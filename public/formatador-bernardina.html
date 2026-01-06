@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Formatador Bernadina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- CSS do portal (fica em /public/styles.css) -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- (Opcional) socket.io já é usado em outras telas do portal -->
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <!-- SIDEBAR -->
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">WL</span>
+            <span class="logo-text">Portal</span>
+          </div>
+
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Alternar menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+
+        <!-- IMPORTANTE: placeholder da sidebar dinâmica -->
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <!-- CONTEÚDO -->
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Contábil / Formatador Bernadina</div>
+          <h1>Formatador Bernadina</h1>
+          <p>
+            Envie as planilhas <strong>.xlsx</strong>. O sistema processa usando o formatador em C# e gera
+            um arquivo <strong>.xlsm</strong> para download.
+          </p>
+
+          <div class="nfe-table-actions" style="margin-top: 10px">
+            <button class="btn btn-ghost-danger" id="btnLogout" type="button">Sair</button>
+          </div>
+
+          <div id="whoami" class="nfe-card-subtitle" style="margin-top: 8px"></div>
+        </header>
+
+        <section class="nfe-row">
+          <!-- CARD UPLOAD -->
+          <div class="nfe-card nfe-card-upload">
+            <h2>Upload</h2>
+            <p class="nfe-card-subtitle">
+              Selecione <strong>todos</strong> os arquivos <strong>.xlsx</strong> do período (pode enviar vários de uma vez).
+            </p>
+
+            <form id="jobForm" class="nfe-upload-form">
+              <label for="xlsxInput" class="nfe-input-file-label">
+                <span>Selecionar XLSX...</span>
+                <input id="xlsxInput" name="files" type="file" accept=".xlsx" multiple required />
+              </label>
+
+              <div class="nfe-table-actions" style="margin-top: 12px">
+                <button class="btn btn-primary" id="btnStart" type="submit">Processar</button>
+                <button class="btn btn-secondary" id="btnClear" type="button">Limpar</button>
+              </div>
+            </form>
+
+            <div id="pageStatus" class="nfe-upload-message" aria-live="polite" style="margin-top: 10px"></div>
+
+            <div id="progressWrap" class="nfe-progress ajuste-progress-hidden" style="margin-top: 10px">
+              <div class="nfe-progress-bar">
+                <div id="progressFill" class="nfe-progress-fill"></div>
+              </div>
+              <span id="progressLabel">0%</span>
+            </div>
+          </div>
+
+          <!-- CARD RESULTADO -->
+          <div class="nfe-card nfe-card-ext">
+            <h2>Resultado</h2>
+            <p class="nfe-card-subtitle">Quando concluir, o download aparecerá aqui.</p>
+
+            <div class="nfe-table-actions" style="margin-top: 10px">
+              <a id="downloadLink" class="btn btn-secondary" href="#" style="display: none" download>
+                Baixar XLSM gerado
+              </a>
+
+              <button id="btnCopyJob" class="btn btn-secondary" type="button" style="display: none">
+                Copiar Job ID
+              </button>
+            </div>
+
+            <div id="jobMeta" class="nfe-card-subtitle" style="margin-top: 10px"></div>
+          </div>
+        </section>
+
+        <!-- LOGS -->
+        <section class="nfe-card nfe-card-table">
+          <div class="nfe-card-header">
+            <h2>Logs do Job</h2>
+            <p class="nfe-card-subtitle">Acompanhe as mensagens principais do processamento.</p>
+          </div>
+
+          <div class="nfe-table-wrapper">
+            <table class="nfe-table">
+              <thead>
+                <tr>
+                  <th>Quando</th>
+                  <th>Mensagem</th>
+                </tr>
+              </thead>
+              <tbody id="logsBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- SCRIPTS (na ordem padrão do portal) -->
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/upload-helper.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/formatador-bernardina.js"></script>
+  </body>
+</html>

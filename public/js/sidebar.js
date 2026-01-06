@@ -1,55 +1,14 @@
 // public/js/sidebar.js
 
-// Configuração única do menu lateral
 const MENU_CONFIG = [
   {
     id: 'pessoal',
     label: 'Pessoal',
     icon: '🙂',
     items: [
-      {
-        id: 'ferias-funcionario',
-        label: 'Férias por Funcionário',
-        href: '/separador-ferias-funcionario',
-        icon: '🏖️',
-      },
-      {
-        id: 'holerites-empresa',
-        label: 'Holerites por Empresa',
-        href: '/separador-holerites-por-empresa',
-        icon: '📄',
-      },
-      {
-        id: 'relatorio-ferias',
-        label: 'Relatório de Férias por Empresa',
-        href: '/separador-pdf-relatorio-de-ferias',
-        icon: '📑',
-      },
-    ],
-  },
-  {
-    id: 'fiscal',
-    label: 'Fiscal',
-    icon: '📁',
-    items: [
-      {
-        id: 'nfe',
-        label: 'Consulta NF-e',
-        href: '/nfe',
-        icon: '🧾',
-      },
-      {
-        id: 'sn',
-        label: 'Declaração SN',
-        href: '/sn',
-        icon: '📄',
-      },
-      {
-        id: 'mit',
-        label: 'Mit',
-        href: '/mit',
-        icon: '📄',
-      },
+      { id: 'ferias-funcionario', label: 'Férias por Funcionário', href: '/separador-ferias-funcionario', icon: '🏖️' },
+      { id: 'holerites-empresa', label: 'Holerites por Empresa', href: '/separador-holerites-por-empresa', icon: '📄' },
+      { id: 'relatorio-ferias', label: 'Relatório de Férias por Empresa', href: '/separador-pdf-relatorio-de-ferias', icon: '📑' },
     ],
   },
   {
@@ -57,49 +16,23 @@ const MENU_CONFIG = [
     label: 'Contábil',
     icon: '📊',
     items: [
-      {
-        id: 'acertos-lotes-internets',
-        label: 'Acertos Lotes Internets',
-        href: '/acertos-lotes-internets',
-        icon: '📊',
-      },
-      {
-        id: 'acerto-lotes-toscan',
-        label: 'Acerto Lotes Toscan',
-        href: '/acerto-lotes-toscan',
-        icon: '📄',
-      },
-      {
-        id: 'importador-recebimentos-madre-scp',
-        label: 'Importador Recebimentos Madre SCP',
-        href: '/importador-recebimentos-madre-scp',
-        icon: '📊',
-      },
-      {
-        id: 'ajuste-diario-gfbr-c',
-        label: 'Ajuste Diario GFBR',
-        href: '/ajuste-diario-gfbr-c',
-        icon: '📄',
-      },
-      {
-        id: 'separador-csv-baixa-automatica',
-        label: 'Separador CSV Baixa Automática',
-        href: '/separador-csv-baixa-automatica',
-        icon: '📊',
-      }
+      { id: 'acertos-lotes-internets', label: 'Acertos Lotes Internets', href: '/acertos-lotes-internets', icon: '📊' },
+      { id: 'acerto-lotes-toscan', label: 'Acerto Lotes Toscan', href: '/acerto-lotes-toscan', icon: '📄' },
+      { id: 'ajuste-diario-gfbr-c', label: 'Ajuste Diario GFBR', href: '/ajuste-diario-gfbr-c', icon: '📄' },
+      { id: 'importador-recebimentos-madre-scp', label: 'Importador Recebimentos Madre SCP', href: '/importador-recebimentos-madre-scp', icon: '📊' },
+      { id: 'separador-csv-baixa-automatica', label: 'Separador CSV Baixa Automática', href: '/separador-csv-baixa-automatica', icon: '📊' },
+      { id: 'formatador-bernardina', label: 'Formatador DRE Bernadina (XLSM)', href: '/formatador-bernardina', icon: '📊' },
     ],
   },
   {
-    id: 'financeiro',
-    label: 'Financeiro',
-    icon: '💰',
+    id: 'fiscal',
+    label: 'Fiscal',
+    icon: '📁',
     items: [
-      {
-        id: 'financeiro-home',
-        label: 'Ver ferramentas na home',
-        href: '/home.html#financeiro',
-        icon: '🏷️',
-      },
+      { id: 'nfe', label: 'Consulta NF-e', href: '/nfe', icon: '🧾' },
+      { id: 'sn', label: 'Declaração SN', href: '/sn', icon: '📄' },
+      { id: 'calculadora-icms-st', label: 'Calculadora de ICMS ST', href: '/calculadora-ICMS-ST', icon: '📄' },
+      { id: 'mit', label: 'Mit', href: '/mit', icon: '📄' },
     ],
   },
   {
@@ -107,57 +40,25 @@ const MENU_CONFIG = [
     label: 'Geral',
     icon: '🧰',
     items: [
-      {
-        id: 'gerador-atas',
-        label: 'Gerador de Atas',
-        icon: '📑',
-        href: '/gerador-atas'
-      },
-      {
-        id: 'comprimir-pdf',
-        label: 'Comprimir PDF',
-        icon: '🧩',
-        href: '/comprimir-pdf'
-      },
-      {
-        id: 'extrator-zip-rar',
-        label: 'Extrator ZIP/RAR',
-        href: '/extrator-zip-rar',
-        icon: '📦',
-      },
-      {
-        id: 'excel-abas-pdf',
-        label: 'Excel → Abas em PDF',
-        icon: '📄',
-        href: '/excel-abas-pdf',
-      },
+      { id: 'gerador-atas', label: 'Gerador de Atas', icon: '📑', href: '/gerador-atas' },
+      { id: 'comprimir-pdf', label: 'Comprimir PDF', icon: '🧩', href: '/comprimir-pdf' },
+      { id: 'extrator-zip-rar', label: 'Extrator ZIP/RAR', href: '/extrator-zip-rar', icon: '📦' },
+      { id: 'excel-abas-pdf', label: 'Excel → Abas em PDF', icon: '📄', href: '/excel-abas-pdf' },
     ],
   },
   {
     id: 'admin',
     label: 'Admin',
     icon: '🔐',
+    adminOnly: true,
     items: [
-      { id: 'admin-usuarios', label: 'Usuários', href: '/admin-usuarios', icon: '👥' },
-      { id: 'audit-logs', label: 'Logs / Auditoria', href: '/logs', icon: '🧾' },
-    ],
-  },
-  {
-    id: 'ti',
-    label: 'Desenvolvendo',
-    icon: '🛠️',
-    items: [
-      {
-        id: 'ti-home',
-        label: 'Ver ferramentas na home',
-        href: '/home.html#ti',
-        icon: '🏷️',
-      },
+      { id: 'admin-usuarios', label: 'Usuários', href: '/admin-usuarios', icon: '👥', adminOnly: true },
+      { id: 'audit-logs', label: 'Logs / Auditoria', href: '/logs', icon: '🧾', adminOnly: true },
     ],
   },
 ];
 
-function gerarSidebarHtml(activePageId) {
+function gerarSidebarHtml(activePageId, userRole) {
   let html = `
     <a href="/home.html" class="nfe-menu-item">
       <span class="icon">🏠</span>
@@ -166,7 +67,12 @@ function gerarSidebarHtml(activePageId) {
   `;
 
   MENU_CONFIG.forEach((group) => {
-    const hasActive = group.items.some((item) => item.id === activePageId);
+    if (group.adminOnly && userRole !== 'ADMIN') return;
+
+    const visibleItems = (group.items || []).filter((item) => !(item.adminOnly && userRole !== 'ADMIN'));
+    if (visibleItems.length === 0) return;
+
+    const hasActive = visibleItems.some((item) => item.id === activePageId);
     const openClass = hasActive ? 'open' : '';
 
     html += `
@@ -179,11 +85,10 @@ function gerarSidebarHtml(activePageId) {
         <div class="nfe-menu-subitems">
     `;
 
-    group.items.forEach((item) => {
+    visibleItems.forEach((item) => {
       const activeClass = item.id === activePageId ? ' active' : '';
       html += `
-        <a href="${item.href}"
-           class="nfe-menu-item nfe-menu-subitem${activeClass}">
+        <a href="${item.href}" class="nfe-menu-item nfe-menu-subitem${activeClass}">
           <span class="icon">${item.icon}</span>
           <span class="label">${item.label}</span>
         </a>
@@ -199,31 +104,34 @@ function gerarSidebarHtml(activePageId) {
   return html;
 }
 
-// Função global para ser chamada em cada página
-function inicializarSidebar(activePageId) {
+async function inicializarSidebar(activePageId) {
   const nav = document.getElementById('sidebarMenu');
   if (!nav) return;
 
-  // Monta o HTML do menu
-  nav.innerHTML = gerarSidebarHtml(activePageId);
+  // Por segurança: se não conseguir ler role, assume não-admin
+  let userRole = null;
+  try {
+    if (window.AuthClient?.getAuthContext) {
+      const ctx = await AuthClient.getAuthContext();
+      userRole = ctx?.user?.role || null;
+    }
+  } catch (_) { }
+
+  nav.innerHTML = gerarSidebarHtml(activePageId, userRole);
 
   const layout = document.querySelector('.nfe-layout');
   const sidebarToggle = document.getElementById('sidebarToggle');
 
-  // Botão hamburguer (recolher/expandir)
   if (layout && sidebarToggle) {
     sidebarToggle.addEventListener('click', () => {
       layout.classList.toggle('collapsed');
     });
   }
 
-  // Abre/fecha grupo ao clicar no departamento
   nav.querySelectorAll('.nfe-menu-group-header').forEach((btn) => {
     btn.addEventListener('click', () => {
       const group = btn.closest('.nfe-menu-group');
-      if (group) {
-        group.classList.toggle('open');
-      }
+      if (group) group.classList.toggle('open');
     });
   });
 }

@@ -84,24 +84,19 @@
           <hr class="nfe-divider" />
 
           <!-- Empresas: dropdown com checkboxes + botão de cadastro -->
+          <!-- Empresas -->
           <div class="nfe-section">
-            <div class="nfe-upload-form">
-              <div class="nfe-input-file-label">
-                <div class="nfe-input-header-row">
-                  <span>Empresas:</span>
-                  <button type="button" id="openCompanyModal" class="btn btn-secondary btn-icon">+</button>
-                </div>
+            <h3>Empresas</h3>
 
-                <!-- Dropdown com checkboxes -->
-                <div class="multi-select" id="companiesMultiSelect">
-                  <div class="multi-select-control" id="companiesDropdown">
-                    <span id="companiesDropdownLabel">Selecione as empresas</span>
-                    <span class="multi-select-arrow">▼</span>
-                  </div>
-                  <div class="multi-select-options" id="companiesOptions">
-                    <!-- opções preenchidas via JS -->
-                  </div>
-                </div>
+            <div class="sn-companies-toolbar">
+              <button type="button" id="btnOpenCompanyModal" class="btn btn-secondary">
+                + Cadastrar empresa
+              </button>
+            </div>
+
+            <div class="sn-companies-list">
+              <div id="companiesOptions" class="sn-companies-options">
+                <!-- preenchido via JS -->
               </div>
             </div>
           </div>
@@ -111,8 +106,8 @@
           <!-- Ações -->
           <div class="nfe-section">
             <div class="nfe-upload-form">
-              <button type="button" id="btnEnviarDecl" class="btn btn-primary">
-                Enviar declarações
+              <button type="button" id="btnEnviarDeclaracao" class="btn btn-primary">
+                Enviar declaração (sem movimento)
               </button>
 
               <button type="button" id="btnConsultarRecibos" class="btn btn-secondary">
@@ -194,6 +189,7 @@
   </div>
 
   <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
   <script src="/js/sn.js"></script>
 
 </body>

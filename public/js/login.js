@@ -3,29 +3,56 @@ document.addEventListener('DOMContentLoaded', () => {
   const msg = document.getElementById('loginMessage');
   const btn = document.getElementById('btnLogin');
 
+  function setMsg(text) {
+    if (!msg) return;
+    msg.textContent = text || '';
+  }
+
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    msg.textContent = '';
-    btn.disabled = true;
+    setMsg('');
+    if (btn) btn.disabled = true;
 
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
+    const email = (document.getElementById('email')?.value || '').trim().toLowerCase();
+    const password = document.getElementById('password')?.value || '';
+
+    if (!email || !email.includes('@') || !password) {
+      setMsg('Informe e-mail e senha.');
+      if (btn) btn.disabled = false;
+      return;
+    }
 
     try {
       const resp = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // <- importante para garantir cookie/sessão
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await resp.json().catch(() => ({}));
-      if (!resp.ok || data.error) throw new Error(data.error || 'Falha no login');
+      // Trata rate-limit do backend (ex.: 429)
+      if (resp.status === 429) {
+        setMsg('Muitas tentativas. Aguarde um pouco e tente novamente.');
+        return;
+      }
 
+      // tenta ler json, mas sem quebrar se vier vazio
+      const data = await resp.json().catch(() => ({}));
+
+      if (!resp.ok) {
+        // backend pode mandar { error: "..." }
+        throw new Error(data.error || 'Falha no login');
+      }
+
+      // Sucesso: cookie httpOnly já foi setado pelo server
       window.location.href = '/';
     } catch (err) {
-      msg.textContent = err.message || 'Erro inesperado';
+      setMsg(err?.message || 'Erro inesperado');
     } finally {
-      btn.disabled = false;
+      if (btn) btn.disabled = false;
     }
   });
 });

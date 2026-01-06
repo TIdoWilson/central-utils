@@ -1,71 +1,94 @@
 // public/js/sn.js
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Inicializa a sidebar compartilhada marcando esta página como ativa
+document.addEventListener('DOMContentLoaded', async () => {
+  // Sidebar
   if (typeof inicializarSidebar === 'function') {
-    inicializarSidebar('sn');
+    await inicializarSidebar('sn');
   }
 
-  // Referências principais
+  // AuthClient é obrigatório (CSRF nas mutações)
+  if (!window.AuthClient) {
+    console.error('AuthClient não carregado. Inclua /js/auth-client.js antes do /js/sn.js');
+    window.location.href = '/login';
+    return;
+  }
+
+  const ctx = await AuthClient.getAuthContext().catch(() => null);
+  if (!ctx) {
+    window.location.href = '/login';
+    return;
+  }
+
+  // Referências principais (aceita IDs novos e antigos)
   const paMes = document.getElementById('paMes');
   const paAno = document.getElementById('paAno');
-  const btnEnviarDecl = document.getElementById('btnEnviarDecl');
-  const btnConsultarRecibos = document.getElementById('btnConsultarRecibos');
-  const snStatus = document.getElementById('snStatus');
-  const consumoInfo = document.getElementById('consumoInfo');
-  const resultsTbody = document.querySelector('#snResultsTable tbody');
-
-  const companiesDropdown = document.getElementById('companiesDropdown');
-  const companiesDropdownLabel = document.getElementById('companiesDropdownLabel');
   const companiesOptions = document.getElementById('companiesOptions');
 
-  const openCompanyModalBtn = document.getElementById('openCompanyModal');
+  const btnEnviar =
+    document.getElementById('btnEnviarDeclaracao') || document.getElementById('btnEnviarDecl');
+  const btnConsultar = document.getElementById('btnConsultarRecibos');
+  const btnDownloadTodos = document.getElementById('btnDownloadTodosRecibos');
+
+  const snStatus = document.getElementById('snStatus');
+  const consumoInfo = document.getElementById('consumoInfo');
+
   const companyModal = document.getElementById('companyModal');
   const companyModalOverlay = document.getElementById('companyModalOverlay');
-  const closeCompanyModalBtn = document.getElementById('closeCompanyModal');
+
+  // botão do modal: NOVO vs ANTIGO
+  const btnOpenCompanyModal =
+    document.getElementById('btnOpenCompanyModal') || document.getElementById('openCompanyModal');
+
+  const btnCloseCompanyModal = document.getElementById('closeCompanyModal');
   const snCompanyForm = document.getElementById('snCompanyForm');
   const snCompanyMessage = document.getElementById('snCompanyMessage');
 
-  const btnDownloadTodos = document.getElementById('btnDownloadTodosRecibos');
+  // Se você ainda usa o dropdown antigo em algum ambiente, mantém o toggle:
+  const companiesDropdown = document.getElementById('companiesDropdown');
+  if (companiesDropdown && companiesOptions) {
+    companiesDropdown.addEventListener('click', () => companiesOptions.classList.toggle('open'));
+    document.addEventListener('click', (e) => {
+      if (!companiesOptions.contains(e.target) && !companiesDropdown.contains(e.target)) {
+        companiesOptions.classList.remove('open');
+      }
+    });
+  }
 
-  let isSending = false;
-  let selectedCompanyIds = new Set();
-  let selectAllCompanies = false;
+  // Guarda último resultado para habilitar download em lote
   let lastSnResults = null;
 
-  function setSending(flag) {
-    isSending = flag;
-    if (btnEnviarDecl) btnEnviarDecl.disabled = flag;
-    if (btnConsultarRecibos) btnConsultarRecibos.disabled = flag;
-    if (btnEnviarDecl) btnEnviarDecl.textContent = flag ? 'Enviando...' : 'Enviar declarações';
-    if (btnConsultarRecibos) btnConsultarRecibos.textContent = flag ? 'Consultando...' : 'Consultar últimos recibos';
+  function extractReceiptIds(data) {
+    const fromTop = Array.isArray(data?.receiptIds) ? data.receiptIds : [];
+    const fromRows = Array.isArray(data?.resultados)
+      ? data.resultados.filter((r) => r?.receiptId).map((r) => r.receiptId)
+      : [];
+    return Array.from(new Set([...fromTop, ...fromRows]));
   }
 
   // Preencher anos (ano atual - 5 até ano atual + 1)
-  (function preencherAnos() {
-    if (!paAno) return;
-    const anoAtual = new Date().getFullYear();
-    const minAno = anoAtual - 5;
-    const maxAno = anoAtual + 1;
+  if (paAno) {
+    const now = new Date();
+    const anoAtual = now.getFullYear();
+    const start = anoAtual - 5;
+    const end = anoAtual + 1;
     paAno.innerHTML = '<option value="">Selecione</option>';
-    for (let a = maxAno; a >= minAno; a--) {
+    for (let a = end; a >= start; a--) {
       const opt = document.createElement('option');
       opt.value = String(a);
       opt.textContent = String(a);
       paAno.appendChild(opt);
     }
-  })();
+  }
 
-  // Modal de cadastro
+  // Modal: abrir/fechar
   function openCompanyModal() {
-    if (!companyModal || !snCompanyMessage) return;
-    snCompanyMessage.textContent = '';
-    snCompanyMessage.style.color = '';
-    const cadCnpj = document.getElementById('cadCnpj');
-    const cadRazao = document.getElementById('cadRazao');
-    if (cadCnpj) cadCnpj.value = '';
-    if (cadRazao) cadRazao.value = '';
+    if (!companyModal) return;
     companyModal.classList.remove('hidden');
+    if (snCompanyMessage) snCompanyMessage.textContent = '';
+    const cnpj = document.getElementById('cadCnpj');
+    const razao = document.getElementById('cadRazao');
+    if (cnpj) cnpj.value = '';
+    if (razao) razao.value = '';
   }
 
   function closeCompanyModal() {
@@ -73,185 +96,134 @@ document.addEventListener('DOMContentLoaded', () => {
     companyModal.classList.add('hidden');
   }
 
-  if (openCompanyModalBtn) openCompanyModalBtn.addEventListener('click', openCompanyModal);
-  if (companyModalOverlay) companyModalOverlay.addEventListener('click', closeCompanyModal);
-  if (closeCompanyModalBtn) closeCompanyModalBtn.addEventListener('click', closeCompanyModal);
+  btnOpenCompanyModal?.addEventListener('click', openCompanyModal);
+  btnCloseCompanyModal?.addEventListener('click', closeCompanyModal);
+  companyModalOverlay?.addEventListener('click', closeCompanyModal);
 
-  // Multi-select de empresas
-  function atualizarLabelEmpresas() {
-    if (!companiesDropdownLabel) return;
-    if (selectAllCompanies) {
-      companiesDropdownLabel.textContent = 'Todas as empresas selecionadas';
-    } else if (selectedCompanyIds.size === 0) {
-      companiesDropdownLabel.textContent = 'Selecione as empresas';
-    } else if (selectedCompanyIds.size === 1) {
-      companiesDropdownLabel.textContent = '1 empresa selecionada';
-    } else {
-      companiesDropdownLabel.textContent = selectedCompanyIds.size + ' empresas selecionadas';
+  // Cadastro de empresa
+  snCompanyForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!snCompanyMessage) return;
+
+    snCompanyMessage.textContent = '';
+    snCompanyMessage.style.color = '';
+
+    const cnpjInput = document.getElementById('cadCnpj');
+    const razaoInput = document.getElementById('cadRazao');
+
+    const cnpj = (cnpjInput ? cnpjInput.value : '').replace(/\D/g, '');
+    const razaoSocial = (razaoInput ? razaoInput.value : '').trim();
+
+    if (!cnpj || !razaoSocial) {
+      snCompanyMessage.textContent = 'Preencha CNPJ e Razão Social.';
+      snCompanyMessage.style.color = 'red';
+      return;
     }
-  }
+    if (cnpj.length !== 14) {
+      snCompanyMessage.textContent = 'CNPJ deve ter 14 dígitos.';
+      snCompanyMessage.style.color = 'red';
+      return;
+    }
 
-  function toggleCompaniesOptions() {
-    if (!companiesOptions) return;
-    companiesOptions.classList.toggle('open');
-  }
+    try {
+      const resp = await AuthClient.authFetch('/api/sn/companies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cnpj, razaoSocial }),
+      });
 
-  if (companiesDropdown) {
-    companiesDropdown.addEventListener('click', toggleCompaniesOptions);
-  }
+      const data = await resp.json().catch(() => ({}));
 
-  document.addEventListener('click', function (e) {
-    if (!companiesOptions || !companiesDropdown) return;
-    if (!companiesOptions.contains(e.target) && !companiesDropdown.contains(e.target)) {
-      companiesOptions.classList.remove('open');
+      if (!resp.ok) {
+        snCompanyMessage.textContent = data.error || 'Erro ao cadastrar empresa.';
+        snCompanyMessage.style.color = 'red';
+        return;
+      }
+
+      snCompanyMessage.textContent = 'Empresa cadastrada com sucesso.';
+      snCompanyMessage.style.color = 'green';
+
+      await carregarEmpresas();
+      closeCompanyModal();
+    } catch (e2) {
+      console.error(e2);
+      snCompanyMessage.textContent = 'Erro inesperado ao cadastrar empresa.';
+      snCompanyMessage.style.color = 'red';
     }
   });
 
+  // Carregar empresas (lista com checkboxes)
   async function carregarEmpresas() {
     if (!companiesOptions) return;
     try {
-      const resp = await fetch('/api/sn/companies');
+      const resp = await AuthClient.authFetch('/api/sn/companies');
       if (!resp.ok) return;
       const empresas = await resp.json();
 
       companiesOptions.innerHTML = '';
 
       // opção "Todos"
-      const labelAll = document.createElement('label');
-      labelAll.className = 'multi-select-option';
-      const checkAll = document.createElement('input');
-      checkAll.type = 'checkbox';
-      checkAll.value = 'all';
-      checkAll.addEventListener('change', function () {
-        selectAllCompanies = checkAll.checked;
-        selectedCompanyIds.clear();
+      const lblAll = document.createElement('label');
+      lblAll.className = 'sn-company-option';
+      lblAll.innerHTML = `
+        <input type="checkbox" id="chkAllCompanies" />
+        <span>Selecionar todas</span>
+      `;
+      companiesOptions.appendChild(lblAll);
 
-        const checks = companiesOptions.querySelectorAll('input[type="checkbox"]');
-        checks.forEach((c) => {
-          if (c === checkAll) return;
-          c.checked = selectAllCompanies;
-          if (selectAllCompanies) {
-            selectedCompanyIds.add(Number(c.value));
-          }
-        });
-
-        atualizarLabelEmpresas();
-      });
-
-      labelAll.appendChild(checkAll);
-      labelAll.appendChild(document.createTextNode(' Todos'));
-      companiesOptions.appendChild(labelAll);
-
-      // demais empresas
-      empresas.forEach((emp) => {
+      (empresas || []).forEach((emp) => {
         const lbl = document.createElement('label');
-        lbl.className = 'multi-select-option';
-        const chk = document.createElement('input');
-        chk.type = 'checkbox';
-        chk.value = emp.id;
-        chk.addEventListener('change', function () {
-          const id = Number(chk.value);
-          if (chk.checked) {
-            selectedCompanyIds.add(id);
-          } else {
-            selectedCompanyIds.delete(id);
-          }
-          // se desmarcar alguma, desmarca "Todos"
-          if (!chk.checked && selectAllCompanies) {
-            selectAllCompanies = false;
-            checkAll.checked = false;
-          }
-          atualizarLabelEmpresas();
-        });
-
-        lbl.appendChild(chk);
-        lbl.appendChild(document.createTextNode(' ' + emp.razaoSocial + ' (' + emp.cnpj + ')'));
+        lbl.className = 'sn-company-option';
+        lbl.innerHTML = `
+          <input type="checkbox" class="sn-company-checkbox" value="${emp.id}" />
+          <span>${emp.cnpj} — ${emp.razaoSocial}</span>
+        `;
         companiesOptions.appendChild(lbl);
       });
 
-      atualizarLabelEmpresas();
+      // Comportamento do "Selecionar todas"
+      const chkAll = document.getElementById('chkAllCompanies');
+      chkAll?.addEventListener('change', () => {
+        const checked = chkAll.checked;
+        document.querySelectorAll('.sn-company-checkbox').forEach((c) => {
+          c.checked = checked;
+        });
+      });
     } catch (e) {
       console.error('Erro ao carregar empresas SN:', e);
     }
   }
 
-  // Cadastro de empresa (modal)
-  if (snCompanyForm) {
-    snCompanyForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      if (!snCompanyMessage) return;
-      snCompanyMessage.textContent = '';
-      snCompanyMessage.style.color = '';
-
-      const cnpjInput = document.getElementById('cadCnpj');
-      const razaoInput = document.getElementById('cadRazao');
-      const cnpj = cnpjInput ? cnpjInput.value.trim() : '';
-      const razaoSocial = razaoInput ? razaoInput.value.trim() : '';
-
-      if (!cnpj || !razaoSocial) {
-        snCompanyMessage.textContent = 'Preencha CNPJ e Razão Social.';
-        snCompanyMessage.style.color = 'red';
-        return;
-      }
-
-      try {
-        const resp = await fetch('/api/sn/companies', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cnpj, razaoSocial }),
-        });
-
-        const data = await resp.json();
-
-        if (!resp.ok) {
-          snCompanyMessage.textContent = data.error || 'Erro ao cadastrar empresa.';
-          snCompanyMessage.style.color = 'red';
-          return;
-        }
-
-        snCompanyMessage.textContent = 'Empresa cadastrada com sucesso.';
-        snCompanyMessage.style.color = 'green';
-
-        // recarrega lista do dropdown
-        await carregarEmpresas();
-        atualizarLabelEmpresas();
-      } catch (e) {
-        console.error(e);
-        snCompanyMessage.textContent = 'Falha na comunicação com o servidor.';
-        snCompanyMessage.style.color = 'red';
-      }
-    });
-  }
-
-  // Resumo de consumo
+  // Atualiza card de consumo
   function atualizarResumoConsumo(resumo) {
-    if (!consumoInfo || !resumo) return;
+    if (!consumoInfo) return;
+    if (!resumo) {
+      consumoInfo.textContent = 'Nenhuma operação realizada.';
+      return;
+    }
 
-    const consumoAtual = resumo.consumoAtual || 0;
-    const totalDecl = resumo.totalDeclaracoes || 0;
-    const totalCons = resumo.totalConsultas || 0;
-    const totalSucesso = resumo.totalSucesso || 0;
-    const totalErro = resumo.totalErro || 0;
-
-    const precoUnitario =
-      typeof resumo.precoUnitario === 'number' ? resumo.precoUnitario.toFixed(2) : '0,00';
-
-    const valorTotal =
-      typeof resumo.valorTotal === 'number' ? resumo.valorTotal.toFixed(2) : '0,00';
+    const totalOps = resumo.totalOperacoes ?? resumo.totalRequisicoes ?? 0;
+    const totalSucesso = resumo.totalSucesso ?? 0;
+    const totalErro = resumo.totalErro ?? 0;
+    const precoUnitario = (resumo.precoUnitario ?? 0.4).toFixed(2);
+    const valorTotal = (resumo.valorTotal ?? 0).toFixed(2);
 
     consumoInfo.textContent =
-      'Operações: ' + consumoAtual +
-      ' (Declarações: ' + totalDecl +
-      ' | Consultas: ' + totalCons +
-      ') | Sucessos: ' + totalSucesso +
-      ' | Erros: ' + totalErro +
-      ' | Preço unitário atual: R$ ' + precoUnitario +
-      ' | Valor total estimado: R$ ' + valorTotal;
+      'Operações: ' +
+      totalOps +
+      ' | Sucessos: ' +
+      totalSucesso +
+      ' | Erros: ' +
+      totalErro +
+      ' | Preço unitário atual: R$ ' +
+      precoUnitario +
+      ' | Valor total estimado: R$ ' +
+      valorTotal;
   }
 
   async function carregarResumo() {
     try {
-      const resp = await fetch('/api/sn/summary');
+      const resp = await AuthClient.authFetch('/api/sn/summary');
       if (!resp.ok) return;
       const resumo = await resp.json();
       atualizarResumoConsumo(resumo);
@@ -260,61 +232,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Utilitário para pegar período e empresas selecionadas
   function getPeriodoEEmpresas() {
     if (!paMes || !paAno || !snStatus) return null;
 
-    const mes = paMes.value;
-    const ano = paAno.value;
+    const mes = String(paMes.value || '').trim();
+    const ano = String(paAno.value || '').trim();
 
     if (!mes || !ano) {
-      snStatus.textContent = 'Informe o mês e o ano da apuração.';
+      snStatus.textContent = 'Selecione mês e ano do período de apuração.';
       return null;
     }
 
-    if (!selectAllCompanies && selectedCompanyIds.size === 0) {
-      snStatus.textContent = 'Selecione pelo menos uma empresa.';
+    const pa = Number(ano + mes);
+
+    const all = !!document.getElementById('chkAllCompanies')?.checked;
+    const ids = Array.from(document.querySelectorAll('.sn-company-checkbox'))
+      .filter((c) => c.checked)
+      .map((c) => Number(c.value))
+      .filter((n) => Number.isFinite(n));
+
+    if (!all && ids.length === 0) {
+      snStatus.textContent = 'Selecione pelo menos uma empresa (ou marque "Selecionar todas").';
       return null;
     }
 
-    const pa = parseInt(String(ano) + String(mes).padStart(2, '0'), 10);
-
-    return {
-      pa,
-      all: selectAllCompanies,
-      companyIds: selectAllCompanies ? [] : Array.from(selectedCompanyIds),
-    };
+    return { pa, all, companyIds: ids };
   }
 
+  function setSending(isSending) {
+    if (btnEnviar) btnEnviar.disabled = isSending;
+    if (btnConsultar) btnConsultar.disabled = isSending;
+  }
+
+  // Renderiza tabela de resultados
   function renderResultados(resultados) {
-    if (!resultsTbody) return;
-    resultsTbody.innerHTML = '';
+    const table = document.getElementById('snResultsTable');
+    const tbody = table?.querySelector('tbody');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
 
     (resultados || []).forEach((r) => {
       const tr = document.createElement('tr');
 
       const tdCnpj = document.createElement('td');
-      tdCnpj.textContent = r.cnpj;
+      tdCnpj.textContent = r.cnpj || '-';
 
       const tdRazao = document.createElement('td');
-      tdRazao.textContent = r.razaoSocial || '';
+      tdRazao.textContent = r.razaoSocial || '-';
 
       const tdOp = document.createElement('td');
-      tdOp.textContent = r.tipo === 'consulta' ? 'Consulta recibo' : 'Declaração';
+      tdOp.textContent = r.operacao || '-';
 
       const tdStatus = document.createElement('td');
-      tdStatus.textContent = r.sucesso ? 'Sucesso' : 'Erro';
-      tdStatus.style.color = r.sucesso ? 'green' : 'red';
+      tdStatus.textContent = r.status || (r.sucesso ? 'Sucesso' : 'Erro');
 
       const tdMsg = document.createElement('td');
-      if (Array.isArray(r.mensagens) && r.mensagens.length) {
-        tdMsg.textContent = r.mensagens
-          .map((m) => '[' + m.codigo + '] ' + m.texto)
-          .join(' | ');
-      } else if (r.error) {
-        tdMsg.textContent = r.error;
-      } else if (r.fromCache) {
-        tdMsg.textContent = 'Recibo obtido do cache.';
+      if (r.mensagens && Array.isArray(r.mensagens) && r.mensagens.length) {
+        tdMsg.textContent = r.mensagens.map((m) => m.texto || m).join(' | ');
+      } else if (r.mensagem) {
+        tdMsg.textContent = r.mensagem;
       } else {
         tdMsg.textContent = '-';
       }
@@ -336,79 +313,83 @@ document.addEventListener('DOMContentLoaded', () => {
       tr.appendChild(tdStatus);
       tr.appendChild(tdMsg);
       tr.appendChild(tdRecibo);
-
-      resultsTbody.appendChild(tr);
+      tbody.appendChild(tr);
     });
   }
 
-  // Handlers: enviar declarações e consultar recibos
-  async function handleEnviarDeclaracoes() {
+  // Enviar declaração
+  btnEnviar?.addEventListener('click', async () => {
+    if (!snStatus) return;
+
+    snStatus.textContent = '';
+    lastSnResults = null;
+    if (btnDownloadTodos) btnDownloadTodos.disabled = true;
+
     const params = getPeriodoEEmpresas();
-    if (!params || !snStatus) return;
+    if (!params) return;
 
     setSending(true);
     snStatus.textContent = 'Enviando declarações...';
 
     try {
-      const resp = await fetch('/api/sn/declaration', {
+      const resp = await AuthClient.authFetch('/api/sn/declaration', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          pa: params.pa,
-          all: params.all,
-          companyIds: params.companyIds,
-          tipoDeclaracao: 1,
-          receitaInterna: 0,
-          receitaExterna: 0,
+          ...params,
           indicadorTransmissao: true,
           indicadorComparacao: false,
         }),
       });
 
-      const data = await resp.json();
+      const data = await resp.json().catch(() => ({}));
 
       if (!resp.ok) {
         let msgErro = data.error || 'Erro ao enviar declarações.';
         if (data.status) msgErro += ' (HTTP ' + data.status + ')';
         snStatus.textContent = msgErro;
-        setSending(false);
         return;
       }
 
+      const receiptIds = extractReceiptIds(data);
+      lastSnResults = { ...data, receiptIds };
+
+      if (btnDownloadTodos) btnDownloadTodos.disabled = receiptIds.length === 0;
+
       renderResultados(data.resultados);
-      snStatus.textContent = 'Declarações processadas com sucesso.';
-      if (data.resumoConsumo) {
-        atualizarResumoConsumo(data.resumoConsumo);
-      } else {
-        carregarResumo();
-      }
+      snStatus.textContent = 'Declarações enviadas.';
+
+      if (data.resumoConsumo) atualizarResumoConsumo(data.resumoConsumo);
     } catch (e) {
       console.error(e);
-      snStatus.textContent = 'Falha na comunicação com o servidor.';
+      snStatus.textContent = e?.message || 'Erro inesperado.';
     } finally {
       setSending(false);
     }
-  }
+  });
 
-  async function handleConsultarRecibos() {
+  // Consultar recibos
+  btnConsultar?.addEventListener('click', async () => {
+    if (!snStatus) return;
+
+    snStatus.textContent = '';
+    lastSnResults = null;
+    if (btnDownloadTodos) btnDownloadTodos.disabled = true;
+
     const params = getPeriodoEEmpresas();
-    if (!params || !snStatus) return;
+    if (!params) return;
 
     setSending(true);
     snStatus.textContent = 'Consultando recibos...';
 
     try {
-      const resp = await fetch('/api/sn/consult-last', {
+      const resp = await AuthClient.authFetch('/api/sn/consult-last', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pa: params.pa,
-          all: params.all,
-          companyIds: params.companyIds,
-        }),
+        body: JSON.stringify(params),
       });
 
-      const data = await resp.json();
+      const data = await resp.json().catch(() => ({}));
 
       if (!resp.ok) {
         let msgErro = data.error || 'Erro ao consultar recibos.';
@@ -417,99 +398,75 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // guarda o resultado da última consulta
-      lastSnResults = data;
+      const receiptIds = extractReceiptIds(data);
+      lastSnResults = { ...data, receiptIds };
 
-      // renderiza a tabela
+      if (btnDownloadTodos) btnDownloadTodos.disabled = receiptIds.length === 0;
+
       renderResultados(data.resultados);
       snStatus.textContent = 'Consultas de recibo concluídas.';
 
-      // atualiza resumo
-      if (data.resumoConsumo) {
-        atualizarResumoConsumo(data.resumoConsumo);
-      } else {
-        carregarResumo();
-      }
-
-      // habilita ou desabilita o botão "Baixar todos os recibos"
-      if (btnDownloadTodos) {
-        const temAlgumRecibo =
-          Array.isArray(data.resultados) &&
-          data.resultados.some((r) => r.receiptId);
-
-        btnDownloadTodos.disabled = !temAlgumRecibo;
-      }
+      if (data.resumoConsumo) atualizarResumoConsumo(data.resumoConsumo);
     } catch (e) {
       console.error(e);
-      snStatus.textContent = 'Falha na comunicação com o servidor.';
+      snStatus.textContent = e?.message || 'Erro inesperado.';
     } finally {
       setSending(false);
     }
-  }
+  });
 
-  if (btnEnviarDecl) btnEnviarDecl.addEventListener('click', handleEnviarDeclaracoes);
-  if (btnConsultarRecibos) btnConsultarRecibos.addEventListener('click', handleConsultarRecibos);
+  // Download em lote (ZIP)
+  btnDownloadTodos?.addEventListener('click', async () => {
+    const receiptIds = lastSnResults?.receiptIds || [];
 
-  // Inicialização
-  carregarEmpresas();
-  carregarResumo();
+    if (!receiptIds.length) {
+      alert('Nenhum recibo disponível para download.');
+      return;
+    }
 
-  if (btnDownloadTodos) {
-    btnDownloadTodos.addEventListener('click', async function () {
-      if (!lastSnResults || !Array.isArray(lastSnResults.resultados)) {
-        alert('Nenhum resultado de consulta disponível.');
+    try {
+      btnDownloadTodos.disabled = true;
+      btnDownloadTodos.textContent = 'Gerando ZIP...';
+
+      const resp = await AuthClient.authFetch('/api/sn/receipts/batch-download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ receiptIds }),
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        console.error('Erro ao baixar ZIP:', err);
+        alert(err.error || 'Erro ao gerar o arquivo ZIP de recibos.');
         return;
       }
 
-      const receiptIds = lastSnResults.resultados
-        .filter((r) => r.receiptId)
-        .map((r) => r.receiptId);
+      const blob = await resp.blob();
 
-      if (receiptIds.length === 0) {
-        alert('Nenhum recibo disponível para download.');
-        return;
-      }
+      // tenta pegar filename do Content-Disposition
+      const cd = resp.headers.get('content-disposition') || '';
+      const m = cd.match(/filename="([^"]+)"/i);
+      const filename = m?.[1] || 'recibos-sn.zip';
 
-      try {
-        btnDownloadTodos.disabled = true;
-        btnDownloadTodos.textContent = 'Gerando ZIP...';
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
 
-        const resp = await fetch('/api/sn/receipts/batch-download', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ receiptIds }),
-        });
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    } catch (e) {
+      console.error(e);
+      alert('Erro ao baixar os recibos.');
+    } finally {
+      btnDownloadTodos.disabled = false;
+      btnDownloadTodos.textContent = 'Baixar todos os recibos';
+    }
+  });
 
-        if (!resp.ok) {
-          let err;
-          try {
-            err = await resp.json();
-          } catch (_) {
-            err = {};
-          }
-          console.error('Erro ao baixar ZIP:', err);
-          alert('Erro ao gerar o arquivo ZIP de recibos.');
-          return;
-        }
-
-        const arrayBuffer = await resp.arrayBuffer();
-        const blob = new Blob([arrayBuffer], { type: 'application/zip' });
-
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'recibos-sn.zip';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      } catch (e) {
-        console.error(e);
-        alert('Erro ao baixar os recibos.');
-      } finally {
-        btnDownloadTodos.disabled = false;
-        btnDownloadTodos.textContent = 'Baixar todos os recibos';
-      }
-    });
-  }
+  // Init
+  await carregarEmpresas();
+  await carregarResumo();
 });
