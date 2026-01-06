@@ -12,12 +12,21 @@ async function autenticarSerpro() {
   const consumerKey = process.env.CONSUMER_KEY;
   const consumerSecret = process.env.CONSUMER_SECRET;
 
-  const certPath = process.env.CERT_PFX_PATH;      // caminho do .pfx / .p12
-  const certPassword = process.env.CERT_PFX_PASSWORD;
+  const certPath = process.env.CERT_PFX_PATH || process.env.SERPRO_PFX_PATH;
+  const certPassword = process.env.CERT_PFX_PASSWORD || process.env.SERPRO_PFX_PASSWORD;
 
   if (!url || !consumerKey || !consumerSecret || !certPath || !certPassword) {
     throw new Error("Faltam variáveis no .env (SERPRO_AUTH_URL, CONSUMER_KEY, CONSUMER_SECRET, CERT_PFX_PATH, CERT_PFX_PASSWORD)");
   }
+
+  const missing = [];
+  if (!url) missing.push('SERPRO_AUTH_URL');
+  if (!consumerKey) missing.push('CONSUMER_KEY');
+  if (!consumerSecret) missing.push('CONSUMER_SECRET');
+  if (!certPath) missing.push('CERT_PFX_PATH/SERPRO_PFX_PATH');
+  if (!certPassword) missing.push('CERT_PFX_PASSWORD/SERPRO_PFX_PASSWORD');
+  if (missing.length) throw new Error('Faltam variáveis no .env: ' + missing.join(', '));
+  if (!fs.existsSync(certPath)) throw new Error('Certificado não encontrado em: ' + certPath);
 
   const certBuffer = fs.readFileSync(certPath);
 

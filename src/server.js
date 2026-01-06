@@ -14,11 +14,23 @@ const { createHttpsAgent, obterToken } = require('./serpro-auth'); // reaproveit
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const rateLimit = require('express-rate-limit');
-
+const { spawn } = require('child_process');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR);
 }
+
+const BERNADINA_DIR = path.join(DATA_DIR, 'formatador-bernardina');
+const BERNADINA_TMP_DIR = path.join(BERNADINA_DIR, '_tmp');
+
+fs.mkdirSync(BERNADINA_DIR, { recursive: true });
+fs.mkdirSync(BERNADINA_TMP_DIR, { recursive: true });
+
+// multer em disco só para essa ferramenta (não usa memoryStorage)
+const uploadBernadina = multer({
+  dest: BERNADINA_TMP_DIR,
+  limits: { fileSize: 50 * 1024 * 1024, files: 120 },
+});
 
 const FERIAS_FUNC_DIR = path.join(DATA_DIR, 'ferias-funcionario');
 if (!fs.existsSync(FERIAS_FUNC_DIR)) {
@@ -69,6 +81,10 @@ if (!fs.existsSync(uploadsDir)) {
 const extratorZipRarUploadsDir = path.join(DATA_DIR, 'uploads', 'extrator-zip-rar');
 if (!fs.existsSync(extratorZipRarUploadsDir)) {
   fs.mkdirSync(extratorZipRarUploadsDir, { recursive: true });
+}
+
+if (!fs.existsSync(BERNADINA_TMP_DIR)) {
+  fs.mkdirSync(BERNADINA_TMP_DIR, { recursive: true });
 }
 
 const uploadExtratorZipRar = multer({
@@ -130,165 +146,71 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 const publicDir = path.join(__dirname, '..', 'public');
 
-// cookie parse simples (sem dependência extra)
-function parseCookies(req) {
-  const header = req.headers.cookie || '';
-  const out = {};
-  header.split(';').forEach((part) => {
-    const [k, ...v] = part.trim().split('=');
-    if (!k) return;
-    out[k] = decodeURIComponent(v.join('=') || '');
-  });
-  return out;
-}
-
-function sha256(input) {
-  return crypto.createHash('sha256').update(input).digest('hex');
-}
-
-function randomToken(bytes = 32) {
-  return crypto.randomBytes(bytes).toString('hex');
-}
-
-function appendSetCookie(res, cookieStr) {
-  const prev = res.getHeader('Set-Cookie');
-  if (!prev) res.setHeader('Set-Cookie', cookieStr);
-  else if (Array.isArray(prev)) res.setHeader('Set-Cookie', [...prev, cookieStr]);
-  else res.setHeader('Set-Cookie', [prev, cookieStr]);
-}
-
-function setSessionCookie(res, token) {
-  const isProd = process.env.NODE_ENV === 'production';
-  const maxAge = Number(process.env.AUTH_SESSION_MAX_AGE_SECONDS || 60 * 60 * 24 * 7);
-  const parts = [
-    `wl_session=${encodeURIComponent(token)}`,
-    'Path=/',
-    'HttpOnly',
-    'SameSite=Lax',
-    `Max-Age=${maxAge}`,
-  ];
-  if (isProd) parts.push('Secure');
-  appendSetCookie(res, parts.join('; '));
-}
-
-function clearSessionCookie(res) {
-  const isProd = process.env.NODE_ENV === 'production';
-  appendSetCookie(
-    res,
-    `wl_session=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax${isProd ? '; Secure' : ''}`
-  );
-}
-
-async function auditLog({ userId = null, email = null, action, status = 'ok', meta = null, req }) {
+async function auditLog(arg1, action, status = 'ok', meta = null, user = null) {
   try {
+    // Descobrir se foi chamado como:
+    // A) auditLog(req, action, status, meta, user)
+    // B) auditLog({ userId, email, action, status, meta, req })
+
+    let req = null;
+    let act = action;
+    let st = status;
+    let mt = meta;
+
+    let userId = null;
+    let email = null;
+
+    // B) legacy object-call
+    if (arg1 && typeof arg1 === 'object' && arg1.req && typeof arg1.action === 'string') {
+      req = arg1.req;
+      act = arg1.action;
+      st = arg1.status ?? 'ok';
+      mt = arg1.meta ?? null;
+
+      userId = arg1.userId ?? arg1.user_id ?? null;
+      email = arg1.email ?? arg1.username ?? null;
+    } else {
+      // A) req-call
+      req = arg1;
+    }
+
+    const headers = (req && req.headers && typeof req.headers === 'object') ? req.headers : {};
+
+    // Pega user com tolerância (req.user, req.auth.user, ou param user)
+    const u = user || req?.user || req?.auth?.user || null;
+    userId = userId ?? u?.id ?? null;
+    email = email ?? u?.email ?? null;
+
     const ipRaw =
-      (req.headers['x-forwarded-for'] || '').toString().split(',')[0].trim() ||
-      req.ip ||
-      req.socket?.remoteAddress ||
+      (headers['x-forwarded-for'] || '').toString().split(',')[0].trim() ||
+      req?.ip ||
+      req?.socket?.remoteAddress ||
       null;
 
     const ip = (ipRaw || '').toString().replace(/^::ffff:/, '').slice(0, 120);
-
-    const ua = (req.headers['user-agent'] || '').toString().slice(0, 400);
+    const ua = (headers['user-agent'] || '').toString().slice(0, 400);
 
     await pool.query(
       `INSERT INTO audit_logs (user_id, email, action, status, meta, ip, user_agent)
        VALUES ($1,$2,$3,$4,$5,$6,$7)`,
-      [userId, email, action, status, meta, ip, ua]
+      [userId, email, act, st, mt ? JSON.stringify(mt) : null, ip || null, ua || null]
     );
   } catch (e) {
-    console.error('Falha ao gravar audit log:', e.message || e);
+    // nunca derrubar request por falha de log
+    console.error('auditLog error:', e.message || e);
   }
 }
 
-async function getSessionUser(req) {
-  const cookies = parseCookies(req);
-  const token = cookies.wl_session;
-  if (!token) return null;
+const uploadAdminUsers = multer({ storage: multer.memoryStorage(), limits: { fileSize: 2 * 1024 * 1024 } });
 
-  const tokenHash = sha256(token);
-
-  const result = await pool.query(
-    `SELECT s.id as session_id, s.user_id, s.csrf_token,
-            u.email, u.name, u.role, u.is_active
-       FROM auth_sessions s
-       JOIN auth_users u ON u.id = s.user_id
-      WHERE s.token_hash = $1 AND s.expires_at > NOW()
-      LIMIT 1`,
-    [tokenHash]
-  );
-
-  if (!result.rows.length) return null;
-  const row = result.rows[0];
-  if (!row.is_active) return null;
-
-  return {
-    sessionId: row.session_id,
-    user: { id: row.user_id, email: row.email, name: row.name, role: row.role },
-    csrfToken: row.csrf_token,
-  };
-}
-
-async function requireAuth(req, res, next) {
-  try {
-    const ctx = await getSessionUser(req);
-    if (!ctx) return res.status(401).json({ error: 'Não autenticado' });
-    req.auth = ctx;
-    return next();
-  } catch (e) {
-    console.error('requireAuth erro:', e.message || e);
-    return res.status(401).json({ error: 'Não autenticado' });
-  }
-}
-
-async function requireAuthPage(req, res, next) {
-  try {
-    const ctx = await getSessionUser(req);
-    if (!ctx) return res.redirect('/login');
-    req.auth = ctx;
-    return next();
-  } catch (_) {
-    return res.redirect('/login');
-  }
-}
-
-function requireRole(role) {
-  return (req, res, next) => {
-    const userRole = req.auth?.user?.role;
-    if (userRole !== role) return res.status(403).json({ error: 'Sem permissão' });
-    next();
-  };
-}
-
-function requireAdminPage(req, res, next) {
-  if (req.auth?.user?.role !== 'ADMIN') return res.status(403).send('Sem permissão');
-  next();
-}
-
-function requireCsrf(req, res, next) {
-  const method = (req.method || 'GET').toUpperCase();
-  if (method === 'GET') return next();
-
-  const sent = (req.headers['x-csrf-token'] || '').toString();
-  const expected = req.auth?.csrfToken || '';
-  if (!sent || !expected || sent !== expected) {
-    return res.status(403).json({ error: 'CSRF inválido' });
-  }
-  next();
-}
-
-function normalizeEmail(email) {
-  return (email || '').toString().trim().toLowerCase();
-}
-
-function normalizeRole(role) {
-  const r = (role || '').toString().trim().toUpperCase();
+function normalizeRole(s) {
+  const r = String(s || '').trim().toUpperCase();
   return r === 'ADMIN' ? 'ADMIN' : 'USER';
 }
 
-function isValidEmail(email) {
-  // validação simples o suficiente para login interno
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+function isValidEmail(s) {
+  const e = String(s || '').trim().toLowerCase();
+  return e.includes('@') && e.includes('.') && e.length <= 320;
 }
 
 // Rate limit para login
@@ -299,27 +221,190 @@ const loginLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.get('/', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+// =========================
+// AUTH v2.1 (Portal) + CSRF
+// =========================
+
+// trust proxy: EVITAR true; use false no dev e 1 atrás de nginx (1 proxy)
+app.set('trust proxy', process.env.TRUST_PROXY === '1' ? 1 : false);
+
+function getCookie(req, name) {
+  const raw = req.headers.cookie || '';
+  const parts = raw.split(';').map(s => s.trim());
+  for (const p of parts) {
+    if (p.startsWith(name + '=')) return decodeURIComponent(p.slice(name.length + 1));
+  }
+  return null;
+}
+
+function sha256Hex(s) {
+  return crypto.createHash('sha256').update(s).digest('hex');
+}
+
+function newTokenHex(bytes = 32) {
+  return crypto.randomBytes(bytes).toString('hex');
+}
+
+function sanitizeUserRow(row) {
+  if (!row) return null;
+  return {
+    id: row.id,
+    name: row.name,
+    email: row.email,
+    role: row.role,
+    isActive: row.is_active,
+    createdAt: row.created_at,
+    lastLoginAt: row.last_login_at,
+  };
+}
+
+async function loadSession(req) {
+  const token = getCookie(req, 'wl_session');
+  if (!token) return null;
+
+  const tokenHash = sha256Hex(token);
+  const { rows } = await pool.query(
+    `SELECT
+       s.id AS session_id,
+       s.csrf_token,
+       s.expires_at,
+       u.id, u.name, u.email, u.role, u.is_active, u.created_at, u.last_login_at
+     FROM auth_sessions s
+     JOIN auth_users u ON u.id = s.user_id
+     WHERE s.token_hash = $1
+     LIMIT 1`,
+    [tokenHash]
+  );
+
+  const row = rows[0];
+  if (!row) return null;
+
+  // expirado?
+  const exp = new Date(row.expires_at);
+  if (Number.isFinite(exp.getTime()) && exp.getTime() < Date.now()) {
+    await pool.query(`DELETE FROM auth_sessions WHERE token_hash=$1`, [tokenHash]).catch(() => { });
+    return null;
+  }
+
+  if (!row.is_active) return null;
+
+  return {
+    tokenHash,
+    sessionId: row.session_id,
+    csrfToken: row.csrf_token,
+    user: sanitizeUserRow(row),
+  };
+}
+
+async function requireAuth(req, res, next) {
+  try {
+    const sess = await loadSession(req);
+    if (!sess) return res.status(401).json({ error: 'Não autenticado' });
+
+    req.user = sess.user;
+    req.csrfToken = sess.csrfToken;
+    req.sessionTokenHash = sess.tokenHash;
+
+    // compat com páginas antigas que usam req.auth.user
+    req.auth = {
+      sessionId: sess.sessionId,
+      csrfToken: sess.csrfToken,
+      user: {
+        id: sess.user?.id,
+        name: sess.user?.name,
+        email: sess.user?.email,
+        role: sess.user?.role,
+        username: sess.user?.email,
+      },
+    };
+
+    return next();
+  } catch (e) {
+    console.error('requireAuth error:', e.message || e);
+    return res.status(500).json({ error: 'Erro interno de autenticação' });
+  }
+}
+
+async function requireAuthPage(req, res, next) {
+  try {
+    const sess = await loadSession(req);
+    if (!sess) return res.redirect('/login');
+
+    req.user = sess.user;
+    req.csrfToken = sess.csrfToken;
+    req.sessionTokenHash = sess.tokenHash;
+
+    req.auth = {
+      sessionId: sess.sessionId,
+      csrfToken: sess.csrfToken,
+      user: {
+        id: sess.user?.id,
+        name: sess.user?.name,
+        email: sess.user?.email,
+        role: sess.user?.role,
+        username: sess.user?.email,
+      },
+    };
+
+    return next();
+  } catch (e) {
+    console.error('requireAuthPage error:', e.message || e);
+    return res.redirect('/login');
+  }
+}
+
+function requireRole(role) {
+  return (req, res, next) => {
+    const userRole = req.user?.role || req.auth?.user?.role;
+    if (userRole !== role) return res.status(403).json({ error: 'Sem permissão' });
+    next();
+  };
+}
+
+function requireAdminPage(req, res, next) {
+  const userRole = req.user?.role || req.auth?.user?.role;
+  if (userRole !== 'ADMIN') return res.status(403).send('Sem permissão');
+  next();
+}
+
+function requireCsrf(req, res, next) {
+  const method = (req.method || 'GET').toUpperCase();
+  if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') return next();
+
+  const sent = (req.headers['x-csrf-token'] || '').toString();
+  const expected = (req.csrfToken || req.auth?.csrfToken || '').toString();
+
+  if (!sent) return res.status(403).json({ error: 'CSRF ausente', code: 'csrf_missing' });
+  if (!expected || sent !== expected) {
+    return res.status(403).json({ error: 'CSRF inválido', code: 'csrf_invalid' });
+  }
+  next();
+}
+
+function logPageView(action) {
+  return async (req, res, next) => {
+    try {
+      await auditLog(req, action, 'ok', { path: req.path, method: req.method });
+    } catch (e) {
+      console.error('logPageView auditLog falhou:', e.message || e);
+    }
+    next();
+  };
+}
+
+// Bloqueia acesso direto a *.html (senão “fura” o requireAuthPage via express.static)
+app.use((req, res, next) => {
+  if (req.method === 'GET' && req.path.endsWith('.html') && req.path !== '/login.html') {
+    return requireAuthPage(req, res, next);
+  }
+  next();
+});
+
+app.get('/', requireAuthPage, logPageView('page_view_home'), (req, res) => {
   res.sendFile(path.join(publicDir, 'home.html'));
 });
 
-app.get('/nfe', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+app.get('/nfe', requireAuthPage, logPageView('page_view_nfe'), (req, res) => {
   res.sendFile(path.join(publicDir, 'nfe.html'));
 });
 
@@ -409,6 +494,135 @@ app.post('/api/clear-done', (req, res) => {
   }
 });
 
+app.post(
+  '/api/formatador-bernardina/jobs',
+  requireAuth,
+  requireCsrf,
+  uploadBernadina.array('files'),
+  async (req, res) => {
+    const exePath = process.env.BERNADINA_EXE_PATH;
+    const baseTemplatePath = process.env.BERNADINA_TEMPLATE_PATH;
+
+    if (!exePath) return res.status(500).json({ message: 'BERNADINA_EXE_PATH não configurado no .env' });
+    if (!baseTemplatePath) return res.status(500).json({ message: 'BERNADINA_TEMPLATE_PATH não configurado no .env' });
+
+    const files = req.files || [];
+    if (!files.length) return res.status(400).json({ message: 'Envie pelo menos 1 .xlsx no campo "files".' });
+
+    const jobId = `jb_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+    const jobBase = path.join(BERNADINA_DIR, jobId);
+    const inputDir = path.join(jobBase, 'input');
+    const outputDir = path.join(jobBase, 'output');
+    const statusPath = path.join(jobBase, 'job.json');
+
+    fs.mkdirSync(inputDir, { recursive: true });
+    fs.mkdirSync(outputDir, { recursive: true });
+
+    // mover tmp -> input
+    for (const f of files) {
+      const safeName = path.basename(f.originalname || 'arquivo.xlsx').replace(/[^\w.\- ]+/g, '_');
+      fs.renameSync(f.path, path.join(inputDir, safeName));
+    }
+
+    // IMPORTANTE: você PASSA outputPath (não deixa o C# jogar em "XLSX prontos")
+    const outputPath = path.join(outputDir, `Agrupado-Bernadina-${jobId}.xlsm`);
+
+    // status inicial do job
+    const jobState = {
+      jobId,
+      status: 'processing',
+      progress: 10,
+      message: 'Iniciando...',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      downloadUrl: null,
+      logs: [{ ts: new Date().toISOString(), msg: `Arquivos recebidos: ${files.length}` }],
+    };
+    fs.writeFileSync(statusPath, JSON.stringify(jobState, null, 2), 'utf-8');
+
+    await auditLog(req, 'job_create_formatador_bernardina', 'ok', { jobId, files: files.length });
+
+    // responde IMEDIATO (JOB)
+    res.json({ jobId });
+
+    const appendLog = (msg) => {
+      const cur = JSON.parse(fs.readFileSync(statusPath, 'utf-8'));
+      cur.logs = cur.logs || [];
+      cur.logs.push({ ts: new Date().toISOString(), msg: String(msg).slice(0, 5000) });
+      cur.updatedAt = new Date().toISOString();
+      fs.writeFileSync(statusPath, JSON.stringify(cur, null, 2), 'utf-8');
+    };
+
+    const patch = (p) => {
+      const cur = JSON.parse(fs.readFileSync(statusPath, 'utf-8'));
+      const next = { ...cur, ...p, updatedAt: new Date().toISOString() };
+      fs.writeFileSync(statusPath, JSON.stringify(next, null, 2), 'utf-8');
+    };
+
+    try {
+      patch({ progress: 30, message: 'Executando formatador (C#)...' });
+
+      // A ORDEM DOS ARGS TEM QUE SER ESSA (igual Program.cs):
+      // args[0]=inputDir, args[1]=outputPath, args[2]=baseTemplatePath
+      const child = spawn(
+        exePath,
+        [inputDir, outputPath, baseTemplatePath],
+        {
+          windowsHide: true,
+          cwd: jobBase, // <<< CRUCIAL pro Program.cs (template em branco vai parar aqui)
+        }
+      );
+
+      child.stdout.on('data', (d) => appendLog(d.toString('utf8')));
+      child.stderr.on('data', (d) => appendLog('[stderr] ' + d.toString('utf8')));
+
+      child.on('close', async (code) => {
+        // O C# retorna 0 no sucesso. Pode retornar 2 em validações (filiais faltando etc.)
+        const outFiles = fs.existsSync(outputDir)
+          ? fs.readdirSync(outputDir).filter((f) => f.toLowerCase().endsWith('.xlsm'))
+          : [];
+
+        if (code === 0 && outFiles.length > 0) {
+          patch({
+            status: 'done',
+            progress: 100,
+            message: 'Concluído.',
+            downloadUrl: `/api/formatador-bernardina/jobs/${encodeURIComponent(jobId)}/download`,
+          });
+          appendLog('Concluído. Arquivo pronto.');
+        } else {
+          patch({
+            status: 'error',
+            progress: 100,
+            message: `Falha no processamento (exitCode=${code}). Veja os logs.`,
+          });
+
+          await auditLog(req, 'job_error_formatador_bernardina', 'error', { jobId, exitCode: code });
+        }
+      });
+    } catch (err) {
+      appendLog('Erro interno: ' + (err?.message || String(err)));
+      patch({ status: 'error', progress: 100, message: 'Erro interno ao executar o formatador.' });
+    }
+  }
+);
+app.get('/api/formatador-bernardina/jobs/:jobId', requireAuth, (req, res) => {
+  const statusPath = path.join(BERNADINA_DIR, req.params.jobId, 'job.json');
+  if (!fs.existsSync(statusPath)) return res.status(404).json({ message: 'Job não encontrado.' });
+  res.json(JSON.parse(fs.readFileSync(statusPath, 'utf-8')));
+});
+app.get('/api/formatador-bernardina/jobs/:jobId/download', requireAuth, async (req, res) => {
+  const outputDir = path.join(BERNADINA_DIR, req.params.jobId, 'output');
+  if (!fs.existsSync(outputDir)) return res.status(404).send('Arquivo não encontrado.');
+
+  const files = fs.readdirSync(outputDir).filter((f) => f.toLowerCase().endsWith('.xlsm'));
+  if (!files.length) return res.status(404).send('Arquivo não encontrado.');
+
+  await auditLog(req, 'job_download_formatador_bernardina', 'ok', { jobId: req.params.jobId });
+
+  res.download(path.join(outputDir, files[0]), files[0]);
+});
+
 app.post('/api/clear-errors', (req, res) => {
   try {
     const removedCount = deleteJobsByStatus([JOB_STATUS.ERROR]);
@@ -424,7 +638,6 @@ app.post('/api/clear-errors', (req, res) => {
     res.status(500).json({ error: "Erro ao limpar chaves com erro." });
   }
 });
-
 
 // endpoint de upload do arquivo com chaves
 // endpoint de upload do arquivo com chaves
@@ -520,22 +733,6 @@ module.exports = {
 // pasta de dados (para empresas SN e resumo de consumo)
 
 const SN_COMPANIES_FILE = path.join(DATA_DIR, 'sn_companies.json');
-
-// ---------- FUNÇÕES AUXILIARES (EMPRESAS SN) ----------
-
-function loadSnCompanies() {
-  if (!fs.existsSync(SN_COMPANIES_FILE)) return [];
-  try {
-    return JSON.parse(fs.readFileSync(SN_COMPANIES_FILE, 'utf-8'));
-  } catch (e) {
-    console.error('Erro ao ler sn_companies.json:', e);
-    return [];
-  }
-}
-
-function saveSnCompanies(companies) {
-  fs.writeFileSync(SN_COMPANIES_FILE, JSON.stringify(companies, null, 2));
-}
 
 // ---------- FUNÇÕES AUXILIARES (RESUMO DE CONSUMO SN) ----------
 
@@ -959,22 +1156,22 @@ app.get('/login', (req, res) => {
 // Exemplo:
 // app.get('/', async (req, res) => { ... })  ==>  app.get('/', requireAuthPage, async (req,res)=>{...})
 
-app.get('/sn', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+app.get('/sn', requireAuthPage, logPageView('page_view_sn'), (req, res) => {
   res.sendFile(path.join(publicDir, 'sn.html'));
+});
+
+app.get('/formatador-bernardina', requireAuthPage, (req, res) => {
+  res.sendFile(path.join(publicDir, 'formatador-bernardina.html'));
+});
+
+app.get('/formatador-bernadina', (req, res) => {
+  res.redirect('/formatador-bernardina');
 });
 
 // ---------- ROTAS API SN: EMPRESAS + RESUMO + RECIBO ----------
 
 // lista empresas cadastradas (Postgres)
-app.get('/api/sn/companies', async (req, res) => {
+app.get('/api/sn/companies', requireAuth, async (req, res) => {
   try {
     const companies = await dbGetSnCompanies();
     res.json(companies);
@@ -985,7 +1182,7 @@ app.get('/api/sn/companies', async (req, res) => {
 });
 
 // cadastra nova empresa SN
-app.post('/api/sn/companies', async (req, res) => {
+app.post('/api/sn/companies', requireAuth, requireCsrf, async (req, res) => {
   try {
     const { cnpj, razaoSocial } = req.body;
 
@@ -1014,7 +1211,7 @@ app.post('/api/sn/companies', async (req, res) => {
 });
 
 // resumo de consumo (inclui valor total em R$)
-app.get('/api/sn/summary', (req, res) => {
+app.get('/api/sn/summary', requireAuth, async (req, res) => {
   try {
     res.json(buildResumoResponse());
   } catch (err) {
@@ -1024,7 +1221,7 @@ app.get('/api/sn/summary', (req, res) => {
 });
 
 // download de recibo em PDF
-app.get('/api/sn/receipt/:id', async (req, res) => {
+app.get('/api/sn/receipt/:id', requireAuth, async (req, res) => {
   const id = Number(req.params.id);
   if (!id) return res.status(400).send('ID inválido');
 
@@ -1047,33 +1244,21 @@ app.get('/api/sn/receipt/:id', async (req, res) => {
 // --- Nova página: calculadora-icms-st ---
 
 app.get('/calculadora-icms-st', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'calculadora-icms-st.html'));
 });
 
 // --- Nova página: Envio MIT Apuração DCTFWeb ---
 app.get('/mit', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'mit.html'));
 });
 
 // ---------- ROTA: DOWNLOAD ZIP COM VÁRIOS RECIBOS ----------
 // ---------- ROTA: DOWNLOAD ZIP COM VÁRIOS RECIBOS ----------
-app.post('/api/sn/receipts/batch-download', async (req, res) => {
+app.post('/api/sn/receipts/batch-download', requireAuth, requireCsrf, async (req, res) => {
   try {
     const { receiptIds } = req.body;
 
@@ -1129,7 +1314,7 @@ app.post('/api/sn/receipts/batch-download', async (req, res) => {
 
 // ---------- ROTA: DECLARAÇÃO SN EM LOTE ----------
 
-app.post('/api/sn/declaration', async (req, res) => {
+app.post('/api/sn/declaration', requireAuth, requireCsrf, async (req, res) => {
   try {
     const {
       pa,                         // já no formato AAAAMM (montado no front a partir de mês/ano)
@@ -1145,7 +1330,7 @@ app.post('/api/sn/declaration', async (req, res) => {
       all = false,
     } = req.body;
 
-    const contratante = process.env.CONTRATANTE_CNPJ;
+    const contratante = process.env.CNPJ_CONTRATANTE;
 
     if (!pa) {
       return res
@@ -1305,7 +1490,7 @@ app.post('/api/sn/declaration', async (req, res) => {
 // ---------- ROTA: CONSULTA ÚLTIMO RECIBO POR PERÍODO ----------
 
 // ---------- ROTA: CONSULTA ÚLTIMA DECLARAÇÃO / RECIBO POR PA ----------
-app.post('/api/sn/consult-last', async (req, res) => {
+app.post('/api/sn/consult-last', requireAuth, requireCsrf, async (req, res) => {
   try {
     const {
       pa,                // AAAAMM, ex: 202511
@@ -1313,7 +1498,7 @@ app.post('/api/sn/consult-last', async (req, res) => {
       all = false,
     } = req.body;
 
-    const contratante = process.env.CONTRATANTE_CNPJ;
+    const contratante = process.env.CNPJ_CONTRATANTE;
 
     if (!pa) {
       return res
@@ -1648,14 +1833,8 @@ app.post('/api/sn/consult-last', async (req, res) => {
 // --- Nova página: separador-pdf-relatorio-de-ferias ---
 
 app.get('/separador-pdf-relatorio-de-ferias', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'separador-pdf-relatorio-de-ferias.html'));
 });
 // --- API da ferramenta separador-pdf-relatorio-de-ferias ---
@@ -1718,14 +1897,8 @@ app.post(
 // Página: Separador Holerites por Empresa
 
 app.get('/separador-holerites-por-empresa', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'separador-holerites-por-empresa.html'));
 });
 
@@ -1806,14 +1979,8 @@ app.post(
 );
 
 app.get('/separador-ferias-funcionario', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'separador-ferias-funcionario.html'));
 });
 
@@ -1933,17 +2100,9 @@ app.get(
   }
 );
 
-// perto das outras rotas de página
-
 app.get('/gerador-atas', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'gerador-atas.html'));
 });
 
@@ -2072,14 +2231,8 @@ app.get('/api/cnpj/:cnpj', async (req, res) => {
 // Página: Acertos Lotes Internets
 
 app.get('/acertos-lotes-internets', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'acertos-lotes-internets.html'));
 });
 
@@ -2130,27 +2283,14 @@ app.post('/api/acertos-lotes-internets/process',
 // Página: Acerto Lotes Toscan (separada do Acertos Lotes Internets)
 
 app.get('/acerto-lotes-toscan', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'acerto-lotes-toscan.html'));
 });
 
-
 app.get('/comprimir-pdf', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'comprimir-pdf.html'));
 });
 
@@ -2220,17 +2360,9 @@ app.post(
   }
 );
 
-// server.js
-
 app.get('/extrator-zip-rar', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'extrator-zip-rar.html'));
 });
 
@@ -2319,14 +2451,8 @@ app.use('/api/extrator-zip-rar', extratorZipRarRouter);
 // Página Excel → Abas em PDF
 
 app.get('/excel-abas-pdf', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'excel-abas-pdf.html'));
 });
 
@@ -2682,14 +2808,8 @@ app.get(
 
 // --- Nova página: ajuste-diario-gfbr ---
 app.get('/ajuste-diario-gfbr', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'ajuste-diario-gfbr.html'));
 });
 
@@ -2800,14 +2920,8 @@ app.get('/api/ajuste-diario-gfbr/download-backup/:fileName', (req, res) => {
 
 // --- Nova página: separador-csv-baixa-automatica ---
 app.get('/separador-csv-baixa-automatica', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'separador-csv-baixa-automatica.html'));
 });
 
@@ -2918,14 +3032,8 @@ app.get('/api/separador-csv-baixa-automatica/download/:jobId', (req, res) => {
 
 // --- Nova página: ajuste-diario-gfbr-c ---
 app.get('/ajuste-diario-gfbr-c', requireAuthPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    username: req.auth.user.username,
-    action: 'page_view_home',
-    status: 'ok',
-    meta: { path: '/' },
-    req,
-  });
+  await auditLog(req, 'page_view_home', 'ok', { path: '/', method: req.method });
+
   res.sendFile(path.join(publicDir, 'ajuste-diario-gfbr-c.html'));
 });
 
@@ -3051,583 +3159,272 @@ app.get('/api/ajuste-diario-gfbr-c/download/backup/:id', async (req, res) => {
 });
 
 // Páginas Admin (protegidas)
-app.get('/admin-usuarios', requireAuthPage, requireAdminPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    email: req.auth.user.email,
-    action: 'page_view_admin_users',
-    status: 'ok',
-    meta: { path: '/admin-usuarios' },
-    req,
-  });
+// admin (exigem ADMIN)
+app.get('/admin-usuarios', requireAuthPage, requireAdminPage, logPageView('page_view_admin_users'), (req, res) => {
   res.sendFile(path.join(publicDir, 'admin-usuarios.html'));
 });
 
-app.get('/logs', requireAuthPage, requireAdminPage, async (req, res) => {
-  await auditLog({
-    userId: req.auth.user.id,
-    email: req.auth.user.email,
-    action: 'page_view_logs',
-    status: 'ok',
-    meta: { path: '/logs' },
-    req,
-  });
+app.get('/logs', requireAuthPage, requireAdminPage, logPageView('page_view_audit_logs'), (req, res) => {
   res.sendFile(path.join(publicDir, 'logs.html'));
 });
 
 // API AUTH
-app.post('/api/auth/login', loginLimiter, express.json(), async (req, res) => {
-  const { email, password } = req.body || {};
-  const e = normalizeEmail(email);
+app.post('/api/auth/login', loginLimiter, async (req, res) => {
+  const emailRaw = String(req.body?.email || '').trim().toLowerCase();
+  const password = String(req.body?.password || '');
+
+  if (!emailRaw || !emailRaw.includes('@') || password.length < 1) {
+    await auditLog(req, 'login_failed', 'error', { reason: 'invalid_payload' });
+    return res.status(400).json({ error: 'Credenciais inválidas' });
+  }
 
   try {
-    if (!isValidEmail(e)) {
-      await auditLog({ action: 'login_failed', status: 'error', meta: { email: e, reason: 'invalid_email' }, req });
-      return res.status(400).json({ error: 'E-mail inválido' });
-    }
-
-    const r = await pool.query(
-      `SELECT id, email, name, password_hash, role, is_active
-         FROM auth_users
-        WHERE email = $1
-        LIMIT 1`,
-      [e]
+    const { rows } = await pool.query(
+      `SELECT id, name, email, password_hash, role, is_active, created_at, last_login_at
+       FROM auth_users
+       WHERE email=$1
+       LIMIT 1`,
+      [emailRaw]
     );
 
-    if (!r.rows.length) {
-      await auditLog({ action: 'login_failed', status: 'error', meta: { email: e, reason: 'not_found' }, req });
+    const user = rows[0];
+    if (!user || !user.is_active) {
+      await auditLog(req, 'login_failed', 'error', { reason: 'user_not_found_or_inactive', email: emailRaw });
       return res.status(401).json({ error: 'E-mail ou senha inválidos' });
     }
 
-    const user = r.rows[0];
-    if (!user.is_active) {
-      await auditLog({ action: 'login_failed', status: 'error', meta: { email: e, reason: 'inactive' }, req });
-      return res.status(401).json({ error: 'Usuário inativo' });
-    }
-
-    const ok = await bcrypt.compare(password || '', user.password_hash || '');
+    const ok = await bcrypt.compare(password, user.password_hash);
     if (!ok) {
-      await auditLog({ action: 'login_failed', status: 'error', meta: { email: e, reason: 'bad_password' }, req });
+      await auditLog(req, 'login_failed', 'error', { reason: 'wrong_password', email: emailRaw });
       return res.status(401).json({ error: 'E-mail ou senha inválidos' });
     }
 
     // cria sessão
-    const token = randomToken(32);
-    const tokenHash = sha256(token);
-    const csrfToken = randomToken(24);
-    const maxAgeSeconds = Number(process.env.AUTH_SESSION_MAX_AGE_SECONDS || 60 * 60 * 24 * 7);
+    const sessionToken = newTokenHex(32);
+    const tokenHash = sha256Hex(sessionToken);
+    const csrfToken = newTokenHex(16);
+
+    const maxAgeSeconds = Number(process.env.AUTH_SESSION_MAX_AGE_SECONDS || 604800); // 7 dias
+    const expiresAt = new Date(Date.now() + maxAgeSeconds * 1000);
 
     await pool.query(
       `INSERT INTO auth_sessions (user_id, token_hash, csrf_token, expires_at)
-       VALUES ($1, $2, $3, NOW() + ($4 || ' seconds')::interval)`,
-      [user.id, tokenHash, csrfToken, String(maxAgeSeconds)]
+       VALUES ($1,$2,$3,$4)`,
+      [user.id, tokenHash, csrfToken, expiresAt]
     );
 
-    setSessionCookie(res, token);
+    await pool.query(`UPDATE auth_users SET last_login_at=NOW() WHERE id=$1`, [user.id]).catch(() => { });
 
-    await auditLog({
-      userId: user.id,
-      email: user.email,
-      action: 'login_success',
-      status: 'ok',
-      meta: { role: user.role },
-      req,
-    });
+    const cookieOpts = [
+      `wl_session=${encodeURIComponent(sessionToken)}`,
+      'Path=/',
+      'HttpOnly',
+      'SameSite=Lax',
+      `Max-Age=${maxAgeSeconds}`,
+    ];
+    if (process.env.NODE_ENV === 'production') cookieOpts.push('Secure');
 
-    return res.json({ ok: true });
+    res.setHeader('Set-Cookie', cookieOpts.join('; '));
+
+    const safeUser = sanitizeUserRow(user);
+    await auditLog(req, 'login_success', 'ok', {}, safeUser);
+    return res.json({ user: safeUser, csrfToken });
   } catch (e) {
-    console.error('login erro:', e.message || e);
-    return res.status(500).json({ error: 'Erro interno no login' });
+    console.error('login error:', e.message);
+    await auditLog(req, 'login_failed', 'error', { reason: 'server_error' });
+    return res.status(500).json({ error: 'Erro interno' });
   }
 });
 
-app.get('/api/auth/me', async (req, res) => {
-  try {
-    const ctx = await getSessionUser(req);
-    if (!ctx) return res.status(401).json({ error: 'Não autenticado' });
-    return res.json({ user: ctx.user, csrfToken: ctx.csrfToken });
-  } catch (e) {
-    return res.status(401).json({ error: 'Não autenticado' });
-  }
+app.get('/api/auth/me', requireAuth, async (req, res) => {
+  return res.json({ user: req.user, csrfToken: req.csrfToken });
 });
 
-app.post('/api/auth/logout', async (req, res) => {
+app.post('/api/auth/logout', requireAuth, requireCsrf, async (req, res) => {
   try {
-    const ctx = await getSessionUser(req);
-    if (ctx?.sessionId) {
-      await pool.query('DELETE FROM auth_sessions WHERE id = $1', [ctx.sessionId]);
-      await auditLog({
-        userId: ctx.user.id,
-        email: ctx.user.email,
-        action: 'logout',
-        status: 'ok',
-        meta: null,
-        req,
-      });
-    }
-  } catch (_) { }
-  clearSessionCookie(res);
-  res.json({ ok: true });
+    await pool.query(`DELETE FROM auth_sessions WHERE token_hash=$1`, [req.sessionTokenHash]);
+  } catch (e) {
+    console.error('logout error:', e.message);
+  }
+
+  res.setHeader('Set-Cookie', 'wl_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
+  await auditLog(req, 'logout', 'ok', {});
+  return res.json({ ok: true });
 });
 
 // API ADMIN: usuários
 app.get('/api/admin/users', requireAuth, requireRole('ADMIN'), async (req, res) => {
+  const { rows } = await pool.query(
+    `SELECT id, name, email, role, is_active, created_at, last_login_at
+     FROM auth_users
+     ORDER BY id DESC`
+  );
+  res.json(rows.map(sanitizeUserRow));
+}); app.post('/api/admin/users', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
+  const name = String(req.body?.name || '').trim();
+  const email = String(req.body?.email || '').trim().toLowerCase();
+  const password = String(req.body?.password || '');
+  const role = normalizeRole(req.body?.role);
+
+  if (!name || !isValidEmail(email) || password.length < 6) {
+    return res.status(400).json({ error: 'Dados inválidos (nome, e-mail, senha>=6)' });
+  }
+
+  const hash = await bcrypt.hash(password, 10);
+
   try {
-    const r = await pool.query(
-      `SELECT id, name, email, role, is_active, created_at
-         FROM auth_users
-        ORDER BY email ASC`
+    const { rows } = await pool.query(
+      `INSERT INTO auth_users (name, email, password_hash, role, is_active)
+       VALUES ($1,$2,$3,$4,true)
+       RETURNING id, name, email, role, is_active, created_at, last_login_at`,
+      [name, email, hash, role]
     );
-    return res.json({ ok: true, users: r.rows });
+
+    await auditLog(req, 'user_create', 'ok', { target_email: email, target_user_id: rows[0]?.id });
+    return res.json({ user: sanitizeUserRow(rows[0]) });
   } catch (e) {
+    if (String(e.message || '').includes('unique')) {
+      return res.status(409).json({ error: 'E-mail já existe' });
+    }
     console.error(e);
-    return res.status(500).json({ error: 'Erro ao listar usuários' });
+    await auditLog(req, 'user_create', 'error', { target_email: email, reason: 'server_error' });
+    return res.status(500).json({ error: 'Erro interno' });
   }
 });
 
-app.post(
-  '/api/admin/users',
-  requireAuth,
-  requireRole('ADMIN'),
-  requireCsrf,
-  express.json(),
-  async (req, res) => {
-    try {
-      const name = (req.body?.name || '').toString().trim();
-      const email = normalizeEmail(req.body?.email);
-      const password = (req.body?.password || '').toString();
-      const role = normalizeRole(req.body?.role || 'USER');
-      const isActive = req.body?.is_active === false ? false : true;
+app.patch('/api/admin/users/:id', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID inválido' });
 
-      if (!name || name.length < 2) return res.status(400).json({ error: 'Nome inválido' });
-      if (!isValidEmail(email)) return res.status(400).json({ error: 'E-mail inválido' });
-      if (!password || password.length < 6) return res.status(400).json({ error: 'Senha inválida (mínimo 6)' });
-
-      const hash = await bcrypt.hash(password, 12);
-
-      const r = await pool.query(
-        `INSERT INTO auth_users (name, email, password_hash, role, is_active)
-         VALUES ($1,$2,$3,$4,$5)
-         RETURNING id, name, email, role, is_active, created_at`,
-        [name, email, hash, role, isActive]
-      );
-
-      await auditLog({
-        userId: req.auth.user.id,
-        email: req.auth.user.email,
-        action: 'user_create',
-        status: 'ok',
-        meta: { created_user_id: r.rows[0].id, created_email: email },
-        req,
-      });
-
-      return res.json({ ok: true, user: r.rows[0] });
-    } catch (e) {
-      if (String(e?.code) === '23505') return res.status(409).json({ error: 'E-mail já existe' });
-      console.error(e);
-      return res.status(500).json({ error: 'Erro ao criar usuário' });
-    }
+  // bloqueia desativar a si mesmo (recomendado)
+  if (req.body?.is_active === false && req.user?.id === id) {
+    return res.status(400).json({ error: 'Você não pode desativar seu próprio usuário' });
   }
-);
 
-app.patch(
-  '/api/admin/users/:id',
-  requireAuth,
-  requireRole('ADMIN'),
-  requireCsrf,
-  express.json(),
-  async (req, res) => {
-    try {
-      const id = Number(req.params.id);
-      if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID inválido' });
+  const name = String(req.body?.name || '').trim();
+  const email = String(req.body?.email || '').trim().toLowerCase();
+  const role = normalizeRole(req.body?.role);
+  const isActive = req.body?.is_active;
 
-      const name = req.body?.name != null ? String(req.body.name).trim() : null;
-      const email = req.body?.email != null ? normalizeEmail(req.body.email) : null;
-      const role = req.body?.role != null ? normalizeRole(req.body.role) : null;
-      const isActive = req.body?.is_active != null ? !!req.body.is_active : null;
-
-      if (name !== null && name.length < 2) return res.status(400).json({ error: 'Nome inválido' });
-      if (email !== null && !isValidEmail(email)) return res.status(400).json({ error: 'E-mail inválido' });
-
-      // evita se trancar fora
-      if (req.auth.user.id === id && isActive === false) {
-        return res.status(400).json({ error: 'Você não pode desativar seu próprio usuário' });
-      }
-
-      const fields = [];
-      const params = [];
-      let i = 1;
-
-      if (name !== null) { fields.push(`name = $${i++}`); params.push(name); }
-      if (email !== null) { fields.push(`email = $${i++}`); params.push(email); }
-      if (role !== null) { fields.push(`role = $${i++}`); params.push(role); }
-      if (isActive !== null) { fields.push(`is_active = $${i++}`); params.push(isActive); }
-
-      if (!fields.length) return res.status(400).json({ error: 'Nada para atualizar' });
-
-      params.push(id);
-      const r = await pool.query(
-        `UPDATE auth_users
-            SET ${fields.join(', ')}
-          WHERE id = $${i}
-        RETURNING id, name, email, role, is_active, created_at`,
-        params
-      );
-
-      if (!r.rows.length) return res.status(404).json({ error: 'Usuário não encontrado' });
-
-      await auditLog({
-        userId: req.auth.user.id,
-        email: req.auth.user.email,
-        action: 'user_update',
-        status: 'ok',
-        meta: { target_user_id: id, fields: fields.map(f => f.split('=')[0].trim()) },
-        req,
-      });
-
-      return res.json({ ok: true, user: r.rows[0] });
-    } catch (e) {
-      if (String(e?.code) === '23505') return res.status(409).json({ error: 'E-mail já existe' });
-      console.error(e);
-      return res.status(500).json({ error: 'Erro ao atualizar usuário' });
-    }
+  if (!name || !isValidEmail(email) || (isActive !== undefined && typeof isActive !== 'boolean')) {
+    return res.status(400).json({ error: 'Dados inválidos' });
   }
-);
 
-app.patch(
-  '/api/admin/users/:id/password',
-  requireAuth,
-  requireRole('ADMIN'),
-  requireCsrf,
-  express.json(),
-  async (req, res) => {
-    try {
-      const id = Number(req.params.id);
-      const password = (req.body?.password || '').toString();
+  const { rows } = await pool.query(
+    `UPDATE auth_users
+     SET name=$1, email=$2, role=$3, is_active=COALESCE($4,is_active)
+     WHERE id=$5
+     RETURNING id, name, email, role, is_active, created_at, last_login_at`,
+    [name, email, role, isActive ?? null, id]
+  );
 
-      if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID inválido' });
-      if (!password || password.length < 6) return res.status(400).json({ error: 'Senha inválida (mínimo 6)' });
+  if (!rows[0]) return res.status(404).json({ error: 'Usuário não encontrado' });
 
-      const hash = await bcrypt.hash(password, 12);
+  await auditLog(req, 'user_update', 'ok', { target_user_id: id, target_email: email });
+  res.json({ user: sanitizeUserRow(rows[0]) });
+});
 
-      const r = await pool.query(`UPDATE auth_users SET password_hash = $1 WHERE id = $2 RETURNING id`, [hash, id]);
-      if (!r.rows.length) return res.status(404).json({ error: 'Usuário não encontrado' });
+app.patch('/api/admin/users/:id/password', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
+  const id = Number(req.params.id);
+  const password = String(req.body?.password || '');
+  if (!Number.isFinite(id) || password.length < 6) return res.status(400).json({ error: 'Dados inválidos' });
 
-      // segurança: encerra sessões do usuário após reset de senha
-      await pool.query(`DELETE FROM auth_sessions WHERE user_id = $1`, [id]);
+  const hash = await bcrypt.hash(password, 10);
 
-      await auditLog({
-        userId: req.auth.user.id,
-        email: req.auth.user.email,
-        action: 'user_password_reset',
-        status: 'ok',
-        meta: { target_user_id: id },
-        req,
-      });
+  await pool.query(`UPDATE auth_users SET password_hash=$1 WHERE id=$2`, [hash, id]);
+  // apaga sessões do usuário
+  await pool.query(`DELETE FROM auth_sessions WHERE user_id=$1`, [id]).catch(() => { });
+  await auditLog(req, 'user_password_reset', 'ok', { target_user_id: id });
 
-      return res.json({ ok: true });
-    } catch (e) {
-      console.error(e);
-      return res.status(500).json({ error: 'Erro ao alterar senha' });
+  res.json({ ok: true });
+});
+
+app.delete('/api/admin/users/:id', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID inválido' });
+
+  // bloquear excluir o próprio usuário logado
+  if (req.user?.id === id) return res.status(400).json({ error: 'Você não pode excluir seu próprio usuário' });
+
+  await pool.query(`DELETE FROM auth_users WHERE id=$1`, [id]);
+  await auditLog(req, 'user_delete', 'ok', { target_user_id: id });
+  res.json({ ok: true });
+});
+
+app.post('/api/admin/users/import', requireAuth, requireRole('ADMIN'), requireCsrf, uploadAdminUsers.single('file'), async (req, res) => {
+  const usersText = String(req.body?.usersText || '').trim();
+  const fileBuf = req.file?.buffer;
+
+  let text = usersText;
+  if (!text && fileBuf) text = fileBuf.toString('utf-8');
+
+  if (!text) return res.status(400).json({ error: 'Envie um arquivo ou cole o texto para importação.' });
+
+  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  if (lines.length === 0) return res.status(400).json({ error: 'Arquivo/vazio.' });
+
+  // aceita header opcional
+  const startIdx = lines[0].toLowerCase().startsWith('nome;email;senha') ? 1 : 0;
+
+  const results = { total: 0, createdOrUpdated: 0, errors: [] };
+
+  for (let i = startIdx; i < lines.length; i++) {
+    results.total++;
+
+    const parts = lines[i].split(';');
+    const name = String(parts[0] || '').trim();
+    const email = String(parts[1] || '').trim().toLowerCase();
+    const pass = String(parts[2] || '');
+    const role = normalizeRole(parts[3] || 'USER');
+
+    if (!name || !isValidEmail(email) || pass.length < 6) {
+      results.errors.push({ line: i + 1, error: 'Linha inválida (nome/email/senha/role)', raw: lines[i] });
+      continue;
     }
+
+    const hash = await bcrypt.hash(pass, 10);
+
+    await pool.query(
+      `INSERT INTO auth_users (name, email, password_hash, role, is_active)
+       VALUES ($1,$2,$3,$4,true)
+       ON CONFLICT (email)
+       DO UPDATE SET
+         name=EXCLUDED.name,
+         password_hash=EXCLUDED.password_hash,
+         role=EXCLUDED.role,
+         is_active=true`,
+      [name, email, hash, role]
+    );
+
+    results.createdOrUpdated++;
   }
-);
 
-app.delete(
-  '/api/admin/users/:id',
-  requireAuth,
-  requireRole('ADMIN'),
-  requireCsrf,
-  async (req, res) => {
-    try {
-      const id = Number(req.params.id);
-      if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID inválido' });
+  await auditLog(req, 'users_import', results.errors.length ? 'error' : 'ok', { ...results });
+  res.json(results);
+});
 
-      if (req.auth.user.id === id) {
-        return res.status(400).json({ error: 'Você não pode excluir seu próprio usuário' });
-      }
-
-      await pool.query(`DELETE FROM auth_sessions WHERE user_id = $1`, [id]);
-
-      const r = await pool.query(`DELETE FROM auth_users WHERE id = $1 RETURNING id, email`, [id]);
-      if (!r.rows.length) return res.status(404).json({ error: 'Usuário não encontrado' });
-
-      await auditLog({
-        userId: req.auth.user.id,
-        email: req.auth.user.email,
-        action: 'user_delete',
-        status: 'ok',
-        meta: { deleted_user_id: id, deleted_email: r.rows[0].email },
-        req,
-      });
-
-      return res.json({ ok: true });
-    } catch (e) {
-      console.error(e);
-      return res.status(500).json({ error: 'Erro ao excluir usuário' });
-    }
-  }
-);
-
-// API ADMIN: importação (CSV/linhas) - formato: nome;email;senha;tipo_acesso
-app.post(
-  '/api/admin/users/import',
-  requireAuth,
-  requireRole('ADMIN'),
-  requireCsrf,
-  upload.single('file'),
-  async (req, res) => {
-    try {
-      const usersText = (req.body?.usersText || '').toString();
-      const fileBuf = req.file?.buffer;
-
-      const lines = [];
-      if (fileBuf && fileBuf.length) {
-        fileBuf
-          .toString('utf-8')
-          .split(/\r?\n/)
-          .forEach((l) => lines.push(l));
-      }
-      if (usersText) {
-        usersText.split(/\r?\n/).forEach((l) => lines.push(l));
-      }
-
-      // parse simples por ; (ou ,)
-      const parsed = [];
-      for (const rawLine of lines) {
-        const line = (rawLine || '').trim();
-        if (!line) continue;
-        if (line.startsWith('#')) continue;
-
-        const sep = line.includes(';') ? ';' : ',';
-        const parts = line.split(sep).map((p) => (p ?? '').trim());
-
-        // pula header comum
-        const head = parts.map((p) => p.toLowerCase());
-        if (head.includes('nome') && head.includes('email') && head.includes('senha')) continue;
-
-        const name = parts[0] || '';
-        const email = normalizeEmail(parts[1] || '');
-        const password = parts[2] || '';
-        const role = normalizeRole(parts[3] || 'USER');
-
-        if (!name || !email || !password) continue;
-        parsed.push({ name, email, password, role });
-      }
-
-      if (!parsed.length) return res.status(400).json({ error: 'Nenhum usuário válido para importar' });
-
-      let created = 0;
-      let updated = 0;
-      let skipped = 0;
-
-      for (const u of parsed) {
-        if (!isValidEmail(u.email)) {
-          skipped++;
-          continue;
-        }
-
-        const hash = await bcrypt.hash(u.password, 12);
-
-        // upsert por email
-        const r = await pool.query(
-          `INSERT INTO auth_users (name, email, password_hash, role, is_active)
-           VALUES ($1,$2,$3,$4,true)
-           ON CONFLICT (email)
-           DO UPDATE SET name = EXCLUDED.name,
-                         password_hash = EXCLUDED.password_hash,
-                         role = EXCLUDED.role,
-                         is_active = true
-           RETURNING (xmax = 0) AS inserted`,
-          [u.name, u.email, hash, u.role]
-        );
-
-        if (r.rows?.[0]?.inserted) created++;
-        else updated++;
-      }
-
-      await auditLog({
-        userId: req.auth.user.id,
-        email: req.auth.user.email,
-        action: 'users_import',
-        status: 'ok',
-        meta: { created, updated, skipped, total: parsed.length },
-        req,
-      });
-
-      return res.json({ ok: true, created, updated, skipped });
-    } catch (e) {
-      console.error(e);
-      await auditLog({
-        userId: req.auth.user.id,
-        email: req.auth.user.email,
-        action: 'users_import',
-        status: 'error',
-        meta: { error: e.message || String(e) },
-        req,
-      });
-      return res.status(500).json({ error: 'Erro ao importar usuários' });
-    }
-  }
-);
-
-// API ADMIN: importação (CSV/linhas) - formato: nome;email;senha;tipo_acesso
-app.post(
-  '/api/admin/users/import',
-  requireAuth,
-  requireRole('ADMIN'),
-  requireCsrf,
-  upload.single('file'),
-  async (req, res) => {
-    try {
-      const usersText = (req.body?.usersText || '').toString();
-      const fileBuf = req.file?.buffer;
-
-      const lines = [];
-      if (fileBuf && fileBuf.length) {
-        fileBuf
-          .toString('utf-8')
-          .split(/\r?\n/)
-          .forEach((l) => lines.push(l));
-      }
-      if (usersText) {
-        usersText.split(/\r?\n/).forEach((l) => lines.push(l));
-      }
-
-      // parse simples por ; (ou ,)
-      const parsed = [];
-      for (const rawLine of lines) {
-        const line = (rawLine || '').trim();
-        if (!line) continue;
-        if (line.startsWith('#')) continue;
-
-        const sep = line.includes(';') ? ';' : ',';
-        const parts = line.split(sep).map((p) => (p ?? '').trim());
-
-        // pula header comum
-        const head = parts.map((p) => p.toLowerCase());
-        if (head.includes('nome') && head.includes('email') && head.includes('senha')) continue;
-
-        const name = parts[0] || '';
-        const email = normalizeEmail(parts[1] || '');
-        const password = parts[2] || '';
-        const role = normalizeRole(parts[3] || 'USER');
-
-        if (!name || !email || !password) continue;
-        parsed.push({ name, email, password, role });
-      }
-
-      if (!parsed.length) return res.status(400).json({ error: 'Nenhum usuário válido para importar' });
-
-      let created = 0;
-      let updated = 0;
-      let skipped = 0;
-
-      for (const u of parsed) {
-        if (!isValidEmail(u.email)) {
-          skipped++;
-          continue;
-        }
-
-        const hash = await bcrypt.hash(u.password, 12);
-
-        // upsert por email
-        const r = await pool.query(
-          `INSERT INTO auth_users (name, email, password_hash, role, is_active)
-           VALUES ($1,$2,$3,$4,true)
-           ON CONFLICT (email)
-           DO UPDATE SET name = EXCLUDED.name,
-                         password_hash = EXCLUDED.password_hash,
-                         role = EXCLUDED.role,
-                         is_active = true
-           RETURNING (xmax = 0) AS inserted`,
-          [u.name, u.email, hash, u.role]
-        );
-
-        if (r.rows?.[0]?.inserted) created++;
-        else updated++;
-      }
-
-      await auditLog({
-        userId: req.auth.user.id,
-        email: req.auth.user.email,
-        action: 'users_import',
-        status: 'ok',
-        meta: { created, updated, skipped, total: parsed.length },
-        req,
-      });
-
-      return res.json({ ok: true, created, updated, skipped });
-    } catch (e) {
-      console.error(e);
-      await auditLog({
-        userId: req.auth.user.id,
-        email: req.auth.user.email,
-        action: 'users_import',
-        status: 'error',
-        meta: { error: e.message || String(e) },
-        req,
-      });
-      return res.status(500).json({ error: 'Erro ao importar usuários' });
-    }
-  }
-);
-
-function isValidName(name) {
-  const n = (name || '').toString().trim();
-  return n.length >= 2 && n.length <= 120;
-}
-
-function isValidPassword(pw) {
-  const p = (pw || '').toString();
-  return p.length >= 6 && p.length <= 200;
-}
-
-// API ADMIN: logs
 app.get('/api/admin/audit-logs', requireAuth, requireRole('ADMIN'), async (req, res) => {
-  try {
-    const { action, email, startDate, endDate } = req.query || {};
+  const action = String(req.query?.action || '').trim();
+  const username = String(req.query?.username || req.query?.email || '').trim().toLowerCase();
+  const startDate = String(req.query?.startDate || '').trim();
+  const endDate = String(req.query?.endDate || '').trim();
 
-    const where = [];
-    const params = [];
-    let i = 1;
+  const params = [];
+  const where = [];
 
-    if (action) {
-      where.push(`action ILIKE $${i++}`);
-      params.push(`%${action}%`);
-    }
-    if (email) {
-      where.push(`l.email ILIKE $${i++}`);
-      params.push(`%${String(email)}%`);
-    }
-    if (startDate) {
-      where.push(`created_at >= $${i++}`);
-      params.push(`${startDate} 00:00:00`);
-    }
-    if (endDate) {
-      where.push(`created_at <= $${i++}`);
-      params.push(`${endDate} 23:59:59`);
-    }
+  if (action) { params.push(`%${action}%`); where.push(`action ILIKE $${params.length}`); }
+  if (username) { params.push(`%${username}%`); where.push(`(email ILIKE $${params.length})`); }
+  if (startDate) { params.push(startDate); where.push(`created_at >= ($${params.length}::date)`); }
+  if (endDate) { params.push(endDate); where.push(`created_at < (($${params.length}::date) + INTERVAL '1 day')`); }
 
-    const sql =
-      `SELECT
-      l.created_at,
-      COALESCE(u.name, '-') AS name,
-      COALESCE(l.email, u.email, '-') AS email,
-      l.action,
-      l.status,
-      l.ip,
-      l.meta
-   FROM audit_logs l
-   LEFT JOIN auth_users u ON u.id = l.user_id` +
-      (where.length ? ` WHERE ${where.join(' AND ')}` : '') +
-      ` ORDER BY l.created_at DESC
-    LIMIT 500`;
+  const sql = `
+    SELECT id, created_at, user_id, email, action, status, ip, user_agent, meta
+    FROM audit_logs
+    ${where.length ? 'WHERE ' + where.join(' AND ') : ''}
+    ORDER BY created_at DESC
+    LIMIT 500
+  `;
+  const { rows } = await pool.query(sql, params);
 
-    const r = await pool.query(sql, params);
-    return res.json({ ok: true, logs: r.rows });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).json({ error: 'Erro ao consultar logs' });
-  }
+  res.json({ logs: rows });
 });

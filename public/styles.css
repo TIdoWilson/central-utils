@@ -1166,6 +1166,112 @@ body.nfe-body {
   background: #e5e7eb;
 }
 
+/* =========================================================
+   SN (Simples Nacional) — layout novo (lista de empresas)
+   ========================================================= */
+
+/* Seção "Empresas" */
+.sn-companies-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+
+/* Caixa que contém a lista de empresas */
+.sn-companies-list {
+  width: 100%;
+}
+
+/* Container das opções (lista) */
+.sn-companies-options {
+  border: 1px dashed #1f2937;
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 10px 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  max-height: 220px;        /* evita “estourar” o card */
+  overflow-y: auto;
+}
+
+/* Cada linha de empresa */
+.sn-company-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+
+  color: #111827;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+/* Hover suave no padrão do portal */
+.sn-company-option:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+/* Checkbox alinhado com o texto */
+.sn-company-option input[type="checkbox"] {
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  accent-color: #0f172a; /* combina com btn-primary */
+}
+
+/* Texto da empresa quebra linha bonitinho */
+.sn-company-option span {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Ações */
+.sn-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* Linha do botão de download (resultado) */
+.sn-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 10px 0 6px;
+}
+
+/* Status não “estoura” o layout */
+#snStatus,
+#snCompanyMessage {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Responsivo: no mobile, lista e botões ficam mais confortáveis */
+@media (max-width: 900px) {
+  .sn-companies-options {
+    max-height: 260px;
+  }
+
+  .sn-actions .btn {
+    width: 100%;
+  }
+}
+
 /* Opcional: ajuste visual do log da ferramenta de holerites */
 #holeritesLog {
   background: #f9fafb;
@@ -1719,4 +1825,77 @@ body.wl-page-dragover::after {
   margin-top: 8px;
   font-size: 13px;
   color: #6b7280;
+}
+
+/* Logs: UI mais amigável */
+.log-muted {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.log-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 13px;
+}
+
+.log-action {
+  font-weight: 600;
+}
+
+.log-chips {
+  margin-top: 4px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.log-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.log-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+.log-badge.ok {
+  background: rgba(46, 204, 113, 0.12);
+}
+
+.log-badge.error {
+  background: rgba(231, 76, 60, 0.12);
+}
+
+.log-badge.muted {
+  opacity: 0.7;
+}
+
+.log-details {
+  max-width: 520px;
+}
+
+.log-toggle {
+  cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+.log-json {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(0,0,0,0.04);
+  max-height: 220px;
+  overflow: auto;
+  white-space: pre;
 }

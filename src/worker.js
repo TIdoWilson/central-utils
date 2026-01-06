@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 function startServer() {
   server.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
+    console.log(`Servidor rodando em http://192.0.0.252:${PORT}`);
     console.log('Worker iniciado. Aguardando extensão Chrome...');
   });
 }
