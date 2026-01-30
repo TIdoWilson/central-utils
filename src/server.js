@@ -1,8 +1,10 @@
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 const express = require('express');
 const http = require('http');
 const multer = require('multer');
+const readline = require('readline');
 const { Server } = require('socket.io');
 const cors = require('cors'); // <<< NOVO
 require('dotenv').config();
@@ -19,6 +21,37 @@ const DATA_DIR = path.join(__dirname, '..', 'data');
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR);
 }
+
+//////////////// ENSINA PARA O SCRIPT QUE W:\ == \\192.0.0.251\ARQUIVOS
+function resolveWPath(p) {
+  const s = String(p || '');
+
+  // Se vier UNC, não mexe
+  if (s.startsWith('\\\\')) return s;
+
+  // Se começar com W:\ e existir W_UNC_ROOT, traduz
+  const root = process.env.W_UNC_ROOT;
+  if (/^[Ww]:\\/.test(s) && root) {
+    const cleanRoot = String(root).replace(/[\\\/]+$/, ''); // remove "\" no final
+    // remove "W:\" (3 chars) e cola no UNC
+    return cleanRoot + '\\' + s.slice(3);
+  }
+
+  return s;
+}
+
+// ===== Balancete — Conta Transitória (C#) =====
+const BALANCETE_DIR = path.join(DATA_DIR, 'balancete-transitorio');
+const BALANCETE_TMP_DIR = path.join(BALANCETE_DIR, '_tmp');
+
+fs.mkdirSync(BALANCETE_DIR, { recursive: true });
+fs.mkdirSync(BALANCETE_TMP_DIR, { recursive: true });
+
+// multer em disco (XLSX pode ser grande)
+const uploadBalancete = multer({
+  dest: BALANCETE_TMP_DIR,
+  limits: { fileSize: 50 * 1024 * 1024, files: 120 },
+});
 
 const BERNADINA_DIR = path.join(DATA_DIR, 'formatador-bernardina');
 const BERNADINA_TMP_DIR = path.join(BERNADINA_DIR, '_tmp');
@@ -123,6 +156,212 @@ const uploadAjusteDiarioGfbr = multer({
 const SEPARADOR_CSV_BASE_DIR = path.join(DATA_DIR, 'separador-csv-baixa-automatica');
 const SEPARADOR_CSV_UPLOAD_DIR = path.join(SEPARADOR_CSV_BASE_DIR, 'uploads');
 const SEPARADOR_CSV_OUTPUT_DIR = path.join(SEPARADOR_CSV_BASE_DIR, 'outputs');
+
+
+// ===== DIMOB (Automação) =====
+const DIMOB_DIR = path.join(DATA_DIR, 'dimob');
+const DIMOB_UPLOAD_DIR = path.join(DIMOB_DIR, '_tmp');
+const DIMOB_OUTPUT_DIR = path.join(DIMOB_DIR, 'outputs');
+
+fs.mkdirSync(DIMOB_DIR, { recursive: true });
+fs.mkdirSync(DIMOB_UPLOAD_DIR, { recursive: true });
+fs.mkdirSync(DIMOB_OUTPUT_DIR, { recursive: true });
+
+// Pasta da rede para DIMOB do ano anterior (padrão: W:\DECLARAÇÕES\DIMOB)
+const DIMOB_NETWORK_BASE_DIR = process.env.DIMOB_NETWORK_BASE_DIR || 'W:\\DECLARAÇÕES\\DIMOB';
+
+// fileId -> path (cache em memória, 1h)
+const dimobPreviousFileMap = new Map();
+function dimobStoreNetworkFile(filePath) {
+  const fileId = crypto.randomUUID();
+  dimobPreviousFileMap.set(fileId, { filePath, expiresAt: Date.now() + 60 * 60 * 1000 });
+  return fileId;
+}
+function dimobGetNetworkFile(fileId) {
+  const rec = dimobPreviousFileMap.get(fileId);
+  if (!rec) return null;
+  if (Date.now() > rec.expiresAt) {
+    dimobPreviousFileMap.delete(fileId);
+    return null;
+  }
+  return rec.filePath;
+}
+
+// Se já existir no seu server.js, mantenha o seu e só garanta que esta função exista:
+function dimobOnlyDigits(v = '') {
+  return String(v || '').replace(/\D/g, '');
+}
+
+function dimobParseBrNumber(v) {
+  if (v === null || v === undefined) return 0;
+  let s = String(v).trim();
+  if (!s) return 0;
+  // remove separador de milhar "." e troca "," por "."
+  s = s.replace(/\./g, '').replace(',', '.');
+  const n = Number(s);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function dimobParseDDMMYYYY(s) {
+  const raw = dimobOnlyDigits(s);
+  if (raw.length !== 8) return null;
+  const dd = raw.slice(0, 2);
+  const mm = raw.slice(2, 4);
+  const yyyy = raw.slice(4, 8);
+  const d = new Date(`${yyyy}-${mm}-${dd}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return null;
+  return { dd, mm, yyyy, date: d };
+}
+
+/**
+ * Lê 1 arquivo SPED 1x e retorna:
+ * - período via 0000 (parts[6]=DT_INI, parts[7]=DT_FIN)
+ * - F525: doc=parts[4], valor=parts[7]
+ * - F200: tipo=parts[2], nome=parts[4], doc=parts[7], data=parts[8], valorOper=parts[9], obs=parts[22]
+ * Se não existir F525/F200: retorna estruturas vazias (mês zerado).
+ */
+async function dimobParseSpedFileOnce(filePath) {
+  let text = '';
+  let encoding = 'utf8';
+  try {
+    text = fs.readFileSync(filePath, 'utf8');
+  } catch (e) {
+    encoding = 'latin1';
+    text = fs.readFileSync(filePath, 'latin1');
+  }
+
+  const lines = text.split(/\r?\n/);
+
+  let dtIni = '';
+  let dtFim = '';
+  let month = null;
+  let year = null;
+
+  // F525 agregado por doc
+  const aggF525 = new Map();
+  let f525Parsed = 0;
+  let f525Skipped = 0;
+  const sampleF525 = [];
+
+  // F200: lista de operações
+  const opsF200 = [];
+  let f200Parsed = 0;
+  let f200Skipped = 0;
+  const sampleF200 = [];
+
+  for (const lineRaw of lines) {
+    const line = (lineRaw || '').trim();
+    if (!line || line[0] !== '|') continue;
+
+    if (line.startsWith('|0000|')) {
+      const parts = line.split('|');
+      // parts[6]=DT_INI, parts[7]=DT_FIN (conforme seu exemplo real)
+      dtIni = parts[6] || '';
+      dtFim = parts[7] || '';
+
+      const p = dimobParseDDMMYYYY(dtIni) || dimobParseDDMMYYYY(dtFim);
+      if (p) {
+        month = Number(p.mm);
+        year = Number(p.yyyy);
+      }
+      continue;
+    }
+
+    if (line.startsWith('|F525|')) {
+      const parts = line.split('|');
+      // doc campo 04 -> parts[4], valor campo 07 -> parts[7]
+      const doc = dimobOnlyDigits(parts[4] || '');
+      const valor = dimobParseBrNumber(parts[7]);
+
+      if ((doc.length === 11 || doc.length === 14) && valor > 0) {
+        aggF525.set(doc, (aggF525.get(doc) || 0) + valor);
+        f525Parsed++;
+        if (sampleF525.length < 5) sampleF525.push(line);
+      } else {
+        f525Skipped++;
+      }
+      continue;
+    }
+
+    if (line.startsWith('|F200|')) {
+      const parts = line.split('|');
+
+      // conforme seus campos:
+      // campo 2 = tipo pagamento => parts[2]
+      // campo 7 = CPF/CNPJ => parts[7]
+      // campo 8 = data venda => parts[8]
+      // campo 9 = valor venda => parts[9]
+      // campo 22 = observações => parts[22]
+      const tipoPagto = String(parts[2] || '').trim();
+      const nomeSped = String(parts[4] || '').trim(); // ajuda a preencher (se vier)
+      const doc = dimobOnlyDigits(parts[7] || '');
+      const dtVenda = String(parts[8] || '').trim();
+      const valorOper = dimobParseBrNumber(parts[9]);
+      const obs = String(parts[22] || '').trim();
+
+      if ((doc.length === 11 || doc.length === 14) && valorOper > 0) {
+        const pagoAuto = (tipoPagto === '01' || tipoPagto === '03');
+        opsF200.push({
+          participantDoc: doc,
+          nomeSped,
+          tipoPagamento: tipoPagto,
+          valorOperacao: valorOper,
+          // se 01/03 preenche igual; senão null para usuário preencher
+          valorPagoNoAno: pagoAuto ? valorOper : null,
+          precisaPreencherPago: !pagoAuto,
+          dataContrato: dtVenda,
+          observacoes: obs
+        });
+        f200Parsed++;
+        if (sampleF200.length < 5) sampleF200.push(line);
+      } else {
+        f200Skipped++;
+      }
+      continue;
+    }
+  }
+
+  return {
+    encoding,
+    dtIni,
+    dtFim,
+    month,
+    year,
+
+    aggF525,       // Map()
+    f525Parsed,
+    f525Skipped,
+    sampleF525,
+
+    opsF200,       // Array
+    f200Parsed,
+    f200Skipped,
+    sampleF200
+  };
+}
+
+// ===== MULTER DIMOB (TMP local para evitar EPERM) =====
+// Se você já tem uploadDimob, SUBSTITUA por este (principalmente o destino).
+const DIMOB_TMP_DIR =
+  process.env.DIMOB_TMP_DIR || path.join(os.tmpdir(), 'central-utils-dimob', '_tmp');
+
+fs.mkdirSync(DIMOB_TMP_DIR, { recursive: true });
+
+const uploadDimob = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => cb(null, DIMOB_TMP_DIR),
+    filename: (req, file, cb) => {
+      // mantém extensão se existir
+      const ext = path.extname(file.originalname || '');
+      const safe = `${Date.now()}_${Math.random().toString(16).slice(2)}${ext}`;
+      cb(null, safe);
+    }
+  }),
+  limits: {
+    files: 50,
+    fileSize: 50 * 1024 * 1024 // 50MB (ajuste se quiser)
+  }
+});
 
 app.set('trust proxy', false);
 
@@ -404,9 +643,18 @@ app.get('/', requireAuthPage, logPageView('page_view_home'), (req, res) => {
   res.sendFile(path.join(publicDir, 'home.html'));
 });
 
+app.get('/balancete-transitorio', requireAuthPage, logPageView('page_view_balancete_transitorio'), (req, res) => {
+  res.sendFile(path.join(publicDir, 'balancete-transitorio.html'));
+});
+
 app.get('/nfe', requireAuthPage, logPageView('page_view_nfe'), (req, res) => {
   res.sendFile(path.join(publicDir, 'nfe.html'));
 });
+
+app.get('/dimob', requireAuthPage, logPageView('page_view_dimob'), (req, res) => {
+  res.sendFile(path.join(publicDir, 'dimob.html'));
+});
+
 
 // para conseguir ler JSON do body (usado em /api/mark-done e SN)
 app.use(express.json());
@@ -909,6 +1157,26 @@ async function dbCreateSnCompany(cnpj, razaoSocial) {
     cnpj: r.cnpj,
     razaoSocial: r.razao_social,
   };
+}
+
+// ---------- FUNÇÕES AUXILIARES: BALANCETES WERBRAN ----------
+
+function zipDirectory(srcDir, zipPath) {
+  return new Promise((resolve, reject) => {
+    const output = fs.createWriteStream(zipPath);
+    const archive = archiver('zip', { zlib: { level: 9 } });
+
+    output.on('close', () => resolve());
+    archive.on('error', (err) => reject(err));
+
+    archive.pipe(output);
+    archive.directory(srcDir, false);
+    archive.finalize();
+  });
+}
+
+function safeName(name) {
+  return path.basename(name || 'arquivo.xlsx').replace(/[^\w.\- ]+/g, '_');
 }
 
 // ---------- FUNÇÕES AUXILIARES: RECIBOS (Postgres) ----------
@@ -1487,7 +1755,147 @@ app.post('/api/sn/declaration', requireAuth, requireCsrf, async (req, res) => {
   }
 });
 
-// ---------- ROTA: CONSULTA ÚLTIMO RECIBO POR PERÍODO ----------
+// ---------- ROTA: WERBRAN BALANCETE ----------
+
+app.post(
+  '/api/balancete-transitorio/jobs',
+  requireAuth,
+  requireCsrf, // CSRF obrigatório em mutações:contentReference[oaicite:4]{index=4}
+  uploadBalancete.array('files'),
+  async (req, res) => {
+    const exePath = process.env.BALANCETE_EXE_PATH;
+    if (!exePath) return res.status(500).json({ message: 'BALANCETE_EXE_PATH não configurado no .env' });
+
+    const files = req.files || [];
+    if (!files.length) return res.status(400).json({ message: 'Envie pelo menos 1 .xlsx no campo "files".' });
+
+    const jobId = crypto.randomUUID ? crypto.randomUUID() : crypto.randomBytes(16).toString('hex');
+    const jobBase = path.join(BALANCETE_DIR, jobId);
+
+    // Mantém a lógica do C# intacta:
+    // - entrada: ./balancetes
+    // - saída:   ./PDFs Prontos
+    // ambos relativos ao cwd:contentReference[oaicite:5]{index=5}
+    const inputDir = path.join(jobBase, 'balancetes');
+    const pdfDir = path.join(jobBase, 'PDFs Prontos');
+
+    fs.mkdirSync(inputDir, { recursive: true });
+    fs.mkdirSync(pdfDir, { recursive: true });
+
+    // move tmp -> input
+    for (const f of files) {
+      const n = safeName(f.originalname);
+      if (!n.toLowerCase().endsWith('.xlsx')) {
+        try { fs.unlinkSync(f.path); } catch (_) {}
+        continue;
+      }
+      fs.renameSync(f.path, path.join(inputDir, n));
+    }
+
+    const statusPath = path.join(jobBase, 'job.json');
+
+    const jobState = {
+      jobId,
+      status: 'processing',
+      progress: 10,
+      message: 'Arquivos recebidos. Iniciando...',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      downloadUrl: null,
+      logs: [{ ts: new Date().toISOString(), msg: `Arquivos recebidos: ${files.length}` }],
+    };
+
+    fs.writeFileSync(statusPath, JSON.stringify(jobState, null, 2), 'utf-8');
+
+    await auditLog(req, 'job_create_balancete_transitorio', 'ok', { jobId, files: files.length });
+
+    // responde imediato (JOB)
+    res.json({ jobId });
+
+    const patch = (partial) => {
+      let cur = jobState;
+      try {
+        cur = JSON.parse(fs.readFileSync(statusPath, 'utf-8'));
+      } catch (_) {}
+
+      const next = {
+        ...cur,
+        ...partial,
+        updatedAt: new Date().toISOString(),
+      };
+
+      // limita logs (evita arquivo gigante)
+      if (Array.isArray(next.logs) && next.logs.length > 1500) {
+        next.logs = next.logs.slice(-1500);
+      }
+
+      fs.writeFileSync(statusPath, JSON.stringify(next, null, 2), 'utf-8');
+    };
+
+    const appendLog = (msg) => {
+      const clean = (msg || '').toString().replace(/\r/g, '').trimEnd();
+      if (!clean) return;
+
+      let cur;
+      try { cur = JSON.parse(fs.readFileSync(statusPath, 'utf-8')); } catch (_) { cur = jobState; }
+
+      cur.logs = Array.isArray(cur.logs) ? cur.logs : [];
+      cur.logs.push({ ts: new Date().toISOString(), msg: clean });
+      cur.updatedAt = new Date().toISOString();
+
+      if (cur.logs.length > 1500) cur.logs = cur.logs.slice(-1500);
+      fs.writeFileSync(statusPath, JSON.stringify(cur, null, 2), 'utf-8');
+    };
+
+    try {
+      patch({ progress: 25, message: 'Executando processamento (C#)...' });
+
+      const child = spawn(exePath, [], {
+        windowsHide: true,
+        cwd: jobBase,
+      });
+
+      child.stdout.on('data', (d) => appendLog(d.toString('utf8')));
+      child.stderr.on('data', (d) => appendLog('[stderr] ' + d.toString('utf8')));
+
+      child.on('close', async (code) => {
+        try {
+          patch({ progress: 80, message: 'Finalizando e compactando PDFs...' });
+
+          const pdfs = fs.existsSync(pdfDir)
+            ? fs.readdirSync(pdfDir).filter((f) => f.toLowerCase().endsWith('.pdf'))
+            : [];
+
+          if (code === 0 && pdfs.length > 0) {
+            const zipPath = path.join(jobBase, `PDFs-Prontos-${jobId}.zip`);
+            await zipDirectory(pdfDir, zipPath);
+
+            patch({
+              status: 'done',
+              progress: 100,
+              message: 'Concluído.',
+              downloadUrl: `/api/balancete-transitorio/jobs/${encodeURIComponent(jobId)}/download`,
+            });
+
+            appendLog(`Concluído. PDFs: ${pdfs.length}`);
+          } else {
+            patch({
+              status: 'error',
+              progress: 100,
+              message: `Falha no processamento (exitCode=${code}). PDFs encontrados: ${pdfs.length}`,
+            });
+          }
+        } catch (err) {
+          appendLog('Erro ao finalizar: ' + String(err));
+          patch({ status: 'error', progress: 100, message: 'Erro ao finalizar/compactar PDFs.' });
+        }
+      });
+    } catch (err) {
+      appendLog('Erro ao iniciar o processo: ' + String(err));
+      patch({ status: 'error', progress: 100, message: 'Erro interno ao executar o C#.' });
+    }
+  }
+);
 
 // ---------- ROTA: CONSULTA ÚLTIMA DECLARAÇÃO / RECIBO POR PA ----------
 app.post('/api/sn/consult-last', requireAuth, requireCsrf, async (req, res) => {
@@ -2051,7 +2459,20 @@ app.post(
   }
 );
 
-// Download do ZIP de férias por funcionário
+// Download de balancete WERBRAN
+app.get('/api/balancete-transitorio/jobs/:jobId', requireAuth, (req, res) => {
+  const statusPath = path.join(BALANCETE_DIR, req.params.jobId, 'job.json');
+  if (!fs.existsSync(statusPath)) return res.status(404).json({ message: 'Job não encontrado.' });
+  res.json(JSON.parse(fs.readFileSync(statusPath, 'utf-8')));
+});
+
+app.get('/api/balancete-transitorio/jobs/:jobId/download', requireAuth, (req, res) => {
+  const jobBase = path.join(BALANCETE_DIR, req.params.jobId);
+  const zipPath = path.join(jobBase, `PDFs-Prontos-${req.params.jobId}.zip`);
+  if (!fs.existsSync(zipPath)) return res.status(404).send('Arquivo não encontrado.');
+  res.download(zipPath, path.basename(zipPath));
+});
+
 // Download do ZIP de férias por funcionário
 app.get(
   '/api/separador-ferias-funcionario/download/:zipName',
@@ -3427,4 +3848,923 @@ app.get('/api/admin/audit-logs', requireAuth, requireRole('ADMIN'), async (req, 
   const { rows } = await pool.query(sql, params);
 
   res.json({ logs: rows });
+});
+
+// Página: Simulador Carnê-Leão (IRPF)
+app.get('/irpf-carne-leao', requireAuthPage, (req, res) => {
+  res.sendFile(path.join(publicDir, 'irpf-carne-leao.html'));
+});
+
+function toNumber(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function round2(n) {
+  return Math.round((Number(n || 0) + Number.EPSILON) * 100) / 100;
+}
+
+/**
+ * Regras (valores extraídos das suas tabelas/PDFs):
+ * 2024 (mai/23–jan/24) e 2024 (fev/24–abr/25): tabela 1.pdf
+ * 2025 (mai/25–dez/25): tabela 2.pdf
+ * 2026: tabela 3.pdf + explicacao calculo 2026.pdf (redutor adicional 5k–7.350)
+ */
+const IRPF_RULES = [
+  {
+    id: '2024_mai23_jan24',
+    periodoLabel: '2024 (tabela mai/2023–jan/2024)',
+    deducaoDependente: 189.59,
+    descontoSimplificadoLimite: 528.00,
+    faixas: [
+      { ate: 2112.00, aliquota: 0.0, parcela: 0.0 },
+      { ate: 2826.65, aliquota: 0.075, parcela: 158.40 },
+      { ate: 3751.05, aliquota: 0.15, parcela: 370.40 },
+      { ate: 4664.68, aliquota: 0.225, parcela: 651.73 },
+      { ate: Infinity, aliquota: 0.275, parcela: 884.96 }
+    ]
+  },
+  {
+    id: '2024_fev24_abr25',
+    periodoLabel: '2024/2025 (tabela fev/2024–abr/2025)',
+    deducaoDependente: 189.59,
+    descontoSimplificadoLimite: 564.80,
+    faixas: [
+      { ate: 2259.20, aliquota: 0.0, parcela: 0.0 },
+      { ate: 2826.65, aliquota: 0.075, parcela: 169.44 },
+      { ate: 3751.05, aliquota: 0.15, parcela: 381.44 },
+      { ate: 4664.68, aliquota: 0.225, parcela: 662.77 },
+      { ate: Infinity, aliquota: 0.275, parcela: 896.00 }
+    ]
+  },
+  {
+    id: '2025_mai25_dez25',
+    periodoLabel: '2025 (tabela a partir de 05/2025)',
+    deducaoDependente: 189.59,
+    descontoSimplificadoLimite: 607.20,
+    faixas: [
+      { ate: 2428.80, aliquota: 0.0, parcela: 0.0 },
+      { ate: 2826.65, aliquota: 0.075, parcela: 182.16 },
+      { ate: 3751.05, aliquota: 0.15, parcela: 394.16 },
+      { ate: 4664.68, aliquota: 0.225, parcela: 675.49 },
+      { ate: Infinity, aliquota: 0.275, parcela: 908.73 }
+    ]
+  },
+  {
+    id: '2026_jan_dez',
+    periodoLabel: '2026 (isenção até 5k + redutor 5k–7.350)',
+    deducaoDependente: 189.59,
+    descontoSimplificadoLimite: 607.20, // ajuste se seu PDF 2026 indicar outro limite
+    faixas: [
+      { ate: 2428.80, aliquota: 0.0, parcela: 0.0 },
+      { ate: 2826.65, aliquota: 0.075, parcela: 182.16 },
+      { ate: 3751.05, aliquota: 0.15, parcela: 394.16 },
+      { ate: 4664.68, aliquota: 0.225, parcela: 675.49 },
+      { ate: Infinity, aliquota: 0.275, parcela: 908.73 }
+    ],
+    regra2026: {
+      isentoAte: 5000.0,
+      faixaRedutorAte: 7350.0,
+      // redutor = 978,62 - (0,133145 * rendimentos)
+      redutorConst: 978.62,
+      redutorCoef: 0.133145
+    }
+  }
+];
+
+function calcFaixa(base, regra) {
+  const faixa = regra.faixas.find((f) => base <= f.ate) || regra.faixas[regra.faixas.length - 1];
+  const imposto = Math.max(0, base * faixa.aliquota - faixa.parcela);
+  return {
+    aliquota: faixa.aliquota,
+    parcelaADeduzir: faixa.parcela,
+    imposto: round2(imposto)
+  };
+}
+
+function calcDeducao(rendimentos, despesas, dependentes, regra) {
+  const descontoSimplificado = Math.min(rendimentos * 0.2, regra.descontoSimplificadoLimite);
+  const deducaoDependentes = dependentes * regra.deducaoDependente;
+  const deducaoLegal = despesas + deducaoDependentes;
+
+  const usarSimplificado = descontoSimplificado >= deducaoLegal;
+  const deducaoUsada = usarSimplificado ? descontoSimplificado : deducaoLegal;
+
+  return {
+    tipo: usarSimplificado ? 'Desconto simplificado' : 'Deduções legais',
+    valor: round2(deducaoUsada),
+    descontoSimplificado: round2(descontoSimplificado),
+    deducaoLegal: round2(deducaoLegal),
+    deducaoDependentes: round2(deducaoDependentes)
+  };
+}
+
+function applyRegra2026IfNeeded(rendimentosReferencia, impostoCalculado, regra) {
+  if (!regra.regra2026) {
+    return { impostoFinal: impostoCalculado, meta2026: null };
+  }
+
+  const r = regra.regra2026;
+  if (rendimentosReferencia <= r.isentoAte) {
+    return {
+      impostoFinal: 0,
+      meta2026: { redutorAplicado: round2(impostoCalculado), rendimentosReferencia: round2(rendimentosReferencia) }
+    };
+  }
+
+  if (rendimentosReferencia <= r.faixaRedutorAte) {
+    const redutor = Math.max(0, r.redutorConst - (r.redutorCoef * rendimentosReferencia));
+    const impostoFinal = Math.max(0, impostoCalculado - redutor);
+    return {
+      impostoFinal: round2(impostoFinal),
+      meta2026: {
+        redutorAplicado: round2(impostoCalculado - impostoFinal),
+        rendimentosReferencia: round2(rendimentosReferencia)
+      }
+    };
+  }
+
+  return { impostoFinal: impostoCalculado, meta2026: { redutorAplicado: 0, rendimentosReferencia: round2(rendimentosReferencia) } };
+}
+
+app.get('/api/irpf/simular', requireAuth, (req, res) => {
+  const rendimentos = toNumber(req.query.rendimentos);
+  const despesas = toNumber(req.query.despesas);
+  const dependentes = Math.max(0, Math.floor(toNumber(req.query.dependentes)));
+  const impostoPago = toNumber(req.query.impostoPago);
+  const saldoAnterior = toNumber(req.query.saldoAnterior);
+
+  if (!Number.isFinite(rendimentos) || rendimentos <= 0) {
+    return res.status(400).json({ error: 'rendimentos inválido' });
+  }
+
+  const items = IRPF_RULES.map((regra) => {
+    const deducao = calcDeducao(rendimentos, despesas, dependentes, regra);
+    const baseCalculo = Math.max(0, rendimentos - deducao.valor);
+
+    const faixa = calcFaixa(baseCalculo, regra);
+    const impostoAntes2026 = faixa.imposto;
+
+    const applied = applyRegra2026IfNeeded(rendimentos, impostoAntes2026, regra);
+    const impostoDevido = applied.impostoFinal;
+
+    const saldoPagarCompensar = round2(impostoDevido - impostoPago - saldoAnterior);
+
+    return {
+      regraId: regra.id,
+      periodoLabel: regra.periodoLabel,
+      deducao,
+      baseCalculo: round2(baseCalculo),
+      faixa: {
+        aliquota: faixa.aliquota,
+        parcelaADeduzir: round2(faixa.parcelaADeduzir)
+      },
+      impostoDevido: round2(impostoDevido),
+      impostoPago: round2(impostoPago),
+      saldoAnterior: round2(saldoAnterior),
+      saldoPagarCompensar,
+      meta2026: applied.meta2026
+    };
+  });
+
+  res.json({ items });
+});
+
+// ----------------------------------------------------------------------
+// DIMOB – Automação (SPED F525 -> tabela de faturamento mensal)
+// ----------------------------------------------------------------------
+
+function dimobParsePreviousDimobLocatarios(decText, declaranteCnpj14 = '') {
+  const set = new Set();
+  const cnpjDeclarante = String(declaranteCnpj14 || '').replace(/\D+/g, '').padStart(14, '0');
+
+  // Heurística robusta:
+  // - captura tokens de 11 ou 14 dígitos (CPF/CNPJ) separados por não-dígitos
+  // - evita capturar datas (8 dígitos), valores etc.
+  const re = /(^|\D)(\d{11}|\d{14})(?=\D|$)/g;
+
+  const text = String(decText || '');
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const raw = m[2];
+    const only = raw.replace(/\D+/g, '');
+    if (!(only.length === 11 || only.length === 14)) continue;
+
+    const doc14 = only.padStart(14, '0');
+
+    // remove o CNPJ do declarante (normalmente aparece no cabeçalho do DEC)
+    if (cnpjDeclarante && doc14 === cnpjDeclarante) continue;
+
+    set.add(doc14);
+  }
+
+  return set;
+}
+
+// Busca DIMOB do ano anterior na pasta da rede:
+// W:\DECLARAÇÕES\DIMOB\{ano_anterior}\1-GRAVADAS
+app.get('/api/dimob/previous-file', requireAuth, async (req, res) => {
+  try {
+    const cnpj = String(req.query?.cnpj || '').replace(/\D+/g, '');
+    const year = Number(req.query?.year);
+    const debug = String(req.query?.debug || '') === '1';
+
+    if (!/^\d{14}$/.test(cnpj)) return res.status(400).json({ found: false, error: 'CNPJ inválido (14 dígitos).' });
+    if (!Number.isFinite(year) || year < 2015) return res.status(400).json({ found: false, error: 'Ano inválido.' });
+
+    const prevYear = year - 1;
+
+    const baseDirRaw = process.env.DIMOB_NETWORK_BASE_DIR || 'W:\\DECLARAÇÕES\\DIMOB';
+    const baseDir = resolveWPath(baseDirRaw); // ✅ aqui traduz W:\ para UNC quando necessário
+    const dir = path.join(baseDir, String(prevYear), '1-GRAVADAS');
+
+
+    const dbg = {
+      yearReceived: year,
+      prevYear,
+      baseDir,
+      dir,
+      existsDir: fs.existsSync(dir),
+    };
+
+    if (!dbg.existsDir) {
+      return res.json({
+        found: false,
+        error: `Diretório não encontrado: ${dir}`,
+        ...(debug ? { debug: dbg } : {})
+      });
+    }
+
+    const all = fs.readdirSync(dir).filter(f => /\.dec$/i.test(f));
+    dbg.filesFound = all.length;
+
+    // padrão exato: CNPJ-DIMOB-ANO-ORIGI.DEC ou ...-RETIF.DEC
+    const re = new RegExp(`^${cnpj}-DIMOB-${prevYear}-(ORIGI|RETIF)\\.DEC$`, 'i');
+
+    const candidates = all
+      .filter(f => re.test(f))
+      .map(f => {
+        const full = path.join(dir, f);
+        const st = fs.statSync(full);
+        const up = f.toUpperCase();
+        const kind = up.endsWith('-RETIF.DEC') ? 'RETIF' : (up.endsWith('-ORIGI.DEC') ? 'ORIGI' : 'OUTRO');
+        return { f, full, kind, mtimeMs: st.mtimeMs, size: st.size };
+      });
+
+    dbg.candidates = candidates.map(x => ({ f: x.f, kind: x.kind, mtimeMs: x.mtimeMs }));
+
+    if (!candidates.length) {
+      return res.json({
+        found: false,
+        error: `Nenhum arquivo encontrado com padrão ${cnpj}-DIMOB-${prevYear}-ORIGI.DEC/RETIF.DEC em ${dir}`,
+        ...(debug ? { debug: dbg } : {})
+      });
+    }
+
+    // Preferir RETIF, senão ORIGI, sempre o mais recente
+    const retifs = candidates.filter(x => x.kind === 'RETIF').sort((a, b) => b.mtimeMs - a.mtimeMs);
+    const origis = candidates.filter(x => x.kind === 'ORIGI').sort((a, b) => b.mtimeMs - a.mtimeMs);
+    const chosen = retifs[0] || origis[0] || candidates.sort((a, b) => b.mtimeMs - a.mtimeMs)[0];
+
+    dbg.chosen = { f: chosen.f, kind: chosen.kind, mtimeMs: chosen.mtimeMs, size: chosen.size };
+
+    const fileId = dimobStoreNetworkFile(chosen.full);
+
+    return res.json({
+      found: true,
+      fileId,
+      fileName: chosen.f,
+      mtime: new Date(chosen.mtimeMs).toISOString(),
+      size: chosen.size,
+      ...(debug ? { debug: dbg } : {})
+    });
+  } catch (e) {
+    return res.status(500).json({ found: false, error: 'Erro ao buscar arquivo na rede.', details: e.message });
+  }
+});
+
+app.post(
+  '/api/dimob/parse-sped',
+  requireAuth,
+  requireCsrf,
+  uploadDimob.fields([
+    { name: 'spedFiles', maxCount: 40 },
+    { name: 'previousDimob', maxCount: 1 },
+  ]),
+  async (req, res) => {
+    const cleanupPaths = [];
+    try {
+      const cnpj = dimobOnlyDigits(req.body?.cnpj);
+      const yearSelected = Number(req.body?.year);
+      const debugEnabled = String(req.query?.debug || '') === '1';
+
+      if (!/^\d{14}$/.test(cnpj)) return res.status(400).json({ error: 'CNPJ inválido (14 dígitos).' });
+      if (!Number.isFinite(yearSelected) || yearSelected < 2015) return res.status(400).json({ error: 'Ano inválido.' });
+
+      const spedFiles = (req.files?.spedFiles || []);
+      if (!spedFiles.length) return res.status(400).json({ error: 'Anexe pelo menos um SPED.' });
+
+      const warnings = [];
+      const debug = debugEnabled ? { filesParsed: [], monthChosen: [] } : null;
+
+      // stats + cleanup
+      const spedStats = spedFiles.map(f => {
+        cleanupPaths.push(f.path);
+        const st = fs.statSync(f.path);
+        return { ...f, mtimeMs: st.mtimeMs, size: st.size };
+      });
+
+      // 1) Parse 1x cada arquivo, sempre aceitando se houver 0000 válido do ano
+      const parsedPerFile = [];
+      for (const f of spedStats) {
+        const r = await dimobParseSpedFileOnce(f.path);
+
+        if (debugEnabled) {
+          debug.filesParsed.push({
+            originalname: f.originalname,
+            size: f.size,
+            mtimeMs: f.mtimeMs,
+            encoding: r.encoding,
+            dtIni: r.dtIni,
+            dtFim: r.dtFim,
+            detectedMonth: r.month,
+            detectedYear: r.year,
+            f525Parsed: r.f525Parsed,
+            f525Skipped: r.f525Skipped,
+            f200Parsed: r.f200Parsed,
+            f200Skipped: r.f200Skipped,
+            sampleF525: r.sampleF525,
+            sampleF200: r.sampleF200
+          });
+        }
+
+        // 0000 é obrigatório para classificar mês/ano
+        if (!r.year || !r.month) {
+          warnings.push(`Arquivo ${f.originalname}: não identifiquei DT_INI/DT_FIN no 0000 (campos 06/07). Ignorado.`);
+          continue;
+        }
+
+        if (r.year !== yearSelected) {
+          warnings.push(`Arquivo ${f.originalname}: ano do 0000 = ${r.year} (esperado ${yearSelected}). Ignorado.`);
+          continue;
+        }
+
+        // Se não tiver F525 nem F200, não ignora: apenas mês zerado
+        if (r.f525Parsed === 0 && r.f200Parsed === 0) {
+          warnings.push(`Arquivo ${f.originalname}: não possui F525 nem F200. Mês ${String(r.month).padStart(2, '0')} ficará zerado.`);
+        }
+
+        parsedPerFile.push({
+          file: f,
+          month: r.month,
+          year: r.year,
+          dtIni: r.dtIni,
+          dtFim: r.dtFim,
+          aggF525: r.aggF525,
+          opsF200: r.opsF200,
+          f525Parsed: r.f525Parsed,
+          f525Skipped: r.f525Skipped,
+          f200Parsed: r.f200Parsed,
+          f200Skipped: r.f200Skipped
+        });
+      }
+
+      // Se nenhum arquivo tiver 0000 válido no ano, aí sim erro
+      if (!parsedPerFile.length) {
+        return res.status(400).json({
+          error: 'Nenhum SPED válido foi processado (verifique o registro 0000 e o ano selecionado).',
+          warnings,
+          ...(debugEnabled ? { debug } : {})
+        });
+      }
+
+      // 2) Selecionar 1 arquivo por mês: mais novo (mtimeMs)
+      const byMonth = new Map();
+      for (const item of parsedPerFile) {
+        const m = Number(item.month);
+        if (!Number.isFinite(m) || m < 1 || m > 12) continue;
+        const key = String(m);
+        const cur = byMonth.get(key);
+        if (!cur || item.file.mtimeMs > cur.file.mtimeMs) byMonth.set(key, item);
+      }
+
+      const monthsSorted = Array.from(byMonth.keys()).map(Number).sort((a, b) => a - b);
+
+      if (debugEnabled) {
+        debug.monthChosen = monthsSorted.map(m => {
+          const it = byMonth.get(String(m));
+          return {
+            month: m,
+            originalname: it?.file?.originalname,
+            mtimeMs: it?.file?.mtimeMs,
+            dtIni: it?.dtIni,
+            dtFim: it?.dtFim,
+            f525Parsed: it?.f525Parsed || 0,
+            f200Parsed: it?.f200Parsed || 0,
+            docsF525: it?.aggF525?.size || 0,
+            opsF200: it?.opsF200?.length || 0
+          };
+        });
+      }
+
+      // 3) Montar faturamento (F525): doc -> month -> sum
+      const finalF525 = new Map(); // doc -> Map(month -> value)
+      const firstMonthByDoc = new Map(); // doc -> firstMonthDetected (1..12)
+
+      let parsedF525Lines = 0;
+      let skippedF525Lines = 0;
+
+      // 4) Montar atividade imobiliária (F200): lista consolidada (apenas dos arquivos escolhidos por mês)
+      const atividadeImobiliaria = [];
+      let parsedF200Lines = 0;
+      let skippedF200Lines = 0;
+
+      for (const m of monthsSorted) {
+        const it = byMonth.get(String(m));
+        if (!it) continue;
+
+        parsedF525Lines += Number(it?.f525Parsed || 0);
+        skippedF525Lines += Number(it?.f525Skipped || 0);
+
+        parsedF200Lines += Number(it?.f200Parsed || 0);
+        skippedF200Lines += Number(it?.f200Skipped || 0);
+
+
+        // F525
+        for (const [doc, sum] of it.aggF525.entries()) {
+          if (!finalF525.has(doc)) finalF525.set(doc, new Map());
+          finalF525.get(doc).set(String(m), sum);
+
+          if (sum > 0 && !firstMonthByDoc.has(doc)) firstMonthByDoc.set(doc, m);
+        }
+
+        // F200
+        for (const op of (it.opsF200 || [])) {
+          // também marcamos o mês detectado (útil para debug/UI)
+          atividadeImobiliaria.push({ ...op, mesDetectado: m });
+        }
+      }
+
+      // DIMOB anterior: upload (.DEC) OU fileId da rede (mantém como você já tem)
+      let previousSet = null;
+
+      const previousFileId = String(req.body?.previousFileId || '').trim();
+      const prevUpload = (req.files?.previousDimob || [])[0];
+
+      if (prevUpload?.path) {
+        cleanupPaths.push(prevUpload.path);
+        let txt = '';
+        try { txt = fs.readFileSync(prevUpload.path, 'utf-8'); }
+        catch { txt = fs.readFileSync(prevUpload.path, 'latin1'); }
+        previousSet = dimobParsePreviousDimobLocatarios(txt);
+      } else if (previousFileId) {
+        const p = dimobGetNetworkFile(previousFileId);
+        if (p && fs.existsSync(p)) {
+          let txt = '';
+          try { txt = fs.readFileSync(p, 'utf-8'); }
+          catch { txt = fs.readFileSync(p, 'latin1'); }
+          previousSet = dimobParsePreviousDimobLocatarios(txt);
+        }
+      }
+
+      // Payload faturamento (UI)
+      const byParticipant = [];
+      const totalsByMonth = {};
+      let grandTotal = 0;
+
+      const docs = Array.from(finalF525.keys()).sort();
+      for (const doc of docs) {
+        const monthMap = finalF525.get(doc);
+        const monthsObj = {};
+        let total = 0;
+
+        for (let mm = 1; mm <= 12; mm++) {
+          const key = String(mm);
+          const v = Number(monthMap?.get(key) || 0);
+          monthsObj[key] = v;
+          totalsByMonth[key] = Number(totalsByMonth[key] || 0) + v;
+          total += v;
+        }
+
+        grandTotal += total;
+        byParticipant.push({ participantDoc: doc, months: monthsObj, total });
+      }
+
+      // Novos locatários: doc que está no SPED (F525) e não está na DIMOB anterior
+      const newParticipants = [];
+      if (previousSet) {
+        for (const doc of docs) {
+          if (previousSet.has(doc)) continue;
+
+          const monthMap = finalF525.get(doc);
+
+          // acha o primeiro mês em que esse doc tem valor > 0
+          let firstMonth = null;
+          for (let mm = 1; mm <= 12; mm++) {
+            const v = Number(monthMap?.get(String(mm)) || 0);
+            if (v > 0) { firstMonth = mm; break; }
+          }
+
+          const obs = firstMonth
+            ? `Primeira ocorrência no SPED: ${String(firstMonth).padStart(2, '0')}/${yearSelected}`
+            : '';
+
+          newParticipants.push({
+            participantDoc: doc,
+            firstMonthDetected: firstMonth,
+            observacao: obs
+          });
+        }
+      }
+
+
+      await auditLog(req, 'dimob_parse_sped', 'ok', {
+        cnpj,
+        year: yearSelected,
+        spedFiles: spedFiles.length,
+        monthsUsed: monthsSorted,
+        parsedF525Lines,
+        skippedF525Lines,
+        parsedF200Lines,
+        skippedF200Lines,
+        warningsCount: warnings.length,
+        usedPrevious: Boolean(previousSet)
+      });
+
+      return res.json({
+        cnpj,
+        year: yearSelected,
+        warnings,
+
+        // F525 / Faturamento
+        parsedLines: parsedF525Lines,
+        skippedLines: skippedF525Lines,
+        byParticipant,
+        totalsByMonth,
+        grandTotal,
+        newParticipants,
+
+        // F200 / Atividade Imobiliária
+        atividadeImobiliaria,
+        parsedF200Lines,
+        skippedF200Lines,
+
+        ...(debugEnabled ? { debug } : {})
+      });
+    } catch (e) {
+      console.error('dimob parse-sped error:', e);
+      await auditLog(req, 'dimob_parse_sped', 'error', { error: e?.message || String(e) });
+      return res.status(500).json({ error: 'Erro ao processar SPED.' });
+    } finally {
+      for (const p of cleanupPaths) {
+        try { fs.unlinkSync(p); } catch { }
+      }
+    }
+  }
+);
+
+// ============================
+// DIMOB - GERAR ARQUIVO NOVO
+// ============================
+
+const DIMOB_PUBLIC_JS_DIR = path.join(__dirname, '..', 'public', 'js');
+const DIMOB_LAYOUT_PATH = process.env.DIMOB_LAYOUT_PATH || path.join(DIMOB_PUBLIC_JS_DIR, 'layout dimob.json');
+const DIMOB_MUNICIPIOS_PATH = process.env.DIMOB_MUNICIPIOS_PATH || path.join(DIMOB_PUBLIC_JS_DIR, 'municipios DIMOB.json');
+
+let __dimobLayoutCache = null;
+let __dimobMunicipiosCache = null;
+let __dimobMunicipioMap = null;
+
+function dimobLoadLayout() {
+  if (__dimobLayoutCache) return __dimobLayoutCache;
+  const raw = fs.readFileSync(DIMOB_LAYOUT_PATH, 'utf-8');
+  __dimobLayoutCache = JSON.parse(raw);
+  return __dimobLayoutCache;
+}
+
+function dimobNormalizeText(s) {
+  return String(s || '')
+    .trim()
+    .toUpperCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+function dimobLoadMunicipios() {
+  if (__dimobMunicipioMap) return __dimobMunicipioMap;
+  const raw = fs.readFileSync(DIMOB_MUNICIPIOS_PATH, 'utf-8');
+  __dimobMunicipiosCache = JSON.parse(raw);
+
+  const map = new Map();
+  for (const it of __dimobMunicipiosCache) {
+    const uf = dimobNormalizeText(it.MUNI_UF_SG);
+    const nm = dimobNormalizeText(it.MUNI_NM);
+    const key = `${uf}|${nm}`;
+    map.set(key, String(it.MUNI_CD));
+  }
+  __dimobMunicipioMap = map;
+  return map;
+}
+
+function dimobGetMunicipioCode(uf, municipio) {
+  const map = dimobLoadMunicipios();
+  const key = `${dimobNormalizeText(uf)}|${dimobNormalizeText(municipio)}`;
+  return map.get(key) || null;
+}
+
+// start/end são 1-based inclusive
+function dimobSetSlice(line, start, end, value, padChar = ' ', align = 'left') {
+  const len = (end - start + 1);
+  let v = String(value ?? '');
+
+  if (v.length > len) v = v.slice(0, len);
+
+  if (align === 'right') v = v.padStart(len, padChar);
+  else v = v.padEnd(len, padChar);
+
+  const a = line.slice(0, start - 1);
+  const b = line.slice(end);
+  return a + v + b;
+}
+
+function dimobFormatMoneyFixed(value, len) {
+  const n = Number(value || 0);
+  const cents = Math.round(n * 100);
+  return String(cents).padStart(len, '0');
+}
+
+// Extrai doc do locatário do R02 via heurística segura:
+// pega o ÚLTIMO bloco de 14 dígitos antes do padrão contrato+datas.
+function dimobExtractLocatarioFromR02(line) {
+  const m = /(\d{6})(\d{8})(\d{8})/.exec(line);
+  const idxContrato = m ? m.index : -1;
+  const head = idxContrato >= 0 ? line.slice(0, idxContrato) : line;
+
+  const all14 = [...head.matchAll(/\d{14}/g)];
+  if (!all14.length) return { doc14: null, nameStart: null, nameEnd: null, contratoIndex: idxContrato };
+
+  const last = all14[all14.length - 1];
+  const doc14 = last[0];
+  const nameStart = last.index + 14;
+  const nameEnd = idxContrato >= 0 ? idxContrato : null;
+
+  return { doc14, nameStart, nameEnd, contratoIndex: idxContrato };
+}
+
+// Atualiza aluguel/comissão no R02 usando layout JSON (parte dos valores bate com o DEC real)
+function dimobApplyF525ToR02(line, monthsObj) {
+  const layout = dimobLoadLayout();
+  const fields = layout?.records?.R02?.fields || [];
+
+  // helper: pega pos de um campo
+  const pos = (key) => fields.find(f => f.key === key);
+
+  let total = 0;
+  for (let mm = 1; mm <= 12; mm++) {
+    const k = String(mm).padStart(2, '0');
+    const keyField = `valor_do_aluguel_${k}`;
+    const f = pos(keyField);
+    if (!f) continue;
+
+    const v = Number(monthsObj?.[String(mm)] || 0);
+    total += v;
+    const formatted = dimobFormatMoneyFixed(v, f.len);
+    line = dimobSetSlice(line, f.start, f.end, formatted, '0', 'right');
+  }
+
+  // total do aluguel
+  const ft = pos('valor_total_do_aluguel');
+  if (ft) {
+    const formattedTotal = dimobFormatMoneyFixed(total, ft.len);
+    line = dimobSetSlice(line, ft.start, ft.end, formattedTotal, '0', 'right');
+  }
+
+  // zera comissão (mensal + total)
+  for (let mm = 1; mm <= 12; mm++) {
+    const k = String(mm).padStart(2, '0');
+    const keyField = `valor_da_comissao_${k}`;
+    const f = pos(keyField);
+    if (!f) continue;
+    line = dimobSetSlice(line, f.start, f.end, ''.padStart(f.len, '0'), '0', 'right');
+  }
+  const fc = pos('valor_total_da_comissao');
+  if (fc) line = dimobSetSlice(line, fc.start, fc.end, ''.padStart(fc.len, '0'), '0', 'right');
+
+  return line;
+}
+
+// Atualiza "ano" nos registros (posição padrão 18-21 no DEC real)
+function dimobSetYearInLine(line, year) {
+  const y = String(year).padStart(4, '0');
+  // 18-21
+  return dimobSetSlice(line, 18, 21, y, '0', 'right');
+}
+
+// Atualiza cabeçalho: chars 13-16
+function dimobSetYearInHeader(headerLine, year) {
+  const y = String(year).padStart(4, '0');
+  return headerLine.slice(0, 12) + y + headerLine.slice(16);
+}
+
+// Atualiza R01 (modo seguro: usando template anterior e detectando trechos)
+async function dimobUpdateR01UsingCnpj(line, cnpj) {
+  // consulta sua API /api/cnpj/:cnpj via axios diretamente (mesma regra da rota)
+  let data = null;
+  try {
+    const r = await axios.get(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`);
+    data = r.data;
+  } catch {
+    return line; // se falhar, mantém o antigo
+  }
+
+  const razao = (data?.razao_social || '').toUpperCase();
+  const uf = (data?.uf || '').toUpperCase();
+  const municipio = (data?.municipio || '').toUpperCase();
+  const logradouro = (data?.logradouro || '').toUpperCase();
+  const numero = (data?.numero || '').toUpperCase();
+  const bairro = (data?.bairro || '').toUpperCase();
+
+  const endereco = [logradouro, numero ? `Nº ${numero}` : '', bairro ? `- ${bairro}` : '']
+    .filter(Boolean).join(' ').trim();
+
+  const cod = dimobGetMunicipioCode(uf, municipio);
+
+  // Mapeamento real do DEC (descoberto pelo modelo):
+  // 44-103 nome (60), 104-114 cpf (11), 115-234 endereço (120),
+  // 235-236 UF (2), 237-240 cod município (4), 241-260 nome município (20)
+  if (razao) line = dimobSetSlice(line, 44, 103, razao, ' ', 'left');
+  if (endereco) line = dimobSetSlice(line, 115, 234, endereco, ' ', 'left');
+
+  if (uf) line = dimobSetSlice(line, 235, 236, uf, ' ', 'left');
+  if (cod) line = dimobSetSlice(line, 237, 240, String(cod).padStart(4, '0'), '0', 'right');
+  if (municipio) line = dimobSetSlice(line, 241, 260, municipio, ' ', 'left');
+
+  return line;
+}
+
+// ============ ENDPOINT ============
+app.post('/api/dimob/generate-file', requireAuth, requireCsrf, async (req, res) => {
+  try {
+    const cnpj = String(req.body?.cnpj || '').replace(/\D/g, '');
+    const year = Number(req.body?.year);
+    const previousFileId = String(req.body?.previousFileId || '').trim();
+
+    if (!/^\d{14}$/.test(cnpj)) return res.status(400).json({ error: 'CNPJ inválido.' });
+    if (!Number.isFinite(year) || year < 2015) return res.status(400).json({ error: 'Ano inválido.' });
+    if (!previousFileId) return res.status(400).json({ error: 'previousFileId não informado.' });
+
+    const prevPath = dimobGetNetworkFile(previousFileId);
+    if (!prevPath || !fs.existsSync(prevPath)) {
+      return res.status(400).json({ error: 'Arquivo DIMOB anterior não encontrado no servidor.' });
+    }
+
+    // dados do SPED já processados (byParticipant)
+    const byParticipant = Array.isArray(req.body?.byParticipant) ? req.body.byParticipant : [];
+    const newLocatarios = Array.isArray(req.body?.newLocatarios) ? req.body.newLocatarios : [];
+
+    // monta mapa doc -> months
+    const spedMap = new Map();
+    for (const it of byParticipant) {
+      const doc = String(it.participantDoc || '').replace(/\D/g, '');
+      if (!doc) continue;
+      spedMap.set(doc, it.months || {});
+    }
+
+    // lê arquivo anterior
+    let raw = '';
+    try { raw = fs.readFileSync(prevPath, 'utf-8'); }
+    catch { raw = fs.readFileSync(prevPath, 'latin1'); }
+
+    const eol = raw.includes('\r\n') ? '\r\n' : '\n';
+    const lines = raw.split(/\r?\n/).filter(Boolean);
+
+    const header = lines[0] || '';
+    const newHeader = dimobSetYearInHeader(header, year);
+
+    const r01Old = lines.find(l => l.startsWith('R01'));
+    if (!r01Old) return res.status(400).json({ error: 'Arquivo anterior não possui registro R01.' });
+
+    let r01New = r01Old;
+    r01New = dimobSetYearInLine(r01New, year);
+
+    // declaração original + recibo zerado (22 = retificadora, 23-34 = recibo)
+    r01New = dimobSetSlice(r01New, 22, 22, '0', '0', 'right');
+    r01New = dimobSetSlice(r01New, 23, 34, '000000000000', '0', 'right');
+
+    // atualiza dados do declarante via BrasilAPI
+    r01New = await dimobUpdateR01UsingCnpj(r01New, cnpj);
+
+    // template R02 (para criar novos)
+    const r02Templates = lines.filter(l => l.startsWith('R02'));
+    const r02Template = r02Templates[0] || null;
+
+    // processa R02 antigos (somente os que existem no SPED)
+    const r02Out = [];
+    for (const line of r02Templates) {
+      const info = dimobExtractLocatarioFromR02(line);
+      const doc = info.doc14;
+      if (!doc) continue;
+      if (!spedMap.has(doc)) continue;
+
+      let ln = line;
+      ln = dimobSetYearInLine(ln, year);
+      ln = dimobApplyF525ToR02(ln, spedMap.get(doc));
+      r02Out.push(ln);
+    }
+
+    // inclui novos locatários
+    if (newLocatarios.length && !r02Template) {
+      return res.status(400).json({ error: 'Arquivo anterior não possui nenhum R02 para servir de template. Não consigo criar novos R02 automaticamente.' });
+    }
+
+    for (const n of newLocatarios) {
+      const doc = String(n.doc || n.participantDoc || '').replace(/\D/g, '');
+      const nome = String(n.nome || '').trim().toUpperCase();
+      const contrato = String(n.contrato || '').replace(/\D/g, '').padStart(6, '0').slice(0, 6);
+      const dtIni = String(n.dataInicio || '').replace(/\D/g, '').padStart(8, '0').slice(0, 8);
+
+      const cep = String(n.cep || '').replace(/\D/g, '').padStart(8, '0').slice(0, 8);
+      const endereco = String(n.endereco || '').trim().toUpperCase();
+      const municipio = String(n.municipio || '').trim().toUpperCase();
+      const uf = String(n.uf || '').trim().toUpperCase();
+
+      if (!doc || !nome || !contrato || !dtIni || !cep || !endereco || !municipio || !uf) {
+        return res.status(400).json({ error: `Novo locatário incompleto (${doc || '(sem doc)'}). Preencha todos os campos.` });
+      }
+
+      const codMun = dimobGetMunicipioCode(uf, municipio);
+      if (!codMun) return res.status(400).json({ error: `Código de município não encontrado para ${uf}/${municipio}. Verifique se o nome está idêntico ao JSON.` });
+
+      let ln = r02Template;
+      ln = dimobSetYearInLine(ln, year);
+
+      // troca DOC e NOME do locatário usando as posições detectadas
+      const info = dimobExtractLocatarioFromR02(ln);
+      if (!info.doc14 || info.nameStart == null || info.nameEnd == null || info.contratoIndex == null) {
+        return res.status(400).json({ error: 'Não consegui detectar as posições do locatário no R02 template.' });
+      }
+
+      ln = dimobSetSlice(ln, info.nameStart + 1 - 14, info.nameStart, doc, '0', 'right'); // doc tem 14
+      const nomeLen = info.nameEnd - info.nameStart;
+      ln = dimobSetSlice(ln, info.nameStart + 1, info.nameEnd, nome, ' ', 'left');
+
+      // contrato (6) + dtIni (8) + dtFim (8 = zeros)
+      ln = dimobSetSlice(ln, info.contratoIndex + 1, info.contratoIndex + 6, contrato, '0', 'right');
+      ln = dimobSetSlice(ln, info.contratoIndex + 7, info.contratoIndex + 14, dtIni, '0', 'right');
+      ln = dimobSetSlice(ln, info.contratoIndex + 15, info.contratoIndex + 22, '00000000', '0', 'right');
+
+      // Tail do R02 no modelo real:
+      // index 693..799: "00" + tipo(1) + endereco(60) + cep(8) + cod(4) + mun(20) + uf(2) + checksum(10)
+      const tailStart = 693;
+      const tail = ln.slice(tailStart - 1);
+      if (tail.length >= 107) {
+        const tipo = tail.slice(0, 3); // mantém prefixo (ex: "00U")
+        const checksum = tail.slice(-10);
+
+        const endereco60 = endereco.slice(0, 60).padEnd(60, ' ');
+        const cod4 = String(codMun).padStart(4, '0');
+        const mun20 = municipio.slice(0, 20).padEnd(20, ' ');
+        const uf2 = uf.slice(0, 2).padEnd(2, ' ');
+
+        const newTail = tipo
+          + endereco60
+          + cep
+          + cod4
+          + mun20
+          + uf2
+          + checksum;
+
+        ln = ln.slice(0, tailStart - 1) + newTail;
+      }
+
+      // aplica valores do SPED (se existir no map, senão zera)
+      ln = dimobApplyF525ToR02(ln, spedMap.get(doc) || {});
+      r02Out.push(ln);
+    }
+
+    // trailer: copia o que vem após o último R02 (T9/R10/R90) e ajusta ano no T9
+    const tailLines = lines.filter(l => l.startsWith('T9') || l.startsWith('R10') || l.startsWith('R90'));
+    const tailOut = [];
+
+    for (const tl of tailLines) {
+      let ln = tl;
+      if (ln.startsWith('T9')) {
+        // T9: pos 17-20 = ano, pos 21-28 = contador (opcional)
+        ln = dimobSetSlice(ln, 17, 20, String(year).padStart(4, '0'), '0', 'right');
+        ln = dimobSetSlice(ln, 21, 28, String(r02Out.length + 3).padStart(8, '0'), '0', 'right'); // (R01 + R02s + R10 + R90 = +3)
+      }
+      tailOut.push(ln);
+    }
+
+    const outLines = [newHeader, r01New, ...r02Out, ...tailOut];
+    const outText = outLines.join(eol) + eol;
+
+    const fileName = `${cnpj}-DIMOB-${year}-ORIGI.txt`;
+    res.setHeader('Content-Type', 'text/plain; charset=latin1');
+    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+    return res.send(Buffer.from(outText, 'latin1'));
+  } catch (e) {
+    console.error('dimob generate-file error:', e);
+    return res.status(500).json({ error: 'Erro ao gerar arquivo DIMOB.' });
+  }
 });

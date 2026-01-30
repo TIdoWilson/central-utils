@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Balancete — Conta Transitória</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">WL</span>
+            <span class="logo-text">Portal</span>
+          </div>
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <h1>Conciliador Conta Transitória</h1>
+          <p>
+            Envie um ou mais arquivos <b>.xlsx</b>.
+          </p>
+
+          <div class="nfe-table-actions">
+            <button class="btn btn-primary" id="btnStart">Processar</button>
+          </div>
+
+          <div id="whoami" class="nfe-card-subtitle" style="margin-top: 8px"></div>
+        </header>
+
+        <section class="nfe-card">
+          <div class="nfe-card-header">
+            <h2>Upload</h2>
+            <p class="nfe-card-subtitle">
+              Dica: o tipo é inferido pelo nome do arquivo (contendo “pagar” ou “receber”).
+            </p>
+          </div>
+          <div class="nfe-card-body">
+            <div class="wl-upload-area">
+              <label class="nfe-input-file-label" for="filesInput">
+                <input
+                  id="filesInput"
+                  type="file"
+                  multiple
+                  accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                />
+                <span>Selecionar arquivos .xlsx</span>
+              </label>
+              <div class="wl-upload-summary"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="nfe-card">
+          <div class="nfe-card-header">
+            <h2>Status</h2>
+            <p class="nfe-card-subtitle" id="jobMessage">Aguardando…</p>
+          </div>
+          <div class="nfe-card-body">
+            <div class="nfe-progress">
+              <div class="nfe-progress-bar">
+                <div class="nfe-progress-fill" id="progressFill"></div>
+              </div>
+              <div class="nfe-progress-text" id="progressText">0%</div>
+            </div>
+
+            <div class="bt-download" id="downloadArea" hidden>
+              <a class="btn btn-primary" id="downloadLink" href="#" rel="noopener">Baixar ZIP</a>
+            </div>
+
+            <pre class="bt-logbox" id="logBox"></pre>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/upload-helper.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/balancete-transitorio.js"></script>
+  </body>
+</html>

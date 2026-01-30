@@ -7,6 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
     inicializarPagina();
 });
 
+function marcarTodosProdutos(checked) {
+    const tbody = document.getElementById('stItensBody');
+    if (!tbody) return;
+
+    Array.from(tbody.querySelectorAll('.st-flag')).forEach(chk => {
+        chk.checked = checked;
+    });
+
+    recalcularTudo();
+}
+
 function inicializarPagina() {
     const form = document.getElementById('form-calculadora-icms-st');
     const xmlInput = document.getElementById('xmlInput');
@@ -52,6 +63,19 @@ function inicializarPagina() {
     xmlInput?.addEventListener('change', () => {
         setMsgEntrada('');
         log('Arquivo selecionado. Clique em “Carregar XML”.');
+    });
+
+    // Botões: marcar/desmarcar/exportar
+    document.getElementById('btnMarkAllSt')?.addEventListener('click', () => {
+        marcarTodosProdutos(true);
+    });
+
+    document.getElementById('btnUnmarkAllSt')?.addEventListener('click', () => {
+        marcarTodosProdutos(false);
+    });
+
+    document.getElementById('btnExportXlsx')?.addEventListener('click', () => {
+        exportarTabelaParaXlsx();
     });
 
     atualizarUIAutopecas();
@@ -261,13 +285,16 @@ function reconstruirTabelaItens(nfe) {
         const nomeCurto = truncateText(nomeCompleto, 50);
 
         tr.innerHTML = `
-      <td><input type="checkbox" class="st-flag" checked /></td>
+      <td>
+          <input type="checkbox" class="st-flag" checked />
+      </td>
       <td title="${escapeHtml(nomeCompleto)}">${escapeHtml(nomeCurto)}</td>
       <td>${escapeHtml(item.ncm || '')}</td>
       <td>${formatPercent(item.pICMS, 2)}</td>
       <td class="cell-mva">—</td>
       <td class="cell-base">—</td>
       <td class="cell-st">—</td>
+      <td class="cell-diff">—</td>
     `;
 
         tr.querySelector('.st-flag')?.addEventListener('change', () => recalcularTudo());
@@ -508,14 +535,18 @@ function recalcularTudo() {
             ? calcularValorIcmsSt(base, aliqDest, icmsItem, icmsStDestacado)
             : 0;
 
+        const diffRecolher = stFlag ? arred2(stValor - icmsStDestacado) : 0;
+
         // Render
         const cellMva = tr.querySelector('.cell-mva');
         const cellBase = tr.querySelector('.cell-base');
         const cellSt = tr.querySelector('.cell-st');
-
+        const cellDiff = tr.querySelector('.cell-diff');
+        
         if (cellMva) cellMva.textContent = formatPercent(mvaPct, 4);
         if (cellBase) cellBase.textContent = formatBRL(base);
         if (cellSt) cellSt.textContent = formatBRL(stValor);
+        if (cellDiff) cellDiff.textContent = formatBRL(diffRecolher);
 
         if (stFlag) {
             totalBase += base;
@@ -532,6 +563,89 @@ function recalcularTudo() {
     const diff = totalSt - xmlSt;
     setVal('r_diff', formatBRL(diff));
 }
+
+function exportarTabelaParaXlsx() {
+    if (!estadoNfe) {
+        log('Carregue um XML antes de exportar.');
+        return;
+    }
+
+    if (typeof XLSX === 'undefined') {
+        log('Biblioteca XLSX não carregada. Verifique o <script src="...xlsx.full.min.js">.');
+        return;
+    }
+
+    const aliqDest = parsePtNumber(document.getElementById('aliquotaDestino')?.value || '');
+    const autopecas = !!document.getElementById('produtosAutopecas')?.checked;
+
+    const vendedorSN = !!document.getElementById('vendedorSimples')?.checked;
+    const compradorSN = !!document.getElementById('compradorSimples')?.checked;
+    const internal = isOperacaoInterna(estadoNfe.ufOrig, estadoNfe.ufDest);
+
+    // pega marcação ST? atual da tabela
+    const stFlags = obterFlagsStDaTabela(); // Map idx -> boolean
+
+    const rows = estadoNfe.itens.map(item => {
+        const stFlag = stFlags.get(item.idx) ?? true;
+
+        const mvaPct = autopecas
+            ? obterMvaAutopecas({ internal, vendedorSN, compradorSN, pIcms: item.pICMS })
+            : obterMvaPorCombo(item);
+
+        const base = calcularBaseSt(item, mvaPct);
+
+        const icmsItem = obterIcmsDoItem(item);
+        const icmsStDestacado = Number.isFinite(item.vICMSST) ? item.vICMSST : 0;
+
+        const stValor = stFlag
+            ? calcularValorIcmsSt(base, aliqDest, icmsItem, icmsStDestacado)
+            : 0;
+
+        const diffRecolher = stFlag ? arred2(stValor - icmsStDestacado) : 0;
+
+        return {
+            ST: stFlag ? 'SIM' : 'NÃO',
+            Produto: (item.xProd || '').slice(0, 50),
+            NCM: item.ncm || '',
+            'pICMS (%)': arred4(num(item.pICMS)),
+            'MVA (%)': arred4(num(mvaPct)),
+            'Base ST': arred2(num(base)),
+            'Valor ICMS ST': arred2(num(stValor)),
+            'Dif. a Recolher': arred2(num(diffRecolher)),
+        };
+    });
+
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(wb, ws, 'ICMS_ST');
+
+    const chave = (estadoNfe.chave || 'NFE').replace(/[^\dA-Za-z]/g, '');
+    const filename = `ICMS_ST_${chave}.xlsx`;
+
+    XLSX.writeFile(wb, filename);
+    log(`Exportado: ${filename}`);
+}
+
+function obterFlagsStDaTabela() {
+    const map = new Map();
+    const tbody = document.getElementById('stItensBody');
+    if (!tbody) return map;
+
+    Array.from(tbody.children).forEach(tr => {
+        const idx = Number(tr.dataset.idx);
+        const stFlag = tr.querySelector('.st-flag')?.checked ?? true;
+        map.set(idx, stFlag);
+    });
+
+    return map;
+}
+
+function arred4(n) {
+    const v = Number.isFinite(n) ? n : 0;
+    return Math.round(v * 10000) / 10000;
+}
+
 
 function obterMvaPorCombo(item) {
     const ncm = (item.ncm || '').trim() || '(sem NCM)';

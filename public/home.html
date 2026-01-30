@@ -145,7 +145,7 @@
                         <a href="/acertos-lotes-internets" class="btn-card">Acessar</a>
                     </div>
                 </div>
-
+								
                 <!-- Snippet para home.html (sessão Contábil) -->
                 <div class="carousel-card" data-script="acerto-lotes-toscan">
                     <div class="card-icon">📄</div>
@@ -201,7 +201,7 @@
                     <div class="card-hover">
                         <p>CONCILIA CONTA TRANSITÓRIA DA WERBRAN PARA LOCALIZAÇÃO DAS NOTAS COM DIFERENÇA NOS
                             LANÇAMENTOS</p>
-                        <a href="#" class="btn-card">Acessar</a>
+                        <a href="/balancete-transitorio" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
@@ -329,20 +329,6 @@
                     </div>
                 </div>
 
-                <div class="carousel-card">
-                    <div class="card-icon">📄</div>
-                    <h3 class="card-title">Declaração Simples Nacional sem movimento</h3>
-                    <p class="card-subtitle">Envie a declaração mensal sem movimento pelo Integra Contador.</p>
-                    <div class="card-tags">
-                        <span>Fiscal</span>
-                        <span>Simples Nacional</span>
-                    </div>
-                    <div class="card-hover">
-                        <p>Serviço que transmite a declaração mensal do Simples Nacional de forma automatizada.</p>
-                        <a href="/sn" class="btn-card">Acessar</a>
-                    </div>
-                </div>
-
                 <div class="carousel-card" data-script="calculadora-icms-st">
                     <div class="card-icon">🧮</div>
                     <div class="card-content">
@@ -361,29 +347,6 @@
                             por item.
                         </p>
                         <a href="/calculadora-icms-st" class="btn-card">Acessar</a>
-                    </div>
-                </div>
-
-                <div class="carousel-card" data-script="mit">
-                    <div class="card-icon">📑</div>
-                    <div class="card-content">
-                        <h3 class="card-title">Envio MIT – Apuração DCTFWeb</h3>
-                        <p class="card-subtitle">
-                            Envie o JSON do MIT (ENCAPURACAO314) direto para o Integra Contador / SERPRO.
-                        </p>
-                        <div class="card-tags">
-                            <span class="tag">Fiscal</span>
-                            <span class="tag">JavaScript</span>
-                        </div>
-                    </div>
-                    <div class="card-hover">
-                        <p>
-                            Faça upload do arquivo JSON gerado pelo MIT, deixe o portal calcular o CNPJ da matriz a
-                            partir
-                            do nome do arquivo, ajustar os campos obrigatórios (como TransmissaoImediata) e transmitir
-                            a apuração automaticamente para o Integra Contador.
-                        </p>
-                        <a href="/mit" class="btn-card">Acessar</a>
                     </div>
                 </div>
             </div>
@@ -507,11 +470,103 @@
                     </div>
                 </div>
 
+                <div class="carousel-card" data-script="irpf-carne-leao">
+                    <div class="card-icon">🧮</div>
+                    <h3 class="card-title">Simulador Carnê-Leão (IRPF)</h3>
+                    <p class="card-subtitle">
+                        Simule IR mensal com regras 2024, 2025 e 2026 (inclui redutor 2026).
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Pessoal</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Informe rendimentos, despesas, dependentes e ajustes. A ferramenta calcula base, imposto
+                            devido
+                            e saldo a pagar/compensar em todos os períodos de tabela dos PDFs.
+                        </p>
+                        <a href="/irpf-carne-leao" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
             </div>
         </div>
 
 
     </section>
+
+    <!-- ===== Declarações ===== -->
+    <section class="session session--declaracoes" id="Declaracoes">
+        <button class="session-header" type="button">
+            <div class="session-header-text">
+                <span class="session-pill session-pill-declaracoes">Declarações</span>
+                <span class="session-subtitle">
+                    Automações das declarações.
+                </span>
+            </div>
+            <span class="session-chevron">⌄</span>
+        </button>
+    
+        <div class="session-body">
+            <div class="session-grid">
+                <!-- Snippet para home.html (sessão declaracoes) -->
+                <div class="carousel-card">
+                    <div class="card-icon">🏢</div>
+                    <h3 class="card-title">DIMOB</h3>
+                    <p class="card-subtitle">Tabela de faturamento mensal via SPED e preparação para gerar o TXT de importação.</p>
+                    <div class="card-tags">
+                        <span>Fiscal</span>
+                        <span>DIMOB</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>Informe CNPJ/ano, anexe SPED(s) e veja o faturamento mensal. (Geração do arquivo DIMOB: próxima etapa.)</p>
+                        <a href="/dimob" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+                
+                <div class="carousel-card">
+                    <div class="card-icon">📄</div>
+                    <h3 class="card-title">Simples Nacional sem movimento</h3>
+                    <p class="card-subtitle">Envie a declaração mensal sem movimento pelo Integra Contador.</p>
+                    <div class="card-tags">
+                        <span>Fiscal</span>
+                        <span>Simples Nacional</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Serviço que transmite a declaração mensal do Simples Nacional de forma automatizada.
+                            (Apenas com procuração para o CNPJ).
+                        </p>
+                        <a href="/sn" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+    
+                <div class="carousel-card" data-script="mit">
+                    <div class="card-icon">📑</div>
+                    <div class="card-content">
+                        <h3 class="card-title">Envio MIT – Apuração DCTFWeb</h3>
+                        <p class="card-subtitle">
+                            Envie o JSON do MIT direto para o Integra Contador / SERPRO.
+                        </p>
+                        <div class="card-tags">
+                            <span class="tag">Fiscal</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Faça upload do arquivo JSON gerado pelo IOB, caso seja sem movimento entregara o MIT e a DCTFWeb automaticamente.
+                            (Apenas com procuração para o CNPJ)
+                        </p>
+                        <a href="/mit" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
 
     <!-- ===== Desenvolvendo ===== -->
     <section class="session session--ti" id="ti">

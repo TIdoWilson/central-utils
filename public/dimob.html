@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Automação DIMOB</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body class="app-body nfe-body dimob-page">
+    <div class="nfe-layout">
+        <!-- SIDEBAR -->
+        <aside class="nfe-sidebar">
+            <div class="nfe-sidebar-top">
+                <div class="nfe-sidebar-logo">
+                    <span class="logo-circle">WL</span>
+                    <span class="logo-text">Portal</span>
+                </div>
+
+                <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="nfe-main">
+            <header class="nfe-header">
+                <div class="nfe-breadcrumb">Portal / Fiscal / DIMOB</div>
+                <h1>Automação DIMOB</h1>
+                <p>
+                    Anexe SPED(s) e monte a tabela de faturamento mensal (Jan–Dez) + total do ano.
+                    A geração do TXT DIMOB ficará disponível na próxima etapa.
+                </p>
+            </header>
+
+            <!-- CARD: parâmetros + uploads -->
+            <section class="nfe-row">
+                <div class="nfe-card nfe-card-upload">
+                    <h2>Dados da declaração</h2>
+                    <p class="nfe-card-subtitle">
+                        Informe CNPJ e selecione o ano-calendário (lista de 2015 a 2025, padrão 2025).
+                    </p>
+
+                    <div class="nfe-upload-form">
+                        <label class="nfe-input">
+                            <span>CNPJ do declarante</span>
+                            <input id="dimobCnpj" inputmode="numeric" placeholder="Somente números" />
+                        </label>
+
+                        <label class="nfe-input">
+                            <span>Ano-calendário</span>
+                            <select id="dimobYear" class="sn-select"></select>
+                        </label>
+                    </div>
+
+                    <div class="nfe-section">
+                        <h3>SPED(s) manual</h3>
+                        <p class="nfe-card-subtitle">
+                            Anexe um ou mais arquivos SPED. A ferramenta tentará extrair receitas do registro F525 e
+                            consolidar por mês.
+                        </p>
+
+                        <label class="nfe-input-file-label">
+                            <input type="file" id="spedFiles" multiple accept=".txt,.sped,.efd,.dat,text/plain" />
+                            <span class="icon">📎</span>
+                            <span class="label">Selecionar SPED(s)</span>
+                        </label>
+                    </div>
+
+                    <div class="nfe-section">
+                        <h3>DIMOB do ano anterior</h3>
+                        <p class="nfe-card-subtitle">
+                            Utilize a busca automatica do sistema para encontrar o DIMOB do ano anterior.
+                            Em caso de falha pode anexar manualmente abaixo.
+                        </p>
+
+                        <div class="nfe-table-actions" style="justify-content:flex-start;">
+                            <button id="btnFindPrevious" type="button" class="btn btn-primary">
+                                Buscar DIMOB anterior automaticamente
+                            </button>
+                        </div>
+
+                        <div id="previousNetworkInfo" class="wl-upload-summary">Nenhum arquivo encontrado/buscado ainda.
+                        </div>
+
+                        <label class="nfe-input-file-label">
+                            <input type="file" id="previousDimobFile" accept=".dec,.DEC,.txt,text/plain" />
+                            <span class="icon">📎</span>
+                            <span class="label">Selecionar DIMOB anterior manualmente</span>
+                        </label>
+                    </div>
+
+                    <div class="nfe-table-actions">
+                        <button id="btnParseSped" type="button" class="btn btn-primary">
+                            Montar tabela de faturamento
+                        </button>
+                    </div>
+
+                    <div id="dimobStatus" class="nfe-upload-message"></div>
+                    <div id="dimobLog" class="mit-log" aria-live="polite"></div>
+                </div>
+            </section>
+
+            <!-- RESULTADOS -->
+            <section class="nfe-row">
+                <div class="nfe-card">
+                    <h2>Informações do SPED</h2>
+                        <h3>Atividade imobiliária</h3>
+                        <div id="atividadeImobiliariaTableWrapper" class="wl-upload-summary">
+                            Nenhum dado ainda.
+                        </div>
+                        
+                        <h3>Faturamento mensal (SPED)</h3>
+                        <p class="nfe-card-subtitle">
+                            Consolidação por CPF/CNPJ do locatário + total anual no rodapé.
+                        </p>
+                        <div class="nfe-table-wrapper" id="billingTableWrapper">
+                            <div class="wl-upload-summary">Nenhum resultado ainda.</div>
+                        </div>
+                </div>
+            </section>
+
+            <section class="nfe-row">
+                <div class="nfe-card">
+                    <h2>Novos locatários (em comparação com DIMOB anterior)</h2>
+                    <p class="nfe-card-subtitle">
+                    </p>
+                    <div class="nfe-table-wrapper" id="newTenantsTableWrapper">
+                        <div class="wl-upload-summary">Nenhum resultado ainda.</div>
+                    </div>
+                    <div class="nfe-table-actions">
+                        <button id="btnGenerateDimob" type="button" class="btn btn-primary"
+                            title="A geração do TXT DIMOB será liberada na próxima etapa.">
+                            Gerar arquivo DIMOB
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/upload-helper.js"></script>
+    <script src="/js/dimob.js"></script>
+</body>
+
+</html>

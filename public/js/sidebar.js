@@ -19,6 +19,7 @@ const MENU_CONFIG = [
       { id: 'acertos-lotes-internets', label: 'Acertos Lotes Internets', href: '/acertos-lotes-internets', icon: '📊' },
       { id: 'acerto-lotes-toscan', label: 'Acerto Lotes Toscan', href: '/acerto-lotes-toscan', icon: '📄' },
       { id: 'ajuste-diario-gfbr-c', label: 'Ajuste Diario GFBR', href: '/ajuste-diario-gfbr-c', icon: '📄' },
+      { id: 'balancete-transitorio', label: 'Conciliador Conta Transitória', href: '/balancete-transitorio', icon: '📄' },
       { id: 'importador-recebimentos-madre-scp', label: 'Importador Recebimentos Madre SCP', href: '/importador-recebimentos-madre-scp', icon: '📊' },
       { id: 'separador-csv-baixa-automatica', label: 'Separador CSV Baixa Automática', href: '/separador-csv-baixa-automatica', icon: '📊' },
       { id: 'formatador-bernardina', label: 'Formatador DRE Bernadina (XLSM)', href: '/formatador-bernardina', icon: '📊' },
@@ -30,9 +31,7 @@ const MENU_CONFIG = [
     icon: '📁',
     items: [
       { id: 'nfe', label: 'Consulta NF-e', href: '/nfe', icon: '🧾' },
-      { id: 'sn', label: 'Declaração SN', href: '/sn', icon: '📄' },
       { id: 'calculadora-icms-st', label: 'Calculadora de ICMS ST', href: '/calculadora-ICMS-ST', icon: '📄' },
-      { id: 'mit', label: 'Mit', href: '/mit', icon: '📄' },
     ],
   },
   {
@@ -44,6 +43,17 @@ const MENU_CONFIG = [
       { id: 'comprimir-pdf', label: 'Comprimir PDF', icon: '🧩', href: '/comprimir-pdf' },
       { id: 'extrator-zip-rar', label: 'Extrator ZIP/RAR', href: '/extrator-zip-rar', icon: '📦' },
       { id: 'excel-abas-pdf', label: 'Excel → Abas em PDF', icon: '📄', href: '/excel-abas-pdf' },
+      { id: 'irpf-carne-leao', label: 'IRPF Carne Leão', icon: '📄', href: '/irpf-carne-leao' },
+    ],
+  },
+  {
+    id: 'declaracoes',
+    label: 'Declarações',
+    icon: '🏢',
+    items: [
+      { id: 'automacao-DIMOB', label: 'Automação DIMOB', href: '/DIMOB', icon: '🏢' },
+      { id: 'sn', label: 'SN sem movimento', href: '/sn', icon: '📄' },
+      { id: 'mit', label: 'MIT/DCTFWEB sem movimento', href: '/mit', icon: '📄' },
     ],
   },
   {

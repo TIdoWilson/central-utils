@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Relatório de Provisão de Férias</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="title">
+      <h1>Relatório de Provisão de Férias</h1>
+      <p class="subtitle">Nome completo • Mês inicial/final • Valores por mês</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="../RELATORIO_PROVISAO_FERIAS.xlsx" download>Baixar Excel</a>
+      <button class="btn" id="btnExportCsv">Exportar CSV</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="filters">
+      <div class="field">
+        <label for="q">Buscar (nome)</label>
+        <input id="q" type="search" placeholder="Digite parte do nome..." />
+      </div>
+
+      <div class="field">
+        <label for="mesInicial">Mês inicial</label>
+        <select id="mesInicial"></select>
+      </div>
+
+      <div class="field">
+        <label for="mesFinal">Mês final</label>
+        <select id="mesFinal"></select>
+      </div>
+
+      <div class="field">
+        <label>&nbsp;</label>
+        <button class="btn" id="btnClear">Limpar</button>
+      </div>
+
+      <div class="summary" id="summary"></div>
+    </section>
+
+    <section class="table-wrap">
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th data-key="nome">Nome completo</th>
+            <th data-key="mesInicial">Mês inicial</th>
+            <th data-key="mesFinal">Mês final</th>
+            <th class="num" data-key="valorMes1">Valor mês 1</th>
+            <th class="num" data-key="valorMes2">Valor mês 2</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Versão web (estática). Ordene clicando nos títulos das colunas.</span>
+  </footer>
+
+  <script src="provisao-de-ferias.js"></script>
+</body>
+</html>
