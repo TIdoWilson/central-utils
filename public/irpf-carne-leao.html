@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Simulador Carnê-Leão (IRPF)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="app-body nfe-body">
+    <div class="nfe-layout irpf-page">
+        <aside class="nfe-sidebar">
+            <div class="nfe-sidebar-top">
+                <div class="nfe-sidebar-logo">
+                    <span class="logo-circle">WL</span>
+                    <span class="logo-text">Portal</span>
+                </div>
+
+                <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+
+            <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+        </aside>
+
+        <main class="nfe-main">
+            <header class="nfe-header">
+                <div class="nfe-breadcrumb">Portal / Pessoal / Carnê-Leão</div>
+                <h1>Simulador Carnê-Leão (IRPF) — 2024, 2025 e 2026</h1>
+                <p>
+                    Informe os valores do mês e veja o imposto calculado em <strong>todos os períodos/tabelas</strong>
+                    dos PDFs (inclui regra especial de 2026).
+                </p>
+            </header>
+
+            <section class="nfe-card">
+                <div class="nfe-card-header">
+                    <div>
+                        <h2>Dados do mês</h2>
+                        <p class="nfe-card-subtitle">Valores em R$ (use ponto ou vírgula).</p>
+                    </div>
+
+                    <div class="nfe-table-actions">
+                        <button class="btn btn-secondary" type="button" id="btnPreencherExemplo">Preencher
+                            exemplo</button>
+                        <button class="btn btn-primary" type="button" id="btnCalcular">Calcular</button>
+                    </div>
+                </div>
+
+                <div class="nfe-row" style="grid-template-columns: 1fr 1fr">
+                    <label class="auth-label">
+                        Rendimentos (R$)
+                        <input id="rendimentos" class="auth-input" inputmode="decimal" placeholder="ex.: 7518,20" />
+                    </label>
+
+                    <label class="auth-label">
+                        Despesas dedutíveis (Livro Caixa) (R$)
+                        <input id="despesas" class="auth-input" inputmode="decimal" placeholder="ex.: 379,18" />
+                    </label>
+
+                    <label class="auth-label">
+                        Dependentes (qtde)
+                        <input id="dependentes" class="auth-input" inputmode="numeric" placeholder="ex.: 1" />
+                    </label>
+
+                    <label class="auth-label">
+                        Imposto pago no mês (R$)
+                        <input id="impostoPago" class="auth-input" inputmode="decimal" placeholder="ex.: 0,00" />
+                    </label>
+
+                    <label class="auth-label">
+                        Saldo anterior a compensar (R$)
+                        <input id="saldoAnterior" class="auth-input" inputmode="decimal" placeholder="ex.: 0,00" />
+                    </label>
+
+                    <div class="nfe-card" style="margin: 0; box-shadow: none; padding: 0">
+                        <div class="nfe-card-subtitle" style="margin: 0">
+                            A ferramenta escolhe automaticamente a <strong>melhor dedução</strong> (maior entre
+                            <em>desconto simplificado</em> e <em>deduções legais</em>).
+                            Se você quiser travar uma opção depois, a gente adiciona um seletor.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="irpfStatus" class="nfe-upload-message" style="margin-top: 10px"></div>
+                <pre id="irpfLog" class="irpf-log" aria-live="polite"></pre>
+            </section>
+
+            <section class="nfe-card nfe-card-table">
+                <div class="nfe-card-header">
+                    <div>
+                        <h2>Resultados por período/tabela</h2>
+                        <p class="nfe-card-subtitle">
+                            Mostra base, imposto devido e saldo a pagar/compensar em cada período dos PDFs.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="periodCards" class="irpf-period-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/irpf-carne-leao.js"></script>
+</body>
+
+</html>

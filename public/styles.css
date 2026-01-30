@@ -1,4 +1,4 @@
-/* ===== GLOBAL ===== */
+﻿/* ===== GLOBAL ===== */
 body.app-body {
   margin: 0;
   background: #f8fafc;
@@ -48,10 +48,11 @@ body.app-body {
 
 /* texto */
 .logo-text {
-    font-size: 18px;
+    font-size: 0px;
     font-weight: 600;
     color: white;
 }
+
 
 .user-area {
     color: #e5e7eb;
@@ -175,6 +176,10 @@ body.app-body {
   background: #ffffff;
 }
 
+.session--declaracoes .session-header {
+  background: #ffffff;
+}
+
 /* corpo das sessões – cinza bem claro neutro */
 .session--contabil .session-body {
   background: #f9fafb;
@@ -195,6 +200,10 @@ body.app-body {
 .session--ti .session-body {
   background: #f9fafb;
 }
+
+.session--declaracoes .session-body {
+   background: #f9fafb;
+ }
 
 
 /* quando a sessão está aberta */
@@ -428,7 +437,7 @@ body.nfe-body {
   width: 200px;
   /* antes era 230 */
   background: linear-gradient(180deg, #221f20, #221f20);
-  color: #fff;
+  color: #ff000000;
   padding: 20px 14px;
   display: flex;
   flex-direction: column;
@@ -438,16 +447,17 @@ body.nfe-body {
 .nfe-sidebar-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
   margin-bottom: 24px;
 }
 
 .nfe-sidebar-toggle {
   background: transparent;
+  margin-left: auto;
   border: none;
   cursor: pointer;
   padding: 6px;
-  border-radius: 8px;
+  border-radius: 80px;
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -455,16 +465,17 @@ body.nfe-body {
 
 .nfe-sidebar-toggle span {
   display: block;
+  margin-left: auto;
   width: 18px;
   height: 2px;
-  background: rgba(249, 250, 251, 0.9);
-  border-radius: 999px;
+  background: rgba(251, 249, 249, 0.9);
+  border-radius: 99px;
 }
 
 .nfe-sidebar-logo {
   display: flex;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
   font-weight: 600;
 }
 
@@ -491,15 +502,26 @@ body.nfe-body {
   align-self: center;
 }
 
+/* SUBSTITUA o bloco atual .nfe-sidebar-logo .logo-circle por este */
 .nfe-sidebar-logo .logo-circle {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: rgba(248, 250, 252, 0.16);
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+
+  /* fundo do círculo (opcional) */
+  background-color: rgb(255, 255, 255);
+
+  /* imagem do logo (mesma pasta do styles.css) */
+  background-image: url("logo_skype.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  /* ou "70%" se quiser mais “folga” */
+
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
+  margin-right: -10px;
 }
 
 .nfe-sidebar-menu {
@@ -533,8 +555,6 @@ body.nfe-body {
   background: rgba(15, 23, 42, 0.95);
   color: #fff;
 }
-
-/* ===== Sidebar em grupos (departamentos) ===== */
 
 /* ===== Sidebar em grupos (departamentos) ===== */
 
@@ -598,6 +618,10 @@ body.nfe-body {
   display: none;
 }
 
+.nfe-layout.collapsed .nfe-menu-group-header {
+  justify-content: center;
+}
+
 .nfe-layout.collapsed .nfe-menu-group-header .chevron {
   display: none;
 }
@@ -608,20 +632,50 @@ body.nfe-body {
 
 /* MAIN */
 
+/* em flex com sidebar, precisa permitir encolher */
 .nfe-main {
   flex: 1;
-  padding: 28px 40px;
-  max-width: 1200px;
-  margin: 0 auto;
+  min-width: 0;
+  /* CRÍTICO para não estourar largura */
+  max-width: none;
+  /* remove o limite que somado à sidebar estoura a tela */
+  margin: 0;
+  /* evita centralizar somando largura com sidebar */
+  padding: 18px 20px;
+  /* diminui margem esquerda */
+  box-sizing: border-box;
 }
+
+/* garante que os wrappers das tabelas segurem overflow */
+#billingTableWrapper {
+   max-width: 100%;
+   overflow-x: auto;
+ }
+#atividadeImobiliariaTableWrapper {
+  max-width: 100%;
+  overflow-x: auto;
+}
+#newTenantsTableWrapper {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* BACKUP do antigo, alterei pra limitar o tamanho da tabela da dimob***
+  .nfe-main {
+    flex: 1;
+    padding: 28px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
 @media (max-width: 900px) {
 
-  /* em telas menores, já pode começar recolhido se quiser */
+  /* em telas menores, já pode começar recolhido se quiser 
   .nfe-layout.collapsed .nfe-main {
     padding-inline: 16px;
   }
 }
+*/
 
 .nfe-header .nfe-breadcrumb {
   font-size: 13px;
@@ -1898,4 +1952,211 @@ body.wl-page-dragover::after {
   max-height: 220px;
   overflow: auto;
   white-space: pre;
+}
+
+/* ===== Ferramenta: IRPF Carnê-Leão ===== */
+.irpf-log {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #020617;
+  color: #e5e7eb;
+  border-radius: 12px;
+  max-height: 220px;
+  overflow: auto;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+/* ===== IRPF: cards por período (sem tabela) ===== */
+
+.irpf-period-grid{
+  display: grid;
+  gap: 16px;
+}
+
+/* Desktop grande: 4 colunas */
+@media (min-width: 1400px){
+  .irpf-period-grid{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Desktop padrão: ainda 4 colunas (se quiser “forçar mesmo”) */
+@media (min-width: 1200px) and (max-width: 1399px){
+  .irpf-period-grid{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Tablet: 2 colunas */
+@media (min-width: 768px) and (max-width: 1199px){
+  .irpf-period-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile: 1 coluna */
+@media (max-width: 767px){
+  .irpf-period-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+.irpf-period-card{
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  padding: 14px;
+}
+
+.irpf-card-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 2px 10px 2px;
+}
+
+.irpf-period-title{
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.irpf-block{
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  margin-top: 10px;
+}
+
+.irpf-block.is-devido{
+  border-color: rgba(185, 28, 28, 0.25);
+  background: rgba(185, 28, 28, 0.04);
+}
+
+.irpf-block.is-compensar{
+  border-color: rgba(22, 163, 74, 0.25);
+  background: rgba(22, 163, 74, 0.04);
+}
+
+.irpf-block-icon{
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.irpf-block-icon.red{ background: rgba(239, 68, 68, 0.20); }
+.irpf-block-icon.blue{ background: rgba(59, 130, 246, 0.20); }
+.irpf-block-icon.yellow{ background: rgba(234, 179, 8, 0.20); }
+.irpf-block-icon.cyan{ background: rgba(14, 165, 233, 0.20); }
+
+.irpf-block-main{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.irpf-block-value{
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.irpf-block-label{
+  font-size: 13px;
+  color: rgba(15, 23, 42, 0.7);
+}
+
+.irpf-block-lines{
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.irpf-block-lines .line{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: rgba(15, 23, 42, 0.75);
+}
+
+.irpf-block-lines .line strong{
+  color: #0f172a;
+  font-weight: 700;
+}
+/* Balancete — logs do job */
+.bt-logbox {
+  margin-top: 12px;
+  max-height: 320px;
+  overflow: auto;
+  background: #0b1220;
+  color: #e5e7eb;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bt-download {
+  margin-top: 12px;
+}
+
+
+/* Evita que qualquer coisa estoure a largura da página */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* IMPORTANTE em layouts com sidebar/flex: permitir encolher */
+.nfe-main,
+.main,
+main,
+.content {
+  min-width: 0;
+}
+
+/* Wrapper do log (se existir) */
+#dimobLogWrapper,
+.dimob-log-wrapper {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  /* scroll só dentro do wrapper, se necessário */
+}
+
+/* O campo de log em si */
+#dimobLog {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  /* ESSENCIAL: quebra linha */
+  white-space: pre-wrap;
+  /* preserva \n e quebra */
+  overflow-wrap: anywhere;
+  /* quebra até “palavras” gigantes */
+  word-break: break-word;
+
+  /* se for <pre>/<div> */
+  overflow-x: auto;
+}
+
+/* Se o #dimobLog for um <textarea>, isso ajuda também */
+textarea#dimobLog {
+  resize: vertical;
 }

@@ -288,6 +288,13 @@
                     </p>
                 </div>
 
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+                    <button type="button" class="btn btn-secondary" id="btnMarkAllSt">Marcar todos</button>
+                    <button type="button" class="btn btn-secondary" id="btnUnmarkAllSt">Desmarcar todos</button>
+                    <button type="button" class="btn btn-primary" id="btnExportXlsx">Exportar .xlsx</button>
+                </div>
+
+
                 <div class="nfe-table-wrapper">
                     <table class="nfe-table">
                         <thead>
@@ -299,9 +306,11 @@
                                 <th>MVA (%)</th>
                                 <th>Base ST</th>
                                 <th>Valor ICMS ST</th>
+                                <th>Dif. a Recolher</th>
                             </tr>
                         </thead>
                         <tbody id="stItensBody"></tbody>
+
                     </table>
                 </div>
             </section>
@@ -331,6 +340,8 @@
         </main>
     </div>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
     <script src="/js/sidebar.js"></script>
     <script src="/js/upload-helper.js"></script>
     <script src="/js/calculadora-icms-st.js"></script>
