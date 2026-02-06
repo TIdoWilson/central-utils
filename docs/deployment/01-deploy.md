@@ -1,0 +1,358 @@
+# 01 - Deploy em Produção
+
+## 🚀 Checklist Pré-Deployment
+
+Antes de fazer deploy:
+
+- [ ] Todos os testes passando
+- [ ] Documentação atualizada
+- [ ] Variáveis `.env` configuradas
+- [ ] Banco de dados migrado
+- [ ] Certificados SERPRO testados
+- [ ] Backups configurados
+- [ ] Monitoramento ativo
+- [ ] SSL/HTTPS preparado
+
+---
+
+## 🖥️ Opções de Deployment
+
+### Opção 1: Servidor Linux (Recomendado)
+
+Usar servidor Debian/Ubuntu com Systemd, Docker, ou PM2.
+
+#### Via Docker (Mais fácil)
+
+**Dockerfile:**
+
+```dockerfile
+FROM node:18-alpine as builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+
+FROM python:3.11-slim
+RUN apt-get update && apt-get install -y nodejs npm postgresql-client
+
+WORKDIR /app
+COPY --from=builder /app/node_modules ./node_modules
+COPY . .
+
+RUN pip install -r api/requirements.txt
+
+EXPOSE 3000 8001 8002
+
+CMD ["npm", "run", "dev"]
+```
+
+**docker-compose.yml:**
+
+```yaml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: central_utils
+      POSTGRES_USER: central_app
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    environment:
+      NODE_ENV: production
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      PORT: 3000
+    ports:
+      - "3000:3000"
+      - "8001:8001"
+      - "8002:8002"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+```
+
+**Como usar:**
+
+```bash
+# Copiar .env.example para .env e configurar
+cp .env.example .env
+
+# Iniciar
+docker-compose up -d
+
+# Parar
+docker-compose down
+
+# Logs
+docker-compose logs -f app
+```
+
+#### Via PM2 (Sem Docker)
+
+**Instalar PM2:**
+
+```bash
+npm install -g pm2
+```
+
+**Criar ecosystem.config.js:**
+
+```javascript
+module.exports = {
+  apps: [
+    {
+      name: 'central-utils-node',
+      script: 'src/server.js',
+      instances: 'max',
+      exec_mode: 'cluster',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3000
+      },
+      error_file: 'logs/error.log',
+      out_file: 'logs/out.log'
+    },
+    {
+      name: 'central-utils-python',
+      script: 'api/integra_api.py',
+      instances: 1,
+      interpreter: '.venv/bin/python',
+      args: '-m uvicorn',
+      env: {
+        PYTHON_PORT: 8001,
+        PYTHON_ENV: 'production'
+      }
+    }
+  ]
+};
+```
+
+**Usar PM2:**
+
+```bash
+# Iniciar
+pm2 start ecosystem.config.js
+
+# Parar
+pm2 stop all
+
+# Reiniciar
+pm2 restart all
+
+# Logs
+pm2 logs
+
+# Monitorar
+pm2 monit
+
+# Status
+pm2 status
+
+# Auto-restart no boot
+pm2 startup
+pm2 save
+```
+
+---
+
+### Opção 2: Windows Server
+
+**Via Task Scheduler + Node/Python:**
+
+1. **Criar arquivo batch `start.bat`:**
+
+```batch
+@echo off
+cd W:\DOCUMENTOS ESCRITORIO\INSTALACAO SISTEMA\central-utils
+
+REM Ativar Python venv
+call .venv\Scripts\activate.bat
+
+REM Iniciar em foreground (será capturado por Task Scheduler)
+npm run dev
+```
+
+2. **Criar Task Scheduler:**
+   - Open Task Scheduler
+   - Create Basic Task
+   - Name: "Central Utils"
+   - Trigger: "At startup"
+   - Action: Run `start.bat`
+   - Check "Run with highest privileges"
+
+3. **Monitorar com NSSM (Non-Sucking Service Manager):**
+
+```bash
+# Download: https://nssm.cc/download
+
+nssm install CentralUtils "W:\DOCUMENTOS ESCRITORIO\INSTALACAO SISTEMA\central-utils\start.bat"
+nssm start CentralUtils
+nssm status CentralUtils
+```
+
+---
+
+## 🔐 Configuração SSL/HTTPS
+
+### Com Let's Encrypt (Linux)
+
+```bash
+# Instalar Certbot
+sudo apt-get install certbot python3-certbot-nginx
+
+# Obter certificado
+sudo certbot certonly --standalone -d seu-dominio.com
+
+# Auto-renew
+sudo systemctl enable certbot.timer
+sudo systemctl start certbot.timer
+```
+
+### Usar com Express
+
+```javascript
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  cert: fs.readFileSync('/etc/letsencrypt/live/seu-dominio/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/seu-dominio/privkey.pem')
+};
+
+https.createServer(options, app).listen(443);
+```
+
+---
+
+## 📊 Monitoramento
+
+### Nginx (Reverse Proxy Recomendado)
+
+**Instalar:**
+
+```bash
+sudo apt-get install nginx
+```
+
+**Configurar `/etc/nginx/sites-available/central-utils`:**
+
+```nginx
+upstream node_app {
+    server 127.0.0.1:3000;
+}
+
+upstream python_api {
+    server 127.0.0.1:8001;
+}
+
+server {
+    listen 80;
+    server_name seu-dominio.com;
+    
+    client_max_body_size 100M;
+    
+    location / {
+        proxy_pass http://node_app;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+    
+    location /api/python {
+        rewrite ^/api/python/(.*)$ /api/$1 break;
+        proxy_pass http://python_api;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_timeout 300s;
+    }
+}
+```
+
+**Ativar:**
+
+```bash
+sudo ln -s /etc/nginx/sites-available/central-utils /etc/nginx/sites-enabled/
+sudo systemctl reload nginx
+```
+
+---
+
+## 📈 Auto-scaling (Kubernetes - Avançado)
+
+Para alta disponibilidade, considere Kubernetes com Helm.
+
+```bash
+# Deploy com Helm
+helm install central-utils ./helm-chart
+
+# Escalar
+kubectl scale deployment central-utils --replicas=5
+```
+
+---
+
+## 🔄 Processo de Update
+
+**Com 0 downtime:**
+
+```bash
+# 1. Clonar repositório para tmp
+git clone repo nova-versao
+
+# 2. Testes na nova versão
+cd nova-versao
+npm test
+pytest api/
+
+# 3. Parar versão antiga (gracefully)
+pm2 gracefulReload all
+
+# 4. Trocar versão
+mv . /app-nova
+mv /app /app-old
+mv /app-nova /app
+
+# 5. Reiniciar
+pm2 start ecosystem.config.js
+
+# 6. Se erro, rollback
+rm -rf /app
+mv /app-old /app
+pm2 start ecosystem.config.js
+```
+
+---
+
+## 📋 Checklist Final de Deploy
+
+- [ ] DNS apontando para servidor
+- [ ] SSL/HTTPS ativo
+- [ ] Variáveis de ambiente corretas
+- [ ] Banco de dados em backup
+- [ ] Logs sendo coletados
+- [ ] Monitoramento ativo
+- [ ] Alertas configurados
+- [ ] Plano de rollback
+- [ ] Documentação atualizada
+- [ ] Teste de acesso funcional
+
+---
+
+**Última atualização:** Fevereiro 2026

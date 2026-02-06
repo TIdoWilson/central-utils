@@ -17,3 +17,8 @@ central-utils.zip
 /go-api/work
 /tmp/tareffa-empresas-lote
 .backup
+.env.example
+docs.zip
+~$CUMENTACAO_COMPLETA.docx
+gerar_documentacao.py
+DOCUMENTACAO_COMPLETA.docx
