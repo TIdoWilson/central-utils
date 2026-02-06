@@ -1,0 +1,38 @@
+site_name: "Central Utils - Documentação"
+theme:
+  name: material
+  language: pt
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Modo escuro
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+plugins:
+  - search
+
+nav:
+  - Início: index.md
+  - Documentos Principais:
+      - Arquitetura: 01-ARQUITETURA.md
+      - Instalação: 02-INSTALACAO.md
+      - Uso: 03-USO.md
+      - Contribuindo: 04-CONTRIBUINDO.md
+  - API (Ferramentas):
+      - Índice: api/00-INDICE.md
+      - Gerador de Atas: api/01-gerador-atas.md
+      - Separador PDF (Relatório Férias): api/02-separador-pdf-relatorio-ferias.md
+      - Separador Holerites: api/03-separador-holerites.md
+      - Separador Férias Funcionário: api/04-separador-ferias-funcionario.md
+      - Separador CSV Baixa: api/05-separador-csv-baixa.md
+      - Excel Abas → PDF: api/06-excel-abas-pdf.md
+      - Compressor PDF: api/07-compressor-pdf.md
+      - Extrator ZIP/RAR: api/08-extrator-zip-rar.md
+      - Importador Recebimentos: api/09-importador-recebimentos.md
+      - Ajuste Diário GFBR: api/10-ajuste-diario-gfbr.md
+  - Deployment:
+      - Deploy: deployment/01-deploy.md
+      - Variáveis de Ambiente: deployment/02-env-vars.md
