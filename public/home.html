@@ -145,7 +145,7 @@
                         <a href="/acertos-lotes-internets" class="btn-card">Acessar</a>
                     </div>
                 </div>
-								
+
                 <!-- Snippet para home.html (sessão Contábil) -->
                 <div class="carousel-card" data-script="acerto-lotes-toscan">
                     <div class="card-icon">📄</div>
@@ -297,6 +297,23 @@
                         <a href="/formatador-bernardina" class="btn-card">Acessar</a>
                     </div>
                 </div>
+
+                <div class="carousel-card" data-script="conciliador-hausen-ocean">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">Conciliador Hausen e Ocean</h3>
+                    <p class="card-subtitle">Merge arquivos excel do DRE e Balancetes das duas empresas.</p>
+                    <div class="card-tags">
+                        <span class="tag">Contábil</span>
+                        <span class="tag">C#</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Selecione se é DRE ou Balancete, envie dois arquivos Excel (Hausen e Ocean) e baixe o
+                            consolidado automaticamente.
+                        </p>
+                        <a href="/conciliador-hausen-ocean" class="btn-card">Acessar</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -352,6 +369,40 @@
             </div>
         </div>
     </section>
+
+    <!-- ===== FERRAMENTAS PDF ===== -->
+    <section class="session session--pdf" id="ferramentas-pdf">
+        <button class="session-header" type="button">
+            <div class="session-header-text">
+                <span class="session-pill session-pill-pdf">Ferramentas PDF</span>
+                <span class="session-subtitle">
+                    Conversões e validações de documentos em PDF.
+                </span>
+            </div>
+            <span class="session-chevron">⌄</span>
+        </button>
+    
+        <div class="session-body">
+            <div class="session-grid">
+                <div class="carousel-card" data-script="pdfa">
+                    <div class="card-icon">📄</div>
+                    <h3 class="card-title">Conversor PDF → PDF/A</h3>
+                    <p class="card-subtitle">Converta arquivos para o padrão PDF/A.</p>
+                    <div class="card-tags">
+                        <span>PDF</span>
+                        <span>Conversão</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Envie um PDF (ou outro formato suportado) e receba a versão em PDF/A pronta para uso.
+                        </p>
+                        <a href="/pdf-a" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- ===== GERAL ===== -->
     <section class="session session--geral" id="geral">
@@ -490,6 +541,29 @@
                     </div>
                 </div>
 
+                <!-- Snippet para home.html -->
+                <div class="carousel-card" data-script="tareffa-empresas-lote">
+                    <div class="card-icon">🏢</div>
+                    <h3 class="card-title">Tareffa — Cadastro de Empresas em Lote</h3>
+                    <p class="card-subtitle">
+                        Digite CNPJs em formato de planilha, auto-preencha por API e cadastre tudo no Tareffa com
+                        características e serviços.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Contábil</span>
+                        <span class="tag">JOB</span>
+                        <span class="tag">Python</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Tabela estilo planilha: CNPJ + dados. Ao cadastrar, o robô cria as empresas em lote no
+                            Tareffa, baixa os IDs,
+                            marca Regime/Atividades/Município/Estado e gera serviços automaticamente.
+                        </p>
+                        <a href="/tareffa-empresas-lote" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -507,24 +581,26 @@
             </div>
             <span class="session-chevron">⌄</span>
         </button>
-    
+
         <div class="session-body">
             <div class="session-grid">
                 <!-- Snippet para home.html (sessão declaracoes) -->
                 <div class="carousel-card">
                     <div class="card-icon">🏢</div>
                     <h3 class="card-title">DIMOB</h3>
-                    <p class="card-subtitle">Tabela de faturamento mensal via SPED e preparação para gerar o TXT de importação.</p>
+                    <p class="card-subtitle">Tabela de faturamento mensal via SPED e preparação para gerar o TXT de
+                        importação.</p>
                     <div class="card-tags">
                         <span>Fiscal</span>
                         <span>DIMOB</span>
                     </div>
                     <div class="card-hover">
-                        <p>Informe CNPJ/ano, anexe SPED(s) e veja o faturamento mensal. (Geração do arquivo DIMOB: próxima etapa.)</p>
+                        <p>Informe CNPJ/ano, anexe SPED(s) e veja o faturamento mensal. (Geração do arquivo DIMOB:
+                            próxima etapa.)</p>
                         <a href="/dimob" class="btn-card">Acessar</a>
                     </div>
                 </div>
-                
+
                 <div class="carousel-card">
                     <div class="card-icon">📄</div>
                     <h3 class="card-title">Simples Nacional sem movimento</h3>
@@ -541,7 +617,7 @@
                         <a href="/sn" class="btn-card">Acessar</a>
                     </div>
                 </div>
-    
+
                 <div class="carousel-card" data-script="mit">
                     <div class="card-icon">📑</div>
                     <div class="card-content">
@@ -556,10 +632,28 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            Faça upload do arquivo JSON gerado pelo IOB, caso seja sem movimento entregara o MIT e a DCTFWeb automaticamente.
+                            Faça upload do arquivo JSON gerado pelo IOB, caso seja sem movimento entregara o MIT e a
+                            DCTFWeb automaticamente.
                             (Apenas com procuração para o CNPJ)
                         </p>
                         <a href="/mit" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
+                <div class="carousel-card" data-script="ecd-status">
+                    <div class="card-icon">📄</div>
+                    <h3 class="card-title">Lista de Empresas para ECD</h3>
+                    <p class="card-subtitle">Marque as empresas prontas para gerar ECD para que fiquem na fila do robô.</p>
+                    <div class="card-tags">
+                        <span>Fiscal</span>
+                        <span>ECD</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Lista de empresas com marcação de Simples/Normal e necessidade de DFC.
+                            Após salvar, o registro fica gerado e bloqueado (somente ADMIN pode alterar).
+                        </p>
+                        <a href="/ecd-status" class="btn-card">Acessar</a>
                     </div>
                 </div>
 

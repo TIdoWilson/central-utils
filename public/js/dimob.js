@@ -97,9 +97,72 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let previousFileId = null;
     let previousFileLabel = null;
+    let lastParseData = null;
+    let lastParseCnpj = null;
+    let lastParseYear = null;
 
     // ========= utils =========
     const nowStr = () => new Date().toLocaleString('pt-BR');
+
+    function getFilenameFromContentDisposition(cd) {
+        if (!cd) return '';
+        // filename="..."
+        let m = cd.match(/filename\s*=\s*"?([^";]+)"?/i);
+        if (m?.[1]) return m[1];
+
+        // filename*=UTF-8''...
+        m = cd.match(/filename\*\s*=\s*UTF-8''([^;]+)/i);
+        if (m?.[1]) {
+            try { return decodeURIComponent(m[1]); } catch { return m[1]; }
+        }
+        return '';
+    }
+
+    function collectNewLocatariosFromUI() {
+        // Lê a tabela renderizada em renderNewTenantsTable()
+        const table = newTenantsWrap?.querySelector('table');
+        if (!table) return [];
+
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const out = [];
+        const missing = [];
+
+        for (const tr of rows) {
+            const doc = String(tr.querySelector('td')?.title || '').replace(/\D+/g, '');
+
+            const inputs = Array.from(tr.querySelectorAll('input'));
+            const [nomeInput, contratoInput, cepInput, enderecoInput, municipioInput, ufInput, dataInput] = inputs;
+
+            const item = {
+                doc,
+                nome: (nomeInput?.value || '').trim(),
+                contrato: (contratoInput?.value || '').trim(),
+                cep: (cepInput?.value || '').trim(),
+                endereco: (enderecoInput?.value || '').trim(),
+                municipio: (municipioInput?.value || '').trim(),
+                uf: (ufInput?.value || '').trim(),
+                dataInicio: (dataInput?.value || '').trim(),
+            };
+
+            // validação rápida (para já logar antes de mandar pro backend)
+            const reqFields = ['doc', 'nome', 'contrato', 'cep', 'endereco', 'municipio', 'uf', 'dataInicio'];
+            const miss = reqFields.filter(k => !String(item[k] || '').trim());
+            if (miss.length) {
+                missing.push(`${doc || '(sem doc)'}: faltando ${miss.join(', ')}`);
+            }
+
+            out.push(item);
+        }
+
+        if (missing.length) {
+            log('GERAÇÃO: campos obrigatórios faltando nos novos locatários:');
+            missing.forEach(m => log(`- ${m}`));
+            throw new Error('Preencha todos os campos dos novos locatários antes de gerar.');
+        }
+
+        return out;
+    }
+
 
     function setStatus(msg) {
         if (statusEl) statusEl.textContent = msg || '';
@@ -324,7 +387,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         for (const t of tenants) {
             const doc14 = String(t.participantDoc || '').replace(/\D+/g, '');
             const docDisplay = dimobDisplayDoc(doc14);
-            const firstMonth = Number(t.firstMonth || 0);
+            const firstMonth = Number(t.firstMonthDetected || t.firstMonth || 0);
 
             const tr = document.createElement('tr');
 
@@ -404,10 +467,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Observação (primeiro mês detectado)
             const tdObs = document.createElement('td');
-            tdObs.textContent = (firstMonth >= 1 && firstMonth <= 12 && year)
-                ? `Detectado 1ª vez em ${String(firstMonth).padStart(2, '0')}/${year}`
-                : 'Detectado (mês não informado)';
+
+            const obsFromApi = String(t.observacao || '').trim();
+            tdObs.textContent = obsFromApi
+                ? obsFromApi
+                : (firstMonth >= 1 && firstMonth <= 12 && year)
+                    ? `Detectado 1ª vez em ${String(firstMonth).padStart(2, '0')}/${year}`
+                    : 'Detectado (mês não informado)';
+
             tr.appendChild(tdObs);
+
 
             tbody.appendChild(tr);
 
@@ -892,14 +961,110 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderAtividadeImobiliariaTable(data);
             renderBillingTable(data);
             renderNewTenantsTable(data);
+            // guarda o último retorno para usar na geração
+            lastParseData = data;
+            lastParseCnpj = cnpj;
+            lastParseYear = selectedYear;
 
-            if (btnGenerate) btnGenerate.disabled = true; // fase 2
+            // ✅ botão gerar deve ficar habilitado (se existir)
+            if (btnGenerate) btnGenerate.disabled = false;
         } catch (e) {
             setStatus(`Erro: ${e.message || e}`);
             log(`ERRO parsing SPED: ${e.message || e}`);
             ensureEmptyState();
         } finally {
             btnParse && (btnParse.disabled = false);
+        }
+    }
+
+    async function generateDimobFile(ev) {
+        ev?.preventDefault?.();
+
+        hr('GERAR ARQUIVO DIMOB (CLIQUES/REQUEST/RESPONSE)');
+        log('Clique no botão "Gerar arquivo" detectado.');
+
+        try {
+            await ensureAuth();
+
+            const cnpj = onlyDigits(lastParseCnpj || elCnpj?.value);
+            const year = Number(lastParseYear || elYear?.value);
+
+            if (!isValidCnpj14(cnpj)) throw new Error('CNPJ inválido (14 dígitos).');
+            if (!Number.isFinite(year)) throw new Error('Ano inválido.');
+
+            if (!lastParseData) {
+                throw new Error('Nenhum SPED processado ainda. Clique em "Montar tabela" primeiro.');
+            }
+
+            // precisa do arquivo DIMOB anterior salvo no servidor (rede)
+            if (!previousFileId) {
+                log('GERAÇÃO: previousFileId está vazio (arquivo DIMOB anterior não foi selecionado via rede).');
+                throw new Error('Selecione a DIMOB anterior via "Buscar DIMOB anterior" (rede) antes de gerar.');
+            }
+
+            const byParticipant = Array.isArray(lastParseData?.byParticipant) ? lastParseData.byParticipant : [];
+            const newLocatarios = collectNewLocatariosFromUI();
+
+            log(`Payload: cnpj=${cnpj} year=${year} previousFileId=${previousFileId}`);
+            log(`Payload: byParticipant=${byParticipant.length} | newLocatarios=${newLocatarios.length}`);
+
+            btnGenerate && (btnGenerate.disabled = true);
+
+            const payload = { cnpj, year, previousFileId, byParticipant, newLocatarios };
+
+            log('POST /api/dimob/generate-file');
+            const resp = await authFetch('/api/dimob/generate-file', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            log(`Resposta HTTP: ${resp.status}`);
+
+            if (!resp.ok) {
+                const { data, raw } = await safeReadResponse(resp);
+
+                const errMsg =
+                    (data?.detail ? `${data.error} | detail: ${data.detail}` : (data?.error || 'Erro')) +
+                    (data?.traceId ? ` | traceId: ${data.traceId}` : '');
+
+                log(`ERRO /generate-file bruto: ${shortText(raw || JSON.stringify(data || {}), 3000)}`);
+                throw new Error(errMsg || `Erro HTTP ${resp.status}`);
+            }
+
+            const cd = resp.headers.get('content-disposition') || '';
+            const ct = resp.headers.get('content-type') || '';
+            const fileName = getFilenameFromContentDisposition(cd) || `${cnpj}-DIMOB-${year}.txt`;
+
+            log(`OK /generate-file | content-type=${ct}`);
+            log(`Content-Disposition: ${cd || '(vazio)'}`);
+            log(`Arquivo: ${fileName}`);
+
+            const blob = await resp.blob();
+            log(`Tamanho (bytes): ${blob.size}`);
+
+            // dispara download
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 2000);
+
+            setStatus(`Arquivo gerado: ${fileName}`);
+            log('Download disparado com sucesso.');
+            
+        } catch (e) {
+            try {
+                await auditLog(req, 'dimob_generate_file', 'error', {
+                    cnpj, year, prevPath,
+                    traceId,
+                    message: e?.message || String(e)
+                });
+            } catch { }
+            return send500(e);
         }
     }
 
@@ -913,4 +1078,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     btnFindPrev?.addEventListener('click', findPreviousDimobOnNetwork);
     btnParse?.addEventListener('click', parseSpedAndBuildTable);
+    btnGenerate?.addEventListener('click', generateDimobFile);
+
 });
