@@ -1,0 +1,144 @@
+<!-- public/tareffa-empresas-lote.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Tareffa — Cadastro de Empresas em Lote</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="app-body nfe-body page-empresas-lote">
+  <div class="nfe-layout">
+    <aside class="nfe-sidebar">
+      <div class="nfe-sidebar-top">
+        <div class="nfe-sidebar-logo">
+          <span class="logo-circle">WL</span>
+          <span class="logo-text">Portal</span>
+        </div>
+
+        <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+    </aside>
+
+    <main class="nfe-main lote-main">
+      <header class="nfe-header lote-header">
+        <h1>Tareffa — Cadastro de Empresas em Lote</h1>
+        <p>
+          Digite o CNPJ, pressione <strong>TAB</strong> para buscar/auto-preencher. Se não vier nada, complete
+          manualmente.
+          No fim da linha, TAB novamente cria uma nova linha. Depois clique em <strong>Cadastrar</strong> para rodar o
+          job.
+        </p>
+
+        <div class="nfe-table-actions" style="margin-top: 10px; gap: 8px;">
+          <button class="btn btn-secondary" id="btnAddRow" type="button">+ Linha</button>
+          <button class="btn btn-ghost-danger" id="btnClearAll" type="button">Limpar</button>
+          <button class="btn btn-primary" id="btnSubmitJob" type="button">Cadastrar</button>
+        </div>
+
+        <div id="whoami" class="nfe-card-subtitle" style="margin-top: 8px"></div>
+      </header>
+
+      <section class="nfe-card nfe-card-table empresas-lote-card lote-card">
+        <div class="nfe-card-header">
+          <h2>Planilha de empresas</h2>
+          <p class="nfe-card-subtitle">
+            Regime Tributário é digitável com sugestões. Atividade da Empresa é multi-seleção
+            (Aluguel/Comércio/Indústria/Serviços/Tem ICMS).
+          </p>
+        </div>
+
+        <div class="nfe-table-wrapper lote-table-wrapper">
+          <table class="nfe-table empresas-lote-table" id="empresasTable">
+
+            <colgroup>
+              <col style="width: 16ch;"> <!-- CNPJ -->
+              <col style="width: 26ch;"> <!-- Razão Social -->
+              <col style="width: 12ch;"> <!-- Início -->
+              <col style="width: 12ch;"> <!-- IE -->
+              <col style="width: 18ch;"> <!-- Regime -->
+              <col style="width: 11ch;"> <!-- CNAE -->
+              <col style="width: 18ch;"> <!-- Atividade -->
+              <col style="width: 10ch;"> <!-- CEP -->
+              <col style="width: 4ch;"> <!-- UF -->
+              <col style="width: 16ch;"> <!-- Município -->
+              <col style="width: 10ch;"> <!-- Status -->
+              <col style="width: 6ch;"> <!-- Ações -->
+            </colgroup>
+
+            <thead>
+              <tr>
+                <th>CNPJ</th>
+                <th>Razão Social</th>
+                <th>Início Atividade</th>
+                <th>Inscrição Estadual</th>
+                <th>Regime Tributário</th>
+                <th>CNAE Primário</th>
+                <th>Atividade da Empresa</th>
+                <th>CEP</th>
+                <th>UF</th>
+                <th>Município</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+
+            <tbody id="empresasTbody"></tbody>
+          </table>
+        </div>
+
+        <div class="nfe-card-subtitle" style="margin-top: 10px;">
+          Dica: cole vários CNPJs (um por linha) no primeiro campo de CNPJ — a tela distribui automaticamente nas
+          linhas.
+        </div>
+      </section>
+
+      <section class="nfe-card" style="margin-top: 14px;" id="jobSection" hidden>
+        <div class="nfe-card-header">
+          <h2>Status do Job</h2>
+          <p class="nfe-card-subtitle">Acompanhe logs e progresso.</p>
+        </div>
+
+        <div class="nfe-row" style="grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+          <div>
+            <div class="auth-label">Job ID</div>
+            <div id="jobIdBox" class="auth-input" style="display:flex; align-items:center; min-height: 40px;"></div>
+          </div>
+
+          <div>
+            <div class="auth-label">Status</div>
+            <div id="jobStatusBox" class="auth-input" style="display:flex; align-items:center; min-height: 40px;"></div>
+          </div>
+
+          <div>
+            <div class="auth-label">Progresso</div>
+            <div id="jobProgressBox" class="auth-input" style="display:flex; align-items:center; min-height: 40px;">
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 10px;">
+          <div class="auth-label">Logs</div>
+          <pre id="jobLogs" class="empresas-lote-logs"></pre>
+        </div>
+
+        <div style="margin-top: 10px;">
+          <div class="auth-label">Resultado</div>
+          <pre id="jobResult" class="empresas-lote-logs"></pre>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
+  <script src="/js/tareffa-empresas-lote.js"></script>
+</body>
+
+</html>

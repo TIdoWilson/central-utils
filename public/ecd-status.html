@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Empresas para ECD</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="app-body nfe-body">
+  <div class="nfe-layout">
+    <aside class="nfe-sidebar">
+      <div class="nfe-sidebar-top">
+        <div class="nfe-sidebar-logo">
+          <span class="logo-circle">WL</span>
+          <span class="logo-text">Portal</span>
+        </div>
+        <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+    </aside>
+
+    <main class="nfe-main">
+      <header class="nfe-header">
+        <div class="nfe-breadcrumb">Portal / Fiscal / Lista de Empresas para ECD</div>
+        <h1>Lista de Empresas para ECD</h1>
+        <p>Selecione uma empresa, confirme Simples/Normal e DFC. Ao concluir, o registro fica gerado e bloqueado.</p>
+      </header>
+
+      <section class="nfe-row">
+        <div class="nfe-card nfe-card-upload" style="flex:2">
+          <h2>Empresas</h2>
+          <p class="nfe-card-subtitle">Use os filtros para localizar e selecionar uma empresa.</p>
+
+          <div class="nfe-upload-form">
+            <label class="nfe-input-file-label" style="width: 100%">
+              <span>Código (exato)</span>
+              <input type="text" id="ecdSearchCode" placeholder="Ex.: 123" />
+            </label>
+            <label class="nfe-input-file-label" style="width: 100%">
+              <span>Nome</span>
+              <input type="text" id="ecdSearchName" placeholder="Digite parte do nome" />
+            </label>
+            <label class="nfe-input-file-label" style="width: 100%">
+              <span>CNPJ</span>
+              <input type="text" id="ecdSearchCnpj" placeholder="Digite parte do CNPJ" />
+            </label>
+            <label class="nfe-input-file-label" style="width: 100%">
+              <span>Status</span>
+              <select id="ecdStatusFilter" class="sn-select">
+                <option value="">Todos</option>
+                <option value="Completo">Completo</option>
+                <option value="Na Fila">Na Fila</option>
+                <option value="ERRO">ERRO</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="nfe-table-wrapper">
+            <table class="nfe-table" id="ecdTable">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Empresa</th>
+                  <th>CNPJ</th>
+                  <th>Padrao</th>
+                  <th>Status</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="nfe-card nfe-card-ext" style="flex:1">
+          <h2>Detalhes</h2>
+          <div id="ecdDetailsEmpty" class="nfe-card-subtitle">Selecione uma empresa na lista.</div>
+
+          <div id="ecdDetails" style="display:none">
+            <div class="nfe-section">
+              <p><strong>Código:</strong> <span id="ecdCode"></span></p>
+              <p><strong>Empresa:</strong> <span id="ecdName"></span></p>
+              <p><strong>CNPJ:</strong> <span id="ecdCnpj"></span></p>
+            </div>
+
+            <hr class="nfe-divider" />
+
+            <div class="nfe-section">
+              <label class="nfe-input-file-label">
+                <span>Tipo</span>
+                <select id="ecdTipo" class="sn-select">
+                  <option value="">Selecione</option>
+                  <option value="Simples">Simples</option>
+                  <option value="Normal">Normal</option>
+                </select>
+              </label>
+
+              <label class="nfe-input-file-label">
+                <span>Precisa de DFC?</span>
+                <select id="ecdDfc" class="sn-select">
+                  <option value="">Selecione</option>
+                  <option value="true">Sim</option>
+                  <option value="false">Não</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="nfe-section">
+              <button type="button" id="ecdSaveBtn" class="btn btn-primary">Salvar e gerar</button>
+            </div>
+
+            <div id="ecdStatusMsg" class="nfe-upload-message"></div>
+            <div id="ecdFilesMsg" class="nfe-upload-message"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
+  <script src="/js/ecd-status.js"></script>
+</body>
+</html>

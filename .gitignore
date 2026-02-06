@@ -15,3 +15,5 @@
 /.venv
 central-utils.zip
 /go-api/work
+/tmp/tareffa-empresas-lote
+.backup

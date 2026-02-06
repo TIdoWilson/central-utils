@@ -132,6 +132,10 @@ body.app-body {
   color: #0ea5e9;
 }
 
+.session-pill-pdf {
+  color: #ef4444;
+}
+
 .session-chevron {
   font-size: 18px;
   color: #6b7280;
@@ -180,6 +184,10 @@ body.app-body {
   background: #ffffff;
 }
 
+.session--pdf .session-header {
+  background: #ffffff;
+}
+
 /* corpo das sessões – cinza bem claro neutro */
 .session--contabil .session-body {
   background: #f9fafb;
@@ -204,6 +212,10 @@ body.app-body {
 .session--declaracoes .session-body {
    background: #f9fafb;
  }
+
+.session--pdf .session-body {
+  background: #f9fafb;
+}
 
 
 /* quando a sessão está aberta */
@@ -2159,4 +2171,257 @@ main,
 /* Se o #dimobLog for um <textarea>, isso ajuda também */
 textarea#dimobLog {
   resize: vertical;
+}
+
+/* =========================================================
+   Tareffa — Empresas em Lote (ESCOPADO)
+   Depende do body ter: class="page-empresas-lote"
+   ========================================================= */
+
+/* ======================
+   Layout (2.2) — sem depender de nfe-*
+   ====================== */
+.page-empresas-lote .lote-main{
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-empresas-lote .lote-header{
+  flex: 0 0 auto;
+  margin-bottom: 10px;
+}
+
+.page-empresas-lote .lote-card{
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-empresas-lote .lote-table-wrapper{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* Fallback temporário (remova quando seu HTML já tiver lote-*) */
+.page-empresas-lote .nfe-main{
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.page-empresas-lote .nfe-header{
+  flex: 0 0 auto;
+  margin-bottom: 10px;
+}
+.page-empresas-lote .empresas-lote-card{
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.page-empresas-lote .nfe-table-wrapper{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* ======================
+   Tabela compacta
+   ====================== */
+.page-empresas-lote .empresas-lote-table{
+  width: 100%;
+  table-layout: fixed; /* respeita colgroup */
+}
+
+.page-empresas-lote .empresas-lote-table th,
+.page-empresas-lote .empresas-lote-table td{
+  padding: 6px 8px;
+  min-width: 0;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-size: 12px;
+}
+
+.page-empresas-lote .empresas-lote-table .auth-input{
+  height: 30px;
+  min-height: 30px;
+  padding: 4px 8px;
+  font-size: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* status */
+.page-empresas-lote .status-cell{
+  font-size: 12px;
+  opacity: 0.95;
+}
+.page-empresas-lote .status-ok { color: #3bd671; }
+.page-empresas-lote .status-warn { color: #f0c14b; }
+.page-empresas-lote .status-err { color: #ff6b6b; }
+
+/* logs */
+.page-empresas-lote .empresas-lote-logs{
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 10px;
+  min-height: 120px;
+  max-height: 320px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+/* ======================
+   Combobox (Regime Tributário)
+   ====================== */
+.page-empresas-lote .wl-combobox{ position: relative; }
+
+.page-empresas-lote .wl-combobox-menu{
+  position: absolute; /* padrão (não-portal) */
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+
+  z-index: 99999;
+  display: none;
+
+  background: #fff;
+  color: #111;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+/* quando o JS mover o menu pro body, ele deve adicionar a classe .portal */
+.page-empresas-lote .wl-combobox-menu.portal{
+  position: fixed;   /* modo portal (1.1) */
+  top: auto; left: auto; right: auto; /* JS define via style inline */
+}
+
+.page-empresas-lote .wl-combobox-menu.open{ display: block; }
+
+.page-empresas-lote .wl-combobox-item{
+  padding: 10px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.page-empresas-lote .wl-combobox-item:hover{
+  background: rgba(0,0,0,0.06);
+}
+
+/* ======================
+   Atividade da Empresa (MENU multi-select)
+   ====================== */
+.page-empresas-lote .wl-mini-check{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  user-select: none;
+}
+
+.page-empresas-lote .wl-multi{ position: relative; }
+
+.page-empresas-lote .wl-multi-btn{
+  width: 100%;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: #fff;
+  padding: 4px 10px;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.page-empresas-lote .wl-multi-menu{
+  position: absolute; /* padrão (não-portal) */
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+
+  z-index: 99999;
+  display: none;
+
+  background: #fff;
+  color: #111;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  padding: 8px;
+
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.page-empresas-lote .wl-multi-menu.portal{
+  position: fixed;  /* modo portal (1.1) */
+  top: auto; left: auto; right: auto; /* JS define via style inline */
+}
+
+.page-empresas-lote .wl-multi-menu.open{ display: block; }
+
+.page-empresas-lote .wl-multi-menu .wl-mini-check{
+  display: flex;
+  gap: 6px;
+  margin: 4px 0;
+}
+
+.page-empresas-lote .wl-combobox-item.is-active{
+  background: rgba(0,0,0,0.06);
+}
+
+.page-empresas-lote .wl-multi-menu .wl-mini-check.is-active{
+  background: rgba(0,0,0,0.06);
+  border-radius: 10px;
+  padding: 4px 6px;
+}
+
+/* ===== manter planilha visível mesmo com o job aparecendo ===== */
+
+/* o container principal precisa ser flex-col e sem scroll na página */
+.page-empresas-lote .lote-main,
+.page-empresas-lote .nfe-main{
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* card da planilha ocupa o espaço restante */
+.page-empresas-lote .empresas-lote-card,
+.page-empresas-lote .lote-card{
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* wrapper da tabela cresce e mostra a tabela */
+.page-empresas-lote .lote-table-wrapper,
+.page-empresas-lote .nfe-table-wrapper{
+  flex: 1 1 auto;
+  min-height: 140px;   /* <- evita “sumir” */
+  overflow: auto;
+}
+
+/* o card do job não pode “engolir” toda a tela */
+.page-empresas-lote #jobSection{
+  flex: 0 0 320px;     /* altura fixa do status do job */
+  min-height: 320px;
+  overflow: hidden;
+}
+
+/* logs rolam dentro do job */
+.page-empresas-lote #jobSection .empresas-lote-logs{
+  max-height: 180px;
+  overflow: auto;
 }

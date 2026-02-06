@@ -12,6 +12,14 @@ const MENU_CONFIG = [
     ],
   },
   {
+    id: 'ferramentas-pdf',
+    label: 'Ferramentas PDF',
+    icon: '📄',
+    items: [
+      { id: 'pdfa', label: 'Conversor PDF → PDF/A', href: '/pdf-a', icon: '📄' },
+    ],
+  },
+  {
     id: 'contabil',
     label: 'Contábil',
     icon: '📊',
@@ -20,6 +28,7 @@ const MENU_CONFIG = [
       { id: 'acerto-lotes-toscan', label: 'Acerto Lotes Toscan', href: '/acerto-lotes-toscan', icon: '📄' },
       { id: 'ajuste-diario-gfbr-c', label: 'Ajuste Diario GFBR', href: '/ajuste-diario-gfbr-c', icon: '📄' },
       { id: 'balancete-transitorio', label: 'Conciliador Conta Transitória', href: '/balancete-transitorio', icon: '📄' },
+      { id: 'conciliador-hausen-ocean', label: 'Conciliador Hausen e Ocean', href: '/conciliador-hausen-ocean', icon: '📊' },
       { id: 'importador-recebimentos-madre-scp', label: 'Importador Recebimentos Madre SCP', href: '/importador-recebimentos-madre-scp', icon: '📊' },
       { id: 'separador-csv-baixa-automatica', label: 'Separador CSV Baixa Automática', href: '/separador-csv-baixa-automatica', icon: '📊' },
       { id: 'formatador-bernardina', label: 'Formatador DRE Bernadina (XLSM)', href: '/formatador-bernardina', icon: '📊' },
@@ -44,6 +53,7 @@ const MENU_CONFIG = [
       { id: 'extrator-zip-rar', label: 'Extrator ZIP/RAR', href: '/extrator-zip-rar', icon: '📦' },
       { id: 'excel-abas-pdf', label: 'Excel → Abas em PDF', icon: '📄', href: '/excel-abas-pdf' },
       { id: 'irpf-carne-leao', label: 'IRPF Carne Leão', icon: '📄', href: '/irpf-carne-leao' },
+      { id: 'tareffa-empresas-lote', label: 'Tareffa Empresas Lote', icon: '📄', href: '/tareffa-empresas-lote' },
     ],
   },
   {
@@ -54,6 +64,7 @@ const MENU_CONFIG = [
       { id: 'automacao-DIMOB', label: 'Automação DIMOB', href: '/DIMOB', icon: '🏢' },
       { id: 'sn', label: 'SN sem movimento', href: '/sn', icon: '📄' },
       { id: 'mit', label: 'MIT/DCTFWEB sem movimento', href: '/mit', icon: '📄' },
+      { id: 'ecd-status', label: 'Lista de Empresas para ECD', href: '/ecd-status', icon: '📄' },
     ],
   },
   {

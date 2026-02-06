@@ -22,6 +22,14 @@ if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR);
 }
 
+// ===== PDF/A Converter =====
+const PDFA_DIR = path.join(DATA_DIR, 'pdfa');
+const PDFA_TMP_DIR = path.join(PDFA_DIR, '_tmp');
+const PDFA_OUT_DIR = path.join(PDFA_DIR, 'outputs');
+fs.mkdirSync(PDFA_DIR, { recursive: true });
+fs.mkdirSync(PDFA_TMP_DIR, { recursive: true });
+fs.mkdirSync(PDFA_OUT_DIR, { recursive: true });
+
 //////////////// ENSINA PARA O SCRIPT QUE W:\ == \\192.0.0.251\ARQUIVOS
 function resolveWPath(p) {
   const s = String(p || '');
@@ -40,6 +48,198 @@ function resolveWPath(p) {
   return s;
 }
 
+function conciliadorGetCsprojPath() {
+  const envPath = process.env.CONCILIADOR_HO_CSPROJ;
+  if (envPath && fs.existsSync(envPath)) return envPath;
+  const candidate = 'W:\\DOCUMENTOS ESCRITORIO\\INSTALACAO SISTEMA\\C#\\RR - Ocean\\PdfToExcel\\RR.Ocean.PdfToExcel.csproj';
+  if (fs.existsSync(candidate)) return candidate;
+  return candidate;
+}
+
+function conciliadorGetAppPath() {
+  const exePath = process.env.CONCILIADOR_HO_EXE;
+  if (exePath && fs.existsSync(exePath)) return { kind: 'exe', path: exePath };
+
+  const dllPath = process.env.CONCILIADOR_HO_DLL;
+  if (dllPath && fs.existsSync(dllPath)) return { kind: 'dll', path: dllPath };
+
+  const defaultDll = path.join(CONCILIADOR_DIR, 'app', 'RR.Ocean.PdfToExcel.dll');
+  if (fs.existsSync(defaultDll)) return { kind: 'dll', path: defaultDll };
+
+  return null;
+}
+
+function conciliadorGetTemplatePath(tipo) {
+  const isDre = String(tipo || '').toLowerCase() === 'dre';
+  const envKey = isDre ? 'CONCILIADOR_HO_TEMPLATE_DRE' : 'CONCILIADOR_HO_TEMPLATE_BALANCETE';
+  const envPath = process.env[envKey];
+  if (envPath && fs.existsSync(envPath)) return envPath;
+
+  const direct = isDre
+    ? 'W:\\DOCUMENTOS ESCRITORIO\\INSTALACAO SISTEMA\\C#\\RR - Ocean\\Template DRE.xlsx'
+    : 'W:\\DOCUMENTOS ESCRITORIO\\INSTALACAO SISTEMA\\C#\\RR - Ocean\\Template Balancete.xlsx';
+  if (fs.existsSync(direct)) return direct;
+
+  const templatesDir = path.join(CONCILIADOR_DIR, 'templates');
+  const templatesPath = path.join(templatesDir, isDre ? 'Template DRE.xlsx' : 'Template Balancete.xlsx');
+  if (fs.existsSync(templatesPath)) return templatesPath;
+
+  const dataRootName = isDre ? 'Template DRE.xlsx' : 'Template Balancete.xlsx';
+  const dataRootPath = path.join(DATA_DIR, dataRootName);
+  if (fs.existsSync(dataRootPath)) return dataRootPath;
+
+  const localName = isDre ? 'Template DRE.xlsx' : 'Template Balancete.xlsx';
+  const localPath = path.join(CONCILIADOR_DIR, localName);
+  if (fs.existsSync(localPath)) return localPath;
+
+  return direct;
+}
+
+// ===== PDF/A Converter (helpers) =====
+const PDFA_DOWNLOAD_MAP = new Map(); // id -> { path, expiresAt }
+
+function pdfaStoreFile(filePath) {
+  const id = crypto.randomUUID ? crypto.randomUUID() : crypto.randomBytes(16).toString('hex');
+  PDFA_DOWNLOAD_MAP.set(id, { path: filePath, expiresAt: Date.now() + 60 * 60 * 1000 });
+  return id;
+}
+
+function pdfaGetFile(id) {
+  const rec = PDFA_DOWNLOAD_MAP.get(id);
+  if (!rec) return null;
+  if (Date.now() > rec.expiresAt) {
+    PDFA_DOWNLOAD_MAP.delete(id);
+    return null;
+  }
+  return rec.path;
+}
+
+function pdfaGetGhostscriptPath() {
+  const envPath = process.env.GS_EXE_PATH;
+  if (envPath && fs.existsSync(envPath)) return envPath;
+  const candidates = [
+    'C:\\\\Program Files\\\\gs\\\\gs10.00.0\\\\bin\\\\gswin64c.exe',
+    'C:\\\\Program Files\\\\gs\\\\gs10.01.0\\\\bin\\\\gswin64c.exe',
+    'C:\\\\Program Files\\\\gs\\\\gs10.02.0\\\\bin\\\\gswin64c.exe',
+    'C:\\\\Program Files\\\\gs\\\\gs10.03.0\\\\bin\\\\gswin64c.exe',
+    'C:\\\\Program Files\\\\gs\\\\gs10.04.0\\\\bin\\\\gswin64c.exe',
+  ];
+  for (const p of candidates) {
+    if (fs.existsSync(p)) return p;
+  }
+  return 'gswin64c.exe'; // tenta via PATH
+}
+
+function pdfaGetLibreOfficePath() {
+  const envPath = process.env.LIBREOFFICE_PATH;
+  if (envPath && fs.existsSync(envPath)) return envPath;
+  const candidates = [
+    'C:\\\\Program Files\\\\LibreOffice\\\\program\\\\soffice.exe',
+    'C:\\\\Program Files (x86)\\\\LibreOffice\\\\program\\\\soffice.exe',
+  ];
+  for (const p of candidates) {
+    if (fs.existsSync(p)) return p;
+  }
+  return null;
+}
+
+function pdfaGetIccProfilePath() {
+  const envPath = process.env.PDFA_ICC_PROFILE;
+  if (envPath && fs.existsSync(envPath)) return envPath;
+  const candidates = [
+    'C:\\\\Windows\\\\System32\\\\spool\\\\drivers\\\\color\\\\sRGB Color Space Profile.icm',
+    'C:\\\\Windows\\\\System32\\\\spool\\\\drivers\\\\color\\\\sRGB IEC61966-2.1.icm',
+  ];
+  for (const p of candidates) {
+    if (fs.existsSync(p)) return p;
+  }
+  return null;
+}
+
+async function pdfaRun(cmd, args, opts = {}) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(cmd, args, { ...opts, windowsHide: true });
+    let stdout = '';
+    let stderr = '';
+    child.stdout?.on('data', (d) => { stdout += d.toString('utf8'); });
+    child.stderr?.on('data', (d) => { stderr += d.toString('utf8'); });
+    child.on('error', (err) => reject({ err, stdout, stderr }));
+    child.on('close', (code) => {
+      if (code === 0) return resolve({ stdout, stderr });
+      return reject({ code, stdout, stderr });
+    });
+  });
+}
+
+// ===== ECD Status (helpers) =====
+function ensureEcdCsvCopies() {
+  try {
+    if (fs.existsSync(ECD_SRC_ALL_CSV)) {
+      fs.copyFileSync(ECD_SRC_ALL_CSV, ECD_ALL_CSV);
+    }
+    if (fs.existsSync(ECD_SRC_SN_CSV)) {
+      fs.copyFileSync(ECD_SRC_SN_CSV, ECD_SN_CSV);
+    }
+  } catch (e) {
+    console.error('[ECD] Falha ao copiar CSVs:', e.message || e);
+  }
+}
+
+function parseEcdCsv(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const raw = fs.readFileSync(filePath, 'utf-8');
+  const lines = raw.split(/\r?\n/).filter((l) => l && l.trim());
+  const out = [];
+  for (const line of lines) {
+    const parts = line.split(';');
+    if (parts.length < 3) continue;
+    const code = String(parts[0] || '').trim();
+    const name = String(parts[1] || '').trim();
+    const cnpj = String(parts[2] || '').replace(/\D/g, '');
+    if (!code || !name || !cnpj) continue;
+    out.push({ code, name, cnpj });
+  }
+  return out;
+}
+
+function loadEcdStatus() {
+  if (!fs.existsSync(ECD_STATUS_FILE)) return { companies: {} };
+  try {
+    const raw = fs.readFileSync(ECD_STATUS_FILE, 'utf-8');
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return { companies: {} };
+    if (!parsed.companies || typeof parsed.companies !== 'object') parsed.companies = {};
+    if (!Array.isArray(parsed.order)) parsed.order = [];
+    return parsed;
+  } catch (e) {
+    console.error('[ECD] Erro ao ler ecd_status.json:', e.message || e);
+    return { companies: {} };
+  }
+}
+
+function saveEcdStatus(data) {
+  try {
+    fs.writeFileSync(ECD_STATUS_FILE, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (e) {
+    console.error('[ECD] Erro ao salvar ecd_status.json:', e.message || e);
+  }
+}
+
+function loadEcdCompanies() {
+  ensureEcdCsvCopies();
+  const simples = parseEcdCsv(ECD_SN_CSV).map((c) => ({ ...c, defaultTipo: 'Simples' }));
+  const normal = parseEcdCsv(ECD_ALL_CSV).map((c) => ({ ...c, defaultTipo: 'Normal' }));
+  return [...simples, ...normal];
+}
+
+function ecdHasErrorPng(companyName) {
+  const name = String(companyName || '').trim();
+  if (!name) return false;
+  const base = resolveWPath(ECD_BASE_DIR);
+  const p = path.join(base, name, 'erros registrados.png');
+  return fs.existsSync(p);
+}
+
 // ===== Balancete — Conta Transitória (C#) =====
 const BALANCETE_DIR = path.join(DATA_DIR, 'balancete-transitorio');
 const BALANCETE_TMP_DIR = path.join(BALANCETE_DIR, '_tmp');
@@ -51,6 +251,27 @@ fs.mkdirSync(BALANCETE_TMP_DIR, { recursive: true });
 const uploadBalancete = multer({
   dest: BALANCETE_TMP_DIR,
   limits: { fileSize: 50 * 1024 * 1024, files: 120 },
+});
+
+// ===== Conciliador Hausen e Ocean (C#) =====
+const CONCILIADOR_DIR = path.join(DATA_DIR, 'conciliador-hausen-ocean');
+const CONCILIADOR_TMP_DIR = path.join(CONCILIADOR_DIR, '_tmp');
+const CONCILIADOR_OUT_DIR = path.join(CONCILIADOR_DIR, 'outputs');
+
+fs.mkdirSync(CONCILIADOR_DIR, { recursive: true });
+fs.mkdirSync(CONCILIADOR_TMP_DIR, { recursive: true });
+fs.mkdirSync(CONCILIADOR_OUT_DIR, { recursive: true });
+
+const uploadConciliador = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => cb(null, CONCILIADOR_TMP_DIR),
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname || '') || '.xlsx';
+      const safe = `${Date.now()}_${Math.random().toString(16).slice(2)}${ext}`;
+      cb(null, safe);
+    },
+  }),
+  limits: { fileSize: 50 * 1024 * 1024, files: 2 },
 });
 
 const BERNADINA_DIR = path.join(DATA_DIR, 'formatador-bernardina');
@@ -72,6 +293,22 @@ if (!fs.existsSync(FERIAS_FUNC_DIR)) {
 
 // Arquivo de resumo do SN (apenas um)
 const SN_SUMMARY_FILE = path.join(DATA_DIR, 'sn_summary.json');
+
+// ===== ECD Status =====
+const ECD_DIR = path.join(DATA_DIR, 'ecd-status');
+const ECD_STATUS_FILE = path.join(ECD_DIR, 'ecd_status.json');
+const ECD_CSV_DIR = path.join(ECD_DIR, 'csv');
+
+// origem (fora do site) -> copia local no data/
+const ECD_SRC_ALL_CSV = 'W:\\DOCUMENTOS ESCRITORIO\\INSTALACAO SISTEMA\\Lista Todas Empresas\\formatados\\Todas Empresas - formatado.csv';
+const ECD_SRC_SN_CSV = 'W:\\DOCUMENTOS ESCRITORIO\\INSTALACAO SISTEMA\\Lista Todas Empresas\\formatados\\todas empresas simples nacional - formatado.csv';
+
+const ECD_ALL_CSV = path.join(ECD_CSV_DIR, 'Todas Empresas - formatado.csv');
+const ECD_SN_CSV = path.join(ECD_CSV_DIR, 'todas empresas simples nacional - formatado.csv');
+const ECD_BASE_DIR = 'W:\\SPEDs\\ECD\\2025';
+
+fs.mkdirSync(ECD_DIR, { recursive: true });
+fs.mkdirSync(ECD_CSV_DIR, { recursive: true });
 
 const {
   JOB_STATUS,
@@ -645,6 +882,10 @@ app.get('/', requireAuthPage, logPageView('page_view_home'), (req, res) => {
 
 app.get('/balancete-transitorio', requireAuthPage, logPageView('page_view_balancete_transitorio'), (req, res) => {
   res.sendFile(path.join(publicDir, 'balancete-transitorio.html'));
+});
+
+app.get('/conciliador-hausen-ocean', requireAuthPage, logPageView('page_view_conciliador_hausen_ocean'), (req, res) => {
+  res.sendFile(path.join(publicDir, 'conciliador-hausen-ocean.html'));
 });
 
 app.get('/nfe', requireAuthPage, logPageView('page_view_nfe'), (req, res) => {
@@ -1428,6 +1669,18 @@ app.get('/sn', requireAuthPage, logPageView('page_view_sn'), (req, res) => {
   res.sendFile(path.join(publicDir, 'sn.html'));
 });
 
+// ECD Status
+app.get('/ecd-status', requireAuthPage, async (req, res) => {
+  await auditLog(req, 'page_view_ecd_status', 'ok', { path: req.path, method: req.method });
+  res.sendFile(path.join(publicDir, 'ecd-status.html'));
+});
+
+// PDF/A Converter
+app.get('/pdf-a', requireAuthPage, async (req, res) => {
+  await auditLog(req, 'page_view_pdfa', 'ok', { path: req.path, method: req.method });
+  res.sendFile(path.join(publicDir, 'pdf-a.html'));
+});
+
 app.get('/formatador-bernardina', requireAuthPage, (req, res) => {
   res.sendFile(path.join(publicDir, 'formatador-bernardina.html'));
 });
@@ -1507,6 +1760,198 @@ app.get('/api/sn/receipt/:id', requireAuth, async (req, res) => {
     console.error('Erro ao buscar recibo:', err);
     res.status(500).send('Erro ao buscar recibo');
   }
+});
+
+// ---------- ROTAS API: ECD STATUS ----------
+app.get('/api/ecd/companies', requireAuth, async (req, res) => {
+  try {
+    const list = loadEcdCompanies();
+    const status = loadEcdStatus();
+    const out = list.map((c) => {
+      const st = status.companies[c.code] || {};
+      const hasErrorPng = ecdHasErrorPng(c.name);
+      if (hasErrorPng) {
+        st.erro = 'Y';
+        st.erroMsg = st.erroMsg || 'Arquivo de erro encontrado na pasta.';
+      }
+      return {
+        code: c.code,
+        name: c.name,
+        cnpj: c.cnpj,
+        defaultTipo: c.defaultTipo,
+        status: st,
+      };
+    });
+    res.json({ companies: out });
+  } catch (e) {
+    console.error('[ECD] Erro ao listar empresas:', e.message || e);
+    res.status(500).json({ error: 'Erro ao listar empresas.' });
+  }
+});
+
+app.post('/api/ecd/save', requireAuth, requireCsrf, async (req, res) => {
+  try {
+    const code = String(req.body?.code || '').trim();
+    const simples = String(req.body?.simples || '').trim();
+    const dfc = req.body?.dfc;
+
+    if (!code) return res.status(400).json({ error: 'Código obrigatório.' });
+    if (simples !== 'Simples' && simples !== 'Normal') {
+      return res.status(400).json({ error: 'Tipo inválido (Simples/Normal).' });
+    }
+    if (typeof dfc !== 'boolean') {
+      return res.status(400).json({ error: 'DFC inválido (true/false).' });
+    }
+
+    const status = loadEcdStatus();
+    const cur = status.companies[code] || null;
+
+    const nameFromReq = String(req.body?.name || '').trim();
+    let name = nameFromReq;
+    if (!name) {
+      const all = loadEcdCompanies();
+      const found = all.find((c) => String(c.code) === code);
+      if (found?.name) name = found.name;
+    }
+    if (!name && cur?.name) name = cur.name;
+
+    const isAdmin = (req.user?.role || '').toUpperCase() === 'ADMIN';
+    if (cur?.completed && !isAdmin) {
+      return res.status(409).json({ error: 'Empresa já está gerada e bloqueada para edição.' });
+    }
+
+    const nowIso = new Date().toISOString();
+    const next = {
+      code,
+      name: name || '',
+      simples,
+      dfc,
+      completed: true,
+      arquivosNaPasta: cur?.arquivosNaPasta || 'N',
+      lockedAt: nowIso,
+      lockedBy: {
+        id: req.user?.id || null,
+        email: req.user?.email || null,
+        name: req.user?.name || null,
+      },
+    };
+
+    if (cur?.completed && isAdmin) {
+      next.overrideAt = nowIso;
+      next.overrideBy = {
+        id: req.user?.id || null,
+        email: req.user?.email || null,
+        name: req.user?.name || null,
+      };
+    }
+
+    status.companies[code] = next;
+    if (!status.order.includes(code)) status.order.push(code);
+    saveEcdStatus(status);
+
+    await auditLog(req, 'ecd_status_save', 'ok', { code, simples, dfc });
+    res.json({ ok: true, status: next });
+  } catch (e) {
+    console.error('[ECD] Erro ao salvar status:', e.message || e);
+    res.status(500).json({ error: 'Erro ao salvar status.' });
+  }
+});
+
+// ---------- ROTAS API: PDF/A ----------
+const uploadPdfa = multer({
+  dest: PDFA_TMP_DIR,
+  limits: { fileSize: 50 * 1024 * 1024, files: 1 },
+});
+
+app.post('/api/pdfa/convert', requireAuth, requireCsrf, uploadPdfa.single('file'), async (req, res) => {
+  let tempDir = null;
+  try {
+    if (!req.file) return res.status(400).json({ error: 'Nenhum arquivo enviado.' });
+
+    const originalName = req.file.originalname || 'arquivo';
+    const ext = path.extname(originalName).toLowerCase();
+    const inputPath = req.file.path;
+
+    const workDir = fs.mkdtempSync(path.join(PDFA_TMP_DIR, 'job-'));
+    tempDir = workDir;
+
+    let pdfPath = inputPath;
+
+    if (ext !== '.pdf') {
+      const soffice = pdfaGetLibreOfficePath();
+      if (!soffice) {
+        return res.status(500).json({ error: 'LibreOffice não encontrado. Configure LIBREOFFICE_PATH.' });
+      }
+
+      const loArgs = [
+        '--headless',
+        '--nologo',
+        '--nolockcheck',
+        '--norestore',
+        '--convert-to',
+        'pdf',
+        '--outdir',
+        workDir,
+        inputPath,
+      ];
+
+      await pdfaRun(soffice, loArgs, { cwd: workDir });
+
+      const pdfCandidates = fs.readdirSync(workDir).filter((f) => f.toLowerCase().endsWith('.pdf'));
+      if (!pdfCandidates.length) {
+        return res.status(500).json({ error: 'Falha ao converter para PDF.' });
+      }
+      pdfPath = path.join(workDir, pdfCandidates[0]);
+    }
+
+    const gs = pdfaGetGhostscriptPath();
+    const icc = pdfaGetIccProfilePath();
+    if (!icc) {
+      return res.status(500).json({ error: 'Perfil ICC não encontrado. Configure PDFA_ICC_PROFILE.' });
+    }
+
+    const outName = `${path.parse(originalName).name}-PDFA.pdf`;
+    const outPath = path.join(PDFA_OUT_DIR, `${Date.now()}-${outName}`);
+
+    const gsArgs = [
+      '-dPDFA=2',
+      '-dBATCH',
+      '-dNOPAUSE',
+      '-dNOOUTERSAVE',
+      '-sProcessColorModel=DeviceRGB',
+      '-sDEVICE=pdfwrite',
+      '-sPDFACompatibilityPolicy=1',
+      `-sOutputICCProfile=${icc}`,
+      `-sOutputFile=${outPath}`,
+      pdfPath,
+    ];
+
+    await pdfaRun(gs, gsArgs, { cwd: workDir });
+
+    const fileId = pdfaStoreFile(outPath);
+    await auditLog(req, 'pdfa_convert', 'ok', { fileId, originalName });
+
+    return res.json({
+      ok: true,
+      fileId,
+      fileName: path.basename(outPath),
+      downloadUrl: `/api/pdfa/download/${fileId}`,
+    });
+  } catch (e) {
+    console.error('[PDF/A] erro:', e);
+    return res.status(500).json({ error: 'Erro ao converter para PDF/A.' });
+  } finally {
+    if (tempDir && fs.existsSync(tempDir)) {
+      try { fs.rmSync(tempDir, { recursive: true, force: true }); } catch {}
+    }
+  }
+});
+
+app.get('/api/pdfa/download/:id', requireAuth, async (req, res) => {
+  const id = String(req.params.id || '').trim();
+  const p = pdfaGetFile(id);
+  if (!p || !fs.existsSync(p)) return res.status(404).send('Arquivo não encontrado.');
+  return res.download(p, path.basename(p));
 });
 
 // --- Nova página: calculadora-icms-st ---
@@ -1786,7 +2231,7 @@ app.post(
     for (const f of files) {
       const n = safeName(f.originalname);
       if (!n.toLowerCase().endsWith('.xlsx')) {
-        try { fs.unlinkSync(f.path); } catch (_) {}
+        try { fs.unlinkSync(f.path); } catch (_) { }
         continue;
       }
       fs.renameSync(f.path, path.join(inputDir, n));
@@ -1816,7 +2261,7 @@ app.post(
       let cur = jobState;
       try {
         cur = JSON.parse(fs.readFileSync(statusPath, 'utf-8'));
-      } catch (_) {}
+      } catch (_) { }
 
       const next = {
         ...cur,
@@ -1893,6 +2338,105 @@ app.post(
     } catch (err) {
       appendLog('Erro ao iniciar o processo: ' + String(err));
       patch({ status: 'error', progress: 100, message: 'Erro interno ao executar o C#.' });
+    }
+  }
+);
+
+// ---------- ROTA: Conciliador Hausen e Ocean ----------
+app.post(
+  '/api/conciliador-hausen-ocean/processar',
+  requireAuth,
+  requireCsrf,
+  uploadConciliador.array('files', 2),
+  async (req, res) => {
+    try {
+      const tipo = String(req.body?.tipo || '').toLowerCase();
+      if (!['dre', 'balancete'].includes(tipo)) {
+        return res.status(400).json({ message: 'Tipo inválido. Use DRE ou Balancete.' });
+      }
+
+      const files = req.files || [];
+      if (files.length !== 2) {
+        return res.status(400).json({ message: 'Envie exatamente 2 arquivos.' });
+      }
+
+      const jobId = crypto.randomUUID ? crypto.randomUUID() : crypto.randomBytes(16).toString('hex');
+      const jobDir = path.join(CONCILIADOR_OUT_DIR, jobId);
+      fs.mkdirSync(jobDir, { recursive: true });
+
+      const moved = files.map((f, idx) => {
+        const safeName = `${idx + 1}_${(f.originalname || 'arquivo.xlsx').replace(/[^\w\-. ]+/g, '')}`;
+        const dest = path.join(jobDir, safeName);
+        fs.renameSync(f.path, dest);
+        return dest;
+      });
+
+      const appPath = conciliadorGetAppPath();
+      const templatePath = conciliadorGetTemplatePath(tipo);
+      if (!fs.existsSync(templatePath)) {
+        return res.status(500).json({ message: `Template não encontrado: ${templatePath}` });
+      }
+
+      const outName = `Consolidado_${tipo.toUpperCase()}_${Date.now()}.xlsx`;
+      const outPath = path.join(jobDir, outName);
+
+      let cmd = 'dotnet';
+      let args = [];
+
+      if (appPath?.kind === 'exe') {
+        cmd = appPath.path;
+        args = [
+          '--pdf1', moved[0],
+          '--pdf2', moved[1],
+          '--template', templatePath,
+          '--out', outPath,
+          '--tipo', tipo.toUpperCase(),
+        ];
+      } else if (appPath?.kind === 'dll') {
+        cmd = 'dotnet';
+        args = [
+          appPath.path,
+          '--pdf1', moved[0],
+          '--pdf2', moved[1],
+          '--template', templatePath,
+          '--out', outPath,
+          '--tipo', tipo.toUpperCase(),
+        ];
+      } else {
+        const csproj = conciliadorGetCsprojPath();
+        args = [
+          'run',
+          '--project', csproj,
+          '--',
+          '--pdf1', moved[0],
+          '--pdf2', moved[1],
+          '--template', templatePath,
+          '--out', outPath,
+          '--tipo', tipo.toUpperCase(),
+        ];
+      }
+
+      await new Promise((resolve, reject) => {
+        const child = spawn(cmd, args, { windowsHide: true });
+        let stderr = '';
+        child.stderr?.on('data', (d) => { stderr += d.toString('utf8'); });
+        child.on('error', reject);
+        child.on('close', (code) => {
+          if (code === 0) return resolve();
+          return reject(new Error(stderr || `dotnet saiu com código ${code}`));
+        });
+      });
+
+      if (!fs.existsSync(outPath)) {
+        return res.status(500).json({ message: 'Arquivo de saída não foi gerado.' });
+      }
+
+      await auditLog(req, 'conciliador_hausen_ocean', 'ok', { tipo, jobId });
+      return res.download(outPath, outName);
+    } catch (err) {
+      console.error('conciliador_hausen_ocean error:', err);
+      await auditLog(req, 'conciliador_hausen_ocean', 'error', { error: err?.message || String(err) });
+      return res.status(500).json({ message: err?.message || 'Erro ao processar.' });
     }
   }
 );
@@ -4450,6 +4994,20 @@ function dimobNormalizeText(s) {
     .replace(/[\u0300-\u036f]/g, '');
 }
 
+function dimobSanitizeAscii(s) {
+  // 1) remove acentos, uppercase (já faz no normalize)
+  let out = dimobNormalizeText(s);
+
+  // 2) remove qualquer coisa fora de um conjunto seguro (DIMOB costuma aceitar A-Z/0-9/espaco e pontuações simples)
+  out = out.replace(/[^A-Z0-9 \-\/\.\,\(\)&]/g, ' ');
+
+  // 3) compacta espaços
+  out = out.replace(/\s+/g, ' ').trim();
+
+  return out;
+}
+
+
 function dimobLoadMunicipios() {
   if (__dimobMunicipioMap) return __dimobMunicipioMap;
   const raw = fs.readFileSync(DIMOB_MUNICIPIOS_PATH, 'utf-8');
@@ -4500,6 +5058,11 @@ function dimobExtractLocatarioFromR02(line) {
   const idxContrato = m ? m.index : -1;
   const head = idxContrato >= 0 ? line.slice(0, idxContrato) : line;
 
+  const nome60 = dimobSanitizeField(n.nome || '', 60);
+  const endereco = dimobSanitizeField(n.endereco || '', 60);
+  const municipio = dimobSanitizeField(n.municipio || '', 20);
+  const uf = dimobSanitizeField(n.uf || '', 2);
+
   const all14 = [...head.matchAll(/\d{14}/g)];
   if (!all14.length) return { doc14: null, nameStart: null, nameEnd: null, contratoIndex: idxContrato };
 
@@ -4510,6 +5073,20 @@ function dimobExtractLocatarioFromR02(line) {
 
   return { doc14, nameStart, nameEnd, contratoIndex: idxContrato };
 }
+
+function dimobApplyLocadorToR02(line, { locadorDoc14, locadorNome60 }) {
+  // Layout R02:
+  // 149 tipo_do_locador (1)
+  // 150-163 cpf_cnpj_do_locador (14)
+  // 164-223 nome_do_locador (60)
+  let ln = line;
+
+  const doc14 = String(locadorDoc14 || '').replace(/\D/g, '').padStart(14, '0').slice(-14);
+  const nome60 = dimobSanitizeAscii(locadorNome60 || '').slice(0, 60);
+
+  return ln;
+}
+
 
 // Atualiza aluguel/comissão no R02 usando layout JSON (parte dos valores bate com o DEC real)
 function dimobApplyF525ToR02(line, monthsObj) {
@@ -4566,78 +5143,161 @@ function dimobSetYearInHeader(headerLine, year) {
   return headerLine.slice(0, 12) + y + headerLine.slice(16);
 }
 
-// Atualiza R01 (modo seguro: usando template anterior e detectando trechos)
+function dimobSanitizeText(s) {
+  s = String(s ?? '');
+
+  // remove acentos/diacríticos
+  s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  // remove caracteres de controle
+  s = s.replace(/[\u0000-\u001F\u007F]/g, ' ');
+
+  // permite só letras/números/espaços e alguns sinais comuns
+  s = s.replace(/[^A-Za-z0-9 \/\.\,\-\(\)]/g, ' ');
+
+  // normaliza espaços
+  s = s.replace(/\s+/g, ' ').trim();
+
+  return s.toUpperCase();
+}
+
+function dimobSanitizeField(s, maxLen) {
+  const out = dimobSanitizeText(s);
+  return maxLen ? out.slice(0, maxLen) : out;
+}
+
 async function dimobUpdateR01UsingCnpj(line, cnpj) {
-  // consulta sua API /api/cnpj/:cnpj via axios diretamente (mesma regra da rota)
   let data = null;
   try {
     const r = await axios.get(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`);
     data = r.data;
   } catch {
-    return line; // se falhar, mantém o antigo
+    return line;
   }
 
-  const razao = (data?.razao_social || '').toUpperCase();
-  const uf = (data?.uf || '').toUpperCase();
-  const municipio = (data?.municipio || '').toUpperCase();
-  const logradouro = (data?.logradouro || '').toUpperCase();
-  const numero = (data?.numero || '').toUpperCase();
-  const bairro = (data?.bairro || '').toUpperCase();
+  const dados = data || {};
 
-  const endereco = [logradouro, numero ? `Nº ${numero}` : '', bairro ? `- ${bairro}` : '']
+  const nome = dimobSanitizeAscii(dados.nome || dados.razao_social || '');
+  const logradouro = dimobSanitizeAscii(dados.logradouro || '');
+  const numero = dimobSanitizeAscii(dados.numero || '');
+  const complemento = dimobSanitizeAscii(dados.complemento || '');
+  const bairro = dimobSanitizeAscii(dados.bairro || '');
+  const municipio = dimobSanitizeAscii(dados.municipio || dados.cidade || '');
+  const uf = dimobSanitizeAscii(dados.uf || '').slice(0, 2);
+
+  let endereco = [logradouro, numero ? `N ${numero}` : '', complemento ? ` ${complemento}` : '', bairro ? ` - ${bairro}` : '']
     .filter(Boolean).join(' ').trim();
 
-  const cod = dimobGetMunicipioCode(uf, municipio);
+  // limites típicos do seu R01 (nome 60 / endereço 120 / municipio 20 / uf 2)
+  const nome60 = nome.slice(0, 60);
+  const end120 = endereco.slice(0, 120);
+  const mun20 = municipio.slice(0, 20);
+  const uf2 = uf.slice(0, 2);
 
-  // Mapeamento real do DEC (descoberto pelo modelo):
-  // 44-103 nome (60), 104-114 cpf (11), 115-234 endereço (120),
-  // 235-236 UF (2), 237-240 cod município (4), 241-260 nome município (20)
-  if (razao) line = dimobSetSlice(line, 44, 103, razao, ' ', 'left');
-  if (endereco) line = dimobSetSlice(line, 115, 234, endereco, ' ', 'left');
+  const cod = dimobGetMunicipioCode(uf2, mun20); // sua função já existe
 
-  if (uf) line = dimobSetSlice(line, 235, 236, uf, ' ', 'left');
+  // ajuste conforme seu layout R01 (você já está usando essas posições no seu código atual)
+  if (nome60) line = dimobSetSlice(line, 44, 103, nome60, ' ', 'left');
+  if (end120) line = dimobSetSlice(line, 115, 234, end120, ' ', 'left');
+  if (uf2) line = dimobSetSlice(line, 235, 236, uf2, ' ', 'left');
   if (cod) line = dimobSetSlice(line, 237, 240, String(cod).padStart(4, '0'), '0', 'right');
-  if (municipio) line = dimobSetSlice(line, 241, 260, municipio, ' ', 'left');
+  if (mun20) line = dimobSetSlice(line, 241, 260, mun20, ' ', 'left');
 
   return line;
 }
 
-// ============ ENDPOINT ============
+// ============ ENDPOINT (NOVA VERSÃO) ============
+function dimobSanitizeText(s) {
+  s = String(s ?? '');
+
+  // remove caracteres de controle
+  s = s.replace(/[\u0000-\u001F\u007F]/g, ' ');
+
+  // remove acentos (NFD) e diacríticos
+  s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  // troca caracteres “problemáticos” por espaço
+  // (mantém letras, números e pontuação básica que costuma passar na DIMOB)
+  s = s.replace(/[^A-Za-z0-9 \/\.\,\-\(\)]/g, ' ');
+
+  // colapsa espaços
+  s = s.replace(/\s+/g, ' ').trim();
+
+  return s.toUpperCase();
+}
+
+function dimobSanitizeField(s, maxLen) {
+  const out = dimobSanitizeText(s);
+  if (!maxLen) return out;
+  return out.slice(0, maxLen);
+}
+
+
 app.post('/api/dimob/generate-file', requireAuth, requireCsrf, async (req, res) => {
+  let cnpj = '';
+  let year = NaN;
+  let previousFileId = '';
+  let byParticipant = [];
+  let newLocatarios = [];
+  let prevPath = '';
+
+  const traceId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+  function send500(e) {
+    const msg = e?.message || String(e);
+    const stack = String(e?.stack || '');
+    console.error(`[DIMOB][${traceId}] generate-file ERROR:`, e);
+    return res.status(500).json({
+      error: 'Erro ao gerar arquivo DIMOB.',
+      traceId,
+      detail: msg,
+      stack: stack.split('\n').slice(0, 12).join('\n')
+    });
+  }
+
+  // normaliza doc para chave do Map: remove zeros à esquerda de CPF que vem preenchido
+  function normalizeDocKey(d) {
+    d = String(d || '').replace(/\D/g, '');
+    // se veio com padding (ex.: CPF dentro de campo 14), remove zeros iniciais
+    d = d.replace(/^0+(?=\d{11,14}$)/, '');
+    return d;
+  }
+
   try {
-    const cnpj = String(req.body?.cnpj || '').replace(/\D/g, '');
-    const year = Number(req.body?.year);
-    const previousFileId = String(req.body?.previousFileId || '').trim();
+    // ------------------ payload ------------------
+    cnpj = String(req.body?.cnpj || '').replace(/\D/g, '');
+    year = Number(req.body?.year);
+    previousFileId = String(req.body?.previousFileId || '').trim();
+    byParticipant = Array.isArray(req.body?.byParticipant) ? req.body.byParticipant : [];
+    newLocatarios = Array.isArray(req.body?.newLocatarios) ? req.body.newLocatarios : [];
 
     if (!/^\d{14}$/.test(cnpj)) return res.status(400).json({ error: 'CNPJ inválido.' });
     if (!Number.isFinite(year) || year < 2015) return res.status(400).json({ error: 'Ano inválido.' });
     if (!previousFileId) return res.status(400).json({ error: 'previousFileId não informado.' });
 
-    const prevPath = dimobGetNetworkFile(previousFileId);
+    // ------------------ arquivo anterior ------------------
+    prevPath = dimobGetNetworkFile(previousFileId);
     if (!prevPath || !fs.existsSync(prevPath)) {
       return res.status(400).json({ error: 'Arquivo DIMOB anterior não encontrado no servidor.' });
     }
 
-    // dados do SPED já processados (byParticipant)
-    const byParticipant = Array.isArray(req.body?.byParticipant) ? req.body.byParticipant : [];
-    const newLocatarios = Array.isArray(req.body?.newLocatarios) ? req.body.newLocatarios : [];
-
-    // monta mapa doc -> months
-    const spedMap = new Map();
-    for (const it of byParticipant) {
-      const doc = String(it.participantDoc || '').replace(/\D/g, '');
-      if (!doc) continue;
-      spedMap.set(doc, it.months || {});
-    }
-
-    // lê arquivo anterior
     let raw = '';
     try { raw = fs.readFileSync(prevPath, 'utf-8'); }
     catch { raw = fs.readFileSync(prevPath, 'latin1'); }
 
     const eol = raw.includes('\r\n') ? '\r\n' : '\n';
     const lines = raw.split(/\r?\n/).filter(Boolean);
+    if (!lines.length) return res.status(400).json({ error: 'Arquivo DIMOB anterior está vazio ou inválido.' });
 
+    // ------------------ SPED map ------------------
+    const spedMap = new Map();
+    for (const it of byParticipant) {
+      const docKey = normalizeDocKey(it.participantDoc);
+      if (!docKey) continue;
+      spedMap.set(docKey, it.months || {});
+    }
+
+    // ------------------ header + R01 ------------------
     const header = lines[0] || '';
     const newHeader = dimobSetYearInHeader(header, year);
 
@@ -4646,112 +5306,177 @@ app.post('/api/dimob/generate-file', requireAuth, requireCsrf, async (req, res) 
 
     let r01New = r01Old;
     r01New = dimobSetYearInLine(r01New, year);
-
-    // declaração original + recibo zerado (22 = retificadora, 23-34 = recibo)
     r01New = dimobSetSlice(r01New, 22, 22, '0', '0', 'right');
     r01New = dimobSetSlice(r01New, 23, 34, '000000000000', '0', 'right');
-
-    // atualiza dados do declarante via BrasilAPI
     r01New = await dimobUpdateR01UsingCnpj(r01New, cnpj);
 
-    // template R02 (para criar novos)
+    const locadorDoc14 = cnpj; // sempre CNPJ do declarante
+    const locadorNome60 = dimobSanitizeAscii(r01New.slice(44 - 1, 103).trim()).slice(0, 60);
+
+    // ------------------ layout R02 ------------------
+    const layout = dimobLoadLayout();
+    const r02Fields = layout?.records?.R02?.fields || [];
+
+    const pos = (key) => {
+      const f = r02Fields.find(x => x.key === key);
+      return f ? { start: f.start, end: f.end, len: (f.end - f.start + 1) } : null;
+    };
+
+    const P_SEQ = pos('sequencial_da_locacao');
+    const P_LOCADOR_DOC = pos('cpf_cnpj_do_locador');
+    const P_LOCADOR_NOME = pos('nome_do_locador');
+    const P_LOCADOR_TIPO = pos('tipo_do_locador');
+
+    const P_LOCAT_DOC = pos('cpf_cnpj_do_locatario');
+    const P_LOCAT_NOME = pos('nome_do_locatario');
+
+    // contrato / datas (dependem do seu JSON correto)
+    const P_NUM_CONTR = pos('numero_do_contrato') || pos('numero_do_contrato_de_locacao');
+    const P_DT_CONTR = pos('data_do_contrato') || pos('data_do_contrato_de_locacao');
+    const P_DTINI = pos('data_de_inicio_do_contrato');
+    const P_DTFIM = pos('data_de_termino_do_contrato');
+
+    // imóvel (dependem do seu JSON correto)
+    const P_TIPO_IMOVEL = pos('tipo_do_imovel');
+    const P_END_IMOVEL = pos('endereco_do_imovel');
+    const P_CEP_IMOVEL = pos('cep_do_imovel') || pos('cep');
+    const P_COD_MUN = pos('codigo_do_municipio_do_imovel') || pos('codigo_do_municipio');
+    const P_UF_IMOVEL = pos('uf_do_imovel') || pos('uf');
+
+    if (!P_LOCAT_DOC || !P_LOCAT_NOME || !P_SEQ) {
+      return res.status(500).json({ error: 'Layout DIMOB (R02) não possui campos essenciais (sequencial/locatário).' });
+    }
+
+    function r02GetLocatarioDocKey(line) {
+      const rawDoc = line.slice(P_LOCAT_DOC.start - 1, P_LOCAT_DOC.end);
+      return normalizeDocKey(rawDoc);
+    }
+
+    function r02GetSeq(line) {
+      const rawSeq = line.slice(P_SEQ.start - 1, P_SEQ.end);
+      const n = parseInt(String(rawSeq || '').replace(/\D/g, ''), 10);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function applyLocadorByLayout(ln) {
+      // escreve locador só nos campos do JSON atual (não hardcode)
+      if (P_LOCADOR_TIPO) ln = dimobSetSlice(ln, P_LOCADOR_TIPO.start, P_LOCADOR_TIPO.end, '2', '0', 'right');
+      if (P_LOCADOR_DOC) ln = dimobSetSlice(ln, P_LOCADOR_DOC.start, P_LOCADOR_DOC.end, locadorDoc14, '0', 'right');
+      if (P_LOCADOR_NOME) ln = dimobSetSlice(ln, P_LOCADOR_NOME.start, P_LOCADOR_NOME.end, locadorNome60, ' ', 'left');
+      return ln;
+    }
+
+    // ------------------ R02 existentes ------------------
     const r02Templates = lines.filter(l => l.startsWith('R02'));
     const r02Template = r02Templates[0] || null;
 
-    // processa R02 antigos (somente os que existem no SPED)
+    let maxSeq = 0;
+    for (const l of r02Templates) maxSeq = Math.max(maxSeq, r02GetSeq(l));
+
     const r02Out = [];
     for (const line of r02Templates) {
-      const info = dimobExtractLocatarioFromR02(line);
-      const doc = info.doc14;
-      if (!doc) continue;
-      if (!spedMap.has(doc)) continue;
+      const docKey = r02GetLocatarioDocKey(line);
+      if (!docKey) continue;
+      if (!spedMap.has(docKey)) continue;
 
       let ln = line;
       ln = dimobSetYearInLine(ln, year);
-      ln = dimobApplyF525ToR02(ln, spedMap.get(doc));
+
+      // ✅ locador sempre = TOSCAN, mas escrito no lugar certo do JSON atual
+      ln = applyLocadorByLayout(ln);
+
+      // valores mensais
+      ln = dimobApplyF525ToR02(ln, spedMap.get(docKey));
       r02Out.push(ln);
     }
 
-    // inclui novos locatários
+    // ------------------ novos locatários ------------------
     if (newLocatarios.length && !r02Template) {
-      return res.status(400).json({ error: 'Arquivo anterior não possui nenhum R02 para servir de template. Não consigo criar novos R02 automaticamente.' });
+      return res.status(400).json({ error: 'Arquivo anterior não possui nenhum R02 para servir de template.' });
     }
 
-    for (const n of newLocatarios) {
-      const doc = String(n.doc || n.participantDoc || '').replace(/\D/g, '');
-      const nome = String(n.nome || '').trim().toUpperCase();
-      const contrato = String(n.contrato || '').replace(/\D/g, '').padStart(6, '0').slice(0, 6);
-      const dtIni = String(n.dataInicio || '').replace(/\D/g, '').padStart(8, '0').slice(0, 8);
+    function formatCpfCnpjField(docDigits, fieldLen) {
+      const d = String(docDigits || '').replace(/\D/g, '');
 
-      const cep = String(n.cep || '').replace(/\D/g, '').padStart(8, '0').slice(0, 8);
-      const endereco = String(n.endereco || '').trim().toUpperCase();
-      const municipio = String(n.municipio || '').trim().toUpperCase();
-      const uf = String(n.uf || '').trim().toUpperCase();
-
-      if (!doc || !nome || !contrato || !dtIni || !cep || !endereco || !municipio || !uf) {
-        return res.status(400).json({ error: `Novo locatário incompleto (${doc || '(sem doc)'}). Preencha todos os campos.` });
+      // CPF (11) => "04092799942   " (espaços à direita)
+      if (d.length <= 11) {
+        const cpf11 = d.padStart(11, '0').slice(-11);         // mantém zero válido no começo
+        return cpf11.padEnd(fieldLen, ' ');                   // completa com espaço à direita
       }
 
-      const codMun = dimobGetMunicipioCode(uf, municipio);
-      if (!codMun) return res.status(400).json({ error: `Código de município não encontrado para ${uf}/${municipio}. Verifique se o nome está idêntico ao JSON.` });
+      // CNPJ (14) => "12345678000199" (14)
+      const cnpj14 = d.padStart(14, '0').slice(-14);
+      // se fieldLen for 14, isso já fica exato; se for maior, completa com espaço
+      return cnpj14.padEnd(fieldLen, ' ');
+    }
+
+
+    for (const n of newLocatarios) {
+      const docKey = normalizeDocKey(n.doc || n.participantDoc);
+      const docField = formatCpfCnpjField(docKey, P_LOCAT_DOC.len);
+
+      const nomeField = dimobSanitizeAscii(n.nome || '').slice(0, P_LOCAT_NOME.len || 60);
+
+      const contrato6 = String(n.contrato || '').replace(/\D/g, '').padStart(6, '0').slice(0, 6);
+      const dtIni8 = String(n.dataInicio || '').replace(/\D/g, '').padStart(8, '0').slice(0, 8);
+
+      const cep8 = String(n.cep || '').replace(/\D/g, '').padStart(8, '0').slice(0, 8);
+      const enderecoTxt = dimobSanitizeAscii(n.endereco || '');
+      const municipioTxt = dimobSanitizeAscii(n.municipio || '');
+      const ufTxt = dimobSanitizeAscii(n.uf || '').slice(0, 2);
+
+      if (!docKey || !nomeField || !contrato6 || !dtIni8 || !cep8 || !enderecoTxt || !municipioTxt || !ufTxt) {
+        return res.status(400).json({ error: `Novo locatário incompleto (${docKey || '(sem doc)'}).` });
+      }
+
+      const codMun = dimobGetMunicipioCode(ufTxt, municipioTxt);
+      if (!codMun) return res.status(400).json({ error: `Código de município não encontrado para ${ufTxt}/${municipioTxt}.` });
 
       let ln = r02Template;
       ln = dimobSetYearInLine(ln, year);
 
-      // troca DOC e NOME do locatário usando as posições detectadas
-      const info = dimobExtractLocatarioFromR02(ln);
-      if (!info.doc14 || info.nameStart == null || info.nameEnd == null || info.contratoIndex == null) {
-        return res.status(400).json({ error: 'Não consegui detectar as posições do locatário no R02 template.' });
+      // ✅ sequencial novo (evita clonar BAUER)
+      maxSeq += 1;
+      ln = dimobSetSlice(ln, P_SEQ.start, P_SEQ.end, String(maxSeq).padStart(P_SEQ.len, '0'), '0', 'right');
+
+      // ✅ locador fixo (TOSCAN) no local certo do JSON atual
+      ln = applyLocadorByLayout(ln);
+
+      // ✅ sobrescreve locatário no local certo do JSON atual (isso remove BAUER do template)
+      // ✅ escreve já “pronto”, com espaços à direita quando CPF
+      ln = dimobSetSlice(ln, P_LOCAT_DOC.start, P_LOCAT_DOC.end, docField, ' ', 'left');
+      ln = dimobSetSlice(ln, P_LOCAT_NOME.start, P_LOCAT_NOME.end, nomeField, ' ', 'left');
+
+      // contrato/datas (usa o que existir no JSON)
+      if (P_NUM_CONTR) ln = dimobSetSlice(ln, P_NUM_CONTR.start, P_NUM_CONTR.end, contrato6, '0', 'right');
+      if (P_DT_CONTR) ln = dimobSetSlice(ln, P_DT_CONTR.start, P_DT_CONTR.end, dtIni8, '0', 'right');
+      if (P_DTINI) ln = dimobSetSlice(ln, P_DTINI.start, P_DTINI.end, dtIni8, '0', 'right');
+      if (P_DTFIM) ln = dimobSetSlice(ln, P_DTFIM.start, P_DTFIM.end, '00000000', '0', 'right');
+
+      // imóvel (sem tailStart / sem checksum)
+      if (P_TIPO_IMOVEL) {
+        // se você não tem campo no UI, mantém o do template (não altera)
+        // ln = dimobSetSlice(ln, P_TIPO_IMOVEL.start, P_TIPO_IMOVEL.end, 'U', ' ', 'left');
       }
+      if (P_END_IMOVEL) ln = dimobSetSlice(ln, P_END_IMOVEL.start, P_END_IMOVEL.end, enderecoTxt.slice(0, P_END_IMOVEL.len), ' ', 'left');
+      if (P_CEP_IMOVEL) ln = dimobSetSlice(ln, P_CEP_IMOVEL.start, P_CEP_IMOVEL.end, cep8, '0', 'right');
+      if (P_COD_MUN) ln = dimobSetSlice(ln, P_COD_MUN.start, P_COD_MUN.end, String(codMun).padStart(P_COD_MUN.len, '0'), '0', 'right');
+      if (P_UF_IMOVEL) ln = dimobSetSlice(ln, P_UF_IMOVEL.start, P_UF_IMOVEL.end, ufTxt.padEnd(P_UF_IMOVEL.len, ' '), ' ', 'left');
 
-      ln = dimobSetSlice(ln, info.nameStart + 1 - 14, info.nameStart, doc, '0', 'right'); // doc tem 14
-      const nomeLen = info.nameEnd - info.nameStart;
-      ln = dimobSetSlice(ln, info.nameStart + 1, info.nameEnd, nome, ' ', 'left');
-
-      // contrato (6) + dtIni (8) + dtFim (8 = zeros)
-      ln = dimobSetSlice(ln, info.contratoIndex + 1, info.contratoIndex + 6, contrato, '0', 'right');
-      ln = dimobSetSlice(ln, info.contratoIndex + 7, info.contratoIndex + 14, dtIni, '0', 'right');
-      ln = dimobSetSlice(ln, info.contratoIndex + 15, info.contratoIndex + 22, '00000000', '0', 'right');
-
-      // Tail do R02 no modelo real:
-      // index 693..799: "00" + tipo(1) + endereco(60) + cep(8) + cod(4) + mun(20) + uf(2) + checksum(10)
-      const tailStart = 693;
-      const tail = ln.slice(tailStart - 1);
-      if (tail.length >= 107) {
-        const tipo = tail.slice(0, 3); // mantém prefixo (ex: "00U")
-        const checksum = tail.slice(-10);
-
-        const endereco60 = endereco.slice(0, 60).padEnd(60, ' ');
-        const cod4 = String(codMun).padStart(4, '0');
-        const mun20 = municipio.slice(0, 20).padEnd(20, ' ');
-        const uf2 = uf.slice(0, 2).padEnd(2, ' ');
-
-        const newTail = tipo
-          + endereco60
-          + cep
-          + cod4
-          + mun20
-          + uf2
-          + checksum;
-
-        ln = ln.slice(0, tailStart - 1) + newTail;
-      }
-
-      // aplica valores do SPED (se existir no map, senão zera)
-      ln = dimobApplyF525ToR02(ln, spedMap.get(doc) || {});
+      // valores mensais (usa docKey normalizado)
+      ln = dimobApplyF525ToR02(ln, spedMap.get(docKey) || {});
       r02Out.push(ln);
     }
 
-    // trailer: copia o que vem após o último R02 (T9/R10/R90) e ajusta ano no T9
+    // ------------------ tail (T9/R10/R90) ------------------
     const tailLines = lines.filter(l => l.startsWith('T9') || l.startsWith('R10') || l.startsWith('R90'));
     const tailOut = [];
 
     for (const tl of tailLines) {
       let ln = tl;
       if (ln.startsWith('T9')) {
-        // T9: pos 17-20 = ano, pos 21-28 = contador (opcional)
         ln = dimobSetSlice(ln, 17, 20, String(year).padStart(4, '0'), '0', 'right');
-        ln = dimobSetSlice(ln, 21, 28, String(r02Out.length + 3).padStart(8, '0'), '0', 'right'); // (R01 + R02s + R10 + R90 = +3)
+        ln = dimobSetSlice(ln, 21, 28, String(r02Out.length + 3).padStart(8, '0'), '0', 'right');
       }
       tailOut.push(ln);
     }
@@ -4763,8 +5488,142 @@ app.post('/api/dimob/generate-file', requireAuth, requireCsrf, async (req, res) 
     res.setHeader('Content-Type', 'text/plain; charset=latin1');
     res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
     return res.send(Buffer.from(outText, 'latin1'));
+
   } catch (e) {
-    console.error('dimob generate-file error:', e);
-    return res.status(500).json({ error: 'Erro ao gerar arquivo DIMOB.' });
+    return send500(e);
   }
 });
+
+// ...
+app.get('/tareffa-empresas-lote', requireAuthPage, (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/tareffa-empresas-lote.html'));
+});
+
+function startPythonJob({ jobId, inputPath, outDir, headless }) {
+  const pythonBin = process.env.PYTHON_BIN || 'python';
+
+  const scriptPath = path.join(process.cwd(), 'api', 'tareffa_empresas_lote_job.py');
+
+  const args = [
+    scriptPath,
+    '--input', inputPath,
+    '--outdir', outDir,
+  ];
+  if (headless) args.push('--headless');
+
+  const child = spawn(pythonBin, args, {
+    env: process.env,
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+
+  const logs = [];
+  const pushLog = (line) => {
+    const s = String(line || '').trim();
+    if (!s) return;
+    logs.push(s);
+    updateJob(jobId, { logs: logs.slice(-800), updatedAt: new Date().toISOString() });
+  };
+
+  updateJob(jobId, { status: JOB_STATUS.PROCESSING, logs, updatedAt: new Date().toISOString() });
+
+  child.stdout.on('data', (buf) => {
+    const text = buf.toString('utf-8');
+    text.split(/\r?\n/).forEach((line) => {
+      if (!line.trim()) return;
+
+      if (line.startsWith('__EVENT__')) {
+        try {
+          const ev = JSON.parse(line.replace(/^__EVENT__/, ''));
+          if (ev.type === 'log') {
+            pushLog(ev.message);
+          } else if (ev.type === 'progress') {
+            const pct = ev.total ? Math.round((ev.current / ev.total) * 100) : null;
+            updateJob(jobId, { progress: pct ?? 0, current: ev.current, total: ev.total });
+          } else if (ev.type === 'done') {
+            pushLog('✅ Job finalizado.');
+            updateJob(jobId, { status: JOB_STATUS.DONE, progress: 100, result: ev.result });
+          } else if (ev.type === 'error') {
+            pushLog(`❌ ERRO: ${ev.message}`);
+            updateJob(jobId, { status: JOB_STATUS.ERROR, errorMessage: ev.message });
+          } else {
+            pushLog(JSON.stringify(ev));
+          }
+          return;
+        } catch (e) {
+          // cai no log padrão
+        }
+      }
+
+      pushLog(line);
+    });
+  });
+
+  child.stderr.on('data', (buf) => {
+    const text = buf.toString('utf-8');
+    text.split(/\r?\n/).forEach((line) => {
+      if (line.trim()) pushLog('[stderr] ' + line.trim());
+    });
+  });
+
+  child.on('close', (code) => {
+    if (code === 0) return;
+    updateJob(jobId, { status: JOB_STATUS.ERROR, errorMessage: `Python saiu com código ${code}` });
+  });
+}
+
+app.post('/api/tareffa-empresas-lote/jobs', requireAuth, requireCsrf, async (req, res) => {
+  try {
+    const companies = Array.isArray(req.body?.companies) ? req.body.companies : [];
+    const options = req.body?.options || {};
+    if (!companies.length) return res.status(400).json({ error: 'Sem empresas no payload' });
+
+    const jobKey = `tareffa_empresas_lote_${Date.now()}`;
+
+    // cria no queue usando o seu método padrão
+    const created = createJobsFromKeys([jobKey]);
+    const job = (Array.isArray(created) && created[0]) || findJobByKey(jobKey);
+    if (!job) return res.status(500).json({ error: 'Falha ao criar job na fila' });
+
+    // grava input em disco (igual você já fez)
+    const tmpBase = path.join(process.cwd(), 'tmp', 'tareffa-empresas-lote', String(job.id));
+    fs.mkdirSync(tmpBase, { recursive: true });
+
+    const inputPath = path.join(tmpBase, 'input.json');
+    fs.writeFileSync(inputPath, JSON.stringify({ companies, options }, null, 2), 'utf-8');
+
+    // marca como pendente/inicial
+    updateJob(job.id, {
+      status: JOB_STATUS.PENDING,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      progress: 0,
+      logs: [],
+      updatedAt: new Date().toISOString(),
+      // opcional: salvar o key pra facilitar debug
+      key: jobKey,
+      type: 'tareffa_empresas_lote',
+    });
+
+    // dispara o python
+    setTimeout(() => {
+      startPythonJob({
+        jobId: job.id,
+        jobKey,
+        inputPath,
+        outDir: tmpBase,
+        headless: Boolean(options.headless),
+      });
+    }, 50);
+
+    return res.json({ jobKey, jobId: job.id });
+  } catch (e) {
+    return res.status(500).json({ error: 'Falha ao criar job' });
+  }
+});
+
+app.get('/api/tareffa-empresas-lote/jobs/:jobKey', requireAuth, (req, res) => {
+  const job = findJobByKey(req.params.jobKey);
+  if (!job) return res.status(404).json({ error: 'Job não encontrado' });
+  return res.json(job);
+});
+
