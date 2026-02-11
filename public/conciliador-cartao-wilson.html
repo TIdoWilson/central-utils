@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Conciliador Cartão (Razão x Financeiro)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <!-- SIDEBAR -->
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">WL</span>
+            <span class="logo-text">Portal</span>
+          </div>
+
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <!-- CONTEÚDO PRINCIPAL -->
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Contábil / Conciliação Cartão</div>
+          <h1>Conciliador Cartão — Razão x Financeiro</h1>
+          <p>
+            Faça upload dos PDFs (Razão e Financeiro) e gere o Excel de conciliação com casados e diferenças.
+          </p>
+        </header>
+
+        <section class="nfe-row">
+          <div class="nfe-card nfe-card-upload">
+            <h2>Uploads e parâmetros</h2>
+            <p class="nfe-card-subtitle">
+              Selecione os 2 PDFs. Ajuste tolerância, janela de dias e limiar de nome (opcional).
+            </p>
+
+            <form id="conciliadorForm" class="nfe-upload-form">
+              <label class="nfe-input-file-label">
+                <span>PDF do Razão (Cartão)</span>
+                <input type="file" id="razaoPdf" name="razaoPdf" accept="application/pdf" required />
+              </label>
+
+              <label class="nfe-input-file-label">
+                <span>PDF do Financeiro (Cartão)</span>
+                <input type="file" id="financeiroPdf" name="financeiroPdf" accept="application/pdf" required />
+              </label>
+
+              <div class="nfe-row" style="grid-template-columns: 1fr 1fr 1fr; margin-top: 10px">
+                <label class="auth-label">
+                  Tolerância valor (R$)
+                  <input id="valorTol" class="auth-input" type="number" step="0.01" value="0.05" min="0" />
+                </label>
+
+                <label class="auth-label">
+                  Janela de dias
+                  <input id="diasJanela" class="auth-input" type="number" step="1" value="31" min="0" />
+                </label>
+
+                <label class="auth-label">
+                  Limiar nome (0–1)
+                  <input id="limiarNome" class="auth-input" type="number" step="0.01" value="0.72" min="0" max="1" />
+                </label>
+              </div>
+
+              <div class="nfe-table-actions" style="margin-top: 12px">
+                <button type="submit" class="btn btn-primary" id="btnProcessar">
+                  Processar e gerar Excel
+                </button>
+                <button type="button" class="btn btn-secondary" id="btnLimpar" disabled>
+                  Limpar resultado
+                </button>
+              </div>
+
+              <div id="statusMsg" class="nfe-upload-message" aria-live="polite" style="margin-top: 10px"></div>
+            </form>
+          </div>
+
+          <div class="nfe-card nfe-card-ext">
+            <h2>Resumo</h2>
+            <p class="nfe-card-subtitle">Totais e diferenças calculadas após o processamento.</p>
+            <div id="resumoBox">
+              <p>Nenhum processamento ainda.</p>
+            </div>
+
+            <div class="nfe-table-actions" style="margin-top: 12px">
+              <button type="button" class="btn btn-secondary" id="btnDownloadXlsx" disabled>
+                Baixar XLSX
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="nfe-card nfe-card-table">
+          <div class="nfe-card-header nfe-card-header-with-actions">
+            <div>
+              <h2>Diferenças</h2>
+              <p class="nfe-card-subtitle">
+                Prévia (primeiras linhas). O arquivo completo fica no XLSX.
+              </p>
+            </div>
+          </div>
+
+          <div class="nfe-row" style="grid-template-columns: 1fr 1fr; gap: 12px">
+            <div>
+              <h3 style="margin: 0">Só no Razão</h3>
+              <div class="nfe-table-wrapper">
+                <table class="nfe-table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Cliente</th>
+                      <th>Valor</th>
+                      <th>Histórico</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblSoRazao"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
+              <h3 style="margin: 0">Só no Financeiro</h3>
+              <div class="nfe-table-wrapper">
+                <table class="nfe-table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>CPF/CNPJ</th>
+                      <th>Cliente</th>
+                      <th>Título</th>
+                      <th>Valor</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblSoFin"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/upload-helper.js"></script>
+    <script src="/js/conciliador-cartao-wilson.js"></script>
+  </body>
+</html>

@@ -1,12 +1,9 @@
 # api/integra_api.py
 
 from pathlib import Path
-from typing import Optional
 import tempfile
 import shutil
-
-# no topo de api/integra_api.py
-from typing import List, Dict, Any
+from typing import List, Optional, Dict, Any
 from pydantic import BaseModel
 
 from api.gerador_atas_core import (
@@ -15,47 +12,33 @@ from api.gerador_atas_core import (
     gerar_ata as gerar_ata_core,
 )
 
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks, HTTPException
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
 
 # Importações dos módulos internos (sem circular)
 from api.relatorio_ferias_core import split_pdf_relatorio_ferias
 from api.holerites_core import split_pdf_holerites
 from api.separador_ferias_funcionario_core import processar_ferias_por_funcionario
 
-# imports (no topo de integra_api.py, se ainda não existirem)
 import base64
-from pydantic import BaseModel
 
 from api.comprimir_pdf_core import comprimir_pdf_bytes
 
-from pathlib import Path
-from pydantic import BaseModel
-from fastapi import HTTPException
-
 from api.extrator_zip_rar_core import processar_pasta_zip_rar
-
-# imports no topo do arquivo integra_api.py
-from typing import List, Optional
-from pydantic import BaseModel
 
 from api.excel_abas_pdf_core import exportar_abas_para_pdf
 
-from pydantic import BaseModel
 from api.separador_csv_baixa_automatica_core import processar_baixa_automatica_arquivo
 
 app = FastAPI(title="Integração Python API")
 
-from typing import Optional
 from api.importador_recebimentos_madre_scp_core import (
     processar_importador_recebimentos_madre_scp,
 )
-from pydantic import BaseModel
 
-from typing import Optional
-from pydantic import BaseModel
 from api.ajuste_diario_gfbr_core import ajustar_diario_gfbr
+
+from api.conciliador_cartao_wilson_core import conciliar_cartao_wilson, VALOR_TOLERANCIA_PADRAO
 # =========================
 # MODELO DE ENTRADA (FÉRIAS)
 # =========================
@@ -336,3 +319,32 @@ def processar_separador_csv_baixa_automatica(params: ParametrosSeparadorCSVBaixa
     "ok": resultado.get("ok", False),
     "resultado": resultado,
   }
+  
+@app.post("/api/conciliador/cartao-wilson")
+async def api_conciliador_cartao_wilson(
+    razaoPdf: UploadFile = File(...),
+    financeiroPdf: UploadFile = File(...),
+    valorTol: float = Form(VALOR_TOLERANCIA_PADRAO),
+    diasJanela: int = Form(31),
+    limiarNome: float = Form(0.72),
+):
+    try:
+        razao_bytes = await razaoPdf.read()
+        fin_bytes = await financeiroPdf.read()
+
+        # limites simples anti-bomba (ajuste se precisar)
+        if len(razao_bytes) > 25 * 1024 * 1024 or len(fin_bytes) > 25 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="PDF muito grande (limite 25MB por arquivo).")
+
+        return conciliar_cartao_wilson(
+            razao_bytes,
+            fin_bytes,
+            valor_tol=float(valorTol),
+            dias_janela=int(diasJanela),
+            limiar_nome=float(limiarNome),
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
