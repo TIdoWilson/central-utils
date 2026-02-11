@@ -123,6 +123,8 @@ function pdfaGetGhostscriptPath() {
     'C:\\\\Program Files\\\\gs\\\\gs10.02.0\\\\bin\\\\gswin64c.exe',
     'C:\\\\Program Files\\\\gs\\\\gs10.03.0\\\\bin\\\\gswin64c.exe',
     'C:\\\\Program Files\\\\gs\\\\gs10.04.0\\\\bin\\\\gswin64c.exe',
+    'C:\\\\Program Files\\\\gs\\\\gs10.05.0\\\\bin\\\\gswin64c.exe',
+    'C:\\\\Program Files\\\\gs\\\\gs10.06.0\\\\bin\\\\gswin64c.exe',
   ];
   for (const p of candidates) {
     if (fs.existsSync(p)) return p;
@@ -149,6 +151,14 @@ function pdfaGetIccProfilePath() {
   const candidates = [
     'C:\\\\Windows\\\\System32\\\\spool\\\\drivers\\\\color\\\\sRGB Color Space Profile.icm',
     'C:\\\\Windows\\\\System32\\\\spool\\\\drivers\\\\color\\\\sRGB IEC61966-2.1.icm',
+    // Ghostscript normalmente instala um sRGB.icc junto (bem útil para PDF/A).
+    'C:\\\\Program Files\\\\gs\\\\gs10.00.0\\\\iccprofiles\\\\sRGB.icc',
+    'C:\\\\Program Files\\\\gs\\\\gs10.01.0\\\\iccprofiles\\\\sRGB.icc',
+    'C:\\\\Program Files\\\\gs\\\\gs10.02.0\\\\iccprofiles\\\\sRGB.icc',
+    'C:\\\\Program Files\\\\gs\\\\gs10.03.0\\\\iccprofiles\\\\sRGB.icc',
+    'C:\\\\Program Files\\\\gs\\\\gs10.04.0\\\\iccprofiles\\\\sRGB.icc',
+    'C:\\\\Program Files\\\\gs\\\\gs10.05.0\\\\iccprofiles\\\\sRGB.icc',
+    'C:\\\\Program Files\\\\gs\\\\gs10.06.0\\\\iccprofiles\\\\sRGB.icc',
   ];
   for (const p of candidates) {
     if (fs.existsSync(p)) return p;
@@ -1914,13 +1924,17 @@ app.post('/api/pdfa/convert', requireAuth, requireCsrf, uploadPdfa.single('file'
     const outPath = path.join(PDFA_OUT_DIR, `${Date.now()}-${outName}`);
 
     const gsArgs = [
+      // Ghostscript 10+ roda em SAFER e pode bloquear leitura/escrita. Permitimos explicitamente só o necessário.
+      `--permit-file-read=${pdfPath}`,
+      `--permit-file-read=${icc}`,
+      `--permit-file-write=${outPath}`,
       '-dPDFA=2',
+      '-dPDFACompatibilityPolicy=1',
       '-dBATCH',
       '-dNOPAUSE',
       '-dNOOUTERSAVE',
       '-sProcessColorModel=DeviceRGB',
       '-sDEVICE=pdfwrite',
-      '-sPDFACompatibilityPolicy=1',
       `-sOutputICCProfile=${icc}`,
       `-sOutputFile=${outPath}`,
       pdfPath,
@@ -5627,3 +5641,53 @@ app.get('/api/tareffa-empresas-lote/jobs/:jobKey', requireAuth, (req, res) => {
   return res.json(job);
 });
 
+// Página interna (protegida)
+app.get('/conciliador-cartao-wilson', requireAuthPage, (req, res) => {
+  res.sendFile(path.join(publicDir, 'conciliador-cartao-wilson.html'));
+});
+
+const PY_API_URL = process.env.PY_API_URL || 'http://127.0.0.1:8001';
+
+// API interna (protegida)
+app.post(
+  '/api/conciliador-cartao-wilson/process',
+  requireAuth,
+  upload.fields([
+    { name: 'razaoPdf', maxCount: 1 },
+    { name: 'financeiroPdf', maxCount: 1 }
+  ]),
+  async (req, res) => {
+    try {
+      const razao = req.files?.razaoPdf?.[0];
+      const fin = req.files?.financeiroPdf?.[0];
+
+      if (!razao || !fin) {
+        return res.status(400).send('Envie os 2 PDFs: razaoPdf e financeiroPdf.');
+      }
+
+      const form = new (require('form-data'))();
+      form.append('razaoPdf', razao.buffer, { filename: razao.originalname || 'razao.pdf', contentType: razao.mimetype });
+      form.append('financeiroPdf', fin.buffer, { filename: fin.originalname || 'financeiro.pdf', contentType: fin.mimetype });
+
+      form.append('valorTol', String(req.body.valorTol ?? '0.05'));
+      form.append('diasJanela', String(req.body.diasJanela ?? '31'));
+      form.append('limiarNome', String(req.body.limiarNome ?? '0.72'));
+
+      const pyResp = await axios.post(`${PY_API_URL}/api/conciliador/cartao-wilson`, form, {
+        headers: form.getHeaders(),
+        maxBodyLength: Infinity,
+        maxContentLength: Infinity,
+        timeout: 120000 // 120s
+      });
+
+      // Aqui você pode também registrar auditoria se já tiver auditLog no projeto
+      // auditLog(req, 'conciliador_cartao_wilson_process', 'ok', { ... });
+
+      return res.json(pyResp.data);
+    } catch (err) {
+      const status = err.response?.status || 500;
+      const detail = err.response?.data?.detail || err.response?.data || err.message || 'Erro';
+      return res.status(status).send(typeof detail === 'string' ? detail : JSON.stringify(detail));
+    }
+  }
+);

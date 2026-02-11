@@ -32,6 +32,8 @@ const MENU_CONFIG = [
       { id: 'importador-recebimentos-madre-scp', label: 'Importador Recebimentos Madre SCP', href: '/importador-recebimentos-madre-scp', icon: '📊' },
       { id: 'separador-csv-baixa-automatica', label: 'Separador CSV Baixa Automática', href: '/separador-csv-baixa-automatica', icon: '📊' },
       { id: 'formatador-bernardina', label: 'Formatador DRE Bernadina (XLSM)', href: '/formatador-bernardina', icon: '📊' },
+      { id: 'conciliador-cartao-wilson', label: 'Conciliador Cartão (Razão x Financeiro)', href: '/conciliador-cartao-wilson', icon: '📊' }
+
     ],
   },
   {
