@@ -17,6 +17,9 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const rateLimit = require('express-rate-limit');
 const { spawn } = require('child_process');
+const createAuthRoutes = require('./routes/auth.routes');
+const createAdminRoutes = require('./routes/admin.routes');
+let pool;
 const DATA_DIR = path.join(__dirname, '..', 'data');
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR);
@@ -336,6 +339,9 @@ const { parseFileToKeys } = require('./parsers');
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 const MAIN_UPLOAD_DIR = path.join(__dirname, '..', 'uploads');
 if (!fs.existsSync(MAIN_UPLOAD_DIR)) {
@@ -627,9 +633,6 @@ app.use(
   })
 );
 
-// servir arquivos estáticos (index.html, styles.css, etc.)
-app.use(express.static(path.join(__dirname, '..', 'public')));
-
 const publicDir = path.join(__dirname, '..', 'public');
 
 async function auditLog(arg1, action, status = 'ok', meta = null, user = null) {
@@ -733,6 +736,9 @@ function newTokenHex(bytes = 32) {
 
 function sanitizeUserRow(row) {
   if (!row) return null;
+  const permissions = Array.isArray(row.permissions)
+    ? row.permissions
+    : (Array.isArray(row._permissions) ? row._permissions : []);
   return {
     id: row.id,
     name: row.name,
@@ -741,6 +747,7 @@ function sanitizeUserRow(row) {
     isActive: row.is_active,
     createdAt: row.created_at,
     lastLoginAt: row.last_login_at,
+    permissions,
   };
 }
 
@@ -754,10 +761,13 @@ async function loadSession(req) {
        s.id AS session_id,
        s.csrf_token,
        s.expires_at,
-       u.id, u.name, u.email, u.role, u.is_active, u.created_at, u.last_login_at
+       u.id, u.name, u.email, u.role, u.is_active, u.created_at, u.last_login_at,
+       COALESCE(ARRAY_AGG(p.perm) FILTER (WHERE p.perm IS NOT NULL), '{}') AS permissions
      FROM auth_sessions s
      JOIN auth_users u ON u.id = s.user_id
+     LEFT JOIN auth_user_permissions p ON p.user_id = u.id
      WHERE s.token_hash = $1
+     GROUP BY s.id, s.csrf_token, s.expires_at, u.id, u.name, u.email, u.role, u.is_active, u.created_at, u.last_login_at
      LIMIT 1`,
     [tokenHash]
   );
@@ -853,6 +863,44 @@ function requireAdminPage(req, res, next) {
   next();
 }
 
+const RBAC_STRICT = ['1', 'true', 'yes', 'on'].includes(String(process.env.RBAC_STRICT || 'false').toLowerCase());
+
+function normalizeToolSlug(toolSlug) {
+  return String(toolSlug || '').trim().toLowerCase();
+}
+
+function hasToolPermission(user, toolSlug) {
+  if (!user) return false;
+  if (String(user.role || '').toUpperCase() === 'ADMIN') return true;
+
+  const slug = normalizeToolSlug(toolSlug);
+  if (!slug) return false;
+
+  const permissions = Array.isArray(user.permissions) ? user.permissions : [];
+  if (permissions.includes(`tool:${slug}`) || permissions.includes('tool:*')) return true;
+  if (permissions.length === 0 && RBAC_STRICT === false) return true;
+  return false;
+}
+
+function requireToolApi(toolSlug) {
+  return (req, res, next) => {
+    if (!hasToolPermission(req.user || req.auth?.user, toolSlug)) {
+      return res.status(403).json({ error: 'Sem permissão para esta ferramenta' });
+    }
+    return next();
+  };
+}
+
+function requireToolPage(toolSlug) {
+  return (req, res, next) => {
+    const user = req.user || req.auth?.user;
+    if (!hasToolPermission(user, toolSlug)) {
+      return res.status(403).send('Sem permissão');
+    }
+    return next();
+  };
+}
+
 function requireCsrf(req, res, next) {
   const method = (req.method || 'GET').toUpperCase();
   if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') return next();
@@ -878,13 +926,22 @@ function logPageView(action) {
   };
 }
 
-// Bloqueia acesso direto a *.html (senão “fura” o requireAuthPage via express.static)
+// Bloqueia acesso direto a *.html com redirect para rota limpa
 app.use((req, res, next) => {
-  if (req.method === 'GET' && req.path.endsWith('.html') && req.path !== '/login.html') {
-    return requireAuthPage(req, res, next);
+  if (req.method === 'GET' && req.path.toLowerCase().endsWith('.html')) {
+    const url = new URL(req.originalUrl, 'http://localhost');
+    const cleanPath = req.path.slice(0, -5) || '/';
+    const normalized = cleanPath === '/home' ? '/' : (cleanPath === '/login' ? '/login' : cleanPath);
+    const target = `${normalized}${url.search || ''}`;
+    return res.redirect(301, target);
   }
   next();
 });
+
+app.use(express.static(path.join(__dirname, '..', 'public'), {
+  index: false,
+  redirect: false,
+}));
 
 app.get('/', requireAuthPage, logPageView('page_view_home'), (req, res) => {
   res.sendFile(path.join(publicDir, 'home.html'));
@@ -910,6 +967,56 @@ app.get('/dimob', requireAuthPage, logPageView('page_view_dimob'), (req, res) =>
 // para conseguir ler JSON do body (usado em /api/mark-done e SN)
 app.use(express.json());
 
+app.use('/api/sn', requireAuth, requireToolApi('sn'));
+app.use('/api/ecd', requireAuth, requireToolApi('ecd-status'));
+app.use('/api/pdfa', requireAuth, requireToolApi('pdf-a'));
+app.use('/api/balancete-transitorio', requireAuth, requireToolApi('balancete-transitorio'));
+app.use('/api/conciliador-hausen-ocean', requireAuth, requireToolApi('conciliador-hausen-ocean'));
+app.use('/api/separador-pdf-relatorio-de-ferias', requireAuth, requireToolApi('separador-pdf-relatorio-de-ferias'));
+app.use('/api/separador-holerites-por-empresa', requireAuth, requireToolApi('separador-holerites-por-empresa'));
+app.use('/api/separador-ferias-funcionario', requireAuth, requireToolApi('separador-ferias-funcionario'));
+app.use('/api/atas', requireAuth, requireToolApi('gerador-atas'));
+app.use('/api/acertos-lotes-internets', requireAuth, requireToolApi('acertos-lotes-internets'));
+app.use('/api/comprimir-pdf', requireAuth, requireToolApi('comprimir-pdf'));
+app.use('/api/extrator-zip-rar', requireAuth, requireToolApi('extrator-zip-rar'));
+app.use('/api/excel-abas-pdf', requireAuth, requireToolApi('excel-abas-pdf'));
+app.use('/api/importador-recebimentos-madre-scp', requireAuth, requireToolApi('importador-recebimentos-madre-scp'));
+app.use('/api/mit', requireAuth, requireToolApi('mit'));
+app.use('/api/ajuste-diario-gfbr', requireAuth, requireToolApi('ajuste-diario-gfbr'));
+app.use('/api/separador-csv-baixa-automatica', requireAuth, requireToolApi('separador-csv-baixa-automatica'));
+app.use('/api/ajuste-diario-gfbr-c', requireAuth, requireToolApi('ajuste-diario-gfbr-c'));
+app.use('/api/dimob', requireAuth, requireToolApi('dimob'));
+app.use('/api/tareffa-empresas-lote', requireAuth, requireToolApi('tareffa-empresas-lote'));
+app.use('/api/conciliador-cartao-wilson', requireAuth, requireToolApi('conciliador-cartao-wilson'));
+app.use('/api/irpf', requireAuth, requireToolApi('irpf-carne-leao'));
+
+const authRoutes = createAuthRoutes({
+  pool,
+  bcrypt,
+  loginLimiter,
+  auditLog,
+  requireAuth,
+  requireCsrf,
+  newTokenHex,
+  sha256Hex,
+  sanitizeUserRow,
+});
+app.use('/api/auth', authRoutes);
+
+const adminRoutes = createAdminRoutes({
+  pool,
+  bcrypt,
+  requireAuth,
+  requireRole,
+  requireCsrf,
+  uploadAdminUsers,
+  auditLog,
+  sanitizeUserRow,
+  normalizeRole,
+  isValidEmail,
+});
+app.use('/api/admin', adminRoutes);
+
 // <<< ROTAS DA EXTENSÃO / API >>>
 
 // teste simples (usado no popup da extensão)
@@ -918,7 +1025,7 @@ app.get('/api/ping', (req, res) => {
 });
 
 // devolve a próxima chave pendente para a extensão
-app.get('/api/next-key', (req, res) => {
+app.get('/api/next-key', requireAuth, requireToolApi('nfe'), (req, res) => {
   const job = getNextJob();
 
   if (!job) {
@@ -933,7 +1040,7 @@ app.get('/api/next-key', (req, res) => {
 });
 
 // marca uma chave como concluída (quando o XML já foi baixado)
-app.post('/api/mark-done', (req, res) => {
+app.post('/api/mark-done', requireAuth, requireToolApi('nfe'), requireCsrf, (req, res) => {
   const { key } = req.body;
 
   if (!key) {
@@ -957,7 +1064,7 @@ app.post('/api/mark-done', (req, res) => {
 
 // <<< ROTAS JÁ EXISTENTES >>>
 
-app.post('/api/clear-pending', (req, res) => {
+app.post('/api/clear-pending', requireAuth, requireToolApi('nfe'), requireCsrf, (req, res) => {
   try {
     // removemos jobs PENDING e PROCESSING de vez
     const removedCount = deleteJobsByStatus([
@@ -977,7 +1084,7 @@ app.post('/api/clear-pending', (req, res) => {
   }
 });
 
-app.post('/api/clear-done', (req, res) => {
+app.post('/api/clear-done', requireAuth, requireToolApi('nfe'), requireCsrf, (req, res) => {
   try {
     const removedCount = deleteJobsByStatus([JOB_STATUS.DONE]);
 
@@ -1122,7 +1229,7 @@ app.get('/api/formatador-bernardina/jobs/:jobId/download', requireAuth, async (r
   res.download(path.join(outputDir, files[0]), files[0]);
 });
 
-app.post('/api/clear-errors', (req, res) => {
+app.post('/api/clear-errors', requireAuth, requireToolApi('nfe'), requireCsrf, (req, res) => {
   try {
     const removedCount = deleteJobsByStatus([JOB_STATUS.ERROR]);
 
@@ -1140,7 +1247,7 @@ app.post('/api/clear-errors', (req, res) => {
 
 // endpoint de upload do arquivo com chaves
 // endpoint de upload do arquivo com chaves
-app.post('/upload', upload.single('file'), async (req, res) => {
+app.post('/upload', requireAuth, requireToolApi('nfe'), requireCsrf, upload.single('file'), async (req, res) => {
   let tempFilePath = null;
 
   try {
@@ -1194,7 +1301,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 });
 
 // endpoint para pegar estado atual (útil quando entrar na página)
-app.get('/status', (req, res) => {
+app.get('/status', requireAuth, requireToolApi('nfe'), (req, res) => {
   res.json({
     summary: getSummary(),
     jobs: getAllJobs(),
@@ -1219,11 +1326,6 @@ function broadcastJobUpdate(job) {
     jobs: getAllJobs(),
   });
 }
-
-module.exports = {
-  server,
-  broadcastJobUpdate,
-};
 
 // ----------------------------------------------------------------------
 // SIMPLES NACIONAL – CADASTRO, RESUMO E DECLARAÇÃO EM LOTE
@@ -1276,10 +1378,6 @@ function registrarSnResultado(sucesso) {
 // ----------------------------------------------------------------------
 
 // Pool do Postgres
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-
 async function initSecuritySchemaAndBootstrap() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS auth_users (
@@ -1301,6 +1399,15 @@ async function initSecuritySchemaAndBootstrap() {
       csrf_token TEXT NOT NULL,
       expires_at TIMESTAMPTZ NOT NULL,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS auth_user_permissions (
+      user_id BIGINT NOT NULL REFERENCES auth_users(id) ON DELETE CASCADE,
+      perm TEXT NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      PRIMARY KEY (user_id, perm)
     );
   `);
 
@@ -4147,268 +4254,6 @@ app.get('/logs', requireAuthPage, requireAdminPage, logPageView('page_view_audit
   res.sendFile(path.join(publicDir, 'logs.html'));
 });
 
-// API AUTH
-app.post('/api/auth/login', loginLimiter, async (req, res) => {
-  const emailRaw = String(req.body?.email || '').trim().toLowerCase();
-  const password = String(req.body?.password || '');
-
-  if (!emailRaw || !emailRaw.includes('@') || password.length < 1) {
-    await auditLog(req, 'login_failed', 'error', { reason: 'invalid_payload' });
-    return res.status(400).json({ error: 'Credenciais inválidas' });
-  }
-
-  try {
-    const { rows } = await pool.query(
-      `SELECT id, name, email, password_hash, role, is_active, created_at, last_login_at
-       FROM auth_users
-       WHERE email=$1
-       LIMIT 1`,
-      [emailRaw]
-    );
-
-    const user = rows[0];
-    if (!user || !user.is_active) {
-      await auditLog(req, 'login_failed', 'error', { reason: 'user_not_found_or_inactive', email: emailRaw });
-      return res.status(401).json({ error: 'E-mail ou senha inválidos' });
-    }
-
-    const ok = await bcrypt.compare(password, user.password_hash);
-    if (!ok) {
-      await auditLog(req, 'login_failed', 'error', { reason: 'wrong_password', email: emailRaw });
-      return res.status(401).json({ error: 'E-mail ou senha inválidos' });
-    }
-
-    // cria sessão
-    const sessionToken = newTokenHex(32);
-    const tokenHash = sha256Hex(sessionToken);
-    const csrfToken = newTokenHex(16);
-
-    const maxAgeSeconds = Number(process.env.AUTH_SESSION_MAX_AGE_SECONDS || 604800); // 7 dias
-    const expiresAt = new Date(Date.now() + maxAgeSeconds * 1000);
-
-    await pool.query(
-      `INSERT INTO auth_sessions (user_id, token_hash, csrf_token, expires_at)
-       VALUES ($1,$2,$3,$4)`,
-      [user.id, tokenHash, csrfToken, expiresAt]
-    );
-
-    await pool.query(`UPDATE auth_users SET last_login_at=NOW() WHERE id=$1`, [user.id]).catch(() => { });
-
-    const cookieOpts = [
-      `wl_session=${encodeURIComponent(sessionToken)}`,
-      'Path=/',
-      'HttpOnly',
-      'SameSite=Lax',
-      `Max-Age=${maxAgeSeconds}`,
-    ];
-    if (process.env.NODE_ENV === 'production') cookieOpts.push('Secure');
-
-    res.setHeader('Set-Cookie', cookieOpts.join('; '));
-
-    const safeUser = sanitizeUserRow(user);
-    await auditLog(req, 'login_success', 'ok', {}, safeUser);
-    return res.json({ user: safeUser, csrfToken });
-  } catch (e) {
-    console.error('login error:', e.message);
-    await auditLog(req, 'login_failed', 'error', { reason: 'server_error' });
-    return res.status(500).json({ error: 'Erro interno' });
-  }
-});
-
-app.get('/api/auth/me', requireAuth, async (req, res) => {
-  return res.json({ user: req.user, csrfToken: req.csrfToken });
-});
-
-app.post('/api/auth/logout', requireAuth, requireCsrf, async (req, res) => {
-  try {
-    await pool.query(`DELETE FROM auth_sessions WHERE token_hash=$1`, [req.sessionTokenHash]);
-  } catch (e) {
-    console.error('logout error:', e.message);
-  }
-
-  res.setHeader('Set-Cookie', 'wl_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
-  await auditLog(req, 'logout', 'ok', {});
-  return res.json({ ok: true });
-});
-
-// API ADMIN: usuários
-app.get('/api/admin/users', requireAuth, requireRole('ADMIN'), async (req, res) => {
-  const { rows } = await pool.query(
-    `SELECT id, name, email, role, is_active, created_at, last_login_at
-     FROM auth_users
-     ORDER BY id DESC`
-  );
-  res.json(rows.map(sanitizeUserRow));
-}); app.post('/api/admin/users', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
-  const name = String(req.body?.name || '').trim();
-  const email = String(req.body?.email || '').trim().toLowerCase();
-  const password = String(req.body?.password || '');
-  const role = normalizeRole(req.body?.role);
-
-  if (!name || !isValidEmail(email) || password.length < 6) {
-    return res.status(400).json({ error: 'Dados inválidos (nome, e-mail, senha>=6)' });
-  }
-
-  const hash = await bcrypt.hash(password, 10);
-
-  try {
-    const { rows } = await pool.query(
-      `INSERT INTO auth_users (name, email, password_hash, role, is_active)
-       VALUES ($1,$2,$3,$4,true)
-       RETURNING id, name, email, role, is_active, created_at, last_login_at`,
-      [name, email, hash, role]
-    );
-
-    await auditLog(req, 'user_create', 'ok', { target_email: email, target_user_id: rows[0]?.id });
-    return res.json({ user: sanitizeUserRow(rows[0]) });
-  } catch (e) {
-    if (String(e.message || '').includes('unique')) {
-      return res.status(409).json({ error: 'E-mail já existe' });
-    }
-    console.error(e);
-    await auditLog(req, 'user_create', 'error', { target_email: email, reason: 'server_error' });
-    return res.status(500).json({ error: 'Erro interno' });
-  }
-});
-
-app.patch('/api/admin/users/:id', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
-  const id = Number(req.params.id);
-  if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID inválido' });
-
-  // bloqueia desativar a si mesmo (recomendado)
-  if (req.body?.is_active === false && req.user?.id === id) {
-    return res.status(400).json({ error: 'Você não pode desativar seu próprio usuário' });
-  }
-
-  const name = String(req.body?.name || '').trim();
-  const email = String(req.body?.email || '').trim().toLowerCase();
-  const role = normalizeRole(req.body?.role);
-  const isActive = req.body?.is_active;
-
-  if (!name || !isValidEmail(email) || (isActive !== undefined && typeof isActive !== 'boolean')) {
-    return res.status(400).json({ error: 'Dados inválidos' });
-  }
-
-  const { rows } = await pool.query(
-    `UPDATE auth_users
-     SET name=$1, email=$2, role=$3, is_active=COALESCE($4,is_active)
-     WHERE id=$5
-     RETURNING id, name, email, role, is_active, created_at, last_login_at`,
-    [name, email, role, isActive ?? null, id]
-  );
-
-  if (!rows[0]) return res.status(404).json({ error: 'Usuário não encontrado' });
-
-  await auditLog(req, 'user_update', 'ok', { target_user_id: id, target_email: email });
-  res.json({ user: sanitizeUserRow(rows[0]) });
-});
-
-app.patch('/api/admin/users/:id/password', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
-  const id = Number(req.params.id);
-  const password = String(req.body?.password || '');
-  if (!Number.isFinite(id) || password.length < 6) return res.status(400).json({ error: 'Dados inválidos' });
-
-  const hash = await bcrypt.hash(password, 10);
-
-  await pool.query(`UPDATE auth_users SET password_hash=$1 WHERE id=$2`, [hash, id]);
-  // apaga sessões do usuário
-  await pool.query(`DELETE FROM auth_sessions WHERE user_id=$1`, [id]).catch(() => { });
-  await auditLog(req, 'user_password_reset', 'ok', { target_user_id: id });
-
-  res.json({ ok: true });
-});
-
-app.delete('/api/admin/users/:id', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
-  const id = Number(req.params.id);
-  if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID inválido' });
-
-  // bloquear excluir o próprio usuário logado
-  if (req.user?.id === id) return res.status(400).json({ error: 'Você não pode excluir seu próprio usuário' });
-
-  await pool.query(`DELETE FROM auth_users WHERE id=$1`, [id]);
-  await auditLog(req, 'user_delete', 'ok', { target_user_id: id });
-  res.json({ ok: true });
-});
-
-app.post('/api/admin/users/import', requireAuth, requireRole('ADMIN'), requireCsrf, uploadAdminUsers.single('file'), async (req, res) => {
-  const usersText = String(req.body?.usersText || '').trim();
-  const fileBuf = req.file?.buffer;
-
-  let text = usersText;
-  if (!text && fileBuf) text = fileBuf.toString('utf-8');
-
-  if (!text) return res.status(400).json({ error: 'Envie um arquivo ou cole o texto para importação.' });
-
-  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-  if (lines.length === 0) return res.status(400).json({ error: 'Arquivo/vazio.' });
-
-  // aceita header opcional
-  const startIdx = lines[0].toLowerCase().startsWith('nome;email;senha') ? 1 : 0;
-
-  const results = { total: 0, createdOrUpdated: 0, errors: [] };
-
-  for (let i = startIdx; i < lines.length; i++) {
-    results.total++;
-
-    const parts = lines[i].split(';');
-    const name = String(parts[0] || '').trim();
-    const email = String(parts[1] || '').trim().toLowerCase();
-    const pass = String(parts[2] || '');
-    const role = normalizeRole(parts[3] || 'USER');
-
-    if (!name || !isValidEmail(email) || pass.length < 6) {
-      results.errors.push({ line: i + 1, error: 'Linha inválida (nome/email/senha/role)', raw: lines[i] });
-      continue;
-    }
-
-    const hash = await bcrypt.hash(pass, 10);
-
-    await pool.query(
-      `INSERT INTO auth_users (name, email, password_hash, role, is_active)
-       VALUES ($1,$2,$3,$4,true)
-       ON CONFLICT (email)
-       DO UPDATE SET
-         name=EXCLUDED.name,
-         password_hash=EXCLUDED.password_hash,
-         role=EXCLUDED.role,
-         is_active=true`,
-      [name, email, hash, role]
-    );
-
-    results.createdOrUpdated++;
-  }
-
-  await auditLog(req, 'users_import', results.errors.length ? 'error' : 'ok', { ...results });
-  res.json(results);
-});
-
-app.get('/api/admin/audit-logs', requireAuth, requireRole('ADMIN'), async (req, res) => {
-  const action = String(req.query?.action || '').trim();
-  const username = String(req.query?.username || req.query?.email || '').trim().toLowerCase();
-  const startDate = String(req.query?.startDate || '').trim();
-  const endDate = String(req.query?.endDate || '').trim();
-
-  const params = [];
-  const where = [];
-
-  if (action) { params.push(`%${action}%`); where.push(`action ILIKE $${params.length}`); }
-  if (username) { params.push(`%${username}%`); where.push(`(email ILIKE $${params.length})`); }
-  if (startDate) { params.push(startDate); where.push(`created_at >= ($${params.length}::date)`); }
-  if (endDate) { params.push(endDate); where.push(`created_at < (($${params.length}::date) + INTERVAL '1 day')`); }
-
-  const sql = `
-    SELECT id, created_at, user_id, email, action, status, ip, user_agent, meta
-    FROM audit_logs
-    ${where.length ? 'WHERE ' + where.join(' AND ') : ''}
-    ORDER BY created_at DESC
-    LIMIT 500
-  `;
-  const { rows } = await pool.query(sql, params);
-
-  res.json({ logs: rows });
-});
-
-// Página: Simulador Carnê-Leão (IRPF)
 app.get('/irpf-carne-leao', requireAuthPage, (req, res) => {
   res.sendFile(path.join(publicDir, 'irpf-carne-leao.html'));
 });
@@ -5691,3 +5536,60 @@ app.post(
     }
   }
 );
+
+const RESERVED_DYNAMIC_SLUGS = new Set([
+  'api',
+  'socket.io',
+  'login',
+  'admin-usuarios',
+  'logs',
+  'favicon.ico',
+  'robots.txt',
+  'sitemap.xml',
+  'status',
+  'health',
+]);
+
+app.get('/:toolSlug', requireAuthPage, async (req, res, next) => {
+  try {
+    const rawSlug = String(req.params.toolSlug || '').trim();
+    if (!rawSlug) return next();
+    if (RESERVED_DYNAMIC_SLUGS.has(rawSlug)) return next();
+    if (!/^[A-Za-z0-9._-]+$/.test(rawSlug)) return next();
+
+    const candidates = [
+      rawSlug,
+      decodeURIComponent(rawSlug),
+      rawSlug.toLowerCase(),
+    ];
+    let filePath = null;
+    for (const candidate of candidates) {
+      if (!candidate || candidate.includes('..') || candidate.includes('/') || candidate.includes('\\')) continue;
+      const p = path.join(publicDir, `${candidate}.html`);
+      if (fs.existsSync(p)) {
+        filePath = p;
+        break;
+      }
+    }
+    if (!filePath) return next();
+
+    const slug = normalizeToolSlug(rawSlug);
+    if ((slug === 'admin-usuarios' || slug === 'logs') && String(req.user?.role || '').toUpperCase() !== 'ADMIN') {
+      return res.status(403).send('Sem permissão');
+    }
+    if (!hasToolPermission(req.user, slug)) return res.status(403).send('Sem permissão');
+
+    await auditLog(req, `page_view_${slug}`, 'ok', { path: req.path, method: req.method });
+    return res.sendFile(filePath);
+  } catch (e) {
+    console.error('dynamic tool route error:', e.message || e);
+    return next();
+  }
+});
+
+module.exports = {
+  server,
+  io,
+  broadcastJobUpdate,
+};
+
