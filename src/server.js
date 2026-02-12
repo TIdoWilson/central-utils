@@ -935,6 +935,19 @@ function requireToolPage(toolSlug) {
   };
 }
 
+function requireAnyToolAccess(req, res, next) {
+  const user = req.user || req.auth?.user;
+  if (!user) return res.status(403).json({ error: 'Sem permissão para esta ferramenta' });
+  if (String(user.role || '').toUpperCase() === 'ADMIN') return next();
+
+  const permissions = Array.isArray(user.permissions) ? user.permissions : [];
+  if (permissions.includes('tool:*') || permissions.some((p) => String(p || '').startsWith('tool:'))) {
+    return next();
+  }
+  if (permissions.length === 0 && RBAC_STRICT === false) return next();
+  return res.status(403).json({ error: 'Sem permissão para esta ferramenta' });
+}
+
 function requireCsrf(req, res, next) {
   const method = (req.method || 'GET').toUpperCase();
   if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') return next();
@@ -1681,7 +1694,7 @@ const uploadPdfa = multer({
 
 
 // Busca CEP na BrasilAPI
-app.get('/api/cep/:cep', requireAuth, requireToolApi('dimob'), async (req, res) => {
+app.get('/api/cep/:cep', requireAuth, requireAnyToolAccess, async (req, res) => {
   try {
     const cepRaw = req.params.cep || '';
     const cep = cepRaw.replace(/\D/g, '');
@@ -1714,7 +1727,7 @@ app.get('/api/cep/:cep', requireAuth, requireToolApi('dimob'), async (req, res) 
 });
 
 // Busca CNPJ na BrasilAPI
-app.get('/api/cnpj/:cnpj', requireAuth, requireToolApi('dimob'), async (req, res) => {
+app.get('/api/cnpj/:cnpj', requireAuth, requireAnyToolAccess, async (req, res) => {
   try {
     const cnpjRaw = req.params.cnpj || '';
     const cnpj = cnpjRaw.replace(/\D/g, '');
