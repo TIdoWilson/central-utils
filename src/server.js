@@ -48,6 +48,7 @@ if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR);
 }
 const PY_BASE_URL = process.env.PY_BASE_URL || 'http://127.0.0.1:8001';
+const PY_API_URL = process.env.PY_API_URL || 'http://127.0.0.1:8001';
 // ===== PDF/A Converter =====
 const PDFA_DIR = path.join(DATA_DIR, 'pdfa');
 const PDFA_TMP_DIR = path.join(PDFA_DIR, '_tmp');
