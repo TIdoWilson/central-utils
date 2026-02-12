@@ -1656,7 +1656,7 @@ app.get('/login', (req, res) => {
 // PDF/A Converter
 
 
-app.get('/formatador-bernadina', (req, res) => {
+app.get('/formatador-bernadina', requireAuthPage, (req, res) => {
   res.redirect('/formatador-bernardina');
 });
 
