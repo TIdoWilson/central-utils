@@ -125,19 +125,19 @@ body {
 
 .portal-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px;
-  margin: 8px 0 20px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+  margin: 6px 0 16px;
 }
 
 .portal-card {
   background: var(--portal-surface);
   border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 16px 14px;
+  border-radius: 12px;
+  padding: 12px 11px;
   text-decoration: none;
   color: var(--portal-ink);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.07);
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.07);
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
 
@@ -148,14 +148,16 @@ body {
 }
 
 .portal-card h3 {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   color: #0f172a;
+  font-size: 1.05rem;
 }
 
 .portal-card p {
   margin: 0;
   color: var(--portal-muted);
-  font-size: .95rem;
+  font-size: .88rem;
+  line-height: 1.35;
 }
 
 /* Fallback para tema "mkdocs" clássico, se carregar sem Material */
