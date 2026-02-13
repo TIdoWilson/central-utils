@@ -11,6 +11,9 @@ async function autenticarSerpro() {
 
   const consumerKey = process.env.CONSUMER_KEY;
   const consumerSecret = process.env.CONSUMER_SECRET;
+  const roleType = process.env.ROLE_TYPE || "TERCEIROS";
+  const timeoutMs = Number(process.env.SERPRO_AUTH_TIMEOUT_MS || 30000);
+  const debugAuth = ["1", "true", "yes", "on"].includes(String(process.env.SERPRO_AUTH_DEBUG || "").toLowerCase());
 
   const certPath = process.env.CERT_PFX_PATH || process.env.SERPRO_PFX_PATH;
   const certPassword = process.env.CERT_PFX_PASSWORD || process.env.SERPRO_PFX_PASSWORD;
@@ -40,15 +43,17 @@ async function autenticarSerpro() {
 
   const headers = {
     "Authorization": "Basic " + basic,
-    "Role-Type": "TERCEIROS",
+    "Role-Type": roleType,
     "Content-Type": "application/x-www-form-urlencoded"
   };
 
   const body = new URLSearchParams({ grant_type: "client_credentials" });
 
-  const resp = await axios.post(url, body, { headers, httpsAgent });
-
-  console.log("Token recebido do SERPRO:", resp.data);
+  const resp = await axios.post(url, body, { headers, httpsAgent, timeout: timeoutMs });
+  if (debugAuth) {
+    const expiresIn = resp?.data?.expires_in ?? null;
+    console.log("[SERPRO auth] token recebido com sucesso.", { expires_in: expiresIn, roleType });
+  }
 
   // AQUI, pela doc, devem vir:
   // access_token + jwt_token

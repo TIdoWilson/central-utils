@@ -24,7 +24,11 @@ module.exports = function createAdminRoutes(deps) {
        FROM auth_users
        ORDER BY id DESC`
     );
-    res.json(rows.map(sanitizeUserRow));
+    const users = rows.map(sanitizeUserRow);
+    if (String(req.query?.format || '').toLowerCase() === 'array') {
+      return res.json(users);
+    }
+    return res.json({ users });
   });
 
   router.post('/users', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {

@@ -15,6 +15,14 @@
     out.textContent = (out.textContent ? out.textContent + "\n" : "") + line;
   }
 
+  async function safeJson(resp) {
+    try {
+      return await resp.json();
+    } catch (_) {
+      return null;
+    }
+  }
+
   async function boot() {
     try {
       if (typeof inicializarSidebar === "function") {
@@ -22,8 +30,10 @@
       }
 
       // Confere sessão (páginas internas devem estar autenticadas)
-      const me = await AuthClient.authFetch("/api/auth/me", { method: "GET" });
-      write({ me });
+      const meResp = await AuthClient.authFetch("/api/auth/me", { method: "GET" });
+      const me = await safeJson(meResp);
+      if (!meResp.ok) throw new Error("Sessão inválida.");
+      write({ user: me?.user || null });
 
       const btn = $("btnAction");
       if (btn) btn.addEventListener("click", onAction);
@@ -36,9 +46,10 @@
     write("Executando ação…");
 
     try {
-      // EXEMPLO (GET)
-      // const r1 = await AuthClient.authFetch(`${API_BASE}/health`, { method: "GET" });
-      // write({ health: r1 });
+      // EXEMPLO (GET /health)
+      const r1 = await AuthClient.authFetch(`${API_BASE}/health`, { method: "GET" });
+      const j1 = await safeJson(r1);
+      write({ healthStatus: r1.status, health: j1 });
 
       // EXEMPLO (POST com CSRF automático via authFetch)
       // const r2 = await AuthClient.authFetch(`${API_BASE}/run`, {
@@ -46,9 +57,10 @@
       //   headers: { "Content-Type": "application/json" },
       //   body: JSON.stringify({ hello: "world" }),
       // });
-      // write({ run: r2 });
+      // const j2 = await safeJson(r2);
+      // write({ runStatus: r2.status, run: j2 });
 
-      write("Ação (stub) concluída. Edite este arquivo para ligar nos endpoints reais.");
+      write("Ação concluída. Ajuste este arquivo para ligar nos endpoints reais da ferramenta.");
     } catch (e) {
       write({ error: "Falha ao executar ação", detail: String(e && e.message ? e.message : e) });
     }

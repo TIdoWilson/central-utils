@@ -18,6 +18,23 @@
             <img src="img/Logo_preta_negativo-removebg-preview.png" class="topbar-logo" alt="Logo">
         </div>
 
+        <div class="topbar-right">
+            <button class="home-user-btn" id="homeUserBtn" type="button" aria-haspopup="menu" aria-expanded="false">
+                <span class="home-user-avatar">👤</span>
+                <span class="home-user-label">Conta</span>
+            </button>
+            <div class="home-user-menu" id="homeUserMenu" role="menu" aria-hidden="true">
+                <div class="home-user-menu-header">
+                    <strong id="homeUserName">Usuário</strong>
+                    <span id="homeUserEmail"></span>
+                </div>
+                <a href="/" class="home-user-item" role="menuitem">Início</a>
+                <button type="button" class="home-user-item home-user-item-danger" id="homeLogoutBtn" role="menuitem">
+                    Sair
+                </button>
+            </div>
+        </div>
+
     </header>
 
 
@@ -527,23 +544,6 @@
                     </div>
                 </div>
 
-                <div class="carousel-card" data-script="admin-usuarios">
-                    <div class="card-icon">🔐</div>
-                    <h3 class="card-title">Administração</h3>
-                    <p class="card-subtitle">Usuários, controle de acesso e auditoria</p>
-                    <div class="card-tags">
-                        <span class="tag">RBAC</span>
-                        <span class="tag">Logs</span>
-                        <span class="tag">Importação</span>
-                    </div>
-                    <div class="card-hover">
-                        <p>
-                            Gerencie usuários (importação com login/senha) e consulte logs de acesso e ações no portal.
-                        </p>
-                        <a href="/admin-usuarios" class="btn-card">Acessar</a>
-                    </div>
-                </div>
-
                 <div class="carousel-card" data-script="irpf-carne-leao">
                     <div class="card-icon">🧮</div>
                     <h3 class="card-title">Simulador Carnê-Leão (IRPF)</h3>
@@ -681,6 +681,55 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Administração ===== -->
+    <section class="session session--admin" id="admin">
+        <button class="session-header" type="button">
+            <div class="session-header-text">
+                <span class="session-pill session-pill-admin">Administração</span>
+                <span class="session-subtitle">
+                    Gestão de usuários, permissões e auditoria do portal.
+                </span>
+            </div>
+            <span class="session-chevron">⌄</span>
+        </button>
+
+        <div class="session-body">
+            <div class="session-grid">
+                <div class="carousel-card" data-script="admin-usuarios">
+                    <div class="card-icon">🔐</div>
+                    <h3 class="card-title">Administração de Usuários</h3>
+                    <p class="card-subtitle">Cadastre usuários, edite acessos e permissões por ferramenta.</p>
+                    <div class="card-tags">
+                        <span class="tag">Admin</span>
+                        <span class="tag">RBAC</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Tela administrativa para importação e gestão de usuários com permissões por ferramenta.
+                        </p>
+                        <a href="/admin-usuarios" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
+                <div class="carousel-card" data-script="logs">
+                    <div class="card-icon">🧾</div>
+                    <h3 class="card-title">Logs e Auditoria</h3>
+                    <p class="card-subtitle">Visualize eventos de acesso e ações sensíveis no sistema.</p>
+                    <div class="card-tags">
+                        <span class="tag">Admin</span>
+                        <span class="tag">Auditoria</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Consulte o histórico de ações (login, alterações e operações críticas) para rastreabilidade.
+                        </p>
+                        <a href="/logs" class="btn-card">Acessar</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

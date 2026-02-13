@@ -5,61 +5,83 @@
 - **Slug:** `ajuste-diario-gfbr-c`
 - **Grupo:** Geral
 - **Página (rota):** `/ajuste-diario-gfbr-c`
-- **API base:** `/api/ajuste-diario-gfbr-c`
+- **API base (Node):** `/api/ajuste-diario-gfbr-c`
 - **Permissão RBAC:** `tool:ajuste-diario-gfbr-c` ou `tool:*` (ADMIN acessa)
 
-Arruma lançamentos do grupo GFBR para importação correta do diário contábil.
+Versão de alto desempenho do ajuste diário GFBR. O Node atua como gateway, a API em Go executa a orquestração do processamento e o executável `.NET/C#` aplica as regras na planilha.
 
 ## 2. Objetivo Operacional
 
-- Envie o diário em Excel exportado do sistema GFBR e deixe o robô remover contas transitórias, separar estornos em uma aba própria e filtrar recebimentos e lançamentos indesejados, mantendo a formatação da planilha de origem.
-- Uso recomendado quando há alto volume, risco de erro manual ou necessidade de padronização de entrega.
+- Processar o diário contábil (`.xlsx`) removendo grupos transitórios e linhas indesejadas.
+- Separar estornos e produzir resumo técnico do processamento.
+- Disponibilizar download do arquivo ajustado e, quando habilitado, do backup.
 
 ## 3. Arquivos Relacionados (Verificados)
 
 - **Página HTML:** `public/ajuste-diario-gfbr-c.html`
-- **Script JS da ferramenta:** `public/js/ajuste-diario-gfbr-c.js`
-- **Router Node:** `src/routes/tools/ajuste-diario-gfbr-c.routes.js`
-- **Service Node:** _não identificado_
-- **Arquivos Python relacionados:** `api/ajuste_diario_gfbr_core.py`
+- **Script JS da página:** `public/js/ajuste-diario-gfbr-c.js`
+- **Router Node (gateway):** `src/routes/tools/ajuste-diario-gfbr-c.routes.js`
+- **API Go:** `go-api/main.go`
+- **Binário .NET usado pela API Go:** `go-api/bin/AjusteDiarioGfbr.exe` (Windows)
+- **Service Node dedicado:** _não há; a orquestração está no router + API Go_
 
 ## 4. Rotas e Endpoints
 
-- **Rota de página:** `/ajuste-diario-gfbr-c`;
-- **Base de API esperada:** `/api/ajuste-diario-gfbr-c`;
-- **Endpoints no router:**
-  - `POST /processar`
-  - `GET /download/ajustado/:id`
-  - `GET /download/backup/:id`
+- **Página interna:** `GET /ajuste-diario-gfbr-c`
+- **Node -> cliente:**
+  - `POST /api/ajuste-diario-gfbr-c/processar`
+  - `GET /api/ajuste-diario-gfbr-c/download/ajustado/:id`
+  - `GET /api/ajuste-diario-gfbr-c/download/backup/:id`
+- **Go API (upstream):**
+  - `POST /api/ajuste-diario-gfbr-c/processar`
+  - `GET /api/ajuste-diario-gfbr-c/download/ajustado/:id`
+  - `GET /api/ajuste-diario-gfbr-c/download/backup/:id`
 
-## 5. Fluxo Técnico (Página -> Node -> Python/Serviço)
+## 5. Fluxo Técnico Real
 
-- Front-end coleta parâmetros/arquivos e chama APIs internas (preferência por `AuthClient.authFetch`).
-- Router valida entrada, aplica segurança (CSRF em mutações quando aplicável) e orquestra o processamento.
-- Service concentra regra de negócio, integração com armazenamento e chamadas a serviços externos/Python.
-- Retorno padronizado em JSON e/ou arquivo para download.
+1. Usuário envia arquivo na página (`public/js/ajuste-diario-gfbr-c.js`).
+2. Front chama `POST /api/ajuste-diario-gfbr-c/processar` (multipart).
+3. Router Node valida upload e repassa para `GO_API_URL` (default `http://127.0.0.1:8002`).
+4. Go salva arquivo temporário em `go-api/work`, executa `AjusteDiarioGfbr.exe` e parseia o resumo.
+5. Go retorna `download_id`, `download_url_ajustado` e `download_url_backup`.
+6. Front habilita os botões de download e exibe métricas.
 
-## 6. Segurança e Governança
+## 6. Configuração de Runtime (Go + C#)
 
-- Exige autenticação ativa no portal.
-- RBAC por ferramenta (`tool:<slug>`, `tool:*`, ADMIN).
-- Em mutações, usar token CSRF via header `x-csrf-token` (exceto login).
-- `auditLog` deve registrar evento sem interromper a requisição em falhas de auditoria.
+- `GO_API_URL`: URL base consumida pelo Node para chamar a API Go.
+- `GO_API_PORT`: porta de publicação da API Go.
+- `AJUSTE_DIARIO_GFBR_BIN`: caminho do binário `.NET`; se ausente, Go tenta `go-api/bin/AjusteDiarioGfbr(.exe)`.
 
-## 7. Entradas e Saídas Esperadas
+Pré-requisitos:
+- Processo da Go API ativo.
+- Binário `.NET` acessível no host.
+- Permissão de escrita em `go-api/work`.
 
-- **Entradas:** parâmetros de formulário e/ou upload conforme UI da ferramenta.
-- **Saídas:** resposta em tela e, quando aplicável, artefatos (ZIP/PDF/XLSX/CSV/JSON).
-- **Observação:** validar encoding, formato e tamanho dos arquivos para evitar erro 400/422.
+## 7. Segurança e Governança
 
-## 8. Troubleshooting Rápido
+- Exige autenticação e RBAC da ferramenta.
+- `POST /processar` exige CSRF (`x-csrf-token`).
+- Downloads são protegidos por sessão e permissão via middleware do servidor Node.
+- No fluxo atual, a API Go não é pública por si só; deve ficar restrita à rede interna/local.
 
-- **401/403:** conferir sessão do usuário e permissão RBAC.
-- **404 em endpoint:** validar rota no `router` e base URL consumida no JS.
-- **422/400:** revisar campos obrigatórios e estrutura do arquivo enviado.
-- **500:** inspecionar logs do Node e, quando existir, logs do processamento Python.
+## 8. Entradas, Saídas e Erros Comuns
+
+Entradas:
+- Campo `arquivoDiario` (`.xlsx`).
+- Opcionais: `abaOrigem`, `criarBackup`.
+
+Saídas:
+- JSON com `resultado`, `download_id` e URLs de download.
+- Arquivo ajustado e backup opcional.
+
+Erros observáveis:
+- `400 Arquivo é obrigatório`: upload sem arquivo.
+- `500 Executável .NET não encontrado`: validar `AJUSTE_DIARIO_GFBR_BIN` e `go-api/bin/`.
+- `504 Processamento excedeu o tempo limite`: arquivo grande ou travamento do binário.
+- `404 download`: ID expirado (janela curta de retenção no Go).
 
 ## 9. Observações de Manutenção
 
-- Ao alterar nomes de arquivo/rota, manter compatibilidade (alias/redirect) para não quebrar links legados.
-- Se incluir nova API/fluxo, atualizar este documento e `src/core/tool-catalog.json`.
+- O documento antigo citava Python para este slug; o fluxo atual é **Node + Go + .NET**, sem core Python nesta rota.
+- Se alterar payload entre Node e Go, atualizar este `.md` e o front (`public/js/ajuste-diario-gfbr-c.js`) no mesmo commit.
+- Ao surgir incidente real em produção, registrar aqui em seção de erros com causa e correção aplicada.

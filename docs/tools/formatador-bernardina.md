@@ -20,8 +20,9 @@ Envie os XLSX das filiais e gere o XLSM “AGRUPADA” pronto, com período vali
 - **Página HTML:** `public/formatador-bernardina.html`
 - **Script JS da ferramenta:** `public/js/formatador-bernardina.js`
 - **Router Node:** `src/routes/tools/formatador-bernardina.routes.js`
-- **Service Node:** _não identificado_
-- **Arquivos Python relacionados:** _não foi identificado arquivo Python específico para este slug_
+- **Binário C#/.NET (publish):** `tools/formatador-bernardina/publish/Formatador Bernadina.exe`
+- **Service Node:** _não há service dedicado; execução ocorre diretamente no router_
+- **Arquivos Python relacionados:** _não aplicável para este slug_
 
 ## 4. Rotas e Endpoints
 
@@ -32,12 +33,14 @@ Envie os XLSX das filiais e gere o XLSM “AGRUPADA” pronto, com período vali
   - `GET /jobs/:jobId`
   - `GET /jobs/:jobId/download`
 
-## 5. Fluxo Técnico (Página -> Node -> Python/Serviço)
+## 5. Fluxo Técnico Real (Página -> Node -> C#)
 
-- Front-end coleta parâmetros/arquivos e chama APIs internas (preferência por `AuthClient.authFetch`).
-- Router valida entrada, aplica segurança (CSRF em mutações quando aplicável) e orquestra o processamento.
-- Service concentra regra de negócio, integração com armazenamento e chamadas a serviços externos/Python.
-- Retorno padronizado em JSON e/ou arquivo para download.
+1. Front autentica usuário em `/api/auth/me` para obter CSRF.
+2. Front envia `FormData` com múltiplos `files` para `POST /api/formatador-bernardina/jobs`.
+3. Router cria diretório do job em `data/formatador-bernardina/<jobId>/`.
+4. Router executa `spawn(BERNADINA_EXE_PATH, [inputDir, outputPath, BERNADINA_TEMPLATE_PATH])`.
+5. Status é persistido em `job.json` e consultado via polling (`GET /jobs/:jobId`).
+6. Ao concluir, download fica disponível em `GET /jobs/:jobId/download`.
 
 ## 6. Segurança e Governança
 
@@ -46,20 +49,31 @@ Envie os XLSX das filiais e gere o XLSM “AGRUPADA” pronto, com período vali
 - Em mutações, usar token CSRF via header `x-csrf-token` (exceto login).
 - `auditLog` deve registrar evento sem interromper a requisição em falhas de auditoria.
 
-## 7. Entradas e Saídas Esperadas
+## 7. Configuração de Runtime (C#)
 
-- **Entradas:** parâmetros de formulário e/ou upload conforme UI da ferramenta.
-- **Saídas:** resposta em tela e, quando aplicável, artefatos (ZIP/PDF/XLSX/CSV/JSON).
-- **Observação:** validar encoding, formato e tamanho dos arquivos para evitar erro 400/422.
+- `BERNADINA_EXE_PATH`: caminho absoluto do executável C#.
+- `BERNADINA_TEMPLATE_PATH`: caminho do template `.xlsm` base.
 
-## 8. Troubleshooting Rápido
+Falhas de configuração retornam erro explícito:
+- `BERNADINA_EXE_PATH não configurado no .env`
+- `BERNADINA_TEMPLATE_PATH não configurado no .env`
+
+## 8. Entradas e Saídas Esperadas
+
+- **Entradas:** array `files` com planilhas `.xlsx`.
+- **Saídas:** `jobId`, status incremental (`processing/done/error`) e arquivo `.xlsm` final.
+- **Persistência local:** logs e metadados por job em `job.json`.
+
+## 9. Troubleshooting Específico
 
 - **401/403:** conferir sessão do usuário e permissão RBAC.
-- **404 em endpoint:** validar rota no `router` e base URL consumida no JS.
-- **422/400:** revisar campos obrigatórios e estrutura do arquivo enviado.
-- **500:** inspecionar logs do Node e, quando existir, logs do processamento Python.
+- **400 "Envie pelo menos 1 .xlsx":** campo multipart incorreto (esperado `files`).
+- **500 ao criar job:** validar `BERNADINA_EXE_PATH` e permissões de execução do `.exe`.
+- **Job `error` com `exitCode != 0`:** abrir logs do job em `job.json` (stdout/stderr gravados).
+- **404 no download:** job inexistente ou sem `.xlsm` produzido.
 
-## 9. Observações de Manutenção
+## 10. Observações de Manutenção
 
 - Ao alterar nomes de arquivo/rota, manter compatibilidade (alias/redirect) para não quebrar links legados.
 - Se incluir nova API/fluxo, atualizar este documento e `src/core/tool-catalog.json`.
+- Se o executável C# mudar contrato de argumentos, atualizar o router e esta documentação em conjunto.

@@ -58,6 +58,7 @@ module.exports = function createMitRoutes(deps) {
         }
 
         const payloadMit = {
+          // Valores sensíveis/contratante vêm do .env para evitar hardcode no código.
           contratante: {
             numero: process.env.CNPJ_CONTRATANTE,
             tipo: 2
@@ -78,9 +79,17 @@ module.exports = function createMitRoutes(deps) {
           }
         };
 
+        if (!process.env.CNPJ_CONTRATANTE) {
+          return res.status(500).json({
+            ok: false,
+            error: 'CNPJ_CONTRATANTE não configurado no .env.'
+          });
+        }
+
         const { accessToken, jwtToken } = await obterToken();
 
         const urlDeclarar =
+          process.env.SERPRO_MIT_DECLARAR_URL ||
           process.env.SERPRO_DECLARAR_URL ||
           'https://gateway.apiserpro.serpro.gov.br/integra-contador-trial/v1/Declarar';
 

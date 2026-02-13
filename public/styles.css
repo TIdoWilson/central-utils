@@ -43,6 +43,83 @@ body.app-body {
 /* texto da direita alinhado */
 .topbar-right {
     text-align: right;
+    position: relative;
+}
+
+.home-user-btn {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  border-radius: 999px;
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.home-user-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.home-user-menu {
+  position: absolute;
+  right: 0;
+  top: 78px;
+  width: 260px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.22);
+  z-index: 50;
+  display: none;
+  text-align: left;
+}
+
+.home-user-menu.open {
+  display: block;
+}
+
+.home-user-menu-header {
+  padding: 14px 14px 8px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #111827;
+}
+
+.home-user-menu-header span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.home-user-item {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+  color: #111827;
+  font-size: 14px;
+  display: block;
+  text-align: left;
+  padding: 11px 14px;
+  cursor: pointer;
+}
+
+.home-user-item:hover {
+  background: #f8fafc;
+}
+
+.home-user-item-danger {
+  color: #b91c1c;
 }
 
 
@@ -136,6 +213,10 @@ body.app-body {
   color: #ef4444;
 }
 
+.session-pill-admin {
+  color: #f59e0b;
+}
+
 .session-chevron {
   font-size: 18px;
   color: #6b7280;
@@ -181,6 +262,10 @@ body.app-body {
 }
 
 .session--declaracoes .session-header {
+  background: #ffffff;
+}
+
+.session--admin .session-header {
   background: #ffffff;
 }
 
@@ -438,41 +523,68 @@ body.nfe-body {
 }
 
 .nfe-layout {
-  display: flex;
-  min-height: 100vh;
+  display: block;
+  min-height: calc(100vh - 70px);
+  margin-top: 70px;
+  --header-height: 70px;
+  --sidebar-width: 220px;
+}
+
+.nfe-layout.collapsed {
+  --sidebar-width: 84px;
 }
 
 /* SIDEBAR */
 
 /* largura padrão menor */
 .nfe-sidebar {
-  width: 200px;
-  /* antes era 230 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1200;
+  box-sizing: border-box;
+  width: var(--sidebar-width);
   background: linear-gradient(180deg, #221f20, #221f20);
   color: #ff000000;
-  padding: 20px 14px;
+  padding: 0 10px 14px;
   display: flex;
   flex-direction: column;
+  transition: width 0.2s ease;
+  box-shadow: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.nfe-sidebar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 /* topo da sidebar + botão */
 .nfe-sidebar-top {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 24px;
+  justify-content: center;
+  gap: 0;
+  min-height: var(--header-height);
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .nfe-sidebar-toggle {
   background: transparent;
-  margin-left: auto;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.28);
   cursor: pointer;
-  padding: 6px;
-  border-radius: 80px;
+  padding: 8px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
+  margin: 0 auto;
 }
 
 .nfe-sidebar-toggle span {
@@ -485,17 +597,17 @@ body.nfe-body {
 }
 
 .nfe-sidebar-logo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0px;
-  font-weight: 600;
+  display: none;
 }
 
 /* === ESTADO RECOLHIDO === */
 
 .nfe-layout.collapsed .nfe-sidebar {
-  width: 72px;
-  padding-inline: 10px;
+  width: var(--sidebar-width);
+}
+
+.nfe-layout:not(.collapsed) .nfe-sidebar {
+  width: var(--sidebar-width);
 }
 
 .nfe-layout.collapsed .logo-text {
@@ -516,8 +628,8 @@ body.nfe-body {
 
 /* SUBSTITUA o bloco atual .nfe-sidebar-logo .logo-circle por este */
 .nfe-sidebar-logo .logo-circle {
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   border-radius: 100%;
 
   /* fundo do círculo (opcional) */
@@ -527,19 +639,209 @@ body.nfe-body {
   background-image: url("logo_skype.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: 85%;
   /* ou "70%" se quiser mais “folga” */
 
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: -10px;
+  margin-right: 4px;
 }
 
 .nfe-sidebar-menu {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  flex: 1;
+  min-height: 0;
+}
+
+.nfe-menu-spacer {
+  flex: 1;
+  min-height: 10px;
+}
+
+.nfe-sidebar-account {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding-top: 10px;
+}
+
+.nfe-sidebar-account-name {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nfe-sidebar-account-email {
+  color: rgba(249, 250, 251, 0.7);
+  font-size: 12px;
+  margin-bottom: 8px;
+  padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nfe-layout.collapsed .nfe-sidebar-account-name,
+.nfe-layout.collapsed .nfe-sidebar-account-email {
+  display: none;
+}
+
+.nfe-menu-action {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.nfe-menu-action:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: none;
+}
+
+.nfe-layout.collapsed .nfe-menu-action {
+  justify-content: center;
+  padding-inline: 8px;
+}
+
+.app-topbar {
+  height: 70px;
+  margin: 0;
+  padding: 0 12px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.app-topbar-menu {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* desktop: usa hambúrguer da sidebar, não do header */
+@media (min-width: 901px) {
+  .app-topbar-menu {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.app-topbar-right {
+  margin-left: auto;
+  justify-self: end;
+  position: relative;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.app-topbar-user {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  border-radius: 999px;
+  padding: 5px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  max-width: 260px;
+}
+
+.app-topbar-user-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.app-topbar-user-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-topbar-user-menu {
+  position: absolute;
+  right: 0;
+  top: 42px;
+  width: 230px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
+  display: none;
+  overflow: hidden;
+}
+
+.app-topbar-user-menu.open {
+  display: block;
+}
+
+.app-topbar-user-email {
+  font-size: 12px;
+  color: #6b7280;
+  padding: 10px 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.app-topbar-user-item {
+  width: 100%;
+  display: block;
+  border: none;
+  background: transparent;
+  color: #111827;
+  text-decoration: none;
+  text-align: left;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.app-topbar-user-item:hover {
+  background: #f8fafc;
+}
+
+.app-topbar-user-item-danger {
+  color: #b91c1c;
+}
+
+.nfe-sidebar-backdrop {
+  display: none;
 }
 
 .nfe-menu-item {
@@ -652,10 +954,64 @@ body.nfe-body {
   max-width: none;
   /* remove o limite que somado à sidebar estoura a tela */
   margin: 0;
+  margin-left: var(--sidebar-width);
+  transition: margin-left 0.2s ease;
   /* evita centralizar somando largura com sidebar */
   padding: 18px 20px;
   /* diminui margem esquerda */
   box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .app-topbar {
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .app-topbar-user-name {
+    display: none;
+  }
+
+  .nfe-main {
+    margin-left: 0;
+    padding: 14px 12px 16px;
+    transition: none;
+  }
+
+  .nfe-sidebar {
+    top: 0;
+    left: -236px;
+    bottom: 0;
+    width: 220px;
+    z-index: 1200;
+    transition: left 0.2s ease;
+    box-shadow: 12px 0 26px rgba(0, 0, 0, 0.24);
+  }
+
+  .nfe-sidebar-top {
+    min-height: 52px;
+    margin-bottom: 10px;
+  }
+
+  /* mobile: usa hambúrguer do header, não o da sidebar */
+  .nfe-sidebar-toggle {
+    display: none;
+  }
+
+  .nfe-layout.menu-open .nfe-sidebar {
+    left: 0;
+  }
+
+  .nfe-sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 1100;
+  }
+
+  .nfe-layout.menu-open .nfe-sidebar-backdrop {
+    display: block;
+  }
 }
 
 /* garante que os wrappers das tabelas segurem overflow */
@@ -713,6 +1069,47 @@ body.nfe-body {
   padding: 20px 22px;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
   margin-top: 22px;
+}
+
+.forbidden-card {
+  max-width: 720px;
+  margin: 34px auto 0;
+  text-align: center;
+  padding: 36px 28px;
+}
+
+.forbidden-badge {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 12px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  box-shadow: 0 12px 30px rgba(153, 27, 27, 0.28);
+}
+
+.forbidden-card h1 {
+  margin: 8px 0 10px;
+}
+
+.forbidden-card p {
+  margin: 0 auto;
+  color: #4b5563;
+  line-height: 1.55;
+  max-width: 560px;
+}
+
+.forbidden-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .nfe-row {

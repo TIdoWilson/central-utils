@@ -29,6 +29,15 @@
 8. Baixar resultado
 ```
 
+### Resposta de acesso negado (RBAC)
+
+Se o usuário estiver autenticado, mas sem permissão para a ferramenta, o portal retorna **HTTP 403** e exibe a página visual **Acesso negado**.
+
+Valide:
+- Permissão `tool:<slug>` ou `tool:*`
+- Perfil `ADMIN` para `/admin-usuarios` e `/logs`
+- `RBAC_STRICT` do ambiente
+
 ---
 
 ## 🛠️ Como Usar Cada Ferramenta
