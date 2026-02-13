@@ -1,0 +1,119 @@
+:root {
+  --portal-bg: #f8fafc;
+  --portal-surface: #ffffff;
+  --portal-ink: #111827;
+  --portal-muted: #6b7280;
+  --portal-accent: #0ea5e9;
+  --portal-topbar: #221f20;
+}
+
+body {
+  background: var(--portal-bg);
+  color: var(--portal-ink);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.wy-nav-top, .bs-sidebar, .navbar {
+  background: linear-gradient(90deg, var(--portal-topbar), var(--portal-topbar));
+}
+
+.wy-side-nav-search, .navbar-brand, .navbar-default {
+  background: transparent !important;
+}
+
+.wy-nav-content, .container, .col-md-9 {
+  background: transparent;
+}
+
+h1, h2, h3 {
+  color: #0f172a;
+  letter-spacing: .01em;
+}
+
+h1 {
+  border-bottom: 3px solid #e5e7eb;
+  padding-bottom: .35rem;
+}
+
+a { color: #0369a1; }
+a:hover { color: #0284c7; }
+
+pre, code { border-radius: 10px; }
+
+blockquote {
+  border-left: 4px solid var(--portal-accent);
+  background: #f1f5f9;
+}
+
+table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admonition {
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+}
+
+.portal-hero {
+  background: linear-gradient(120deg, #221f20 0%, #2f2a2c 100%);
+  border-radius: 18px;
+  color: #f8fafc;
+  padding: 28px 26px;
+  margin: 8px 0 20px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+}
+
+.portal-hero-logo {
+  max-height: 56px;
+  width: auto;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.portal-hero h1 {
+  color: #ffffff;
+  border-bottom: 0;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.portal-hero p {
+  margin: 0;
+  color: #d1d5db;
+}
+
+.portal-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 8px 0 20px;
+}
+
+.portal-card {
+  background: var(--portal-surface);
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px 14px;
+  text-decoration: none;
+  color: var(--portal-ink);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.07);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.portal-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+  border-color: #bae6fd;
+}
+
+.portal-card h3 {
+  margin: 0 0 6px;
+  color: #0f172a;
+}
+
+.portal-card p {
+  margin: 0;
+  color: var(--portal-muted);
+  font-size: .95rem;
+}

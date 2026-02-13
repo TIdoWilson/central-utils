@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 site_name: "Central Utils - Documentação"
 theme:
   name: material
@@ -36,3 +37,43 @@ nav:
   - Deployment:
       - Deploy: deployment/01-deploy.md
       - Variáveis de Ambiente: deployment/02-env-vars.md
+=======
+site_name: Integra Python Portal
+site_description: Documentação operacional do Central Utils
+site_url: 
+
+theme:
+  name: mkdocs
+  locale: pt_BR
+
+nav:
+  - Home: index.md
+  - Arquitetura: 01-ARQUITETURA.md
+  - Instalação: 02-INSTALACAO.md
+  - Uso: 03-USO.md
+  - Contribuindo: 04-CONTRIBUINDO.md
+  - FAQ Global: FAQ-GLOBAL.md
+  - Ferramentas: tools/index.md
+  - Runbooks:
+      - Ajuste Diário GFBR: runbooks/runbook-ajuste-diario-gfbr.md
+      - Compressor PDF: runbooks/runbook-compressor-pdf.md
+      - Excel Abas PDF: runbooks/runbook-excel-abas-pdf.md
+      - Extrator ZIP/RAR: runbooks/runbook-extrator-zip-rar.md
+      - Gerador de Atas: runbooks/runbook-gerador-atas.md
+      - Holerites: runbooks/runbook-holerites.md
+      - Importador Recebimentos: runbooks/runbook-importador-recebimentos.md
+      - Relatório de Férias: runbooks/runbook-relatorio-ferias.md
+      - CSV Baixa: runbooks/runbook-separador-csv-baixa.md
+      - Férias por Funcionário: runbooks/runbook-separador-ferias.md
+  - Engenharia:
+      - Integra Python v3.1: engineering/integra-python-v3.1.md
+
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
+  - admonition
+
+extra_css:
+  - assets/styles/portal.css
+>>>>>>> Stashed changes
