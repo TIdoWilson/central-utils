@@ -1,111 +1,64 @@
 # Extrator ZIP/RAR
 
+## 1. Visão Geral
+
 - **Slug:** `extrator-zip-rar`
-- **Página:** `/extrator-zip-rar`
-- **Permissão:** `tool:extrator-zip-rar` ou `tool:*` (ADMIN sempre acessa)
-- **API Base:** `/api/extrator-zip-rar`
-- **Runbook:** [runbook extrator-zip-rar](../runbooks/runbook-extrator-zip-rar.md)
+- **Grupo:** Geral
+- **Página (rota):** `/extrator-zip-rar`
+- **API base:** `/api/extrator-zip-rar`
+- **Permissão RBAC:** `tool:extrator-zip-rar` ou `tool:*` (ADMIN acessa)
 
-## Documentação Consolidada
+Envie um ou mais arquivos ZIP/RAR e receba um pacote único com todos os arquivos extraídos, inclusive compactados internos.
 
-> **Tipo:** API  
-> **Status:** Ativa  
-> **Owner:** Squad Operacional  
-> **Local no repo:** `/api/extrator_zip_rar_core.py`  
-> **Ambientes:** dev/stg/prod  
+## 2. Objetivo Operacional
 
-## Objetivo
+- A ferramenta varre todos os ZIPs e RARs enviados, abre compactados internos até 5 níveis de profundidade e grava os arquivos finais em uma pasta única, evitando duplicidades por nome e tamanho. No fim, você baixa um ZIP consolidado com todos os arquivos extraídos.
+- Uso recomendado quando há alto volume, risco de erro manual ou necessidade de padronização de entrega.
 
-Extrai arquivos ZIP e RAR automaticamente, mantendo estrutura de pastas, evitando conflitos de nome com counter intelligente. Reduz manual drag-drop. Beneficia: operações, usuários, automações.
+## 3. Arquivos Relacionados (Verificados)
 
-## Quando usar
+- **Página HTML:** `public/extrator-zip-rar.html`
+- **Script JS da ferramenta:** `public/js/extrator-zip-rar.js`
+- **Router Node:** `src/routes/tools/extrator-zip-rar.routes.js`
+- **Service Node:** _não identificado_
+- **Arquivos Python relacionados:** `api/extrator_zip_rar_core.py`
 
-- Extração automatizada de uploads
-- Descompactação em batch
-- Tratamento de ZIP/RAR com segurança
-- Integração com workflows
+## 4. Rotas e Endpoints
 
-## Como acessar
+- **Rota de página:** `/extrator-zip-rar`;
+- **Base de API esperada:** `/api/extrator-zip-rar`;
+- **Endpoints no router:**
+  - `POST /process`
+  - `GET /download/:jobId`
 
-- **API:** `POST http://localhost:8001/api/extrator-zip-rar/processar`
-- **Core:** `api/extrator_zip_rar_core.py`
+## 5. Fluxo Técnico (Página -> Node -> Python/Serviço)
 
-## Fluxo principal
+- Front-end coleta parâmetros/arquivos e chama APIs internas (preferência por `AuthClient.authFetch`).
+- Router valida entrada, aplica segurança (CSRF em mutações quando aplicável) e orquestra o processamento.
+- Service concentra regra de negócio, integração com armazenamento e chamadas a serviços externos/Python.
+- Retorno padronizado em JSON e/ou arquivo para download.
 
-1. **Upload arquivo:** ZIP ou RAR, máx 500 MB
-2. **Validação:** Verificar tipo e corrupção
-3. **Extração:** Preserva estrutura de pastas
-4. **Tratamento de conflitos:** Renomeia automático (arquivo, arquivo (2), arquivo (3))
-5. **Compactação aninhada:** Até 5 níveis de profundidade
-6. **Limpeza:** Remove .zip/.rar originais (opcional)
-7. **Resultado:** Arquivos extraídos + mapeamento
+## 6. Segurança e Governança
 
-## Entradas e saídas
+- Exige autenticação ativa no portal.
+- RBAC por ferramenta (`tool:<slug>`, `tool:*`, ADMIN).
+- Em mutações, usar token CSRF via header `x-csrf-token` (exceto login).
+- `auditLog` deve registrar evento sem interromper a requisição em falhas de auditoria.
 
-### Entrada
-```json
-{
-  "input_archive_path": "/data/uploads/arquivos.zip",
-  "extract_to": "/data/outputs/extraidos",
-  "remove_source": false
-}
-```
+## 7. Entradas e Saídas Esperadas
 
-### Saída
-```json
-{
-  "success": true,
-  "files_extracted": 150,
-  "folders_created": 25,
-  "output_path": "/data/outputs/extraidos",
-  "size_total_mb": 850.5
-}
-```
+- **Entradas:** parâmetros de formulário e/ou upload conforme UI da ferramenta.
+- **Saídas:** resposta em tela e, quando aplicável, artefatos (ZIP/PDF/XLSX/CSV/JSON).
+- **Observação:** validar encoding, formato e tamanho dos arquivos para evitar erro 400/422.
 
-## Dependências
+## 8. Troubleshooting Rápido
 
-- **Libs:** zipfile (built-in), rarfile>=4.0.0 (RAR)
-- **Serviços:** Nenhum
+- **401/403:** conferir sessão do usuário e permissão RBAC.
+- **404 em endpoint:** validar rota no `router` e base URL consumida no JS.
+- **422/400:** revisar campos obrigatórios e estrutura do arquivo enviado.
+- **500:** inspecionar logs do Node e, quando existir, logs do processamento Python.
 
-## Permissões e segurança
+## 9. Observações de Manutenção
 
-- **RBAC:** Ops (total)
-- **LGPD:** Files sensíveis - auditar acesso
-- **Auditoria:** `/var/log/central-utils/extrator.log`
-
-## Configurações
-
-- **Env vars:** EXTRATOR_MAX_MB (default: 500), MAX_DEPTH (default: 5)
-- **Flags:** HANDLE_CONFLICTS (default: true)
-
-## Observabilidade
-
-- **Logs:** `/var/log/central-utils/extrator.log`
-- **Métricas:** extrator_processamentos_total, _arquivos_extraidos_total, _tempo_segundos
-
-## Runbook
-
-```bash
-curl -X POST http://localhost:8001/api/extrator-zip-rar/processar \
-  -H "Content-Type: application/json" \
-  -d '{
-    "input_archive_path": "/data/uploads/arquivos.zip",
-    "extract_to": "/data/outputs/extraidos"
-  }'
-```
-
-## Troubleshooting
-
-| Sintoma | Causa | Solução |
-|--------|-------|--------|
-| "Arquivo corrompido" | ZIP/RAR inválido | Tentar recriar arquivo |
-| "Permissão negada" | Sem write em destino | Verificar chmod /data/outputs |
-| "Caminho muito longo" | Windows MAX_PATH | Usar path mais curto |
-
-## Referências
-
-- [api/extrator_zip_rar_core.py](../../api/extrator_zip_rar_core.py)
-
----
-
-**Atualização:** Fevereiro 2026 | **Squad:** Operacional
+- Ao alterar nomes de arquivo/rota, manter compatibilidade (alias/redirect) para não quebrar links legados.
+- Se incluir nova API/fluxo, atualizar este documento e `src/core/tool-catalog.json`.
