@@ -1,117 +1,64 @@
 # Importador de Recebimentos MADRE SCP
 
+## 1. Visão Geral
+
 - **Slug:** `importador-recebimentos-madre-scp`
-- **Página:** `/importador-recebimentos-madre-scp`
-- **Permissão:** `tool:importador-recebimentos-madre-scp` ou `tool:*` (ADMIN sempre acessa)
-- **API Base:** `/api/importador-recebimentos-madre-scp`
-- **Runbook:** [runbook importador-recebimentos](../runbooks/runbook-importador-recebimentos.md)
+- **Grupo:** Geral
+- **Página (rota):** `/importador-recebimentos-madre-scp`
+- **API base:** `/api/importador-recebimentos-madre-scp`
+- **Permissão RBAC:** `tool:importador-recebimentos-madre-scp` ou `tool:*` (ADMIN acessa)
 
-## Documentação Consolidada
+Concilia razão IOB considerando apenas históricos semelhantes.
 
-> **Tipo:** API / Job  
-> **Status:** Ativa  
-> **Owner:** Squad Financeiro  
-> **Local no repo:** `/api/importador_recebimentos_madre_scp_core.py`  
-> **Ambientes:** prod (requer credenciais MADRE)  
+## 2. Objetivo Operacional
 
-## Objetivo
+- CONCILIA RAZÃO IOB - APENAS COM HISTORICOS SEMELHANTES
+- Uso recomendado quando há alto volume, risco de erro manual ou necessidade de padronização de entrega.
 
-Integração automatizada com sistema MADRE SCP para importar dados de recebimentos, parsear PDFs, validar e persistir em BD PostgreSQL. Reduz entrada manual, garante precisão. Beneficia: controladoria, auditoria, integrações.
+## 3. Arquivos Relacionados (Verificados)
 
-## Quando usar
+- **Página HTML:** `public/importador-recebimentos-madre-scp.html`
+- **Script JS da ferramenta:** `public/js/importador-recebimentos-madre-scp.js`
+- **Router Node:** `src/routes/tools/importador-recebimentos-madre-scp.routes.js`
+- **Service Node:** _não identificado_
+- **Arquivos Python relacionados:** `api/importador_recebimentos_madre_scp_core.py`
 
-- Importação diária de recebimentos MADRE
-- Reconciliação de contas a receber
-- Auditoria de recebimentos
-- Quando sistema MADRE precisa convergir com central-utils
+## 4. Rotas e Endpoints
 
-## Como acessar
+- **Rota de página:** `/importador-recebimentos-madre-scp`;
+- **Base de API esperada:** `/api/importador-recebimentos-madre-scp`;
+- **Endpoints no router:**
+  - `POST /upload`
+  - `GET /download/:fileName`
 
-- **API:** `POST http://localhost:8001/api/importador-recebimentos-madre-scp/processar`
-- **Core:** `api/importador_recebimentos_madre_scp_core.py`
+## 5. Fluxo Técnico (Página -> Node -> Python/Serviço)
 
-## Fluxo principal
+- Front-end coleta parâmetros/arquivos e chama APIs internas (preferência por `AuthClient.authFetch`).
+- Router valida entrada, aplica segurança (CSRF em mutações quando aplicável) e orquestra o processamento.
+- Service concentra regra de negócio, integração com armazenamento e chamadas a serviços externos/Python.
+- Retorno padronizado em JSON e/ou arquivo para download.
 
-1. **Autenticação MADRE:** Usa credenciais de env var
-2. **Extração PDF:** Faz download de PDF da MADRE API
-3. **Parsing de dados:** Regex extrair datas, valores, contas
-4. **Validação:** Verifica valores, datas, contas válidas
-5. **Limpeza:** Remove duplicatas, trata valores BR
-6. **Persistência:** Insere em tabela `recebimentos_madre` PostgreSQL
-7. **Resultado:** Relatório de importação + contagem
+## 6. Segurança e Governança
 
-## Entradas e saídas
+- Exige autenticação ativa no portal.
+- RBAC por ferramenta (`tool:<slug>`, `tool:*`, ADMIN).
+- Em mutações, usar token CSRF via header `x-csrf-token` (exceto login).
+- `auditLog` deve registrar evento sem interromper a requisição em falhas de auditoria.
 
-### Entrada
-```json
-{
-  "data_inicio": "2025-02-01",
-  "data_fim": "2025-02-28",
-  "empresa": "EMPRESA_A",
-  "tipo_filtro": "recebimentos"
-}
-```
+## 7. Entradas e Saídas Esperadas
 
-### Saída
-```json
-{
-  "success": true,
-  "registros_importados": 250,
-  "registros_duplicados": 5,
-  "registros_erro": 2,
-  "valor_total_importado": 125000.50,
-  "timestamp": "2025-02-06T12:00:00Z"
-}
-```
+- **Entradas:** parâmetros de formulário e/ou upload conforme UI da ferramenta.
+- **Saídas:** resposta em tela e, quando aplicável, artefatos (ZIP/PDF/XLSX/CSV/JSON).
+- **Observação:** validar encoding, formato e tamanho dos arquivos para evitar erro 400/422.
 
-## Dependências
+## 8. Troubleshooting Rápido
 
-- **Libs:** pdfplumber>=0.8.0, pandas>=1.3.0, psycopg2>=2.9.0
-- **Serviços:** MADRE API (SCP), PostgreSQL BD
-- **Env vars:** MADRE_API_URL, MADRE_API_KEY, MADRE_USER, MADRE_PASS
+- **401/403:** conferir sessão do usuário e permissão RBAC.
+- **404 em endpoint:** validar rota no `router` e base URL consumida no JS.
+- **422/400:** revisar campos obrigatórios e estrutura do arquivo enviado.
+- **500:** inspecionar logs do Node e, quando existir, logs do processamento Python.
 
-## Permissões e segurança
+## 9. Observações de Manutenção
 
-- **RBAC:** controller, auditor (total)
-- **LGPD:** Dados financeiros (sensível) - criptografar, manter 7 anos
-- **Auditoria:** `/var/log/central-utils/madre_importer.log` + trigger BD
-
-## Configurações
-
-- **Env vars:** MADRE_API_URL, MADRE_API_KEY, MADRE_USER, MADRE_PASS, MADRE_TIMEOUT (default: 30s)
-- **Flags:** VALIDAR_VALORES (default: true), IMPORTAR_DUPLICATAS (default: false)
-
-## Observabilidade
-
-- **Logs:** `/var/log/central-utils/madre_importer.log`
-- **Métricas:** madre_importacoes_total, _registros_importados_total, _tempo_segundos
-- **Tracing:** request_id + transação BD
-
-## Runbook
-
-```bash
-curl -X POST http://localhost:8001/api/importador-recebimentos-madre-scp/processar \
-  -H "Content-Type: application/json" \
-  -d '{
-    "data_inicio": "2025-02-01",
-    "data_fim": "2025-02-28",
-    "empresa": "EMPRESA_A"
-  }'
-```
-
-## Troubleshooting
-
-| Sintoma | Causa | Solução |
-|--------|-------|--------|
-| "Autenticação MADRE falhou" | Credenciais inválidas/expiradas | Verificar env vars, renovar token |
-| "BD integridade violada" | Duplicata ou FK inválida | Checar se registro já existe, validar empresa |
-| "PDF parsing falhou" | Formato MADRE mudou | Atualizar regex patterns em código |
-
-## Referências
-
-- [api/importador_recebimentos_madre_scp_core.py](../../api/importador_recebimentos_madre_scp_core.py)
-- MADRE API Docs: [interno]
-
----
-
-**Atualização:** Fevereiro 2026 | **Squad:** Financeiro | **Crítico:** Prod only
+- Ao alterar nomes de arquivo/rota, manter compatibilidade (alias/redirect) para não quebrar links legados.
+- Se incluir nova API/fluxo, atualizar este documento e `src/core/tool-catalog.json`.

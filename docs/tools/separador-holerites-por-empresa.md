@@ -1,113 +1,63 @@
 # Separador PDF - Holerites por Empresa
 
+## 1. Visão Geral
+
 - **Slug:** `separador-holerites-por-empresa`
-- **Página:** `/separador-holerites-por-empresa`
-- **Permissão:** `tool:separador-holerites-por-empresa` ou `tool:*` (ADMIN sempre acessa)
-- **API Base:** `/api/separador-holerites-por-empresa`
-- **Runbook:** [runbook holerites](../runbooks/runbook-holerites.md)
+- **Grupo:** Geral
+- **Página (rota):** `/separador-holerites-por-empresa`
+- **API base:** `/api/separador-holerites-por-empresa`
+- **Permissão RBAC:** `tool:separador-holerites-por-empresa` ou `tool:*` (ADMIN acessa)
 
-## Documentação Consolidada
+Envia um PDF de holerites e gera um PDF por empresa, com um ZIP final para download.
 
-> **Tipo:** API / Job  
-> **Status:** Ativa  
-> **Owner:** Squad RH  
-> **Local no repo:** `/api/holerites_core.py`  
-> **Ambientes:** dev/stg/prod  
+## 2. Objetivo Operacional
 
-## Objetivo
+- Faça o upload de um único PDF contendo holerites/folhas de várias empresas. A ferramenta identifica automaticamente o nome da empresa na primeira linha de cada página, separa as páginas por empresa e devolve um arquivo ZIP com todos os PDFs gerados.
+- Uso recomendado quando há alto volume, risco de erro manual ou necessidade de padronização de entrega.
 
-Processa **PDFs consolidados de holerites** (múltiplas empresas em um arquivo) e separa por empresa, gerando um PDF para cada. Reduz retrabalho manual, facilita distribuição. Beneficia: RH, controladoria, gestores, auditores.
+## 3. Arquivos Relacionados (Verificados)
 
-## Quando usar
+- **Página HTML:** `public/separador-holerites-por-empresa.html`
+- **Script JS da ferramenta:** `public/js/separador-holerites-por-empresa.js`
+- **Router Node:** `src/routes/tools/separador-holerites-por-empresa.routes.js`
+- **Service Node:** _não identificado_
+- **Arquivos Python relacionados:** `api/holerites_core.py`
 
-- Distribuição mensal de holerites organizados por empresa
-- Preparação para digitalização/arquivamento
-- Auditoria externa
-- Integração com sistemas de RH
+## 4. Rotas e Endpoints
 
-## Como acessar
+- **Rota de página:** `/separador-holerites-por-empresa`;
+- **Base de API esperada:** `/api/separador-holerites-por-empresa`;
+- **Endpoints no router:**
+  - `POST /`
 
-- **API:** `POST http://localhost:8001/api/separador-holerites/processar`
-- **Swagger:** http://localhost:8001/docs
-- **Core:** `api/holerites_core.py`
+## 5. Fluxo Técnico (Página -> Node -> Python/Serviço)
 
-## Fluxo principal
+- Front-end coleta parâmetros/arquivos e chama APIs internas (preferência por `AuthClient.authFetch`).
+- Router valida entrada, aplica segurança (CSRF em mutações quando aplicável) e orquestra o processamento.
+- Service concentra regra de negócio, integração com armazenamento e chamadas a serviços externos/Python.
+- Retorno padronizado em JSON e/ou arquivo para download.
 
-1. **Upload PDF consolidado:** Máx 100 MB, PDF padrão
-2. **Extração de empresa:** Usa pdfplumber para primeira linha de cada página
-3. **Normalização:** Remove acentos, caracteres especiais, maiúsculas
-4. **Separação por empresa:** Agrupa páginas de mesma empresa
-5. **Criação de PDFs:** 1 PDF por empresa
-6. **Compressão em ZIP:** DEFLATE compression
-7. **Resultado:** ZIP organizando por empresa
+## 6. Segurança e Governança
 
-## Entradas e saídas
+- Exige autenticação ativa no portal.
+- RBAC por ferramenta (`tool:<slug>`, `tool:*`, ADMIN).
+- Em mutações, usar token CSRF via header `x-csrf-token` (exceto login).
+- `auditLog` deve registrar evento sem interromper a requisição em falhas de auditoria.
 
-### Entrada
-```json
-{
-  "input_pdf_path": "/data/uploads/holerites_fevereiro.pdf",
-  "competencia": "2025-02",
-  "output_dir": "/data/outputs/holerites"
-}
-```
+## 7. Entradas e Saídas Esperadas
 
-### Saída
-```json
-{
-  "success": true,
-  "output_path": "/data/outputs/holerites_2025-02.zip",
-  "empresas": 12,
-  "paginas": 150,
-  "timestamp": "2025-02-06T11:45:00Z"
-}
-```
+- **Entradas:** parâmetros de formulário e/ou upload conforme UI da ferramenta.
+- **Saídas:** resposta em tela e, quando aplicável, artefatos (ZIP/PDF/XLSX/CSV/JSON).
+- **Observação:** validar encoding, formato e tamanho dos arquivos para evitar erro 400/422.
 
-## Dependências
+## 8. Troubleshooting Rápido
 
-- **Libs:** PyPDF2>=3.0.0, pdfplumber>=0.8.0
-- **Serviços:** Nenhum
+- **401/403:** conferir sessão do usuário e permissão RBAC.
+- **404 em endpoint:** validar rota no `router` e base URL consumida no JS.
+- **422/400:** revisar campos obrigatórios e estrutura do arquivo enviado.
+- **500:** inspecionar logs do Node e, quando existir, logs do processamento Python.
 
-## Permissões e segurança
+## 9. Observações de Manutenção
 
-- **RBAC:** gestor_rh, analista_rh (total)
-- **LGPD:** Holerites (sensível) - criptografar, manter 2 anos
-- **Auditoria:** `/var/log/central-utils/holerites.log`
-
-## Configurações
-
-- **Env vars:** HOLERITES_MAX_MB (default: 100)
-- **Flags:** NORMALIZAR_NOME_EMPRESA (default: true)
-
-## Observabilidade
-
-- **Logs:** `/var/log/central-utils/holerites.log`
-- **Métricas:** holerites_processamentos_total, _empresas_total, _tempo_segundos
-
-## Runbook
-
-```bash
-curl -X POST http://localhost:8001/api/separador-holerites/processar \
-  -H "Content-Type: application/json" \
-  -d '{
-    "input_pdf_path": "/data/uploads/holerites.pdf",
-    "competencia": "2025-02"
-  }'
-```
-
-## Troubleshooting
-
-| Sintoma | Causa | Solução |
-|--------|-------|--------|
-| "Empresa não detectada" | Padrão não encontrado na primeira linha | Verificar formato do PDF |
-| "PDF corrompido" | Arquivo danificado | Regenerar do sistema |
-| "Timeout" | Arquivo muito grande | Dividir PDF |
-
-## Referências
-
-- [api/holerites_core.py](../../api/holerites_core.py)
-- Relacionado: [02-separador-pdf-relatorio-ferias.md](02-separador-pdf-relatorio-ferias.md)
-
----
-
-**Atualização:** Fevereiro 2026 | **Squad:** RH
+- Ao alterar nomes de arquivo/rota, manter compatibilidade (alias/redirect) para não quebrar links legados.
+- Se incluir nova API/fluxo, atualizar este documento e `src/core/tool-catalog.json`.

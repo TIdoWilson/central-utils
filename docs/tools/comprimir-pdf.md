@@ -1,112 +1,63 @@
 # Compressor de PDF
 
+## 1. Visão Geral
+
 - **Slug:** `comprimir-pdf`
-- **Página:** `/comprimir-pdf`
-- **Permissão:** `tool:comprimir-pdf` ou `tool:*` (ADMIN sempre acessa)
-- **API Base:** `/api/comprimir-pdf`
-- **Runbook:** [runbook compressor-pdf](../runbooks/runbook-compressor-pdf.md)
+- **Grupo:** Geral
+- **Página (rota):** `/comprimir-pdf`
+- **API base:** `/api/comprimir-pdf`
+- **Permissão RBAC:** `tool:comprimir-pdf` ou `tool:*` (ADMIN acessa)
 
-## Documentação Consolidada
+Envie um PDF e receba uma versão otimizada em tons de cinza, com tamanho reduzido.
 
-> **Tipo:** API  
-> **Status:** Ativa  
-> **Owner:** Squad Operacional  
-> **Local no repo:** `/api/comprimir_pdf_core.py`  
-> **Ambientes:** dev/stg/prod  
+## 2. Objetivo Operacional
 
-## Objetivo
+- A ferramenta converte o PDF para tons de cinza, aplica compressão nas páginas e informa o ganho de tamanho obtido, permitindo baixar o arquivo comprimido pronto para envio por e-mail ou upload em portais.
+- Uso recomendado quando há alto volume, risco de erro manual ou necessidade de padronização de entrega.
 
-Reduz tamanho de PDFs automaticamente convertendo para tons de cinza, aplicando compressão JPEG. Reduz de 50-90% sem qualidade visível. Beneficia: operações, armazenamento, transmissão.
+## 3. Arquivos Relacionados (Verificados)
 
-## Quando usar
+- **Página HTML:** `public/comprimir-pdf.html`
+- **Script JS da ferramenta:** `public/js/comprimir-pdf.js`
+- **Router Node:** `src/routes/tools/comprimir-pdf.routes.js`
+- **Service Node:** _não identificado_
+- **Arquivos Python relacionados:** `api/comprimir_pdf_core.py`
 
-- Otimização de PDFs para email/compartilhamento
-- Redução de espaço em disco
-- Quando tamanho excede limites de sistema
-- Arquivamento long-term
+## 4. Rotas e Endpoints
 
-## Como acessar
+- **Rota de página:** `/comprimir-pdf`;
+- **Base de API esperada:** `/api/comprimir-pdf`;
+- **Endpoints no router:**
+  - `POST /processar`
 
-- **API:** `POST http://localhost:8001/api/compressor-pdf/processar`
-- **Core:** `api/comprimir_pdf_core.py`
+## 5. Fluxo Técnico (Página -> Node -> Python/Serviço)
 
-## Fluxo principal
+- Front-end coleta parâmetros/arquivos e chama APIs internas (preferência por `AuthClient.authFetch`).
+- Router valida entrada, aplica segurança (CSRF em mutações quando aplicável) e orquestra o processamento.
+- Service concentra regra de negócio, integração com armazenamento e chamadas a serviços externos/Python.
+- Retorno padronizado em JSON e/ou arquivo para download.
 
-1. **Upload PDF:** Máx 200 MB
-2. **Configuração:** DPI scale (resolução) + JPEG quality (1-100)
-3. **Conversão:** Renderiza cada página em tons de cinza
-4. **Compressão JPEG:** Reduz com qualidade configurável
-5. **Reconstrução PDF:** Insere imagens no novo PDF
-6. **Resultado:** PDF reduzido + métricas de compressão
+## 6. Segurança e Governança
 
-## Entradas e saídas
+- Exige autenticação ativa no portal.
+- RBAC por ferramenta (`tool:<slug>`, `tool:*`, ADMIN).
+- Em mutações, usar token CSRF via header `x-csrf-token` (exceto login).
+- `auditLog` deve registrar evento sem interromper a requisição em falhas de auditoria.
 
-### Entrada
-```json
-{
-  "input_pdf_path": "/data/uploads/grande.pdf",
-  "compression_level": "medium",
-  "dpi_scale": 1.0,
-  "jpeg_quality": 50
-}
-```
+## 7. Entradas e Saídas Esperadas
 
-### Saída
-```json
-{
-  "success": true,
-  "original_size_mb": 15.5,
-  "compressed_size_mb": 2.3,
-  "reduction_percent": 85.2,
-  "output_path": "/data/outputs/grande_compressed.pdf"
-}
-```
+- **Entradas:** parâmetros de formulário e/ou upload conforme UI da ferramenta.
+- **Saídas:** resposta em tela e, quando aplicável, artefatos (ZIP/PDF/XLSX/CSV/JSON).
+- **Observação:** validar encoding, formato e tamanho dos arquivos para evitar erro 400/422.
 
-## Dependências
+## 8. Troubleshooting Rápido
 
-- **Libs:** fitz/PyMuPDF>=1.23.0
-- **Serviços:** Nenhum
+- **401/403:** conferir sessão do usuário e permissão RBAC.
+- **404 em endpoint:** validar rota no `router` e base URL consumida no JS.
+- **422/400:** revisar campos obrigatórios e estrutura do arquivo enviado.
+- **500:** inspecionar logs do Node e, quando existir, logs do processamento Python.
 
-## Permissões e segurança
+## 9. Observações de Manutenção
 
-- **RBAC:** Todos autenticados podem usar
-- **LGPD:** Dados sensíveis perdem qualidade (t/v de negó)
-- **Auditoria:** `/var/log/central-utils/compressor.log`
-
-## Configurações
-
-- **Env vars:** COMPRESSOR_MAX_MB (default: 200), COMPRESSOR_DEFAULT_QUALITY (default: 50)
-- **Flags:** KEEP_COLOR (default: false - converte p/ cinza)
-
-## Observabilidade
-
-- **Logs:** `/var/log/central-utils/compressor.log`
-- **Métricas:** compressor_processamentos_total, _reducao_percent_media, _tempo_segundos
-
-## Runbook
-
-```bash
-curl -X POST http://localhost:8001/api/compressor-pdf/processar \
-  -H "Content-Type: application/json" \
-  -d '{
-    "input_pdf_path": "/data/uploads/grande.pdf",
-    "compression_level": "medium"
-  }'
-```
-
-## Troubleshooting
-
-| Sintoma | Causa | Solução |
-|--------|-------|--------|
-| "PDF vazio após compressão" | JPEG quality muito baixo | Aumentar quality (ex: 70 vs 30) |
-| "Timeout" | Arquivo muito grande | Reduzir dpi_scale (ex: 0.75) |
-| "Comprensão mínima" | PDF já comprimido | Tentar outra ferramenta |
-
-## Referências
-
-- [api/comprimir_pdf_core.py](../../api/comprimir_pdf_core.py)
-- Relacionado: [07-compressor-pdf.md](07-compressor-pdf.md)
-
----
-
-**Atualização:** Fevereiro 2026 | **Squad:** Operacional
+- Ao alterar nomes de arquivo/rota, manter compatibilidade (alias/redirect) para não quebrar links legados.
+- Se incluir nova API/fluxo, atualizar este documento e `src/core/tool-catalog.json`.

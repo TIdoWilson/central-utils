@@ -1,120 +1,65 @@
 # Ajuste Diário GFBR
 
+## 1. Visão Geral
+
 - **Slug:** `ajuste-diario-gfbr`
-- **Página:** `/ajuste-diario-gfbr`
-- **Permissão:** `tool:ajuste-diario-gfbr` ou `tool:*` (ADMIN sempre acessa)
-- **API Base:** `/api/ajuste-diario-gfbr`
-- **Runbook:** [runbook ajuste-diario-gfbr](../runbooks/runbook-ajuste-diario-gfbr.md)
+- **Grupo:** Geral
+- **Página (rota):** `/ajuste-diario-gfbr`
+- **API base:** `/api/ajuste-diario-gfbr`
+- **Permissão RBAC:** `tool:ajuste-diario-gfbr` ou `tool:*` (ADMIN acessa)
 
-## Documentação Consolidada
+Ferramenta Ajuste Diário GFBR no portal, com fluxo autenticado e controle de acesso por RBAC.
 
-> **Tipo:** API / Processamento contábil  
-> **Status:** Ativa  
-> **Owner:** Squad Controladoria  
-> **Local no repo:** `/api/ajuste_diario_gfbr_core.py`  
-> **Ambientes:** prod  
+## 2. Objetivo Operacional
 
-## Objetivo
+- Automatiza uma rotina operacional para reduzir trabalho manual e padronizar saída.
+- Uso recomendado quando há alto volume, risco de erro manual ou necessidade de padronização de entrega.
 
-Gera automaticamente ajustes contábeis diários no padrão GFBR (plano de contas), com validação debit=credit, mapeamento de contas contábeis, detecção de grupos. Coordena com: auditoria, BI, ERPs.
+## 3. Arquivos Relacionados (Verificados)
 
-## Quando usar
+- **Página HTML:** `public/ajuste-diario-gfbr.html`
+- **Script JS da ferramenta:** `public/js/ajuste-diario-gfbr.js`
+- **Router Node:** `src/routes/tools/ajuste-diario-gfbr.routes.js`
+- **Service Node:** _não identificado_
+- **Arquivos Python relacionados:** `api/ajuste_diario_gfbr_core.py`
 
-- Ajustes contábeis fim de dia
-- Reconhecimento de receita/competência
-- Correção de lançamentos
-- Reconciliação com ERP
+## 4. Rotas e Endpoints
 
-## Como acessar
+- **Rota de página:** `/ajuste-diario-gfbr`;
+- **Base de API esperada:** `/api/ajuste-diario-gfbr`;
+- **Endpoints no router:**
+  - `POST /processar`
+  - `GET /download/:fileId`
+  - `GET /download-backup/:fileName`
 
-- **API:** `POST http://localhost:8001/api/ajuste-diario-gfbr/gerar`
-- **Core:** `api/ajuste_diario_gfbr_core.py`
+## 5. Fluxo Técnico (Página -> Node -> Python/Serviço)
 
-## Fluxo principal
+- Front-end coleta parâmetros/arquivos e chama APIs internas (preferência por `AuthClient.authFetch`).
+- Router valida entrada, aplica segurança (CSRF em mutações quando aplicável) e orquestra o processamento.
+- Service concentra regra de negócio, integração com armazenamento e chamadas a serviços externos/Python.
+- Retorno padronizado em JSON e/ou arquivo para download.
 
-1. **Leitura Excel:** Carrega planilha com regras de ajuste
-2. **Parsing de grupos:** Identifica blocos de ajustes (início=texto, fim=vazio)
-3. **Validação GFBR:** Verifica plano de contas, mapeamento de centros
-4. **Balanço:** Garante débito = crédito por grupo
-5. **Geração:** Cria linhas contábeis estruturadas
-6. **Output:** Arquivo TXT formato GFBR ou JSON
-7. **Auditoria:** Registra histório + hash
+## 6. Segurança e Governança
 
-## Entradas e saídas
+- Exige autenticação ativa no portal.
+- RBAC por ferramenta (`tool:<slug>`, `tool:*`, ADMIN).
+- Em mutações, usar token CSRF via header `x-csrf-token` (exceto login).
+- `auditLog` deve registrar evento sem interromper a requisição em falhas de auditoria.
 
-### Entrada
-```json
-{
-  "arquivo_excel": "ajustes_fevereiro.xlsx",
-  "data_ajuste": "2025-02-28",
-  "empresa": "CPNJ_00123456",
-  "validar_completo": true
-}
-```
+## 7. Entradas e Saídas Esperadas
 
-### Saída
-```json
-{
-  "success": true,
-  "ajustes_gerados": 45,
-  "valor_total_debitos": 250000.00,
-  "valor_total_creditos": 250000.00,
-  "arquivo_saida": "AJUSTES_20250228_GFBR.txt",
-  "hash_validacao": "abc123def456"
-}
-```
+- **Entradas:** parâmetros de formulário e/ou upload conforme UI da ferramenta.
+- **Saídas:** resposta em tela e, quando aplicável, artefatos (ZIP/PDF/XLSX/CSV/JSON).
+- **Observação:** validar encoding, formato e tamanho dos arquivos para evitar erro 400/422.
 
-## Dependências
+## 8. Troubleshooting Rápido
 
-- **Libs:** openpyxl>=3.6.0, pandas>=1.3.0, hashlib (built-in)
-- **Serviços:** Plano GFBR, BD PostgreSQL (auditoria)
-- **Dados:** Mapeamento contas X centros em BD
+- **401/403:** conferir sessão do usuário e permissão RBAC.
+- **404 em endpoint:** validar rota no `router` e base URL consumida no JS.
+- **422/400:** revisar campos obrigatórios e estrutura do arquivo enviado.
+- **500:** inspecionar logs do Node e, quando existir, logs do processamento Python.
 
-## Permissões e segurança
+## 9. Observações de Manutenção
 
-- **RBAC:** controller, auditor, contador
-- **LGPD:** Dados contábeis (confidencial) - criptografar, retenção conforme Lei
-- **Auditoria:** Todos lançamentos + hash imutável
-
-## Configurações
-
-- **Env vars:** GFBR_PLANO_CONTAS_PATH, GFBR_VALIDAR_SALDO (default: true)
-- **Flags:** MODO_DRY_RUN (default: false), PERMITIR_AJUSTES_NEGATIVOS (default: false)
-- **Constants:** ABA_ESTORNOS="Estornos", ABA_AJUSTES="Ajustes", MAX_DEBITO=9999999.99
-
-## Observabilidade
-
-- **Logs:** `/var/log/central-utils/ajuste_gfbr.log`
-- **Métricas:** gfbr_ajustes_total, _erros_validacao, _tempo_segundos
-- **Audit log:** Tabela `auditoria_gfbr` (usuário, timestamp, hash, valores)
-
-## Runbook
-
-```bash
-curl -X POST http://localhost:8001/api/ajuste-diario-gfbr/gerar \
-  -H "Content-Type: application/json" \
-  -d '{
-    "arquivo_excel": "ajustes_fevereiro.xlsx",
-    "data_ajuste": "2025-02-28",
-    "empresa": "00123456",
-    "validar_completo": true
-  }'
-```
-
-## Troubleshooting
-
-| Sintoma | Causa | Solução |
-|--------|-------|--------|
-| "Débito ≠ Crédito no grupo" | Lançamento desbalanceado | Revisar linhas, adicionar contrapartida |
-| "Conta inválida GFBR" | Código fora do plano de contas | Usar código de mapear, consultar cardápio |
-| "Grupo não detectado" | Formatação Excel inconsistente | Seguir padrão: linha 1=título, últimaColuna=valor, próx=vazio |
-
-## Referências
-
-- [api/ajuste_diario_gfbr_core.py](../../api/ajuste_diario_gfbr_core.py)
-- Plano GFBR: [Manual Interno]
-- RFC de auditoria: [RFCs/auditoria-contabil.md]
-
----
-
-**Atualização:** Fevereiro 2026 | **Squad:** Controladoria | **Crítico:** SIM
+- Ao alterar nomes de arquivo/rota, manter compatibilidade (alias/redirect) para não quebrar links legados.
+- Se incluir nova API/fluxo, atualizar este documento e `src/core/tool-catalog.json`.
