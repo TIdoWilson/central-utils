@@ -1,5 +1,63 @@
 site_name: Integra Python Portal
+site_description: Documentação operacional do Central Utils
+use_directory_urls: false
+
+theme:
+  name: material
+  language: pt-BR
+  logo: assets/img/logo-portal.png
+  favicon: assets/img/logo-portal.png
+  palette:
+    - scheme: default
+      primary: black
+      accent: light blue
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+
 nav:
   - Home: index.md
+  - UI Map: UI_MAP.md
+  - Arquitetura: 01-ARQUITETURA.md
+  - Instalação: 02-INSTALACAO.md
+  - Uso: 03-USO.md
+  - Contribuindo: 04-CONTRIBUINDO.md
+  - FAQ Global: FAQ-GLOBAL.md
   - Ferramentas: tools/index.md
-  - Engenharia: engineering/integra-python-v3.1.md
+  - Frontend:
+      - Estrutura: frontend/01-estrutura.md
+  - Deployment:
+      - Deploy: deployment/01-deploy.md
+      - Variáveis de Ambiente: deployment/02-env-vars.md
+  - Exemplos:
+      - Uso API: exemplos/01-uso-api.md
+  - Runbooks:
+      - Ajuste Diário GFBR: runbooks/runbook-ajuste-diario-gfbr.md
+      - Compressor PDF: runbooks/runbook-compressor-pdf.md
+      - Excel Abas PDF: runbooks/runbook-excel-abas-pdf.md
+      - Extrator ZIP/RAR: runbooks/runbook-extrator-zip-rar.md
+      - Gerador de Atas: runbooks/runbook-gerador-atas.md
+      - Holerites: runbooks/runbook-holerites.md
+      - Importador Recebimentos: runbooks/runbook-importador-recebimentos.md
+      - Relatório de Férias: runbooks/runbook-relatorio-ferias.md
+      - CSV Baixa: runbooks/runbook-separador-csv-baixa.md
+      - Férias por Funcionário: runbooks/runbook-separador-ferias.md
+  - Engenharia:
+      - Integra Python v3.1: engineering/integra-python-v3.1.md
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+extra_css:
+  - assets/styles/portal.css
+
+validation:
+  nav:
+    omitted_files: ignore
