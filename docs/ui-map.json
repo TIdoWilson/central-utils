@@ -1,0 +1,280 @@
+{
+  "generatedAt": "2026-02-13T10:45:12.852Z",
+  "groups": [
+    {
+      "group": "Geral",
+      "tools": [
+        {
+          "slug": "acerto-lotes-toscan",
+          "title": "Acerto Lotes Toscan",
+          "path": "/acerto-lotes-toscan",
+          "hasApi": false,
+          "apiBase": "/api/acerto-lotes-toscan",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "acertos-lotes-internets",
+          "title": "Acertos Lotes Internets",
+          "path": "/acertos-lotes-internets",
+          "hasApi": true,
+          "apiBase": "/api/acertos-lotes-internets",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "ajuste-diario-gfbr",
+          "title": "Ajuste Diario Gfbr",
+          "path": "/ajuste-diario-gfbr",
+          "hasApi": true,
+          "apiBase": "/api/ajuste-diario-gfbr",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "ajuste-diario-gfbr-c",
+          "title": "Ajuste Diario Gfbr C",
+          "path": "/ajuste-diario-gfbr-c",
+          "hasApi": true,
+          "apiBase": "/api/ajuste-diario-gfbr-c",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "balancete-transitorio",
+          "title": "Balancete Transitorio",
+          "path": "/balancete-transitorio",
+          "hasApi": true,
+          "apiBase": "/api/balancete-transitorio",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "calculadora-ICMS-ST",
+          "title": "Calculadora ICMS ST",
+          "path": "/calculadora-ICMS-ST",
+          "hasApi": false,
+          "apiBase": "/api/calculadora-ICMS-ST",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "comprimir-pdf",
+          "title": "Comprimir PDF",
+          "path": "/comprimir-pdf",
+          "hasApi": true,
+          "apiBase": "/api/comprimir-pdf",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "conciliador-cartao-wilson",
+          "title": "Conciliador Cartao Wilson",
+          "path": "/conciliador-cartao-wilson",
+          "hasApi": true,
+          "apiBase": "/api/conciliador-cartao-wilson",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "conciliador-hausen-ocean",
+          "title": "Conciliador Hausen Ocean",
+          "path": "/conciliador-hausen-ocean",
+          "hasApi": true,
+          "apiBase": "/api/conciliador-hausen-ocean",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "dimob",
+          "title": "Dimob",
+          "path": "/dimob",
+          "hasApi": true,
+          "apiBase": "/api/dimob",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "ecd-status",
+          "title": "ECD Status",
+          "path": "/ecd-status",
+          "hasApi": true,
+          "apiBase": "/api/ecd-status",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "excel-abas-pdf",
+          "title": "Excel Abas PDF",
+          "path": "/excel-abas-pdf",
+          "hasApi": true,
+          "apiBase": "/api/excel-abas-pdf",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "extrator-zip-rar",
+          "title": "Extrator ZIP RAR",
+          "path": "/extrator-zip-rar",
+          "hasApi": true,
+          "apiBase": "/api/extrator-zip-rar",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "formatador-bernardina",
+          "title": "Formatador Bernardina",
+          "path": "/formatador-bernardina",
+          "hasApi": true,
+          "apiBase": "/api/formatador-bernardina",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "gerador-atas",
+          "title": "Gerador Atas",
+          "path": "/gerador-atas",
+          "hasApi": true,
+          "apiBase": "/api/gerador-atas",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "importador-recebimentos-madre-scp",
+          "title": "Importador Recebimentos Madre SCP",
+          "path": "/importador-recebimentos-madre-scp",
+          "hasApi": true,
+          "apiBase": "/api/importador-recebimentos-madre-scp",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "irpf",
+          "title": "IRPF",
+          "path": "/irpf",
+          "hasApi": true,
+          "apiBase": "/api/irpf",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "irpf-carne-leao",
+          "title": "IRPF Carne Leao",
+          "path": "/irpf-carne-leao",
+          "hasApi": false,
+          "apiBase": "/api/irpf-carne-leao",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "mit",
+          "title": "MIT",
+          "path": "/mit",
+          "hasApi": true,
+          "apiBase": "/api/mit",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "nfe",
+          "title": "NFE",
+          "path": "/nfe",
+          "hasApi": false,
+          "apiBase": "/api/nfe",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "nfe-legacy",
+          "title": "NFE Legacy",
+          "path": "/nfe-legacy",
+          "hasApi": true,
+          "apiBase": "/api/nfe-legacy",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "pdf-a",
+          "title": "PDF A",
+          "path": "/pdf-a",
+          "hasApi": false,
+          "apiBase": "/api/pdf-a",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "pdfa",
+          "title": "Pdfa",
+          "path": "/pdfa",
+          "hasApi": true,
+          "apiBase": "/api/pdfa",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "provisao-de-ferias",
+          "title": "Provisao DE Ferias",
+          "path": "/provisao-de-ferias",
+          "hasApi": false,
+          "apiBase": "/api/provisao-de-ferias",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "separador-csv-baixa-automatica",
+          "title": "Separador CSV Baixa Automatica",
+          "path": "/separador-csv-baixa-automatica",
+          "hasApi": true,
+          "apiBase": "/api/separador-csv-baixa-automatica",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "separador-ferias-funcionario",
+          "title": "Separador Ferias Funcionario",
+          "path": "/separador-ferias-funcionario",
+          "hasApi": true,
+          "apiBase": "/api/separador-ferias-funcionario",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "separador-holerites-por-empresa",
+          "title": "Separador Holerites POR Empresa",
+          "path": "/separador-holerites-por-empresa",
+          "hasApi": true,
+          "apiBase": "/api/separador-holerites-por-empresa",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "separador-pdf-relatorio-de-ferias",
+          "title": "Separador PDF Relatorio DE Ferias",
+          "path": "/separador-pdf-relatorio-de-ferias",
+          "hasApi": true,
+          "apiBase": "/api/separador-pdf-relatorio-de-ferias",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "sn",
+          "title": "SN",
+          "path": "/sn",
+          "hasApi": true,
+          "apiBase": "/api/sn",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "tareffa-empresas-lote",
+          "title": "Tareffa Empresas Lote",
+          "path": "/tareffa-empresas-lote",
+          "hasApi": true,
+          "apiBase": "/api/tareffa-empresas-lote",
+          "adminOnly": false,
+          "aliases": []
+        }
+      ]
+    }
+  ]
+}
