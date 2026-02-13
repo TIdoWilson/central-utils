@@ -421,7 +421,7 @@ Editar: `public/home.html` (ou sidebar)
 
 ### Passo 6: Documentar
 
-Criar: `docs/api/XX-nova-ferramenta.md`
+Criar: `docs/tools/<slug>.md`
 
 ```markdown
 # Nova Ferramenta

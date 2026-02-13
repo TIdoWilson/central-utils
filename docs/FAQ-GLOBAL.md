@@ -824,7 +824,7 @@ curl -X POST http://localhost:8001/api/.../version
 
 ## 📚 Referências Rápidas
 
-- **Docs principais:** [/docs/api/](../../docs/api/)
+- **Docs principais:** [docs/tools/index.md](./tools/index.md)
 - **Runbooks operacionais:** [/docs/runbooks/](../runbooks/)
 - **GitHub Issues:** [central-utils/issues](https://github.com/empresa/central-utils/issues)
 - **Wikis:** [central-utils Wiki - Troubleshooting](https://wiki.empresa.com/central-utils)

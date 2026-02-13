@@ -1057,14 +1057,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             log('Download disparado com sucesso.');
             
         } catch (e) {
-            try {
-                await auditLog(req, 'dimob_generate_file', 'error', {
-                    cnpj, year, prevPath,
-                    traceId,
-                    message: e?.message || String(e)
-                });
-            } catch { }
-            return send500(e);
+            setStatus(`Erro: ${e.message || e}`);
+            log(`ERRO gerar DIMOB: ${e.message || e}`);
         }
     }
 

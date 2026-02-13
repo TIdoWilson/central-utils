@@ -1,120 +1,92 @@
 // public/js/auth-client.js
-let _authCache = null;
-let _authLoading = null;
+(function () {
+  const nativeFetch = window.fetch.bind(window);
 
-async function getAuthContext(force = false) {
-  if (_authCache && !force) return _authCache;
+  const AuthClient = {
+    _ctx: null,
+    _nativeFetch: nativeFetch,
 
-  if (_authLoading && !force) return _authLoading;
+    async getAuthContext(force = false) {
+      if (!force && this._ctx) return this._ctx;
 
-  _authLoading = (async () => {
-    const resp = await fetch('/api/auth/me', {
-      method: 'GET',
-      credentials: 'include',
-      headers: { 'Accept': 'application/json' },
-    });
-
-    if (!resp.ok) {
-      _authCache = null;
-      return null;
-    }
-
-    const data = await resp.json().catch(() => null);
-    _authCache = data;
-    return _authCache;
-  })().finally(() => {
-    _authLoading = null;
-  });
-
-  return _authLoading;
-}
-
-function _isMutation(method) {
-  const m = String(method || 'GET').toUpperCase();
-  return m === 'POST' || m === 'PUT' || m === 'PATCH' || m === 'DELETE';
-}
-
-async function authFetch(url, options = {}) {
-  const method = (options.method || 'GET').toUpperCase();
-
-  // login é público e não usa CSRF (mas pode ser chamado com fetch direto do login.js)
-  const isLogin = url === '/api/auth/login';
-
-  // carrega contexto (se não for login)
-  let ctx = null;
-  if (!isLogin) {
-    ctx = await getAuthContext();
-    if (!ctx) {
-      window.location.href = '/login';
-      throw new Error('Não autenticado');
-    }
-  }
-
-  const headers = new Headers(options.headers || {});
-  if (!headers.has('Accept')) headers.set('Accept', 'application/json');
-
-  // injeta CSRF nas mutações (exceto login)
-  if (!isLogin && _isMutation(method)) {
-    headers.set('x-csrf-token', ctx?.csrfToken || '');
-  }
-
-  // sempre inclui cookies (wl_session)
-  const doFetch = () =>
-    fetch(url, {
-      ...options,
-      method,
-      headers,
-      credentials: 'include',
-    });
-
-  let resp = await doFetch();
-
-  // sessão expirada
-  if (resp.status === 401) {
-    _authCache = null;
-    window.location.href = '/login';
-    throw new Error('Sessão expirada');
-  }
-
-  // CSRF inválido/ausente: recarrega /me e repete 1x
-  if (!isLogin && resp.status === 403 && _isMutation(method)) {
-    let body = null;
-    try {
-      body = await resp.clone().json();
-    } catch (_) {}
-
-    if (body && (body.code === 'csrf_invalid' || body.code === 'csrf_missing')) {
-      ctx = await getAuthContext(true);
-      if (!ctx) {
-        window.location.href = '/login';
-        throw new Error('Não autenticado');
-      }
-
-      headers.set('x-csrf-token', ctx.csrfToken || '');
-      resp = await doFetch();
+      const resp = await this._nativeFetch('/api/auth/me', {
+        method: 'GET',
+        credentials: 'include',
+        headers: { Accept: 'application/json' },
+      });
 
       if (resp.status === 401) {
-        _authCache = null;
-        window.location.href = '/login';
-        throw new Error('Sessão expirada');
+        this._ctx = null;
+        return null;
       }
-    }
+
+      const data = await resp.json().catch(() => null);
+      if (!resp.ok || !data?.user) {
+        this._ctx = null;
+        return null;
+      }
+
+      this._ctx = {
+        user: data.user,
+        csrfToken: data.csrfToken,
+        rbacStrict: !!data.rbacStrict,
+      };
+
+      return this._ctx;
+    },
+
+    clearCache() {
+      this._ctx = null;
+    },
+
+    async authFetch(url, options = {}) {
+      const opts = { ...options };
+      opts.credentials = 'include';
+
+      const headers = new Headers(opts.headers || {});
+      headers.set('Accept', 'application/json');
+
+      const method = String(opts.method || 'GET').toUpperCase();
+      const isMutation = !['GET', 'HEAD', 'OPTIONS'].includes(method);
+
+      if (isMutation && !headers.has('x-csrf-token')) {
+        const ctx = await this.getAuthContext();
+        if (ctx?.csrfToken) headers.set('x-csrf-token', ctx.csrfToken);
+      }
+
+      opts.headers = headers;
+
+      const resp = await this._nativeFetch(url, opts);
+
+      if (resp.status === 401) {
+        this._ctx = null;
+        window.location.href = '/login';
+      }
+
+      return resp;
+    },
+
+    async logoutAndRedirect() {
+      try {
+        await this.authFetch('/api/auth/logout', { method: 'POST' });
+      } catch (_) {}
+      this._ctx = null;
+      window.location.href = '/login';
+    },
+  };
+
+  window.AuthClient = AuthClient;
+
+  // Compatibilidade: converte fetch em authFetch automaticamente nas páginas internas.
+  if (window.location.pathname !== '/login') {
+    window.fetch = async function wrappedFetch(url, options) {
+      try {
+        const u = typeof url === 'string' ? url : (url?.url || '');
+        if (typeof u === 'string' && u.startsWith('/') && !u.startsWith('//')) {
+          return AuthClient.authFetch(url, options || {});
+        }
+      } catch (_) {}
+      return nativeFetch(url, options);
+    };
   }
-
-  return resp;
-}
-
-async function logoutAndRedirect() {
-  try {
-    // logout é autenticado; CSRF recomendado (você já injeta):contentReference[oaicite:3]{index=3}
-    await authFetch('/api/auth/logout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({}),
-    });
-  } catch (_) {}
-  _authCache = null;
-  window.location.href = '/login';
-}
-
-window.AuthClient = { getAuthContext, authFetch, logoutAndRedirect };
+})();
