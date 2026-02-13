@@ -26,7 +26,6 @@ Esta lista é gerada automaticamente a partir de `src/core/tool-catalog.json`.
 - [NFE](./nfe.md) — `/nfe`
 - [NFE Legacy](./nfe-legacy.md) — `/nfe-legacy` • API: `/api/nfe-legacy`
 - [PDF A](./pdf-a.md) — `/pdf-a`
-- [Pdfa](./pdfa.md) — `/pdfa` • API: `/api/pdfa`
 - [Provisao DE Ferias](./provisao-de-ferias.md) — `/provisao-de-ferias`
 - [Separador CSV Baixa Automatica](./separador-csv-baixa-automatica.md) — `/separador-csv-baixa-automatica` • API: `/api/separador-csv-baixa-automatica`
 - [Separador Ferias Funcionario](./separador-ferias-funcionario.md) — `/separador-ferias-funcionario` • API: `/api/separador-ferias-funcionario`
