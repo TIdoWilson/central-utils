@@ -11,7 +11,13 @@
     "dev:node": "node src/worker.js",
     "dev:py": ".venv\\Scripts\\python.exe -m uvicorn api.integra_api:app --host 127.0.0.1 --port 8001",
     "dev": "concurrently --kill-others-on-fail \"npm run dev:node\" \"npm run dev:py\" \"npm run dev:go\"",
-    "dev:go": "cd go-api && go run ."
+    "dev:go": "cd go-api && go run .",
+    "verify": "node scripts/verify.mjs",
+    "init:workspace": "node scripts/init-workspace.mjs",
+    "scaffold:tool": "node scripts/scaffold-tool.mjs",
+    "gen:docs": "node scripts/gen-docs.mjs",
+    "gen:ui": "node scripts/gen-ui.mjs",
+    "tool:new": "node scripts/tool-new.mjs"
   },
   "keywords": [],
   "dependencies": {

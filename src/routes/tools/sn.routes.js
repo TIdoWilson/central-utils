@@ -1,20 +1,22 @@
 const express = require('express');
+const { createSnService } = require('../../services/sn.service');
 
 module.exports = function createSnRoutes(deps) {
+  const snService = deps.snService || (deps.snConfig ? createSnService(deps.snConfig) : null);
   const {
     requireCsrf,
     pool,
     auditLog,
     autenticarSerpro,
     axios,
-    dbGetSnCompanies,
-    dbCreateSnCompany,
-    dbGetReceiptById,
-    dbGetReceiptsByIds,
-    dbGetReceiptByCompanyAndPa,
-    dbSaveReceipt,
-    buildResumoResponse,
-    registrarSnResultado,
+    dbGetSnCompanies = snService?.dbGetSnCompanies,
+    dbCreateSnCompany = snService?.dbCreateSnCompany,
+    dbGetReceiptById = snService?.dbGetReceiptById,
+    dbGetReceiptsByIds = snService?.dbGetReceiptsByIds,
+    dbGetReceiptByCompanyAndPa = snService?.dbGetReceiptByCompanyAndPa,
+    dbSaveReceipt = snService?.dbSaveReceipt,
+    buildResumoResponse = snService?.buildResumoResponse,
+    registrarSnResultado = snService?.registrarSnResultado,
   } = deps;
 
   const router = express.Router();

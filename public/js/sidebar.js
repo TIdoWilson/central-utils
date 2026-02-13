@@ -63,7 +63,7 @@ const MENU_CONFIG = [
     label: 'Declarações',
     icon: '🏢',
     items: [
-      { id: 'automacao-DIMOB', label: 'Automação DIMOB', href: '/DIMOB', icon: '🏢' },
+      { id: 'dimob', label: 'Automação DIMOB', href: '/dimob', icon: '🏢' },
       { id: 'sn', label: 'SN sem movimento', href: '/sn', icon: '📄' },
       { id: 'mit', label: 'MIT/DCTFWEB sem movimento', href: '/mit', icon: '📄' },
       { id: 'ecd-status', label: 'Lista de Empresas para ECD', href: '/ecd-status', icon: '📄' },

@@ -3,15 +3,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const whoami = document.getElementById('whoami');
 
+  if (!window.AuthClient) {
+    window.location.href = '/login';
+    return;
+  }
+
   document.getElementById('btnLogout')?.addEventListener('click', () => AuthClient.logoutAndRedirect());
   document.getElementById('btnReloadUsers')?.addEventListener('click', carregarUsuarios);
 
-  const ctx = await AuthClient.getAuthContext();
-  if (!ctx) return;
+  const ctx = await AuthClient.getAuthContext().catch(() => null);
+  if (!ctx?.user) {
+    window.location.href = '/login';
+    return;
+  }
 
   if (whoami) {
     whoami.textContent = `Logado como: ${ctx.user.name} <${ctx.user.email}> (${ctx.user.role})`;
   }
+
+  // Catálogo de ferramentas vem do MENU_CONFIG da sidebar
+  const toolsCatalog = buildToolsCatalogFromMenu(window.MENU_CONFIG || []);
+  setupPermissionsModal(toolsCatalog);
 
   // IMPORTAÇÃO
   document.getElementById('importForm')?.addEventListener('submit', async (e) => {
@@ -36,7 +48,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         importMsg.textContent = `Importação OK: ${data.created} criados, ${data.updated} atualizados, ${data.skipped} ignorados.`;
       }
 
-      // opcional: limpar inputs
       if (fileInput) fileInput.value = '';
       if (usersText) usersText.value = '';
 
@@ -104,6 +115,7 @@ async function carregarUsuarios() {
             <td>${u.is_active ? 'Sim' : 'Não'}</td>
             <td>${u.created_at ? new Date(u.created_at).toLocaleString() : '-'}</td>
             <td>
+              <button class="btn btn-secondary btn-sm" data-action="perms">Permissões</button>
               <button class="btn btn-secondary btn-sm" data-action="edit">Editar</button>
               <button class="btn btn-secondary btn-sm" data-action="pass">Senha</button>
               <button class="btn btn-secondary btn-sm" data-action="toggle">${u.is_active ? 'Desativar' : 'Ativar'}</button>
@@ -114,7 +126,6 @@ async function carregarUsuarios() {
       })
       .join('');
 
-    // bind actions
     tbody.querySelectorAll('button[data-action]').forEach((btn) => {
       btn.addEventListener('click', onRowAction);
     });
@@ -136,6 +147,11 @@ async function onRowAction(e) {
   const activeCell = tr.children[3]?.textContent?.trim() === 'Sim';
 
   try {
+    if (action === 'perms') {
+      await openPermissionsModal({ id, name: nameCell, email: emailCell, role: roleCell });
+      return;
+    }
+
     if (action === 'edit') {
       const name = prompt('Nome:', nameCell) ?? '';
       if (!name.trim()) return;
@@ -192,6 +208,178 @@ async function onRowAction(e) {
   } catch (err) {
     alert(err.message || 'Erro');
   }
+}
+
+// ===== Permissões =====
+
+let __toolsCatalog = [];
+
+function normalizeToolSlugFromHref(href) {
+  if (!href) return null;
+  const raw = String(href).trim();
+  if (!raw || raw === '#') return null;
+
+  try {
+    const url = new URL(raw, window.location.origin);
+    let p = decodeURIComponent(url.pathname || '');
+    p = p.replace(/^\/+/, '');
+    p = p.replace(/\.html$/i, '');
+    return p.toLowerCase();
+  } catch (_) {
+    let p = raw.split('?')[0].split('#')[0];
+    p = p.replace(/^\/+/, '');
+    p = p.replace(/\.html$/i, '');
+    return p.toLowerCase() || null;
+  }
+}
+
+function buildToolsCatalogFromMenu(menu) {
+  const tools = [];
+  for (const group of menu) {
+    for (const item of (group.items || [])) {
+      const slug = normalizeToolSlugFromHref(item.href);
+      if (!slug) continue;
+
+      tools.push({
+        groupId: group.id,
+        groupLabel: group.label,
+        id: item.id,
+        label: item.label,
+        href: item.href,
+        slug,
+        perm: `tool:${slug}`,
+        adminOnly: !!(group.adminOnly || item.adminOnly),
+      });
+    }
+  }
+  // tira duplicados por perm
+  const seen = new Set();
+  return tools.filter(t => {
+    if (seen.has(t.perm)) return false;
+    seen.add(t.perm);
+    return true;
+  });
+}
+
+function setupPermissionsModal(toolsCatalog) {
+  __toolsCatalog = toolsCatalog;
+
+  const modal = document.getElementById('permissionsModal');
+  const btnClose = document.getElementById('btnClosePermissions');
+  const btnCancel = document.getElementById('btnCancelPermissions');
+
+  const close = () => {
+    modal?.classList.add('hidden');
+    modal?.setAttribute('aria-hidden', 'true');
+    document.getElementById('permissionsMessage').textContent = '';
+  };
+
+  btnClose?.addEventListener('click', close);
+  btnCancel?.addEventListener('click', close);
+
+  modal?.querySelector('[data-close="1"]')?.addEventListener('click', close);
+
+  window.__closePermissionsModal = close;
+}
+
+async function openPermissionsModal(user) {
+  const modal = document.getElementById('permissionsModal');
+  const subtitle = document.getElementById('permissionsSubtitle');
+  const msg = document.getElementById('permissionsMessage');
+  const list = document.getElementById('permissionsList');
+  const btnSave = document.getElementById('btnSavePermissions');
+
+  if (!modal || !subtitle || !msg || !list || !btnSave) return;
+
+  msg.textContent = '';
+  subtitle.textContent = `Usuário: ${user.name} <${user.email}> (${user.role})`;
+  btnSave.disabled = true;
+
+  modal.dataset.userId = String(user.id);
+
+  // carrega permissões atuais
+  const current = await fetchUserPermissions(user.id).catch(() => []);
+  const selected = new Set(current);
+
+  renderPermissionsList(list, __toolsCatalog, selected);
+
+  btnSave.disabled = false;
+
+  const onSave = async () => {
+    msg.textContent = '';
+    btnSave.disabled = true;
+
+    const checked = Array.from(list.querySelectorAll('input[type="checkbox"][data-perm]'))
+      .filter(i => i.checked)
+      .map(i => i.getAttribute('data-perm'));
+
+    try {
+      const resp = await AuthClient.authFetch(`/api/admin/users/${user.id}/permissions`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ permissions: checked }),
+      });
+
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok || data.error) throw new Error(data.error || 'Falha ao salvar');
+
+      msg.textContent = 'Permissões salvas com sucesso.';
+      // menus do navegador podem estar cacheados:
+      AuthClient.clearCache();
+      setTimeout(() => window.__closePermissionsModal?.(), 450);
+    } catch (e) {
+      msg.textContent = e.message || 'Erro ao salvar permissões.';
+      btnSave.disabled = false;
+    }
+  };
+
+  // evita empilhar handlers
+  btnSave.replaceWith(btnSave.cloneNode(true));
+  const btnSave2 = document.getElementById('btnSavePermissions');
+  btnSave2.addEventListener('click', onSave);
+
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+async function fetchUserPermissions(userId) {
+  const resp = await AuthClient.authFetch(`/api/admin/users/${userId}/permissions`, { method: 'GET' });
+  const data = await resp.json().catch(() => ({}));
+  if (!resp.ok || data.error) throw new Error(data.error || 'Falha ao carregar permissões');
+  return Array.isArray(data.permissions) ? data.permissions : [];
+}
+
+function renderPermissionsList(container, toolsCatalog, selectedSet) {
+  const ctx = (window.AuthClient && AuthClient.getAuthContext) ? AuthClient._ctx : null;
+
+  const tools = toolsCatalog
+    .filter(t => !t.adminOnly) // permissões “de ferramenta” (não admin)
+    .sort((a, b) => (a.groupLabel + a.label).localeCompare(b.groupLabel + b.label));
+
+  const groups = new Map();
+  for (const t of tools) {
+    if (!groups.has(t.groupLabel)) groups.set(t.groupLabel, []);
+    groups.get(t.groupLabel).push(t);
+  }
+
+  let html = '';
+  for (const [groupLabel, arr] of groups.entries()) {
+    html += `<div class="perm-group-title">${esc(groupLabel)}</div>`;
+    for (const t of arr) {
+      const checked = selectedSet.has(t.perm) ? 'checked' : '';
+      html += `
+        <label class="perm-item">
+          <input type="checkbox" data-perm="${esc(t.perm)}" ${checked} />
+          <div class="perm-item-text">
+            <div class="perm-item-title">${esc(t.label)}</div>
+            <div class="perm-item-sub">${esc(t.href)} · <code>${esc(t.perm)}</code></div>
+          </div>
+        </label>
+      `;
+    }
+  }
+
+  container.innerHTML = html || '<p class="nfe-card-subtitle">Nenhuma ferramenta encontrada no MENU_CONFIG.</p>';
 }
 
 function esc(s) {

@@ -305,7 +305,7 @@ Veja [docs/deployment/01-deploy.md](../deployment/01-deploy.md)
 
 - [02 - Guia de Instalação](./02-INSTALACAO.md)
 - [03 - Guia de Uso](./03-USO.md)
-- [API Python - Detalhes](./api/)
+- [Ferramentas - Detalhes](./tools/index.md)
 - [Frontend - Detalhes](./frontend/)
 
 ---

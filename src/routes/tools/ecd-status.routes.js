@@ -1,12 +1,14 @@
 const express = require('express');
+const { createEcdStatusService } = require('../../services/ecd-status.service');
 
 module.exports = function createEcdStatusRoutes(deps) {
+  const ecdService = deps.ecdService || (deps.ecdConfig ? createEcdStatusService(deps.ecdConfig) : null);
   const {
     requireCsrf,
-    loadEcdCompanies,
-    loadEcdStatus,
-    saveEcdStatus,
-    ecdHasErrorPng,
+    loadEcdCompanies = ecdService?.loadEcdCompanies,
+    loadEcdStatus = ecdService?.loadEcdStatus,
+    saveEcdStatus = ecdService?.saveEcdStatus,
+    ecdHasErrorPng = ecdService?.ecdHasErrorPng,
     auditLog,
   } = deps;
 

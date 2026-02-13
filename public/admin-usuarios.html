@@ -25,14 +25,12 @@
       <main class="nfe-main">
         <header class="nfe-header">
           <h1>Administração — Usuários</h1>
-          <p>Importe e gerencie usuários (nome, e-mail, senha e tipo de acesso).</p>
+          <p>Importe e gerencie usuários (nome, e-mail, senha, perfil e permissões por ferramenta).</p>
 
-          <div class="nfe-table-actions" style="margin-top: 10px">
-            <a class="btn btn-secondary" href="/logs">Ver Logs</a>
-            <button class="btn btn-ghost-danger" id="btnLogout">Sair</button>
+          <div class="nfe-header-actions">
+            <span id="whoami" class="nfe-breadcrumb"></span>
+            <button class="btn btn-secondary" id="btnLogout">Sair</button>
           </div>
-
-          <div id="whoami" class="nfe-card-subtitle" style="margin-top: 8px"></div>
         </header>
 
         <section class="nfe-card">
@@ -72,7 +70,7 @@
           <div class="nfe-card-header nfe-card-header-with-actions">
             <div>
               <h2>Usuários cadastrados</h2>
-              <p class="nfe-card-subtitle">Nome, e-mail e perfil.</p>
+              <p class="nfe-card-subtitle">Nome, e-mail, perfil e ações.</p>
             </div>
             <div class="nfe-table-actions">
               <button class="btn btn-secondary" id="btnReloadUsers">Recarregar</button>
@@ -99,9 +97,37 @@
       </main>
     </div>
 
-    <script src="/js/sidebar.js"></script>
-    <script src="/js/upload-helper.js"></script>
+    <!-- Modal de permissões -->
+    <div class="modal hidden" id="permissionsModal" aria-hidden="true">
+      <div class="modal-overlay" data-close="1"></div>
+
+      <div class="modal-content" style="max-width: 780px;">
+        <div class="modal-header">
+          <h2>Permissões por ferramenta</h2>
+          <button class="modal-close" type="button" id="btnClosePermissions">×</button>
+        </div>
+
+        <p class="nfe-card-subtitle" id="permissionsSubtitle" style="margin-top: 6px;">
+          ...
+        </p>
+
+        <div class="auth-message" id="permissionsMessage" aria-live="polite"></div>
+
+        <div id="permissionsList" class="perm-list"></div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="btnCancelPermissions">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="btnSavePermissions">Salvar permissões</button>
+        </div>
+
+        <p class="nfe-card-subtitle" style="margin-top: 10px;">
+          Observação: <strong>ADMIN</strong> sempre tem acesso total (independente da lista).
+        </p>
+      </div>
+    </div>    <script src="/js/sidebar.js"></script>
     <script src="/js/auth-client.js"></script>
+    <script src="/js/upload-helper.js"></script>
     <script src="/js/admin-usuarios.js"></script>
   </body>
 </html>
+
