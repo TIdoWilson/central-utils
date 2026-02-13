@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  document.getElementById('btnLogout')?.addEventListener('click', () => AuthClient.logoutAndRedirect());
   document.getElementById('btnReloadUsers')?.addEventListener('click', carregarUsuarios);
 
   const ctx = await AuthClient.getAuthContext().catch(() => null);
@@ -45,7 +44,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!resp.ok || data.error) throw new Error(data.error || 'Erro ao importar');
 
       if (importMsg) {
-        importMsg.textContent = `Importação OK: ${data.created} criados, ${data.updated} atualizados, ${data.skipped} ignorados.`;
+        const total = Number(data.total || 0);
+        const createdOrUpdated = Number(data.createdOrUpdated || 0);
+        const errors = Array.isArray(data.errors) ? data.errors.length : 0;
+        importMsg.textContent = `Importação OK: ${createdOrUpdated}/${total} processados, ${errors} erros.`;
       }
 
       if (fileInput) fileInput.value = '';
@@ -99,7 +101,7 @@ async function carregarUsuarios() {
     const data = await resp.json().catch(() => ({}));
     if (!resp.ok || data.error) throw new Error(data.error || 'Erro ao carregar');
 
-    const users = data.users || [];
+    const users = Array.isArray(data) ? data : (Array.isArray(data.users) ? data.users : []);
     if (!users.length) {
       tbody.innerHTML = `<tr><td colspan="6">Nenhum usuário cadastrado.</td></tr>`;
       return;
@@ -107,18 +109,20 @@ async function carregarUsuarios() {
 
     tbody.innerHTML = users
       .map((u) => {
+        const isActive = typeof u.is_active === 'boolean' ? u.is_active : !!u.isActive;
+        const createdAt = u.created_at || u.createdAt || null;
         return `
           <tr data-id="${u.id}">
             <td>${esc(u.name)}</td>
             <td>${esc(u.email)}</td>
             <td>${esc(u.role)}</td>
-            <td>${u.is_active ? 'Sim' : 'Não'}</td>
-            <td>${u.created_at ? new Date(u.created_at).toLocaleString() : '-'}</td>
+            <td>${isActive ? 'Sim' : 'Não'}</td>
+            <td>${createdAt ? new Date(createdAt).toLocaleString() : '-'}</td>
             <td>
               <button class="btn btn-secondary btn-sm" data-action="perms">Permissões</button>
               <button class="btn btn-secondary btn-sm" data-action="edit">Editar</button>
               <button class="btn btn-secondary btn-sm" data-action="pass">Senha</button>
-              <button class="btn btn-secondary btn-sm" data-action="toggle">${u.is_active ? 'Desativar' : 'Ativar'}</button>
+              <button class="btn btn-secondary btn-sm" data-action="toggle">${isActive ? 'Desativar' : 'Ativar'}</button>
               <button class="btn btn-ghost-danger btn-sm" data-action="delete">Excluir</button>
             </td>
           </tr>

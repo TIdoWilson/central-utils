@@ -428,9 +428,21 @@ function requireRole(role) {
   };
 }
 
+function sendForbiddenPage(req, res, message) {
+  const wantsJson = req.accepts(['html', 'json']) === 'json';
+  if (wantsJson) {
+    return res.status(403).json({ error: message || 'Sem permissão' });
+  }
+  return res.status(403).sendFile(path.join(publicDir, 'acesso-negado.html'));
+}
+
+function sendForbiddenPageHtml(res) {
+  return res.status(403).sendFile(path.join(publicDir, 'acesso-negado.html'));
+}
+
 function requireAdminPage(req, res, next) {
   const userRole = req.user?.role || req.auth?.user?.role;
-  if (userRole !== 'ADMIN') return res.status(403).send('Sem permissão');
+  if (userRole !== 'ADMIN') return sendForbiddenPageHtml(res);
   next();
 }
 
@@ -478,7 +490,7 @@ function requireToolPage(toolSlug) {
   return (req, res, next) => {
     const user = req.user || req.auth?.user;
     if (!hasToolPermission(user, toolSlug)) {
-      return res.status(403).send('Sem permissão');
+      return sendForbiddenPageHtml(res);
     }
     return next();
   };
@@ -1090,7 +1102,7 @@ app.get('/:toolSlug', requireAuthPage, async (req, res, next) => {
 
     const slug = normalizeToolSlug(rawSlug);
     if ((slug === 'admin-usuarios' || slug === 'logs') && String(req.user?.role || '').toUpperCase() !== 'ADMIN') {
-      return res.status(403).send('Sem permissão');
+      return sendForbiddenPageHtml(res);
     }
     return requireToolPage(slug)(req, res, async () => {
       await auditLog(req, pageViewActionForSlug(slug), 'ok', { path: req.path, method: req.method });

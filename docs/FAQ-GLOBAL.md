@@ -381,6 +381,41 @@ ls -la /var/log/central-utils/audit_gfbr.log
 # Files: gpg encrypt, FIPS-compliant
 ```
 
+### P: A página mostra "Acesso negado (403)" mesmo com login válido
+
+**Ferramentas afetadas:** Todas as páginas internas com RBAC por ferramenta
+
+**Causas:**
+- Usuário não tem `tool:<slug>` (nem `tool:*`)
+- `RBAC_STRICT=true` e usuário sem permissões explícitas
+- Rota pertence ao grupo admin (`/admin-usuarios`, `/logs`) e usuário não é ADMIN
+
+**Soluções:**
+```bash
+# 1. Confirmar contexto do usuário
+curl -s http://localhost:3000/api/auth/me --cookie "wl_session=<token>"
+
+# 2. Validar permissões no banco
+SELECT u.email, u.role, p.perm
+FROM auth_users u
+LEFT JOIN auth_user_permissions p ON p.user_id = u.id
+WHERE lower(u.email) = lower('<email>');
+
+# 3. Verificar modo strict
+echo $RBAC_STRICT
+
+# 4. Em caso de ajuste, recarregar sessão (logout/login)
+```
+
+### P: Usuário consegue ver/alterar código pelo navegador?
+
+**Resposta curta:** JavaScript/HTML/CSS do frontend sempre é visível no browser, isso é normal da web.
+
+**Proteção real:**
+- Código de backend (Node, Python, Go, C#) não é servido em `/public`.
+- Permissões são validadas no servidor (`requireAuth`, `requireToolApi`, `requireRole`), não no cliente.
+- Alterar JS no navegador não concede acesso a APIs bloqueadas (retorna `401/403`).
+
 ---
 
 ## ✓ Problemas de Validação & Dados
@@ -563,6 +598,33 @@ find /data/extrator-zip-rar/outputs/ -type f -name "file.txt" \
 ---
 
 ## 🗄️ Problemas de Banco de Dados
+
+### P: Tela "Administração — Usuários" fica vazia após ajustes de RBAC
+
+**Ferramentas afetadas:** Admin Usuários (`/admin-usuarios`)
+
+**Sintoma:**
+- Login funciona normalmente.
+- Página admin abre como ADMIN.
+- Tabela mostra "Nenhum usuário cadastrado" mesmo com registros em `auth_users`.
+
+**Causas:**
+- Contrato divergente entre API e front:
+  - API retornando `[...]` e front esperando `{ users: [...] }`.
+  - Campos com convenções diferentes (`created_at` vs `createdAt`, `is_active` vs `isActive`).
+
+**Soluções:**
+```bash
+# 1. Testar endpoint de usuários (logado como ADMIN)
+curl -i http://localhost:3000/api/admin/users
+
+# 2. Verificar registros na tabela auth_users
+psql "$DATABASE_URL" -c "SELECT id,email,role,is_active FROM auth_users ORDER BY id DESC LIMIT 20;"
+
+# 3. Garantir compatibilidade front/API:
+# - API preferencial: { "users": [...] }
+# - Front tolerante a formatos legado/novo e snake_case/camelCase
+```
 
 ### P: "Foreign Key error" ou referência inválida
 

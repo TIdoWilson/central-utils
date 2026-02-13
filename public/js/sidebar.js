@@ -12,14 +12,6 @@ const MENU_CONFIG = [
     ],
   },
   {
-    id: 'ferramentas-pdf',
-    label: 'Ferramentas PDF',
-    icon: '📄',
-    items: [
-      { id: 'pdfa', label: 'Conversor PDF → PDF/A', href: '/pdf-a', icon: '📄' },
-    ],
-  },
-  {
     id: 'contabil',
     label: 'Contábil',
     icon: '📊',
@@ -43,6 +35,14 @@ const MENU_CONFIG = [
     items: [
       { id: 'nfe', label: 'Consulta NF-e', href: '/nfe', icon: '🧾' },
       { id: 'calculadora-icms-st', label: 'Calculadora de ICMS ST', href: '/calculadora-ICMS-ST', icon: '📄' },
+    ],
+  },
+  {
+    id: 'ferramentas-pdf',
+    label: 'Ferramentas PDF',
+    icon: '📄',
+    items: [
+      { id: 'pdfa', label: 'Conversor PDF → PDF/A', href: '/pdf-a', icon: '📄' },
     ],
   },
   {
@@ -83,6 +83,15 @@ const MENU_CONFIG = [
 
 // Exporta pra outras telas (ex.: admin-usuarios montar lista de permissões)
 window.MENU_CONFIG = MENU_CONFIG;
+
+function escapeHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 function normalizeToolSlugFromHref(href) {
   if (!href) return null;
@@ -170,7 +179,69 @@ function gerarSidebarHtml(activePageId, ctx) {
     `;
   });
 
+  const userName = escapeHtml(ctx?.user?.name || 'Usuário');
+  const userEmail = escapeHtml(ctx?.user?.email || '');
+  html += `
+    <div class="nfe-menu-spacer"></div>
+    <div class="nfe-sidebar-account">
+      <div class="nfe-sidebar-account-name">${userName}</div>
+      ${userEmail ? `<div class="nfe-sidebar-account-email">${userEmail}</div>` : ''}
+      <button type="button" class="nfe-menu-item nfe-menu-action nfe-logout-btn" data-action="logout">
+        <span class="icon">⎋</span>
+        <span class="label">Sair</span>
+      </button>
+    </div>
+  `;
+
   return html;
+}
+
+function isMobileLayout() {
+  return window.matchMedia('(max-width: 900px)').matches;
+}
+
+function ensureSidebarBackdrop(layout) {
+  if (!layout) return null;
+  let backdrop = layout.querySelector('.nfe-sidebar-backdrop');
+  if (!backdrop) {
+    backdrop = document.createElement('div');
+    backdrop.className = 'nfe-sidebar-backdrop';
+    layout.appendChild(backdrop);
+  }
+  return backdrop;
+}
+
+function ensureGlobalTopbar(ctx) {
+  const main = document.querySelector('.nfe-main');
+  if (!main) return;
+  if (main.querySelector('.app-topbar')) return;
+
+  const userName = escapeHtml(ctx?.user?.name || 'Conta');
+  const userEmail = escapeHtml(ctx?.user?.email || '');
+
+  const topbar = document.createElement('div');
+  topbar.className = 'topbar app-topbar';
+  topbar.innerHTML = `
+    <div class="topbar-left">
+      <button type="button" class="app-topbar-menu" data-action="toggle-menu" aria-label="Abrir menu">☰</button>
+    </div>
+    <div class="topbar-center">
+      <img src="/img/Logo_preta_negativo-removebg-preview.png" class="topbar-logo" alt="Logo">
+    </div>
+    <div class="app-topbar-right">
+      <button type="button" class="app-topbar-user" data-action="toggle-user-menu" aria-haspopup="menu" aria-expanded="false">
+        <span class="app-topbar-user-avatar">👤</span>
+        <span class="app-topbar-user-name">${userName}</span>
+      </button>
+      <div class="app-topbar-user-menu" data-role="user-menu" aria-hidden="true">
+        ${userEmail ? `<div class="app-topbar-user-email">${userEmail}</div>` : ''}
+        <a href="/" class="app-topbar-user-item">Início</a>
+        <button type="button" class="app-topbar-user-item app-topbar-user-item-danger" data-action="logout">Sair</button>
+      </div>
+    </div>
+  `;
+
+  main.insertBefore(topbar, main.firstChild);
 }
 
 async function inicializarSidebar(activePageId) {
@@ -188,10 +259,25 @@ async function inicializarSidebar(activePageId) {
 
   const layout = document.querySelector('.nfe-layout');
   const sidebarToggle = document.getElementById('sidebarToggle');
+  const backdrop = ensureSidebarBackdrop(layout);
+  ensureGlobalTopbar(ctx);
+
+  const toggleSidebar = () => {
+    if (!layout) return;
+    if (isMobileLayout()) {
+      layout.classList.toggle('menu-open');
+    } else {
+      layout.classList.toggle('collapsed');
+    }
+  };
 
   if (layout && sidebarToggle) {
-    sidebarToggle.addEventListener('click', () => {
-      layout.classList.toggle('collapsed');
+    sidebarToggle.addEventListener('click', toggleSidebar);
+  }
+
+  if (layout && backdrop) {
+    backdrop.addEventListener('click', () => {
+      layout.classList.remove('menu-open');
     });
   }
 
@@ -200,5 +286,72 @@ async function inicializarSidebar(activePageId) {
       const group = btn.closest('.nfe-menu-group');
       if (group) group.classList.toggle('open');
     });
+  });
+
+  // Em mobile, ao navegar para uma página, fecha o drawer para não parecer "preso aberto".
+  nav.querySelectorAll('a.nfe-menu-item').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (!layout) return;
+      if (isMobileLayout()) layout.classList.remove('menu-open');
+    });
+  });
+
+  nav.querySelectorAll('[data-action="logout"]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try {
+        if (window.AuthClient?.logoutAndRedirect) {
+          await window.AuthClient.logoutAndRedirect();
+          return;
+        }
+        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+      } catch (_) { }
+      window.location.href = '/login';
+    });
+  });
+
+  document.querySelectorAll('.app-topbar .app-topbar-menu[data-action="toggle-menu"]').forEach((btn) => {
+    btn.addEventListener('click', toggleSidebar);
+  });
+
+  document.querySelectorAll('.app-topbar [data-action="toggle-user-menu"]').forEach((btn) => {
+    btn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      const wrapper = btn.closest('.app-topbar-right');
+      if (!wrapper) return;
+      const menu = wrapper.querySelector('[data-role="user-menu"]');
+      if (!menu) return;
+      const open = menu.classList.toggle('open');
+      menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  document.querySelectorAll('.app-topbar [data-action="logout"]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try {
+        if (window.AuthClient?.logoutAndRedirect) {
+          await window.AuthClient.logoutAndRedirect();
+          return;
+        }
+        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+      } catch (_) { }
+      window.location.href = '/login';
+    });
+  });
+
+  document.addEventListener('click', (ev) => {
+    document.querySelectorAll('.app-topbar [data-role="user-menu"]').forEach((menu) => {
+      const wrap = menu.closest('.app-topbar-right');
+      if (!wrap || wrap.contains(ev.target)) return;
+      menu.classList.remove('open');
+      menu.setAttribute('aria-hidden', 'true');
+      const trigger = wrap.querySelector('[data-action="toggle-user-menu"]');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    if (!layout) return;
+    if (!isMobileLayout()) layout.classList.remove('menu-open');
   });
 }

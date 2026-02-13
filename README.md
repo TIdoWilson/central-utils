@@ -203,9 +203,9 @@ npm run build         # Build para produção
 ### 1. Fazer Login
 
 ```bash
-curl -X POST http://localhost:3000/api/login \
+curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin"}'
+  -d '{"email":"seu_usuario@empresa.com","password":"SUA_SENHA_AQUI"}'
 ```
 
 ### 2. Gerar Ata

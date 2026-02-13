@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const ctx = await AuthClient.getAuthContext().catch(() => null);
   if (!ctx?.user) return;
+  setupHomeUserMenu(ctx);
 
   const role = ctx.user.role;
   const perms = Array.isArray(ctx.user.permissions) ? ctx.user.permissions : [];
@@ -36,6 +37,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const slug = normalizeToolSlugFromHref(href);
     if (!slug) continue;
 
+    // Páginas administrativas só aparecem para ADMIN.
+    if ((slug === 'admin-usuarios' || slug === 'logs') && role !== 'ADMIN') {
+      card.style.display = 'none';
+      continue;
+    }
+
     const needed = `tool:${slug}`;
     if (!allowAll && !perms.includes(needed) && !perms.includes('tool:*')) {
       card.style.display = 'none';
@@ -49,6 +56,61 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!visible) section.style.display = 'none';
   });
 });
+
+function setupHomeUserMenu(ctx) {
+  const btn = document.getElementById('homeUserBtn');
+  const menu = document.getElementById('homeUserMenu');
+  const logoutBtn = document.getElementById('homeLogoutBtn');
+  const userNameEl = document.getElementById('homeUserName');
+  const userEmailEl = document.getElementById('homeUserEmail');
+
+  if (!btn || !menu) return;
+
+  if (userNameEl) userNameEl.textContent = ctx?.user?.name || 'Usuário';
+  if (userEmailEl) userEmailEl.textContent = ctx?.user?.email || '';
+
+  const closeMenu = () => {
+    menu.classList.remove('open');
+    menu.setAttribute('aria-hidden', 'true');
+    btn.setAttribute('aria-expanded', 'false');
+  };
+
+  const toggleMenu = () => {
+    const willOpen = !menu.classList.contains('open');
+    if (willOpen) {
+      menu.classList.add('open');
+      menu.setAttribute('aria-hidden', 'false');
+      btn.setAttribute('aria-expanded', 'true');
+    } else {
+      closeMenu();
+    }
+  };
+
+  btn.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    toggleMenu();
+  });
+
+  document.addEventListener('click', (ev) => {
+    if (!menu.contains(ev.target) && ev.target !== btn) closeMenu();
+  });
+
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') closeMenu();
+  });
+
+  logoutBtn?.addEventListener('click', async () => {
+    closeMenu();
+    try {
+      if (window.AuthClient?.logoutAndRedirect) {
+        await window.AuthClient.logoutAndRedirect();
+        return;
+      }
+      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+    } catch (_) { }
+    window.location.href = '/login';
+  });
+}
 
 function normalizeToolSlugFromHref(href) {
   const raw = String(href || '').trim();

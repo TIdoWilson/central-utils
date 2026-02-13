@@ -16,11 +16,23 @@ Este repositório segue o padrão **Integra Python v3.1**. Antes de alterar cód
 - Páginas fixas apenas: `/login`, `/`, `/admin-usuarios`, `/logs`. Ferramentas via `GET /:toolSlug`.
 - RBAC: `tool:<slug>` e `tool:*`; ADMIN acessa tudo (exceto não precisa perm). `RBAC_STRICT` controla fallback.
 - **Proibido duplicar helpers/funções** (sobrescrita silenciosa).
+- Toda correção de erro após teste de ferramenta deve atualizar a documentação da própria ferramenta com: sintoma, causa provável e solução.
+- `FAQ-GLOBAL.md` deve receber apenas ocorrências relevantes e recorrentes (erros reais, armadilhas operacionais, decisões de operação); não registrar toda pergunta pontual do usuário.
 
 ## Arquitetura alvo
 - `src/server.js`: bootstrap + segurança + mounts + páginas + rota dinâmica + socket + error handler.
 - `src/routes/`: routers (`auth`, `admin`, `shared`, `tools/<slug>`).
 - `src/services/`: lógica pesada (parse/IO/cálculos/integrações).
+
+## Padrão UI interno (obrigatório para novas páginas)
+- Toda página interna deve usar layout padrão com:
+  - `<div class="nfe-layout">`
+  - `<aside class="nfe-sidebar">` contendo `<button id="sidebarToggle">` e `<nav id="sidebarMenu"></nav>`
+  - `<main class="nfe-main">` para o conteúdo da ferramenta
+- O header global interno é injetado por `public/js/sidebar.js` (topbar compartilhada).
+- Não criar botão local de logout por página (usar apenas logout global da sidebar/topbar).
+- Front da página deve chamar `inicializarSidebar('<slug-ou-id>')` no `DOMContentLoaded`.
+- Em páginas com API interna, usar `AuthClient.authFetch` (CSRF automático em mutações).
 
 ## Comandos padrão
 - Criar ferramenta + atualizar docs/UI + verificar: `npm run tool:new -- --slug <slug> --title \"...\" --group \"...\" --api`

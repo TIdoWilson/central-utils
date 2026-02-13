@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Acesso negado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Alternar menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <section class="nfe-card forbidden-card">
+          <div class="forbidden-badge">403</div>
+          <h1>Acesso negado</h1>
+          <p>
+            Você está autenticado, mas não possui permissão para abrir esta página.
+            Se precisar do acesso, solicite ao administrador do portal.
+          </p>
+
+          <div class="forbidden-actions">
+            <a href="/" class="btn btn-primary">Voltar ao início</a>
+            <button type="button" class="btn btn-secondary" id="forbiddenLogoutBtn">Sair</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/acesso-negado.js"></script>
+  </body>
+</html>

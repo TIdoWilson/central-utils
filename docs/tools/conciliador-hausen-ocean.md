@@ -8,7 +8,7 @@
 - **API base:** `/api/conciliador-hausen-ocean`
 - **Permissão RBAC:** `tool:conciliador-hausen-ocean` ou `tool:*` (ADMIN acessa)
 
-Merge arquivos excel do DRE e Balancetes das duas empresas.
+Concilia dois arquivos Excel (Hausen e Ocean) para gerar consolidado por tipo (`dre`/`balancete`).
 
 ## 2. Objetivo Operacional
 
@@ -21,20 +21,23 @@ Merge arquivos excel do DRE e Balancetes das duas empresas.
 - **Script JS da ferramenta:** `public/js/conciliador-hausen-ocean.js`
 - **Router Node:** `src/routes/tools/conciliador-hausen-ocean.routes.js`
 - **Service Node:** _não identificado_
-- **Arquivos Python relacionados:** _não foi identificado arquivo Python específico para este slug_
+- **Arquivos Go/C# relacionados:** _não encontrados no backend atual para este slug_
 
 ## 4. Rotas e Endpoints
 
 - **Rota de página:** `/conciliador-hausen-ocean`;
 - **Base de API esperada:** `/api/conciliador-hausen-ocean`;
-- **Endpoints no router:** _não foi possível extrair endpoints específicos (arquivo ausente ou dinâmica indireta)._
+- **Estado atual do router:** arquivo existe, mas retorna `express.Router()` vazio.
+- **Fluxo esperado pelo front:** `POST /api/conciliador-hausen-ocean/processar`.
 
-## 5. Fluxo Técnico (Página -> Node -> Python/Serviço)
+## 5. Fluxo Técnico Atual (Importante)
 
-- Front-end coleta parâmetros/arquivos e chama APIs internas (preferência por `AuthClient.authFetch`).
-- Router valida entrada, aplica segurança (CSRF em mutações quando aplicável) e orquestra o processamento.
-- Service concentra regra de negócio, integração com armazenamento e chamadas a serviços externos/Python.
-- Retorno padronizado em JSON e/ou arquivo para download.
+1. Front coleta `tipo` (`dre` ou `balancete`) + 2 arquivos.
+2. Front chama `POST /api/conciliador-hausen-ocean/processar` com CSRF.
+3. Backend montado em `src/server.js` não expõe esse endpoint hoje.
+4. Resultado prático atual: retorno `404` para processamento.
+
+Conclusão: a página está publicada, mas a API da ferramenta está pendente de implementação.
 
 ## 6. Segurança e Governança
 
@@ -49,14 +52,15 @@ Merge arquivos excel do DRE e Balancetes das duas empresas.
 - **Saídas:** resposta em tela e, quando aplicável, artefatos (ZIP/PDF/XLSX/CSV/JSON).
 - **Observação:** validar encoding, formato e tamanho dos arquivos para evitar erro 400/422.
 
-## 8. Troubleshooting Rápido
+## 8. Troubleshooting Real do Estado Atual
 
 - **401/403:** conferir sessão do usuário e permissão RBAC.
-- **404 em endpoint:** validar rota no `router` e base URL consumida no JS.
-- **422/400:** revisar campos obrigatórios e estrutura do arquivo enviado.
-- **500:** inspecionar logs do Node e, quando existir, logs do processamento Python.
+- **404 em `/processar`:** comportamento esperado no estado atual, pois o router está vazio.
+- **Erro de download não iniciar:** consequência do `POST` não implementado.
+- **Ação necessária:** implementar endpoint no router e registrar runtime real (Node/Python/Go/C#) após definição técnica.
 
 ## 9. Observações de Manutenção
 
 - Ao alterar nomes de arquivo/rota, manter compatibilidade (alias/redirect) para não quebrar links legados.
 - Se incluir nova API/fluxo, atualizar este documento e `src/core/tool-catalog.json`.
+- Se esta ferramenta passar a usar Go ou C#, documentar no mesmo padrão aplicado em `ajuste-diario-gfbr-c` e `formatador-bernardina`.

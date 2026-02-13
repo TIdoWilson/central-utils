@@ -124,23 +124,28 @@ Regras:
 ----------------------------------------------------------------------
 4) Páginas internas — Layout, Sidebar e Separação HTML/JS
 Páginas internas usam layout padrão com:
-- <nav id="sidebarMenu"></nav> como placeholder
 - .nfe-layout, .nfe-sidebar, .nfe-main, .nfe-card, .nfe-table
+- dentro do `<aside class="nfe-sidebar">`:
+  - `<button id="sidebarToggle">` (toggle)
+  - `<nav id="sidebarMenu"></nav>` (menu dinâmico)
+- header global interno (topbar) é compartilhado e injetado por `public/js/sidebar.js`
 
 4.1 Sidebar compartilhada (public/js/sidebar.js)
 Sidebar é montada dinamicamente:
 - existe MENU_CONFIG com grupos (Pessoal, Fiscal, Contábil etc.)
 - existe inicializarSidebar(activePageId) que:
   - gera HTML no <nav id="sidebarMenu">
+  - injeta topbar global no conteúdo interno (header compartilhado)
   - controla toggle/hambúrguer
   - controla abrir/fechar grupos
 
 Regras (v2 mantidas):
-- Nunca escrever sidebar manualmente no HTML
-- Sempre usar placeholder <nav id="sidebarMenu"></nav> e sidebar.js
+- Nunca escrever itens de menu manualmente no HTML
+- Sempre usar `<aside class="nfe-sidebar">` com placeholder `<nav id="sidebarMenu"></nav>` e `sidebar.js`
 - Cada página interna:
   - deve ter um ID único em MENU_CONFIG
   - deve chamar inicializarSidebar('<id-da-pagina>') no DOMContentLoaded
+- Não criar botão local de logout por página (usar apenas logout global da sidebar/topbar)
 
 Menu Admin (v2 mantido):
 - prever grupo Admin com:
@@ -346,6 +351,15 @@ Regras:
 - DELETE /api/admin/users/:id → ADMIN + CSRF
 - POST /api/admin/users/import → ADMIN + CSRF
 - GET /api/admin/audit-logs → ADMIN
+
+Contrato recomendado (compatibilidade):
+- GET /api/admin/users retorna preferencialmente `{ users: [...] }`.
+- Front-end de admin deve aceitar ambos formatos durante transição:
+  - `{ users: [...] }`
+  - `[...]` (legado)
+- Campos de usuário podem vir em snake_case ou camelCase; o front deve tolerar:
+  - `is_active` ou `isActive`
+  - `created_at` ou `createdAt`
 
 Regras extras:
 - bloquear excluir o próprio usuário logado
@@ -641,6 +655,28 @@ A resposta DEVE seguir esta estrutura, na ordem:
 7) CSS novo (se necessário)
 8) Trechos para server.js e/ou novos arquivos em src/routes/ (server.js só mounts e essenciais)
 9) Passos finais de integração (SQL migrations, env, segurança, logs, deploy quando aplicável)
+
+======================================================================
+POLÍTICA DE DOCUMENTAÇÃO CONTÍNUA (v3.1)
+
+1) Correção de erro após teste de ferramenta (obrigatório)
+- Sempre que o usuário testar uma ferramenta, ocorrer erro e a correção for aplicada:
+  - atualizar o `docs/tools/<slug>.md` da ferramenta afetada;
+  - incluir no mínimo:
+    - Sintoma (mensagem/efeito observado),
+    - Causa provável (técnica e objetiva),
+    - Como resolver (passos práticos),
+    - Como prevenir (quando aplicável).
+- Essa atualização faz parte da entrega da correção (não é opcional).
+
+2) Atualização do FAQ global por relevância (criteriosa)
+- `docs/FAQ-GLOBAL.md` deve ser atualizado apenas quando houver conteúdo realmente relevante para operação contínua:
+  - erro recorrente,
+  - falha com impacto alto,
+  - armadilha comum de configuração/deploy,
+  - dúvida transversal que tende a se repetir entre ferramentas.
+- Não adicionar toda pergunta pontual do usuário.
+- Critério: se a informação ajuda múltiplos casos futuros, entra no FAQ; se é caso isolado, fica no documento da ferramenta.
 
 ======================================================================
 REGRAS FINAIS (v3.1)

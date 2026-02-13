@@ -20,6 +20,13 @@ module.exports = function createSnRoutes(deps) {
   } = deps;
 
   const router = express.Router();
+  const snDebug = ['1', 'true', 'yes', 'on'].includes(String(process.env.SN_DEBUG || '').toLowerCase());
+  const serproDeclararUrl =
+    process.env.SERPRO_DECLARAR_URL ||
+    'https://gateway.apiserpro.serpro.gov.br/integra-contador/v1/Declarar';
+  const serproConsultarUrl =
+    process.env.SERPRO_CONSULTAR_URL ||
+    'https://gateway.apiserpro.serpro.gov.br/integra-contador/v1/Consultar';
 
   router.get('/companies', async (req, res) => {
     try {
@@ -164,8 +171,7 @@ module.exports = function createSnRoutes(deps) {
         Accept: 'application/json',
       };
 
-      const url =
-        'https://gateway.apiserpro.serpro.gov.br/integra-contador/v1/Declarar';
+      const url = serproDeclararUrl;
 
       const resultados = [];
 
@@ -318,8 +324,7 @@ module.exports = function createSnRoutes(deps) {
         });
       }
 
-      const url =
-        'https://gateway.apiserpro.serpro.gov.br/integra-contador/v1/Consultar';
+      const url = serproConsultarUrl;
 
       const headers = {
         Authorization: 'Bearer ' + access_token,
@@ -418,10 +423,12 @@ module.exports = function createSnRoutes(deps) {
             const apiResp = await axios.post(url, payload, { headers });
             const data = apiResp.data;
 
-            console.log('--- RESPOSTA SERPRO CONSULTIMADECREC14 ---');
-            console.log('status:', data.status);
-            console.log('mensagens:', data.mensagens);
-            console.log('dados (primeiros 200 chars):', String(data.dados).slice(0, 200));
+            if (snDebug) {
+              console.log('--- RESPOSTA SERPRO CONSULTIMADECREC14 ---');
+              console.log('status:', data.status);
+              console.log('mensagens:', data.mensagens);
+              console.log('dados (primeiros 200 chars):', String(data.dados).slice(0, 200));
+            }
 
             if (data.status && data.status !== 200) {
               registrarSnResultado(false, 'consulta');
