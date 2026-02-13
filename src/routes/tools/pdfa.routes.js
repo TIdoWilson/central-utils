@@ -1,4 +1,12 @@
 const express = require('express');
+const {
+  pdfaStoreFile,
+  pdfaGetFile,
+  pdfaGetGhostscriptPath,
+  pdfaGetLibreOfficePath,
+  pdfaGetIccProfilePath,
+  pdfaRun,
+} = require('../../services/pdfa.service');
 
 module.exports = function createPdfaRoutes(deps) {
   const {
@@ -6,12 +14,12 @@ module.exports = function createPdfaRoutes(deps) {
     uploadPdfa,
     PDFA_TMP_DIR,
     PDFA_OUT_DIR,
-    pdfaGetLibreOfficePath,
-    pdfaRun,
-    pdfaGetGhostscriptPath,
-    pdfaGetIccProfilePath,
-    pdfaStoreFile,
-    pdfaGetFile,
+    pdfaGetLibreOfficePath: getLibreOfficePath = pdfaGetLibreOfficePath,
+    pdfaRun: runPdfa = pdfaRun,
+    pdfaGetGhostscriptPath: getGhostscriptPath = pdfaGetGhostscriptPath,
+    pdfaGetIccProfilePath: getIccProfilePath = pdfaGetIccProfilePath,
+    pdfaStoreFile: storeFile = pdfaStoreFile,
+    pdfaGetFile: getFile = pdfaGetFile,
     auditLog,
     fs,
     path,
@@ -34,7 +42,7 @@ module.exports = function createPdfaRoutes(deps) {
       let pdfPath = inputPath;
 
       if (ext !== '.pdf') {
-        const soffice = pdfaGetLibreOfficePath();
+        const soffice = getLibreOfficePath();
         if (!soffice) {
           return res.status(500).json({ error: 'LibreOffice não encontrado. Configure LIBREOFFICE_PATH.' });
         }
@@ -51,7 +59,7 @@ module.exports = function createPdfaRoutes(deps) {
           inputPath,
         ];
 
-        await pdfaRun(soffice, loArgs, { cwd: workDir });
+        await runPdfa(soffice, loArgs, { cwd: workDir });
 
         const pdfCandidates = fs.readdirSync(workDir).filter((f) => f.toLowerCase().endsWith('.pdf'));
         if (!pdfCandidates.length) {
@@ -60,8 +68,8 @@ module.exports = function createPdfaRoutes(deps) {
         pdfPath = path.join(workDir, pdfCandidates[0]);
       }
 
-      const gs = pdfaGetGhostscriptPath();
-      const icc = pdfaGetIccProfilePath();
+      const gs = getGhostscriptPath();
+      const icc = getIccProfilePath();
       if (!icc) {
         return res.status(500).json({ error: 'Perfil ICC não encontrado. Configure PDFA_ICC_PROFILE.' });
       }
@@ -86,9 +94,9 @@ module.exports = function createPdfaRoutes(deps) {
         pdfPath,
       ];
 
-      await pdfaRun(gs, gsArgs, { cwd: workDir });
+      await runPdfa(gs, gsArgs, { cwd: workDir });
 
-      const fileId = pdfaStoreFile(outPath);
+      const fileId = storeFile(outPath);
       await auditLog(req, 'pdfa_convert', 'ok', { fileId, originalName });
 
       return res.json({
@@ -109,7 +117,7 @@ module.exports = function createPdfaRoutes(deps) {
 
   router.get('/download/:id', async (req, res) => {
     const id = String(req.params.id || '').trim();
-    const p = pdfaGetFile(id);
+    const p = getFile(id);
     if (!p || !fs.existsSync(p)) return res.status(404).send('Arquivo não encontrado.');
     return res.download(p, path.basename(p));
   });

@@ -2425,3 +2425,51 @@ textarea#dimobLog {
   max-height: 180px;
   overflow: auto;
 }
+
+/* ===== Admin - Permissões ===== */
+.perm-list {
+  margin-top: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  background: #f9fafb;
+  max-height: 380px;
+  overflow: auto;
+}
+
+.perm-group-title {
+  font-weight: 800;
+  font-size: 13px;
+  color: #111827;
+  margin: 10px 0 6px;
+}
+
+.perm-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+.perm-item:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+.perm-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.perm-item-title {
+  font-weight: 700;
+  color: #111827;
+  font-size: 13px;
+}
+
+.perm-item-sub {
+  font-size: 12px;
+  color: #6b7280;
+  word-break: break-word;
+}

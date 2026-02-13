@@ -77,12 +77,12 @@
 
   window.AuthClient = AuthClient;
 
-  // Compatibilidade: converte fetch('/api/...') em authFetch automaticamente nas páginas internas.
+  // Compatibilidade: converte fetch em authFetch automaticamente nas páginas internas.
   if (window.location.pathname !== '/login') {
     window.fetch = async function wrappedFetch(url, options) {
       try {
         const u = typeof url === 'string' ? url : (url?.url || '');
-        if (typeof u === 'string' && u.startsWith('/api/')) {
+        if (typeof u === 'string' && u.startsWith('/') && !u.startsWith('//')) {
           return AuthClient.authFetch(url, options || {});
         }
       } catch (_) {}

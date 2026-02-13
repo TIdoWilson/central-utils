@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fd.append('diasJanela', String(diasJanela.value || '31'));
       fd.append('limiarNome', String(limiarNome.value || '0.72'));
 
-      const resp = await fetch('/api/conciliador-cartao-wilson/process', {
+      const resp = await AuthClient.authFetch('/api/conciliador-cartao-wilson/process', {
         method: 'POST',
         body: fd
       });

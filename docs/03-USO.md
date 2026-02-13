@@ -474,7 +474,7 @@ ifconfig | grep inet
 
 ## 📚 Próximas Seções
 
-- [Documentação API Python](../api/) - Detalhes de cada ferramenta
+- [Documentação de Ferramentas](./tools/index.md) - Detalhes de cada ferramenta
 - [Documentação Frontend](../frontend/) - Estrutura HTML/JS
 - [Deployment](../deployment/) - Deploy em produção
 

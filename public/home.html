@@ -771,19 +771,8 @@
         </div>
     </section>
 
-    <script>
-        // Acordeon das sessões
-        document.querySelectorAll('.session-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const session = header.closest('.session');
-                if (!session) return;
-                session.classList.toggle('open');
-            });
-        });
-
-        // Se quiser começar com alguma sessão já aberta (ex.: Fiscal):
-        // document.getElementById('fiscal')?.classList.add('open');
-    </script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/home.js"></script>
 
 </body>
 
