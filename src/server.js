@@ -40,6 +40,7 @@ const createAjusteDiarioGfbrCRoutes = require('./routes/tools/ajuste-diario-gfbr
 const createDimobRoutes = require('./routes/tools/dimob.routes');
 const createTareffaEmpresasLoteRoutes = require('./routes/tools/tareffa-empresas-lote.routes');
 const createConciliadorCartaoWilsonRoutes = require('./routes/tools/conciliador-cartao-wilson.routes');
+const createConciliadorCartaoTipo50Routes = require('./routes/tools/conciliador-cartao-tipo50.routes');
 const createIrpfRoutes = require('./routes/tools/irpf.routes');
 const createNfeLegacyRoutes = require('./routes/tools/nfe-legacy.routes');
 const { createDimobService } = require('./services/dimob.service');
@@ -103,6 +104,7 @@ const {
   PDFA_OUT_DIR,
   uploadPdfa,
   BALANCETE_DIR,
+  uploadBalancete,
   BERNADINA_DIR,
   uploadBernadina,
   FERIAS_FUNC_DIR,
@@ -446,7 +448,7 @@ function requireAdminPage(req, res, next) {
   next();
 }
 
-const RBAC_STRICT = ['1', 'true', 'yes', 'on'].includes(String(process.env.RBAC_STRICT || 'false').toLowerCase());
+const RBAC_STRICT = ['1', 'true', 'yes', 'on'].includes(String(process.env.RBAC_STRICT || 'true').toLowerCase());
 
 function normalizeToolSlug(toolSlug) {
   return String(toolSlug || '').trim().toLowerCase();
@@ -454,6 +456,10 @@ function normalizeToolSlug(toolSlug) {
 
 const LEGACY_PAGE_VIEW_SLUG_MAP = {
   'pdf-a': 'pdfa',
+};
+
+const TOOL_PERMISSION_ALIASES = {
+  'conciliador-cartao-tipo50': ['conciliador-cartao-wilson'],
 };
 
 function pageViewActionForSlug(toolSlug) {
@@ -472,7 +478,12 @@ function hasToolPermission(user, toolSlug) {
   if (!slug) return false;
 
   const permissions = Array.isArray(user.permissions) ? user.permissions : [];
-  if (permissions.includes(`tool:${slug}`) || permissions.includes('tool:*')) return true;
+  const candidateSlugs = [slug, ...(TOOL_PERMISSION_ALIASES[slug] || [])]
+    .map((s) => normalizeToolSlug(s))
+    .filter(Boolean);
+
+  if (permissions.includes('tool:*')) return true;
+  if (candidateSlugs.some((s) => permissions.includes(`tool:${s}`))) return true;
   if (permissions.length === 0 && RBAC_STRICT === false) return true;
   return false;
 }
@@ -815,9 +826,14 @@ app.use(
   requireAuth,
   requireToolApi('balancete-transitorio'),
   createBalanceteTransitorioRoutes({
+    requireCsrf,
+    uploadBalancete,
     BALANCETE_DIR,
+    auditLog,
     fs,
     path,
+    spawn,
+    archiver,
   })
 );
 app.use(
@@ -1041,6 +1057,17 @@ app.use(
   requireAuth,
   requireToolApi('conciliador-cartao-wilson'),
   createConciliadorCartaoWilsonRoutes({
+    requireCsrf,
+    upload,
+    axios,
+    PY_API_URL,
+  })
+);
+app.use(
+  '/api/conciliador-cartao-tipo50',
+  requireAuth,
+  requireToolApi('conciliador-cartao-tipo50'),
+  createConciliadorCartaoTipo50Routes({
     requireCsrf,
     upload,
     axios,

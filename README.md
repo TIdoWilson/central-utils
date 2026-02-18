@@ -196,6 +196,38 @@ npm test              # Rodar testes (quando configurado)
 npm run build         # Build para produção
 ```
 
+### Deploy VPS (1 comando)
+
+No servidor VPS (Linux), dentro de `/opt/central-utils`:
+
+```bash
+npm run deploy:vps -- main
+```
+
+O script faz:
+- `git pull` da branch
+- instala dependências Node e Python
+- roda `verify` (quando disponível)
+- reinicia `central-node`, `central-python`, `central-go` e `caddy`
+
+Se o repositório estiver em outro caminho, use:
+
+```bash
+APP_DIR=/caminho/do/projeto bash scripts/deploy-vps.sh main
+```
+
+### Fluxo para publicar nova ferramenta no site
+
+1. Criar ferramenta local:
+```bash
+npm run tool:new -- --slug <slug> --title "..." --group "..." --api
+```
+2. Commit e push para o GitHub.
+3. Na VPS:
+```bash
+npm run deploy:vps -- main
+```
+
 ---
 
 ## 📊 Exemplo Rápido

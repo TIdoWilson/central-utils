@@ -1,286 +1,368 @@
+﻿from __future__ import annotations
+
 import re
 import unicodedata
+from datetime import datetime
 from pathlib import Path
+from tkinter import Tk, filedialog, messagebox
 
 import pandas as pd
 
-PDF_LIVRO = Path("LIVRO REGISTRO DE ENTRADAS.pdf")
-PDF_TIPO50 = Path("RELATORIO TIPO 50 ENTRADAS FINAL.PDF")
+PASTA_SAIDA = Path(r"W:\DOCUMENTOS ESCRITORIO\INSTALACAO SISTEMA\python\Conciliador Cartão Tipo 50\Arquivos")
 
-# ----------------------------
-# Helpers de normalização
-# ----------------------------
+
 def strip_accents(s: str) -> str:
     s = unicodedata.normalize("NFKD", s)
     return "".join(ch for ch in s if not unicodedata.combining(ch))
 
-def to_decimal_br(v):
-    """Converte '3.151,42' ou '3151,42' ou '3151.42' em float."""
+
+def clean_spaces(s: str) -> str:
+    return re.sub(r"\s+", " ", str(s)).strip()
+
+
+def to_decimal_br(v: str | None) -> float | None:
     if v is None:
         return None
     s = str(v).strip()
-    if s == "" or s.upper() == "EX":
+    if not s:
         return None
-    # remove separador de milhar provável
-    # caso brasileiro: '.' milhar e ',' decimal
     if "," in s and "." in s:
         s = s.replace(".", "").replace(",", ".")
-    else:
-        # se só tiver vírgula, assume decimal
-        if "," in s:
-            s = s.replace(",", ".")
-    # remove lixo
+    elif "," in s:
+        s = s.replace(",", ".")
     s = re.sub(r"[^\d\.\-]", "", s)
+    if not s:
+        return None
     try:
         return float(s)
-    except:
+    except ValueError:
         return None
 
-def norm_int(s):
-    s = "" if s is None else str(s)
-    s = re.sub(r"\D", "", s)
-    return s if s else None
 
-def norm_date_ddmmyyyy(s):
-    s = "" if s is None else str(s).strip()
-    m = re.search(r"(\d{2}/\d{2}/\d{4})", s)
-    return m.group(1) if m else None
-
-def clean_spaces(s: str) -> str:
-    s = re.sub(r"\s+", " ", str(s)).strip()
-    return s
-
-# ----------------------------
-# Extração com Camelot
-# ----------------------------
-def read_tables_camelot(pdf_path: Path):
+def ler_linhas_pdf(pdf_path: Path) -> list[str]:
     try:
-        import camelot
-        tables = camelot.read_pdf(str(pdf_path), pages="all", flavor="stream")  # stream costuma funcionar bem em livros fiscais
-        dfs = []
-        for t in tables:
-            df = t.df.copy()
-            # remove linhas vazias
-            df = df.dropna(how="all")
-            if df.shape[0] >= 2 and df.shape[1] >= 6:
-                dfs.append(df)
-        return dfs
+        from pypdf import PdfReader
+
+        leitor = PdfReader(str(pdf_path))
+        texto = "\n".join((p.extract_text() or "") for p in leitor.pages)
     except Exception:
-        return []
-
-# ----------------------------
-# Parse: LIVRO (Registro de Entradas)
-#   Campos que vamos tentar capturar:
-#   data_entrada, especie, serie, numero, cfop (cód fiscal), valor_contabil
-# ----------------------------
-def parse_livro(pdf_path: Path) -> pd.DataFrame:
-    # 1) tentar Camelot
-    dfs = read_tables_camelot(pdf_path)
-    rows = []
-    if dfs:
-        # Heurística: procurar colunas com "Data de Entrada" e "Número"
-        for df in dfs:
-            # concatena linha 0 para achar cabeçalho
-            head = " ".join(df.iloc[0].astype(str).tolist())
-            head = strip_accents(clean_spaces(head)).lower()
-            # Muitas vezes o cabeçalho vem quebrado; seguimos mesmo assim.
-            for i in range(1, len(df)):
-                line = " ".join(df.iloc[i].astype(str).tolist())
-                line = clean_spaces(line)
-                if re.search(r"\d{2}/\d{2}/\d{4}", line) and re.search(r"\bNFe\b|\bNF\b|\bCTe\b", line):
-                    # Exemplo de linha (pode variar):
-                    # 05/01/2026 NFe 6 2159 02/01/2026 0035190 PR ... 3.151,42 1.653 ...
-                    m = re.search(
-                        r"(?P<data>\d{2}/\d{2}/\d{4})\s+(?P<esp>NFe|NF|CTe)\s+(?P<serie>\d+)\s+(?P<num>\d+).*?\s+(?P<valor>[\d\.,]+)\s+(?P<cfop>\d\.\d{3})",
-                        line
-                    )
-                    if m:
-                        rows.append({
-                            "data": m.group("data"),
-                            "especie": m.group("esp"),
-                            "serie": norm_int(m.group("serie")),
-                            "numero": norm_int(m.group("num")),
-                            "cfop": m.group("cfop"),
-                            "valor_total": to_decimal_br(m.group("valor")),
-                            "fonte": "livro_camelot"
-                        })
-
-    # 2) fallback por texto (pdfplumber)
-    if not rows:
         import pdfplumber
+
+        partes = []
         with pdfplumber.open(str(pdf_path)) as pdf:
             for page in pdf.pages:
-                txt = page.extract_text() or ""
-                txt = txt.replace("\n", " ")
-                txt = clean_spaces(txt)
-                # varre todas as ocorrências de linhas que pareçam um lançamento
-                for m in re.finditer(
-                    r"(\d{2}/\d{2}/\d{4})\s+(NFe|NF|CTe)\s+(\d+)\s+(\d+)\s+.*?\s+([\d\.,]+)\s+(\d\.\d{3})",
-                    txt
-                ):
-                    rows.append({
-                        "data": m.group(1),
-                        "especie": m.group(2),
-                        "serie": norm_int(m.group(3)),
-                        "numero": norm_int(m.group(4)),
-                        "valor_total": to_decimal_br(m.group(5)),
-                        "cfop": m.group(6),
-                        "fonte": "livro_texto"
-                    })
+                partes.append(page.extract_text() or "")
+        texto = "\n".join(partes)
 
-    df = pd.DataFrame(rows)
-    if df.empty:
-        return df
+    return [ln.strip() for ln in texto.splitlines() if ln.strip()]
 
-    # Normalizações finais
-    df["chave_nf"] = df["data"].fillna("") + "|" + df["serie"].fillna("") + "|" + df["numero"].fillna("")
-    # em livro, às vezes repete a NF em múltiplas linhas por imposto; aqui agregamos por NF+CFOP
-    df = (df.groupby(["data", "serie", "numero", "cfop"], as_index=False)
-            .agg(valor_total=("valor_total", "sum")))
-    df["chave"] = df["data"] + "|" + df["serie"].astype(str) + "|" + df["numero"].astype(str) + "|" + df["cfop"].astype(str)
-    return df
 
-# ----------------------------
-# Parse: TIPO 50
-#   Campos típicos:
-#   Data, Nro, Tip, CNPJ, UF, CFOP, Aliq ICMS, Total, Base, Vlr ICMS, Vlr IPI, ...
-#   Uma mesma NF pode aparecer em várias linhas (CFOPs diferentes).
-# ----------------------------
-def parse_tipo50(pdf_path: Path) -> pd.DataFrame:
-    dfs = read_tables_camelot(pdf_path)
-    rows = []
+def detectar_tipo_pdf(pdf_path: Path) -> str | None:
+    txt = "\n".join(ler_linhas_pdf(pdf_path)[:300])
+    txt = strip_accents(txt).upper()
 
-    # 1) Camelot
-    if dfs:
-        for df in dfs:
-            for i in range(len(df)):
-                line = " ".join(df.iloc[i].astype(str).tolist())
-                line = clean_spaces(line)
+    if "REGISTRO DE ENTRADAS - MODELO P1" in txt or "TOTAL GERAL" in txt:
+        return "livro"
+    if "TIPO 50" in txt and ("ARQUIVO MAGN" in txt or "REGISTROS.:" in txt):
+        return "tipo50"
+    return None
 
-                # Exemplo: 05/01/202 2159 T 29299004000102 PR 1.653 0 3.151,42 ...
-                m = re.search(
-                    r"(?P<data>\d{2}/\d{2}/\d{4}|\d{2}/\d{2}/\d{3})\s+(?P<num>\d+)\s+(?P<tip>[TP])\s+(?P<cnpj>[A-Z0-9\.]+)\s+(?P<uf>[A-Z]{2})\s+(?P<cfop>\d\.\d{3})\s+(?P<aliq>[\d\.,]+)\s+(?P<total>[\d\.,]+)",
-                    line
-                )
-                if m:
-                    data = m.group("data")
-                    # Corrige ano truncado tipo '05/01/202'
-                    if re.fullmatch(r"\d{2}/\d{2}/\d{3}", data):
-                        data = data + "6"  # heurística para 2026 (ajuste se precisar)
-                    rows.append({
-                        "data": norm_date_ddmmyyyy(data),
-                        "numero": norm_int(m.group("num")),
-                        "tip": m.group("tip"),
-                        "cnpj": m.group("cnpj"),
-                        "uf": m.group("uf"),
-                        "cfop": m.group("cfop"),
-                        "aliq_icms": to_decimal_br(m.group("aliq")),
-                        "valor_total": to_decimal_br(m.group("total")),
-                        "fonte": "tipo50_camelot"
-                    })
 
-    # 2) fallback texto
-    if not rows:
-        import pdfplumber
-        with pdfplumber.open(str(pdf_path)) as pdf:
-            for page in pdf.pages:
-                txt = page.extract_text() or ""
-                txt = txt.replace("\n", " ")
-                txt = clean_spaces(txt)
-                for m in re.finditer(
-                    r"(\d{2}/\d{2}/\d{3,4})\s+(\d+)\s+([TP])\s+([A-Z0-9\.]+)\s+([A-Z]{2})\s+(\d\.\d{3})\s+([\d\.,]+)\s+([\d\.,]+)",
-                    txt
-                ):
-                    data = m.group(1)
-                    if re.fullmatch(r"\d{2}/\d{2}/\d{3}", data):
-                        data = data + "6"
-                    rows.append({
-                        "data": norm_date_ddmmyyyy(data),
-                        "numero": norm_int(m.group(2)),
-                        "tip": m.group(3),
-                        "cnpj": m.group(4),
-                        "uf": m.group(5),
-                        "cfop": m.group(6),
-                        "aliq_icms": to_decimal_br(m.group(7)),
-                        "valor_total": to_decimal_br(m.group(8)),
-                        "fonte": "tipo50_texto"
-                    })
+def selecionar_pdfs() -> tuple[Path, Path]:
+    root = Tk()
+    root.withdraw()
 
-    df = pd.DataFrame(rows)
-    if df.empty:
-        return df
-
-    # agrega por NF+CFOP (porque pode haver múltiplas linhas por CFOP)
-    df = (df.groupby(["data", "numero", "cfop"], as_index=False)
-            .agg(valor_total=("valor_total", "sum")))
-    # no Tipo 50 não temos série; conciliamos por data+numero+cfop
-    df["chave"] = df["data"].fillna("") + "|" + df["numero"].astype(str) + "|" + df["cfop"].astype(str)
-    return df
-
-# ----------------------------
-# Conciliação
-# ----------------------------
-def conciliar(df_livro: pd.DataFrame, df_tipo50: pd.DataFrame) -> dict:
-    # Ajuste: livro tem série; para conciliar com Tipo50 (sem série) usamos data+numero+cfop
-    df_l = df_livro.copy()
-    df_l["chave_sem_serie"] = df_l["data"].fillna("") + "|" + df_l["numero"].astype(str) + "|" + df_l["cfop"].astype(str)
-
-    df_t = df_tipo50.copy()
-    df_t["chave_sem_serie"] = df_t["chave"]
-
-    merge = df_l.merge(
-        df_t[["chave_sem_serie", "valor_total"]].rename(columns={"valor_total": "valor_tipo50"}),
-        on="chave_sem_serie",
-        how="outer"
+    messagebox.showinfo(
+        "Conciliador Livro x Tipo 50",
+        "Selecione exatamente 2 PDFs:\n"
+        "1 Livro de Registros IOB e 1 Balancete/Relatorio Tipo 50.",
     )
 
-    merge = merge.rename(columns={"valor_total": "valor_livro"})
+    arquivos = filedialog.askopenfilenames(
+        title="Selecione 2 PDFs para conciliacao",
+        filetypes=[("Arquivos PDF", "*.pdf *.PDF"), ("Todos os arquivos", "*.*")],
+    )
+    root.destroy()
+
+    if len(arquivos) != 2:
+        raise RuntimeError("Selecione exatamente 2 arquivos PDF.")
+
+    return Path(arquivos[0]), Path(arquivos[1])
+
+
+def identificar_livro_tipo50(pdf_a: Path, pdf_b: Path) -> tuple[Path, Path]:
+    tipo_a = detectar_tipo_pdf(pdf_a)
+    tipo_b = detectar_tipo_pdf(pdf_b)
+
+    if tipo_a is None or tipo_b is None:
+        raise RuntimeError("Nao foi possivel identificar um dos arquivos. Selecione 1 Livro e 1 Tipo 50.")
+    if tipo_a == tipo_b:
+        raise RuntimeError("Os dois arquivos parecem ser do mesmo tipo.")
+
+    return (pdf_a, pdf_b) if tipo_a == "livro" else (pdf_b, pdf_a)
+
+
+def gerar_arquivo_saida() -> Path:
+    agora = datetime.now()
+    nome = f"Conciliação_{agora.strftime('%H-%M-%S')}_{agora.strftime('%d-%m-%Y')}.xlsx"
+    PASTA_SAIDA.mkdir(parents=True, exist_ok=True)
+    return PASTA_SAIDA / nome
+
+
+def anular_pares_opostos(df: pd.DataFrame) -> pd.DataFrame:
+    # Remove pares +X / -X (mesmo valor absoluto em centavos) para nao contaminar a conta final.
+    if df.empty:
+        return df
+
+    cents = (df["diferenca"].round(2) * 100).astype(int)
+    idx_por_valor: dict[int, list[int]] = {}
+    for idx, v in cents.items():
+        idx_por_valor.setdefault(v, []).append(idx)
+
+    remover: set[int] = set()
+    for v in sorted([k for k in idx_por_valor.keys() if k > 0]):
+        if -v not in idx_por_valor:
+            continue
+        qtd_pares = min(len(idx_por_valor[v]), len(idx_por_valor[-v]))
+        if qtd_pares <= 0:
+            continue
+        remover.update(idx_por_valor[v][:qtd_pares])
+        remover.update(idx_por_valor[-v][:qtd_pares])
+
+    if not remover:
+        return df
+    return df.loc[~df.index.isin(remover)].copy()
+
+
+def parse_livro(pdf_path: Path) -> pd.DataFrame:
+    linhas = ler_linhas_pdf(pdf_path)
+    rows: list[dict] = []
+
+    re_inicio = re.compile(
+        r"^(\d{2}/\d{2}/\d{4})\s+(NFe|NF|CTe)\s+\d+\s+(\d+)\s+\d{2}/\d{2}/\d{4}\s+\d+\s+[A-Z]{2}\s+00\s*/\s*00\s+([\d\.,]+)\s+(\d\.\d{3})"
+    )
+    re_cont = re.compile(r"^([\d\.,]+)\s+(\d\.\d{3})(?:\s|$)")
+    re_moeda = re.compile(r"^(\d{1,3}(?:\.\d{3})*,\d{2})")
+
+    data_atual = None
+    nota_atual = None
+
+    for linha in linhas:
+        m = re_inicio.match(linha)
+        if m:
+            data_atual, _esp, nota, token_valor, cfop = m.groups()
+            nota_atual = re.sub(r"\D", "", nota)
+            mv = re_moeda.match(token_valor)
+            if mv:
+                rows.append(
+                    {
+                        "data": data_atual,
+                        "numero": nota_atual,
+                        "cfop": cfop,
+                        "valor_livro": to_decimal_br(mv.group(1)),
+                    }
+                )
+            continue
+
+        m = re_cont.match(linha)
+        if m and nota_atual:
+            token_valor, cfop = m.groups()
+            mv = re_moeda.match(token_valor)
+            if mv:
+                rows.append(
+                    {
+                        "data": data_atual,
+                        "numero": nota_atual,
+                        "cfop": cfop,
+                        "valor_livro": to_decimal_br(mv.group(1)),
+                    }
+                )
+
+    df = pd.DataFrame(rows)
+    if df.empty:
+        return df
+
+    df = (
+        df.groupby(["data", "numero", "cfop"], as_index=False)
+        .agg(valor_livro=("valor_livro", "sum"))
+    )
+    df["chave"] = df["data"].astype(str) + "|" + df["numero"].astype(str) + "|" + df["cfop"].astype(str)
+    return df
+
+
+def parse_tipo50(pdf_path: Path) -> pd.DataFrame:
+    linhas = ler_linhas_pdf(pdf_path)
+    rows: list[dict] = []
+
+    re_inicio = re.compile(r"^(\d{2}/\d{2}/\d{3,4})(.*)$")
+    re_nota_cfop_resto = re.compile(r"^\s*(\d+)\s+(\d\.\d{3})\s+(.+)$")
+    re_moeda = re.compile(r"^(\d{1,3}(?:\.\d{3})*,\d{2})")
+
+    for linha in linhas:
+        m = re_inicio.match(linha)
+        if not m:
+            continue
+
+        data, resto = m.groups()
+        m2 = re_nota_cfop_resto.match(resto)
+        if not m2:
+            continue
+
+        nota, cfop, sufixo = m2.groups()
+        token = sufixo.split()[0] if sufixo.split() else ""
+        mv = re_moeda.match(token)
+        if not mv:
+            continue
+
+        if re.fullmatch(r"\d{2}/\d{2}/\d{3}", data):
+            data = data + "6"
+
+        rows.append(
+            {
+                "data": data,
+                "numero": re.sub(r"\D", "", nota),
+                "cfop": cfop,
+                "valor_tipo50": to_decimal_br(mv.group(1)),
+            }
+        )
+
+    df = pd.DataFrame(rows)
+    if df.empty:
+        return df
+
+    df = (
+        df.groupby(["data", "numero", "cfop"], as_index=False)
+        .agg(valor_tipo50=("valor_tipo50", "sum"))
+    )
+    df["chave"] = df["data"].astype(str) + "|" + df["numero"].astype(str) + "|" + df["cfop"].astype(str)
+    return df
+
+
+def conciliar(df_livro: pd.DataFrame, df_tipo50: pd.DataFrame) -> pd.DataFrame:
+    # Regra de negocio: conciliar pelo valor final da NF (ignora quebra por CFOP).
+    livro_nf = df_livro.groupby("numero", as_index=False).agg(valor_livro=("valor_livro", "sum"))
+    tipo50_nf = df_tipo50.groupby("numero", as_index=False).agg(valor_tipo50=("valor_tipo50", "sum"))
+
+    merge = livro_nf.merge(
+        tipo50_nf,
+        on="numero",
+        how="outer",
+    )
+
+    merge["codigo_nf"] = merge["numero"]
     merge["valor_livro"] = merge["valor_livro"].fillna(0.0)
     merge["valor_tipo50"] = merge["valor_tipo50"].fillna(0.0)
     merge["diferenca"] = merge["valor_livro"] - merge["valor_tipo50"]
 
-    bateu = merge[(merge["valor_livro"] != 0) & (merge["valor_tipo50"] != 0) & (merge["diferenca"].abs() < 0.01)].copy()
-    so_livro = merge[(merge["valor_livro"] != 0) & (merge["valor_tipo50"] == 0)].copy()
-    so_tipo50 = merge[(merge["valor_livro"] == 0) & (merge["valor_tipo50"] != 0)].copy()
-    divergente = merge[(merge["valor_livro"] != 0) & (merge["valor_tipo50"] != 0) & (merge["diferenca"].abs() >= 0.01)].copy()
+    discrep = merge[(merge["valor_livro"] == 0.0) | (merge["valor_tipo50"] == 0.0) | (merge["diferenca"].abs() >= 0.01)].copy()
+    discrep = discrep[["codigo_nf", "valor_livro", "valor_tipo50", "diferenca"]]
+    discrep = anular_pares_opostos(discrep)
+    # Residuo pequeno de arredondamento nao entra na conta final.
+    discrep = discrep[discrep["diferenca"].abs() > 0.10].copy()
+    discrep["diferenca"] = discrep["diferenca"].round(2)
+    discrep = discrep.sort_values(by=["codigo_nf"], kind="stable")
 
-    return {
-        "merge": merge,
-        "bateu": bateu,
-        "so_livro": so_livro,
-        "so_tipo50": so_tipo50,
-        "divergente": divergente
-    }
+    if discrep.empty:
+        discrep = pd.DataFrame([
+            {
+                "codigo_nf": "SEM_DIVERGENCIAS",
+                "valor_livro": 0.0,
+                "valor_tipo50": 0.0,
+                "diferenca": 0.0,
+            }
+        ])
 
-def main():
-    df_livro = parse_livro(PDF_LIVRO)
-    df_tipo50 = parse_tipo50(PDF_TIPO50)
+    return discrep
+
+
+def tabela_codificacao_diferente(df_livro: pd.DataFrame, df_tipo50: pd.DataFrame) -> pd.DataFrame:
+    # Compara valor por NF+CFOP (ex.: NF 106868 deve bater em 1.102 e 1.403 separadamente).
+    l = (
+        df_livro.groupby(["numero", "cfop"], as_index=False)
+        .agg(valor_livro=("valor_livro", "sum"))
+    )
+    t = (
+        df_tipo50.groupby(["numero", "cfop"], as_index=False)
+        .agg(valor_tipo50=("valor_tipo50", "sum"))
+    )
+
+    m = l.merge(t, on=["numero", "cfop"], how="outer")
+    m["valor_livro"] = m["valor_livro"].fillna(0.0)
+    m["valor_tipo50"] = m["valor_tipo50"].fillna(0.0)
+    m["diferenca"] = (m["valor_livro"] - m["valor_tipo50"]).round(2)
+
+    dif = m[m["diferenca"].abs() >= 0.01].copy()
+    if dif.empty:
+        return pd.DataFrame(
+            [
+                {
+                    "numero_nota": "SEM_DIFERENCA_CFOP",
+                    "cfop": "",
+                    "valor_livro": 0.0,
+                    "valor_tipo50": 0.0,
+                    "diferenca": 0.0,
+                }
+            ]
+        )
+
+    # Anula pares opostos (+X / -X) apenas dentro do mesmo CFOP.
+    cents = (dif["diferenca"].round(2) * 100).astype(int)
+    idx_por_chave: dict[tuple[str, int], list[int]] = {}
+    for idx, v in cents.items():
+        cfop = str(dif.loc[idx, "cfop"])
+        idx_por_chave.setdefault((cfop, v), []).append(idx)
+
+    remover: set[int] = set()
+    cfops = sorted(set(str(c) for c in dif["cfop"].astype(str)))
+    for cfop in cfops:
+        positivos = [k for (c, k) in idx_por_chave.keys() if c == cfop and k > 0]
+        for v in sorted(positivos):
+            chave_pos = (cfop, v)
+            chave_neg = (cfop, -v)
+            if chave_neg not in idx_por_chave:
+                continue
+            qtd_pares = min(len(idx_por_chave[chave_pos]), len(idx_por_chave[chave_neg]))
+            if qtd_pares <= 0:
+                continue
+            remover.update(idx_por_chave[chave_pos][:qtd_pares])
+            remover.update(idx_por_chave[chave_neg][:qtd_pares])
+
+    if remover:
+        dif = dif.loc[~dif.index.isin(remover)].copy()
+
+    # Ignora residuo pequeno de arredondamento.
+    dif = dif[dif["diferenca"].abs() > 0.10].copy()
+
+    dif = dif.rename(columns={"numero": "numero_nota"})
+    dif = dif[["numero_nota", "cfop", "valor_livro", "valor_tipo50", "diferenca"]]
+    dif = dif.sort_values(by=["numero_nota", "cfop"], kind="stable")
+    return dif
+
+
+def main() -> None:
+    pdf_a, pdf_b = selecionar_pdfs()
+    pdf_livro, pdf_tipo50 = identificar_livro_tipo50(pdf_a, pdf_b)
+
+    df_livro = parse_livro(pdf_livro)
+    df_tipo50 = parse_tipo50(pdf_tipo50)
 
     if df_livro.empty:
-        raise RuntimeError("Não consegui extrair dados do LIVRO (Registro de Entradas).")
+        raise RuntimeError("Nao consegui extrair dados do LIVRO (Registro de Entradas).")
     if df_tipo50.empty:
-        raise RuntimeError("Não consegui extrair dados do Tipo 50.")
+        raise RuntimeError("Nao consegui extrair dados do Tipo 50.")
 
-    out = conciliar(df_livro, df_tipo50)
+    discrepancias = conciliar(df_livro, df_tipo50)
+    codif_diferente = tabela_codificacao_diferente(df_livro, df_tipo50)
+    arquivo_saida = gerar_arquivo_saida()
 
-    # Saídas
-    df_livro.to_csv("livro_extraido.csv", index=False, encoding="utf-8-sig")
-    df_tipo50.to_csv("tipo50_extraido.csv", index=False, encoding="utf-8-sig")
-    out["merge"].to_csv("conciliacao_merge.csv", index=False, encoding="utf-8-sig")
-    out["divergente"].to_csv("conciliacao_divergencias.csv", index=False, encoding="utf-8-sig")
-    out["so_livro"].to_csv("conciliacao_so_livro.csv", index=False, encoding="utf-8-sig")
-    out["so_tipo50"].to_csv("conciliacao_so_tipo50.csv", index=False, encoding="utf-8-sig")
+    with pd.ExcelWriter(arquivo_saida, engine="openpyxl") as xw:
+        discrepancias.to_excel(xw, sheet_name="discrepancias", index=False)
+        codif_diferente.to_excel(xw, sheet_name="codificacao_diferente", index=False)
 
-    with pd.ExcelWriter("conciliacao.xlsx", engine="openpyxl") as xw:
-        df_livro.to_excel(xw, sheet_name="livro_extraido", index=False)
-        df_tipo50.to_excel(xw, sheet_name="tipo50_extraido", index=False)
-        out["merge"].to_excel(xw, sheet_name="merge", index=False)
-        out["bateu"].to_excel(xw, sheet_name="bateu", index=False)
-        out["divergente"].to_excel(xw, sheet_name="divergente", index=False)
-        out["so_livro"].to_excel(xw, sheet_name="so_livro", index=False)
-        out["so_tipo50"].to_excel(xw, sheet_name="so_tipo50", index=False)
+    print(f"Livro identificado: {pdf_livro}")
+    print(f"Tipo 50 identificado: {pdf_tipo50}")
+    print(f"OK. Arquivo gerado: {arquivo_saida}")
 
-    print("OK. Arquivos gerados: conciliacao.xlsx e CSVs auxiliares.")
 
 if __name__ == "__main__":
     main()

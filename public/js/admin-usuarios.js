@@ -217,6 +217,7 @@ async function onRowAction(e) {
 // ===== Permissões =====
 
 let __toolsCatalog = [];
+let __rbacStrict = true;
 
 function normalizeToolSlugFromHref(href) {
   if (!href) return null;
@@ -267,10 +268,13 @@ function buildToolsCatalogFromMenu(menu) {
 
 function setupPermissionsModal(toolsCatalog) {
   __toolsCatalog = toolsCatalog;
+  __rbacStrict = !!(window.AuthClient && AuthClient._ctx && AuthClient._ctx.rbacStrict !== false);
 
   const modal = document.getElementById('permissionsModal');
   const btnClose = document.getElementById('btnClosePermissions');
   const btnCancel = document.getElementById('btnCancelPermissions');
+  const btnSelectAll = document.getElementById('btnSelectAllPermissions');
+  const btnClearAll = document.getElementById('btnClearAllPermissions');
 
   const close = () => {
     modal?.classList.add('hidden');
@@ -280,6 +284,8 @@ function setupPermissionsModal(toolsCatalog) {
 
   btnClose?.addEventListener('click', close);
   btnCancel?.addEventListener('click', close);
+  btnSelectAll?.addEventListener('click', () => toggleAllPermissions(true));
+  btnClearAll?.addEventListener('click', () => toggleAllPermissions(false));
 
   modal?.querySelector('[data-close="1"]')?.addEventListener('click', close);
 
@@ -289,6 +295,7 @@ function setupPermissionsModal(toolsCatalog) {
 async function openPermissionsModal(user) {
   const modal = document.getElementById('permissionsModal');
   const subtitle = document.getElementById('permissionsSubtitle');
+  const rbacWarning = document.getElementById('permissionsRbacWarning');
   const msg = document.getElementById('permissionsMessage');
   const list = document.getElementById('permissionsList');
   const btnSave = document.getElementById('btnSavePermissions');
@@ -297,6 +304,15 @@ async function openPermissionsModal(user) {
 
   msg.textContent = '';
   subtitle.textContent = `Usuário: ${user.name} <${user.email}> (${user.role})`;
+  if (rbacWarning) {
+    if (__rbacStrict) {
+      rbacWarning.textContent = '';
+      rbacWarning.classList.add('hidden');
+    } else {
+      rbacWarning.textContent = 'Atenção: RBAC_STRICT está desativado. Usuários sem permissões podem receber acesso por fallback.';
+      rbacWarning.classList.remove('hidden');
+    }
+  }
   btnSave.disabled = true;
 
   modal.dataset.userId = String(user.id);
@@ -384,6 +400,16 @@ function renderPermissionsList(container, toolsCatalog, selectedSet) {
   }
 
   container.innerHTML = html || '<p class="nfe-card-subtitle">Nenhuma ferramenta encontrada no MENU_CONFIG.</p>';
+}
+
+function toggleAllPermissions(checked) {
+  const list = document.getElementById('permissionsList');
+  if (!list) return;
+
+  const boxes = list.querySelectorAll('input[type="checkbox"][data-perm]');
+  boxes.forEach((box) => {
+    box.checked = !!checked;
+  });
 }
 
 function esc(s) {

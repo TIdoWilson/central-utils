@@ -110,7 +110,13 @@
           ...
         </p>
 
+        <div class="auth-message hidden" id="permissionsRbacWarning" aria-live="polite"></div>
         <div class="auth-message" id="permissionsMessage" aria-live="polite"></div>
+
+        <div class="nfe-table-actions" style="margin-bottom: 10px; justify-content: flex-end;">
+          <button type="button" class="btn btn-secondary" id="btnSelectAllPermissions">Marcar todas</button>
+          <button type="button" class="btn btn-secondary" id="btnClearAllPermissions">Desmarcar todas</button>
+        </div>
 
         <div id="permissionsList" class="perm-list"></div>
 

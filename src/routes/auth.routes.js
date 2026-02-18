@@ -91,7 +91,7 @@ module.exports = function createAuthRoutes(deps) {
     return res.json({
       user: req.user,
       csrfToken: req.csrfToken,
-      rbacStrict: toBoolEnv(process.env.RBAC_STRICT, false),
+      rbacStrict: toBoolEnv(process.env.RBAC_STRICT, true),
     });
   });
 

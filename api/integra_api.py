@@ -39,6 +39,7 @@ from api.importador_recebimentos_madre_scp_core import (
 from api.ajuste_diario_gfbr_core import ajustar_diario_gfbr
 
 from api.conciliador_cartao_wilson_core import conciliar_cartao_wilson, VALOR_TOLERANCIA_PADRAO
+from api.conciliador_cartao_tipo50_core import conciliar_cartao_tipo50
 # =========================
 # MODELO DE ENTRADA (FÉRIAS)
 # =========================
@@ -344,6 +345,30 @@ async def api_conciliador_cartao_wilson(
             limiar_nome=float(limiarNome),
         )
 
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/api/conciliador/cartao-tipo50")
+async def api_conciliador_cartao_tipo50(
+    arquivoA: UploadFile = File(...),
+    arquivoB: UploadFile = File(...),
+):
+    try:
+        arquivo_a_bytes = await arquivoA.read()
+        arquivo_b_bytes = await arquivoB.read()
+
+        if len(arquivo_a_bytes) > 25 * 1024 * 1024 or len(arquivo_b_bytes) > 25 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="PDF muito grande (limite 25MB por arquivo).")
+
+        return conciliar_cartao_tipo50(
+            arquivo_a_bytes,
+            arquivoA.filename or "arquivo_a.pdf",
+            arquivo_b_bytes,
+            arquivoB.filename or "arquivo_b.pdf",
+        )
     except HTTPException:
         raise
     except Exception as e:

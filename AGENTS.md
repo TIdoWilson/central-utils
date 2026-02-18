@@ -36,9 +36,26 @@ Este repositório segue o padrão **Integra Python v3.1**. Antes de alterar cód
 
 ## Comandos padrão
 - Criar ferramenta + atualizar docs/UI + verificar: `npm run tool:new -- --slug <slug> --title \"...\" --group \"...\" --api`
+- Deploy na VPS (pull + deps + restart serviços): `npm run deploy:vps -- [branch]`
 - Verificar: `npm run verify`
 - Gerar docs: `npm run gen:docs`
 - Criar ferramenta: `npm run scaffold:tool -- --slug <slug> --title "..." --group "..." --api`
+
+### Publicar ferramenta nova no site (fluxo único)
+1. Criar a ferramenta: `npm run tool:new -- --slug <slug> --title "..." --group "..." --api`
+2. Commit + push para `main`.
+3. Na VPS: `npm run deploy:vps -- main`
+
+### Integração manual de ferramenta (quando não usar `tool:new`)
+Se a ferramenta for criada manualmente, é obrigatório atualizar todos os pontos abaixo:
+1. `api/*_core.py` + endpoint em `api/integra_api.py`.
+2. Rota Node em `src/routes/tools/<slug>.routes.js`.
+3. Mount da rota em `src/server.js` com `requireToolApi('<slug>')`.
+4. Página `public/<slug>.html` e front `public/js/<slug>.js` usando `AuthClient.authFetch`.
+5. Entrada no menu em `public/js/sidebar.js` com `id` igual ao slug.
+6. Catálogo RBAC em `src/core/tool-catalog.json`.
+7. Documentação da ferramenta em `docs/tools/<slug>.md` e índice em `docs/tools/index.md`.
+8. Validar execução das APIs com Python do ambiente ativo (não assumir `.venv` válido).
 
 ## Checklist rápido (A–J)
 A) login/logout/me sem regressão  

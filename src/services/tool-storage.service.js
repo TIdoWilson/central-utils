@@ -26,6 +26,10 @@ function createToolStorage({ dataDir, dimobService }) {
   const BALANCETE_TMP_DIR = path.join(BALANCETE_DIR, '_tmp');
   ensureDir(BALANCETE_DIR);
   ensureDir(BALANCETE_TMP_DIR);
+  const uploadBalancete = multer({
+    dest: BALANCETE_TMP_DIR,
+    limits: { fileSize: 50 * 1024 * 1024, files: 120 },
+  });
 
   // Bernadina
   const BERNADINA_DIR = path.join(dataDir, 'formatador-bernardina');
@@ -111,6 +115,7 @@ function createToolStorage({ dataDir, dimobService }) {
     PDFA_OUT_DIR,
     uploadPdfa,
     BALANCETE_DIR,
+    uploadBalancete,
     BERNADINA_DIR,
     BERNADINA_TMP_DIR,
     uploadBernadina,

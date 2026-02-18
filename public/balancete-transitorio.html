@@ -73,8 +73,20 @@
             </div>
 
             <div class="bt-download" id="downloadArea" hidden>
-              <a class="btn btn-primary" id="downloadLink" href="#" rel="noopener">Baixar ZIP</a>
+              <a class="btn btn-primary" id="downloadLink" href="#" rel="noopener">Baixar Relatório (ZIP)</a>
             </div>
+
+            <div class="bt-download" id="previewActions" hidden style="margin-top: 8px;">
+              <a class="btn btn-secondary" id="previewLink" href="#" target="_blank" rel="noopener">Abrir Pré-visualização</a>
+            </div>
+
+            <p class="nfe-card-subtitle" id="previewMessage" style="margin-top: 10px;"></p>
+            <iframe
+              id="previewFrame"
+              title="Pré-visualização do relatório"
+              style="width: 100%; min-height: 620px; border: 1px solid #d8dee6; border-radius: 10px; margin-top: 10px;"
+              hidden
+            ></iframe>
 
             <pre class="bt-logbox" id="logBox"></pre>
           </div>
