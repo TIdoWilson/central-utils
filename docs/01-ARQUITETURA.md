@@ -66,12 +66,6 @@ A **Central Utils** é uma plataforma multi-camadas que combina Node.js, Python 
 - `public/js/auth-client.js` - Gerenciamento de autenticação
 - `public/js/upload-helper.js` - Utilitários de upload
 
-**Padrão visual atual (páginas internas):**
-- Header global fixo compartilhado (topbar) em todas as páginas internas.
-- Sidebar dinâmica (`sidebar.js`) com comportamento expandido/recolhido e RBAC por menu.
-- Logout centralizado no header/sidebar (evitar botões locais de logout por página).
-- Quando houver bloqueio de RBAC em rota de página, o backend renderiza a página visual `public/acesso-negado.html` (HTTP 403), em vez de texto simples.
-
 ### 2️⃣ Backend Node.js (Orquestrador)
 
 **Localização:** `src/`
@@ -153,27 +147,7 @@ A **Central Utils** é uma plataforma multi-camadas que combina Node.js, Python 
 cd go-api && go run .
 ```
 
-### 4.1️⃣ Runtime .NET/C# (Ferramentas Específicas)
-
-Além de Node/Python/Go, algumas ferramentas executam binários `.NET` no host:
-
-- `ajuste-diario-gfbr-c`: API Go chama `go-api/bin/AjusteDiarioGfbr.exe` (ou caminho em `AJUSTE_DIARIO_GFBR_BIN`).
-- `formatador-bernardina`: router Node chama `BERNADINA_EXE_PATH` via `spawn`.
-
-Variáveis operacionais relacionadas:
-
-- `GO_API_URL` e `GO_API_PORT` (gateway Node -> Go).
-- `AJUSTE_DIARIO_GFBR_BIN` (binário do ajuste GFBR C#).
-- `BERNADINA_EXE_PATH` e `BERNADINA_TEMPLATE_PATH` (formatador Bernadina).
-
 ## 🔐 Segurança e Autenticação
-
-### RBAC efetivo no backend (anti-bypass)
-
-- A visibilidade de menu no frontend é apenas UX; a autorização real ocorre no backend.
-- Toda API de ferramenta é montada com `requireAuth + requireToolApi('<slug>')`.
-- Páginas internas protegidas usam `requireAuthPage` e validação de permissão antes de `sendFile`.
-- Mesmo que o usuário altere JS no navegador, as APIs continuam retornando `401/403` sem permissão.
 
 ### Fluxo de Autenticação
 

@@ -91,6 +91,19 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "conciliador-cartao-tipo50",
+      "title": "Conciliador Cartao Tipo 50",
+      "group": "Geral",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/conciliador-cartao-tipo50",
+      "adminOnly": false,
+      "aliases": [
+        "conciliador-cartao-wilson"
+      ],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "conciliador-hausen-ocean",
       "title": "Conciliador Hausen Ocean",
       "group": "Geral",

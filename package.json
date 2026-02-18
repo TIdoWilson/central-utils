@@ -17,7 +17,8 @@
     "scaffold:tool": "node scripts/scaffold-tool.mjs",
     "gen:docs": "node scripts/gen-docs.mjs",
     "gen:ui": "node scripts/gen-ui.mjs",
-    "tool:new": "node scripts/tool-new.mjs"
+    "tool:new": "node scripts/tool-new.mjs",
+    "deploy:vps": "bash scripts/deploy-vps.sh"
   },
   "keywords": [],
   "dependencies": {

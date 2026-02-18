@@ -1,19 +1,16 @@
-// public/js/balancete-transitorio.js
+﻿// public/js/balancete-transitorio.js
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // Sidebar
   if (typeof inicializarSidebar === 'function') {
     await inicializarSidebar('balancete-transitorio');
   }
 
-  // AuthClient (CSRF nas mutações)
   if (!window.AuthClient) {
-    console.error('AuthClient não carregado. Inclua /js/auth-client.js antes deste arquivo.');
+    console.error('AuthClient nao carregado. Inclua /js/auth-client.js antes deste arquivo.');
     window.location.href = '/login';
     return;
   }
 
-  // UI refs
   const filesInput = document.getElementById('filesInput');
   const btnStart = document.getElementById('btnStart');
   const btnReset = document.getElementById('btnReset');
@@ -25,6 +22,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const progressText = document.getElementById('progressText');
   const downloadArea = document.getElementById('downloadArea');
   const downloadLink = document.getElementById('downloadLink');
+  const previewActions = document.getElementById('previewActions');
+  const previewLink = document.getElementById('previewLink');
+  const previewMessage = document.getElementById('previewMessage');
+  const previewFrame = document.getElementById('previewFrame');
   const logBox = document.getElementById('logBox');
 
   btnLogout?.addEventListener('click', () => AuthClient.logoutAndRedirect());
@@ -60,11 +61,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (pollTimer) clearInterval(pollTimer);
     pollTimer = null;
 
-    setMessage('Aguardando…');
+    setMessage('Aguardando...');
     setProgress(0);
     setLogs([]);
+
     if (downloadArea) downloadArea.hidden = true;
     if (downloadLink) downloadLink.href = '#';
+
+    if (previewActions) previewActions.hidden = true;
+    if (previewLink) previewLink.href = '#';
+
+    if (previewMessage) previewMessage.textContent = '';
+    if (previewFrame) {
+      previewFrame.hidden = true;
+      previewFrame.src = 'about:blank';
+    }
   }
 
   btnReset?.addEventListener('click', resetUI);
@@ -77,12 +88,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     return resp.json();
   }
 
+  function applyPreviewState(st) {
+    const preview = st?.preview || {};
+    const previewAvailable = Boolean(preview.available && preview.previewUrl);
+
+    if (previewActions) previewActions.hidden = !previewAvailable;
+    if (previewLink) previewLink.href = previewAvailable ? preview.previewUrl : '#';
+
+    if (previewAvailable) {
+      if (previewMessage) {
+        previewMessage.textContent =
+          'Pre-visualizacao disponivel para conferencia imediata. Documento validado em pagina unica.';
+      }
+      if (previewFrame) {
+        previewFrame.hidden = false;
+        previewFrame.src = `${preview.previewUrl}?t=${Date.now()}`;
+      }
+      return;
+    }
+
+    if (previewFrame) {
+      previewFrame.hidden = true;
+      previewFrame.src = 'about:blank';
+    }
+
+    if (previewMessage) {
+      previewMessage.textContent =
+        preview.message ||
+        'Arquivo grande demais para pre-visualizacao em tela. Utilize o botao de download para validacao completa.';
+    }
+  }
+
   async function poll(jobId) {
     try {
       const st = await fetchJob(jobId);
 
       setProgress(st.progress);
-      setMessage(st.message || st.status || '—');
+      setMessage(st.message || st.status || '-');
 
       const logs = Array.isArray(st.logs) ? st.logs : [];
       const lines = logs
@@ -99,6 +141,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (st.status === 'done') {
         if (downloadArea) downloadArea.hidden = false;
         if (downloadLink) downloadLink.href = st.downloadUrl || '#';
+
+        applyPreviewState(st);
+
         if (pollTimer) clearInterval(pollTimer);
         pollTimer = null;
       }
@@ -109,7 +154,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     } catch (e) {
       console.error(e);
-      // mantém tentando (pode ser restart momentâneo)
     }
   }
 
@@ -123,14 +167,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     btnStart.disabled = true;
-    setMessage('Enviando arquivos…');
+    setMessage('Enviando arquivos para processamento...');
     setProgress(5);
 
     try {
       const fd = new FormData();
       for (const f of files) fd.append('files', f, f.name);
 
-      // POST com CSRF (AuthClient normalmente injeta x-csrf-token automaticamente)
       const resp = await AuthClient.authFetch('/api/balancete-transitorio/jobs', {
         method: 'POST',
         body: fd,
@@ -140,10 +183,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!resp.ok) throw new Error(data.message || data.error || 'Falha ao criar job.');
 
       currentJobId = data.jobId;
-      setMessage(`Job criado: ${currentJobId}`);
+      setMessage(`Processamento iniciado. Protocolo: ${currentJobId}`);
       setProgress(10);
 
-      // primeira consulta imediata + polling
       await poll(currentJobId);
       pollTimer = setInterval(() => poll(currentJobId), 2000);
     } catch (err) {

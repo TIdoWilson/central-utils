@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Conciliador Cartão Tipo 50</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">CU</span>
+            <span class="logo-text">Portal</span>
+          </div>
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Contábil / Conciliação Tipo 50</div>
+          <h1>Conciliador Cartão Tipo 50</h1>
+          <p>Compare 2 PDFs (Livro de Registros IOB e Balancete Tipo 50) e gere um XLSX com divergências.</p>
+        </header>
+
+        <section class="nfe-row">
+          <div class="nfe-card nfe-card-upload">
+            <h2>Arquivos</h2>
+            <p class="nfe-card-subtitle">A identificação de qual arquivo é Livro/Tipo 50 é automática por conteúdo.</p>
+
+            <form id="formTipo50" class="nfe-upload-form">
+              <label class="nfe-input-file-label">
+                <span>PDF 1</span>
+                <input type="file" id="arquivoA" name="arquivoA" accept="application/pdf" required />
+              </label>
+
+              <label class="nfe-input-file-label">
+                <span>PDF 2</span>
+                <input type="file" id="arquivoB" name="arquivoB" accept="application/pdf" required />
+              </label>
+
+              <div class="nfe-table-actions" style="margin-top: 12px">
+                <button type="submit" class="btn btn-primary" id="btnProcessar">Processar</button>
+                <button type="button" class="btn btn-secondary" id="btnLimpar" disabled>Limpar</button>
+                <button type="button" class="btn btn-secondary" id="btnBaixar" disabled>Baixar XLSX</button>
+              </div>
+
+              <div id="statusMsg" class="nfe-upload-message" aria-live="polite" style="margin-top: 10px"></div>
+            </form>
+          </div>
+
+          <div class="nfe-card nfe-card-ext">
+            <h2>Resumo</h2>
+            <div id="resumoBox">
+              <p>Nenhum processamento ainda.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="nfe-row" style="grid-template-columns: 1fr 1fr; gap: 12px">
+          <div class="nfe-card nfe-card-table">
+            <h2>Divergências (prévia)</h2>
+            <div class="nfe-table-wrapper">
+              <table class="nfe-table">
+                <thead>
+                  <tr>
+                    <th>TIPO</th>
+                    <th>NOTA</th>
+                    <th>DIFERENÇA</th>
+                  </tr>
+                </thead>
+                <tbody id="tblDivergencias"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="nfe-card nfe-card-table">
+            <h2>CFOP Diferente (prévia)</h2>
+            <div class="nfe-table-wrapper">
+              <table class="nfe-table">
+                <thead>
+                  <tr>
+                    <th>NOTA</th>
+                    <th>CFOP</th>
+                    <th>VALOR_LIVRO</th>
+                    <th>VALOR_RELATÓRIO</th>
+                  </tr>
+                </thead>
+                <tbody id="tblCfop"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/upload-helper.js"></script>
+    <script src="/js/conciliador-cartao-tipo50.js"></script>
+  </body>
+</html>

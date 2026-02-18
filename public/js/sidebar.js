@@ -24,7 +24,8 @@ const MENU_CONFIG = [
       { id: 'importador-recebimentos-madre-scp', label: 'Importador Recebimentos Madre SCP', href: '/importador-recebimentos-madre-scp', icon: '📊' },
       { id: 'separador-csv-baixa-automatica', label: 'Separador CSV Baixa Automática', href: '/separador-csv-baixa-automatica', icon: '📊' },
       { id: 'formatador-bernardina', label: 'Formatador DRE Bernadina (XLSM)', href: '/formatador-bernardina', icon: '📊' },
-      { id: 'conciliador-cartao-wilson', label: 'Conciliador Cartão (Razão x Financeiro)', href: '/conciliador-cartao-wilson', icon: '📊' }
+      { id: 'conciliador-cartao-wilson', label: 'Conciliador Cartão (Razão x Financeiro)', href: '/conciliador-cartao-wilson', icon: '📊' },
+      { id: 'conciliador-cartao-tipo50', label: 'Conciliador Cartão Tipo 50', href: '/conciliador-cartao-tipo50', icon: '📊' }
 
     ],
   },
@@ -84,6 +85,10 @@ const MENU_CONFIG = [
 // Exporta pra outras telas (ex.: admin-usuarios montar lista de permissões)
 window.MENU_CONFIG = MENU_CONFIG;
 
+const TOOL_PERMISSION_ALIASES = {
+  'conciliador-cartao-tipo50': ['conciliador-cartao-wilson'],
+};
+
 function escapeHtml(value) {
   return String(value || '')
     .replace(/&/g, '&amp;')
@@ -132,7 +137,11 @@ function canSeeItem(item, ctx) {
 
   const needed = permForItem(item);
   if (!needed) return true;
-  return perms.includes(needed) || perms.includes('tool:*');
+  if (perms.includes('tool:*') || perms.includes(needed)) return true;
+
+  const slug = String(needed || '').replace(/^tool:/, '');
+  const aliases = TOOL_PERMISSION_ALIASES[slug] || [];
+  return aliases.some((a) => perms.includes(`tool:${String(a).toLowerCase()}`));
 }
 
 function gerarSidebarHtml(activePageId, ctx) {
