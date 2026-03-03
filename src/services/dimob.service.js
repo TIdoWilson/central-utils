@@ -2,26 +2,23 @@ const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const crypto = require('crypto');
+const { resolveConfiguredPath } = require('../core/path-resolver');
 
 function createDimobService(options = {}) {
   const axios = options.axios || require('axios');
 
   const dataDir = options.dataDir || path.join(process.cwd(), 'data');
   const dimobLayoutPath =
-    options.dimobLayoutPath ||
-    process.env.DIMOB_LAYOUT_PATH ||
+    resolveConfiguredPath(options.dimobLayoutPath || process.env.DIMOB_LAYOUT_PATH) ||
     path.join(process.cwd(), 'public', 'js', 'layout dimob.json');
   const dimobMunicipiosPath =
-    options.dimobMunicipiosPath ||
-    process.env.DIMOB_MUNICIPIOS_PATH ||
+    resolveConfiguredPath(options.dimobMunicipiosPath || process.env.DIMOB_MUNICIPIOS_PATH) ||
     path.join(process.cwd(), 'public', 'js', 'municipios DIMOB.json');
   const dimobNetworkBaseDir =
-    options.dimobNetworkBaseDir ||
-    process.env.DIMOB_NETWORK_BASE_DIR ||
+    resolveConfiguredPath(options.dimobNetworkBaseDir || process.env.DIMOB_NETWORK_BASE_DIR) ||
     'W:\\DECLARAÇÕES\\DIMOB';
   const dimobTmpDir =
-    options.dimobTmpDir ||
-    process.env.DIMOB_TMP_DIR ||
+    resolveConfiguredPath(options.dimobTmpDir || process.env.DIMOB_TMP_DIR) ||
     path.join(os.tmpdir(), 'central-utils-dimob', '_tmp');
 
   // =====================

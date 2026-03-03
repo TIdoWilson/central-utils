@@ -6,6 +6,58 @@ O arquivo `.env` na raiz do projeto contém configurações sensíveis e especí
 
 > ⚠️ **IMPORTANTE:** Nunca fazer commit do `.env`! Adicione à `.gitignore`
 
+### Regra de caminhos
+
+- Para arquivos que pertencem ao projeto, prefira caminhos relativos à raiz do repositório.
+- Exemplos corretos:
+
+```env
+CERT_PFX_PATH=certs/WILSON.pfx
+PDFA_ICC_PROFILE=profiles/srgb.icc
+DIMOB_LAYOUT_PATH=public/js/layout dimob.json
+```
+
+- Esses caminhos relativos são resolvidos automaticamente no Windows e no Ubuntu.
+- Caminhos absolutos de Windows, como `W:\...`, continuam permitidos apenas para integrações locais que não precisam rodar na VPS.
+- Para publicar com um único comando local, configure também:
+- Para publicar com um único comando local, configure também:
+
+```env
+DEPLOY_VPS_SSH_TARGET=usuario@servidor
+DEPLOY_VPS_PORT=22
+DEPLOY_VPS_APP_DIR=/opt/central-utils
+DEPLOY_VPS_ENV_SOURCE=.env.vps
+HAPI_API_TOKEN=seu_token_da_hostinger
+HOSTINGER_VM_ID=
+HOSTINGER_VM_HOSTNAME=
+HOSTINGER_HAPI_BIN=hapi
+```
+
+- Fluxo recomendado:
+  - `.env`: ambiente local de desenvolvimento;
+  - `.env.vps`: cópia local não-versionada com os valores exatos que devem existir na VPS;
+  - `npm run sync:env:vps`: envia `.env.vps` para a VPS e substitui o `.env` remoto com backup automático.
+  - `npm run compare:env:vps`: compara o `.env` remoto com o arquivo local de publicação e aponta diferenças de chaves/valores.
+
+### Arquivos-modelo criados no repositório
+
+- [`.env.local.example`](/w:/DOCUMENTOS%20ESCRITORIO/INSTALACAO%20SISTEMA/central-utils/.env.local.example)
+- [`.env.vps.example`](/w:/DOCUMENTOS%20ESCRITORIO/INSTALACAO%20SISTEMA/central-utils/.env.vps.example)
+
+Uso sugerido:
+
+```bash
+copy .env.local.example .env
+copy .env.vps.example .env.vps
+```
+
+No Windows PowerShell, se preferir:
+
+```powershell
+Copy-Item .env.local.example .env
+Copy-Item .env.vps.example .env.vps
+```
+
 ---
 
 ## 🔧 Variáveis Disponíveis

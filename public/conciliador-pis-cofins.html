@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Conciliador PIS-COFINS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">CU</span>
+            <span class="logo-text">Portal</span>
+          </div>
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Contabil / Conciliador PIS-COFINS</div>
+          <h1>Conciliador PIS-COFINS</h1>
+          <p>Envie os PDFs de Razao e Relatorio para identificar divergencias de PIS e COFINS.</p>
+        </header>
+
+        <section class="nfe-row">
+          <div class="nfe-card nfe-card-upload">
+            <h2>Arquivos</h2>
+            <p class="nfe-card-subtitle">
+              Envie 3 ou mais PDFs. O sistema identifica automaticamente entrada/saida e tributo pelo layout.
+            </p>
+
+            <form id="formPisCofins" class="nfe-upload-form">
+              <label class="nfe-input-file-label">
+                <span>PDFs (multiplo)</span>
+                <input type="file" id="arquivos" name="arquivos" accept="application/pdf" multiple required />
+              </label>
+
+              <label class="nfe-input-file-label">
+                <span>Modo</span>
+                <select id="modo" name="modo">
+                  <option value="AUTO" selected>AUTO</option>
+                  <option value="RECUPERAR">RECUPERAR</option>
+                  <option value="RECOLHER">RECOLHER</option>
+                </select>
+              </label>
+
+              <div class="nfe-table-actions" style="margin-top: 12px">
+                <button type="submit" class="btn btn-primary" id="btnProcessar">Processar</button>
+                <button type="button" class="btn btn-secondary" id="btnLimpar" disabled>Limpar</button>
+                <button type="button" class="btn btn-secondary" id="btnBaixar" disabled>Baixar XLSX</button>
+              </div>
+
+              <div id="statusMsg" class="nfe-upload-message" aria-live="polite" style="margin-top: 10px"></div>
+            </form>
+          </div>
+
+          <div class="nfe-card nfe-card-ext">
+            <h2>Resumo</h2>
+            <div id="resumoBox">
+              <p>Nenhum processamento ainda.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="nfe-row" style="grid-template-columns: 1fr">
+          <div class="nfe-card nfe-card-table">
+            <h2>Inconsistencias (previa)</h2>
+            <div class="nfe-table-wrapper">
+              <table class="nfe-table">
+                <thead>
+                  <tr>
+                    <th>MOVIMENTO</th>
+                    <th>TRIBUTO</th>
+                    <th>TIPO</th>
+                    <th>NOTA</th>
+                    <th>DIFERENCA</th>
+                  </tr>
+                </thead>
+                <tbody id="tblInconsistencias"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/upload-helper.js"></script>
+    <script src="/js/conciliador-pis-cofins.js"></script>
+  </body>
+</html>
+

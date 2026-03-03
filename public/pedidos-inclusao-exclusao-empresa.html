@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedidos de Inclusao e Exclusao de Empresa</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="app-body nfe-body page-pedidos-inclusao-exclusao">
+  <div class="nfe-layout">
+    <aside class="nfe-sidebar">
+      <div class="nfe-sidebar-top">
+        <div class="nfe-sidebar-logo">
+          <span class="logo-circle">WL</span>
+          <span class="logo-text">Portal</span>
+        </div>
+        <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+    </aside>
+
+    <main class="nfe-main">
+      <header class="nfe-header">
+        <div class="nfe-breadcrumb">Portal / Geral / Pedidos de Inclusao e Exclusao de Empresa</div>
+        <h1>Pedidos de Inclusao e Exclusao de Empresa</h1>
+        <p>Registre pedidos de inclusao ou exclusao com auditoria pelo nome e login da conta.</p>
+        <div class="nfe-header-actions">
+          <span id="whoami" class="nfe-breadcrumb"></span>
+        </div>
+      </header>
+
+      <section class="nfe-row">
+        <div class="nfe-card nfe-card-upload" style="flex: 1.2">
+          <h2>Novo pedido</h2>
+          <p class="nfe-card-subtitle">Selecione o tipo de pedido e informe a empresa.</p>
+
+          <form id="requestForm" class="nfe-upload-form">
+            <label class="nfe-input-file-label" style="width: 100%">
+              <span>Tipo de pedido</span>
+              <select id="requestType" class="sn-select" required>
+                <option value="">Selecione</option>
+                <option value="INCLUSAO">Incluir empresa</option>
+                <option value="EXCLUSAO">Excluir empresa</option>
+              </select>
+            </label>
+
+            <label class="nfe-input-file-label" style="width: 100%">
+              <span>Nome da empresa</span>
+              <input type="text" id="companyName" maxlength="180" required placeholder="Ex.: Empresa Exemplo LTDA" />
+            </label>
+
+            <label class="nfe-input-file-label" style="width: 100%">
+              <span>Solicitante</span>
+              <input type="text" id="requesterName" maxlength="180" readonly />
+            </label>
+
+            <label class="nfe-input-file-label" style="width: 100%">
+              <span>Detalhes</span>
+              <textarea id="requestDetails" class="auth-textarea" rows="5" maxlength="4000" placeholder="Informacoes complementares do pedido."></textarea>
+            </label>
+
+            <div class="nfe-table-actions" style="margin-top: 8px; justify-content: flex-end;">
+              <button type="submit" class="btn btn-primary" id="btnCreateRequest">Registrar pedido</button>
+            </div>
+
+            <div id="requestMessage" class="nfe-upload-message" aria-live="polite"></div>
+          </form>
+        </div>
+      </section>
+
+      <section class="nfe-card nfe-card-table" style="margin-top: 16px;">
+        <div class="nfe-card-header nfe-card-header-with-actions">
+          <div>
+            <h2>Pedidos registrados</h2>
+            <p class="nfe-card-subtitle">Tipo, empresa, solicitante e data do pedido.</p>
+          </div>
+          <div class="nfe-table-actions">
+            <label class="nfe-input-file-label" style="margin: 0; min-width: 200px;">
+              <span>Filtrar por tipo</span>
+              <select id="typeFilter" class="sn-select">
+                <option value="">Todos</option>
+                <option value="INCLUSAO">Incluir empresa</option>
+                <option value="EXCLUSAO">Excluir empresa</option>
+              </select>
+            </label>
+            <label class="nfe-input-file-label" style="margin: 0; min-width: 180px;">
+              <span>Status</span>
+              <select id="statusFilter" class="sn-select">
+                <option value="">Todos</option>
+                <option value="PENDENTE">Pendente</option>
+                <option value="CONCLUIDO">Concluído</option>
+                <option value="NEGADO">Negado</option>
+              </select>
+            </label>
+            <button type="button" class="btn btn-secondary" id="btnReloadList">Recarregar lista</button>
+          </div>
+        </div>
+
+        <div class="nfe-table-wrapper">
+          <table class="nfe-table" id="requestsTable">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Empresa</th>
+                <th>Solicitante</th>
+                <th>Login</th>
+                <th>Detalhes</th>
+                <th>Data do pedido</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
+  <script src="/js/pedidos-inclusao-exclusao-empresa.js"></script>
+</body>
+</html>

@@ -103,7 +103,7 @@ async function carregarUsuarios() {
 
     const users = Array.isArray(data) ? data : (Array.isArray(data.users) ? data.users : []);
     if (!users.length) {
-      tbody.innerHTML = `<tr><td colspan="6">Nenhum usuário cadastrado.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7">Nenhum usuário cadastrado.</td></tr>`;
       return;
     }
 
@@ -111,11 +111,13 @@ async function carregarUsuarios() {
       .map((u) => {
         const isActive = typeof u.is_active === 'boolean' ? u.is_active : !!u.isActive;
         const createdAt = u.created_at || u.createdAt || null;
+        const accessMeta = describeAccessMode(u);
         return `
           <tr data-id="${u.id}">
             <td>${esc(u.name)}</td>
             <td>${esc(u.email)}</td>
             <td>${esc(u.role)}</td>
+            <td>${renderAccessBadge(accessMeta)}</td>
             <td>${isActive ? 'Sim' : 'Não'}</td>
             <td>${createdAt ? new Date(createdAt).toLocaleString() : '-'}</td>
             <td>
@@ -134,7 +136,7 @@ async function carregarUsuarios() {
       btn.addEventListener('click', onRowAction);
     });
   } catch (_) {
-    tbody.innerHTML = `<tr><td colspan="6">Erro ao carregar usuários.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7">Erro ao carregar usuários.</td></tr>`;
   }
 }
 
@@ -305,13 +307,8 @@ async function openPermissionsModal(user) {
   msg.textContent = '';
   subtitle.textContent = `Usuário: ${user.name} <${user.email}> (${user.role})`;
   if (rbacWarning) {
-    if (__rbacStrict) {
-      rbacWarning.textContent = '';
-      rbacWarning.classList.add('hidden');
-    } else {
-      rbacWarning.textContent = 'Atenção: RBAC_STRICT está desativado. Usuários sem permissões podem receber acesso por fallback.';
-      rbacWarning.classList.remove('hidden');
-    }
+    rbacWarning.textContent = 'Regra atual: sem permissões marcadas = acesso total; todas marcadas = acesso total (salvo como tool:*); marcação parcial = acesso somente ao marcado.';
+    rbacWarning.classList.remove('hidden');
   }
   btnSave.disabled = true;
 
@@ -329,15 +326,24 @@ async function openPermissionsModal(user) {
     msg.textContent = '';
     btnSave.disabled = true;
 
+    const allPerms = Array.from(list.querySelectorAll('input[type="checkbox"][data-perm]'))
+      .map(i => String(i.getAttribute('data-perm') || '').trim())
+      .filter(Boolean);
+
     const checked = Array.from(list.querySelectorAll('input[type="checkbox"][data-perm]'))
       .filter(i => i.checked)
       .map(i => i.getAttribute('data-perm'));
+
+    const checkedSet = new Set(checked.map((p) => String(p || '').trim().toLowerCase()));
+    const allSet = new Set(allPerms.map((p) => String(p || '').trim().toLowerCase()));
+    const allChecked = allSet.size > 0 && Array.from(allSet).every((p) => checkedSet.has(p));
+    const toSave = allChecked ? ['tool:*'] : checked;
 
     try {
       const resp = await AuthClient.authFetch(`/api/admin/users/${user.id}/permissions`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ permissions: checked }),
+        body: JSON.stringify({ permissions: toSave }),
       });
 
       const data = await resp.json().catch(() => ({}));
@@ -383,10 +389,11 @@ function renderPermissionsList(container, toolsCatalog, selectedSet) {
   }
 
   let html = '';
+  const hasWildcard = selectedSet.has('tool:*');
   for (const [groupLabel, arr] of groups.entries()) {
     html += `<div class="perm-group-title">${esc(groupLabel)}</div>`;
     for (const t of arr) {
-      const checked = selectedSet.has(t.perm) ? 'checked' : '';
+      const checked = (hasWildcard || selectedSet.has(t.perm)) ? 'checked' : '';
       html += `
         <label class="perm-item">
           <input type="checkbox" data-perm="${esc(t.perm)}" ${checked} />
@@ -410,6 +417,39 @@ function toggleAllPermissions(checked) {
   boxes.forEach((box) => {
     box.checked = !!checked;
   });
+}
+
+function describeAccessMode(user) {
+  const role = String(user?.role || '').toUpperCase();
+  if (role === 'ADMIN') {
+    return { tone: 'admin', label: 'Admin', detail: 'Acesso total por perfil' };
+  }
+
+  const perms = (Array.isArray(user?.permissions) ? user.permissions : [])
+    .map((p) => String(p || '').trim().toLowerCase())
+    .filter((p) => p.startsWith('tool:'));
+
+  if (perms.length === 0) {
+    return { tone: 'full', label: 'Acesso total', detail: 'Sem marcações' };
+  }
+
+  if (perms.includes('tool:*')) {
+    return { tone: 'full', label: 'Acesso total', detail: 'Todas marcadas' };
+  }
+
+  return { tone: 'limited', label: 'Limitado', detail: `${perms.length} permiss${perms.length === 1 ? 'ão' : 'ões'}` };
+}
+
+function renderAccessBadge(accessMeta) {
+  const tone = esc(accessMeta?.tone || 'limited');
+  const label = esc(accessMeta?.label || 'Limitado');
+  const detail = esc(accessMeta?.detail || '');
+  return `
+    <div class="user-access-mode">
+      <span class="user-access-pill user-access-pill-${tone}">${label}</span>
+      <div class="user-access-detail">${detail}</div>
+    </div>
+  `;
 }
 
 function esc(s) {

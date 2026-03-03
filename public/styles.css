@@ -1598,24 +1598,144 @@ body.nfe-body {
   cursor: pointer;
 }
 
-/* ---------- SELECTS DE MÊS/ANO (SN) ---------- */
+/* ---------- SN (Simples Nacional) ---------- */
 
-.sn-select {
+.page-sn {
+  --sn-surface: #ffffff;
+  --sn-surface-soft: #f8fafc;
+  --sn-surface-muted: #eef2f7;
+  --sn-border: #d7dee8;
+  --sn-ink: #0f172a;
+  --sn-ink-soft: #475569;
+  --sn-accent: #0f172a;
+  --sn-shadow: 0 28px 60px rgba(15, 23, 42, 0.12);
+  --sn-shadow-soft: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+.page-sn .nfe-header h1,
+.page-sn .nfe-card h2,
+.page-sn .nfe-card h3,
+.page-sn .modal-content h3 {
+  letter-spacing: -0.02em;
+}
+
+.page-sn .nfe-card {
+  border: 1px solid rgba(183, 193, 209, 0.7);
+  box-shadow: var(--sn-shadow-soft);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.96) 100%);
+}
+
+.page-sn .sn-overview-row {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid #d1d5db;
-  background: #f9fafb;
-  font-size: 0.9rem;
-  outline: none;
-  cursor: pointer;
+  margin-inline: 0;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 16px;
+  margin-bottom: 16px;
+}
 
-  /* remove o estilo padrão do SO */
+.page-sn .sn-companies-row,
+.page-sn .sn-results-row {
+  width: 100%;
+  margin-inline: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.page-sn .sn-main-card {
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-sn .sn-companies-card {
+  min-width: 0;
+}
+
+.page-sn .sn-summary-card {
+  position: static;
+  min-height: 0;
+  padding-block: 14px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-sn .nfe-card-subtitle,
+.page-sn .nfe-breadcrumb,
+.page-sn .sn-company-meta,
+.page-sn #consumoInfo {
+  color: var(--sn-ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.page-sn .nfe-section {
+  background: var(--sn-surface);
+  border: 1px solid var(--sn-border);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.page-sn .nfe-section + .nfe-section {
+  margin-top: 14px;
+}
+
+.page-sn .nfe-divider {
+  margin: 18px 0;
+  border-top: 1px solid rgba(184, 196, 214, 0.8);
+}
+
+.page-sn .nfe-input-file-label {
+  gap: 8px;
+}
+
+.page-sn .nfe-input-file-label > span {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--sn-ink-soft);
+}
+
+.sn-select,
+.page-sn input[type="text"],
+.page-sn .sn-select {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--sn-border);
+  background: var(--sn-surface-soft);
+  color: var(--sn-ink);
+  font-size: 0.92rem;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.page-sn input[type="text"]::placeholder {
+  color: #94a3b8;
+}
+
+.page-sn input[type="text"]:focus,
+.page-sn .sn-select:focus {
+  border-color: #94a3b8;
+  box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.22);
+  background: #fff;
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.sn-select,
+.page-sn .sn-select {
+  cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-
-  /* “setinha” customizada à direita (opcional) */
   background-image: linear-gradient(45deg, transparent 50%, #9ca3af 50%),
     linear-gradient(135deg, #9ca3af 50%, transparent 50%);
   background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
@@ -1623,18 +1743,19 @@ body.nfe-body {
   background-repeat: no-repeat;
 }
 
-.sn-select:focus {
-  border-color: #0f172a;
-  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.25);
-  background: #e5e7eb;
+.page-sn .nfe-upload-form {
+  gap: 12px;
 }
 
-/* =========================================================
-   SN (Simples Nacional) — layout novo (lista de empresas)
-   ========================================================= */
+.page-sn .sn-period-grid,
+.page-sn .sn-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
 
-/* Seção "Empresas" */
-.sn-companies-toolbar {
+.sn-companies-toolbar,
+.page-sn .sn-companies-toolbar {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -1642,66 +1763,113 @@ body.nfe-body {
   margin-bottom: 10px;
 }
 
-/* Caixa que contém a lista de empresas */
-.sn-companies-list {
+.sn-companies-list,
+.page-sn .sn-companies-list {
   width: 100%;
 }
 
-/* Container das opções (lista) */
-.sn-companies-options {
-  border: 1px dashed #1f2937;
-  background: #f9fafb;
-  border-radius: 12px;
-  padding: 10px 12px;
-
+.sn-companies-options,
+.page-sn .sn-companies-options {
+  max-height: 540px;
+  border: 1px solid var(--sn-border);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 18px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-
-  max-height: 220px;        /* evita “estourar” o card */
+  gap: 10px;
   overflow-y: auto;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-/* Cada linha de empresa */
-.sn-company-option {
-  display: flex;
-  align-items: flex-start;
+.sn-company-row,
+.page-sn .sn-company-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
+  align-items: center;
+}
 
-  padding: 8px 10px;
-  border-radius: 10px;
+.sn-company-option,
+.page-sn .sn-company-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid transparent;
   cursor: pointer;
   user-select: none;
-
   color: #111827;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.25;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.18s ease;
 }
 
-/* Hover suave no padrão do portal */
-.sn-company-option:hover {
-  background: rgba(15, 23, 42, 0.06);
+.sn-company-option:hover,
+.page-sn .sn-company-option:hover {
+  border-color: rgba(184, 196, 214, 0.95);
+  background: #fff;
+  transform: translateY(-1px);
 }
 
-/* Checkbox alinhado com o texto */
-.sn-company-option input[type="checkbox"] {
-  margin-top: 2px;
+.sn-company-option input[type="checkbox"],
+.page-sn .sn-company-option input[type="checkbox"] {
   width: 16px;
   height: 16px;
+  margin-top: 0;
   flex: 0 0 auto;
-  accent-color: #0f172a; /* combina com btn-primary */
+  accent-color: var(--sn-accent);
 }
 
-/* Texto da empresa quebra linha bonitinho */
-.sn-company-option span {
+.sn-company-option span,
+.page-sn .sn-company-option span {
   display: block;
   min-width: 0;
+  font-size: 0.9rem;
+  color: var(--sn-ink);
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-/* Ações */
-.sn-actions {
+.sn-company-edit,
+.page-sn .sn-company-edit {
+  min-height: 38px;
+  padding: 0 14px;
+  white-space: nowrap;
+  font-size: 0.88rem;
+}
+
+.sn-company-meta,
+.page-sn .sn-company-meta {
+  margin: 0 0 8px;
+  font-size: 0.88rem;
+}
+
+.sn-company-search,
+.page-sn .sn-company-search {
+  margin: 0 0 12px;
+}
+
+.sn-company-search input,
+.page-sn .sn-company-search input {
+  width: 100%;
+}
+
+.sn-company-form-grid,
+.page-sn .sn-company-form-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.sn-actions,
+.page-sn .sn-actions {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -1709,29 +1877,181 @@ body.nfe-body {
   margin-top: 8px;
 }
 
-/* Linha do botão de download (resultado) */
-.sn-actions-row {
+.sn-actions-row,
+.page-sn .sn-actions-row {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 10px 0 6px;
+  margin: 0 0 14px;
 }
 
-/* Status não “estoura” o layout */
-#snStatus,
-#snCompanyMessage {
+.page-sn .sn-summary-card #consumoInfo {
+  line-height: 1.5;
+  font-size: 0.9rem;
+  max-width: none;
+}
+
+.page-sn .nfe-table-wrapper {
+  border: 1px solid var(--sn-border);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.page-sn #snResultsTable th {
+  background: #e2e8f0;
+  color: var(--sn-ink);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.page-sn #snResultsTable td {
+  vertical-align: top;
+}
+
+.page-sn #snStatus,
+.page-sn #snCompanyMessage {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--sn-surface-soft);
+  border: 1px solid var(--sn-border);
+  min-height: 42px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 
-/* Responsivo: no mobile, lista e botões ficam mais confortáveis */
+.page-sn #snCompanyMessage[data-state="error"] {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #b91c1c !important;
+}
+
+.page-sn #snCompanyMessage[data-state="info"] {
+  background: #ecfdf3;
+  border-color: #bbf7d0;
+  color: #166534 !important;
+}
+
+.page-sn #snCompanyMessage:empty,
+.page-sn #snStatus:empty {
+  display: none;
+}
+
+.page-sn .modal-content {
+  width: min(680px, calc(100vw - 32px));
+  border-radius: 24px;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 247, 251, 0.98) 100%);
+  border: 1px solid rgba(183, 193, 209, 0.88);
+  box-shadow: var(--sn-shadow);
+}
+
+.page-sn .modal-overlay {
+  backdrop-filter: blur(5px);
+  background: rgba(15, 23, 42, 0.34);
+}
+
+.page-sn .modal-content h3 {
+  margin-bottom: 14px;
+  font-size: 1.45rem;
+  color: var(--sn-ink);
+}
+
+.page-sn .modal-actions {
+  margin-top: 18px;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.sn-modal-hint,
+.page-sn .sn-modal-hint {
+  margin: -4px 0 14px;
+  color: var(--sn-ink-soft);
+  font-size: 0.89rem;
+}
+
+.sn-modal-shell,
+.page-sn .sn-modal-shell {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(183, 193, 209, 0.78);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.sn-modal-shell .nfe-input-file-label,
+.page-sn .sn-modal-shell .nfe-input-file-label {
+  gap: 10px;
+}
+
+.sn-modal-shell .nfe-input-file-label + .nfe-input-file-label,
+.page-sn .sn-modal-shell .nfe-input-file-label + .nfe-input-file-label {
+  margin-top: 14px;
+}
+
+.sn-section-title-row,
+.page-sn .sn-section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.sn-section-title-row h3,
+.page-sn .sn-section-title-row h3 {
+  margin: 0;
+}
+
+.sn-chip,
+.page-sn .sn-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: var(--sn-ink);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 @media (max-width: 900px) {
-  .sn-companies-options {
+  .page-sn .sn-overview-row {
+    grid-template-columns: 1fr;
+  }
+
+  .page-sn .sn-overview-row,
+  .page-sn .sn-companies-row,
+  .page-sn .sn-results-row {
+    width: 100%;
+  }
+
+  .page-sn .sn-period-grid,
+  .page-sn .sn-actions-grid,
+  .page-sn .sn-company-row {
+    grid-template-columns: 1fr;
+  }
+
+  .page-sn .sn-companies-options {
     max-height: 260px;
   }
 
-  .sn-actions .btn {
+  .page-sn .sn-actions .btn,
+  .page-sn .sn-company-edit,
+  .page-sn .modal-actions .btn {
     width: 100%;
+  }
+
+  .page-sn .modal-actions {
+    flex-direction: column-reverse;
   }
 }
 
@@ -2869,4 +3189,258 @@ textarea#dimobLog {
   font-size: 12px;
   color: #6b7280;
   word-break: break-word;
+}
+
+.user-access-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-access-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.user-access-pill-admin {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.user-access-pill-full {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.user-access-pill-limited {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.user-access-detail {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Checklist TI - Criacao de Usuario */
+.page-checklist-ti-criacao-usuario .checklist-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.page-checklist-ti-criacao-usuario .checklist-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.page-checklist-ti-criacao-usuario .checklist-grid-password {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-field {
+  width: 100%;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-field .auth-input,
+.page-checklist-ti-criacao-usuario .checklist-field .auth-textarea {
+  width: 100%;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-password-btn {
+  min-width: 220px;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-preview-card {
+  margin: 2px 0;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 22px;
+  font-size: 14px;
+  color: #111827;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-checkboxes label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-checkboxes input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-textarea {
+  min-height: 96px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-actions {
+  justify-content: flex-start;
+  margin-top: 4px;
+}
+
+.page-checklist-ti-criacao-usuario .checklist-password-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+@media (max-width: 980px) {
+  .page-checklist-ti-criacao-usuario .checklist-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .page-checklist-ti-criacao-usuario .checklist-grid-2,
+  .page-checklist-ti-criacao-usuario .checklist-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .page-checklist-ti-criacao-usuario .checklist-grid-password {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-checklist-ti-criacao-usuario .checklist-password-btn {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* Pedidos de Alteração de Empresa */
+.page-pedidos-alteracao .request-description {
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 460px;
+}
+
+.page-pedidos-alteracao .status-pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.page-pedidos-alteracao .status-pill-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.page-pedidos-alteracao .status-pill-done {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.page-pedidos-alteracao .status-pill-denied {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.page-pedidos-alteracao .request-action-muted {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* Pedidos de Inclusao e Exclusao de Empresa */
+.page-pedidos-inclusao-exclusao .request-details {
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 460px;
+}
+
+.page-pedidos-inclusao-exclusao .request-type-pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.page-pedidos-inclusao-exclusao .request-type-pill-inclusao {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.page-pedidos-inclusao-exclusao .request-type-pill-exclusao {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.page-pedidos-inclusao-exclusao .request-status-pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.page-pedidos-inclusao-exclusao .request-status-pill-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.page-pedidos-inclusao-exclusao .request-status-pill-done {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.page-pedidos-inclusao-exclusao .request-action-muted {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* Admin - pedidos empresas */
+.request-status-pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.request-status-pill-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.request-status-pill-done {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.request-status-pill-denied {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.request-action-muted {
+  color: #94a3b8;
+  font-weight: 500;
 }

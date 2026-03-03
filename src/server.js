@@ -5,7 +5,8 @@ const http = require('http');
 const multer = require('multer');
 const { Server } = require('socket.io');
 const cors = require('cors'); // <<< NOVO
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+require('dotenv').config({ path: path.join(__dirname, '..', 'public', 'admin-pedidos-empresas', '.env'), override: true });
 const axios = require('axios'); // para chamar a API Integra Contador
 const { autenticarSerpro } = require("./serpro-auth");
 const { Pool } = require('pg'); // << ADICIONE ESTA LINHA
@@ -18,6 +19,7 @@ const { spawn } = require('child_process');
 const createAuthRoutes = require('./routes/auth.routes');
 const createAdminRoutes = require('./routes/admin.routes');
 const createSharedRoutes = require('./routes/shared.routes');
+const { getTools } = require('./core/tool-catalog');
 const createSnRoutes = require('./routes/tools/sn.routes');
 const createEcdStatusRoutes = require('./routes/tools/ecd-status.routes');
 const createExtratorZipRarRoutes = require('./routes/tools/extrator-zip-rar.routes');
@@ -41,8 +43,14 @@ const createDimobRoutes = require('./routes/tools/dimob.routes');
 const createTareffaEmpresasLoteRoutes = require('./routes/tools/tareffa-empresas-lote.routes');
 const createConciliadorCartaoWilsonRoutes = require('./routes/tools/conciliador-cartao-wilson.routes');
 const createConciliadorCartaoTipo50Routes = require('./routes/tools/conciliador-cartao-tipo50.routes');
+const createConciliadorPisCofinsRoutes = require('./routes/tools/conciliador-pis-cofins.routes');
+const createPedidosInclusaoExclusaoEmpresaRoutes = require('./routes/tools/pedidos-inclusao-exclusao-empresa.routes');
+const createChecklistTiCriacaoUsuarioRoutes = require('./routes/tools/checklist-ti-criacao-usuario.routes');
 const createIrpfRoutes = require('./routes/tools/irpf.routes');
 const createNfeLegacyRoutes = require('./routes/tools/nfe-legacy.routes');
+const createPedidosAlteracaoEmpresaRoutes = require('./routes/tools/pedidos-alteracao-empresa.routes');
+const createComparadorEventosHoleriteRoutes = require('./routes/tools/comparador-eventos-holerite.routes');
+const createCartaoHorasIobRoutes = require('./routes/tools/cartao-horas-iob.routes');
 const { createDimobService } = require('./services/dimob.service');
 const { createEcdStatusService } = require('./services/ecd-status.service');
 const { createToolStorage } = require('./services/tool-storage.service');
@@ -470,21 +478,65 @@ function pageViewActionForSlug(toolSlug) {
   return `page_view_${safe || slug}`;
 }
 
-function hasToolPermission(user, toolSlug) {
+function getKnownToolPermissions() {
+  const tools = Array.isArray(getTools()) ? getTools() : [];
+  const perms = [];
+  for (const t of tools) {
+    const slug = normalizeToolSlug(t?.slug);
+    if (!slug) continue;
+    if (t?.adminOnly) continue;
+    perms.push(`tool:${slug}`);
+  }
+  return new Set(perms);
+}
+
+function normalizeUserToolPermissions(user) {
+  const permissions = Array.isArray(user?.permissions) ? user.permissions : [];
+  return new Set(
+    permissions
+      .map((p) => String(p || '').trim().toLowerCase())
+      .filter((p) => p.startsWith('tool:'))
+  );
+}
+
+function hasGlobalToolAccess(user) {
   if (!user) return false;
   if (String(user.role || '').toUpperCase() === 'ADMIN') return true;
+
+  const toolPerms = normalizeUserToolPermissions(user);
+
+  // Sem marcação de ferramenta: acesso total.
+  if (toolPerms.size === 0) return true;
+  if (toolPerms.has('tool:*')) return true;
+
+  // Todas as ferramentas marcadas também vira acesso total.
+  const known = getKnownToolPermissions();
+  if (known.size > 0) {
+    let allKnown = true;
+    for (const perm of known) {
+      if (!toolPerms.has(perm)) {
+        allKnown = false;
+        break;
+      }
+    }
+    if (allKnown) return true;
+  }
+  return false;
+}
+
+function hasToolPermission(user, toolSlug) {
+  if (!user) return false;
+  if (hasGlobalToolAccess(user)) return true;
 
   const slug = normalizeToolSlug(toolSlug);
   if (!slug) return false;
 
-  const permissions = Array.isArray(user.permissions) ? user.permissions : [];
+  const permissions = Array.from(normalizeUserToolPermissions(user));
   const candidateSlugs = [slug, ...(TOOL_PERMISSION_ALIASES[slug] || [])]
     .map((s) => normalizeToolSlug(s))
     .filter(Boolean);
 
-  if (permissions.includes('tool:*')) return true;
   if (candidateSlugs.some((s) => permissions.includes(`tool:${s}`))) return true;
-  if (permissions.length === 0 && RBAC_STRICT === false) return true;
   return false;
 }
 
@@ -510,13 +562,12 @@ function requireToolPage(toolSlug) {
 function requireAnyToolAccess(req, res, next) {
   const user = req.user || req.auth?.user;
   if (!user) return res.status(403).json({ error: 'Sem permissão para esta ferramenta' });
-  if (String(user.role || '').toUpperCase() === 'ADMIN') return next();
+  if (hasGlobalToolAccess(user)) return next();
 
-  const permissions = Array.isArray(user.permissions) ? user.permissions : [];
-  if (permissions.includes('tool:*') || permissions.some((p) => String(p || '').startsWith('tool:'))) {
+  const permissions = Array.from(normalizeUserToolPermissions(user));
+  if (permissions.length > 0) {
     return next();
   }
-  if (permissions.length === 0 && RBAC_STRICT === false) return next();
   return res.status(403).json({ error: 'Sem permissão para esta ferramenta' });
 }
 
@@ -697,6 +748,100 @@ async function initSecuritySchemaAndBootstrap() {
     );
   `);
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS company_change_requests (
+      id BIGSERIAL PRIMARY KEY,
+      company_name TEXT NOT NULL,
+      requester_full_name TEXT NOT NULL,
+      requester_login TEXT NOT NULL,
+      requester_email TEXT NOT NULL,
+      change_description TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'PENDENTE',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      completed_at TIMESTAMPTZ NULL,
+      email_sent_at TIMESTAMPTZ NULL,
+      email_error TEXT NULL
+    );
+  `);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_company_change_requests_status_created_at
+    ON company_change_requests (status, created_at DESC)
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS company_include_exclude_requests (
+      id BIGSERIAL PRIMARY KEY,
+      request_type TEXT NOT NULL,
+      company_name TEXT NOT NULL,
+      requester_full_name TEXT NOT NULL,
+      requester_login TEXT NOT NULL,
+      requester_email TEXT NOT NULL,
+      request_details TEXT NULL,
+      status TEXT NOT NULL DEFAULT 'PENDENTE',
+      completed_at TIMESTAMPTZ NULL,
+      email_sent_at TIMESTAMPTZ NULL,
+      email_error TEXT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  await pool.query(`ALTER TABLE company_include_exclude_requests ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'PENDENTE'`);
+  await pool.query(`ALTER TABLE company_include_exclude_requests ADD COLUMN IF NOT EXISTS completed_at TIMESTAMPTZ NULL`);
+  await pool.query(`ALTER TABLE company_include_exclude_requests ADD COLUMN IF NOT EXISTS email_sent_at TIMESTAMPTZ NULL`);
+  await pool.query(`ALTER TABLE company_include_exclude_requests ADD COLUMN IF NOT EXISTS email_error TEXT NULL`);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_company_include_exclude_requests_type_created_at
+    ON company_include_exclude_requests (request_type, created_at DESC)
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS checklist_ti_user_creation_forms (
+      id BIGSERIAL PRIMARY KEY,
+      process_number TEXT NULL,
+      process_seq BIGINT NULL,
+      request_date DATE NULL,
+      employee_name TEXT NOT NULL,
+      cpf TEXT NULL,
+      department TEXT NULL,
+      it_responsible TEXT NULL,
+      system_user_email TEXT NOT NULL,
+      user_iob_login TEXT NULL,
+      system_passwords JSONB NOT NULL DEFAULT '{}'::jsonb,
+      provisional_password TEXT NULL,
+      machine_name TEXT NULL,
+      shared_folders_released BOOLEAN NOT NULL DEFAULT false,
+      printers_configured BOOLEAN NOT NULL DEFAULT false,
+      email_signature_standardized BOOLEAN NOT NULL DEFAULT false,
+      observations TEXT NULL,
+      is_final BOOLEAN NOT NULL DEFAULT false,
+      finalized_at TIMESTAMPTZ NULL,
+      pdf_bytes BYTEA NOT NULL,
+      pdf_filename TEXT NOT NULL,
+      created_by_name TEXT NOT NULL,
+      created_by_email TEXT NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  await pool.query(`ALTER TABLE checklist_ti_user_creation_forms ADD COLUMN IF NOT EXISTS process_seq BIGINT NULL`);
+  await pool.query(`ALTER TABLE checklist_ti_user_creation_forms ADD COLUMN IF NOT EXISTS system_passwords JSONB NOT NULL DEFAULT '{}'::jsonb`);
+  await pool.query(`ALTER TABLE checklist_ti_user_creation_forms ADD COLUMN IF NOT EXISTS user_iob_login TEXT NULL`);
+  await pool.query(`ALTER TABLE checklist_ti_user_creation_forms ADD COLUMN IF NOT EXISTS is_final BOOLEAN NOT NULL DEFAULT false`);
+  await pool.query(`ALTER TABLE checklist_ti_user_creation_forms ADD COLUMN IF NOT EXISTS finalized_at TIMESTAMPTZ NULL`);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_checklist_ti_user_creation_forms_updated_at
+    ON checklist_ti_user_creation_forms (updated_at DESC)
+  `);
+  await pool.query(`
+    CREATE UNIQUE INDEX IF NOT EXISTS uq_checklist_ti_user_creation_forms_process_seq
+    ON checklist_ti_user_creation_forms (process_seq)
+    WHERE process_seq IS NOT NULL
+  `);
+
   // bootstrap admin via .env (cria apenas se não existir)
   const adminEmail = (process.env.ADMIN_BOOTSTRAP_EMAIL || '').trim().toLowerCase();
   const adminName = (process.env.ADMIN_BOOTSTRAP_NAME || 'Administrador').trim();
@@ -751,6 +896,10 @@ app.get('/admin-usuarios', requireAuthPage, requireAdminPage, logPageView('page_
 
 app.get('/logs', requireAuthPage, requireAdminPage, logPageView('page_view_audit_logs'), (req, res) => {
   res.sendFile(path.join(publicDir, 'logs.html'));
+});
+
+app.get('/admin-pedidos-empresas', requireAuthPage, requireAdminPage, logPageView('page_view_admin_company_requests'), (req, res) => {
+  res.sendFile(path.join(publicDir, 'admin-pedidos-empresas.html'));
 });
 
 
@@ -1075,6 +1224,72 @@ app.use(
   })
 );
 app.use(
+  '/api/conciliador-pis-cofins',
+  requireAuth,
+  requireToolApi('conciliador-pis-cofins'),
+  createConciliadorPisCofinsRoutes({
+    requireCsrf,
+    upload,
+    axios,
+    PY_API_URL,
+  })
+);
+app.use(
+  '/api/comparador-eventos-holerite',
+  requireAuth,
+  requireToolApi('comparador-eventos-holerite'),
+  createComparadorEventosHoleriteRoutes({
+    requireCsrf,
+    upload,
+    axios,
+    PY_API_URL,
+  })
+);
+app.use(
+  '/api/cartao-horas-iob',
+  requireAuth,
+  requireToolApi('cartao-horas-iob'),
+  createCartaoHorasIobRoutes({
+    requireCsrf,
+    upload,
+    axios,
+    PY_API_URL,
+  })
+);
+app.use(
+  '/api/pedidos-alteracao-empresa',
+  requireAuth,
+  requireToolApi('pedidos-alteracao-empresa'),
+  createPedidosAlteracaoEmpresaRoutes({
+    pool,
+    requireCsrf,
+    requireRole,
+    auditLog,
+  })
+);
+app.use(
+  '/api/pedidos-inclusao-exclusao-empresa',
+  requireAuth,
+  requireToolApi('pedidos-inclusao-exclusao-empresa'),
+  createPedidosInclusaoExclusaoEmpresaRoutes({
+    pool,
+    requireCsrf,
+    requireRole,
+    auditLog,
+  })
+);
+app.use(
+  '/api/checklist-ti-criacao-usuario',
+  requireAuth,
+  requireRole('ADMIN'),
+  requireToolApi('checklist-ti-criacao-usuario'),
+  createChecklistTiCriacaoUsuarioRoutes({
+    pool,
+    requireCsrf,
+    auditLog,
+  })
+);
+app.use(
   '/api/irpf',
   requireAuth,
   requireToolApi('irpf-carne-leao'),
@@ -1128,7 +1343,7 @@ app.get('/:toolSlug', requireAuthPage, async (req, res, next) => {
     if (!filePath) return next();
 
     const slug = normalizeToolSlug(rawSlug);
-    if ((slug === 'admin-usuarios' || slug === 'logs') && String(req.user?.role || '').toUpperCase() !== 'ADMIN') {
+    if ((slug === 'admin-usuarios' || slug === 'logs' || slug === 'checklist-ti-criacao-usuario') && String(req.user?.role || '').toUpperCase() !== 'ADMIN') {
       return sendForbiddenPageHtml(res);
     }
     return requireToolPage(slug)(req, res, async () => {

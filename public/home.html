@@ -57,7 +57,43 @@
 
         <div class="session-body">
             <div class="session-grid">
+                <div class="carousel-card" data-script="comparador-eventos-holerite">
+                    <div class="card-icon">&#128176;</div>
+                    <h3 class="card-title">Comparador de Eventos de Holerite</h3>
+                    <p class="card-subtitle">
+                        Compara duas competencias no SLK e mostra os eventos que sumiram no periodo final.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Pessoal</span>
+                        <span class="tag">Python</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Envie o arquivo de holerites em SLK, deixe as competencias serem detectadas automaticamente e visualize o preview
+                            antes de baixar o Excel consolidado por funcionario.
+                        </p>
+                        <a href="/comparador-eventos-holerite" class="btn-card">Acessar</a>
+                    </div>
+                </div>
                 <!-- Snippet para home.html (sessão Pessoal) -->
+                <div class="carousel-card" data-script="cartao-horas-iob">
+                    <div class="card-icon">&#128339;</div>
+                    <h3 class="card-title">Importador Cartao Horas IOB</h3>
+                    <p class="card-subtitle">
+                        Envie o PDF do cartao de ponto e gere o TXT de importacao IOB escolhendo quais horas entram e qual evento usar.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Pessoal</span>
+                        <span class="tag">Python</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Faca upload do espelho de ponto, selecione horas normais, extras, noturnas ou faltas conforme precisar
+                            e baixe o arquivo TXT no layout IOB pronto para importacao.
+                        </p>
+                        <a href="/cartao-horas-iob" class="btn-card">Acessar</a>
+                    </div>
+                </div>
                 <div class="carousel-card" data-script="separador-ferias-funcionario">
                     <div class="card-icon">🏖️</div>
                     <h3 class="card-title">Separador Férias por Funcionário</h3>
@@ -332,6 +368,25 @@
                     </div>
                 </div>
 
+                <div class="carousel-card" data-script="conciliador-pis-cofins">
+                    <div class="card-icon">&#128176;</div>
+                    <h3 class="card-title">Conciliador PIS-COFINS</h3>
+                    <p class="card-subtitle">
+                        Concilia arquivos fiscais para validação de diferenças de PIS e COFINS.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Contabil</span>
+                        <span class="tag">Python</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Envie os arquivos da apuração para comparar bases e valores de PIS/COFINS,
+                            com saída pronta para conferência das divergências.
+                        </p>
+                        <a href="/conciliador-pis-cofins" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
                 <div class="carousel-card" data-script="conciliador-cartao-wilson">
                     <div class="card-icon">💳</div>
                     <div class="card-content">
@@ -564,6 +619,44 @@
                     </div>
                 </div>
 
+                <div class="carousel-card" data-script="pedidos-alteracao-empresa">
+                    <div class="card-icon">&#127970;</div>
+                    <h3 class="card-title">Pedidos de Altera&ccedil;&atilde;o de Empresa</h3>
+                    <p class="card-subtitle">
+                        Registre solicita&ccedil;&otilde;es para altera&ccedil;&otilde;es de empresas para modifica&ccedil;&atilde;o.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Geral</span>
+                        <span class="tag">Portal</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Informe empresa, nome completo e a altera&ccedil;&atilde;o necess&aacute;ria. O pedido entra como pendente
+                            e somente admin pode marcar como conclu&iacute;do.
+                        </p>
+                        <a href="/pedidos-alteracao-empresa" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
+                <div class="carousel-card" data-script="pedidos-inclusao-exclusao-empresa">
+                    <div class="card-icon">&#127970;</div>
+                    <h3 class="card-title">Pedidos de Inclus&atilde;o e Exclus&atilde;o de Empresa</h3>
+                    <p class="card-subtitle">
+                        Registre solicita&ccedil;&otilde;es para incluir ou excluir empresas.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Geral</span>
+                        <span class="tag">Portal</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Selecione o tipo do pedido, informe a empresa e registre detalhes quando necess&aacute;rio.
+                            A auditoria grava o nome e login da conta solicitante.
+                        </p>
+                        <a href="/pedidos-inclusao-exclusao-empresa" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
                 <!-- Snippet para home.html -->
                 <div class="carousel-card" data-script="tareffa-empresas-lote">
                     <div class="card-icon">🏢</div>
@@ -728,6 +821,23 @@
                             Consulte o histórico de ações (login, alterações e operações críticas) para rastreabilidade.
                         </p>
                         <a href="/logs" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
+                <div class="carousel-card" data-script="checklist-ti-criacao-usuario">
+                    <div class="card-icon">📝</div>
+                    <h3 class="card-title">Checklist TI - Criação de Usuário</h3>
+                    <p class="card-subtitle">Rascunho, finalização definitiva e PDF para onboarding de acessos.</p>
+                    <div class="card-tags">
+                        <span class="tag">Admin</span>
+                        <span class="tag">Portal</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Monte o checklist de criação de usuário com rascunho automático e finalize em PDF com número
+                            de processo sequencial.
+                        </p>
+                        <a href="/checklist-ti-criacao-usuario" class="btn-card">Acessar</a>
                     </div>
                 </div>
             </div>

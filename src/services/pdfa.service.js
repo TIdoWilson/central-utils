@@ -1,6 +1,7 @@
 const fs = require('fs');
 const crypto = require('crypto');
 const { spawn } = require('child_process');
+const { resolveConfiguredPath } = require('../core/path-resolver');
 
 const PDFA_DOWNLOAD_MAP = new Map();
 
@@ -21,7 +22,7 @@ function pdfaGetFile(id) {
 }
 
 function pdfaGetGhostscriptPath() {
-  const envPath = process.env.GS_EXE_PATH;
+  const envPath = resolveConfiguredPath(process.env.GS_EXE_PATH);
   if (envPath && fs.existsSync(envPath)) return envPath;
   const candidates = [
     'C:\\\\Program Files\\\\gs\\\\gs10.00.0\\\\bin\\\\gswin64c.exe',
@@ -31,6 +32,8 @@ function pdfaGetGhostscriptPath() {
     'C:\\\\Program Files\\\\gs\\\\gs10.04.0\\\\bin\\\\gswin64c.exe',
     'C:\\\\Program Files\\\\gs\\\\gs10.05.0\\\\bin\\\\gswin64c.exe',
     'C:\\\\Program Files\\\\gs\\\\gs10.06.0\\\\bin\\\\gswin64c.exe',
+    '/usr/bin/gs',
+    '/usr/local/bin/gs',
   ];
   for (const p of candidates) {
     if (fs.existsSync(p)) return p;
@@ -39,11 +42,13 @@ function pdfaGetGhostscriptPath() {
 }
 
 function pdfaGetLibreOfficePath() {
-  const envPath = process.env.LIBREOFFICE_PATH;
+  const envPath = resolveConfiguredPath(process.env.LIBREOFFICE_PATH);
   if (envPath && fs.existsSync(envPath)) return envPath;
   const candidates = [
     'C:\\\\Program Files\\\\LibreOffice\\\\program\\\\soffice.exe',
     'C:\\\\Program Files (x86)\\\\LibreOffice\\\\program\\\\soffice.exe',
+    '/usr/bin/soffice',
+    '/usr/lib/libreoffice/program/soffice',
   ];
   for (const p of candidates) {
     if (fs.existsSync(p)) return p;
@@ -52,7 +57,7 @@ function pdfaGetLibreOfficePath() {
 }
 
 function pdfaGetIccProfilePath() {
-  const envPath = process.env.PDFA_ICC_PROFILE;
+  const envPath = resolveConfiguredPath(process.env.PDFA_ICC_PROFILE);
   if (envPath && fs.existsSync(envPath)) return envPath;
   const candidates = [
     'C:\\\\Windows\\\\System32\\\\spool\\\\drivers\\\\color\\\\sRGB Color Space Profile.icm',
@@ -64,6 +69,9 @@ function pdfaGetIccProfilePath() {
     'C:\\\\Program Files\\\\gs\\\\gs10.04.0\\\\iccprofiles\\\\sRGB.icc',
     'C:\\\\Program Files\\\\gs\\\\gs10.05.0\\\\iccprofiles\\\\sRGB.icc',
     'C:\\\\Program Files\\\\gs\\\\gs10.06.0\\\\iccprofiles\\\\sRGB.icc',
+    '/usr/share/color/icc/ghostscript/srgb.icc',
+    '/usr/share/color/icc/colord/sRGB.icc',
+    '/usr/share/color/icc/ghostscript/default_rgb.icc',
   ];
   for (const p of candidates) {
     if (fs.existsSync(p)) return p;

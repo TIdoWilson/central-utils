@@ -3,6 +3,28 @@
   "generatedAt": "2026-02-12T22:15:10.281Z",
   "tools": [
     {
+      "slug": "cartao-horas-iob",
+      "title": "Cartao Horas IOB",
+      "group": "Pessoal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/cartao-horas-iob",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "comparador-eventos-holerite",
+      "title": "Comparador Eventos Holerite",
+      "group": "Pessoal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/comparador-eventos-holerite",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "acerto-lotes-toscan",
       "title": "Acerto Lotes Toscan",
       "group": "Geral",
@@ -69,6 +91,17 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "checklist-ti-criacao-usuario",
+      "title": "Checklist TI Criacao de Usuario",
+      "group": "Admin",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/checklist-ti-criacao-usuario",
+      "adminOnly": true,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "comprimir-pdf",
       "title": "Comprimir PDF",
       "group": "Geral",
@@ -101,6 +134,17 @@
       "aliases": [
         "conciliador-cartao-wilson"
       ],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "conciliador-pis-cofins",
+      "title": "Conciliador PIS-COFINS",
+      "group": "Geral",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/conciliador-pis-cofins",
+      "adminOnly": false,
+      "aliases": [],
       "sharedApisUsed": []
     },
     {

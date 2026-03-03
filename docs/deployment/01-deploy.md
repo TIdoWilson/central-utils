@@ -13,6 +13,54 @@ Antes de fazer deploy:
 - [ ] Monitoramento ativo
 - [ ] SSL/HTTPS preparado
 
+## Fluxo Operacional Recomendado
+
+### 1. Desenvolvimento local
+
+- Use caminhos relativos no `.env` para arquivos do próprio projeto, por exemplo `certs/WILSON.pfx` ou `public/js/layout dimob.json`.
+- Reserve caminhos absolutos de Windows, como `W:\...`, apenas para integrações deliberadamente locais que não precisam funcionar na VPS.
+- Toda alteração de banco deve virar uma migration SQL em `db/migrations/`.
+
+### 2. Publicação em produção
+
+- O comando local recomendado passou a ser:
+  - antes, alinhe o arquivo local `.env.vps` com o ambiente que deve existir na VPS;
+  - esse arquivo não vai para o GitHub e será enviado por `scp` durante o release.
+
+```bash
+npm run release:vps -- main
+```
+
+- Esse fluxo faz:
+  - se `HAPI_API_TOKEN` estiver configurado, executa checagem prévia da VPS via Hostinger CLI/API;
+  - valida que o `git` local está limpo;
+  - executa `git push origin <branch>`;
+  - sincroniza o `.env` da VPS a partir do arquivo local `.env.vps` (ou `.env`, se `.env.vps` não existir);
+  - conecta por `ssh` na VPS;
+  - roda `scripts/deploy-vps.sh`;
+  - aplica `npm run migrate` na VPS antes de reiniciar os serviços.
+
+### 3. Deploy dentro da VPS
+
+- Se precisar executar direto no servidor, continue usando:
+
+```bash
+npm run deploy:vps -- main
+```
+
+- Esse script agora instala dependências, roda verify, aplica migrations SQL e só então reinicia os serviços.
+
+### Checagem Hostinger
+
+Se a máquina local tiver a CLI oficial `hapi` instalada e `HAPI_API_TOKEN` configurado, ficam disponíveis:
+
+```bash
+npm run hostinger:vps:status
+npm run hostinger:predeploy
+```
+
+Esses comandos usam a API/CLI oficial da Hostinger para consultar a VPS antes do deploy.
+
 ---
 
 ## 🖥️ Opções de Deployment

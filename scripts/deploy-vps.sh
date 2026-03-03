@@ -67,6 +67,11 @@ if [[ -f scripts/verify.mjs ]]; then
   npm run verify || true
 fi
 
+if [[ -f scripts/migrate.mjs ]]; then
+  echo "[deploy] npm run migrate"
+  npm run migrate
+fi
+
 echo "[deploy] daemon-reload"
 run_systemctl daemon-reload || true
 
