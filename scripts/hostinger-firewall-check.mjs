@@ -28,7 +28,9 @@ function main() {
   const { hapi, vmId, vm } = loadResolvedVm();
   const firewallId = String(vm?.firewall_group_id || '').trim();
   if (!firewallId) {
-    throw new Error(`VPS ${vmId} sem firewall_group_id associado.`);
+    console.log(`[hostinger:firewall] vm_id=${vmId}`);
+    console.log('[hostinger:firewall] aviso: VPS sem firewall_group_id associado na API da Hostinger. Checagem de firewall será ignorada.');
+    return;
   }
 
   const firewall = loadFirewall(hapi, firewallId);
