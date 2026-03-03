@@ -2597,6 +2597,62 @@ body.wl-page-dragover::after {
   box-sizing: border-box;
 }
 
+.auth-password-wrap {
+  position: relative;
+  display: block;
+}
+
+.auth-password-input {
+  width: 100%;
+  padding-right: 46px;
+}
+
+.auth-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.auth-password-toggle:hover,
+.auth-password-toggle:focus-visible {
+  background: #eef2ff;
+  color: #0f172a;
+  outline: none;
+}
+
+.auth-password-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.auth-password-icon-show {
+  display: none;
+}
+
+.auth-password-icon-hide {
+  display: block;
+}
+
+.auth-password-toggle.is-visible .auth-password-icon-show {
+  display: block;
+}
+
+.auth-password-toggle.is-visible .auth-password-icon-hide {
+  display: none;
+}
+
 .auth-textarea {
   resize: vertical;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",

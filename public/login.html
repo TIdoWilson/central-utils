@@ -23,14 +23,44 @@
 
           <label class="auth-label">
             Senha
-            <input
-              id="password"
-              name="password"
-              type="password"
-              class="auth-input"
-              autocomplete="current-password"
-              required
-            />
+            <span class="auth-password-wrap">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                class="auth-input auth-password-input"
+                autocomplete="current-password"
+                required
+              />
+              <button
+                type="button"
+                class="auth-password-toggle"
+                id="passwordToggle"
+                aria-label="Mostrar senha"
+                aria-pressed="false"
+              >
+                <svg
+                  class="auth-password-icon auth-password-icon-show"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 5C7 5 3.1 8.1 1.5 12C3.1 15.9 7 19 12 19C17 19 20.9 15.9 22.5 12C20.9 8.1 17 5 12 5ZM12 17C9.2 17 6.8 15.3 5.3 12C6.8 8.7 9.2 7 12 7C14.8 7 17.2 8.7 18.7 12C17.2 15.3 14.8 17 12 17ZM12 9C10.3 9 9 10.3 9 12C9 13.7 10.3 15 12 15C13.7 15 15 13.7 15 12C15 10.3 13.7 9 12 9Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <svg
+                  class="auth-password-icon auth-password-icon-hide"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2.7 3.8L1.3 5.2L5 8.9C3.4 10 2.2 11.4 1.5 13C3.1 16.9 7 20 12 20C14 20 15.8 19.5 17.4 18.6L20.8 22L22.2 20.6L2.7 3.8ZM12 18C8.9 18 6.2 16.2 4.7 13C5.2 12 5.9 11.1 6.7 10.4L8.8 12.5C8.9 14.3 10.3 15.7 12.1 15.8L14.7 18.4C13.9 17.8 13 18 12 18ZM10.9 8.1C11.3 8 11.6 8 12 8C15.1 8 17.8 9.8 19.3 13C18.8 14 18.1 14.9 17.3 15.6L15.2 13.5C15.1 11.7 13.7 10.3 11.9 10.2L9.3 7.6C9.8 8 10.3 8.1 10.9 8.1Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+            </span>
           </label>
 
           <button type="submit" class="btn btn-primary" id="btnLogin">Entrar</button>
