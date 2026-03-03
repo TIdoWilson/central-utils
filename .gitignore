@@ -1,6 +1,7 @@
 /node_modules
 /uploads
 .env
+.env.vps
 /public/img/scripts
 /data/uploads/separador-ferias
 /data/ferias-funcionario/FERIAS - TAXCO SERVIÇOS CONTABEIS S S
@@ -24,3 +25,7 @@ gerar_documentacao.py
 DOCUMENTACAO_COMPLETA.docx
 /backup integra python funcionando
 site/
+.env.local.example
+.env.vps.example
+Backup do env.zip
+backup-env-0303.zip
