@@ -26,6 +26,7 @@ Antes de fazer deploy:
 - O comando local recomendado passou a ser:
   - antes, alinhe o arquivo local `.env.vps` com o ambiente que deve existir na VPS;
   - esse arquivo não vai para o GitHub e será enviado por `scp` durante o release.
+  - com a chave SSH configurada localmente, prefira usar um alias como `hostinger-vps` em `DEPLOY_VPS_SSH_TARGET`.
 
 ```bash
 npm run release:vps -- main
@@ -37,9 +38,10 @@ npm run release:vps -- main
   - valida que o `git` local está limpo;
   - executa `git push origin <branch>`;
   - sincroniza o `.env` da VPS a partir do arquivo local `.env.vps` (ou `.env`, se `.env.vps` não existir);
-  - conecta por `ssh` na VPS;
+  - conecta por `ssh` na VPS usando o target configurado em `DEPLOY_VPS_SSH_TARGET`;
   - roda `scripts/deploy-vps.sh`;
   - aplica `npm run migrate` na VPS antes de reiniciar os serviços;
+  - reinicia automaticamente `central-node`, `central-python`, `central-go` e `nginx` (ou `caddy`, se existir);
   - se `HAPI_API_TOKEN` estiver configurado, roda uma checagem pós-deploy de saúde da VPS.
 
 ### 3. Deploy dentro da VPS
@@ -97,8 +99,8 @@ if [ -f api/requirements.txt ]; then .venv/bin/python -m pip install -r api/requ
 if [ -f requirements.txt ]; then .venv/bin/python -m pip install -r requirements.txt; fi && \
 npm run migrate && \
 systemctl daemon-reload && \
-systemctl restart central-python central-go central-node caddy && \
-systemctl --no-pager --full status central-python central-go central-node caddy
+systemctl restart central-python central-go central-node nginx && \
+systemctl --no-pager --full status central-python central-go central-node nginx
 ```
 
 Se preferir usar o script versionado do projeto, o equivalente é:

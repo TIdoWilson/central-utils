@@ -75,7 +75,7 @@ fi
 echo "[deploy] daemon-reload"
 run_systemctl daemon-reload || true
 
-for svc in central-python central-go central-node caddy; do
+for svc in central-python central-go central-node nginx caddy; do
   if systemctl list-unit-files | grep -q "^${svc}\\.service"; then
     echo "[deploy] restart $svc"
     run_systemctl restart "$svc"
@@ -85,7 +85,7 @@ for svc in central-python central-go central-node caddy; do
 done
 
 echo "[deploy] status"
-for svc in central-python central-go central-node caddy; do
+for svc in central-python central-go central-node nginx caddy; do
   if systemctl list-unit-files | grep -q "^${svc}\\.service"; then
     run_systemctl status "$svc" --no-pager | sed -n '1,12p' || true
   fi

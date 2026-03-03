@@ -10,6 +10,8 @@ const APP_ROOT = path.resolve(__dirname, '..');
 
 dotenv.config({ path: path.join(APP_ROOT, '.env') });
 
+const GIT_BIN = process.platform === 'win32' ? 'git.exe' : 'git';
+
 function run(command, args, options = {}) {
   const result = spawnSync(command, args, {
     cwd: APP_ROOT,
@@ -49,11 +51,11 @@ function capture(command, args, options = {}) {
 }
 
 function getCurrentBranch() {
-  return capture('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
+  return capture(GIT_BIN, ['rev-parse', '--abbrev-ref', 'HEAD']);
 }
 
 function ensureCleanWorktree() {
-  const status = capture('git', ['status', '--porcelain']);
+  const status = capture(GIT_BIN, ['status', '--porcelain']);
   if (status) {
     throw new Error('Worktree com alterações locais. Faça commit/stash antes do release.');
   }
@@ -99,7 +101,7 @@ function main() {
     run('node', ['scripts/hostinger-predeploy-check.mjs']);
   }
   console.log('[release] git push');
-  run('git', ['push', 'origin', branch]);
+  run(GIT_BIN, ['push', 'origin', branch]);
 
   console.log('[release] sync env');
   run('node', ['scripts/sync-env-vps.mjs']);

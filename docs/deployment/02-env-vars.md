@@ -23,7 +23,7 @@ DIMOB_LAYOUT_PATH=public/js/layout dimob.json
 - Para publicar com um único comando local, configure também:
 
 ```env
-DEPLOY_VPS_SSH_TARGET=usuario@servidor
+DEPLOY_VPS_SSH_TARGET=hostinger-vps
 DEPLOY_VPS_PORT=22
 DEPLOY_VPS_APP_DIR=/opt/central-utils
 DEPLOY_VPS_ENV_SOURCE=.env.vps
@@ -41,6 +41,7 @@ HOSTINGER_HEALTH_MIN_DISK_FREE_BYTES=1073741824
 - Fluxo recomendado:
   - `.env`: ambiente local de desenvolvimento;
   - `.env.vps`: cópia local não-versionada com os valores exatos que devem existir na VPS;
+  - com `hostinger-vps` configurado em `C:\Users\Usuario\.ssh\config`, o release passa a usar a chave SSH automaticamente, sem prompt de senha;
   - `npm run sync:env:vps`: envia `.env.vps` para a VPS e substitui o `.env` remoto com backup automático.
   - `npm run compare:env:vps`: compara o `.env` remoto com o arquivo local de publicação e aponta diferenças de chaves/valores.
   - `npm run hostinger:health`: verifica estado, CPU, RAM, disco e tráfego da VPS.
@@ -49,6 +50,7 @@ HOSTINGER_HEALTH_MIN_DISK_FREE_BYTES=1073741824
 ### Notas sobre as variáveis Hostinger
 
 - `HOSTINGER_HAPI_BIN` pode apontar para o binário oficial instalado fora do `PATH`, por exemplo `C:\Users\Usuario\go\bin\api-cli.exe`.
+- `DEPLOY_VPS_SSH_TARGET` pode ser um alias do `~/.ssh/config`, não precisa ser necessariamente `usuario@ip`.
 - `HOSTINGER_REQUIRED_TCP_PORTS` define as portas mínimas que o projeto considera obrigatórias no firewall da Hostinger antes do deploy.
   - exemplo enxuto: `22`
   - exemplo completo: `22,80,443`

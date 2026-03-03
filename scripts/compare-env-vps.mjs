@@ -79,8 +79,27 @@ function parseEnvContent(content) {
   return parsed;
 }
 
+const IGNORE_REMOTE_ENV_KEYS = new Set([
+  'DEPLOY_VPS_SSH_TARGET',
+  'DEPLOY_VPS_PORT',
+  'DEPLOY_VPS_APP_DIR',
+  'DEPLOY_VPS_ENV_SOURCE',
+  'HAPI_API_TOKEN',
+  'HOSTINGER_VM_ID',
+  'HOSTINGER_VM_HOSTNAME',
+  'HOSTINGER_HAPI_BIN',
+  'HOSTINGER_REQUIRED_TCP_PORTS',
+  'HOSTINGER_HEALTH_CPU_MAX_PERCENT',
+  'HOSTINGER_HEALTH_RAM_MAX_PERCENT',
+  'HOSTINGER_HEALTH_DISK_MAX_PERCENT',
+  'HOSTINGER_HEALTH_MIN_DISK_FREE_BYTES',
+]);
+
 function diffEnvs(localEnv, remoteEnv) {
-  const localKeys = Object.keys(localEnv);
+  const filteredLocalEnv = Object.fromEntries(
+    Object.entries(localEnv).filter(([key]) => !IGNORE_REMOTE_ENV_KEYS.has(key)),
+  );
+  const localKeys = Object.keys(filteredLocalEnv);
   const remoteKeys = Object.keys(remoteEnv);
   const allKeys = Array.from(new Set([...localKeys, ...remoteKeys])).sort((a, b) => a.localeCompare(b));
 
@@ -99,7 +118,7 @@ function diffEnvs(localEnv, remoteEnv) {
       onlyRemote.push(key);
       continue;
     }
-    if (localEnv[key] !== remoteEnv[key]) {
+    if (filteredLocalEnv[key] !== remoteEnv[key]) {
       different.push(key);
     }
   }
