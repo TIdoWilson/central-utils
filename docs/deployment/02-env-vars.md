@@ -31,6 +31,11 @@ HAPI_API_TOKEN=seu_token_da_hostinger
 HOSTINGER_VM_ID=
 HOSTINGER_VM_HOSTNAME=
 HOSTINGER_HAPI_BIN=hapi
+HOSTINGER_REQUIRED_TCP_PORTS=22
+HOSTINGER_HEALTH_CPU_MAX_PERCENT=95
+HOSTINGER_HEALTH_RAM_MAX_PERCENT=95
+HOSTINGER_HEALTH_DISK_MAX_PERCENT=95
+HOSTINGER_HEALTH_MIN_DISK_FREE_BYTES=1073741824
 ```
 
 - Fluxo recomendado:
@@ -38,23 +43,33 @@ HOSTINGER_HAPI_BIN=hapi
   - `.env.vps`: cópia local não-versionada com os valores exatos que devem existir na VPS;
   - `npm run sync:env:vps`: envia `.env.vps` para a VPS e substitui o `.env` remoto com backup automático.
   - `npm run compare:env:vps`: compara o `.env` remoto com o arquivo local de publicação e aponta diferenças de chaves/valores.
+  - `npm run hostinger:health`: verifica estado, CPU, RAM, disco e tráfego da VPS.
+  - `npm run hostinger:firewall:check`: valida se o firewall da Hostinger está sincronizado e com as portas TCP exigidas.
+
+### Notas sobre as variáveis Hostinger
+
+- `HOSTINGER_HAPI_BIN` pode apontar para o binário oficial instalado fora do `PATH`, por exemplo `C:\Users\Usuario\go\bin\api-cli.exe`.
+- `HOSTINGER_REQUIRED_TCP_PORTS` define as portas mínimas que o projeto considera obrigatórias no firewall da Hostinger antes do deploy.
+  - exemplo enxuto: `22`
+  - exemplo completo: `22,80,443`
+- Os limites `HOSTINGER_HEALTH_*` são usados para reprovar deploy quando a VPS está com recurso crítico.
 
 ### Arquivos-modelo criados no repositório
 
-- [`.env.local.example`](/w:/DOCUMENTOS%20ESCRITORIO/INSTALACAO%20SISTEMA/central-utils/.env.local.example)
+- [`.env.example`](/w:/DOCUMENTOS%20ESCRITORIO/INSTALACAO%20SISTEMA/central-utils/.env.example)
 - [`.env.vps.example`](/w:/DOCUMENTOS%20ESCRITORIO/INSTALACAO%20SISTEMA/central-utils/.env.vps.example)
 
 Uso sugerido:
 
 ```bash
-copy .env.local.example .env
+copy .env.example .env
 copy .env.vps.example .env.vps
 ```
 
 No Windows PowerShell, se preferir:
 
 ```powershell
-Copy-Item .env.local.example .env
+Copy-Item .env.example .env
 Copy-Item .env.vps.example .env.vps
 ```
 

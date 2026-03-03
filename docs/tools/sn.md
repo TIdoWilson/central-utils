@@ -84,6 +84,18 @@ Envie a declaração mensal sem movimento pelo Integra Contador.
   - **Sintoma:** após editar a razão social, o modal exibe apenas `Erro ao atualizar empresa.` sem detalhe do motivo.
   - **Causa provável:** resposta não-JSON do backend, rota `PUT /api/sn/companies/:id` indisponível no processo Node atual ou erro interno 5xx.
   - **Solução:** a UI passou a exibir o status HTTP real e orientar reinício do serviço Node quando a rota retornar `404`; em deploy local/VPS, reiniciar o processo após publicar alterações do router.
+- **Ao enviar declaração da SN no site local, a tela retorna `Certificado não encontrado em: /opt/central-utils/certs/WILSON.pfx`:**
+  - **Sintoma:** o front local da SN tenta enviar a declaração, mas o backend responde com caminho Linux inexistente apesar do certificado `.pfx` existir na máquina Windows.
+  - **Causa provável:** o `.env` local ficou com `CERT_PFX_PATH`/`SERPRO_PFX_PATH` apontando para o caminho da VPS em vez do caminho Windows do ambiente local.
+  - **Solução:** ajustar `CERT_PFX_PATH` e `SERPRO_PFX_PATH` do `.env` local para o caminho real do `.pfx` na máquina/servidor Windows e reiniciar o serviço local do portal para recarregar o ambiente. O backend também passou a tentar automaticamente o mesmo nome de arquivo em `Documents` e `OneDrive\\Documentos` do usuário Windows atual antes de falhar.
+- **Após corrigir o caminho do `.pfx`, a SN ainda falha no envio local:**
+  - **Sintoma:** a autenticação deixa de falhar por arquivo ausente, mas a integração com o SERPRO retorna erro `400`.
+  - **Causa provável:** credenciais (`CONSUMER_KEY`/`CONSUMER_SECRET`), certificado, `ROLE_TYPE` ou payload da autenticação rejeitados pelo endpoint do SERPRO.
+  - **Solução:** o backend passou a expor o detalhe bruto do `HTTP 400` na autenticação do SERPRO para facilitar o diagnóstico; testar novamente com `SERPRO_AUTH_DEBUG=true` no `.env` local quando precisar validar o motivo exato retornado pelo serviço.
+- **Após autenticar no SERPRO, a declaração retorna `Required property 'TipoDeclaracao' not found in JSON`:**
+  - **Sintoma:** a linha da empresa aparece com status `400` e mensagem informando ausência de `TipoDeclaracao` dentro de `declaracao`.
+  - **Causa provável:** o backend estava montando o objeto com a chave `tipoDeclaracao` em minúsculo e o front nem sempre enviava esse campo explicitamente.
+  - **Solução:** a rota passou a enviar `TipoDeclaracao` com capitalização compatível com o contrato do SERPRO e assume `1` (declaração original) quando o front não informar o valor.
 - **Ao filtrar empresas, marcar uma e limpar a busca, a tela passa a indicar seleção total incorreta:**
   - **Sintoma:** ao marcar empresa(s) em um resultado filtrado e depois limpar o campo de busca, o checkbox `Selecionar todas as exibidas` aparece marcado como se toda a base estivesse selecionada.
   - **Causa provável:** a renderização estava reaproveitando o estado visual do checkbox mestre filtrado para remontar a lista inteira, em vez de recalcular a seleção a partir dos IDs realmente marcados.

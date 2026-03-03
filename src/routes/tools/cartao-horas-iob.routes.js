@@ -18,6 +18,7 @@ module.exports = function createCartaoHorasIobRoutes(deps) {
         }
 
         const eventosJson = req.body?.eventos_json || '{}';
+        const idsJson = req.body?.ids_json || '{}';
 
         const form = new FormData();
         form.append('arquivo', arquivo.buffer, {
@@ -25,6 +26,7 @@ module.exports = function createCartaoHorasIobRoutes(deps) {
           contentType: arquivo.mimetype || 'application/pdf',
         });
         form.append('eventos_json', eventosJson);
+        form.append('ids_json', idsJson);
 
         const pyResp = await axios.post(`${PY_API_URL}/api/cartao-horas-iob/processar`, form, {
           headers: form.getHeaders(),

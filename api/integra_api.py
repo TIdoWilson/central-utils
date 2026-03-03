@@ -31,7 +31,6 @@ from api.excel_abas_pdf_core import exportar_abas_para_pdf
 
 from api.separador_csv_baixa_automatica_core import processar_baixa_automatica_arquivo
 from api.comparador_eventos_holerite_core import processar_comparador_eventos_holerite
-from api.cartao_horas_iob_core import processar_pdf_cartao_iob
 
 app = FastAPI(title="Integração Python API")
 
@@ -90,18 +89,26 @@ async def processar_comparador_eventos_holerite_endpoint(
 async def processar_cartao_horas_iob_endpoint(
     arquivo: UploadFile = File(...),
     eventos_json: str = Form("{}"),
+    ids_json: str = Form("{}"),
 ):
     try:
+        from api.cartao_horas_iob_core import processar_pdf_cartao_iob
+
         pdf_bytes = await arquivo.read()
         try:
             eventos_config = json.loads(eventos_json or "{}")
         except json.JSONDecodeError as exc:
             raise HTTPException(status_code=400, detail="Configuracao de eventos invalida.") from exc
+        try:
+            ids_por_chave = json.loads(ids_json or "{}")
+        except json.JSONDecodeError as exc:
+            raise HTTPException(status_code=400, detail="Configuracao de IDs invalida.") from exc
 
         resultado = processar_pdf_cartao_iob(
             pdf_bytes=pdf_bytes,
             nome_arquivo=arquivo.filename or "cartao.pdf",
             eventos_config=eventos_config,
+            ids_por_chave=ids_por_chave,
         )
         txt_bytes = "\n".join(resultado["linhas"]).encode("utf-8")
         return {
@@ -117,9 +124,15 @@ async def processar_cartao_horas_iob_endpoint(
             "layoutOrigem": (resultado["resumos"][0].get("layout_origem") if resultado["resumos"] else ""),
             "tiposEvento": resultado["tipos_evento"],
             "totaisEvento": resultado["totais_evento"],
+            "funcionariosSemId": resultado["funcionarios_sem_id"],
             "eventosPadrao": resultado["eventos_padrao"],
             "previewLinhas": resultado["linhas"][:20],
         }
+    except FileNotFoundError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="Ferramenta indisponivel neste ambiente: script de conversao do cartao de horas nao localizado.",
+        ) from exc
     except HTTPException:
         raise
     except Exception as exc:
