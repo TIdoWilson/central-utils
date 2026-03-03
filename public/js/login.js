@@ -2,11 +2,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('loginForm');
   const msg = document.getElementById('loginMessage');
   const btn = document.getElementById('btnLogin');
+  const passwordInput = document.getElementById('password');
+  const passwordToggle = document.getElementById('passwordToggle');
 
   function setMsg(text) {
     if (!msg) return;
     msg.textContent = text || '';
   }
+
+  function updatePasswordToggle() {
+    if (!passwordInput || !passwordToggle) return;
+    const isVisible = passwordInput.type === 'text';
+    passwordToggle.setAttribute('aria-pressed', isVisible ? 'true' : 'false');
+    passwordToggle.setAttribute('aria-label', isVisible ? 'Ocultar senha' : 'Mostrar senha');
+    passwordToggle.classList.toggle('is-visible', isVisible);
+  }
+
+  passwordToggle?.addEventListener('click', () => {
+    if (!passwordInput) return;
+    passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+    updatePasswordToggle();
+    passwordInput.focus({ preventScroll: true });
+    const valueLength = passwordInput.value.length;
+    passwordInput.setSelectionRange(valueLength, valueLength);
+  });
+
+  updatePasswordToggle();
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -14,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btn) btn.disabled = true;
 
     const email = (document.getElementById('email')?.value || '').trim().toLowerCase();
-    const password = document.getElementById('password')?.value || '';
+    const password = passwordInput?.value || '';
 
     if (!email || !email.includes('@') || !password) {
       setMsg('Informe e-mail e senha.');
