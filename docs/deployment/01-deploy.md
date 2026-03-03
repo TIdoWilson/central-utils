@@ -33,12 +33,14 @@ npm run release:vps -- main
 
 - Esse fluxo faz:
   - se `HAPI_API_TOKEN` estiver configurado, executa checagem prévia da VPS via Hostinger CLI/API;
+  - valida o firewall da Hostinger com as portas TCP obrigatórias configuradas;
   - valida que o `git` local está limpo;
   - executa `git push origin <branch>`;
   - sincroniza o `.env` da VPS a partir do arquivo local `.env.vps` (ou `.env`, se `.env.vps` não existir);
   - conecta por `ssh` na VPS;
   - roda `scripts/deploy-vps.sh`;
-  - aplica `npm run migrate` na VPS antes de reiniciar os serviços.
+  - aplica `npm run migrate` na VPS antes de reiniciar os serviços;
+  - se `HAPI_API_TOKEN` estiver configurado, roda uma checagem pós-deploy de saúde da VPS.
 
 ### 3. Deploy dentro da VPS
 
@@ -56,10 +58,62 @@ Se a máquina local tiver a CLI oficial `hapi` instalada e `HAPI_API_TOKEN` conf
 
 ```bash
 npm run hostinger:vps:status
+npm run hostinger:health
+npm run hostinger:firewall:check
 npm run hostinger:predeploy
+npm run hostinger:postdeploy
 ```
 
 Esses comandos usam a API/CLI oficial da Hostinger para consultar a VPS antes do deploy.
+
+### Banco de dados e migrations
+
+- Toda alteração de banco feita no desenvolvimento precisa virar arquivo SQL em `db/migrations/`.
+- O deploy da VPS só aplica o que estiver versionado nessa pasta.
+- Se alguma alteração foi feita diretamente no banco local e ainda não existe migration correspondente, ela **não** irá para a VPS automaticamente.
+- Antes de publicar, confirme:
+  - a migration `.sql` existe em `db/migrations/`;
+  - a migration foi testada no banco local;
+  - `npm run migrate` está limpo localmente.
+
+### Bloco único para terminal web da VPS
+
+Se o SSH externo continuar indisponível, use este bloco no terminal web da Hostinger.
+
+Antes de colar:
+- confirme que o repositório já existe em `/opt/central-utils`;
+- atualize manualmente `/opt/central-utils/.env` se houver mudança de variáveis;
+- confirme que as alterações de banco já estão versionadas em `db/migrations/`.
+
+```bash
+cd /opt/central-utils && \
+git fetch --all --prune && \
+git checkout main && \
+git pull --ff-only origin main && \
+if [ -f package-lock.json ]; then npm ci; else npm install; fi && \
+if [ ! -d .venv ]; then python3 -m venv .venv; fi && \
+.venv/bin/python -m pip install --upgrade pip && \
+if [ -f api/requirements.txt ]; then .venv/bin/python -m pip install -r api/requirements.txt; fi && \
+if [ -f requirements.txt ]; then .venv/bin/python -m pip install -r requirements.txt; fi && \
+npm run migrate && \
+systemctl daemon-reload && \
+systemctl restart central-python central-go central-node caddy && \
+systemctl --no-pager --full status central-python central-go central-node caddy
+```
+
+Se preferir usar o script versionado do projeto, o equivalente é:
+
+```bash
+cd /opt/central-utils && APP_DIR=/opt/central-utils bash scripts/deploy-vps.sh main
+```
+
+### Bootstrap inicial da VPS
+
+O repositório agora inclui um script versionado para post-install/bootstrap da VPS:
+
+- [`scripts/templates/hostinger-post-install-central-utils.sh`](/w:/DOCUMENTOS%20ESCRITORIO/INSTALACAO%20SISTEMA/central-utils/scripts/templates/hostinger-post-install-central-utils.sh)
+
+Ele pode ser usado como base tanto para o recurso `post-install-scripts` da Hostinger quanto para uma configuração manual inicial da VPS.
 
 ---
 

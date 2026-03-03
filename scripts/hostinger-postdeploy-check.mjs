@@ -25,10 +25,8 @@ function run(command, args) {
 }
 
 try {
-  run('node', ['scripts/hostinger-vps-status.mjs']);
   run('node', ['scripts/hostinger-health.mjs']);
-  run('node', ['scripts/hostinger-firewall-check.mjs']);
 } catch (error) {
-  console.error('[hostinger:predeploy] Falha na checagem pré-deploy:', error?.message || error);
+  console.error('[hostinger:postdeploy] Falha na checagem pós-deploy:', error?.message || error);
   process.exitCode = 1;
 }

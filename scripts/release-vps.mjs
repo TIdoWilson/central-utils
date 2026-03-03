@@ -113,6 +113,11 @@ function main() {
 
   console.log(`[release] ssh ${sshTarget}`);
   run('ssh', sshArgs);
+
+  if (process.env.HAPI_API_TOKEN) {
+    console.log('[release] hostinger postdeploy check');
+    run('node', ['scripts/hostinger-postdeploy-check.mjs']);
+  }
 }
 
 try {

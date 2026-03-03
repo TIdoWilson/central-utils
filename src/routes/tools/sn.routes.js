@@ -195,6 +195,7 @@ module.exports = function createSnRoutes(deps) {
         pa,
         indicadorTransmissao,
         indicadorComparacao,
+        tipoDeclaracao,
         receitaInterna,
         receitaExterna,
         complemento,
@@ -224,6 +225,10 @@ module.exports = function createSnRoutes(deps) {
         receitaInterna === undefined || receitaInterna === null ? 0 : receitaInterna;
       const receitaExternaNormalizada =
         receitaExterna === undefined || receitaExterna === null ? 0 : receitaExterna;
+      const tipoDeclaracaoNormalizado =
+        tipoDeclaracao === undefined || tipoDeclaracao === null || tipoDeclaracao === ''
+          ? 1
+          : Number(tipoDeclaracao);
 
       const empresasCadastradas = await dbGetSnCompanies();
       let empresasParaDeclarar = [];
@@ -277,7 +282,7 @@ module.exports = function createSnRoutes(deps) {
           }
 
           const declaracaoObj = {
-            tipoDeclaracao: req.body.tipoDeclaracao,
+            TipoDeclaracao: tipoDeclaracaoNormalizado,
             receitaPaCompetenciaInterno: receitaInternaNormalizada,
             receitaPaCompetenciaExterno: receitaExternaNormalizada,
             ...(complemento || {}),
