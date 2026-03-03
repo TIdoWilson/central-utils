@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checklist TI - Criacao de Usuario</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="app-body nfe-body page-checklist-ti-criacao-usuario">
+  <div class="nfe-layout">
+    <aside class="nfe-sidebar">
+      <div class="nfe-sidebar-top">
+        <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+    </aside>
+
+    <main class="nfe-main">
+      <header class="nfe-header">
+        <div class="nfe-breadcrumb">Portal / Admin / Checklist TI - Criacao de Usuario</div>
+        <h1>Checklist TI - Criacao de Usuario</h1>
+        <p>Salve rascunhos, finalize definitivamente e gere PDF bloqueado para edicao.</p>
+      </header>
+
+      <section class="nfe-row">
+        <div class="nfe-card nfe-card-upload" style="flex: 1.5;">
+          <h2>Formulario</h2>
+          <p class="nfe-card-subtitle">Depois da finalizacao definitiva, o documento nao pode mais ser editado.</p>
+
+          <form id="checklistForm" class="nfe-upload-form checklist-form">
+            <input type="hidden" id="documentId" />
+
+            <div class="checklist-grid checklist-grid-2">
+              <label class="auth-label checklist-field">
+                <span>Numero do processo (automatico)</span>
+                <input class="auth-input" id="processNumber" type="text" readonly />
+              </label>
+              <label class="auth-label checklist-field">
+                <span>Data</span>
+                <input class="auth-input" id="requestDate" type="date" />
+              </label>
+            </div>
+
+            <label class="auth-label checklist-field">
+              <span>Nome do funcionario</span>
+              <input class="auth-input" id="employeeName" type="text" maxlength="180" />
+            </label>
+
+            <div class="checklist-grid checklist-grid-3">
+              <label class="auth-label checklist-field">
+                <span>CPF</span>
+                <input class="auth-input" id="cpf" type="text" maxlength="20" placeholder="Somente numeros ou formatado" />
+              </label>
+              <label class="auth-label checklist-field">
+                <span>Setor</span>
+                <input class="auth-input" id="department" type="text" maxlength="180" />
+              </label>
+              <label class="auth-label checklist-field">
+                <span>Responsavel TI</span>
+                <input class="auth-input" id="itResponsible" type="text" maxlength="180" readonly />
+              </label>
+            </div>
+
+            <label class="auth-label checklist-field">
+              <span>E-mail de usuario (replicado para todos os sistemas)</span>
+              <input class="auth-input" id="systemUserEmail" type="email" maxlength="320" placeholder="usuario@empresa.com.br" />
+            </label>
+
+            <label class="auth-label checklist-field">
+              <span>Usuario IOB (login proprio, nao e e-mail)</span>
+              <input class="auth-input" id="userIobLogin" type="text" maxlength="180" placeholder="Ex.: usuario.iob" />
+            </label>
+
+            <section class="nfe-card checklist-preview-card">
+              <h3 style="margin-top: 0;">Senhas por sistema</h3>
+              <p class="nfe-card-subtitle">Cada sistema pode ter uma senha diferente.</p>
+
+              <div class="checklist-grid checklist-grid-2">
+                <label class="auth-label checklist-field">
+                  <span>1) E-mail corporativo</span>
+                  <div class="checklist-password-row">
+                    <input class="auth-input" id="passwordEmailCorporativo" type="text" maxlength="180" />
+                    <button type="button" class="btn btn-secondary btn-sm" data-password-target="passwordEmailCorporativo">Gerar</button>
+                  </div>
+                </label>
+
+                <label class="auth-label checklist-field">
+                  <span>2) Microsoft Teams</span>
+                  <div class="checklist-password-row">
+                    <input class="auth-input" id="passwordMicrosoftTeams" type="text" maxlength="180" />
+                    <button type="button" class="btn btn-secondary btn-sm" data-password-target="passwordMicrosoftTeams">Gerar</button>
+                  </div>
+                </label>
+
+                <label class="auth-label checklist-field">
+                  <span>3) Sistema Monitor</span>
+                  <div class="checklist-password-row">
+                    <input class="auth-input" id="passwordSistemaMonitor" type="text" maxlength="180" />
+                    <button type="button" class="btn btn-secondary btn-sm" data-password-target="passwordSistemaMonitor">Gerar</button>
+                  </div>
+                </label>
+
+                <label class="auth-label checklist-field">
+                  <span>4) Sistema Tareffa / Integrador</span>
+                  <div class="checklist-password-row">
+                    <input class="auth-input" id="passwordSistemaTareffaIntegrador" type="text" maxlength="180" />
+                    <button type="button" class="btn btn-secondary btn-sm" data-password-target="passwordSistemaTareffaIntegrador">Gerar</button>
+                  </div>
+                </label>
+
+                <label class="auth-label checklist-field">
+                  <span>5) Sistema Pink</span>
+                  <div class="checklist-password-row">
+                    <input class="auth-input" id="passwordSistemaPink" type="text" maxlength="180" />
+                    <button type="button" class="btn btn-secondary btn-sm" data-password-target="passwordSistemaPink">Gerar</button>
+                  </div>
+                </label>
+
+                <label class="auth-label checklist-field">
+                  <span>6) Usuario IOB</span>
+                  <div class="checklist-password-row">
+                    <input class="auth-input" id="passwordUsuarioIob" type="text" maxlength="180" />
+                    <button type="button" class="btn btn-secondary btn-sm" data-password-target="passwordUsuarioIob">Gerar</button>
+                  </div>
+                </label>
+              </div>
+            </section>
+
+            <div class="checklist-grid checklist-grid-2">
+              <label class="auth-label checklist-field">
+                <span>Nome da maquina</span>
+                <input class="auth-input" id="machineName" type="text" maxlength="180" />
+              </label>
+            </div>
+
+            <div class="checklist-checkboxes">
+              <label><input id="sharedFoldersReleased" type="checkbox" /> Pastas compartilhadas liberadas</label>
+              <label><input id="printersConfigured" type="checkbox" /> Impressoras configuradas</label>
+              <label><input id="emailSignatureStandardized" type="checkbox" /> Assinatura de e-mail padronizada</label>
+            </div>
+
+            <label class="auth-label checklist-field">
+              <span>Observacoes</span>
+              <textarea id="observations" class="auth-textarea checklist-textarea" rows="4" maxlength="4000"></textarea>
+            </label>
+
+            <div class="nfe-table-actions checklist-actions">
+              <button id="btnSaveDraft" type="button" class="btn btn-secondary">Salvar rascunho</button>
+              <button id="btnFinalizeDocument" type="submit" class="btn btn-primary">Salvar definitivo e gerar PDF</button>
+              <button id="btnResetForm" type="button" class="btn btn-secondary">Novo formulario</button>
+            </div>
+            <div id="formMessage" class="nfe-upload-message" aria-live="polite"></div>
+          </form>
+        </div>
+      </section>
+
+      <section class="nfe-card nfe-card-table" style="margin-top: 16px;">
+        <div class="nfe-card-header nfe-card-header-with-actions">
+          <div>
+            <h2>Documentos</h2>
+            <p class="nfe-card-subtitle">Rascunhos podem continuar; finalizados ficam bloqueados.</p>
+          </div>
+          <div class="nfe-table-actions">
+            <button id="btnReloadList" class="btn btn-secondary" type="button">Recarregar</button>
+          </div>
+        </div>
+        <div class="nfe-table-wrapper">
+          <table class="nfe-table" id="documentsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Processo</th>
+                <th>Funcionario</th>
+                <th>Status</th>
+                <th>Atualizado em</th>
+                <th>Acoes</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
+  <script src="/js/checklist-ti-criacao-usuario.js"></script>
+</body>
+</html>

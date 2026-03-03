@@ -40,12 +40,16 @@ module.exports = function createSnRoutes(deps) {
 
   router.post('/companies', requireCsrf, async (req, res) => {
     try {
-      const { cnpj, razaoSocial } = req.body;
+      const cnpj = String(req.body?.cnpj || '').replace(/\D/g, '');
+      const razaoSocial = String(req.body?.razaoSocial || '').trim();
 
       if (!cnpj || !razaoSocial) {
         return res
           .status(400)
           .json({ error: 'Campos obrigatórios: cnpj e razaoSocial.' });
+      }
+      if (cnpj.length !== 14) {
+        return res.status(400).json({ error: 'CNPJ deve ter 14 dígitos.' });
       }
 
       const existing = await pool.query(
@@ -63,6 +67,69 @@ module.exports = function createSnRoutes(deps) {
     } catch (err) {
       console.error('Erro ao cadastrar empresa SN:', err);
       res.status(500).json({ error: 'Erro ao cadastrar empresa.' });
+    }
+  });
+
+  router.put('/companies/:id', requireCsrf, async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      const cnpj = String(req.body?.cnpj || '').replace(/\D/g, '');
+      const razaoSocial = String(req.body?.razaoSocial || '').trim();
+
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).json({ error: 'ID da empresa inválido.' });
+      }
+      if (!cnpj || !razaoSocial) {
+        return res
+          .status(400)
+          .json({ error: 'Campos obrigatórios: cnpj e razaoSocial.' });
+      }
+      if (cnpj.length !== 14) {
+        return res.status(400).json({ error: 'CNPJ deve ter 14 dígitos.' });
+      }
+
+      const existing = await pool.query(
+        'SELECT id FROM sn_companies WHERE cnpj = $1 AND id <> $2',
+        [cnpj, id]
+      );
+      if (existing.rowCount > 0) {
+        return res
+          .status(400)
+          .json({ error: 'Já existe empresa cadastrada com este CNPJ.' });
+      }
+
+      const result = await pool.query(
+        `
+          UPDATE sn_companies
+          SET cnpj = $1, razao_social = $2
+          WHERE id = $3
+          RETURNING id, cnpj, razao_social
+        `,
+        [cnpj, razaoSocial, id]
+      );
+
+      if (result.rowCount === 0) {
+        return res.status(404).json({ error: 'Empresa não encontrada.' });
+      }
+
+      const company = result.rows[0];
+
+      await auditLog?.(
+        req,
+        'sn_company_update',
+        'ok',
+        { companyId: company.id, cnpj: company.cnpj },
+        req.user || req.auth?.user || null
+      );
+
+      return res.json({
+        id: company.id,
+        cnpj: company.cnpj,
+        razaoSocial: company.razao_social,
+      });
+    } catch (err) {
+      console.error('Erro ao atualizar empresa SN:', err);
+      res.status(500).json({ error: 'Erro ao atualizar empresa.' });
     }
   });
 
@@ -93,7 +160,10 @@ module.exports = function createSnRoutes(deps) {
 
   router.post('/receipts/batch-download', requireCsrf, async (req, res) => {
     try {
-      const ids = Array.isArray(req.body?.ids) ? req.body.ids.map(Number) : [];
+      const idsEntrada = Array.isArray(req.body?.ids)
+        ? req.body.ids
+        : (Array.isArray(req.body?.receiptIds) ? req.body.receiptIds : []);
+      const ids = idsEntrada.map(Number).filter((id) => Number.isFinite(id));
       if (!ids.length) return res.status(400).json({ error: 'IDs obrigatórios.' });
 
       const receipts = await dbGetReceiptsByIds(ids);
@@ -122,7 +192,6 @@ module.exports = function createSnRoutes(deps) {
   router.post('/declaration', requireCsrf, async (req, res) => {
     try {
       const {
-        contratante,
         pa,
         indicadorTransmissao,
         indicadorComparacao,
@@ -130,29 +199,47 @@ module.exports = function createSnRoutes(deps) {
         receitaExterna,
         complemento,
         empresas,
+        companyIds = null,
+        all = false,
         estabelecimentosEntrada,
         valoresParaComparacao,
       } = req.body || {};
 
+      const contratante = process.env.CNPJ_CONTRATANTE;
+
       if (!contratante) {
-        return res.status(400).json({ error: 'CNPJ contratante obrigatório.' });
+        return res.status(500).json({ error: 'CNPJ_CONTRATANTE nao configurado no .env.' });
       }
       if (!pa) {
         return res.status(400).json({ error: 'Período de apuração (pa) obrigatório.' });
       }
-      if (!indicadorTransmissao) {
-        return res.status(400).json({ error: 'Indicador de transmissão obrigatório.' });
+      if (typeof indicadorTransmissao !== 'boolean') {
+        return res.status(400).json({ error: 'Indicador de transmissao obrigatorio.' });
       }
-      if (!indicadorComparacao) {
-        return res.status(400).json({ error: 'Indicador de comparação obrigatório.' });
+      if (typeof indicadorComparacao !== 'boolean') {
+        return res.status(400).json({ error: 'Indicador de comparacao obrigatorio.' });
       }
-      if (!receitaInterna && receitaInterna !== 0) {
-        return res.status(400).json({ error: 'Receita interna obrigatória.' });
+
+      const receitaInternaNormalizada =
+        receitaInterna === undefined || receitaInterna === null ? 0 : receitaInterna;
+      const receitaExternaNormalizada =
+        receitaExterna === undefined || receitaExterna === null ? 0 : receitaExterna;
+
+      const empresasCadastradas = await dbGetSnCompanies();
+      let empresasParaDeclarar = [];
+
+      if (Array.isArray(empresas) && empresas.length > 0) {
+        empresasParaDeclarar = empresas;
+      } else if (all) {
+        empresasParaDeclarar = empresasCadastradas;
+      } else if (Array.isArray(companyIds) && companyIds.length > 0) {
+        const idsNum = companyIds.map(Number).filter((id) => Number.isFinite(id));
+        empresasParaDeclarar = empresasCadastradas.filter((empresa) =>
+          idsNum.includes(empresa.id)
+        );
       }
-      if (!receitaExterna && receitaExterna !== 0) {
-        return res.status(400).json({ error: 'Receita externa obrigatória.' });
-      }
-      if (!Array.isArray(empresas) || empresas.length === 0) {
+
+      if (!Array.isArray(empresasParaDeclarar) || empresasParaDeclarar.length === 0) {
         return res.status(400).json({ error: 'Selecione empresas.' });
       }
 
@@ -175,7 +262,7 @@ module.exports = function createSnRoutes(deps) {
 
       const resultados = [];
 
-      for (const empresa of empresas) {
+      for (const empresa of empresasParaDeclarar) {
         try {
           let estabelecimentos;
 
@@ -191,8 +278,8 @@ module.exports = function createSnRoutes(deps) {
 
           const declaracaoObj = {
             tipoDeclaracao: req.body.tipoDeclaracao,
-            receitaPaCompetenciaInterno: receitaInterna,
-            receitaPaCompetenciaExterno: receitaExterna,
+            receitaPaCompetenciaInterno: receitaInternaNormalizada,
+            receitaPaCompetenciaExterno: receitaExternaNormalizada,
             ...(complemento || {}),
             estabelecimentos,
           };
@@ -286,6 +373,10 @@ module.exports = function createSnRoutes(deps) {
       } = req.body;
 
       const contratante = process.env.CNPJ_CONTRATANTE;
+
+      if (!contratante) {
+        return res.status(500).json({ error: 'CNPJ_CONTRATANTE nao configurado no .env.' });
+      }
 
       if (!pa) {
         return res

@@ -3,6 +3,7 @@
 from pathlib import Path
 import tempfile
 import shutil
+import json
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel
 
@@ -12,7 +13,7 @@ from api.gerador_atas_core import (
     gerar_ata as gerar_ata_core,
 )
 
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks
 from fastapi.responses import StreamingResponse
 
 # Importações dos módulos internos (sem circular)
@@ -29,6 +30,8 @@ from api.extrator_zip_rar_core import processar_pasta_zip_rar
 from api.excel_abas_pdf_core import exportar_abas_para_pdf
 
 from api.separador_csv_baixa_automatica_core import processar_baixa_automatica_arquivo
+from api.comparador_eventos_holerite_core import processar_comparador_eventos_holerite
+from api.cartao_horas_iob_core import processar_pdf_cartao_iob
 
 app = FastAPI(title="Integração Python API")
 
@@ -40,6 +43,88 @@ from api.ajuste_diario_gfbr_core import ajustar_diario_gfbr
 
 from api.conciliador_cartao_wilson_core import conciliar_cartao_wilson, VALOR_TOLERANCIA_PADRAO
 from api.conciliador_cartao_tipo50_core import conciliar_cartao_tipo50
+from api.conciliador_pis_cofins_core import conciliar_pis_cofins
+
+
+@app.post("/api/comparador-eventos-holerite/processar")
+async def processar_comparador_eventos_holerite_endpoint(
+    arquivo: UploadFile = File(...),
+    competencia_anterior: str | None = Form(None),
+    competencia_atual: str | None = Form(None),
+    ocultar_eventos_json: str | None = Form(None),
+):
+    try:
+        conteudo = await arquivo.read()
+        eventos_ocultos = []
+        if ocultar_eventos_json:
+            try:
+                eventos_ocultos = json.loads(ocultar_eventos_json)
+            except json.JSONDecodeError as exc:
+                raise HTTPException(status_code=400, detail="Lista de filtros invalida.") from exc
+        resultado = processar_comparador_eventos_holerite(
+            arquivo_bytes=conteudo,
+            nome_arquivo=arquivo.filename or "arquivo.slk",
+            competencia_anterior=competencia_anterior,
+            competencia_atual=competencia_atual,
+            eventos_ocultos=eventos_ocultos,
+        )
+        return {
+            "ok": True,
+            "competenciasEncontradas": resultado["competencias_encontradas"],
+            "competenciaAnterior": resultado["competencia_anterior"],
+            "competenciaAtual": resultado["competencia_atual"],
+            "competenciaAnteriorExtenso": resultado["competencia_anterior_extenso"],
+            "competenciaAtualExtenso": resultado["competencia_atual_extenso"],
+            "preview": resultado["preview"],
+            "totalFuncionariosComDiferenca": resultado["total_funcionarios_com_diferenca"],
+            "arquivoSaida": resultado["arquivo_saida"],
+            "xlsxBase64": base64.b64encode(resultado["xlsx_bytes"]).decode("ascii"),
+        }
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as exc:
+        print("Erro ao processar comparador de eventos de holerite:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao processar o arquivo SLK.")
+
+@app.post("/api/cartao-horas-iob/processar")
+async def processar_cartao_horas_iob_endpoint(
+    arquivo: UploadFile = File(...),
+    eventos_json: str = Form("{}"),
+):
+    try:
+        pdf_bytes = await arquivo.read()
+        try:
+            eventos_config = json.loads(eventos_json or "{}")
+        except json.JSONDecodeError as exc:
+            raise HTTPException(status_code=400, detail="Configuracao de eventos invalida.") from exc
+
+        resultado = processar_pdf_cartao_iob(
+            pdf_bytes=pdf_bytes,
+            nome_arquivo=arquivo.filename or "cartao.pdf",
+            eventos_config=eventos_config,
+        )
+        txt_bytes = "\n".join(resultado["linhas"]).encode("utf-8")
+        return {
+            "ok": True,
+            "nomeArquivo": resultado["nome_saida"],
+            "txtBase64": base64.b64encode(txt_bytes).decode("ascii"),
+            "totalFuncionarios": resultado["total_funcionarios"],
+            "totalLancamentos": resultado["total_lancamentos"],
+            "totalRegistrosTxt": resultado["total_registros_txt"],
+            "empresa": (resultado["resumos"][0].get("empresa") if resultado["resumos"] else ""),
+            "periodoInicial": (resultado["resumos"][0].get("periodo_inicial") if resultado["resumos"] else ""),
+            "periodoFinal": (resultado["resumos"][0].get("periodo_final") if resultado["resumos"] else ""),
+            "layoutOrigem": (resultado["resumos"][0].get("layout_origem") if resultado["resumos"] else ""),
+            "tiposEvento": resultado["tipos_evento"],
+            "totaisEvento": resultado["totais_evento"],
+            "eventosPadrao": resultado["eventos_padrao"],
+            "previewLinhas": resultado["linhas"][:20],
+        }
+    except HTTPException:
+        raise
+    except Exception as exc:
+        print("Erro ao processar cartao horas IOB:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao processar o PDF do cartao.")
 # =========================
 # MODELO DE ENTRADA (FÉRIAS)
 # =========================
@@ -369,6 +454,29 @@ async def api_conciliador_cartao_tipo50(
             arquivo_b_bytes,
             arquivoB.filename or "arquivo_b.pdf",
         )
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/api/conciliador/pis-cofins")
+async def api_conciliador_pis_cofins(
+    arquivos: List[UploadFile] = File(...),
+    modo: str = Form("AUTO"),
+):
+    try:
+        if not arquivos or len(arquivos) < 3:
+            raise HTTPException(status_code=400, detail="Envie no minimo 3 PDFs.")
+
+        payload: list[tuple[str, bytes]] = []
+        for arq in arquivos:
+            conteudo = await arq.read()
+            if len(conteudo) > 25 * 1024 * 1024:
+                raise HTTPException(status_code=413, detail=f"PDF muito grande: {arq.filename}")
+            payload.append((arq.filename or "arquivo.pdf", conteudo))
+
+        return conciliar_pis_cofins(payload, modo=modo)
     except HTTPException:
         raise
     except Exception as e:

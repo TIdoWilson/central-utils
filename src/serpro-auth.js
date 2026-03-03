@@ -2,7 +2,8 @@
 const fs = require("fs");
 const https = require("https");
 const axios = require("axios");
-require("dotenv").config();
+const { resolveAppPath, resolveConfiguredPath } = require("./core/path-resolver");
+require("dotenv").config({ path: resolveAppPath('.env') });
 
 async function autenticarSerpro() {
   // ⚠️ AGORA usando o endpoint CORRETO da documentação:
@@ -15,7 +16,7 @@ async function autenticarSerpro() {
   const timeoutMs = Number(process.env.SERPRO_AUTH_TIMEOUT_MS || 30000);
   const debugAuth = ["1", "true", "yes", "on"].includes(String(process.env.SERPRO_AUTH_DEBUG || "").toLowerCase());
 
-  const certPath = process.env.CERT_PFX_PATH || process.env.SERPRO_PFX_PATH;
+  const certPath = resolveConfiguredPath(process.env.CERT_PFX_PATH || process.env.SERPRO_PFX_PATH);
   const certPassword = process.env.CERT_PFX_PASSWORD || process.env.SERPRO_PFX_PASSWORD;
 
   if (!url || !consumerKey || !consumerSecret || !certPath || !certPassword) {

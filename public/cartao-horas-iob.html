@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal - Cartao Horas IOB</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">WL</span>
+            <span class="logo-text">Portal</span>
+          </div>
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Pessoal / Cartao Horas IOB</div>
+          <h1>Importador Cartao Horas IOB</h1>
+          <p>Envie um PDF de cartao de ponto, escolha quais tipos de horas devem entrar no TXT final e informe o codigo de evento de cada um.</p>
+        </header>
+
+        <section class="nfe-row" style="grid-template-columns: minmax(340px, 420px) 1fr; gap: 16px;">
+          <div class="nfe-card nfe-card-upload">
+            <h2>Arquivo e configuracao</h2>
+            <p class="nfe-card-subtitle">O TXT final segue o layout IOB. Se um tipo nao estiver marcado ou estiver com codigo 0, ele nao entra no arquivo.</p>
+
+            <form id="formCartaoHorasIob" class="nfe-upload-form">
+              <label class="nfe-input-file-label">
+                <span>Selecionar PDF do cartao</span>
+                <input type="file" id="arquivoCartao" name="arquivo" accept="application/pdf" required />
+              </label>
+
+              <div id="configEventosIob" class="nfe-table-wrapper" style="margin-top: 14px;"></div>
+
+              <div class="nfe-table-actions" style="margin-top: 14px;">
+                <button type="submit" class="btn btn-primary" id="btnGerarTxtIob">Gerar TXT IOB</button>
+                <button type="button" class="btn btn-secondary" id="btnBaixarTxtIob" disabled>Baixar TXT</button>
+              </div>
+            </form>
+
+            <div id="statusCartaoHorasIob" class="nfe-upload-message" style="margin-top: 10px;"></div>
+          </div>
+
+          <div class="nfe-card">
+            <h2>Preview do PDF</h2>
+            <p class="nfe-card-subtitle">A visualizacao do PDF aparece assim que o arquivo for selecionado.</p>
+            <div id="infoArquivoCartao" class="nfe-card-subtitle" style="margin-bottom: 10px;">
+              <p>Nenhum PDF selecionado.</p>
+            </div>
+            <iframe
+              id="previewPdfCartao"
+              title="Preview do PDF do cartao"
+              src="about:blank"
+              style="width: 100%; min-height: 620px; border: 1px solid #dbe4ee; border-radius: 12px; background: #fff;"
+            ></iframe>
+          </div>
+        </section>
+
+        <section class="nfe-card">
+          <h2>Resumo da previa automatica</h2>
+          <p class="nfe-card-subtitle">A previa abaixo atualiza ao trocar o PDF ou alterar os eventos, antes de clicar em gerar.</p>
+          <div id="resumoCartaoHorasIob" class="nfe-card-subtitle">
+            <p>Nenhum processamento ainda.</p>
+          </div>
+        </section>
+
+        <section class="nfe-card">
+          <h2>Totais identificados no PDF</h2>
+          <p class="nfe-card-subtitle">Resumo das horas e ocorrencias que o parser encontrou no arquivo, independente dos eventos marcados.</p>
+          <div id="totaisCartaoHorasIob" class="nfe-table-wrapper">
+            <p class="nfe-card-subtitle">Nenhum PDF processado ainda.</p>
+          </div>
+        </section>
+
+        <section class="nfe-card nfe-card-table">
+          <div class="nfe-card-header nfe-card-header-with-actions">
+            <div>
+              <h2>Previa automatica do TXT</h2>
+              <p class="nfe-card-subtitle">Confira as primeiras linhas antes de baixar o arquivo.</p>
+            </div>
+          </div>
+          <div class="nfe-table-wrapper">
+            <table class="nfe-table">
+              <thead>
+                <tr>
+                  <th>Linha</th>
+                  <th>Conteudo</th>
+                </tr>
+              </thead>
+              <tbody id="previewCartaoHorasIob"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/upload-helper.js"></script>
+    <script src="/js/cartao-horas-iob.js"></script>
+  </body>
+</html>

@@ -1,6 +1,7 @@
 ﻿const express = require('express');
 const { PDFDocument } = require('pdf-lib');
 
+const { resolveConfiguredPath } = require('../../core/path-resolver');
 function safeName(name) {
   return String(name || 'arquivo.xlsx').replace(/[^\w.\- ]+/g, '_');
 }
@@ -69,10 +70,13 @@ module.exports = function createBalanceteTransitorioRoutes(deps) {
       });
     }
 
-    const exePath = process.env.BALANCETE_TRANSITORIO_EXE_PATH || defaultExePath;
+    const exePath =
+      resolveConfiguredPath(process.env.BALANCETE_TRANSITORIO_EXE_PATH || process.env.BALANCETE_EXE_PATH) ||
+      defaultExePath;
     if (!fs.existsSync(exePath)) {
       return res.status(500).json({
-        message: 'Executavel do balancete nao encontrado. Configure BALANCETE_TRANSITORIO_EXE_PATH no .env.',
+        message:
+          'Executavel do balancete nao encontrado. Configure BALANCETE_TRANSITORIO_EXE_PATH ou BALANCETE_EXE_PATH no .env.',
       });
     }
 

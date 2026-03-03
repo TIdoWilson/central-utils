@@ -149,6 +149,109 @@
     <script src="/js/upload-helper.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/dimob.js"></script>
+    <script>
+        (function () {
+            const wrapper = document.getElementById('newTenantsTableWrapper');
+            if (!wrapper) return;
+
+            const fieldSelector = [
+                'input:not([disabled]):not([readonly])',
+                'textarea:not([disabled]):not([readonly])',
+                'select:not([disabled])'
+            ].join(', ');
+
+            function getRows() {
+                return Array.from(wrapper.querySelectorAll('table tbody tr'));
+            }
+
+            function getRowFields(row) {
+                if (!row) return [];
+                return Array.from(row.querySelectorAll(fieldSelector));
+            }
+
+            function focusField(field) {
+                if (!field || typeof field.focus !== 'function') return;
+                field.focus();
+            }
+
+            function shouldKeepNativeHorizontalBehavior(field, key) {
+                if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement)) {
+                    return false;
+                }
+
+                const isTextInput =
+                    field instanceof HTMLTextAreaElement ||
+                    ['text', 'search', 'url', 'tel', 'password', 'email', 'number'].includes(field.type);
+
+                if (!isTextInput) return false;
+
+                const start = field.selectionStart;
+                const end = field.selectionEnd;
+
+                if (start === null || end === null) return false;
+                if (start !== end) return true;
+
+                if (key === 'ArrowLeft' && start > 0) return true;
+                if (key === 'ArrowRight' && end < field.value.length) return true;
+                return false;
+            }
+
+            function moveVertical(currentField, direction) {
+                const currentRow = currentField.closest('tr');
+                const rows = getRows();
+                const rowIndex = rows.indexOf(currentRow);
+                if (rowIndex < 0) return;
+
+                const currentRowFields = getRowFields(currentRow);
+                const colIndex = currentRowFields.indexOf(currentField);
+                if (colIndex < 0) return;
+
+                const nextRow = rows[rowIndex + direction];
+                const nextRowFields = getRowFields(nextRow);
+                const nextField = nextRowFields[colIndex] || nextRowFields[nextRowFields.length - 1];
+
+                focusField(nextField);
+            }
+
+            function moveHorizontal(currentField, direction) {
+                const allFields = Array.from(wrapper.querySelectorAll(fieldSelector));
+                const fieldIndex = allFields.indexOf(currentField);
+                if (fieldIndex < 0) return;
+
+                const nextField = allFields[fieldIndex + direction];
+                focusField(nextField);
+            }
+
+            wrapper.addEventListener('keydown', function (event) {
+                const target = event.target;
+                const isField =
+                    target instanceof HTMLInputElement ||
+                    target instanceof HTMLTextAreaElement ||
+                    target instanceof HTMLSelectElement;
+
+                if (!isField) return;
+
+                if (event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    moveVertical(target, -1);
+                    return;
+                }
+
+                if (event.key === 'ArrowDown') {
+                    event.preventDefault();
+                    moveVertical(target, 1);
+                    return;
+                }
+
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                    if (shouldKeepNativeHorizontalBehavior(target, event.key)) return;
+
+                    event.preventDefault();
+                    moveHorizontal(target, event.key === 'ArrowLeft' ? -1 : 1);
+                }
+            }, true);
+        })();
+    </script>
 </body>
 
 </html>

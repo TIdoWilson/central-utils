@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin - Pedidos de Empresas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">WL</span>
+            <span class="logo-text">Portal</span>
+          </div>
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <h1>Administração - Pedidos de Empresas</h1>
+          <p>Confirme ou negue pedidos das listas de alteração e inclusão/exclusão de empresa.</p>
+          <div class="nfe-header-actions">
+            <span id="whoami" class="nfe-breadcrumb"></span>
+          </div>
+        </header>
+
+        <section class="nfe-card nfe-card-table">
+          <div class="nfe-card-header nfe-card-header-with-actions">
+            <div>
+              <h2>Pedidos registrados</h2>
+              <p class="nfe-card-subtitle">Somente admin pode remover itens desta lista.</p>
+            </div>
+            <div class="nfe-table-actions">
+              <label class="nfe-input-file-label" style="margin: 0; min-width: 220px;">
+                <span>Origem</span>
+                <select id="sourceFilter" class="sn-select">
+                  <option value="">Todas</option>
+                  <option value="alteracao">Pedidos de Alteração</option>
+                  <option value="inclusao_exclusao">Pedidos de Inclusão/Exclusão</option>
+                </select>
+              </label>
+              <label class="nfe-input-file-label" style="margin: 0; min-width: 180px;">
+                <span>Status</span>
+                <select id="statusFilter" class="sn-select">
+                  <option value="">Todos</option>
+                  <option value="PENDENTE">Pendente</option>
+                  <option value="CONCLUIDO">Concluído</option>
+                  <option value="NEGADO">Negado</option>
+                </select>
+              </label>
+              <button class="btn btn-secondary" id="btnReload">Recarregar</button>
+            </div>
+          </div>
+
+          <div class="nfe-table-wrapper">
+            <table class="nfe-table">
+              <thead>
+                <tr>
+                  <th>Origem</th>
+                  <th>Empresa</th>
+                  <th>Solicitante</th>
+                  <th>Login</th>
+                  <th>Detalhes</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="requestsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/admin-pedidos-empresas.js"></script>
+  </body>
+</html>

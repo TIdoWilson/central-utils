@@ -14,10 +14,19 @@ Este repositório segue o padrão **Integra Python v3.1**. Antes de alterar cód
 - `auditLog` único, tolerante (nunca derruba request).
 - Compatibilidade: manter `req.auth.user` mesmo usando `req.user`.
 - Páginas fixas apenas: `/login`, `/`, `/admin-usuarios`, `/logs`. Ferramentas via `GET /:toolSlug`.
-- RBAC: `tool:<slug>` e `tool:*`; ADMIN acessa tudo (exceto não precisa perm). `RBAC_STRICT` controla fallback.
+- RBAC:
+  - `ADMIN` acessa tudo.
+  - `USER` sem permissões `tool:` marcadas acessa todas as ferramentas não-admin.
+  - `USER` com marcação parcial acessa somente as ferramentas marcadas.
+  - `USER` com todas as ferramentas marcadas deve ser tratado como acesso total (preferencialmente salvo como `tool:*`).
+  - `tool:*` concede acesso total às ferramentas não-admin, mas nunca a páginas/APIs admin.
 - **Proibido duplicar helpers/funções** (sobrescrita silenciosa).
 - Toda correção de erro após teste de ferramenta deve atualizar a documentação da própria ferramenta com: sintoma, causa provável e solução.
 - `FAQ-GLOBAL.md` deve receber apenas ocorrências relevantes e recorrentes (erros reais, armadilhas operacionais, decisões de operação); não registrar toda pergunta pontual do usuário.
+- Toda criação ou integração de ferramenta deve classificar explicitamente o alvo operacional antes de implementar:
+  - `local-only`: pode depender de caminhos/execuções exclusivas do Windows/local e não precisa funcionar na VPS.
+  - `vps-compatible`: deve considerar compatibilidade com Ubuntu 24.04, paths relativos ao projeto e execução segura fora do Windows.
+- Se o usuário não informar essa classificação ao pedir uma nova ferramenta/script, o agente deve perguntar antes de implementar.
 
 ## Arquitetura alvo
 - `src/server.js`: bootstrap + segurança + mounts + páginas + rota dinâmica + socket + error handler.
@@ -46,6 +55,16 @@ Este repositório segue o padrão **Integra Python v3.1**. Antes de alterar cód
 2. Commit + push para `main`.
 3. Na VPS: `npm run deploy:vps -- main`
 
+### Classificação obrigatória para novas ferramentas
+Antes de criar uma nova ferramenta ou script, confirmar e registrar uma destas opções:
+1. `local-only`
+2. `vps-compatible`
+
+Essa classificação deve orientar:
+1. uso de paths absolutos locais (`W:\...`) ou paths relativos ao projeto;
+2. escolha de binários/integrações dependentes de Windows;
+3. validação de execução no ambiente final esperado.
+
 ### Integração manual de ferramenta (quando não usar `tool:new`)
 Se a ferramenta for criada manualmente, é obrigatório atualizar todos os pontos abaixo:
 1. `api/*_core.py` + endpoint em `api/integra_api.py`.
@@ -61,8 +80,8 @@ Se a ferramenta for criada manualmente, é obrigatório atualizar todos os ponto
 A) login/logout/me sem regressão  
 B) assets carregam em /login sem auth  
 C) `/x.html` redireciona para `/x` e exige auth/RBAC  
-D) USER com `tool:<slug>` acessa só aquela tool  
-E) USER com `tool:*` não acessa admin pages/APIs  
+D) USER sem permissões `tool:` acessa todas as ferramentas não-admin  
+E) USER com marcação parcial acessa só as ferramentas marcadas; `tool:*` não acessa admin pages/APIs  
 F) ADMIN acessa tudo  
 G) APIs antigas continuam no mesmo path  
 H) Socket não vaza dados sem permissão  

@@ -554,14 +554,24 @@ NOVIDADES v3 (E OBRIGAÇÕES DO v3.1)
 17.2 Permissões por ferramenta (nova camada)
 Permissões:
 - tool:<slug> (ex.: tool:nfe, tool:sn)
-- tool:* (todas as ferramentas, sem admin pages/APIs)
+- tool:* (todas as ferramentas não-admin)
 
-Regras:
-- ADMIN acessa tudo (inclui admin pages/APIs)
-- USER:
-  - acessa somente ferramentas permitidas
-  - se tiver tool:*, acessa todas ferramentas exceto admin pages/APIs
-- /admin-usuarios e /logs continuam exigindo ADMIN, mesmo com tool:*.
+Regras oficiais do portal:
+- ADMIN acessa tudo (inclui admin pages/APIs).
+- USER sem nenhuma permissão `tool:` marcada:
+  - acessa todas as ferramentas não-admin;
+  - deve visualizar automaticamente ferramentas novas adicionadas no futuro.
+- USER com marcação parcial:
+  - acessa somente as ferramentas explicitamente marcadas.
+- USER com todas as ferramentas marcadas:
+  - deve ser tratado como acesso total às ferramentas não-admin;
+  - preferencialmente persistir como `tool:*` para evitar manutenção manual quando novas ferramentas forem criadas.
+- `tool:*` concede acesso total às ferramentas não-admin, mas nunca a páginas/APIs admin.
+- `/admin-usuarios` e `/logs` continuam exigindo ADMIN, mesmo com `tool:*`.
+
+Implicação operacional:
+- O padrão recomendado para novos usuários comuns é deixar a lista de permissões vazia.
+- Use marcação apenas para usuários que precisam de acesso limitado.
 
 17.3 Banco: tabela de permissões (incremental)
 - auth_user_permissions (user_id, perm, created_at)

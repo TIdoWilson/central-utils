@@ -73,7 +73,9 @@ module.exports = function createAuthRoutes(deps) {
         'SameSite=Lax',
         `Max-Age=${maxAgeSeconds}`,
       ];
-      if (process.env.NODE_ENV === 'production') cookieOpts.push('Secure');
+      const forwardedProto = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim().toLowerCase();
+      const isHttps = req.secure === true || forwardedProto === 'https';
+      if (isHttps) cookieOpts.push('Secure');
 
       res.setHeader('Set-Cookie', cookieOpts.join('; '));
 
@@ -102,7 +104,17 @@ module.exports = function createAuthRoutes(deps) {
       console.error('logout error:', e.message);
     }
 
-    res.setHeader('Set-Cookie', 'wl_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
+    const forwardedProto = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim().toLowerCase();
+    const isHttps = req.secure === true || forwardedProto === 'https';
+    const clearCookie = [
+      'wl_session=',
+      'Path=/',
+      'HttpOnly',
+      'SameSite=Lax',
+      'Max-Age=0',
+    ];
+    if (isHttps) clearCookie.push('Secure');
+    res.setHeader('Set-Cookie', clearCookie.join('; '));
     await auditLog(req, 'logout', 'ok', {});
     return res.json({ ok: true });
   });

@@ -2,6 +2,10 @@
 
 Esta lista e gerada automaticamente a partir de `src/core/tool-catalog.json`.
 
+## Pessoal
+
+- [Comparador Eventos Holerite](./comparador-eventos-holerite.md) - `/comparador-eventos-holerite` - API: `/api/comparador-eventos-holerite`
+
 ## Geral
 
 - [Acerto Lotes Toscan](./acerto-lotes-toscan.md) - `/acerto-lotes-toscan`
@@ -10,9 +14,11 @@ Esta lista e gerada automaticamente a partir de `src/core/tool-catalog.json`.
 - [Ajuste Diario Gfbr C](./ajuste-diario-gfbr-c.md) - `/ajuste-diario-gfbr-c` - API: `/api/ajuste-diario-gfbr-c`
 - [Balancete Transitorio](./balancete-transitorio.md) - `/balancete-transitorio` - API: `/api/balancete-transitorio`
 - [Calculadora ICMS ST](./calculadora-ICMS-ST.md) - `/calculadora-ICMS-ST`
+- [Checklist TI Criacao de Usuario](./checklist-ti-criacao-usuario.md) - `/checklist-ti-criacao-usuario` - API: `/api/checklist-ti-criacao-usuario`
 - [Comprimir PDF](./comprimir-pdf.md) - `/comprimir-pdf` - API: `/api/comprimir-pdf`
 - [Conciliador Cartao Wilson](./conciliador-cartao-wilson.md) - `/conciliador-cartao-wilson` - API: `/api/conciliador-cartao-wilson`
 - [Conciliador Cartao Tipo 50](./conciliador-cartao-tipo50.md) - `/conciliador-cartao-tipo50` - API: `/api/conciliador-cartao-tipo50`
+- [Conciliador PIS-COFINS](./conciliador-pis-cofins.md) - `/conciliador-pis-cofins` - API: `/api/conciliador-pis-cofins`
 - [Conciliador Hausen Ocean](./conciliador-hausen-ocean.md) - `/conciliador-hausen-ocean` - API: `/api/conciliador-hausen-ocean`
 - [Dimob](./dimob.md) - `/dimob` - API: `/api/dimob`
 - [ECD Status](./ecd-status.md) - `/ecd-status` - API: `/api/ecd-status`

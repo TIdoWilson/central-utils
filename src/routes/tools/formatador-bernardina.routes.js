@@ -1,4 +1,5 @@
 const express = require('express');
+const { resolveConfiguredPath } = require('../../core/path-resolver');
 
 module.exports = function createFormatadorBernardinaRoutes(deps) {
   const {
@@ -14,8 +15,8 @@ module.exports = function createFormatadorBernardinaRoutes(deps) {
   const router = express.Router();
 
   router.post('/jobs', requireCsrf, uploadBernadina.array('files'), async (req, res) => {
-    const exePath = process.env.BERNADINA_EXE_PATH;
-    const baseTemplatePath = process.env.BERNADINA_TEMPLATE_PATH;
+    const exePath = resolveConfiguredPath(process.env.BERNADINA_EXE_PATH);
+    const baseTemplatePath = resolveConfiguredPath(process.env.BERNADINA_TEMPLATE_PATH);
 
     if (!exePath) return res.status(500).json({ message: 'BERNADINA_EXE_PATH não configurado no .env' });
     if (!baseTemplatePath) return res.status(500).json({ message: 'BERNADINA_TEMPLATE_PATH não configurado no .env' });

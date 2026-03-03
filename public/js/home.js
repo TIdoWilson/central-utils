@@ -18,10 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const role = ctx.user.role;
   const perms = Array.isArray(ctx.user.permissions) ? ctx.user.permissions : [];
-  const strict = !!ctx.rbacStrict;
-
-  // ADMIN vê tudo
-  const allowAll = (role === 'ADMIN') || (!strict && perms.length === 0);
+  const allowAll = hasGlobalToolAccessOnHome(ctx);
 
   const cards = Array.from(document.querySelectorAll('.carousel-card'));
   for (const card of cards) {
@@ -38,13 +35,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!slug) continue;
 
     // Páginas administrativas só aparecem para ADMIN.
-    if ((slug === 'admin-usuarios' || slug === 'logs') && role !== 'ADMIN') {
+    if (
+      (slug === 'admin-usuarios' ||
+        slug === 'admin-pedidos-empresas' ||
+        slug === 'logs' ||
+        slug === 'checklist-ti-criacao-usuario') &&
+      role !== 'ADMIN'
+    ) {
       card.style.display = 'none';
       continue;
     }
 
     const needed = `tool:${slug}`;
-    if (!allowAll && !perms.includes(needed) && !perms.includes('tool:*')) {
+    if (!allowAll && !perms.map((p) => String(p || '').toLowerCase()).includes(needed.toLowerCase()) && !perms.includes('tool:*')) {
       card.style.display = 'none';
     }
   }
@@ -56,6 +59,47 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!visible) section.style.display = 'none';
   });
 });
+
+function getAllVisibleToolPermsOnHome() {
+  const perms = new Set();
+  const cards = Array.from(document.querySelectorAll('.carousel-card'));
+  for (const card of cards) {
+    const link = card.querySelector('a.btn-card');
+    const href = link?.getAttribute('href') || '';
+    const slug = normalizeToolSlugFromHref(href);
+    if (!slug) continue;
+    if (['admin-usuarios', 'admin-pedidos-empresas', 'logs', 'checklist-ti-criacao-usuario'].includes(slug)) continue;
+    perms.add(`tool:${slug}`.toLowerCase());
+  }
+  return perms;
+}
+
+function hasGlobalToolAccessOnHome(ctx) {
+  const role = String(ctx?.user?.role || '').toUpperCase();
+  if (role === 'ADMIN') return true;
+
+  const perms = new Set(
+    (Array.isArray(ctx?.user?.permissions) ? ctx.user.permissions : [])
+      .map((p) => String(p || '').trim().toLowerCase())
+      .filter((p) => p.startsWith('tool:'))
+  );
+
+  if (perms.size === 0) return true;
+  if (perms.has('tool:*')) return true;
+
+  const known = getAllVisibleToolPermsOnHome();
+  if (known.size > 0) {
+    let allKnown = true;
+    for (const perm of known) {
+      if (!perms.has(perm)) {
+        allKnown = false;
+        break;
+      }
+    }
+    if (allKnown) return true;
+  }
+  return false;
+}
 
 function setupHomeUserMenu(ctx) {
   const btn = document.getElementById('homeUserBtn');
