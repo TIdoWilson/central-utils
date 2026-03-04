@@ -477,6 +477,7 @@ async def api_conciliador_cartao_tipo50(
 async def api_conciliador_pis_cofins(
     arquivos: List[UploadFile] = File(...),
     modo: str = Form("AUTO"),
+    debug: str = Form("0"),
 ):
     try:
         if not arquivos or len(arquivos) < 3:
@@ -489,7 +490,8 @@ async def api_conciliador_pis_cofins(
                 raise HTTPException(status_code=413, detail=f"PDF muito grande: {arq.filename}")
             payload.append((arq.filename or "arquivo.pdf", conteudo))
 
-        return conciliar_pis_cofins(payload, modo=modo)
+        debug_habilitado = str(debug).strip().lower() in {"1", "true", "yes", "on"}
+        return conciliar_pis_cofins(payload, modo=modo, debug=debug_habilitado)
     except HTTPException:
         raise
     except Exception as e:
