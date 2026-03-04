@@ -111,54 +111,20 @@ def _extrair_linhas_pdfplumber(pdf_bytes: bytes) -> list[str]:
     return _linhas_do_texto("\n".join(partes))
 
 
-def ler_linhas_pdf_bytes(pdf_bytes: bytes, debug_info: dict[str, Any] | None = None) -> list[str]:
-    candidatos: list[dict[str, Any]] = []
-    for nome, extrator in (
-        ("pypdf", _extrair_linhas_pypdf),
-        ("pdfplumber", _extrair_linhas_pdfplumber),
-    ):
+def ler_linhas_pdf_bytes(pdf_bytes: bytes) -> list[str]:
+    candidatos: list[list[str]] = []
+    for extrator in (_extrair_linhas_pypdf, _extrair_linhas_pdfplumber):
         try:
             linhas = extrator(pdf_bytes)
         except Exception:
             linhas = []
         if linhas:
-            score, total_linhas, total_chars = _score_linhas_extraidas(linhas)
-            candidatos.append(
-                {
-                    "extrator": nome,
-                    "linhas": linhas,
-                    "score": score,
-                    "total_linhas": total_linhas,
-                    "total_chars": total_chars,
-                    "amostra": linhas[:5],
-                }
-            )
+            candidatos.append(linhas)
 
     if not candidatos:
-        if debug_info is not None:
-            debug_info.update({"extratores": [], "escolhido": None})
         return []
 
-    escolhido = max(candidatos, key=lambda item: (item["score"], item["total_linhas"], item["total_chars"]))
-    if debug_info is not None:
-        debug_info.update(
-            {
-                "extratores": [
-                    {
-                        "extrator": item["extrator"],
-                        "score": item["score"],
-                        "total_linhas": item["total_linhas"],
-                        "total_chars": item["total_chars"],
-                        "amostra": item["amostra"],
-                    }
-                    for item in candidatos
-                ],
-                "escolhido": escolhido["extrator"],
-                "linhas_escolhidas": escolhido["total_linhas"],
-            }
-        )
-
-    return escolhido["linhas"]
+    return max(candidatos, key=_score_linhas_extraidas)
 
 
 def detectar_tipo_arquivo_por_conteudo(linhas: list[str]) -> tuple[str | None, str | None]:
@@ -397,20 +363,16 @@ def _modo_para_movimentos(modo: str) -> list[tuple[str, str]]:
     return movimentos
 
 
-def conciliar_pis_cofins(arquivos: list[tuple[str, bytes]], modo: str = "AUTO", debug: bool = False) -> dict[str, Any]:
+def conciliar_pis_cofins(arquivos: list[tuple[str, bytes]], modo: str = "AUTO") -> dict[str, Any]:
     if len(arquivos) < 3:
         raise ValueError("Envie no minimo 3 PDFs (PIS Razao, COFINS Razao e Relatorio).")
 
     entrada: list[ArquivoEntrada] = []
-    debug_arquivos: list[dict[str, Any]] = []
     for nome, conteudo in arquivos:
         if not conteudo:
             continue
-        debug_info: dict[str, Any] = {"arquivo": nome}
-        linhas = ler_linhas_pdf_bytes(conteudo, debug_info if debug else None)
+        linhas = ler_linhas_pdf_bytes(conteudo)
         entrada.append(ArquivoEntrada(nome=nome, bytes_pdf=conteudo, linhas=linhas))
-        if debug:
-            debug_arquivos.append(debug_info)
 
     buckets: dict[str, Any] = {
         "entrada_razao": {"PIS": [], "COFINS": []},
@@ -432,7 +394,6 @@ def conciliar_pis_cofins(arquivos: list[tuple[str, bytes]], modo: str = "AUTO", 
     sheets: dict[str, list[list[object]]] = {}
     resumo: list[dict[str, Any]] = []
     preview_incons: list[dict[str, Any]] = []
-    debug_processamento: list[dict[str, Any]] = []
 
     for mov, rotulo in movimentos:
         chave_razao = "entrada_razao" if mov == "entrada" else "saida_razao"
@@ -451,21 +412,6 @@ def conciliar_pis_cofins(arquivos: list[tuple[str, bytes]], modo: str = "AUTO", 
 
         regs_razao_pis, desc_pis = filtrar_razao_por_layout(regs_razao_pis, mov)
         regs_razao_cof, desc_cof = filtrar_razao_por_layout(regs_razao_cof, mov)
-
-        if debug:
-            debug_processamento.append(
-                {
-                    "movimento": rotulo,
-                    "arquivo_razao_pis": razao_pis_pdf.nome,
-                    "arquivo_razao_cofins": razao_cof_pdf.nome,
-                    "arquivo_relatorio": rel_pdf.nome,
-                    "razao_pis_parse": len(regs_razao_pis),
-                    "razao_cofins_parse": len(regs_razao_cof),
-                    "relatorio_parse": len(regs_relatorio),
-                    "razao_pis_descartados_layout": desc_pis,
-                    "razao_cofins_descartados_layout": desc_cof,
-                }
-            )
 
         if not regs_razao_pis or not regs_razao_cof or not regs_relatorio:
             raise ValueError(f"Sem registros validos para {rotulo}.")
@@ -519,16 +465,10 @@ def conciliar_pis_cofins(arquivos: list[tuple[str, bytes]], modo: str = "AUTO", 
 
     xlsx_bytes = gerar_xlsx_bytes(sheets)
     filename = f"Conciliacao_PIS_COFINS_{datetime.now().strftime('%H-%M-%S_%d-%m-%Y')}.xlsx"
-    resposta = {
+    return {
         "ok": True,
         "filename": filename,
         "xlsxBase64": base64.b64encode(xlsx_bytes).decode("ascii"),
         "resumo": resumo,
         "inconsistencias": preview_incons,
     }
-    if debug:
-        resposta["debug"] = {
-            "arquivos": debug_arquivos,
-            "processamento": debug_processamento,
-        }
-    return resposta
