@@ -12,6 +12,7 @@ module.exports = function createConciliadorPisCofinsRoutes(deps) {
       try {
         const arquivos = Array.isArray(req.files) ? req.files : [];
         const modo = String(req.body?.modo || 'AUTO').toUpperCase();
+        const debug = String(req.body?.debug || req.query?.debug || '').trim();
 
         if (arquivos.length < 3) {
           return res.status(400).send('Envie no minimo 3 PDFs (PIS Razao, COFINS Razao e Relatorio).');
@@ -25,6 +26,7 @@ module.exports = function createConciliadorPisCofinsRoutes(deps) {
           });
         }
         form.append('modo', modo);
+        if (debug) form.append('debug', debug);
 
         const pyResp = await axios.post(`${PY_API_URL}/api/conciliador/pis-cofins`, form, {
           headers: form.getHeaders(),
@@ -44,4 +46,3 @@ module.exports = function createConciliadorPisCofinsRoutes(deps) {
 
   return router;
 };
-
