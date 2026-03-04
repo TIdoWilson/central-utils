@@ -198,6 +198,7 @@ def filtrar_razao_por_layout(registros: list[RegistroRazao], movimento: str) -> 
 
 def parse_relatorio(arquivo: ArquivoEntrada) -> list[RegistroRelatorio]:
     out: list[RegistroRelatorio] = []
+    vistos: set[tuple[str, str, Decimal, Decimal]] = set()
     for ln in arquivo.linhas:
         if not RE_LINHA_RELATORIO.match(ln):
             continue
@@ -215,6 +216,10 @@ def parse_relatorio(arquivo: ArquivoEntrada) -> list[RegistroRelatorio]:
             valor_cofins = valor_br_para_decimal(valores[8])
         except Exception:
             continue
+        chave = (nota, data_lcto, valor_pis, valor_cofins)
+        if chave in vistos:
+            continue
+        vistos.add(chave)
         out.append(
             RegistroRelatorio(
                 nota=nota,
