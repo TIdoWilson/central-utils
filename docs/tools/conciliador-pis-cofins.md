@@ -18,10 +18,10 @@ Compara os PDFs de Razao (PIS e COFINS) com o Relatorio de Apuracao e gera um XL
 ## Troubleshooting
 
 ### Sintoma
-- Na VPS, os mesmos PDFs que funcionam no ambiente local podem falhar com `Sem registros validos para RECOLHER.`
+- `npm run dev` falha ao subir a API Python com `ModuleNotFoundError: No module named 'api.conciliador_pis_cofins_core'`.
 
 ### Causa provavel
-- Diferenca na extracao de texto do PDF entre ambientes. Em alguns PDFs, o parser baseado em `PyPDF2` pode perder ou fragmentar linhas relevantes do Razao/Relatorio, impedindo a identificacao dos registros de `RECOLHER`.
+- O arquivo `api/conciliador_pis_cofins_core.py` foi removido ou ficou ausente no workspace, mas `api/integra_api.py` continua importando `conciliar_pis_cofins`.
 
 ### Solucao
-- O parser agora tenta extrair texto com mais de um backend (`PyPDF2`/`pypdf` e `pdfplumber`) e escolhe automaticamente a extracao com mais sinais validos para o layout da ferramenta. Isso reduz divergencias entre Windows/local e Ubuntu/VPS usando os mesmos arquivos.
+- Restaurar `api/conciliador_pis_cofins_core.py` mantendo o import existente em `api/integra_api.py`. Isso preserva a rota Python `/api/conciliador/pis-cofins` e a API Node `/api/conciliador-pis-cofins/process` sem quebrar compatibilidade.
