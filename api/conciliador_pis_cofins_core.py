@@ -18,11 +18,6 @@ try:
 except Exception:  # pragma: no cover
     from PyPDF2 import PdfReader
 
-try:
-    import pdfplumber
-except Exception:  # pragma: no cover
-    pdfplumber = None
-
 
 TOLERANCIA = Decimal("0.10")
 XLSX_FORMATO_MOEDA_BR = "[$R$-416] #,##0.00"
@@ -75,56 +70,9 @@ def normalizar_nota(s: str) -> str:
     return re.sub(r"\D", "", s).lstrip("0") or "0"
 
 
-def _linhas_do_texto(txt: str) -> list[str]:
-    return [ln.strip() for ln in txt.splitlines() if ln.strip()]
-
-
-def _score_linhas_extraidas(linhas: list[str]) -> tuple[int, int, int]:
-    score = 0
-    for ln in linhas:
-        ln_norm = normalizar_ascii(ln)
-        if "RELATORIO" in ln_norm or "RAZAO" in ln_norm:
-            score += 2
-        if "PIS" in ln_norm or "COFINS" in ln_norm:
-            score += 2
-        if "RECOLHER" in ln_norm or "RECUPERAR" in ln_norm:
-            score += 3
-        if RE_DATA_VALOR_SALDO.match(ln):
-            score += 5
-        if RE_LINHA_RELATORIO.match(ln):
-            score += 5
-    return score, len(linhas), sum(len(ln) for ln in linhas)
-
-
-def _extrair_linhas_pypdf(pdf_bytes: bytes) -> list[str]:
-    txt = "\n".join((pg.extract_text() or "") for pg in PdfReader(io.BytesIO(pdf_bytes)).pages)
-    return _linhas_do_texto(txt)
-
-
-def _extrair_linhas_pdfplumber(pdf_bytes: bytes) -> list[str]:
-    if pdfplumber is None:
-        return []
-    partes: list[str] = []
-    with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
-        for page in pdf.pages:
-            partes.append(page.extract_text() or "")
-    return _linhas_do_texto("\n".join(partes))
-
-
 def ler_linhas_pdf_bytes(pdf_bytes: bytes) -> list[str]:
-    candidatos: list[list[str]] = []
-    for extrator in (_extrair_linhas_pypdf, _extrair_linhas_pdfplumber):
-        try:
-            linhas = extrator(pdf_bytes)
-        except Exception:
-            linhas = []
-        if linhas:
-            candidatos.append(linhas)
-
-    if not candidatos:
-        return []
-
-    return max(candidatos, key=_score_linhas_extraidas)
+    txt = "\n".join((pg.extract_text() or "") for pg in PdfReader(io.BytesIO(pdf_bytes)).pages)
+    return [ln.strip() for ln in txt.splitlines() if ln.strip()]
 
 
 def detectar_tipo_arquivo_por_conteudo(linhas: list[str]) -> tuple[str | None, str | None]:
@@ -467,3 +415,4 @@ def conciliar_pis_cofins(arquivos: list[tuple[str, bytes]], modo: str = "AUTO") 
         "resumo": resumo,
         "inconsistencias": preview_incons,
     }
+
