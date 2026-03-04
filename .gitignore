@@ -16,7 +16,7 @@
 /.venv
 central-utils.zip
 /go-api/work
-/tmp/tareffa-empresas-lote
+/tmp
 .backup
 .env.example
 docs.zip
@@ -31,3 +31,8 @@ Backup do env.zip
 backup-env-0303.zip
 WILSON M. LOPES CONTABILIDADE LTDA (42890109).pfx
 WILSON MARCOS LOPES (42890109).pfx
+Thumbs.db
+*.pyc
+*.pyo
+*.rar
+*.bak
