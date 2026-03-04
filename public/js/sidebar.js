@@ -37,7 +37,7 @@ const MENU_CONFIG = [
     icon: '&#128193;',
     items: [
       { id: 'nfe', label: 'Consulta NF-e', href: '/nfe', icon: '&#129534;' },
-      { id: 'calculadora-icms-st', label: 'Calculadora de ICMS ST', href: '/calculadora-ICMS-ST', icon: '&#128196;' },
+      { id: 'calculadora-icms-st', label: 'Calculadora de ICMS ST', href: '/calculadora-icms-st', icon: '&#128196;' },
     ],
   },
   {

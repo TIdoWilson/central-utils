@@ -688,6 +688,11 @@ POLÍTICA DE DOCUMENTAÇÃO CONTÍNUA (v3.1)
 - Não adicionar toda pergunta pontual do usuário.
 - Critério: se a informação ajuda múltiplos casos futuros, entra no FAQ; se é caso isolado, fica no documento da ferramenta.
 
+3) Paridade de ambiente para ferramenta `vps-compatible` (obrigatório)
+- Ferramenta `vps-compatible` não pode depender de versões soltas de bibliotecas quando o resultado variar por parser/engine (PDF, OCR, planilha, DOCX, XML fiscal).
+- Ao adicionar, corrigir ou alinhar biblioteca Python usada pela aplicação, registrar a versão explícita em `api/requirements.txt`.
+- Não deixar dependência Python da aplicação sem versão quando ela impactar comportamento operacional.
+
 ======================================================================
 REGRAS FINAIS (v3.1)
 
@@ -699,4 +704,5 @@ REGRAS FINAIS (v3.1)
 - worker.js é o entrypoint; server.js não dá listen.
 - Fetch interno sempre via AuthClient.authFetch (CSRF automático em mutações).
 - Compat: manter req.auth.user mesmo se usar req.user.
+- Dependência Python da aplicação deve ser versionada explicitamente em `api/requirements.txt`; não registrar apenas o nome do pacote.
 ```

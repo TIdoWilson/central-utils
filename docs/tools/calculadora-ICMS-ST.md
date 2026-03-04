@@ -2,11 +2,11 @@
 
 ## 1. Visão Geral
 
-- **Slug:** `calculadora-ICMS-ST`
+- **Slug:** `calculadora-icms-st`
 - **Grupo:** Geral
-- **Página (rota):** `/calculadora-ICMS-ST`
+- **Página (rota):** `/calculadora-icms-st`
 - **API base:** _N/A_
-- **Permissão RBAC:** `tool:calculadora-ICMS-ST` ou `tool:*` (ADMIN acessa)
+- **Permissão RBAC:** `tool:calculadora-icms-st` ou `tool:*` (ADMIN acessa)
 
 Ferramenta Calculadora ICMS ST no portal, com fluxo autenticado e controle de acesso por RBAC.
 
@@ -17,15 +17,26 @@ Ferramenta Calculadora ICMS ST no portal, com fluxo autenticado e controle de ac
 
 ## 3. Arquivos Relacionados (Verificados)
 
-- **Página HTML:** `public/calculadora-ICMS-ST.html`
-- **Script JS da ferramenta:** `public/js/calculadora-ICMS-ST.js`
+- **Página HTML:** `public/calculadora-icms-st.html`
+- **Script JS da ferramenta:** `public/js/calculadora-icms-st.js`
 - **Router Node:** _não identificado_
 - **Service Node:** _não identificado_
 - **Arquivos Python relacionados:** _não foi identificado arquivo Python específico para este slug_
 
 ## 4. Rotas e Endpoints
 
-- **Rota de página:** `/calculadora-ICMS-ST`;
+- **Rota de página:** `/calculadora-icms-st`;
+
+## Troubleshooting
+
+### Sintoma
+- No servidor Linux/VPS, a página pode falhar ao abrir com `Cannot GET /calculadora-icms-st` ou carregar sem o JavaScript da ferramenta.
+
+### Causa provavel
+- Os arquivos da ferramenta estavam com letras maiúsculas no nome (`calculadora-ICMS-ST`), enquanto links e referências do portal já usavam slug minúsculo em parte da navegação. Em Windows isso pode passar despercebido, mas no Ubuntu a diferença de maiúsculas/minúsculas quebra rota e asset.
+
+### Solucao
+- Padronizar slug, rota e nomes de arquivos da ferramenta em minúsculo (`calculadora-icms-st`) e manter compatibilidade da rota dinâmica para acessos antigos.
 - **Base de API esperada:** _sem API dedicada no catálogo_;
 - **Endpoints no router:** _não foi possível extrair endpoints específicos (arquivo ausente ou dinâmica indireta)._
 

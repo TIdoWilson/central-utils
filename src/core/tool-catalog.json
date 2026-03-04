@@ -80,12 +80,12 @@
       "sharedApisUsed": []
     },
     {
-      "slug": "calculadora-ICMS-ST",
+      "slug": "calculadora-icms-st",
       "title": "Calculadora ICMS ST",
       "group": "Geral",
       "hasPage": true,
       "hasApi": false,
-      "apiBase": "/api/calculadora-ICMS-ST",
+      "apiBase": "/api/calculadora-icms-st",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
