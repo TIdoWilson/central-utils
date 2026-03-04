@@ -9,7 +9,7 @@ Este arquivo é gerado automaticamente a partir de `src/core/tool-catalog.json`.
 - **Ajuste Diario Gfbr** — `/ajuste-diario-gfbr` • API: `/api/ajuste-diario-gfbr`
 - **Ajuste Diario Gfbr C** — `/ajuste-diario-gfbr-c` • API: `/api/ajuste-diario-gfbr-c`
 - **Balancete Transitorio** — `/balancete-transitorio` • API: `/api/balancete-transitorio`
-- **Calculadora ICMS ST** — `/calculadora-ICMS-ST`
+- **Calculadora ICMS ST** — `/calculadora-icms-st`
 - **Comprimir PDF** — `/comprimir-pdf` • API: `/api/comprimir-pdf`
 - **Conciliador Cartao Wilson** — `/conciliador-cartao-wilson` • API: `/api/conciliador-cartao-wilson`
 - **Conciliador Hausen Ocean** — `/conciliador-hausen-ocean` • API: `/api/conciliador-hausen-ocean`

@@ -13,7 +13,7 @@ Esta lista e gerada automaticamente a partir de `src/core/tool-catalog.json`.
 - [Ajuste Diario Gfbr](./ajuste-diario-gfbr.md) - `/ajuste-diario-gfbr` - API: `/api/ajuste-diario-gfbr`
 - [Ajuste Diario Gfbr C](./ajuste-diario-gfbr-c.md) - `/ajuste-diario-gfbr-c` - API: `/api/ajuste-diario-gfbr-c`
 - [Balancete Transitorio](./balancete-transitorio.md) - `/balancete-transitorio` - API: `/api/balancete-transitorio`
-- [Calculadora ICMS ST](./calculadora-ICMS-ST.md) - `/calculadora-ICMS-ST`
+- [Calculadora ICMS ST](./calculadora-ICMS-ST.md) - `/calculadora-icms-st`
 - [Checklist TI Criacao de Usuario](./checklist-ti-criacao-usuario.md) - `/checklist-ti-criacao-usuario` - API: `/api/checklist-ti-criacao-usuario`
 - [Comprimir PDF](./comprimir-pdf.md) - `/comprimir-pdf` - API: `/api/comprimir-pdf`
 - [Conciliador Cartao Wilson](./conciliador-cartao-wilson.md) - `/conciliador-cartao-wilson` - API: `/api/conciliador-cartao-wilson`

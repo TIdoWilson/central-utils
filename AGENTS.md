@@ -27,6 +27,8 @@ Este repositório segue o padrão **Integra Python v3.1**. Antes de alterar cód
   - `local-only`: pode depender de caminhos/execuções exclusivas do Windows/local e não precisa funcionar na VPS.
   - `vps-compatible`: deve considerar compatibilidade com Ubuntu 24.04, paths relativos ao projeto e execução segura fora do Windows.
 - Se o usuário não informar essa classificação ao pedir uma nova ferramenta/script, o agente deve perguntar antes de implementar.
+- Ferramenta `vps-compatible` não pode depender de versões soltas de bibliotecas quando o resultado variar por parser/engine (PDF, OCR, planilha, DOCX, XML fiscal).
+- Ao adicionar, corrigir ou alinhar biblioteca Python usada pela aplicação, registrar a versão explícita em `api/requirements.txt` (não deixar dependência solta).
 
 ## Arquitetura alvo
 - `src/server.js`: bootstrap + segurança + mounts + páginas + rota dinâmica + socket + error handler.
@@ -64,6 +66,7 @@ Essa classificação deve orientar:
 1. uso de paths absolutos locais (`W:\...`) ou paths relativos ao projeto;
 2. escolha de binários/integrações dependentes de Windows;
 3. validação de execução no ambiente final esperado.
+4. travamento de versões em `api/requirements.txt` quando a ferramenta depender de parser/engine sensível ao ambiente.
 
 ### Integração manual de ferramenta (quando não usar `tool:new`)
 Se a ferramenta for criada manualmente, é obrigatório atualizar todos os pontos abaixo:
@@ -75,6 +78,7 @@ Se a ferramenta for criada manualmente, é obrigatório atualizar todos os ponto
 6. Catálogo RBAC em `src/core/tool-catalog.json`.
 7. Documentação da ferramenta em `docs/tools/<slug>.md` e índice em `docs/tools/index.md`.
 8. Validar execução das APIs com Python do ambiente ativo (não assumir `.venv` válido).
+9. Sempre que uma biblioteca Python da aplicação for adicionada ou ajustada, persistir a versão correspondente em `api/requirements.txt`.
 
 ## Checklist rápido (A–J)
 A) login/logout/me sem regressão  

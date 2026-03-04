@@ -1,16 +1,55 @@
 # API web
-fastapi
-uvicorn[standard]
+fastapi==0.127.0
+uvicorn[standard]==0.40.0
 
 # PDFs / Excel
-pdfplumber
-pandas
-XlsxWriter
+pdfplumber==0.11.8
+pandas==2.3.3
+XlsxWriter==3.2.9
 
 # Upload de arquivos (FastAPI)
-python-multipart
+python-multipart==0.0.21
 
-openpyxl
-PyMuPDF
-python-docx
-pypdf2
+openpyxl==3.1.5
+PyMuPDF==1.26.7
+python-docx==1.2.0
+PyPDF2==3.0.1
+pypdf==5.9.0
+pdfminer.six==20251107
+pypdfium2==5.2.0
+
+numpy==2.4.0
+pillow==12.0.0
+python-dotenv==1.2.1
+anyio==4.12.0
+starlette==0.50.0
+websockets==15.0.1
+httptools==0.7.1
+watchfiles==1.1.1
+click==8.3.1
+h11==0.16.0
+typing_extensions==4.15.0
+typing-inspection==0.4.2
+pydantic==2.12.5
+pydantic_core==2.41.5
+annotated-types==0.7.0
+annotated-doc==0.0.4
+cryptography==46.0.3
+cffi==2.0.0
+pycparser==2.23
+charset-normalizer==3.4.4
+idna==3.11
+lxml==6.0.2
+python-dateutil==2.9.0.post0
+six==1.17.0
+PyYAML==6.0.3
+colorama==0.4.6
+
+# Baseline operacional do servidor local
+camelot-py==1.0.9
+chardet==5.2.0
+ghostscript==0.8.1
+opencv-python-headless==4.13.0.92
+pytz==2025.2
+tabulate==0.9.0
+tzdata==2025.3

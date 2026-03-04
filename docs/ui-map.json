@@ -50,11 +50,11 @@
           "aliases": []
         },
         {
-          "slug": "calculadora-ICMS-ST",
+          "slug": "calculadora-icms-st",
           "title": "Calculadora ICMS ST",
-          "path": "/calculadora-ICMS-ST",
+          "path": "/calculadora-icms-st",
           "hasApi": false,
-          "apiBase": "/api/calculadora-ICMS-ST",
+          "apiBase": "/api/calculadora-icms-st",
           "adminOnly": false,
           "aliases": []
         },
