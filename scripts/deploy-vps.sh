@@ -19,15 +19,15 @@ run_systemctl() {
   fi
 }
 
-service_exists() {
+try_systemctl() {
   if ! command -v systemctl >/dev/null 2>&1; then
     return 1
   fi
 
   if [[ "$(id -u)" -eq 0 ]]; then
-    systemctl status "$1" >/dev/null 2>&1
+    systemctl "$@" >/dev/null 2>&1
   else
-    sudo systemctl status "$1" >/dev/null 2>&1
+    sudo systemctl "$@" >/dev/null 2>&1
   fi
 }
 
@@ -88,9 +88,8 @@ echo "[deploy] daemon-reload"
 run_systemctl daemon-reload || true
 
 for svc in central-python central-go central-node nginx caddy; do
-  if service_exists "$svc"; then
+  if try_systemctl restart "$svc"; then
     echo "[deploy] restart $svc"
-    run_systemctl restart "$svc"
   else
     echo "[deploy] aviso: serviço $svc não encontrado, pulando"
   fi
@@ -98,7 +97,7 @@ done
 
 echo "[deploy] status"
 for svc in central-python central-go central-node nginx caddy; do
-  if service_exists "$svc"; then
+  if try_systemctl status "$svc"; then
     run_systemctl status "$svc" --no-pager | sed -n '1,12p' || true
   fi
 done
