@@ -14,7 +14,6 @@ Compara os PDFs de Razao (PIS e COFINS) com o Relatorio de Apuracao e gera um XL
 ## Endpoint
 - `POST /api/conciliador-pis-cofins/process`
   - multipart: `arquivos` (3 a 8 PDFs), `modo` (`AUTO`, `RECUPERAR`, `RECOLHER`)
-  - debug opcional: `debug=1` para retornar diagnostico de extracao e contagem por arquivo
 
 ## Troubleshooting
 
@@ -29,4 +28,3 @@ Compara os PDFs de Razao (PIS e COFINS) com o Relatorio de Apuracao e gera um XL
 ### Solucao
 - O parser agora tenta extrair texto com mais de um backend (`PyPDF2`/`pypdf` e `pdfplumber`) e escolhe automaticamente a extracao com mais sinais validos para o layout da ferramenta. Isso reduz divergencias entre Windows/local e Ubuntu/VPS usando os mesmos arquivos.
 - O parser do relatorio tambem passou a descartar linhas duplicadas exatas por `(nota, data, valor_pis, valor_cofins)`, evitando inflar o total de registros e as inconsistencias na VPS.
-- Para comparar local x VPS com precisao, a API aceita `debug=1` e retorna no JSON qual extrator foi escolhido em cada PDF e quantos registros de razao/relatorio foram parseados por movimento.
