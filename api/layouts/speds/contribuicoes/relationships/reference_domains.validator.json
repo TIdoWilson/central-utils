@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "sped": "CONTRIBUICOES",
+    "version": "1.0.0",
+    "purpose": "Dominios internos para validacao de referencias em todos os registros do arquivo SPED."
+  },
+  "domains": [
+    {
+      "id": "COD_ITEM",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0200", "field": "COD_ITEM" }],
+      "references": {
+        "exact": ["COD_ITEM"],
+        "prefix": ["COD_ITEM_"]
+      }
+    },
+    {
+      "id": "UNID",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0190", "field": "UNID" }],
+      "references": {
+        "exact": ["UNID", "UNID_INV", "UNID_IMOB"],
+        "prefix": ["UNID_"]
+      }
+    },
+    {
+      "id": "COD_PART",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0150", "field": "COD_PART" }],
+      "references": {
+        "exact": ["COD_PART"],
+        "prefix": ["COD_PART_"]
+      }
+    },
+    {
+      "id": "COD_CTA",
+      "value_normalization": "upper",
+      "allowed_literals": ["0"],
+      "definitions": [{ "record": "0500", "field": "COD_CTA" }],
+      "references": {
+        "exact": ["COD_CTA", "COD_CTA_REF"],
+        "prefix": ["COD_CTA_"]
+      }
+    },
+    {
+      "id": "COD_CCUS",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0600", "field": "COD_CCUS" }],
+      "references": {
+        "exact": ["COD_CCUS"]
+      }
+    },
+    {
+      "id": "COD_INF",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0450", "field": "COD_INF" }],
+      "references": {
+        "exact": ["COD_INF"]
+      }
+    }
+  ]
+}

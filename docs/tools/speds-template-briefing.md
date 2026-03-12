@@ -32,6 +32,9 @@ Use este formulario antes de iniciar qualquer script novo.
 - Quais mudancas devem aparecer no preview:
 - Confirmacao obrigatoria antes de gravar? (sim/nao):
 - Quais contadores devem sair no relatorio final:
+- Validacao global de relacionamentos no artefato final (`globalRelationshipValidation`): (sim/nao)
+- Arquivo de regras da validacao (`rulesFile`):
+- Limite de inconsistencias detalhadas (`maxIssues`, default 200):
 
 ## 6) Testes de aceite
 - Arquivo real de referencia (caminho):

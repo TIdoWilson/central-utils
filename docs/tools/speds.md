@@ -21,12 +21,20 @@ Executa templates de processamento de SPED (ICMS, Contribuicoes, ECD e ECF) com 
 - `POST /api/speds/run` (CSRF obrigatorio)
 - `GET /api/speds/download/:jobId/:fileName`
 
-## Mapa de relacionamentos (ICMS)
+## Mapas de relacionamentos
+### ICMS
 - `api/layouts/speds/icms/relationships/hierarchy.parent_child.json`
 - `api/layouts/speds/icms/relationships/dependencies.cross_record.json`
 - `api/layouts/speds/icms/relationships/reference_domains.validator.json`
 - `api/layouts/speds/icms/relationships/index.json`
 - validador: `api/speds_scripts/icms/sped_relationship_validator.py`
+
+### Contribuicoes
+- `api/layouts/speds/contribuicoes/relationships/hierarchy.parent_child.json`
+- `api/layouts/speds/contribuicoes/relationships/dependencies.cross_record.json`
+- `api/layouts/speds/contribuicoes/relationships/reference_domains.validator.json`
+- `api/layouts/speds/contribuicoes/relationships/index.json`
+- validador reutilizavel: `api/speds_scripts/icms/sped_relationship_validator.py` (informar `--layouts-dir` e `--rules-file`)
 
 ## Observacoes de seguranca
 - Mutacoes exigem `x-csrf-token`.
@@ -49,6 +57,18 @@ Executa templates de processamento de SPED (ICMS, Contribuicoes, ECD e ECF) com 
 - ajusta K001/K990, 0990 e bloco 9
 - verifica produtos do Bloco K e aplica politica de faltantes
 - preserva hierarquia de registros filhos no bloco 0 (0200 + 0205/0210/0220/0221)
+
+## Template novo: Contribuicoes - Validador SPED
+- ID: `contribuicoes-validador-sped`
+- Entradas:
+- `sped_txt` (TXT)
+- Campo opcional:
+- `max_issues` (limite de pendencias detalhadas no relatorio)
+- Saida: TXT ou XLSX
+- Comportamento:
+- nao altera o SPED de entrada;
+- executa validacao global de referencias internas;
+- retorna pendencias agrupadas e ocorrencias detalhadas (linha/registro/campo/valor).
 
 ## Modelo de pensamento base (obrigatorio)
 - Etapa 1: mapear registro alvo e relacionamentos (pai, filhos e referencias cruzadas).
@@ -73,6 +93,23 @@ Executa templates de processamento de SPED (ICMS, Contribuicoes, ECD e ECF) com 
 - O validador compara o arquivo inteiro (de `0000` a `9999`) com base nos layouts JSON e nos dominios de `api/layouts/speds/icms/relationships/reference_domains.validator.json`.
 - Os templates `icms-corretor-total-inventario` e `icms-integrar-inventario-sped` ja executam comparacao de integridade origem x final e bloqueiam somente inconsistencias novas.
 - A hierarquia `0200` -> filhos (`0205`, `0210`, `0220`, `0221`) esta preservada nos fluxos de exclusao e integracao de inventario.
+- Cobertura de manifesto no ICMS: 6/6 templates com `manifest` referenciado em `api/layouts/speds/templates.json`.
+- Cobertura de manifesto no Contribuicoes: 2/2 templates com `manifest` referenciado em `api/layouts/speds/templates.json`.
+- A API (`src/services/speds.service.js`) agora executa validacao automatica de relacionamentos no artefato final quando:
+- o manifesto define `validators.globalRelationshipValidation = true`;
+- o artefato final e `.txt`;
+- o arquivo final e um SPED completo (`0000` ate `9999`).
+- Se a validacao reprovar, o processamento aborta com erro explicito.
+- O template `contribuicoes-validador-sped` agora retorna `summary.validationFindings` na API (`POST /api/speds/run`) com:
+- totais (`linhas`, `checagens`, `pendencias`);
+- pendencias agrupadas com mensagem amigavel e orientacao de correcao;
+- primeiras ocorrencias com linha do arquivo.
+- A UI `public/speds.html` renderiza esse resumo em painel amigavel na secao `Resultado`, reduzindo dependencia de leitura tecnica de registro/campo.
+- O script `api/speds_scripts/icms/sped_relationship_validator.py` passou a operar em modo `pva-like` para layouts de `contribuicoes` (modo `auto`), com validacoes adicionais:
+- estrutura/tipos/obrigatoriedade por layout em todos os blocos;
+- totalizadores (`9900`, `0990`, `1990`, `9990`, `9999`);
+- hierarquia contigua pai/filho (quando definida no mapa de relacionamento);
+- regras fiscais iniciais do Bloco M/F (`MSG_VALIDA_VL_CONT_CUM_REC`, `MSG_VALIDA_DET_RECEITA_DCTF`, `MSG_OBRIGATORIO_M205_M605_NAO_DEVE_EXISTIR`, `MSG_CALCULAR_CONTRIBUICAO`, `MSG_CAMPO_OBRIGATORIO`).
 
 ## Contrato para novos templates (manifesto JSON)
 - Objetivo: reduzir script ad-hoc e transformar novos templates em `config + regras`.
@@ -86,10 +123,18 @@ Executa templates de processamento de SPED (ICMS, Contribuicoes, ECD e ECF) com 
 - `fields` (parametros de execucao).
 - `targets` (registros alvo).
 - `cascadePolicy` (regras de exclusao/alteracao com filhos e dependencias).
-- `validators` (regras de integridade e relacionamento).
+- `validators` (regras de integridade e relacionamento), com:
+- `globalRelationshipValidation` (boolean);
+- `rulesFile` (arquivo de dominios);
+- `maxIssues` (opcional; default 200).
 - `totalizers` (lista a recalcular).
 - `output` (formato final e nome sugerido).
 - `dryRun` (habilita simulacao com preview de impacto).
+
+## Politica de novos templates
+- Para `ICMS` e `Contribuicoes`, manifesto e obrigatorio.
+- Template sem manifesto valido nao executa no backend.
+- Novo template que gera SPED final em `.txt` deve sair com `validators.globalRelationshipValidation = true` por padrao.
 
 ## Checklist de qualidade para todo template
 - Preserva hierarquia pai-filho.

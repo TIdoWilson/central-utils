@@ -11,6 +11,10 @@
         "entry": "api/speds_scripts/conferidor_xml.py",
         "source": "C:/Users/Usuario/Desktop/projeto sped/conferidor_xml.py"
       },
+      "manifest": {
+        "path": "api/layouts/speds/contribuicoes/manifests/contribuicoes-conferidor-xml-nfe.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
+      },
       "inputs": [
         {
           "key": "xml_notas",
@@ -33,6 +37,39 @@
       "outputFormats": ["xlsx"]
     },
     {
+      "id": "contribuicoes-validador-sped",
+      "spedType": "contribuicoes",
+      "title": "Contribuicoes - Validador SPED",
+      "description": "Valida relacionamento interno do SPED Contribuicoes e gera relatorio de pendencias sem alterar o arquivo.",
+      "script": {
+        "entry": "api/speds_scripts/icms/sped_relationship_validator.py",
+        "source": "W:/DOCUMENTOS ESCRITORIO/INSTALACAO SISTEMA/central-utils/api/speds_scripts/icms/sped_relationship_validator.py"
+      },
+      "manifest": {
+        "path": "api/layouts/speds/contribuicoes/manifests/contribuicoes-validador-sped.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
+      },
+      "inputs": [
+        {
+          "key": "sped_txt",
+          "label": "Arquivo SPED Contribuicoes",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"]
+        }
+      ],
+      "fields": [
+        {
+          "key": "max_issues",
+          "label": "Maximo de pendencias detalhadas",
+          "type": "number",
+          "required": false,
+          "defaultValue": 200
+        }
+      ],
+      "outputFormats": ["txt", "xlsx"]
+    },
+    {
       "id": "icms-ajustar-cfop-1152",
       "spedType": "icms",
       "title": "ICMS - Ajustar CFOP alvo",
@@ -40,6 +77,10 @@
       "script": {
         "entry": "api/speds_scripts/icms/ajustar_cfop_1152.py",
         "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/ajustar_cfop_1152.py"
+      },
+      "manifest": {
+        "path": "api/layouts/speds/icms/manifests/icms-ajustar-cfop-1152.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
       },
       "inputs": [
         {
@@ -70,6 +111,10 @@
       "script": {
         "entry": "api/speds_scripts/icms/comparador.py",
         "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/comparador.py"
+      },
+      "manifest": {
+        "path": "api/layouts/speds/icms/manifests/icms-comparador-sped-relatorio.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
       },
       "inputs": [
         {
@@ -147,6 +192,10 @@
       "script": {
         "entry": "api/speds_scripts/icms/gerador_de_inventario.py",
         "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/gerador_de_inventario.py"
+      },
+      "manifest": {
+        "path": "api/layouts/speds/icms/manifests/icms-gerador-inventario.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
       },
       "inputs": [
         {
@@ -252,6 +301,10 @@
       "script": {
         "entry": "api/speds_scripts/icms/copiar_bloco_k_sped.py",
         "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/copiar_bloco_k_sped.py"
+      },
+      "manifest": {
+        "path": "api/layouts/speds/icms/manifests/icms-copiar-bloco-k-sped.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
       },
       "inputs": [
         {

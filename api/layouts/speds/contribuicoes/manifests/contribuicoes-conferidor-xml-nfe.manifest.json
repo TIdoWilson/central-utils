@@ -1,0 +1,49 @@
+{
+  "templateId": "contribuicoes-conferidor-xml-nfe",
+  "spedType": "contribuicoes",
+  "operation": "analyze",
+  "inputs": [
+    {
+      "key": "xml_notas",
+      "label": "XML(s) de notas",
+      "required": true,
+      "multiple": true,
+      "acceptedExtensions": [".xml", ".zip", ".rar"],
+      "help": "Aceita XML individual ou lote compactado em ZIP/RAR."
+    }
+  ],
+  "fields": [
+    {
+      "key": "progress_every",
+      "label": "Progresso a cada N arquivos",
+      "type": "number",
+      "required": false,
+      "defaultValue": 500
+    }
+  ],
+  "targets": {
+    "records": ["A100", "A170", "C100", "C170"],
+    "relationshipsFile": "api/layouts/speds/contribuicoes/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": false,
+    "onMissingDependency": "skip",
+    "onOrphanDetected": "cleanup"
+  },
+  "validators": {
+    "globalRelationshipValidation": false,
+    "duplicateKeyCheck": false,
+    "hierarchyCheck": false,
+    "rulesFile": "api/layouts/speds/contribuicoes/relationships/reference_domains.validator.json"
+  },
+  "totalizers": [],
+  "output": {
+    "formats": ["xlsx"],
+    "filenamePattern": "{input}_conferidor_xml_nfe.xlsx"
+  },
+  "dryRun": {
+    "enabled": true,
+    "reportChanges": true,
+    "requireConfirmation": false
+  }
+}

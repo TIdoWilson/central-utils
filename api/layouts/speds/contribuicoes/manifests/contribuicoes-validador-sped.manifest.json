@@ -1,0 +1,49 @@
+{
+  "templateId": "contribuicoes-validador-sped",
+  "spedType": "contribuicoes",
+  "operation": "analyze",
+  "inputs": [
+    {
+      "key": "sped_txt",
+      "label": "Arquivo SPED Contribuicoes",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"]
+    }
+  ],
+  "fields": [
+    {
+      "key": "max_issues",
+      "label": "Maximo de pendencias detalhadas",
+      "type": "number",
+      "required": false,
+      "defaultValue": 200
+    }
+  ],
+  "targets": {
+    "records": ["0000", "9999"],
+    "relationshipsFile": "api/layouts/speds/contribuicoes/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": false,
+    "onMissingDependency": "skip",
+    "onOrphanDetected": "cleanup"
+  },
+  "validators": {
+    "globalRelationshipValidation": false,
+    "duplicateKeyCheck": true,
+    "hierarchyCheck": true,
+    "rulesFile": "api/layouts/speds/contribuicoes/relationships/reference_domains.validator.json",
+    "maxIssues": 200
+  },
+  "totalizers": [],
+  "output": {
+    "formats": ["txt", "xlsx"],
+    "filenamePattern": "{input}_pendencias_validacao_contribuicoes.{ext}"
+  },
+  "dryRun": {
+    "enabled": true,
+    "reportChanges": true,
+    "requireConfirmation": false
+  }
+}

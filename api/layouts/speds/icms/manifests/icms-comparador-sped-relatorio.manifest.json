@@ -1,0 +1,56 @@
+{
+  "templateId": "icms-comparador-sped-relatorio",
+  "spedType": "icms",
+  "operation": "analyze",
+  "inputs": [
+    {
+      "key": "sped_txt",
+      "label": "Arquivo SPED",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"]
+    },
+    {
+      "key": "relatorio_entradas",
+      "label": "Relatorio de entradas",
+      "required": false,
+      "multiple": false,
+      "acceptedExtensions": [".csv", ".xlsx", ".slk", ".pdf"],
+      "help": "Envie junto com o relatorio de saidas sempre que possivel. Aceita executar com apenas um deles."
+    },
+    {
+      "key": "relatorio_saidas",
+      "label": "Relatorio de saidas",
+      "required": false,
+      "multiple": false,
+      "acceptedExtensions": [".csv", ".xlsx", ".slk", ".pdf"],
+      "help": "Envie junto com o relatorio de entradas sempre que possivel. Aceita executar com apenas um deles."
+    }
+  ],
+  "fields": [],
+  "targets": {
+    "records": ["C100", "C170", "C190", "D100", "D190"],
+    "relationshipsFile": "api/layouts/speds/icms/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": false,
+    "onMissingDependency": "skip",
+    "onOrphanDetected": "cleanup"
+  },
+  "validators": {
+    "globalRelationshipValidation": false,
+    "duplicateKeyCheck": false,
+    "hierarchyCheck": false,
+    "rulesFile": "api/layouts/speds/icms/relationships/reference_domains.validator.json"
+  },
+  "totalizers": [],
+  "output": {
+    "formats": ["xlsx"],
+    "filenamePattern": "{input}_comparativo_sped_relatorios.xlsx"
+  },
+  "dryRun": {
+    "enabled": true,
+    "reportChanges": true,
+    "requireConfirmation": false
+  }
+}

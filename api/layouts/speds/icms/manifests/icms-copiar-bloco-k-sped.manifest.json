@@ -1,0 +1,59 @@
+{
+  "templateId": "icms-copiar-bloco-k-sped",
+  "spedType": "icms",
+  "operation": "mixed",
+  "inputs": [
+    {
+      "key": "sped_destino",
+      "label": "SPED destino (recebera o Bloco K)",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"]
+    },
+    {
+      "key": "sped_origem_k",
+      "label": "SPED origem (fonte do Bloco K)",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"]
+    }
+  ],
+  "fields": [
+    {
+      "key": "modo_produto_faltante",
+      "label": "Produto faltante no 0200 do destino",
+      "type": "select",
+      "required": false,
+      "defaultValue": "incluir",
+      "options": [
+        { "value": "incluir", "label": "Incluir 0200 da origem" },
+        { "value": "erro", "label": "Parar com erro" }
+      ]
+    }
+  ],
+  "targets": {
+    "records": ["0200", "0205", "0210", "0220", "0221", "K001", "K010", "K100", "K200", "K210", "K215", "K220", "K230", "K235", "K250", "K255", "K260", "K265", "K270", "K275", "K280", "K290", "K291", "K292", "K300", "K301", "K302", "K990", "0990", "9900", "9990", "9999"],
+    "relationshipsFile": "api/layouts/speds/icms/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": true,
+    "onMissingDependency": "abort",
+    "onOrphanDetected": "abort"
+  },
+  "validators": {
+    "globalRelationshipValidation": true,
+    "duplicateKeyCheck": true,
+    "hierarchyCheck": true,
+    "rulesFile": "api/layouts/speds/icms/relationships/reference_domains.validator.json"
+  },
+  "totalizers": ["K990", "0990", "9900", "9990", "9999"],
+  "output": {
+    "formats": ["txt"],
+    "filenamePattern": "{input}_COM_BLOCO_K.txt"
+  },
+  "dryRun": {
+    "enabled": true,
+    "reportChanges": true,
+    "requireConfirmation": true
+  }
+}

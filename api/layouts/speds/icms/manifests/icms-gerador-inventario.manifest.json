@@ -1,0 +1,144 @@
+{
+  "templateId": "icms-gerador-inventario",
+  "spedType": "icms",
+  "operation": "insert",
+  "inputs": [
+    {
+      "key": "relatorio_inventario",
+      "label": "Relatorio de inventario",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".xlsx", ".xls", ".pdf"]
+    }
+  ],
+  "fields": [
+    {
+      "key": "dt_inv",
+      "label": "Data do inventario",
+      "type": "text",
+      "required": false,
+      "placeholder": "dd/mm/aaaa"
+    },
+    {
+      "key": "mot_inv",
+      "label": "Motivo inventario",
+      "type": "text",
+      "required": false,
+      "defaultValue": "01"
+    },
+    {
+      "key": "tipo_item",
+      "label": "Tipo item",
+      "type": "text",
+      "required": false,
+      "defaultValue": "00"
+    },
+    {
+      "key": "default_unid",
+      "label": "Unidade padrao",
+      "type": "text",
+      "required": false,
+      "defaultValue": "UN"
+    },
+    {
+      "key": "ind_prop",
+      "label": "Indicador propriedade",
+      "type": "text",
+      "required": false,
+      "defaultValue": "0"
+    },
+    {
+      "key": "cod_part",
+      "label": "COD_PART",
+      "type": "text",
+      "required": false,
+      "defaultValue": ""
+    },
+    {
+      "key": "txt_compl",
+      "label": "TXT_COMPL",
+      "type": "text",
+      "required": false,
+      "defaultValue": ""
+    },
+    {
+      "key": "cod_cta",
+      "label": "COD_CTA",
+      "type": "text",
+      "required": false,
+      "defaultValue": "11216001000"
+    },
+    {
+      "key": "preencher_vl_item_ir",
+      "label": "Preencher VL_ITEM_IR",
+      "type": "select",
+      "required": false,
+      "defaultValue": "nao",
+      "options": [
+        { "value": "nao", "label": "Nao" },
+        { "value": "sim", "label": "Sim" }
+      ]
+    },
+    {
+      "key": "gerar_h020",
+      "label": "Gerar H020",
+      "type": "select",
+      "required": false,
+      "defaultValue": "nao",
+      "options": [
+        { "value": "nao", "label": "Nao" },
+        { "value": "sim", "label": "Sim" }
+      ]
+    },
+    {
+      "key": "h020_cst_icms",
+      "label": "H020 CST ICMS",
+      "type": "text",
+      "required": false,
+      "defaultValue": "000"
+    },
+    {
+      "key": "h020_aliq_icms",
+      "label": "H020 Aliquota ICMS",
+      "type": "text",
+      "required": false,
+      "defaultValue": "12"
+    },
+    {
+      "key": "sem_perguntas",
+      "label": "Executar sem perguntas",
+      "type": "select",
+      "required": false,
+      "defaultValue": "sim",
+      "options": [
+        { "value": "sim", "label": "Sim" },
+        { "value": "nao", "label": "Nao" }
+      ]
+    }
+  ],
+  "targets": {
+    "records": ["0190", "0200", "0205", "0210", "0220", "0221", "H001", "H005", "H010", "H020", "H990"],
+    "relationshipsFile": "api/layouts/speds/icms/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": true,
+    "onMissingDependency": "abort",
+    "onOrphanDetected": "abort"
+  },
+  "validators": {
+    "globalRelationshipValidation": true,
+    "duplicateKeyCheck": true,
+    "hierarchyCheck": true,
+    "rulesFile": "api/layouts/speds/icms/relationships/reference_domains.validator.json"
+  },
+  "totalizers": ["H990"],
+  "output": {
+    "formats": ["txt"],
+    "filenamePattern": "{input}_inventario_sped.txt"
+  },
+  "dryRun": {
+    "enabled": true,
+    "reportChanges": true,
+    "requireConfirmation": true
+  }
+}

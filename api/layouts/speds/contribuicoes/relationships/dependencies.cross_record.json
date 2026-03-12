@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "sped": "CONTRIBUICOES",
+    "version": "1.0.0",
+    "generated_at": "2026-03-12T00:00:00Z",
+    "purpose": "Regras de impacto entre registros para operacoes de CRUD em templates."
+  },
+  "rules": [
+    {
+      "id": "R-001-CASCADE-SAFETY",
+      "priority": 1,
+      "description": "Toda exclusao de registro pai deve tratar filhos contiguos antes de persistir.",
+      "operation": "delete",
+      "target_record": "*",
+      "action": "cascade_delete_children",
+      "failure_mode": "abort_with_error"
+    },
+    {
+      "id": "R-002-RECALC-TOTALIZERS",
+      "priority": 2,
+      "description": "Qualquer alteracao estrutural em blocos deve recalcular totalizadores.",
+      "operation": "insert_update_delete",
+      "target_record": "*",
+      "action": "rebuild_totalizers",
+      "totalizers": ["0990", "A990", "C990", "D990", "F990", "I990", "M990", "1990", "P990", "9900", "9990", "9999"]
+    },
+    {
+      "id": "R-003-DELETE-0200-CASCADE",
+      "priority": 3,
+      "description": "Excluir 0200 exige excluir seus registros filhos imediatos.",
+      "operation": "delete",
+      "target_record": "0200",
+      "children_to_delete": ["0205", "0206", "0208"],
+      "child_scope": "contiguous_after_parent",
+      "failure_mode": "abort_if_orphan_children_detected"
+    },
+    {
+      "id": "R-004-DELETE-0190-ONLY-IF-UNUSED",
+      "priority": 4,
+      "description": "0190 so pode ser excluido se unidade nao for mais referenciada.",
+      "operation": "delete",
+      "target_record": "0190",
+      "guard": {
+        "field": "UNID",
+        "must_have_zero_references_in": [
+          { "record": "0200", "field": "UNID_INV" },
+          { "record": "C170", "field": "UNID" },
+          { "record": "F200", "field": "UNID_IMOB" }
+        ]
+      },
+      "failure_mode": "abort_if_still_referenced"
+    },
+    {
+      "id": "R-005-DELETE-0150-ONLY-IF-UNUSED",
+      "priority": 5,
+      "description": "0150 so pode ser excluido se COD_PART nao estiver em documentos fiscais.",
+      "operation": "delete",
+      "target_record": "0150",
+      "guard": {
+        "field": "COD_PART",
+        "must_have_zero_references_in": [
+          { "record": "A100", "field": "COD_PART" },
+          { "record": "C100", "field": "COD_PART" },
+          { "record": "D100", "field": "COD_PART" },
+          { "record": "F100", "field": "COD_PART" }
+        ]
+      },
+      "failure_mode": "abort_if_still_referenced"
+    },
+    {
+      "id": "R-006-COD-ITEM-INTEGRITY",
+      "priority": 6,
+      "description": "Qualquer referencia COD_ITEM deve existir em 0200.",
+      "operation": "insert_update",
+      "target_record": "*",
+      "validator": {
+        "domain": "COD_ITEM",
+        "must_exist_in": { "record": "0200", "field": "COD_ITEM" }
+      },
+      "failure_mode": "abort_if_missing_definition"
+    },
+    {
+      "id": "R-007-COD-CTA-INTEGRITY",
+      "priority": 7,
+      "description": "Qualquer referencia COD_CTA deve existir em 0500, exceto literais permitidos.",
+      "operation": "insert_update",
+      "target_record": "*",
+      "validator": {
+        "domain": "COD_CTA",
+        "must_exist_in": { "record": "0500", "field": "COD_CTA" },
+        "allowed_literals": ["0"]
+      },
+      "failure_mode": "abort_if_missing_definition"
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "UC-0200-LT-LAST",
+      "description": "Excluir o ultimo 0200 cuja unidade seja LT e remover 0190 LT se nao houver uso restante.",
+      "steps": [
+        "Selecionar candidatos 0200 onde UNID_INV = 'LT'.",
+        "Ordenar por ocorrencia no arquivo e escolher o ultimo.",
+        "Aplicar R-003 para excluir 0200 + filhos.",
+        "Validar referencias COD_ITEM em blocos A/C/F (R-006).",
+        "Verificar R-004 para unidade LT e excluir 0190 LT somente se nao houver referencias.",
+        "Aplicar R-002 para recalcular totalizadores."
+      ],
+      "expected_result": {
+        "deleted_records": ["0200", "0205", "0206", "0208"],
+        "conditional_delete": ["0190"],
+        "preserve_hierarchy": true
+      }
+    }
+  ]
+}

@@ -53,6 +53,7 @@
   function clearResult() {
     $('runSummary').innerHTML = '';
     $('downloadList').innerHTML = '';
+    renderValidationInsights(null);
     setErrors([]);
   }
 
@@ -325,10 +326,103 @@
       { label: 'Arquivos', value: String(Array.isArray(summary.files) ? summary.files.length : 0) },
       { label: 'Campos', value: String(Array.isArray(summary.fields) ? summary.fields.length : 0) },
     ];
+    if (summary?.validationFindings) {
+      items.push({
+        label: 'Pendencias',
+        value: String(Number(summary.validationFindings?.totals?.invalidRefs || 0)),
+      });
+    }
 
     el.innerHTML = items
       .map((item) => `<div class="speds-kpi"><strong>${escapeHtml(item.label)}</strong><span>${escapeHtml(item.value)}</span></div>`)
       .join('');
+  }
+
+  function renderValidationInsights(findings) {
+    const box = $('validationInsights');
+    if (!box) return;
+
+    if (!findings || typeof findings !== 'object') {
+      box.style.display = 'none';
+      box.innerHTML = '';
+      return;
+    }
+
+    const totals = findings?.totals || {};
+    const invalidRefs = Number(totals?.invalidRefs || 0);
+    const checks = Number(totals?.checks || 0);
+    const grouped = Array.isArray(findings?.groupedIssues) ? findings.groupedIssues : [];
+    const firstOccurrences = Array.isArray(findings?.firstOccurrences) ? findings.firstOccurrences : [];
+    const missingDomains = Array.isArray(findings?.domainsWithoutDefinitions) ? findings.domainsWithoutDefinitions : [];
+    const statusOk = String(findings?.status || '') === 'ok';
+    const statusText = statusOk ? 'Sem pendencias encontradas.' : 'Pendencias encontradas. Revise os itens abaixo.';
+
+    const groupedHtml = grouped.length === 0
+      ? '<div class="speds-validation-empty">Nenhuma pendencia agrupada.</div>'
+      : grouped.slice(0, 12).map((item) => `
+          <div class="speds-validation-item">
+            <div class="speds-validation-item-top">
+              <strong>${escapeHtml(`${item.count}x`)}</strong>
+              <span>${escapeHtml(item.domainLabel || item.domain || 'Dominio')}</span>
+            </div>
+            <div class="speds-validation-item-body">${escapeHtml(item.message || '')}</div>
+            <div class="speds-validation-item-help">Onde corrigir: ${escapeHtml(item.expectedDefinition || '')}</div>
+            <div class="speds-validation-item-help">Como corrigir: ${escapeHtml(item.howToFix || '')}</div>
+          </div>
+        `).join('');
+
+    const missingHtml = missingDomains.length === 0
+      ? ''
+      : `
+        <div class="speds-validation-block">
+          <h4>Cadastros ausentes no arquivo</h4>
+          <div class="speds-validation-list">
+            ${missingDomains.map((item) => `
+              <div class="speds-validation-item">
+                <div class="speds-validation-item-top">
+                  <strong>${escapeHtml(item.domain || '')}</strong>
+                  <span>${escapeHtml(item.domainLabel || '')}</span>
+                </div>
+                <div class="speds-validation-item-help">Necessario: ${escapeHtml(item.expectedDefinition || '')}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+    const occurrencesHtml = firstOccurrences.length === 0
+      ? ''
+      : `
+        <div class="speds-validation-block">
+          <h4>Primeiras linhas com pendencia</h4>
+          <div class="speds-validation-lines">
+            ${firstOccurrences.slice(0, 12).map((item) => `
+              <div class="speds-validation-line">
+                Linha ${escapeHtml(String(item.lineNumber || 0))}: ${escapeHtml(item.message || '')}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+    box.className = `speds-validation-panel ${statusOk ? 'is-ok' : 'is-issues'}`;
+    box.innerHTML = `
+      <div class="speds-validation-head">
+        <h3>Leitura amigavel da validacao</h3>
+        <p>${escapeHtml(statusText)}</p>
+      </div>
+      <div class="speds-validation-kpis">
+        <div class="speds-validation-kpi"><strong>Checagens</strong><span>${escapeHtml(String(checks))}</span></div>
+        <div class="speds-validation-kpi"><strong>Pendencias</strong><span>${escapeHtml(String(invalidRefs))}</span></div>
+      </div>
+      <div class="speds-validation-block">
+        <h4>Principais causas</h4>
+        <div class="speds-validation-list">${groupedHtml}</div>
+      </div>
+      ${missingHtml}
+      ${occurrencesHtml}
+    `;
+    box.style.display = 'block';
   }
 
   function renderDownloads(artifact) {
@@ -404,11 +498,13 @@
 
       setStatus(`Processamento concluído (job ${data.jobId}).`, false);
       buildSummary(data.summary || null);
+      renderValidationInsights(data.summary?.validationFindings || null);
       renderDownloads(data.artifact || null);
     } catch (error) {
       console.error(error);
       const details = Array.isArray(error?.details) ? error.details : [];
       setStatus(error?.message || 'Erro ao processar template.', true);
+      renderValidationInsights(null);
       setErrors(details);
     } finally {
       submitBtn.disabled = false;

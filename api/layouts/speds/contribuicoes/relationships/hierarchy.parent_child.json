@@ -1,0 +1,466 @@
+{
+  "meta": {
+    "sped": "CONTRIBUICOES",
+    "version": "1.0.0",
+    "generated_at": "2026-03-12T00:00:00Z",
+    "purpose": "Mapa base de hierarquia e chaves para operacoes de alteracao/exclusao com seguranca de cascata."
+  },
+  "block_wrappers": [
+    { "block": "0", "open": "0001", "close": "0990" },
+    { "block": "A", "open": "A001", "close": "A990" },
+    { "block": "C", "open": "C001", "close": "C990" },
+    { "block": "D", "open": "D001", "close": "D990" },
+    { "block": "F", "open": "F001", "close": "F990" },
+    { "block": "I", "open": "I001", "close": "I990" },
+    { "block": "M", "open": "M001", "close": "M990" },
+    { "block": "1", "open": "1001", "close": "1990" },
+    { "block": "P", "open": "P001", "close": "P990" },
+    { "block": "9", "open": "9001", "close": "9999" }
+  ],
+  "parent_child_edges": [
+    {
+      "parent": "0140",
+      "children": ["0145"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "0200",
+      "children": ["0205", "0206", "0208"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "A001",
+      "children": ["A010", "A100", "A990"],
+      "child_scope": "inside_block",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "A100",
+      "children": ["A110", "A111", "A120", "A170"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "C001",
+      "children": ["C010", "C100", "C180", "C380", "C395", "C400", "C500", "C600", "C800", "C860", "C990"],
+      "child_scope": "inside_block",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "C100",
+      "children": ["C110", "C111", "C120", "C170", "C175", "C180", "C181", "C185", "C188", "C190", "C191", "C195", "C198", "C199"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "C180",
+      "children": ["C181", "C185"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "C380",
+      "children": ["C381", "C385"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "C395",
+      "children": ["C396"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "C400",
+      "children": ["C405", "C481", "C485", "C489", "C490", "C491", "C495", "C499"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "C500",
+      "children": ["C501", "C505", "C509"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "C600",
+      "children": ["C601", "C605", "C609"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "C800",
+      "children": ["C810", "C820", "C830"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "C860",
+      "children": ["C870", "C880", "C890"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "D001",
+      "children": ["D010", "D100", "D200", "D300", "D350", "D500", "D600", "D990"],
+      "child_scope": "inside_block",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "D100",
+      "children": ["D101", "D105", "D111"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "D200",
+      "children": ["D201", "D205", "D209"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "D300",
+      "children": ["D309"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "D350",
+      "children": ["D359"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "D500",
+      "children": ["D501", "D505", "D509"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "D600",
+      "children": ["D601", "D605", "D609"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "F001",
+      "children": ["F010", "F100", "F120", "F130", "F150", "F200", "F500", "F510", "F525", "F550", "F560", "F600", "F700", "F800", "F990"],
+      "child_scope": "inside_block",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "F100",
+      "children": ["F111"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "F120",
+      "children": ["F129"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "F130",
+      "children": ["F139"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "F200",
+      "children": ["F205", "F210", "F211"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "F500",
+      "children": ["F509"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "F510",
+      "children": ["F519"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "F550",
+      "children": ["F559"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "F560",
+      "children": ["F569"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "I001",
+      "children": ["I010", "I100", "I199", "I200", "I299", "I300", "I399", "I990"],
+      "child_scope": "inside_block",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M001",
+      "children": ["M100", "M105", "M110", "M115", "M200", "M205", "M210", "M211", "M215", "M220", "M225", "M230", "M300", "M350", "M400", "M410", "M500", "M505", "M510", "M515", "M600", "M605", "M610", "M611", "M615", "M620", "M625", "M630", "M700", "M800", "M810", "M990"],
+      "child_scope": "inside_block",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M100",
+      "children": ["M105"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M200",
+      "children": ["M205"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M210",
+      "children": ["M211", "M215"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M220",
+      "children": ["M225"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M400",
+      "children": ["M410"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M500",
+      "children": ["M505"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M510",
+      "children": ["M515"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M600",
+      "children": ["M605"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M610",
+      "children": ["M611", "M615"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M620",
+      "children": ["M625"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "M800",
+      "children": ["M810"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "1001",
+      "children": ["1010", "1011", "1020", "1050", "1100", "1200", "1300", "1500", "1600", "1700", "1800", "1900", "1990"],
+      "child_scope": "inside_block",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "1100",
+      "children": ["1101", "1102"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "1500",
+      "children": ["1501", "1502"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "1600",
+      "children": ["1610", "1620"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "1800",
+      "children": ["1809"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "P001",
+      "children": ["P010", "P100", "P199", "P200", "P990"],
+      "child_scope": "inside_block",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "P100",
+      "children": ["P110"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "P200",
+      "children": ["P210"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "9001",
+      "children": ["9900", "9990", "9999"],
+      "child_scope": "inside_block_9",
+      "ordered": true,
+      "confidence": "high"
+    }
+  ],
+  "cross_record_links": [
+    {
+      "from": { "record": "0200", "field": "UNID_INV" },
+      "to": { "record": "0190", "field": "UNID" },
+      "type": "lookup_ref",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "A170", "field": "COD_ITEM" },
+      "to": { "record": "0200", "field": "COD_ITEM" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "C170", "field": "COD_ITEM" },
+      "to": { "record": "0200", "field": "COD_ITEM" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "F100", "field": "COD_ITEM" },
+      "to": { "record": "0200", "field": "COD_ITEM" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "A100", "field": "COD_PART" },
+      "to": { "record": "0150", "field": "COD_PART" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "C100", "field": "COD_PART" },
+      "to": { "record": "0150", "field": "COD_PART" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "D100", "field": "COD_PART" },
+      "to": { "record": "0150", "field": "COD_PART" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "A110", "field": "COD_INF" },
+      "to": { "record": "0450", "field": "COD_INF" },
+      "type": "lookup_ref",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "C110", "field": "COD_INF" },
+      "to": { "record": "0450", "field": "COD_INF" },
+      "type": "lookup_ref",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "A170", "field": "COD_CCUS" },
+      "to": { "record": "0600", "field": "COD_CCUS" },
+      "type": "cost_center_ref",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "C170", "field": "COD_CTA" },
+      "to": { "record": "0500", "field": "COD_CTA" },
+      "type": "account_ref",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    }
+  ],
+  "totalizer_records": ["0990", "A990", "C990", "D990", "F990", "I990", "M990", "1990", "P990", "9900", "9990", "9999"]
+}

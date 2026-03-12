@@ -1,0 +1,49 @@
+{
+  "templateId": "icms-ajustar-cfop-1152",
+  "spedType": "icms",
+  "operation": "update",
+  "inputs": [
+    {
+      "key": "sped_txt",
+      "label": "Arquivo SPED ICMS",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"],
+      "help": "Arquivo de entrada do SPED EFD ICMS/IPI."
+    }
+  ],
+  "fields": [
+    {
+      "key": "cfop",
+      "label": "CFOP alvo",
+      "type": "text",
+      "required": true,
+      "defaultValue": "1152"
+    }
+  ],
+  "targets": {
+    "records": ["C100", "C170", "C190", "0990", "9900", "9990", "9999"],
+    "relationshipsFile": "api/layouts/speds/icms/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": true,
+    "onMissingDependency": "abort",
+    "onOrphanDetected": "abort"
+  },
+  "validators": {
+    "globalRelationshipValidation": true,
+    "duplicateKeyCheck": true,
+    "hierarchyCheck": true,
+    "rulesFile": "api/layouts/speds/icms/relationships/reference_domains.validator.json"
+  },
+  "totalizers": ["0990", "9900", "9990", "9999"],
+  "output": {
+    "formats": ["txt"],
+    "filenamePattern": "{input}_CFOP_1152_AJUSTADO.txt"
+  },
+  "dryRun": {
+    "enabled": true,
+    "reportChanges": true,
+    "requireConfirmation": true
+  }
+}
