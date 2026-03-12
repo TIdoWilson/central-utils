@@ -1,0 +1,7 @@
+ALTER TABLE office_companies
+  ADD COLUMN IF NOT EXISTS opcao_simples BOOLEAN NULL,
+  ADD COLUMN IF NOT EXISTS data_opcao_simples DATE NULL,
+  ADD COLUMN IF NOT EXISTS data_exclusao_simples DATE NULL,
+  ADD COLUMN IF NOT EXISTS opcao_mei BOOLEAN NULL,
+  ADD COLUMN IF NOT EXISTS data_opcao_mei DATE NULL,
+  ADD COLUMN IF NOT EXISTS data_exclusao_mei DATE NULL;

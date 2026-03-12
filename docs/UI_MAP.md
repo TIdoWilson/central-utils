@@ -2,6 +2,18 @@
 
 Este arquivo é gerado automaticamente a partir de `src/core/tool-catalog.json`.
 
+## Admin
+
+- **Checklist TI Criacao de Usuario** — `/checklist-ti-criacao-usuario` • API: `/api/checklist-ti-criacao-usuario` • **ADMIN**
+
+## Declaracoes
+
+- **GIAST** — `/giast` • API: `/api/giast`
+
+## Fiscal
+
+- **SPEDS** — `/speds` • API: `/api/speds`
+
 ## Geral
 
 - **Acerto Lotes Toscan** — `/acerto-lotes-toscan`
@@ -9,10 +21,14 @@ Este arquivo é gerado automaticamente a partir de `src/core/tool-catalog.json`.
 - **Ajuste Diario Gfbr** — `/ajuste-diario-gfbr` • API: `/api/ajuste-diario-gfbr`
 - **Ajuste Diario Gfbr C** — `/ajuste-diario-gfbr-c` • API: `/api/ajuste-diario-gfbr-c`
 - **Balancete Transitorio** — `/balancete-transitorio` • API: `/api/balancete-transitorio`
+- **Cadastro de Empresas (BrasilAPI)** — `/cadastro-empresas-brasilapi` • API: `/api/cadastro-empresas-brasilapi`
 - **Calculadora ICMS ST** — `/calculadora-icms-st`
 - **Comprimir PDF** — `/comprimir-pdf` • API: `/api/comprimir-pdf`
+- **Conciliador Cartao Tipo 50** — `/conciliador-cartao-tipo50` • API: `/api/conciliador-cartao-tipo50`
+  - alias: `/conciliador-cartao-wilson`
 - **Conciliador Cartao Wilson** — `/conciliador-cartao-wilson` • API: `/api/conciliador-cartao-wilson`
 - **Conciliador Hausen Ocean** — `/conciliador-hausen-ocean` • API: `/api/conciliador-hausen-ocean`
+- **Conciliador PIS-COFINS** — `/conciliador-pis-cofins` • API: `/api/conciliador-pis-cofins`
 - **Dimob** — `/dimob` • API: `/api/dimob`
 - **ECD Status** — `/ecd-status` • API: `/api/ecd-status`
 - **Excel Abas PDF** — `/excel-abas-pdf` • API: `/api/excel-abas-pdf`
@@ -34,3 +50,8 @@ Este arquivo é gerado automaticamente a partir de `src/core/tool-catalog.json`.
 - **Separador PDF Relatorio DE Ferias** — `/separador-pdf-relatorio-de-ferias` • API: `/api/separador-pdf-relatorio-de-ferias`
 - **SN** — `/sn` • API: `/api/sn`
 - **Tareffa Empresas Lote** — `/tareffa-empresas-lote` • API: `/api/tareffa-empresas-lote`
+
+## Pessoal
+
+- **Cartao Horas IOB** — `/cartao-horas-iob` • API: `/api/cartao-horas-iob`
+- **Comparador Eventos Holerite** — `/comparador-eventos-holerite` • API: `/api/comparador-eventos-holerite`

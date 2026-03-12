@@ -25,6 +25,8 @@ nav:
   - Uso: 03-USO.md
   - Contribuindo: 04-CONTRIBUINDO.md
   - FAQ Global: FAQ-GLOBAL.md
+  - Status Atual: STATUS_ATUAL.md
+  - Playbook Linear: LINEAR_PLAYBOOK.md
   - Ferramentas: tools/index.md
   - Frontend:
       - Estrutura: frontend/01-estrutura.md
