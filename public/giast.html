@@ -1,0 +1,167 @@
+﻿<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GIAST</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body class="app-body nfe-body page-giast">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">WL</span>
+            <span class="logo-text">Portal</span>
+          </div>
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Abrir menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Declaracoes / GIAST</div>
+          <h1>Declaracao GIAST</h1>
+          <p>
+            Cadastre declarantes com inscricoes estaduais por UF e gere o TXT no layout da GIA-ST
+            usando apenas o anexo EC 87/15.
+          </p>
+        </header>
+
+        <section id="giastDeclarantSection" class="nfe-row">
+          <div class="nfe-card">
+            <h2>Declarante e inscricoes estaduais</h2>
+            <p class="nfe-card-subtitle">
+              Selecione um declarante ja cadastrado ou crie um novo. A tabela de inscricoes estaduais
+              pode ser corrigida a qualquer momento.
+            </p>
+
+            <div class="nfe-upload-form giast-top-grid">
+              <div class="giast-select-wrap">
+                <select id="giastDeclarantSelect" class="sn-select giast-native-select"></select>
+                <button
+                  id="giastDeclarantTrigger"
+                  type="button"
+                  class="giast-declarant-trigger is-placeholder"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                >
+                  Selecione um declarante...
+                </button>
+              </div>
+
+              <div class="giast-inline-actions">
+                <button id="btnGiastNewDeclarant" type="button" class="btn btn-secondary">Novo declarante</button>
+                <button id="btnGiastEditDeclarant" type="button" class="btn btn-secondary">Editar declarante</button>
+              </div>
+            </div>
+            <div id="giastDeclarantStatus" class="nfe-upload-message"></div>
+
+            <div id="giastDeclarantEditor" class="giast-editor is-hidden">
+              <h3 id="giastEditorTitle">Novo declarante</h3>
+
+              <div class="nfe-upload-form giast-declarant-grid">
+                <label class="nfe-input-file-label">
+                  <span>Nome do declarante</span>
+                  <input id="giastDeclarantName" type="text" maxlength="140" placeholder="Nome do declarante" />
+                </label>
+
+                <label class="nfe-input-file-label">
+                  <span>CNPJ</span>
+                  <input id="giastDeclarantCnpj" type="text" maxlength="18" placeholder="00.000.000/0000-00" />
+                </label>
+
+                <label class="nfe-input-file-label">
+                  <span>CPF (opcional)</span>
+                  <input id="giastDeclarantCpf" type="text" maxlength="14" placeholder="000.000.000-00" />
+                </label>
+
+                <label class="nfe-input-file-label">
+                  <span>Cargo (opcional)</span>
+                  <input id="giastDeclarantRole" type="text" maxlength="60" placeholder="Cargo do responsavel" />
+                </label>
+
+                <label class="nfe-input-file-label">
+                  <span>Telefone (DDD + numero)</span>
+                  <input id="giastDeclarantPhone" type="text" maxlength="20" placeholder="(00) 00000-0000" />
+                </label>
+
+                <label class="nfe-input-file-label">
+                  <span>E-mail (opcional)</span>
+                  <input id="giastDeclarantEmail" type="email" maxlength="120" placeholder="email@empresa.com" />
+                </label>
+
+                <label class="nfe-input-file-label">
+                  <span>Local da assinatura</span>
+                  <input id="giastDeclarantCity" type="text" maxlength="60" placeholder="Cidade" />
+                </label>
+              </div>
+
+              <h3>Inscricoes estaduais por UF</h3>
+              <div class="giast-ie-wrapper">
+                <div id="giastIeTbody" class="giast-ie-grid"></div>
+              </div>
+
+              <div class="nfe-table-actions">
+                <button id="btnGiastSaveDeclarant" type="button" class="btn btn-primary">Salvar declarante</button>
+                <button id="btnGiastCancelDeclarant" type="button" class="btn btn-secondary">Cancelar</button>
+                <button id="btnGiastDeleteDeclarantEditor" type="button" class="btn btn-ghost-danger is-hidden">Excluir declarante</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="giastGenerateSection" class="nfe-row is-hidden">
+          <div class="nfe-card">
+            <h2>Geracao do TXT GIA-ST</h2>
+            <p class="nfe-card-subtitle">
+              Para declarante existente, preencha UF, data de vencimento, valor DIFAL, valor FCP,
+              devolucoes/anulacoes e pagamentos antecipados.
+              Os registros dos anexos 1, 2 e 3 nao serao gerados.
+            </p>
+
+            <div class="nfe-upload-form giast-period-grid">
+              <label class="nfe-input-file-label">
+                <span>Periodo de referencia (MMAAAA)</span>
+                <input id="giastPeriodRef" type="text" maxlength="6" inputmode="numeric" placeholder="012026" />
+              </label>
+            </div>
+
+            <div class="nfe-table-wrapper">
+              <table class="nfe-table" id="giastRowsTable">
+                <thead>
+                  <tr>
+                    <th>UF</th>
+                    <th>Data de vencimento</th>
+                    <th>Valor DIFAL</th>
+                    <th>Valor FCP</th>
+                    <th>Devolucoes/Anulacoes</th>
+                    <th>Pagamentos Antecipados</th>
+                    <th>Acao</th>
+                  </tr>
+                </thead>
+                <tbody id="giastRowsTbody"></tbody>
+              </table>
+            </div>
+
+            <div class="nfe-table-actions">
+              <button id="btnGiastAddRow" type="button" class="btn btn-secondary">Incluir nova UF</button>
+              <button id="btnGiastGenerateTxt" type="button" class="btn btn-primary">Gerar TXT</button>
+            </div>
+
+            <div id="giastStatus" class="nfe-upload-message"></div>
+            <pre id="giastLog" class="mit-log" aria-live="polite"></pre>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/giast.js"></script>
+  </body>
+</html>

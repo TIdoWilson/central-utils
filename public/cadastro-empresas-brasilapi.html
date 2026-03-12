@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Empresas (BrasilAPI)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="app-body nfe-body page-cadastro-empresas-brasilapi">
+  <div class="nfe-layout">
+    <aside class="nfe-sidebar">
+      <div class="nfe-sidebar-top">
+        <div class="nfe-sidebar-logo">
+          <span class="logo-circle">WL</span>
+          <span class="logo-text">Portal</span>
+        </div>
+        <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+    </aside>
+
+    <main class="nfe-main">
+      <header class="nfe-header">
+        <div class="nfe-breadcrumb">Portal / Geral / Cadastro de Empresas (BrasilAPI)</div>
+        <h1>Cadastro de Empresas (BrasilAPI)</h1>
+        <p>Importe CNPJs em lote, salve no banco e filtre por sócio, CNAE e dados cadastrais.</p>
+        <div class="nfe-header-actions">
+          <span id="whoami" class="nfe-breadcrumb"></span>
+        </div>
+      </header>
+
+      <section class="nfe-row cadastro-empresas-top-row">
+        <div class="nfe-card nfe-card-upload cadastro-empresas-import-section">
+          <h2>Importação em lote</h2>
+          <p class="nfe-card-subtitle">Cole vários CNPJs ou envie planilha/arquivo (`.xlsx`, `.xls`, `.csv`, `.txt`).</p>
+
+          <div class="cadastro-empresas-grid">
+            <label class="nfe-input-file-label cadastro-empresas-wide">
+              <span>
+                CNPJs (um por linha ou separados por espaço/vírgula)
+                <span class="cadastro-help" tabindex="0" data-help="Cole CNPJs manualmente. Pode separar por linha, espaço ou vírgula.">?</span>
+              </span>
+              <textarea
+                id="manualCnpjs"
+                class="auth-textarea cadastro-empresas-textarea"
+                rows="5"
+                placeholder="Exemplo:&#10;12.345.678/0001-95&#10;98765432000110"
+              ></textarea>
+            </label>
+
+            <label class="nfe-input-file-label">
+              <span>
+                Arquivo de lote
+                <span class="cadastro-help" tabindex="0" data-help="Selecione CSV, TXT ou Excel. A ferramenta extrai os CNPJs e consulta a BrasilAPI.">?</span>
+              </span>
+              <input type="file" id="importFile" data-wl-primary-upload="1" accept=".xlsx,.xls,.xlsm,.csv,.txt" />
+            </label>
+
+            <label class="nfe-input-file-label">
+              <span>
+                Opções
+                <span class="cadastro-help" tabindex="0" data-help="Controla se CNPJs já salvos também serão reconsultados na BrasilAPI.">?</span>
+              </span>
+              <label class="cadastro-empresas-check">
+                <input type="checkbox" id="forceRefresh" />
+                Reconsultar CNPJs já cadastrados
+              </label>
+            </label>
+          </div>
+          <div id="fileLoadedBadge" class="cadastro-file-badge" aria-live="polite">Nenhum arquivo carregado.</div>
+
+          <div class="nfe-table-actions cadastro-empresas-actions">
+            <button type="button" class="btn btn-primary" id="btnImportManual">
+              Importar CNPJs digitados
+              <span class="cadastro-help-inline" data-help="Usa os CNPJs da caixa de texto. Se o texto estiver vazio e houver arquivo selecionado, usa o arquivo automaticamente.">?</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnImportFile">
+              Importar arquivo
+              <span class="cadastro-help-inline" data-help="Processa o arquivo de lote selecionado e consulta cada CNPJ encontrado na BrasilAPI.">?</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnRefreshListed">
+              Atualizar empresas listadas
+              <span class="cadastro-help-inline" data-help="Reconsulta apenas os CNPJs exibidos na página atual da tabela.">?</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnRefreshAll">
+              Atualizar todos os cadastrados
+              <span class="cadastro-help-inline" data-help="Reconsulta todos os CNPJs já salvos no banco. Pode levar mais tempo.">?</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnRetryFailures" disabled>
+              Reprocessar falhas
+              <span class="cadastro-help-inline" data-help="Executa nova consulta apenas para os CNPJs que falharam na última execução.">?</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnDownloadFailures" disabled>
+              Baixar falhas (CSV)
+              <span class="cadastro-help-inline" data-help="Baixa uma lista CSV com CNPJ e motivo de erro das falhas da última execução.">?</span>
+            </button>
+          </div>
+
+          <div id="importResult" class="nfe-upload-message cadastro-empresas-message" aria-live="polite"></div>
+          <div id="failuresPanel" class="cadastro-failures-panel" hidden>
+            <div class="cadastro-failures-title">Falhas da última execução</div>
+            <div id="failuresList" class="cadastro-failures-list"></div>
+          </div>
+        </div>
+
+      <div class="nfe-card cadastro-empresas-filters-section">
+        <div class="nfe-card-header nfe-card-header-with-actions">
+          <div>
+            <h2>Filtros</h2>
+            <p class="nfe-card-subtitle">Busca por empresa/CNPJ, sócios e um ou mais CNAEs.</p>
+          </div>
+          <div class="nfe-table-actions">
+            <button type="button" class="btn btn-secondary" id="btnApplyFilters">
+              Aplicar filtros
+              <span class="cadastro-help-inline" data-help="Executa a busca usando os filtros preenchidos abaixo.">?</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnClearFilters">
+              Limpar
+              <span class="cadastro-help-inline" data-help="Limpa todos os filtros e retorna para a listagem padrão.">?</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="cadastro-empresas-grid cadastro-empresas-filters">
+          <label class="nfe-input-file-label">
+            <span>
+              Empresa ou CNPJ
+              <span class="cadastro-help" tabindex="0" data-help="Busca por razão social, nome fantasia ou CNPJ.">?</span>
+            </span>
+            <input type="text" id="filterSearch" class="auth-input" placeholder="Razão social, fantasia ou CNPJ" />
+          </label>
+
+          <label class="nfe-input-file-label">
+            <span>
+              Nome do sócio
+              <span class="cadastro-help" tabindex="0" data-help="Mostra empresas em que esse nome aparece na lista de sócios.">?</span>
+            </span>
+            <input type="text" id="filterPartner" class="auth-input" placeholder="Ex.: João da Silva" />
+          </label>
+
+          <label class="nfe-input-file-label">
+            <span>
+              CNAEs (códigos)
+              <span class="cadastro-help" tabindex="0" data-help="Informe códigos CNAE (ex.: 6201501) e/ou palavras da descrição (ex.: aluguel), separados por vírgula ou ;.">?</span>
+            </span>
+            <input type="text" id="filterCnaes" class="auth-input" list="cnaeSuggestions" placeholder="Ex.: aluguel, 6201501, consultoria" />
+            <datalist id="cnaeSuggestions"></datalist>
+          </label>
+
+          <label class="nfe-input-file-label">
+            <span>
+              Modo de filtro CNAE
+              <span class="cadastro-help" tabindex="0" data-help="Qualquer: empresa entra se tiver ao menos 1 CNAE informado. Todos: empresa precisa ter todos os CNAEs informados.">?</span>
+            </span>
+            <select id="filterCnaeMode" class="sn-select">
+              <option value="any">Qualquer CNAE informado</option>
+              <option value="all">Todos os CNAEs informados</option>
+            </select>
+          </label>
+
+          <label class="nfe-input-file-label">
+            <span>
+              Situação cadastral
+              <span class="cadastro-help" tabindex="0" data-help="Filtra por situação na Receita/BrasilAPI, por exemplo ATIVA ou BAIXADA.">?</span>
+            </span>
+            <select id="filterSituacao" class="sn-select">
+              <option value="">Todas</option>
+            </select>
+          </label>
+
+          <label class="nfe-input-file-label">
+            <span>
+              UF
+              <span class="cadastro-help" tabindex="0" data-help="Filtra empresas por estado (UF).">?</span>
+            </span>
+            <select id="filterUf" class="sn-select">
+              <option value="">Todas</option>
+            </select>
+          </label>
+
+          <label class="nfe-input-file-label">
+            <span>
+              Porte
+              <span class="cadastro-help" tabindex="0" data-help="Filtra por porte da empresa retornado pela BrasilAPI.">?</span>
+            </span>
+            <select id="filterPorte" class="sn-select">
+              <option value="">Todos</option>
+            </select>
+          </label>
+
+          <label class="nfe-input-file-label">
+            <span>
+              Regime tributário
+              <span class="cadastro-help" tabindex="0" data-help="Filtra pelo regime atual calculado a partir do histórico de regime tributário retornado pela BrasilAPI.">?</span>
+            </span>
+            <select id="filterRegime" class="sn-select">
+              <option value="">Todos</option>
+            </select>
+          </label>
+
+          <label class="nfe-input-file-label">
+            <span>
+              Natureza jurídica
+              <span class="cadastro-help" tabindex="0" data-help="Filtra pela natureza jurídica cadastrada na consulta da BrasilAPI.">?</span>
+            </span>
+            <select id="filterNaturezaJuridica" class="sn-select">
+              <option value="">Todas</option>
+            </select>
+          </label>
+
+          <label class="nfe-input-file-label">
+            <span>
+              Município
+              <span class="cadastro-help" tabindex="0" data-help="Filtra empresas por município cadastrado.">?</span>
+            </span>
+            <select id="filterMunicipio" class="sn-select">
+              <option value="">Todos</option>
+            </select>
+          </label>
+
+          <label class="nfe-input-file-label">
+            <span>
+              Linhas por página
+              <span class="cadastro-help" tabindex="0" data-help="Define quantas empresas aparecem em cada página da listagem.">?</span>
+            </span>
+            <select id="pageSize" class="sn-select">
+              <option value="25">25</option>
+              <option value="50" selected>50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      </section>
+
+      <section class="nfe-card cadastro-empresas-columns-section" style="margin-top: 16px;">
+        <h2>Colunas visíveis</h2>
+        <p class="nfe-card-subtitle">Marque o que deseja ver na tabela principal.</p>
+        <div id="columnSelector" class="cadastro-empresas-columns"></div>
+      </section>
+
+      <section class="nfe-card nfe-card-table cadastro-empresas-table-section" style="margin-top: 16px;">
+        <div class="nfe-card-header nfe-card-header-with-actions">
+          <div>
+            <h2>Empresas cadastradas</h2>
+            <p class="nfe-card-subtitle" id="tableSummary">Carregando...</p>
+          </div>
+          <div class="nfe-table-actions">
+            <button type="button" class="btn btn-secondary" id="btnExportExcel">
+              Exportar Excel
+              <span class="cadastro-help-inline" data-help="Exporta para Excel exatamente o resultado dos filtros atuais (não exporta empresas fora do filtro).">?</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnReloadList">
+              Recarregar
+              <span class="cadastro-help-inline" data-help="Atualiza a listagem com os filtros atuais.">?</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="nfe-table-wrapper">
+          <table class="nfe-table" id="companiesTable">
+            <thead>
+              <tr id="companiesHeadRow"></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="cadastro-empresas-pagination">
+          <button type="button" class="btn btn-secondary" id="btnPrevPage">Página anterior</button>
+          <span id="pageInfo">Página 1</span>
+          <button type="button" class="btn btn-secondary" id="btnNextPage">Próxima página</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="companyDetailModal" class="cadastro-modal" aria-hidden="true">
+    <div class="cadastro-modal-backdrop" data-action="close-detail"></div>
+    <div class="cadastro-modal-card" role="dialog" aria-modal="true" aria-labelledby="companyDetailTitle">
+      <div class="cadastro-modal-header">
+        <h3 id="companyDetailTitle">Detalhes</h3>
+        <button type="button" class="btn btn-secondary btn-sm" data-action="close-detail">Fechar</button>
+      </div>
+      <div id="companyDetailBody" class="cadastro-modal-body"></div>
+    </div>
+  </div>
+
+  <div id="regimeEditModal" class="cadastro-modal" aria-hidden="true">
+    <div class="cadastro-modal-backdrop" data-action="close-regime-edit"></div>
+    <div class="cadastro-modal-card" role="dialog" aria-modal="true" aria-labelledby="regimeEditTitle">
+      <div class="cadastro-modal-header">
+        <h3 id="regimeEditTitle">Editar Regime Tributário</h3>
+        <button type="button" class="btn btn-secondary btn-sm" data-action="close-regime-edit">Fechar</button>
+      </div>
+      <div class="cadastro-modal-body">
+        <p id="regimeEditCompany" class="cadastro-empresas-muted" style="margin-top:0;"></p>
+        <form id="regimeEditForm">
+          <label class="nfe-input-file-label" style="margin-bottom: 12px;">
+            <span>Regime tributário (opções)</span>
+            <select id="regimeManualSelect" class="sn-select"></select>
+          </label>
+          <label id="regimeManualCustomWrap" class="nfe-input-file-label" style="display:none; margin-bottom: 12px;">
+            <span>Outro regime (digitar)</span>
+            <input id="regimeManualCustom" type="text" class="auth-input" maxlength="160" placeholder="Ex.: LUCRO ARBITRADO" />
+          </label>
+          <div class="nfe-table-actions">
+            <button type="submit" class="btn btn-primary">Salvar regime</button>
+            <button type="button" class="btn btn-secondary" data-action="close-regime-edit">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
+  <script src="/js/upload-helper.js"></script>
+  <script src="/js/cadastro-empresas-brasilapi.js"></script>
+</body>
+</html>

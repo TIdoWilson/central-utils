@@ -5,8 +5,7 @@ module.exports = function createMitRoutes(deps) {
     requireCsrf,
     mitUpload,
     extrairCnpjContribuinteDeNomeArquivo,
-    obterToken,
-    createHttpsAgent,
+    autenticarSerpro,
     axios,
   } = deps;
 
@@ -86,20 +85,24 @@ module.exports = function createMitRoutes(deps) {
           });
         }
 
-        const { accessToken, jwtToken } = await obterToken();
+        const { access_token, jwt_token } = await autenticarSerpro();
+        if (!access_token || !jwt_token) {
+          return res.status(500).json({
+            ok: false,
+            error:
+              'access_token ou jwt_token nÃ£o retornado pelo SERPRO. Verifique o endpoint /authenticate e as credenciais.'
+          });
+        }
 
         const urlDeclarar =
           process.env.SERPRO_MIT_DECLARAR_URL ||
           process.env.SERPRO_DECLARAR_URL ||
           'https://gateway.apiserpro.serpro.gov.br/integra-contador-trial/v1/Declarar';
 
-        const httpsAgent = createHttpsAgent();
-
         const resp = await axios.post(urlDeclarar, payloadMit, {
-          httpsAgent,
           headers: {
-            Authorization: `Bearer ${accessToken}`,
-            jwt_token: jwtToken,
+            Authorization: `Bearer ${access_token}`,
+            jwt_token,
             'Content-Type': 'application/json'
           },
           timeout: 30000

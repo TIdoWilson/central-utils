@@ -91,3 +91,10 @@ G) APIs antigas continuam no mesmo path
 H) Socket não vaza dados sem permissão  
 I) auditLog não derruba request  
 J) CSRF e rate-limit ok
+
+## Governanca Linear (obrigatoria)
+- Projeto alvo: `Central utilitarios` no Linear.
+- Toda alteracao funcional/tecnica deve atualizar docs e issue correspondente no mesmo ciclo.
+- Ler e seguir `docs/LINEAR_PLAYBOOK.md` e `docs/STATUS_ATUAL.md` antes de retomar uma pendencia.
+- Fase ativa deve ter issue-mae em `In Progress`; pendencias executaveis ficam em `Todo`.
+- Erros mitigados e blocos concluidos devem ser mantidos em `Done` com evidencias.

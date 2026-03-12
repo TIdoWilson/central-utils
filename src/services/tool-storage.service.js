@@ -86,6 +86,25 @@ function createToolStorage({ dataDir, dimobService }) {
   const EXCEL_ABAS_PDF_DIR = path.join(dataDir, 'excel-abas-pdf');
   ensureDir(EXCEL_ABAS_PDF_DIR);
 
+  // SPEDS
+  const SPEDS_BASE_DIR = path.join(dataDir, 'speds');
+  const SPEDS_UPLOAD_DIR = path.join(SPEDS_BASE_DIR, 'uploads');
+  const SPEDS_OUTPUT_DIR = path.join(SPEDS_BASE_DIR, 'outputs');
+  ensureDir(SPEDS_BASE_DIR);
+  ensureDir(SPEDS_UPLOAD_DIR);
+  ensureDir(SPEDS_OUTPUT_DIR);
+  const uploadSpeds = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => cb(null, SPEDS_UPLOAD_DIR),
+      filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname || '');
+        const safe = `${Date.now()}_${Math.random().toString(16).slice(2)}${ext}`;
+        cb(null, safe);
+      },
+    }),
+    limits: { files: 120, fileSize: 100 * 1024 * 1024 },
+  });
+
   // DIMOB
   const DIMOB_DIR = path.join(dataDir, 'dimob');
   const DIMOB_UPLOAD_DIR = path.join(DIMOB_DIR, '_tmp');
@@ -128,6 +147,10 @@ function createToolStorage({ dataDir, dimobService }) {
     SEPARADOR_CSV_OUTPUT_DIR,
     uploadSeparadorCsv,
     EXCEL_ABAS_PDF_DIR,
+    SPEDS_BASE_DIR,
+    SPEDS_UPLOAD_DIR,
+    SPEDS_OUTPUT_DIR,
+    uploadSpeds,
     DIMOB_DIR,
     DIMOB_UPLOAD_DIR,
     DIMOB_OUTPUT_DIR,

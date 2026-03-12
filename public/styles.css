@@ -6,6 +6,11 @@ body.app-body {
   color: #111827;
 }
 
+:root {
+  --wl-z-layer-header: 1300;
+  --wl-z-layer-dropdown: 2147483000;
+}
+
 /* Topbar */
 /* Topbar com imagem de fundo */
 /* Topbar mantém a cor atual */
@@ -19,6 +24,8 @@ body.app-body {
     align-items: center;
     color: white;
     position: relative;
+    z-index: var(--wl-z-layer-header);
+    overflow: visible;
 }
 
 /* Logo centralizada */
@@ -44,6 +51,7 @@ body.app-body {
 .topbar-right {
     text-align: right;
     position: relative;
+    overflow: visible;
 }
 
 .home-user-btn {
@@ -78,7 +86,7 @@ body.app-body {
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.22);
-  z-index: 50;
+  z-index: var(--wl-z-layer-dropdown);
   display: none;
   text-align: left;
 }
@@ -542,7 +550,7 @@ body.nfe-body {
   top: 0;
   left: 0;
   bottom: 0;
-  z-index: 1200;
+  z-index: calc(var(--wl-z-layer-header) + 10);
   box-sizing: border-box;
   width: var(--sidebar-width);
   background: linear-gradient(180deg, #221f20, #221f20);
@@ -572,6 +580,7 @@ body.nfe-body {
   gap: 0;
   min-height: var(--header-height);
   margin-bottom: 6px;
+  padding: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -597,7 +606,20 @@ body.nfe-body {
 }
 
 .nfe-sidebar-logo {
-  display: none;
+  display: none !important;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin-right: auto;
+}
+
+.nfe-sidebar-logo .logo-text {
+  color: rgba(249, 250, 251, 0.92);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* === ESTADO RECOLHIDO === */
@@ -614,6 +636,10 @@ body.nfe-body {
   display: none;
 }
 
+.nfe-layout.collapsed .nfe-sidebar-logo {
+  display: none;
+}
+
 .nfe-layout.collapsed .nfe-menu-item {
   justify-content: center;
 }
@@ -623,7 +649,7 @@ body.nfe-body {
 }
 
 .nfe-layout.collapsed .nfe-sidebar-toggle {
-  align-self: center;
+  align-self: auto;
 }
 
 /* SUBSTITUA o bloco atual .nfe-sidebar-logo .logo-circle por este */
@@ -720,8 +746,9 @@ body.nfe-body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 900;
+  z-index: var(--wl-z-layer-header);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: visible;
 }
 
 .app-topbar-menu {
@@ -751,12 +778,13 @@ body.nfe-body {
   margin-left: auto;
   justify-self: end;
   position: relative;
+  overflow: visible;
 }
 
 .topbar-left {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .topbar-right {
@@ -806,6 +834,7 @@ body.nfe-body {
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
   display: none;
   overflow: hidden;
+  z-index: var(--wl-z-layer-dropdown);
 }
 
 .app-topbar-user-menu.open {
@@ -983,7 +1012,7 @@ body.nfe-body {
     left: -236px;
     bottom: 0;
     width: 220px;
-    z-index: 1200;
+    z-index: calc(var(--wl-z-layer-header) + 10);
     transition: left 0.2s ease;
     box-shadow: 12px 0 26px rgba(0, 0, 0, 0.24);
   }
@@ -1006,7 +1035,7 @@ body.nfe-body {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.35);
-    z-index: 1100;
+    z-index: calc(var(--wl-z-layer-header) + 1);
   }
 
   .nfe-layout.menu-open .nfe-sidebar-backdrop {
@@ -3053,6 +3082,8 @@ textarea#dimobLog {
    Combobox (Regime Tributário)
    ====================== */
 .page-empresas-lote .wl-combobox{ position: relative; }
+.page-empresas-lote .wl-combobox,
+.page-empresas-lote .wl-multi { overflow: visible; }
 
 .page-empresas-lote .wl-combobox-menu{
   position: absolute; /* padrão (não-portal) */
@@ -3060,7 +3091,7 @@ textarea#dimobLog {
   left: 0;
   right: 0;
 
-  z-index: 99999;
+  z-index: var(--wl-z-layer-dropdown);
   display: none;
 
   background: #fff;
@@ -3121,7 +3152,7 @@ textarea#dimobLog {
   left: 0;
   right: 0;
 
-  z-index: 99999;
+  z-index: var(--wl-z-layer-dropdown);
   display: none;
 
   background: #fff;
@@ -3499,4 +3530,850 @@ textarea#dimobLog {
 .request-action-muted {
   color: #94a3b8;
   font-weight: 500;
+}
+
+/* Cadastro de Empresas (BrasilAPI) */
+.page-cadastro-empresas-brasilapi .cadastro-empresas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row {
+  margin-top: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row > .nfe-card {
+  margin-top: 0;
+  padding: 16px 18px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .nfe-card-subtitle {
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-wide {
+  grid-column: span 3;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-filters {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .cadastro-empresas-filters {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .cadastro-empresas-filters .nfe-input-file-label {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 8px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .cadastro-empresas-filters .nfe-input-file-label > span {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .cadastro-empresas-filters .auth-input,
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .cadastro-empresas-filters .sn-select {
+  width: 100%;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .nfe-input-file-label {
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .auth-input,
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .auth-textarea,
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .sn-select {
+  padding: 8px 10px;
+  min-height: 36px;
+  font-size: 13px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .cadastro-file-badge {
+  margin-top: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .cadastro-empresas-actions {
+  margin-top: 8px;
+  gap: 6px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-top-row .cadastro-empresas-actions .btn {
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-textarea {
+  width: 100%;
+  font-size: 13px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #111827;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-actions {
+  margin-top: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-message {
+  margin-top: 10px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-failures-panel {
+  margin-top: 10px;
+  border: 1px solid #fecaca;
+  background: #fff1f2;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-failures-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #7f1d1d;
+  margin-bottom: 6px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-failures-list {
+  max-height: 180px;
+  overflow: auto;
+  font-size: 12px;
+  color: #991b1b;
+  display: grid;
+  gap: 4px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-file-badge {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #64748b;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-file-badge.is-loaded {
+  color: #166534;
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+  font-weight: 600;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-help,
+.page-cadastro-empresas-brasilapi .cadastro-help-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.25);
+  color: #1e293b;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 6px;
+  cursor: help;
+  position: relative;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-help-inline {
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #fff;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-help::after,
+.page-cadastro-empresas-brasilapi .cadastro-help-inline::after {
+  content: attr(data-help);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(100% + 8px);
+  min-width: 260px;
+  max-width: 360px;
+  width: max-content;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #f8fafc;
+  background: #0f172a;
+  box-shadow: 0 12px 26px rgba(2, 6, 23, 0.32);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: normal;
+  z-index: 30;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-help:hover::after,
+.page-cadastro-empresas-brasilapi .cadastro-help:focus::after,
+.page-cadastro-empresas-brasilapi .cadastro-help-inline:hover::after,
+.page-cadastro-empresas-brasilapi .cadastro-help-inline:focus::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px 14px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-pagination {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-meta-cell {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-row-actions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-row-actions .btn.btn-sm {
+  padding: 4px 8px;
+  font-size: 11px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.page-cadastro-empresas-brasilapi .nfe-table-wrapper {
+  overflow-x: auto;
+}
+
+.page-cadastro-empresas-brasilapi .nfe-table {
+  table-layout: auto;
+  width: 100%;
+}
+
+.page-cadastro-empresas-brasilapi .nfe-table th,
+.page-cadastro-empresas-brasilapi .nfe-table td {
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  padding: 6px 6px;
+  vertical-align: top;
+}
+
+.page-cadastro-empresas-brasilapi .nfe-table th.col-situacaoCadastral,
+.page-cadastro-empresas-brasilapi .nfe-table td.col-situacaoCadastral {
+  width: 90px;
+  min-width: 90px;
+  white-space: nowrap;
+}
+
+.page-cadastro-empresas-brasilapi .nfe-table th.col-cnpjFormatted,
+.page-cadastro-empresas-brasilapi .nfe-table td.col-cnpjFormatted,
+.page-cadastro-empresas-brasilapi .nfe-table th.col-cnpj,
+.page-cadastro-empresas-brasilapi .nfe-table td.col-cnpj {
+  width: 132px;
+  min-width: 132px;
+  white-space: nowrap;
+}
+
+.page-cadastro-empresas-brasilapi .nfe-table th.col-uf,
+.page-cadastro-empresas-brasilapi .nfe-table td.col-uf {
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-modal.is-open {
+  display: flex;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.55);
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-modal-card {
+  position: relative;
+  width: min(920px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  margin: 0;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 22px 50px rgba(2, 6, 23, 0.35);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-modal-body {
+  padding: 14px 16px;
+  overflow: auto;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-expanded-row td {
+  background: #f8fafc;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-expanded-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-expanded-content h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-list {
+  margin: 0;
+  padding-left: 18px;
+  max-height: 260px;
+  overflow: auto;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-empresas-muted {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-regime-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+  font-size: 13px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-regime-history-wrap {
+  overflow: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-regime-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-regime-history-table th,
+.page-cadastro-empresas-brasilapi .cadastro-regime-history-table td {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 8px 10px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.page-cadastro-empresas-brasilapi .cadastro-regime-history-table th {
+  background: #f8fafc;
+}
+
+@media (max-width: 1200px) {
+  .page-cadastro-empresas-brasilapi .cadastro-empresas-top-row {
+    grid-template-columns: 1fr;
+  }
+
+  .page-cadastro-empresas-brasilapi .cadastro-empresas-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-cadastro-empresas-brasilapi .cadastro-empresas-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 780px) {
+  .page-cadastro-empresas-brasilapi .cadastro-empresas-grid,
+  .page-cadastro-empresas-brasilapi .cadastro-empresas-filters,
+  .page-cadastro-empresas-brasilapi .cadastro-empresas-columns,
+  .page-cadastro-empresas-brasilapi .cadastro-empresas-expanded-content,
+  .page-cadastro-empresas-brasilapi .cadastro-regime-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-cadastro-empresas-brasilapi .cadastro-empresas-wide {
+    grid-column: span 1;
+  }
+
+  .page-cadastro-empresas-brasilapi .cadastro-empresas-pagination {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+/* ===== GIAST ===== */
+.page-giast .nfe-row {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.page-giast .is-hidden {
+  display: none !important;
+}
+
+.page-giast #giastDeclarantSection {
+  position: relative;
+  z-index: 40;
+}
+
+.page-giast #giastGenerateSection {
+  position: relative;
+  z-index: 10;
+}
+
+.page-giast .nfe-card {
+  overflow: visible;
+}
+
+.page-giast .nfe-input-file-label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 6px;
+  cursor: default;
+}
+
+.page-giast .nfe-input-file-label > span {
+  width: 100%;
+}
+
+.page-giast .sn-select,
+.page-giast .nfe-input-file-label input[type="text"],
+.page-giast .nfe-input-file-label input[type="email"],
+.page-giast .nfe-input-file-label input[type="date"] {
+  width: 100%;
+}
+
+.page-giast .giast-top-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 420px) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+  overflow: visible;
+}
+
+.page-giast .giast-select-wrap {
+  position: relative;
+  height: 36px;
+  min-width: 0;
+  border: 1px dashed #1f2937;
+  border-radius: 12px;
+  background: #f9fafb;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  z-index: 60;
+}
+
+.page-giast .giast-select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #9ca3af;
+  transform: translateY(-35%);
+  pointer-events: none;
+}
+
+.page-giast #giastDeclarantSelect.giast-native-select {
+  display: none;
+}
+
+.page-giast .giast-declarant-trigger {
+  width: 100%;
+  min-height: 32px;
+  border: 0;
+  background: transparent;
+  color: #111827;
+  padding: 0 24px 0 0;
+  margin: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.page-giast .giast-declarant-trigger.is-placeholder {
+  color: #6b7280;
+}
+
+.page-giast .giast-declarant-trigger:focus {
+  outline: none;
+}
+
+.page-giast .giast-declarant-menu {
+  position: fixed;
+  z-index: 2147483000;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.26);
+  overflow: auto;
+  padding: 6px;
+}
+
+.page-giast .giast-declarant-option {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  border-radius: 8px;
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #111827;
+  cursor: pointer;
+}
+
+.page-giast .giast-declarant-option:hover {
+  background: #f3f4f6;
+}
+
+.page-giast .giast-declarant-option.is-selected {
+  background: #e5e7eb;
+  font-weight: 600;
+}
+
+.page-giast .giast-declarant-option.is-placeholder-option {
+  color: #6b7280;
+}
+
+.page-giast .giast-inline-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 0;
+  padding: 0;
+  position: relative;
+  z-index: 20;
+}
+
+.page-giast .giast-inline-actions .btn {
+  white-space: nowrap;
+}
+
+.page-giast .giast-editor h3 {
+  margin: 6px 0 10px;
+}
+
+.page-giast .giast-declarant-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 460px));
+  gap: 10px 36px;
+  margin-top: 14px;
+  justify-content: flex-start;
+}
+
+.page-giast .giast-editor {
+  margin-top: 12px;
+  max-width: 1060px;
+}
+
+.page-giast .giast-ie-wrapper {
+  max-width: 1060px;
+  max-height: 420px;
+  overflow: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px;
+  background: #f8fafc;
+}
+
+.page-giast .giast-ie-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 10px 16px;
+}
+
+.page-giast .giast-ie-item {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.page-giast .giast-ie-uf {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+  background: #e5e7eb;
+  border-radius: 8px;
+  padding: 7px 0;
+}
+
+.page-giast .giast-ie-input,
+.page-giast .giast-row-date,
+.page-giast .giast-row-icms,
+.page-giast .giast-row-fcp,
+.page-giast .giast-row-devolutions,
+.page-giast .giast-row-prepayments {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  min-height: 34px;
+  padding: 6px 8px;
+  font: inherit;
+  color: #111827;
+}
+
+.page-giast .giast-row-uf {
+  min-width: 92px;
+}
+
+.page-giast .giast-period-grid {
+  max-width: 340px;
+}
+
+.page-giast #giastLog {
+  margin-top: 12px;
+  min-height: 110px;
+  max-height: 260px;
+  overflow: auto;
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .page-giast .giast-top-grid,
+  .page-giast .giast-declarant-grid,
+  .page-giast .giast-ie-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-giast .giast-inline-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 0;
+  }
+
+  .page-giast .giast-inline-actions .btn {
+    width: auto;
+  }
+}
+
+/* =========================
+   SPEDS
+   ========================= */
+.page-speds .speds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.page-speds .speds-grid-margin {
+  margin-top: 12px;
+}
+
+.page-speds .speds-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.page-speds .speds-select,
+.page-speds .speds-input,
+.page-speds .speds-textarea {
+  min-height: 40px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #fff;
+  font: inherit;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.page-speds .speds-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.page-speds .speds-meta,
+.page-speds .speds-file-help,
+.page-speds .speds-muted {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.35;
+}
+
+.page-speds .speds-template-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f8fafc;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.page-speds .speds-template-box h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.page-speds .speds-requirements {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.page-speds .speds-requirement {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  padding: 8px 10px;
+}
+
+.page-speds .speds-requirement strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+.page-speds .speds-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.page-speds .speds-errors {
+  margin-top: 10px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fff1f2;
+  color: #9f1239;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.page-speds .speds-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.page-speds .speds-kpi {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  padding: 8px 10px;
+}
+
+.page-speds .speds-kpi strong {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.page-speds .speds-kpi span {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.page-speds .speds-downloads {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.page-speds .speds-download-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .page-speds .speds-download-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

@@ -126,6 +126,94 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.addEventListener('selectionchange', () => flushPendingLogsIfSafe());
   document.addEventListener('keyup', () => flushPendingLogsIfSafe());
 
+  function stopMenuPortal(menu) {
+    if (!menu) return;
+    const cleanup = menu.__wlPortalCleanup;
+    if (typeof cleanup === 'function') cleanup();
+    menu.__wlPortalCleanup = null;
+  }
+
+  function startMenuPortal(menu, anchor) {
+    if (!menu || !anchor) return;
+    stopMenuPortal(menu);
+    menu.classList.add('portal');
+
+    const viewportPad = 8;
+    const gap = 6;
+    let rafId = 0;
+
+    function placeMenu() {
+      if (!menu.classList.contains('open')) return;
+      if (!menu.isConnected || !anchor.isConnected) return;
+
+      const rect = anchor.getBoundingClientRect();
+
+      const width = Math.min(Math.max(rect.width, 140), Math.max(140, window.innerWidth - viewportPad * 2));
+      const left = Math.min(Math.max(rect.left, viewportPad), window.innerWidth - width - viewportPad);
+
+      menu.style.left = `${Math.round(left)}px`;
+      menu.style.width = `${Math.round(width)}px`;
+      menu.style.right = 'auto';
+
+      const cssMaxHeight = parseFloat(window.getComputedStyle(menu).maxHeight);
+      const baseMaxHeight = Number.isFinite(cssMaxHeight) ? cssMaxHeight : 220;
+      const desiredHeight = Math.min(menu.scrollHeight || baseMaxHeight, baseMaxHeight);
+
+      const spaceBelow = window.innerHeight - rect.bottom - gap - viewportPad;
+      const spaceAbove = rect.top - gap - viewportPad;
+      const openUp = spaceBelow < Math.min(desiredHeight, 160) && spaceAbove > spaceBelow;
+
+      const maxForDirection = openUp ? spaceAbove : spaceBelow;
+      const appliedMaxHeight = Math.max(120, Math.min(baseMaxHeight, maxForDirection > 0 ? maxForDirection : baseMaxHeight));
+      const menuHeight = Math.min(desiredHeight, appliedMaxHeight);
+
+      const rawTop = openUp ? rect.top - gap - menuHeight : rect.bottom + gap;
+      const top = Math.max(viewportPad, Math.min(rawTop, window.innerHeight - menuHeight - viewportPad));
+
+      menu.style.top = `${Math.round(top)}px`;
+      menu.style.maxHeight = `${Math.floor(appliedMaxHeight)}px`;
+    }
+
+    function queuePlaceMenu() {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(placeMenu);
+    }
+
+    function onViewportChange() {
+      queuePlaceMenu();
+    }
+
+    window.addEventListener('scroll', onViewportChange, true);
+    window.addEventListener('resize', onViewportChange);
+    queuePlaceMenu();
+
+    menu.__wlPortalCleanup = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', onViewportChange, true);
+      window.removeEventListener('resize', onViewportChange);
+      menu.classList.remove('portal');
+      menu.style.top = '';
+      menu.style.left = '';
+      menu.style.right = '';
+      menu.style.width = '';
+      menu.style.maxHeight = '';
+    };
+  }
+
+  function closeAllMenus() {
+    document.querySelectorAll('.wl-combobox-menu.open').forEach((m) => {
+      stopMenuPortal(m);
+      m.classList.remove('open');
+      m.innerHTML = '';
+    });
+
+    document.querySelectorAll('.wl-multi-menu.open').forEach((m) => {
+      stopMenuPortal(m);
+      m.classList.remove('open');
+      m.querySelectorAll('.wl-mini-check').forEach((l) => l.classList.remove('is-active'));
+    });
+  }
+
   /* =========================
      CLOSE MENUS (1 listener só)
      ========================= */
@@ -133,6 +221,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // fecha combobox se clicou fora
     if (!e.target.closest('.wl-combobox')) {
       document.querySelectorAll('.wl-combobox-menu.open').forEach((m) => {
+        stopMenuPortal(m);
         m.classList.remove('open');
         m.innerHTML = '';
       });
@@ -141,6 +230,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // fecha multi se clicou fora
     if (!e.target.closest('.wl-multi')) {
       document.querySelectorAll('.wl-multi-menu.open').forEach((m) => {
+        stopMenuPortal(m);
         m.classList.remove('open');
         m.querySelectorAll('.wl-mini-check').forEach((l) => l.classList.remove('is-active'));
       });
@@ -224,6 +314,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function deleteRow(idx) {
+    closeAllMenus();
     rows.splice(idx, 1);
     tbody.innerHTML = '';
 
@@ -366,6 +457,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let currentOptions = [];
 
     function closeMenu() {
+      stopMenuPortal(menu);
       menu.classList.remove('open');
       menu.innerHTML = '';
       activeIndex = -1;
@@ -387,6 +479,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       activeIndex = currentOptions.length ? 0 : -1;
       renderMenu();
       menu.classList.add('open');
+      startMenuPortal(menu, input);
     }
 
     function setActive(delta) {
@@ -579,6 +672,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function rerenderRow(idx) {
+    closeAllMenus();
     const tr = tbody.querySelector(`tr[data-row="${idx}"]`);
     if (!tr) return;
     tr.outerHTML = renderRow(idx, rows[idx]);
@@ -658,11 +752,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function open() {
       menu.classList.add('open');
+      startMenuPortal(menu, btn);
       const firstChecked = checkboxes.findIndex((c) => c.checked);
       setFocusAt(firstChecked >= 0 ? firstChecked : 0);
     }
 
     function close(focusBtn = false) {
+      stopMenuPortal(menu);
       menu.classList.remove('open');
       menu.querySelectorAll('.wl-mini-check').forEach((l) => l.classList.remove('is-active'));
       if (focusBtn) btn.focus();
@@ -819,6 +915,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   btnAddRow?.addEventListener('click', () => addRowAndFocus(true));
 
   btnClearAll?.addEventListener('click', () => {
+    closeAllMenus();
     const jobSection = document.getElementById('jobSection');
     if (jobSection) jobSection.hidden = true;
 

@@ -37,6 +37,7 @@ let ultimoPdfUrl = null;
 let debugHabilitado = false;
 let idsPendentesAtuais = [];
 let ultimoBloqueioIds = '';
+let idsInformadosPersistidos = {};
 
 document.addEventListener('DOMContentLoaded', () => {
   inicializarSidebar('cartao-horas-iob');
@@ -55,6 +56,9 @@ function inicializarPaginaCartaoHorasIob() {
 
   inputArquivo?.addEventListener('change', () => {
     ultimoTxt = null;
+    idsInformadosPersistidos = {};
+    idsPendentesAtuais = [];
+    ultimoBloqueioIds = '';
     if (btnBaixar) btnBaixar.disabled = true;
     atualizarPreviewPdf();
     atualizarInfoArquivo();
@@ -453,6 +457,7 @@ function renderizarIdsPendentes(funcionariosSemId) {
 
   box.querySelectorAll('.id-funcionario-pendente').forEach((input) => {
     input.addEventListener('input', () => {
+      atualizarIdPersistido(input.dataset.chave, input.value);
       ultimoTxt = null;
       const btnBaixar = document.getElementById('btnBaixarTxtIob');
       if (btnBaixar) btnBaixar.disabled = true;
@@ -516,14 +521,31 @@ function obterAssinaturaAtual(arquivo) {
 }
 
 function coletarIdsPreenchidos() {
+  const ids = { ...idsInformadosPersistidos };
   const inputs = Array.from(document.querySelectorAll('.id-funcionario-pendente'));
-  const ids = {};
   inputs.forEach((input) => {
     const chave = input.dataset.chave;
     const valor = String(input.value || '').replace(/\D/g, '');
-    if (chave && valor) ids[chave] = valor;
+    if (!chave) return;
+    if (valor) {
+      ids[chave] = valor;
+    } else {
+      delete ids[chave];
+    }
   });
+  idsInformadosPersistidos = { ...ids };
   return ids;
+}
+
+function atualizarIdPersistido(chave, valorBruto) {
+  const chaveLimpa = String(chave || '').trim();
+  if (!chaveLimpa) return;
+  const valor = String(valorBruto || '').replace(/\D/g, '');
+  if (valor) {
+    idsInformadosPersistidos[chaveLimpa] = valor;
+  } else {
+    delete idsInformadosPersistidos[chaveLimpa];
+  }
 }
 
 function obterIdsPendentesNaoPreenchidos() {

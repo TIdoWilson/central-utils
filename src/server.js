@@ -11,7 +11,6 @@ const axios = require('axios'); // para chamar a API Integra Contador
 const { autenticarSerpro } = require("./serpro-auth");
 const { Pool } = require('pg'); // << ADICIONE ESTA LINHA
 const archiver = require('archiver');
-const { createHttpsAgent, obterToken } = require('./serpro-auth'); // reaproveita seu serpro-auth.js;
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const rateLimit = require('express-rate-limit');
@@ -46,11 +45,14 @@ const createConciliadorCartaoTipo50Routes = require('./routes/tools/conciliador-
 const createConciliadorPisCofinsRoutes = require('./routes/tools/conciliador-pis-cofins.routes');
 const createPedidosInclusaoExclusaoEmpresaRoutes = require('./routes/tools/pedidos-inclusao-exclusao-empresa.routes');
 const createChecklistTiCriacaoUsuarioRoutes = require('./routes/tools/checklist-ti-criacao-usuario.routes');
+const createCadastroEmpresasBrasilApiRoutes = require('./routes/tools/cadastro-empresas-brasilapi.routes');
 const createIrpfRoutes = require('./routes/tools/irpf.routes');
+const createGiastRoutes = require('./routes/tools/giast.routes');
 const createNfeLegacyRoutes = require('./routes/tools/nfe-legacy.routes');
 const createPedidosAlteracaoEmpresaRoutes = require('./routes/tools/pedidos-alteracao-empresa.routes');
 const createComparadorEventosHoleriteRoutes = require('./routes/tools/comparador-eventos-holerite.routes');
 const createCartaoHorasIobRoutes = require('./routes/tools/cartao-horas-iob.routes');
+const createSpedsRoutes = require('./routes/tools/speds.routes');
 const { createDimobService } = require('./services/dimob.service');
 const { createEcdStatusService } = require('./services/ecd-status.service');
 const { createToolStorage } = require('./services/tool-storage.service');
@@ -124,6 +126,7 @@ const {
   SEPARADOR_CSV_OUTPUT_DIR,
   uploadSeparadorCsv,
   EXCEL_ABAS_PDF_DIR,
+  uploadSpeds,
   uploadDimob,
 } = toolStorage;
 
@@ -1111,8 +1114,7 @@ app.use(
     requireCsrf,
     mitUpload,
     extrairCnpjContribuinteDeNomeArquivo,
-    obterToken,
-    createHttpsAgent,
+    autenticarSerpro,
     axios,
   })
 );
@@ -1187,6 +1189,18 @@ app.use(
   })
 );
 app.use(
+  '/api/giast',
+  requireAuth,
+  requireToolApi('giast'),
+  createGiastRoutes({
+    requireCsrf,
+    pool,
+    auditLog,
+    axios,
+    PY_API_URL,
+  })
+);
+app.use(
   '/api/tareffa-empresas-lote',
   requireAuth,
   requireToolApi('tareffa-empresas-lote'),
@@ -1199,6 +1213,17 @@ app.use(
     startPythonJob: tareffaService.startPythonJob,
     fs,
     path,
+  })
+);
+app.use(
+  '/api/speds',
+  requireAuth,
+  requireToolApi('speds'),
+  createSpedsRoutes({
+    requireCsrf,
+    auditLog,
+    uploadSpeds,
+    DATA_DIR,
   })
 );
 app.use(
@@ -1285,6 +1310,18 @@ app.use(
   requireToolApi('checklist-ti-criacao-usuario'),
   createChecklistTiCriacaoUsuarioRoutes({
     pool,
+    requireCsrf,
+    auditLog,
+  })
+);
+app.use(
+  '/api/cadastro-empresas-brasilapi',
+  requireAuth,
+  requireToolApi('cadastro-empresas-brasilapi'),
+  createCadastroEmpresasBrasilApiRoutes({
+    pool,
+    axios,
+    upload,
     requireCsrf,
     auditLog,
   })

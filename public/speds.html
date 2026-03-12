@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPEDS</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="app-body nfe-body page-speds">
+  <div class="nfe-layout">
+    <aside class="nfe-sidebar">
+      <div class="nfe-sidebar-top">
+        <div class="nfe-sidebar-logo">
+          <span class="logo-circle">WL</span>
+          <span class="logo-text">Portal</span>
+        </div>
+        <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+    </aside>
+
+    <main class="nfe-main">
+      <header class="nfe-header">
+        <div class="nfe-breadcrumb">Portal / Fiscal / SPEDS</div>
+        <h1>SPEDS</h1>
+        <p>Página única para processar ICMS, Contribuições, ECD e ECF usando templates dinâmicos.</p>
+        <div class="nfe-header-actions">
+          <span id="whoami" class="nfe-breadcrumb"></span>
+        </div>
+      </header>
+
+      <section class="nfe-card nfe-card-upload">
+        <h2>Seleção do processamento</h2>
+        <p class="nfe-card-subtitle">Escolha o tipo de SPED, a função (template) e o formato de saída.</p>
+
+        <div class="speds-grid">
+          <label class="auth-label speds-field">
+            <span>Tipo de SPED</span>
+            <select id="spedTypeSelect" class="speds-select"></select>
+            <span class="speds-meta" id="spedTypeMeta"></span>
+          </label>
+
+          <label class="auth-label speds-field">
+            <span>Função (template)</span>
+            <select id="templateSelect" class="speds-select"></select>
+            <span class="speds-meta" id="templateMeta"></span>
+          </label>
+
+          <label class="auth-label speds-field">
+            <span>Formato de saída</span>
+            <select id="outputFormatSelect" class="speds-select"></select>
+            <span class="speds-meta">Saída suportada pelo template selecionado.</span>
+          </label>
+        </div>
+
+        <div id="templateInfo" class="speds-template-box"></div>
+      </section>
+
+      <section class="nfe-card nfe-card-upload">
+        <h2>Arquivos e informações necessárias</h2>
+        <p class="nfe-card-subtitle">Anexe os arquivos conforme as regras do template selecionado e preencha os campos adicionais.</p>
+
+        <form id="spedsForm">
+          <div id="dynamicInputs" class="speds-grid"></div>
+          <div id="dynamicFields" class="speds-grid speds-grid-margin"></div>
+
+          <div class="speds-actions">
+            <button id="btnRunTemplate" type="submit" class="btn btn-primary">Executar</button>
+            <span class="speds-muted">Uploads suportados (conforme template): .csv, .xlsx, .xls, .slk, .txt, .pdf, .xml, .zip, .rar</span>
+          </div>
+        </form>
+
+        <div id="runErrors" class="speds-errors" style="display:none;"></div>
+      </section>
+
+      <section class="nfe-card">
+        <h2>Resultado</h2>
+        <p class="nfe-card-subtitle">Resumo da execução e download do arquivo gerado.</p>
+        <div id="runStatus" class="nfe-upload-message"></div>
+        <div id="runSummary" class="speds-kpis"></div>
+        <div id="downloadList" class="speds-downloads"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
+  <script src="/js/speds.js"></script>
+</body>
+</html>

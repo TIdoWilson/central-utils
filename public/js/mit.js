@@ -12,8 +12,11 @@ function inicializarPaginaMitEnvio() {
   const statusDiv = document.getElementById('mitStatus');
   const logPre = document.getElementById('mitLog');
   const submitBtn = document.getElementById('mitSubmitBtn');
+  const authFetch = (window.AuthClient && typeof window.AuthClient.authFetch === 'function')
+    ? window.AuthClient.authFetch.bind(window.AuthClient)
+    : fetch;
 
-  if (!form || !fileInput) {
+  if (!form || !fileInput || !statusDiv) {
     console.error('[MIT] Elementos de formulário não encontrados na página.');
     return;
   }
@@ -35,7 +38,7 @@ function inicializarPaginaMitEnvio() {
     if (submitBtn) submitBtn.disabled = true;
 
     try {
-      const resposta = await fetch('/api/mit/enviar-declaracao', {
+      const resposta = await authFetch('/api/mit/enviar-declaracao', {
         method: 'POST',
         body: formData
       });

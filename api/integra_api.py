@@ -43,6 +43,7 @@ from api.ajuste_diario_gfbr_core import ajustar_diario_gfbr
 from api.conciliador_cartao_wilson_core import conciliar_cartao_wilson, VALOR_TOLERANCIA_PADRAO
 from api.conciliador_cartao_tipo50_core import conciliar_cartao_tipo50
 from api.conciliador_pis_cofins_core import conciliar_pis_cofins
+from api.giast_core import gerar_giast_txt
 
 
 @app.post("/api/comparador-eventos-holerite/processar")
@@ -494,3 +495,61 @@ async def api_conciliador_pis_cofins(
         raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+class GiastEntry(BaseModel):
+    uf: str
+    dueDate: str
+    valueIcms: float | str
+    valueFcp: float | str
+    valueDevolutions: float | str = 0
+    valuePrepayments: float | str = 0
+
+
+class GiastDeclarant(BaseModel):
+    cnpj: str
+    name: str
+    cpf: str = ""
+    role: str = ""
+    phoneDdd: str = ""
+    phoneNumber: str = ""
+    faxDdd: str = ""
+    faxNumber: str = ""
+    email: str = ""
+    location: str = ""
+    signatureDate: str = ""
+    stateRegistrations: Dict[str, str] = {}
+
+
+class GiastGenerateParams(BaseModel):
+    periodRef: str
+    fileName: Optional[str] = None
+    declarant: GiastDeclarant
+    entries: List[GiastEntry]
+
+
+@app.post("/api/giast/gerar")
+def api_giast_gerar(params: GiastGenerateParams):
+    try:
+        result = gerar_giast_txt(
+            {
+                "periodRef": params.periodRef,
+                "fileName": params.fileName,
+                "declarant": params.declarant.model_dump(),
+                "entries": [entry.model_dump() for entry in params.entries],
+            }
+        )
+
+        txt_bytes = result["text"].encode("latin1", errors="ignore")
+        return {
+            "ok": True,
+            "fileName": result["file_name"],
+            "lineCount": result["line_count"],
+            "blockCount": result["block_count"],
+            "txtBase64": base64.b64encode(txt_bytes).decode("ascii"),
+        }
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as exc:
+        print("Erro ao gerar GIAST:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao gerar arquivo GIAST.")

@@ -38,6 +38,7 @@ const MENU_CONFIG = [
     items: [
       { id: 'nfe', label: 'Consulta NF-e', href: '/nfe', icon: '&#129534;' },
       { id: 'calculadora-icms-st', label: 'Calculadora de ICMS ST', href: '/calculadora-icms-st', icon: '&#128196;' },
+      { id: 'speds', label: 'SPEDS', href: '/speds', icon: '&#128209;' },
     ],
   },
   {
@@ -58,6 +59,7 @@ const MENU_CONFIG = [
       { id: 'extrator-zip-rar', label: 'Extrator ZIP/RAR', href: '/extrator-zip-rar', icon: '&#128230;' },
       { id: 'excel-abas-pdf', label: 'Excel &rarr; Abas em PDF', icon: '&#128196;', href: '/excel-abas-pdf' },
       { id: 'irpf-carne-leao', label: 'IRPF Carne Le&atilde;o', icon: '&#128196;', href: '/irpf-carne-leao' },
+      { id: 'cadastro-empresas-brasilapi', label: 'Cadastro de Empresas (BrasilAPI)', icon: '&#127970;', href: '/cadastro-empresas-brasilapi' },
       { id: 'tareffa-empresas-lote', label: 'Tareffa Empresas Lote', icon: '&#128196;', href: '/tareffa-empresas-lote' },
       { id: 'pedidos-alteracao-empresa', label: 'Pedidos de Altera&ccedil;&atilde;o de Empresa', icon: '&#127970;', href: '/pedidos-alteracao-empresa' },
       { id: 'pedidos-inclusao-exclusao-empresa', label: 'Pedidos de Inclus&atilde;o e Exclus&atilde;o de Empresa', icon: '&#127970;', href: '/pedidos-inclusao-exclusao-empresa' },
@@ -69,6 +71,7 @@ const MENU_CONFIG = [
     icon: '&#127970;',
     items: [
       { id: 'dimob', label: 'Automa&ccedil;&atilde;o DIMOB', href: '/dimob', icon: '&#127970;' },
+      { id: 'giast', label: 'GIAST', href: '/giast', icon: '&#128196;' },
       { id: 'sn', label: 'SN sem movimento', href: '/sn', icon: '&#128196;' },
       { id: 'mit', label: 'MIT/DCTFWEB sem movimento', href: '/mit', icon: '&#128196;' },
       { id: 'ecd-status', label: 'Lista de Empresas para ECD', href: '/ecd-status', icon: '&#128196;' },

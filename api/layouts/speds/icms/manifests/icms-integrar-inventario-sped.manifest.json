@@ -1,0 +1,55 @@
+{
+  "templateId": "icms-integrar-inventario-sped",
+  "spedType": "icms",
+  "operation": "insert",
+  "inputs": [
+    {
+      "key": "sped_original",
+      "label": "SPED original",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"]
+    },
+    {
+      "key": "inventario_gerado",
+      "label": "Inventario gerado",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"]
+    }
+  ],
+  "fields": [
+    {
+      "key": "default_cod_cta",
+      "label": "COD_CTA padrao",
+      "type": "text",
+      "required": false,
+      "defaultValue": "11216001000"
+    }
+  ],
+  "targets": {
+    "records": ["0190", "0200", "0205", "0210", "0220", "0221", "H001", "H005", "H010", "H990", "0990", "9900", "9990", "9999"],
+    "relationshipsFile": "api/layouts/speds/icms/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": true,
+    "onMissingDependency": "abort",
+    "onOrphanDetected": "abort"
+  },
+  "validators": {
+    "globalRelationshipValidation": true,
+    "duplicateKeyCheck": true,
+    "hierarchyCheck": true,
+    "rulesFile": "api/layouts/speds/icms/relationships/reference_domains.validator.json"
+  },
+  "totalizers": ["0990", "H990", "9900", "9990", "9999"],
+  "output": {
+    "formats": ["txt"],
+    "filenamePattern": "{input}_COM_INVENTARIO.txt"
+  },
+  "dryRun": {
+    "enabled": true,
+    "reportChanges": true,
+    "requireConfirmation": true
+  }
+}
