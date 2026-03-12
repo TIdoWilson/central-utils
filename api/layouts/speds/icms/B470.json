@@ -1,0 +1,159 @@
+{
+  "registro": {
+    "codigo": "B470",
+    "id_guia": "327",
+    "titulo": "Registro B470 da EFD-ICMS/IPI (Apuração do ISS)",
+    "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=327"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 15,
+    "extraido_em_utc": "2026-03-10T19:07:48.966306+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"B470\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_CONT",
+      "descricao": "A- Valor total referente às prestações de serviço do período.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_MAT_TERC",
+      "descricao": "B- Valor total do material fornecido por terceiros na prestação do serviço.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_MAT_PROP",
+      "descricao": "C- Valor do material próprio utilizado na prestação do serviço.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_SUB",
+      "descricao": "D- Valor total das subempreitadas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_ISNT",
+      "descricao": "E- Valor total das operações isentas ou não-tributadas pelo ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_DED_BC",
+      "descricao": "F- Valor total das deduções da base de cálculo (B + C + D + E).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_BC_ISS",
+      "descricao": "G- Valor total da base de cálculo do ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_BC_ISS_RT",
+      "descricao": "H- Valor total da base de cálculo de retenção do ISS referente às prestações do declarante.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_ ISS",
+      "descricao": "I- Valor total do ISS destacado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_ISS_RT",
+      "descricao": "J- Valor total do ISS retido pelo tomador nas prestações do declarante.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_DED",
+      "descricao": "K- Valor total das deduções do ISS próprio.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_ ISS_REC",
+      "descricao": "L- Valor total apurado do ISS próprio a recolher (I - J - K).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_ ISS_ST",
+      "descricao": "M- Valor total do ISS substituto a recolher pelas aquisições do declarante (tomador).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_ISS_REC_UNI",
+      "descricao": "N- Valor do ISS próprio a recolher pela Sociedade Uniprofissional.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

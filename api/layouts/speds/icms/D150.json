@@ -1,0 +1,127 @@
+{
+  "registro": {
+    "codigo": "D150",
+    "id_guia": "101",
+    "titulo": "Registro D150 da EFD-ICMS/IPI (Complemento do Conhecimento Aéreo (Código 10))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=101"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:07:50.153949+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D150\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MUN_ORIG",
+      "descricao": "Código do Município de origem do serviço, conforme a Tabela IBGE (Preencher com 9999999, se Exterior).",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_MUN_DEST",
+      "descricao": "Código do Município de destino, conforme a Tabela IBGE (Preencher com 9999999, se Exterior).",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VEIC_ID",
+      "descricao": "Identificação da aeronave (DAC).",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "VIAGEM",
+      "descricao": "Número do vôo.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "IND_TFA",
+      "descricao": "Indicador do tipo de tarifa aplicada:\n 0: Exp.;\n 1: Enc.;\n 2: C.I.;\n 9: Outra.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_PESO_TX",
+      "descricao": "Peso taxado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_TX_TERR",
+      "descricao": "Valor da taxa terrestre.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_TX_RED",
+      "descricao": "Valor da taxa de redespacho.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_OUT",
+      "descricao": "Outros valores.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_TX_ADV",
+      "descricao": "Valor da taxa \"ad valorem\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    }
+  ]
+}

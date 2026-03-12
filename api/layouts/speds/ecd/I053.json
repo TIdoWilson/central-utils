@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "I053",
+    "titulo": "REGISTRO I053: Subcontas Correlatas",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I053",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I053"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:29:19.583885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I053.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I053"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_IDT",
+      "descricao": "Código de identificação do grupo de contasubconta(a)",
+      "tipo": "C",
+      "tamanho": "6",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E043RMP.GRUCTA"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CNT_CORR",
+      "descricao": "Código da subconta correlata (deve estar no plano de contas e só pode estar relacionada a um único grupo)",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se na tela de entrada no campo Tipo de \n conta estiver com a opção:\n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta conforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta conforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil. \n Campo origem: E043RMP.CTAATU"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "NAT_SUB_CNT",
+      "descricao": "Natureza da subconta correlata (conforme tabela de natureza da subconta publicada no Sped )",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E043RMP.NATCTA"
+      }
+    }
+  ]
+}

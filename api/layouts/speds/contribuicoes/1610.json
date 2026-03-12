@@ -1,0 +1,122 @@
+{
+  "registro": {
+    "codigo": "1610",
+    "titulo": "Registro 1610 da EFD-Contribuições (Detalhamento da Contribuição Social Extemporânea – Cofins)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=547"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:03:23.320170+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “1610”",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição do estabelecimento no CNPJ (Campo 04 do Registro 0140).",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente a COFINS, conforme a Tabela indicada no item 4.3.4.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (Campo 02 do Registro 0150)",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "DT_OPER",
+      "descricao": "Data da Operação (ddmmaaaa)",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_OPER",
+      "descricao": "Valor da Operação",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Base de cálculo da COFINS (em valor ou em quantidade)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da COFINS (em percentual ou em reais)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "DESC_COMPL",
+      "descricao": "Descrição complementar do Documento/Operação",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

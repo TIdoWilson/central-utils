@@ -1,0 +1,117 @@
+{
+  "registro": {
+    "codigo": "Y630",
+    "titulo": "REGISTRO Y630: FUNDOS/CLUBES DE INVESTIMENTO",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y630",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y630"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:31:56.940825+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “Y630”",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y630\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ",
+      "descricao": "As administradoras de Fundos ou Clubes de Investimento devem informar, neste campo, o CNPJ de cada Fundo ou Clube de Investimento.\nOs fundos de investimento imobiliário de que trata a Lei no 8.668, de 1993, alterada pelos arts. 2o a 4o e 22 da Lei no 9.779, de 1999, devem informar o próprio CNPJ.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "QTE_QUOT",
+      "descricao": "Quantidade de quotistas do fundo ou clube, existente no final do período de apuração, para cada CNPJ informado.\nAtenção: No caso de encerramento indicar a quantidade de quotistas do fundo ou clube apurada/levantada pelo Administrador para a data da Assembleia de quotistas para fins de deliberar o encerramento, ou na data do evento de encerramento.",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Quantidade de Quotistas",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "QTE_QUOTA",
+      "descricao": "Quantidade de quotas do fundo ou clube, existente no final do período de apuração, para cada CNPJ informado.\nAtenção: No caso de encerramento indicar a quantidade de quotas do fundo ou clube apurada/levantada pelo Administrador para a data da Assembleia de quotistas para fins de deliberar o encerramento, ou na data do evento de encerramento.",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Quantidade de Quotas",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "PATR_FIN_PER",
+      "descricao": "Patrimônio do fundo ou clube, existente no final do período de apuração, para cada CNPJ informado.\nAtenção: No caso de encerramento indicar o patrimônio do fundo ou clube apurado/levantado pelo Administrador para a data da Assembleia de quotistas para fins de deliberar o encerramento, ou na data do evento de encerramento.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Patrimônio",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "DAT_ABERT",
+      "descricao": "Indicar a data de abertura do fundo ou clube de investimento, para cada CNPJ informado.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data de Abertura",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "DAT_ENCER",
+      "descricao": "Indicar a data de encerramento do fundo ou clube de investimento, para cada CNPJ informado.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Data de Encerramento",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

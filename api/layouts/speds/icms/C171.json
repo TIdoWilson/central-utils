@@ -1,0 +1,55 @@
+{
+  "registro": {
+    "codigo": "C171",
+    "id_guia": "47",
+    "titulo": "Registro C171 da EFD-ICMS/IPI (Armazenamento de combustíveis (Código 01 e 55))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=47"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:07:49.371981+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C171\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "Não\nApre\nsentar"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_TANQUE",
+      "descricao": "Tanque onde foi armazenado o combustível.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QTDE",
+      "descricao": "Quantidade ou volume armazenado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    }
+  ]
+}

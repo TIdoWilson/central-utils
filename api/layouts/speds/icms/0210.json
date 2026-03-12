@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "0210",
+    "id_guia": "203",
+    "titulo": "Registro 0210 da EFD-ICMS/IPI (Consumo específico padronizado (válido até 31/12/2021))",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=203"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:48.672418+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0210\".",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_ITEM_COMP",
+      "descricao": "Código do item componente/insumo (campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "60",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QTD_COMP",
+      "descricao": "Quantidade do item componente/insumo para se produzir uma unidade do item composto/resultante.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "6",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "PERDA",
+      "descricao": "Perda/quebra normal percentual do insumo/componente para se produzir uma unidade do item compoto/resultante.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "4",
+      "obrigatorio": "O"
+    }
+  ]
+}

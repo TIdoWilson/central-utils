@@ -1,0 +1,41 @@
+{
+  "registro": {
+    "codigo": "P990",
+    "titulo": "Registro P990 da EFD-Contribuições (Encerramento do Bloco P)",
+    "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=531"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:03:23.118526+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"P990\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN_P",
+      "descricao": "Quantidade total de linhas do Bloco P",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

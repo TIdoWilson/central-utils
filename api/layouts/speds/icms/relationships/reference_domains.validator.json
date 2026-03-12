@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "sped": "ICMS_IPI",
+    "version": "1.0.0",
+    "purpose": "Dominios internos para validacao de referencias em todos os registros do arquivo SPED."
+  },
+  "domains": [
+    {
+      "id": "COD_ITEM",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0200", "field": "COD_ITEM" }],
+      "references": {
+        "exact": ["COD_ITEM", "COD_ITEM_ATOMICO", "COD_ITEM_COMP", "COD_ITEM_DES", "COD_ITEM_DEST", "COD_ITEM_IPM", "COD_ITEM_ORI"],
+        "prefix": ["COD_ITEM_"]
+      }
+    },
+    {
+      "id": "UNID",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0190", "field": "UNID" }],
+      "references": {
+        "exact": ["UNID", "UNID_INV", "UNID_CONV"],
+        "prefix": ["UNID_"]
+      }
+    },
+    {
+      "id": "COD_PART",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0150", "field": "COD_PART" }],
+      "references": {
+        "exact": ["COD_PART", "COD_PART_CONSG", "COD_PART_IT", "COD_PART_IP", "COD_PART_RED", "COD_PART_NFE_RET", "COD_PART_ULT_E"],
+        "prefix": ["COD_PART_"]
+      }
+    },
+    {
+      "id": "COD_CTA",
+      "value_normalization": "upper",
+      "allowed_literals": ["0"],
+      "definitions": [{ "record": "0500", "field": "COD_CTA" }],
+      "references": {
+        "exact": ["COD_CTA"],
+        "prefix": ["COD_CTA_"]
+      }
+    },
+    {
+      "id": "COD_CCUS",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0600", "field": "COD_CCUS" }],
+      "references": {
+        "exact": ["COD_CCUS"]
+      }
+    },
+    {
+      "id": "COD_INF",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0450", "field": "COD_INF" }],
+      "references": {
+        "exact": ["COD_INF"]
+      }
+    },
+    {
+      "id": "COD_OBS",
+      "value_normalization": "upper",
+      "definitions": [{ "record": "0460", "field": "COD_OBS" }],
+      "references": {
+        "exact": ["COD_OBS"]
+      }
+    }
+  ]
+}

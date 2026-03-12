@@ -1,0 +1,61 @@
+{
+  "registro": {
+    "codigo": "I150",
+    "titulo": "REGISTRO I150: Saldos Periódicos - Identificação do Período",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I150",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I150"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:29:19.586885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I150.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I150"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI",
+      "descricao": "Data de início do período.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela, filtros data"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN",
+      "descricao": "Data de fim do período.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela, filtros data"
+      }
+    }
+  ]
+}

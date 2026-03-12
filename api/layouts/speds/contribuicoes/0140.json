@@ -1,0 +1,104 @@
+{
+  "registro": {
+    "codigo": "0140",
+    "titulo": "Registro 0140 da EFD-Contribuições (Tabela de Cadastro de Estabelecimentos)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=358"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:03:21.578438+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “0140”.",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_EST",
+      "descricao": "Código de identificação do estabelecimento.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "03",
+      "campo": "NOME",
+      "descricao": "Nome empresarial do estabelecimento.",
+      "tipo": "C",
+      "tamanho": "100",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição do estabelecimento no CNPJ.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "UF",
+      "descricao": "Sigla da unidade da federação do estabelecimento.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "IE",
+      "descricao": "Inscrição Estadual do estabelecimento, se contribuinte de ICMS.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "COD_MUN",
+      "descricao": "Código do município do domicílio fiscal do estabelecimento, conforme a tabela IBGE",
+      "tipo": "N",
+      "tamanho": "007*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "IM",
+      "descricao": "Inscrição Municipal do estabelecimento, se contribuinte do ISS.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "SUFRAMA",
+      "descricao": "Inscrição do estabelecimento na Suframa.",
+      "tipo": "C",
+      "tamanho": "009*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

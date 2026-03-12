@@ -1,0 +1,68 @@
+{
+  "registro": {
+    "codigo": "P110",
+    "titulo": "Registro P110 da EFD-Contribuições (Complemento da Escrituração – Detalhamento da Apuração da Contribuição)",
+    "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=527"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:03:23.140525+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"P110\"",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_CAMPO",
+      "descricao": "Informar o número do campo do registro “P100”, objeto de detalhamento neste registro.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_DET",
+      "descricao": "Código do tipo de detalhamento, conforme Tabela 5.1.2",
+      "tipo": "C",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "04",
+      "campo": "DET_VALOR",
+      "descricao": "Valor detalhado referente ao campo 02 deste registro",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "INF_COMPL",
+      "descricao": "Informação complementar do detalhamento.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

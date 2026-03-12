@@ -1,0 +1,127 @@
+{
+  "registro": {
+    "codigo": "B350",
+    "id_guia": "323",
+    "titulo": "Registro B350 da EFD-ICMS/IPI (Serviços prestados por instituições financeiras)",
+    "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=323"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:07:48.820570+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"B350\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "Não\nInfor\nmar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTD",
+      "descricao": "Código da conta do plano de contas.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "CTA_ISS",
+      "descricao": "Descrição da conta no plano de contas.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "CTA_COSIF",
+      "descricao": "Código COSIF a que está subordinada a conta do ISS das instituições financeiras.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "QTD_OCOR",
+      "descricao": "Quantidade de ocorrências na conta.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_SERV",
+      "descricao": "Item da lista de serviços, conforme Tabela 4.6.3..",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_CONT",
+      "descricao": "Valor contábil.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_BC_ISS",
+      "descricao": "Valor da base de cálculo do ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "ALIQ_ISS",
+      "descricao": "Alíquota do ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_ISS",
+      "descricao": "Valor do ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "COD_INF_OBS",
+      "descricao": "Código da observação do lançamento fiscal (campo 02 do Registro 0460).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

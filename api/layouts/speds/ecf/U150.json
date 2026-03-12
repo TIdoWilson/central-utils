@@ -1,0 +1,143 @@
+{
+  "registro": {
+    "codigo": "U150",
+    "titulo": "REGISTRO U150: DEMONSTRAÇÃO DO RESULTADO",
+    "bloco_origem": "bloco-u.htm",
+    "ancora": "u150",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-u.htm#u150"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:31:56.883838+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “U150”",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"U150\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CODIGO",
+      "descricao": "Código de acordo com tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código",
+        "DOCUMENTAÇÃO": "SE “Tipo de conta” (Seleção) for igual a “1 – Conta Contábil” ENTÃO E043PCM.CTARED SENÃO E043PCM.CLACTA"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESCRICAO",
+      "descricao": "Descrição de acordo com tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Descrição",
+        "DOCUMENTAÇÃO": "E043PCM.DESCTA"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "TIPO",
+      "descricao": "Define o tipo da conta:\nS – Sintética\nA – Analítica",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo da Conta",
+        "DOCUMENTAÇÃO": "E043PCM.ANASIN"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NIVEL",
+      "descricao": "Nível da Conta",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Nível da Conta",
+        "DOCUMENTAÇÃO": "E043PCM.NIVCTA"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "COD_NAT",
+      "descricao": "Código natureza da conta/grupo de contas:\n04 – Contas de Resultado",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Natureza da Conta",
+        "DOCUMENTAÇÃO": "\"04\""
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "COD_CTA_SUP",
+      "descricao": "Código da conta sintética /grupo de contas de nível imediatamente superior.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta Superior",
+        "DOCUMENTAÇÃO": "Se “Tipo de conta” (Seleção) for igual a “1 – Conta Contábil”, então E043PCM.CTARED, senão E043PCM.CLACTA\n Obs.: E043PCM.CTARED/E043PCM.CLACTA da conta pai."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VALOR",
+      "descricao": "Valor total transferido para a conta referencial",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor do Saldo Final da Conta Referencial",
+        "DOCUMENTAÇÃO": "Saldo final da conta referencial conforme a visão contábil para o período apurado."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IND_VALOR",
+      "descricao": "Indicador do sinal do saldo final da conta:\nC – Credor\nD – Devedor",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do Saldo Final da Conta Referencial",
+        "DOCUMENTAÇÃO": "Será gerado conforme indicação da lista dinâmica relacionada ao aglutinador, informada na página do registro em \"Lista Dinâmica da Natureza dos Aglutinadores\", a natureza do saldo registrado para o aglutinador e o valor referente ao saldo final da conta referencial para o período."
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "registro": {
+    "codigo": "J932",
+    "titulo": "REGISTRO J932: Signatários do Termo de Verificação para Fins de Substituição da ECD",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "REGISTRO_J932:_Signatários_do_Termo_de_Verificação_para_Fins_de_Substituição_da_ECD",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#REGISTRO_J932:_Signat%C3%A1rios_do_Termo_de_Verifica%C3%A7%C3%A3o_para_Fins_de_Substitui%C3%A7%C3%A3o_da_ECD"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:29:19.606886+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo J932.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J932"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IDENT_NOM_T",
+      "descricao": "Nome do signatário do termo de verificação.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, na guia do registro."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "IDENT_CPF_CNPJ_T",
+      "descricao": "CPF ou CNPJ do assinante do termo de verificação.",
+      "tipo": "N",
+      "tamanho": "CPF (11)\nCNPJ (14)",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, na guia do registro."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IDENT_QUALIF_T",
+      "descricao": "Qualificação do assinante do termo de verificação, conforme tabela.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, na guia do registro."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "COD_ASSIN_T",
+      "descricao": "Código de qualificação do assinante do termo de verificação, conforme tabela.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, na guia do registro."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "IND_CRC_T",
+      "descricao": "Número de inscrição do contabilista no Conselho Regional de Contabilidade.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, na guia do registro."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "EMAIL_T",
+      "descricao": "Email do signatário.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, na guia do registro."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "FONE_T",
+      "descricao": "Telefone do signatário.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, na guia do registro."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "UF_CRC_T",
+      "descricao": "Indicação da unidade da federação que expediu o CRC.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, na guia do registro."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "NUM_SEQ_CRC_T",
+      "descricao": "Número da Certidão de Regularidade Profissional do Contador no seguinte formato: UF/ano/número",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, na guia do registro."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "DT_CRC_T",
+      "descricao": "Data de validade da Certidão de Regularidade Profissional do Contador",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, na guia do registro."
+      }
+    }
+  ]
+}

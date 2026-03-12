@@ -1,0 +1,68 @@
+{
+  "registro": {
+    "codigo": "0110",
+    "titulo": "Registro 0110 da EFD-Contribuições (Regimes de Apuração da Contribuição Social e de Apropriação de Crédito)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=355"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:03:21.599728+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “0110”.",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_INC_TRIB",
+      "descricao": "Código indicador da incidência tributária no período:\n1 – Escrituração de operações com incidência exclusivamente no regime não-cumulativo;\n2 – Escrituração de operações com incidência exclusivamente no regime cumulativo;\n3 – Escrituração de operações com incidência nos regimes não-cumulativo e cumulativo.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_APRO_CRED",
+      "descricao": "Código indicador de método de apropriação de créditos comuns, no caso de incidência no regime não-cumulativo (COD_INC_TRIB = 1 ou 3):\n1 – Método de Apropriação Direta;\n2 – Método de Rateio Proporcional (Receita Bruta)",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_TIPO_CONT",
+      "descricao": "Código indicador do Tipo de Contribuição Apurada no Período\n1 – Apuração da Contribuição Exclusivamente a Alíquota Básica\n2 – Apuração da Contribuição a Alíquotas Específicas (Diferenciadas e/ou por Unidade de Medida de Produto)",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "IND_REG_CUM",
+      "descricao": "Código indicador do critério de escrituração e apuração adotado, no caso de incidência exclusivamente no regime cumulativo (COD_INC_TRIB = 2), pela pessoa jurídica submetida ao regime de tributação com base no lucro presumido:\n1 – Regime de Caixa – Escrituração consolidada (Registro F500);\n2 – Regime de Competência - Escrituração consolidada (Registro F550);\n9 – Regime de Competência - Escrituração detalhada, com base nos registros dos Blocos “A”, “C”, “D” e “F”.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

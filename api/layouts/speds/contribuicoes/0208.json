@@ -1,0 +1,68 @@
+{
+  "registro": {
+    "codigo": "0208",
+    "titulo": "Registro 0208 da EFD-Contribuições (Código de Grupos por Marca Comercial – Refri (bebidas frias))",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=365"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:03:21.567047+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0208\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_TAB",
+      "descricao": "Código indicador da Tabela de Incidência, conforme Anexo III do Decreto nº 6.707/08:\n01 – Tabela I\n02 – Tabela II\n03 – Tabela III\n04 – Tabela IV\n05 – Tabela V\n06 – Tabela VI\n07 – Tabela VII\n08– Tabela VIII\n09 – Tabela IX\n10 – Tabela X\n11 – Tabela XI\n12 – Tabela XII",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "A partir de outubro de 2012:\n13 – Tabela XIII",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "03",
+      "campo": "COD_GRU",
+      "descricao": "Código do grupo, conforme Anexo III do Decreto nº 6.707/08.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "MARCA_COM",
+      "descricao": "Marca Comercial",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

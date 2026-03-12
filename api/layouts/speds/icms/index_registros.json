@@ -1,0 +1,2458 @@
+{
+  "fonte": "https://www.vriconsulting.com.br/guias/efd-icms-ipi.php",
+  "total_registros_esperados": 272,
+  "total_registros_gerados": 272,
+  "gerado_em_utc": "2026-03-10T19:07:51.771436+00:00",
+  "resumo_registros": [
+    {
+      "codigo": "0000",
+      "id_guia": "1",
+      "titulo": "Registro 0000 da EFD-ICMS/IPI (Abertura do arquivo digital e identificação da entidade)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0000.json",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "0001",
+      "id_guia": "2",
+      "titulo": "Registro 0001 da EFD-ICMS/IPI (Abertura do Bloco 0)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "0002",
+      "id_guia": "565",
+      "titulo": "Registro 0002 da EFD-ICMS/IPI (Classificação do estabelecimento industrial ou equiparado a industrial)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0002.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "0005",
+      "id_guia": "3",
+      "titulo": "Registro 0005 da EFD-ICMS/IPI (Dados complementares da entidade)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0005.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "0015",
+      "id_guia": "4",
+      "titulo": "Registro 0015 da EFD-ICMS/IPI (Dados do contribuinte substituto ou responsável pelo ICMS destino)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0015.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0100",
+      "id_guia": "5",
+      "titulo": "Registro 0100 da EFD-ICMS/IPI (Dados do contabilista)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0100.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "0150",
+      "id_guia": "6",
+      "titulo": "Registro 0150 da EFD-ICMS/IPI (Tabela de cadastro do participante)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0150.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "0175",
+      "id_guia": "7",
+      "titulo": "Registro 0175 da EFD-ICMS/IPI (Alteração da Tabela de Cadastro de Participante)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0175.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "0190",
+      "id_guia": "8",
+      "titulo": "Registro 0190 da EFD-ICMS/IPI (Identificação das Unidades de Medida)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0190.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0200",
+      "id_guia": "9",
+      "titulo": "Registro 0200 da EFD-ICMS/IPI (Tabela de identificação do item (produto e serviços))",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0200.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "0205",
+      "id_guia": "10",
+      "titulo": "Registro 0205 da EFD-ICMS/IPI (Alteração do item)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0205.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "0206",
+      "id_guia": "11",
+      "titulo": "Registro 0206 da EFD-ICMS/IPI (Código de produto conforme Tabela publicada pela ANP)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0206.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "0210",
+      "id_guia": "203",
+      "titulo": "Registro 0210 da EFD-ICMS/IPI (Consumo específico padronizado (válido até 31/12/2021))",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0210.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "0220",
+      "id_guia": "12",
+      "titulo": "Registro 0220 da EFD-ICMS/IPI (Fatores de conversão de unidades)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0220.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "0221",
+      "id_guia": "835",
+      "titulo": "Registro 0221 da EFD-ICMS/IPI (Correlação entre códigos de itens comercializados)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0221.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0300",
+      "id_guia": "13",
+      "titulo": "Registro 0300 da EFD-ICMS/IPI (Cadastro de bens ou componentes do Ativo Imobilizado)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0300.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "0305",
+      "id_guia": "14",
+      "titulo": "Registro 0305 da EFD-ICMS/IPI (Informação sobre a utilização do bem)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0305.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "0400",
+      "id_guia": "15",
+      "titulo": "Registro 0400 da EFD-ICMS/IPI (Tabela de Natureza da Operação/Prestação)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0400.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0450",
+      "id_guia": "16",
+      "titulo": "Registro 0450 da EFD-ICMS/IPI (Tabela de Informação Complementar do Documento Fiscal)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0450.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0460",
+      "id_guia": "17",
+      "titulo": "Registro 0460 da EFD-ICMS/IPI (Tabela de Observações do Lançamento Fiscal)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0460.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0500",
+      "id_guia": "18",
+      "titulo": "Registro 0500 da EFD-ICMS/IPI (Plano de Contas Contábeis)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0500.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "0600",
+      "id_guia": "19",
+      "titulo": "Registro 0600 da EFD-ICMS/IPI (Centro de Custos)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0600.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "0990",
+      "id_guia": "20",
+      "titulo": "Registro 0990 da EFD-ICMS/IPI (Encerramento do Bloco 0)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "1001",
+      "id_guia": "165",
+      "titulo": "Registro 1001 da EFD-ICMS/IPI (Abertura do Bloco 1)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "1010",
+      "id_guia": "166",
+      "titulo": "Registro 1010 da EFD-ICMS/IPI (Obrigatoriedade de Registros do Bloco 1)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1010.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "1100",
+      "id_guia": "167",
+      "titulo": "Registro 1100 da EFD-ICMS/IPI (Registro de informações sobre exportação)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1100.json",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "1105",
+      "id_guia": "168",
+      "titulo": "Registro 1105 da EFD-ICMS/IPI (Documentos fiscais de exportação)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1105.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "1110",
+      "id_guia": "169",
+      "titulo": "Registro 1110 da EFD-ICMS/IPI (Operações de Exportação Indireta - Mercadorias de Terceiros)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1110.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "1200",
+      "id_guia": "170",
+      "titulo": "Registro 1200 da EFD-ICMS/IPI (Controle de créditos fiscais - ICMS)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1200.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "1210",
+      "id_guia": "171",
+      "titulo": "Registro 1210 da EFD-ICMS/IPI (Utilização de créditos fiscais - ICMS)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1210.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "1250",
+      "id_guia": "580",
+      "titulo": "Registro 1250 da EFD-ICMS/IPI (Informações consolidadas de saldos de restituição, ressarcimento e complementação do ICMS)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1250.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "1255",
+      "id_guia": "581",
+      "titulo": "Registro 1255 da EFD-ICMS/IPI (Informações consolidadas de saldos de restituição, ressarcimento e complementação do ICMS por motivo)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1255.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "1300",
+      "id_guia": "172",
+      "titulo": "Registro 1300 da EFD-ICMS/IPI (Movimentação diária de combustíveis)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1300.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "1310",
+      "id_guia": "173",
+      "titulo": "Registro 1310 da EFD-ICMS/IPI (Movimentação Diária de Combustíveis por Tanque)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1310.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "1320",
+      "id_guia": "174",
+      "titulo": "Registro 1320 da EFD-ICMS/IPI (Volume de vendas)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1320.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "1350",
+      "id_guia": "175",
+      "titulo": "Registro 1350 da EFD-ICMS/IPI (Bombas)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1350.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "1360",
+      "id_guia": "176",
+      "titulo": "Registro 1360 da EFD-ICMS/IPI (Lacres da bomba)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1360.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "1370",
+      "id_guia": "177",
+      "titulo": "Registro 1370 da EFD-ICMS/IPI (Bicos da bomba)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1370.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "1390",
+      "id_guia": "178",
+      "titulo": "Registro 1390 da EFD-ICMS/IPI (Controle de produção de usina)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1390.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "1391",
+      "id_guia": "179",
+      "titulo": "Registro 1391 da EFD-ICMS/IPI (Produção diária da usina)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1391.json",
+      "total_campos": 23,
+      "resumo": "Layout com 23 campo(s)."
+    },
+    {
+      "codigo": "1400",
+      "id_guia": "180",
+      "titulo": "Registro 1400 da EFD-ICMS/IPI (Informação sobre valores agregados)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1400.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "1500",
+      "id_guia": "181",
+      "titulo": "Registro 1500 da EFD-ICMS/IPI (Nota Fiscal / Conta de Energia Elétrica (Código 06) - Operações Interestaduais)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1500.json",
+      "total_campos": 27,
+      "resumo": "Layout com 27 campo(s)."
+    },
+    {
+      "codigo": "1510",
+      "id_guia": "182",
+      "titulo": "Registro 1510 da EFD-ICMS/IPI (Itens do Documento para Nota Fiscal / Conta de Energia Elétrica (Código 06))",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1510.json",
+      "total_campos": 21,
+      "resumo": "Layout com 21 campo(s)."
+    },
+    {
+      "codigo": "1600",
+      "id_guia": "183",
+      "titulo": "Registro 1600 da EFD-ICMS/IPI (Total das operações com cartão de crédito e/ou débito, loja (private label) e demais instrumentos de pagamentos eletrônicos (válido até 31/12/2021))",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1600.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "1601",
+      "id_guia": "830",
+      "titulo": "Registro 1601 da EFD-ICMS/IPI (Operações com instrumentos de pagamentos eletrônicos (válido a partir de 01/01/2022))",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1601.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "1700",
+      "id_guia": "184",
+      "titulo": "Registro 1700 da EFD-ICMS/IPI (Documentos fiscais utilizados)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1700.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "1710",
+      "id_guia": "185",
+      "titulo": "Registro 1710 da EFD-ICMS/IPI (Documentos fiscais cancelados/inutilizados)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1710.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "1800",
+      "id_guia": "186",
+      "titulo": "Registro 1800 da EFD-ICMS/IPI (DCTA - Demonstrativo de crédito do ICMS sobre transporte aéreo)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1800.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "1900",
+      "id_guia": "187",
+      "titulo": "Registro 1900 da EFD-ICMS/IPI (Indicador de sub-apuração do ICMS)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1900.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "1910",
+      "id_guia": "188",
+      "titulo": "Registro 1910 da EFD-ICMS/IPI (Período de Sub-Apuração do ICMS)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1910.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "1920",
+      "id_guia": "189",
+      "titulo": "Registro 1920 da EFD-ICMS/IPI (Sub-Apuração do ICMS)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1920.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "1921",
+      "id_guia": "190",
+      "titulo": "Registro 1921 da EFD-ICMS/IPI (Ajuste / Benefício / Incentivo da Sub-Apuração do ICMS)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1921.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "1922",
+      "id_guia": "191",
+      "titulo": "Registro 1922 da EFD-ICMS/IPI (Informações Adicionais dos Ajustes da Sub-Apuração do ICMS)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1922.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "1923",
+      "id_guia": "192",
+      "titulo": "Registro 1923 da EFD-ICMS/IPI (Informações adicionais dos ajustes da sub-apuração do ICMS - Identificação dos documentos fiscais)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1923.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "1925",
+      "id_guia": "193",
+      "titulo": "Registro 1925 da EFD-ICMS/IPI (Informações adicionais da sub-apuração - Valores declaratórios)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1925.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "1926",
+      "id_guia": "194",
+      "titulo": "Registro 1926 da EFD-ICMS/IPI (Obrigações do ICMS a recolher - Operações referentes à sub-apuração)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1926.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "1960",
+      "id_guia": "314",
+      "titulo": "Registro 1960 da EFD-ICMS/IPI (GIAF 1 - Guia de Informação e Apuração de incentivos Fiscais e Financeiros: Indústria (Crédito presumido))",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1960.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "1970",
+      "id_guia": "315",
+      "titulo": "Registro 1970 da EFD-ICMS/IPI (GIAF 3 - Guia de Informação e Apuração de incentivos Fiscais e Financeiros: Importação (Diferimento na entrada e crédito presumido na saída subsequente))",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1970.json",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "1975",
+      "id_guia": "316",
+      "titulo": "Registro 1975 da EFD-ICMS/IPI (GIAF 3 - Guia de Informação e Apuração de Incentivos Fiscais e Financeiros: Importação (Saídas intermas por faixa de alíquota))",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1975.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "1980",
+      "id_guia": "317",
+      "titulo": "Registro 1980 da EFD-ICMS/IPI (GIAF 4 - Guia de Informação e Apuração de Incentivos Fiscais e Financeiros: Central de distribuição (entradas/saídas))",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1980.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "1990",
+      "id_guia": "195",
+      "titulo": "Registro 1990 da EFD-ICMS/IPI (Encerramento do Bloco 1)",
+      "bloco": "3.9) Bloco 1 (Outras informações):",
+      "arquivo_json": "1990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9001",
+      "id_guia": "196",
+      "titulo": "Registro 9001 da EFD-ICMS/IPI (Abertura do Bloco 9)",
+      "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+      "arquivo_json": "9001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9900",
+      "id_guia": "197",
+      "titulo": "Registro 9900 da EFD-ICMS/IPI (Registros do arquivo)",
+      "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+      "arquivo_json": "9900.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "9990",
+      "id_guia": "198",
+      "titulo": "Registro 9990 da EFD-ICMS/IPI (Encerramento do Bloco 9)",
+      "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+      "arquivo_json": "9990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9999",
+      "id_guia": "199",
+      "titulo": "Registro 9999 da EFD-ICMS/IPI (Encerramento do arquivo digital)",
+      "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+      "arquivo_json": "9999.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "B001",
+      "id_guia": "318",
+      "titulo": "Registro B001 da EFD-ICMS/IPI (Abertura do Bloco B)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "B020",
+      "id_guia": "319",
+      "titulo": "Registro B020 da EFD-ICMS/IPI (Nota Fiscal (Código 01), Nota Fiscal de serviços (Código 03), Nota Fiscal de serviços avulsa (Código 3B), Nota Fiscal de produtor (Código 04), Conhecimento de Transporte Rodoviário de Cargas (Código 08), NF-e (Código 55), NFC-e (Código 65) e NF3-e (Código 66))",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B020.json",
+      "total_campos": 21,
+      "resumo": "Layout com 21 campo(s)."
+    },
+    {
+      "codigo": "B025",
+      "id_guia": "320",
+      "titulo": "Registro B025 da EFD-ICMS/IPI (Detalhamento por combinação de alíquota e item da Lista de Serviços da LC 116/2003)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B025.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "B030",
+      "id_guia": "321",
+      "titulo": "Registro B030 da EFD-ICMS/IPI (Nota Fiscal de serviços simplificada (Código 3A))",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B030.json",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "B035",
+      "id_guia": "322",
+      "titulo": "Registro B035 da EFD-ICMS/IPI (Detalhamento por combinação de alíquota e item da Lista de Serviços da LC 116/2003)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B035.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "B350",
+      "id_guia": "323",
+      "titulo": "Registro B350 da EFD-ICMS/IPI (Serviços prestados por instituições financeiras)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B350.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "B420",
+      "id_guia": "324",
+      "titulo": "Registro B420 da EFD-ICMS/IPI (Totalização dos valores de serviços prestados por combinação de alíquota e item da Lista se Serviços da LC 116/2003)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B420.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "B440",
+      "id_guia": "325",
+      "titulo": "Registro B440 da EFD-ICMS/IPI (Totalização dos valores retidos)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B440.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "B460",
+      "id_guia": "326",
+      "titulo": "Registro B460 da EFD-ICMS/IPI (Deduções do ISS)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B460.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "B470",
+      "id_guia": "327",
+      "titulo": "Registro B470 da EFD-ICMS/IPI (Apuração do ISS)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B470.json",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "B500",
+      "id_guia": "328",
+      "titulo": "Registro B500 da EFD-ICMS/IPI (Apuração do ISS sociedade unipessoal)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B500.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "B510",
+      "id_guia": "329",
+      "titulo": "Registro B510 da EFD-ICMS/IPI (Uniprofissional - Empregados e sócios)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B510.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "B990",
+      "id_guia": "330",
+      "titulo": "Registro B990 da EFD-ICMS/IPI (Encerramento do Bloco B)",
+      "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+      "arquivo_json": "B990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "C001",
+      "id_guia": "21",
+      "titulo": "Registro C001 da EFD-ICMS/IPI (Abertura do Bloco C)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "C100",
+      "id_guia": "22",
+      "titulo": "Registro C100 da EFD-ICMS/IPI (Nota Fiscal (código 01), Nota Fiscal Avulsa (código 1B), Nota Fiscal de Produtor (código 04), NF-e (código 55) e NFC-e (código 65))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C100.json",
+      "total_campos": 29,
+      "resumo": "Layout com 29 campo(s)."
+    },
+    {
+      "codigo": "C101",
+      "id_guia": "233",
+      "titulo": "Registro C101 da EFD-ICMS/IPI (Informação complementar dos documentos fiscais quando das operações interestaduais destinadas a consumidor final não contribuinte EC 87/15 (Código 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C101.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C105",
+      "id_guia": "23",
+      "titulo": "Registro C105 da EFD-ICMS/IPI (Operações com ICMS-ST recolhido para UF diversa do destinatário do documento fiscal (Código 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C105.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C110",
+      "id_guia": "24",
+      "titulo": "Registro C110 da EFD-ICMS/IPI (Informação complementar da Nota Fiscal (Código 01, 1B, 04 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C110.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C111",
+      "id_guia": "25",
+      "titulo": "Registro C111 da EFD-ICMS/IPI (Processo referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C111.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C112",
+      "id_guia": "26",
+      "titulo": "Registro C112 da EFD-ICMS/IPI (Documento de arrecadação referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C112.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C113",
+      "id_guia": "27",
+      "titulo": "Registro C113 da EFD-ICMS/IPI (Documento fiscal referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C113.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "C114",
+      "id_guia": "28",
+      "titulo": "Registro C114 da EFD-ICMS/IPI (Cupom Fiscal referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C114.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C115",
+      "id_guia": "29",
+      "titulo": "Registro C115 da EFD-ICMS/IPI (Local da coleta e/ou entrega (Código 01, 1B e 04))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C115.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "C116",
+      "id_guia": "30",
+      "titulo": "Registro C116 da EFD-ICMS/IPI (Cupom Fiscal Eletrônico referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C116.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C120",
+      "id_guia": "31",
+      "titulo": "Registro C120 da EFD-ICMS/IPI (Complemento de documento - Operações de importação (Códigos 01 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C120.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C130",
+      "id_guia": "41",
+      "titulo": "Registro C130 da EFD-ICMS/IPI (ISSQN, IRRF e Previdência Social)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C130.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C140",
+      "id_guia": "42",
+      "titulo": "Registro C140 da EFD-ICMS/IPI (Fatura (Código 1))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C140.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "C141",
+      "id_guia": "43",
+      "titulo": "Registro C141 da EFD-ICMS/IPI (Vencimento da fatura (Código 01))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C141.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C160",
+      "id_guia": "44",
+      "titulo": "Registro C160 da EFD-ICMS/IPI (Volumes transportados (Código 01 e 04), exceto combustíveis)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C160.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "C165",
+      "id_guia": "45",
+      "titulo": "Registro C165 da EFD-ICMS/IPI (Operações com combustíveis  (Código 01))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C165.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "C170",
+      "id_guia": "46",
+      "titulo": "Registro C170 da EFD-ICMS/IPI (Itens do documento (Código 01, 1B, 04 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C170.json",
+      "total_campos": 38,
+      "resumo": "Layout com 38 campo(s)."
+    },
+    {
+      "codigo": "C171",
+      "id_guia": "47",
+      "titulo": "Registro C171 da EFD-ICMS/IPI (Armazenamento de combustíveis (Código 01 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C171.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C172",
+      "id_guia": "48",
+      "titulo": "Registro C172 da EFD-ICMS/IPI (Operações com ISSQN (Código 01))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C172.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C173",
+      "id_guia": "49",
+      "titulo": "Registro C173 da EFD-ICMS/IPI (Operações com medicamentos (Código 01 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C173.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C174",
+      "id_guia": "50",
+      "titulo": "Registro C174 da EFD-ICMS/IPI (Operações com armas de fogo (Código 01))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C174.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C175",
+      "id_guia": "51",
+      "titulo": "Registro C175 da EFD-ICMS/IPI (Operações com veículos novos (Códigos 01 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C175.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "C176",
+      "id_guia": "52",
+      "titulo": "Registro C176 da EFD-ICMS/IPI (Ressarcimento de ICMS e Fundo de Combate à Pobreza (FCP) em operações com Substituição Tributária (Códigos 01 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C176.json",
+      "total_campos": 27,
+      "resumo": "Layout com 27 campo(s)."
+    },
+    {
+      "codigo": "C177",
+      "id_guia": "313",
+      "titulo": "Registro C177 da EFD-ICMS/IPI (Complemento de item - Outras informações (Válido a partir de 01/01/2019))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C177_id313.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "C177",
+      "id_guia": "53",
+      "titulo": "Registro C177 da EFD-ICMS/IPI (Operações com produtos sujeitos a selo de controle do IPI (Válido até 31/12/2018))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C177_id53.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C178",
+      "id_guia": "54",
+      "titulo": "Registro C178 da EFD-ICMS/IPI (Operações com produtos sujeitos à tributação de IPI por unidade ou quantidade de produto)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C178.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C179",
+      "id_guia": "55",
+      "titulo": "Registro C179 da EFD-ICMS/IPI (Informações Complementares ST (Código 01))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C179.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C180",
+      "id_guia": "566",
+      "titulo": "Registro C180 da EFD-ICMS/IPI (Informações complementares das operações de entrada de mercadorias sujeitas à substituição tributária (Código 01, 1B, 04 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C180.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "C181",
+      "id_guia": "733",
+      "titulo": "Registro C181 da EFD-ICMS/IPI (Informações complementares das operações de devolução de saídas de mercadorias sujeitas à substituição tributária (Código 01, 1B, 04 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C181.json",
+      "total_campos": 21,
+      "resumo": "Layout com 21 campo(s)."
+    },
+    {
+      "codigo": "C185",
+      "id_guia": "567",
+      "titulo": "Registro C185 da EFD-ICMS/IPI (Informações complementares das operações de saída de mercadorias sujeitas à substituição tributária (Código 01, 1B, 04, 55 e 65))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C185.json",
+      "total_campos": 18,
+      "resumo": "Layout com 18 campo(s)."
+    },
+    {
+      "codigo": "C186",
+      "id_guia": "734",
+      "titulo": "Registro C186 da EFD-ICMS/IPI (Informações complementares das operações de devolução de entradas de mercadorias sujeitas à substituição tributária (Código 01, 1B, 04 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C186.json",
+      "total_campos": 19,
+      "resumo": "Layout com 19 campo(s)."
+    },
+    {
+      "codigo": "C190",
+      "id_guia": "56",
+      "titulo": "Registro C190 da EFD-ICMS/IPI (Registro analítico do documento (Código 01, 1B, 04, 55 e 65))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C190.json",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "C191",
+      "id_guia": "312",
+      "titulo": "Registro C191 da EFD-ICMS/IPI (Informações do Fundo de Combate à Pobreza - FCP - Na N-Fe (Código 55) e na NFC-e (Código 65))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C191.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C195",
+      "id_guia": "57",
+      "titulo": "Registro C195 da EFD-ICMS/IPI (Observações do lançamento fiscal (Códigos 01, 1B, 04 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C195.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C197",
+      "id_guia": "58",
+      "titulo": "Registro C197 da EFD-ICMS/IPI (Outras obrigações tributárias, ajustes e informações de valores provenientes de documento fiscal)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C197.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C300",
+      "id_guia": "60",
+      "titulo": "Registro C300 da EFD-ICMS/IPI (Resumo Diário das Notas Fiscais de Venda a Consumidor (Código 02))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C300.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "C310",
+      "id_guia": "59",
+      "titulo": "Registro C310 da EFD-ICMS/IPI (Documentos cancelados de Notas Fiscais de Venda a Consumidor (Código 02))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C310.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "C320",
+      "id_guia": "61",
+      "titulo": "Registro C320 da EFD-ICMS/IPI (Registro analítico do resumo diário das Notas Fiscais de Venda a Consumidor (Código 02))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C320.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "C321",
+      "id_guia": "66",
+      "titulo": "Registro C321 da EFD-ICMS/IPI (Itens do Resumo Diário dos documentos (Código 02))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C321.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "C330",
+      "id_guia": "568",
+      "titulo": "Registro C330 da EFD-ICMS/IPI (Informações complementares das operações de saída de mercadorias sujeitas à substituição tributária (Código 02))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C330.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "C350",
+      "id_guia": "67",
+      "titulo": "Registro C350 da EFD-ICMS/IPI (Nota Fiscal de Venda a Consumidor (Código 02))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C350.json",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "C370",
+      "id_guia": "68",
+      "titulo": "Registro C370 da EFD-ICMS/IPI (Itens do documento (Código 02))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C370.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "C380",
+      "id_guia": "569",
+      "titulo": "Registro C380 da EFD-ICMS/IPI (Informações complementares das operações de saída de mercadorias sujeitas à substituição tributária (Código 02))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C380.json",
+      "total_campos": 16,
+      "resumo": "Layout com 16 campo(s)."
+    },
+    {
+      "codigo": "C390",
+      "id_guia": "69",
+      "titulo": "Registro C390 da EFD-ICMS/IPI (Registro Analítico das Notas Fiscais de Venda a Consumidor (Código 02))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C390.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "C400",
+      "id_guia": "70",
+      "titulo": "Registro C400 da EFD-ICMS/IPI (Equipamento ECF (Código 02, 2D e 60))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C400.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "C405",
+      "id_guia": "71",
+      "titulo": "Registro C405 da EFD-ICMS/IPI (Redução Z (Código 02, 2D e 60))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C405.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "C410",
+      "id_guia": "72",
+      "titulo": "Registro C410 da EFD-ICMS/IPI (PIS/Pasep e Cofins totalizados no dia (Código 02 e 2D))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C410.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C420",
+      "id_guia": "73",
+      "titulo": "Registro C420 da EFD-ICMS/IPI (Registro dos totalizadores parciais da Redução Z (Código 02, 2D e 60))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C420.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "C425",
+      "id_guia": "74",
+      "titulo": "Registro C425 da EFD-ICMS/IPI (Resumo de itens do movimento diário (Código 02 e 2D))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C425.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "C430",
+      "id_guia": "570",
+      "titulo": "Registro C430 da EFD-ICMS/IPI (Informações complementares das operações de saída de mercadorias sujeitas à substituição tributária (Código 02, 2D e 60))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C430.json",
+      "total_campos": 16,
+      "resumo": "Layout com 16 campo(s)."
+    },
+    {
+      "codigo": "C460",
+      "id_guia": "75",
+      "titulo": "Registro C460 da EFD-ICMS/IPI (Documento fiscal emitido por ECF (Código 02, 2D e 60))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C460.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "C465",
+      "id_guia": "76",
+      "titulo": "Registro C465 da EFD-ICMS/IPI (Complemento do Cupom Fiscal Eletrônico emitido por ECF - CF-e-ECF (Código 60))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C465.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C470",
+      "id_guia": "77",
+      "titulo": "Registro C470 da EFD-ICMS/IPI (Itens do documento fiscal emitido por ECF (Código 02 e 2D))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C470.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "C480",
+      "id_guia": "571",
+      "titulo": "Registro C480 da EFD-ICMS/IPI (Informações complementares das operações de saída de mercadorias sujeitas à substituição tributária (Código 02, 2D e 60))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C480.json",
+      "total_campos": 16,
+      "resumo": "Layout com 16 campo(s)."
+    },
+    {
+      "codigo": "C490",
+      "id_guia": "78",
+      "titulo": "Registro C490 da EFD-ICMS/IPI (Registro Analítico do Movimento Diário (Código 02, 2D e 60))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C490.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C495",
+      "id_guia": "79",
+      "titulo": "Registro C495 da EFD-ICMS/IPI (Resumo Mensal de Itens do ECF por Estabelecimento (Código 02 e 2D))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C495.json",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "C500",
+      "id_guia": "80",
+      "titulo": "Registro C500 da EFD-ICMS/IPI (Nota Fiscal/Conta de Energia Elétrica (código 06), Nota Fiscal de Energia Elétrica Eletrônica - NF3e (código 66), Nota Fiscal/Conta de Fornecimento DÁgua Canalizada (código 29) e Nota Fiscal Consumo Fornecimento de Gás (código 28))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C500.json",
+      "total_campos": 40,
+      "resumo": "Layout com 40 campo(s)."
+    },
+    {
+      "codigo": "C510",
+      "id_guia": "81",
+      "titulo": "Registro C510 da EFD-ICMS/IPI (Itens do Documento NF / Conta de Energia Elétrica (Código 06), NF / Conta de Fornecimento DÁgua Canalizada (Código 29) e NF Consumo Fornecimento de Gás (Código 28))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C510.json",
+      "total_campos": 21,
+      "resumo": "Layout com 21 campo(s)."
+    },
+    {
+      "codigo": "C590",
+      "id_guia": "82",
+      "titulo": "Registro C590 da EFD-ICMS/IPI (Registro Analítico do Documento - Nota Fiscal/Conta de Energia Elétrica (Código 06), Nota Fiscal de Energia Elétrica Eletrônica - NF3e (Código 66), Nota Fiscal/Conta de Fornecimento DÁgua Canalizada (Código 29) e Nota Fiscal Consumo Fornecimento de Gás (Código 28))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C590.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "C591",
+      "id_guia": "572",
+      "titulo": "Registro C591 da EFD-ICMS/IPI (Informações do Fundo de Combate à Pobreza – FCP na NF-e (Código 66))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C591.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C595",
+      "id_guia": "573",
+      "titulo": "Registro C595 da EFD-ICMS/IPI (Observações do lançamento fiscal (Códigos 06, 28, 29 e 66))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C595.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C597",
+      "id_guia": "574",
+      "titulo": "Registro C597 da EFD-ICMS/IPI (Outras obrigações tributárias, ajustes e informações de valores provenientes de documento fiscal)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C597.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C600",
+      "id_guia": "83",
+      "titulo": "Registro C600 da EFD-ICMS/IPI (Consolidação diária de Notas Fiscais/Contas de energia elétrica (Código 06), Nota Fiscal/Conta de fornecimento DÁgua canalizada (Código 29) e Nota Fiscal/Conta de fornecimento de gás (Código 28) (Empresas não obrigadas ao Convênio ICMS 115/03))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C600.json",
+      "total_campos": 22,
+      "resumo": "Layout com 22 campo(s)."
+    },
+    {
+      "codigo": "C601",
+      "id_guia": "84",
+      "titulo": "Registro C601 da EFD-ICMS/IPI (Documentos cancelados - Consolidação diária de NF/Contas de energia elétrica (Cód. 06), NF/Conta de fornecimento dágua canalizada (Cód. 29) e NF consumo fornecimento de gás (Cód. 28))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C601.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "C610",
+      "id_guia": "85",
+      "titulo": "Registro C610 da EFD-ICMS/IPI (Itens do documento consolidado (Cód. 06), NF / Conta de fornecimento dágua canalizada (Cód. 29) e NF / Conta de forn. de gás (Cód. 28) (Empr. não obrigada ao Conv. ICMS nº 115/03))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C610.json",
+      "total_campos": 17,
+      "resumo": "Layout com 17 campo(s)."
+    },
+    {
+      "codigo": "C690",
+      "id_guia": "86",
+      "titulo": "Registro C690 da EFD-ICMS/IPI (Registro Analítico dos Documentos (NF / Contas de Energia Elétrica (Código 06), NF / Conta de Fornecimento DAgua Canalizada (Código 29) e NF / Conta de Fornecimento de Gás (Código 28))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C690.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "C700",
+      "id_guia": "87",
+      "titulo": "Registro C700 da EFD-ICMS/IPI (Consolidação dos documentos NF/Conta energia elétrica (código 06), emitidas em via única (empresas obrigadas à entrega do arquivo previsto no Convênio ICMS 115/03) e Nota Fiscal/Conta de fornecimento de gás canalizado (código 28) e Nota Fiscal de energia elétrica eletrônica - NF3e (código 66))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C700.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "C790",
+      "id_guia": "88",
+      "titulo": "Registro C790 da EFD-ICMS/IPI (Registro Analítico dos Documentos (Códigos 06, 28 e 66))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C790.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "C791",
+      "id_guia": "89",
+      "titulo": "Registro C791 da EFD-ICMS/IPI (Registro de Informações de ST por UF (Código 06 e 66))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C791.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C800",
+      "id_guia": "90",
+      "titulo": "Registro C800 da EFD-ICMS/IPI (Cupom Fiscal Eletrônico - SAT (CF-e-SAT) (Código 59))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C800.json",
+      "total_campos": 17,
+      "resumo": "Layout com 17 campo(s)."
+    },
+    {
+      "codigo": "C810",
+      "id_guia": "575",
+      "titulo": "Registro C810 da EFD-ICMS/IPI (Itens do documento do Cupom Fiscal Eletrônico – SAT (CFE-SAT) (Código 59))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C810.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C815",
+      "id_guia": "576",
+      "titulo": "Registro C815 da EFD-ICMS/IPI (Informações complementares das operações de saída de mercadorias sujeitas à substituição tributária (CF-E-SAT) (Código 59))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C815.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "C850",
+      "id_guia": "91",
+      "titulo": "Registro C850 da EFD-ICMS/IPI (Registro analítico do CF-e-SAT (Código 59))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C850.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C855",
+      "id_guia": "836",
+      "titulo": "Registro C855 da EFD-ICMS/IPI (Observações do lançamento fiscal (Código 59))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C855.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C857",
+      "id_guia": "837",
+      "titulo": "Registro C857 da EFD-ICMS/IPI (Outras obrigações tributárias, ajustes e informações de valores provenientes de documento fiscal)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C857.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C860",
+      "id_guia": "92",
+      "titulo": "Registro C860 da EFD-ICMS/IPI (Identificação do Equipamento SAT-CF-e)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C860.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C870",
+      "id_guia": "577",
+      "titulo": "Registro C870 da EFD-ICMS/IPI (Itens do resumo diário dos documentos (CF-E-SAT) (Código 59))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C870.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C880",
+      "id_guia": "578",
+      "titulo": "Registro C880 da EFD-ICMS/IPI (Informações complementares das operações de saída de mercadorias sujeitas à substituição tributária (CF-E-SAT) (Código 59))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C880.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "C890",
+      "id_guia": "93",
+      "titulo": "Registro C890 da EFD-ICMS/IPI (Resumo Diário do CF-e-SAT (Código 59) por Equipamento SAT-CF-e)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C890.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C895",
+      "id_guia": "838",
+      "titulo": "Registro C895 da EFD-ICMS/IPI (Observações do lançamento fiscal (Código 59))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C895.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C897",
+      "id_guia": "839",
+      "titulo": "Registro C897 da EFD-ICMS/IPI (Outras obrigações tributárias, ajustes e informações de valores provenientes de documento fiscal)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C897.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C990",
+      "id_guia": "94",
+      "titulo": "Registro C990 da EFD-ICMS/IPI (Encerramento do Bloco C)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "D001",
+      "id_guia": "95",
+      "titulo": "Registro D001 da EFD-ICMS/IPI (Abertura do Bloco D)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "D100",
+      "id_guia": "96",
+      "titulo": "Registro D100 da EFD-ICMS/IPI (Nota Fiscal de Serviço de Transporte (código 07) e CTRC (código 08), Conhecimentos de Transporte de Cargas Avulso (código 8B), Aquaviário de Cargas (código 09), Aéreo (código 10), Ferroviário de Cargas (código 11), Multimodal de Cargas (código 26), Nota Fiscal de Transporte Ferroviário de Carga (código 27); Conhecimento de Transporte Eletrônico - CT-e (código  57) e CT-e OS  (código 67) e Bilhete de Passagem Eletrônico - BP-e (código 63))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D100.json",
+      "total_campos": 25,
+      "resumo": "Layout com 25 campo(s)."
+    },
+    {
+      "codigo": "D101",
+      "id_guia": "234",
+      "titulo": "Registro D101 da EFD-ICMS/IPI (Informação complementar dos documentos fiscais quando das prestações interestaduais destinadas a consumidor final não contribuinte EC 87/15 (códigos 57, 63 e 67))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D101.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "D110",
+      "id_guia": "97",
+      "titulo": "Registro D110 da EFD-ICMS/IPI (Itens do documento - Nota Fiscal de Serviços de Transporte (Código 07))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D110.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "D120",
+      "id_guia": "98",
+      "titulo": "Registro D120 da EFD-ICMS/IPI (Complemento da Nota Fiscal de Serviços de Transporte (Código 07))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D120.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "D130",
+      "id_guia": "99",
+      "titulo": "Registro D130 da EFD-ICMS/IPI (Complemento do Conhecimento Rodoviário de Cargas (código 08), do Conhecimento Rodoviário de Cargas Avulso (código 8B) e do Conhecimento de Transporte Eletrônico Simplificado (código 57))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D130.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "D140",
+      "id_guia": "100",
+      "titulo": "Registro D140 da EFD-ICMS/IPI (Complemento do Conhecimento Aquaviário de Cargas Avulso (Código 09))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D140.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "D150",
+      "id_guia": "101",
+      "titulo": "Registro D150 da EFD-ICMS/IPI (Complemento do Conhecimento Aéreo (Código 10))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D150.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "D160",
+      "id_guia": "102",
+      "titulo": "Registro D160 da EFD-ICMS/IPI (Carga transportada (Código 08, 8B, 09, 10, 11, 26 e 27))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D160.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "D161",
+      "id_guia": "103",
+      "titulo": "Registro D161 da EFD-ICMS/IPI (Local da coleta e entrega (Código 08, 8B, 09, 10, 11 e 26))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D161.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "D162",
+      "id_guia": "104",
+      "titulo": "Registro D162 da EFD-ICMS/IPI (Identificação dos documentos fiscais (Códigos 08, 8B, 09, 10, 11, 26 e 27))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D162.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "D170",
+      "id_guia": "105",
+      "titulo": "Registro D170 da EFD-ICMS/IPI (Complemento do Conhecimento Multimodal de Cargas (Código 26))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D170.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "D180",
+      "id_guia": "106",
+      "titulo": "Registro D180 da EFD-ICMS/IPI (Modais (Código 26))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D180.json",
+      "total_campos": 17,
+      "resumo": "Layout com 17 campo(s)."
+    },
+    {
+      "codigo": "D190",
+      "id_guia": "107",
+      "titulo": "Registro D190 da EFD-ICMS/IPI (Registro analítico dos documentos (Código 07, 08, 8B, 09, 10, 11, 26, 27, 57, 63 e 67))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D190.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "D195",
+      "id_guia": "108",
+      "titulo": "Registro D195 da EFD-ICMS/IPI (Observações do Lançamento Fiscal)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D195.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "D197",
+      "id_guia": "109",
+      "titulo": "Registro D197 da EFD-ICMS/IPI (Outras obrigações tributárias, ajustes e informações de valores provenientes de documento fiscal)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D197.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "D300",
+      "id_guia": "110",
+      "titulo": "Registro D300 da EFD-ICMS/IPI (Registro analítico dos Bilhetes Consolidados de Passagem Rodoviário (Cód. 13), de Passagem Aquaviário (Cód. 14), de Passagem e Nota de Bagagem (Cód. 15) e de Passagem Ferroviário (Cód. 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D300.json",
+      "total_campos": 20,
+      "resumo": "Layout com 20 campo(s)."
+    },
+    {
+      "codigo": "D301",
+      "id_guia": "111",
+      "titulo": "Registro D301 da EFD-ICMS/IPI (Documentos Cancelados dos Bilhetes de Passagem Rodoviário (Cód. 13), de Passagem Aquaviário (Cód. 14), de Passagem e Nota de Bagagem (Cód. 15) e de Passagem Ferroviário (Cód. 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D301.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "D310",
+      "id_guia": "112",
+      "titulo": "Registro D310 da EFD-ICMS/IPI (Complemento dos bilhetes (Código 13, 14, 15 e 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D310.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "D350",
+      "id_guia": "113",
+      "titulo": "Registro D350 da EFD-ICMS/IPI (Equipamento ECF (Códigos 2E, 13, 14, 15 e 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D350.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "D355",
+      "id_guia": "114",
+      "titulo": "Registro D355 da EFD-ICMS/IPI (Redução Z (Códigos 2E, 13, 14, 15 e 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D355.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "D360",
+      "id_guia": "115",
+      "titulo": "Registro D360 da EFD-ICMS/IPI (PIS/Pasep e Cofins totalizados no dia (Códigos 2E, 13, 14, 15 e 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D360.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "D365",
+      "id_guia": "116",
+      "titulo": "Registro D365 da EFD-ICMS/IPI (Registro dos totalizadores parciais da Redução Z (Códigos 2E, 13, 14, 15 e 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D365.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "D370",
+      "id_guia": "117",
+      "titulo": "Registro D370 da EFD-ICMS/IPI (Complemento dos documentos informados (Códigos 13, 14, 15, 16 e 2E))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D370.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "D390",
+      "id_guia": "118",
+      "titulo": "Registro D390 da EFD-ICMS/IPI (Registro analítico do movimento diário (Códigos 13, 14, 15, 16 e 2E))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D390.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "D400",
+      "id_guia": "119",
+      "titulo": "Registro D400 da EFD-ICMS/IPI (Resumo de Movimento Diário - RMD (Código 18))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D400.json",
+      "total_campos": 16,
+      "resumo": "Layout com 16 campo(s)."
+    },
+    {
+      "codigo": "D410",
+      "id_guia": "120",
+      "titulo": "Registro D410 da EFD-ICMS/IPI (Documentos informados (Códigos 13, 14, 15 e 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D410.json",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "D411",
+      "id_guia": "121",
+      "titulo": "Registro D411 da EFD-ICMS/IPI (Documentos cancelados dos documentos informados (Código 13, 14, 15 e 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D411.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "D420",
+      "id_guia": "122",
+      "titulo": "Registro D420 da EFD-ICMS/IPI (Complemento dos documentos informados (Código 13, 14, 15 e 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D420.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "D500",
+      "id_guia": "123",
+      "titulo": "Registro D500 da EFD-ICMS/IPI (Nota Fiscal de Serviço de Comunicação (Código 21) e Nota Fiscal de Serviço de Telecomunicação (Código 22))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D500.json",
+      "total_campos": 24,
+      "resumo": "Layout com 24 campo(s)."
+    },
+    {
+      "codigo": "D510",
+      "id_guia": "124",
+      "titulo": "Registro D510 da EFD-ICMS/IPI (Itens do Documento - Nota Fiscal de Serviço de Comunicação (Código 21) e Serviço de Telecomunicação (Código 22))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D510.json",
+      "total_campos": 20,
+      "resumo": "Layout com 20 campo(s)."
+    },
+    {
+      "codigo": "D530",
+      "id_guia": "125",
+      "titulo": "Registro D530 da EFD-ICMS/IPI (Terminal faturado)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D530.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "D590",
+      "id_guia": "126",
+      "titulo": "Registro D590 da EFD-ICMS/IPI (Registro analítico do documento (Código 21 e 22))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D590.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "D600",
+      "id_guia": "127",
+      "titulo": "Registro D600 da EFD-ICMS/IPI (Consolidação da prestação de serviços - Notas de Serviço de Comunicação (Código 21) e de Serviço de Telecomunicação (Código 22))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D600.json",
+      "total_campos": 18,
+      "resumo": "Layout com 18 campo(s)."
+    },
+    {
+      "codigo": "D610",
+      "id_guia": "128",
+      "titulo": "Registro D610 da EFD-ICMS/IPI (Itens do documento consolidado (Código 21 e 22))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D610.json",
+      "total_campos": 18,
+      "resumo": "Layout com 18 campo(s)."
+    },
+    {
+      "codigo": "D690",
+      "id_guia": "129",
+      "titulo": "Registro D690 da EFD-ICMS/IPI (Registro analítico dos documentos (Código 21 e 22))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D690.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "D695",
+      "id_guia": "130",
+      "titulo": "Registro D695 da EFD-ICMS/IPI (Consolidação da prestação de serviços - Notas de Serviço de Comunicação (código 21) e de Serviços de Telecomunicação (código 22) (Empresas obrigadas à entrega dos arquivos previstos no Convênio ICMS nº 115/03))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D695.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "D696",
+      "id_guia": "131",
+      "titulo": "Registro D696 da EFD-ICMS/IPI (Registro Analítico dos Documentos (Código 21 e 22))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D696.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "D697",
+      "id_guia": "132",
+      "titulo": "Registro D697 da EFD-ICMS/IPI (Registro de informações de outras UFs, relativamente aos serviços não-medidos de televisão por assinatura via satélite)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D697.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "D700",
+      "id_guia": "840",
+      "titulo": "Registro D700 da EFD-ICMS/IPI (Nota Fiscal Fatura Eletrônica de serviços de comunicação - NFCom (código 62))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D700.json",
+      "total_campos": 32,
+      "resumo": "Layout com 32 campo(s)."
+    },
+    {
+      "codigo": "D730",
+      "id_guia": "841",
+      "titulo": "Registro D730 da EFD-ICMS/IPI (Registro analítico Nota Fiscal Fatura Eletrônica de serviços de comunicação – NFCom (Código 62))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D730.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "D731",
+      "id_guia": "842",
+      "titulo": "Registro D731 da EFD-ICMS/IPI (Informações do Fundo de Combate à Pobreza - FCP - (Código 62))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D731.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "D735",
+      "id_guia": "843",
+      "titulo": "Registro D735 da EFD-ICMS/IPI (Observações do lançamento fiscal (Código 62))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D735.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "D737",
+      "id_guia": "844",
+      "titulo": "Registro D737 da EFD-ICMS/IPI (Outras obrigações tributárias, ajustes e informações de valores provenientes de documento fiscal)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D737.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "D750",
+      "id_guia": "845",
+      "titulo": "Registro D750 da EFD-ICMS/IPI (Escrituração consolidada da Nota Fiscal Fatura Eletrônica de serviços de comunicação - NFCom (Código 62))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D750.json",
+      "total_campos": 17,
+      "resumo": "Layout com 17 campo(s)."
+    },
+    {
+      "codigo": "D760",
+      "id_guia": "846",
+      "titulo": "Registro D760 da EFD-ICMS/IPI (Registro analítico da escrituração consolidada da Nota Fiscal Fatura Eletrônica de serviços de comunicação - NFCom (Código 62))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D760.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "D761",
+      "id_guia": "847",
+      "titulo": "Registro D761 da EFD-ICMS/IPI (Informações do Fundo de Combate à Pobreza – FCP – (Código 62))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D761.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "D990",
+      "id_guia": "133",
+      "titulo": "Registro D990 da EFD-ICMS/IPI (Encerramento do Bloco D)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "E001",
+      "id_guia": "134",
+      "titulo": "Registro E001 da EFD-ICMS/IPI (Abertura do Bloco E)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "E100",
+      "id_guia": "135",
+      "titulo": "Registro E100 da EFD-ICMS/IPI (Período da Apuração do ICMS)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E100.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "E110",
+      "id_guia": "136",
+      "titulo": "Registro E110 da EFD-ICMS/IPI (Apuração do ICMS - Operações próprias)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E110.json",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "E111",
+      "id_guia": "137",
+      "titulo": "Registro E111 da EFD-ICMS/IPI (Ajuste / benefício / incentivo da Apuração do ICMS)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E111.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "E112",
+      "id_guia": "138",
+      "titulo": "Registro E112 da EFD-ICMS/IPI (Informações Adicionais dos Ajustes da Apuração do ICMS)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E112.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "E113",
+      "id_guia": "139",
+      "titulo": "Registro E113 da EFD-ICMS/IPI (Informações adicionais dos ajustes da apuração do ICMS - Identificação dos documentos fiscais)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E113.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "E115",
+      "id_guia": "140",
+      "titulo": "Registro E115 da EFD-ICMS/IPI (Informações adicionais da Apuração - Valores declaratórios)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E115.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "E116",
+      "id_guia": "141",
+      "titulo": "Registro E116 da EFD-ICMS/IPI (Obrigações do ICMS Recolhido ou a Recolher - Operações Próprias)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E116.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "E200",
+      "id_guia": "142",
+      "titulo": "Registro E200 da EFD-ICMS/IPI (Período de Apuração do ICMS - Substituição Tributária)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E200.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "E210",
+      "id_guia": "143",
+      "titulo": "Registro E210 da EFD-ICMS/IPI (Apuração do ICMS - Substituição Tributária)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E210.json",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "E220",
+      "id_guia": "144",
+      "titulo": "Registro E220 da EFD-ICMS/IPI (Ajuste / Benefício / Incentivo da Apuração do ICMS Substituição Tributária)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E220.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "E230",
+      "id_guia": "145",
+      "titulo": "Registro E230 da EFD-ICMS/IPI (Ajuste / Benefício / Incentivo da Apuração do ICMS Substituição Tributária)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E230.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "E240",
+      "id_guia": "146",
+      "titulo": "Registro E240 da EFD-ICMS/IPI (Informações adicionais dos ajustes da apuração do ICMS substituição tributária - Identificação dos documentos fiscais)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E240.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "E250",
+      "id_guia": "147",
+      "titulo": "Registro E250 da EFD-ICMS/IPI (Obrigações do ICMS Recolhido ou a Recolher - Substituição Tributária)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E250.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "E300",
+      "id_guia": "235",
+      "titulo": "Registro E300 da EFD-ICMS/IPI (Período de Apuração do ICMS Diferencial de Alíquota - UF origem/destino EC 87/15)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E300.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "E310",
+      "id_guia": "236",
+      "titulo": "Registro E310 da EFD-ICMS/IPI (Apuração do ICMS Diferencial de Alíquota - UF origem/destino EC 87/15 (Válido até 31/12/2016))",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E310_id236.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "E310",
+      "id_guia": "258",
+      "titulo": "Registro E310 da EFD-ICMS/IPI (Apuração do Fundo de combate a pobreza e do ICMS Diferencial de Alíquota - UF origem/destino EC 87/15 (Válido a partir de 01/01/2017))",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E310_id258.json",
+      "total_campos": 22,
+      "resumo": "Layout com 22 campo(s)."
+    },
+    {
+      "codigo": "E311",
+      "id_guia": "237",
+      "titulo": "Registro E311 da EFD-ICMS/IPI (Ajuste/benefício/incentivo da apuração do ICMS Diferencial de Alíquota UF origem/destino EC 87/15)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E311.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "E312",
+      "id_guia": "238",
+      "titulo": "Registro E312 da EFD-ICMS/IPI (Informações adicionais aos ajustes da apuração do ICMS Diferencial de Alíquota UF origem/destino EC 8715)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E312.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "E313",
+      "id_guia": "239",
+      "titulo": "Registro E313 da EFD-ICMS/IPI (Informações adicionais dos ajustes da apuração do Fundo de Combate à Pobreza e do ICMS Diferencial de Alíquota UF origem/destino EC 8715 - Identificação dos documentos fiscais)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E313.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "E316",
+      "id_guia": "240",
+      "titulo": "Registro E316 da EFD-ICMS/IPI (Obrigações recolhidas ou a recolher - Fundo de Combate à Pobreza e ICMS Diferencial de Alíquota UF origem/destino - EC 87/15)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E316.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "E500",
+      "id_guia": "148",
+      "titulo": "Registro E500 da EFD-ICMS/IPI (Período de Apuração do IPI)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E500.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "E510",
+      "id_guia": "149",
+      "titulo": "Registro E510 da EFD-ICMS/IPI (Consolidação dos valores do IPI)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E510.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "E520",
+      "id_guia": "150",
+      "titulo": "Registro E520 da EFD-ICMS/IPI (Apuração do IPI)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E520.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "E530",
+      "id_guia": "151",
+      "titulo": "Registro E530 da EFD-ICMS/IPI (Ajustes da Apuração do IPI)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E530.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "E531",
+      "id_guia": "303",
+      "titulo": "Registro E531 da EFD-ICMS/IPI (Informações adicionais dos ajustes da apuração do IPI – Identificação dos documentos fiscais (01 e 55))",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E531.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "E990",
+      "id_guia": "152",
+      "titulo": "Registro E990 da EFD-ICMS/IPI (Encerramento do Bloco E)",
+      "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+      "arquivo_json": "E990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "G001",
+      "id_guia": "153",
+      "titulo": "Registro G001 da EFD-ICMS/IPI (Abertura do Bloco G)",
+      "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+      "arquivo_json": "G001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "G110",
+      "id_guia": "154",
+      "titulo": "Registro G110 da EFD-ICMS/IPI (ICMS - Ativo Permanente - CIAP)",
+      "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+      "arquivo_json": "G110.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "G125",
+      "id_guia": "155",
+      "titulo": "Registro G125 da EFD-ICMS/IPI (Movimentação de bem ou componente do Ativo Imobilizado)",
+      "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+      "arquivo_json": "G125.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "G126",
+      "id_guia": "156",
+      "titulo": "Registro G126 da EFD-ICMS/IPI (Outros créditos CIAP)",
+      "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+      "arquivo_json": "G126.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "G130",
+      "id_guia": "157",
+      "titulo": "Registro G130 da EFD-ICMS/IPI (Identificação do documento fiscal)",
+      "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+      "arquivo_json": "G130.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "G140",
+      "id_guia": "158",
+      "titulo": "Registro G140 da EFD-ICMS/IPI (Identificação do item do documento fiscal)",
+      "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+      "arquivo_json": "G140.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "G990",
+      "id_guia": "159",
+      "titulo": "Registro G990 da EFD-ICMS/IPI (Encerramento do Bloco G)",
+      "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+      "arquivo_json": "G990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "H001",
+      "id_guia": "160",
+      "titulo": "Registro H001 da EFD-ICMS/IPI (Abertura do Bloco H)",
+      "bloco": "3.7) Bloco H (Inventário físico):",
+      "arquivo_json": "H001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "H005",
+      "id_guia": "161",
+      "titulo": "Registro H005 da EFD-ICMS/IPI (Totais do inventário)",
+      "bloco": "3.7) Bloco H (Inventário físico):",
+      "arquivo_json": "H005.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "H010",
+      "id_guia": "162",
+      "titulo": "Registro H010 da EFD-ICMS/IPI (Inventário)",
+      "bloco": "3.7) Bloco H (Inventário físico):",
+      "arquivo_json": "H010.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "H020",
+      "id_guia": "163",
+      "titulo": "Registro H020 da EFD-ICMS/IPI (Informação complementar do inventário)",
+      "bloco": "3.7) Bloco H (Inventário físico):",
+      "arquivo_json": "H020.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "H030",
+      "id_guia": "579",
+      "titulo": "Registro H030 da EFD-ICMS/IPI (Informações complementares do inventário das mercadorias sujeitas ao regime de substituição tributária)",
+      "bloco": "3.7) Bloco H (Inventário físico):",
+      "arquivo_json": "H030.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "H990",
+      "id_guia": "164",
+      "titulo": "Registro H990 da EFD-ICMS/IPI (Encerramento do Bloco H)",
+      "bloco": "3.7) Bloco H (Inventário físico):",
+      "arquivo_json": "H990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "K001",
+      "id_guia": "204",
+      "titulo": "Registro K001 da EFD-ICMS/IPI (Abertura do Bloco K)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "K010",
+      "id_guia": "832",
+      "titulo": "Registro K010 da EFD-ICMS/IPI (Informação sobre o tipo de leiaute (simplificado/completo))",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K010.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "K100",
+      "id_guia": "205",
+      "titulo": "Registro K100 da EFD-ICMS/IPI (Período de Apuração do ICMS/IPI)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K100.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "K200",
+      "id_guia": "206",
+      "titulo": "Registro K200 da EFD-ICMS/IPI (Estoque escriturado)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K200.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "K210",
+      "id_guia": "259",
+      "titulo": "Registro K210 da EFD-ICMS/IPI (Desmontagem de mercadorias - Item de origem)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K210.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "K215",
+      "id_guia": "260",
+      "titulo": "Registro K215 da EFD-ICMS/IPI (Desmontagem de mercadorias - Item de destino)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K215.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "K220",
+      "id_guia": "207",
+      "titulo": "Registro K220 da EFD-ICMS/IPI (Outras movimentações internas entre mercadorias)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K220.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "K230",
+      "id_guia": "208",
+      "titulo": "Registro K230 da EFD-ICMS/IPI (Itens produzidos)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K230.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "K235",
+      "id_guia": "209",
+      "titulo": "Registro K235 da EFD-ICMS/IPI (Insumos consumidos)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K235.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "K250",
+      "id_guia": "210",
+      "titulo": "Registro K250 da EFD-ICMS/IPI (Industrialização efetuada por terceiros - Itens produzidos)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K250.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "K255",
+      "id_guia": "211",
+      "titulo": "Registro K255 da EFD-ICMS/IPI (Industrialização em terceiros - insumos consumidos)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K255.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "K260",
+      "id_guia": "261",
+      "titulo": "Registro K260 da EFD-ICMS/IPI (Reprocessamento/reparo de produto/insumo)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K260.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "K265",
+      "id_guia": "262",
+      "titulo": "Registro K265 da EFD-ICMS/IPI (Reprocessamento/reparo - Mercadorias consumidas e/ou retornadas)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K265.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "K270",
+      "id_guia": "263",
+      "titulo": "Registro K270 da EFD-ICMS/IPI (Correção de apontamento dos Registros K210, K220, K230, K250, K260, K291, K292, K301 e K302)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K270.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "K275",
+      "id_guia": "264",
+      "titulo": "Registro K275 da EFD-ICMS/IPI (Correção de apontamento e retorno de insumos dos Registros K215, K220, K235, K255 e K265)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K275.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "K280",
+      "id_guia": "265",
+      "titulo": "Registro K280 da EFD-ICMS/IPI (Correção de apontamento - Estoque escriturado)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K280.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "K290",
+      "id_guia": "304",
+      "titulo": "Registro K290 da EFD-ICMS/IPI (Produção conjunta - Ordem de Produção)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K290.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "K291",
+      "id_guia": "305",
+      "titulo": "Registro K291 da EFD-ICMS/IPI (Produção conjunta - Itens produzidos)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K291.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "K292",
+      "id_guia": "307",
+      "titulo": "Registro K292 da EFD-ICMS/IPI (Produção conjunta - Insumos consumidos)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K292.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "K300",
+      "id_guia": "308",
+      "titulo": "Registro K300 da EFD-ICMS/IPI (Produção conjunta - Industrialização efetuada por terceiros)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K300.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "K301",
+      "id_guia": "309",
+      "titulo": "Registro K301 da EFD-ICMS/IPI (Produção conjunta - Industrialização efetuada por terceiros - Itens produzidos)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K301.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "K302",
+      "id_guia": "310",
+      "titulo": "Registro K302 da EFD-ICMS/IPI (Produção conjunta - Industrialização efetuada por terceiros - Insumos consumidos)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K302.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "K990",
+      "id_guia": "212",
+      "titulo": "Registro K990 da EFD-ICMS/IPI (Encerramento do Bloco K)",
+      "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+      "arquivo_json": "K990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    }
+  ],
+  "erros": [],
+  "observacao": "Codigos repetidos receberam sufixo _id<idGuia> no nome do arquivo."
+}

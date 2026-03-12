@@ -1,0 +1,41 @@
+{
+  "registro": {
+    "codigo": "P010",
+    "titulo": "Registro P010 da EFD-Contribuições (Identificação do Estabelecimento)",
+    "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=525"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:03:23.100869+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"P010\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição do estabelecimento no CNPJ.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

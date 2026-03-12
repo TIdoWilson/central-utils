@@ -1,0 +1,157 @@
+{
+  "registro": {
+    "codigo": "E020",
+    "titulo": "REGISTRO E020: SALDOS FINAIS DAS CONTAS NA PARTE B DO e-LALUR DA ECF IMEDIATAMENTE ANTERIOR",
+    "bloco_origem": "bloco-e.htm",
+    "ancora": "E020",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-e.htm#E020"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:31:56.813837+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (E020)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[E020]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA_B",
+      "descricao": "Código da Conta da Parte B: Código unívoco atribuído pela empresa à conta no e-Lalur.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESC_CTA_LAL",
+      "descricao": "Descrição da Conta.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "DT_AP_LAL",
+      "descricao": "Data de Criação: Data final do período de apuração em que a conta foi criada",
+      "tipo": "C",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "COD_LAN_ORIG",
+      "descricao": "Código do Tipo de Lançamento no e-Lalur que deu origem à conta",
+      "tipo": "C",
+      "tamanho": "6",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "DESC_LAN_ORIG",
+      "descricao": "Descrição do tipo de lançamento no e-Lalur que deu origem à conta",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "DT_LIM_LAL",
+      "descricao": "Data Limite para a Exclusão, Adição ou Compensação do Valor Controladora, se houver",
+      "tipo": "C",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "TRIBUTO",
+      "descricao": "Indicador de Tributo da Adição/Exclusão:\nI – Imposto de Renda Pessoa Jurídica\nC – Contribuição Social sobre o Lucro Líquido\nA – Ambos (IRPJ e CSLL)",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[I; C; A;]"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "VL_SALDO_FIN",
+      "descricao": "Saldo Final do Período Anterior",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "IND_VL_SALDO_FIN",
+      "descricao": "Indicador de Saldo Final do Período Anterior:\nD – Para prejuízos ou valores que reduzam o lucro real ou a base de cálculo da\ncontribuição social em períodos subsequentes.\nC – Para valores que aumentam o lucro real ou a base de cálculo na contribuição social\nem períodos subsequentes.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[D; C]"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "COD_PB_RFB",
+      "descricao": "Código da tabela padrão da parte B",
+      "tipo": "C",
+      "tamanho": "6",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    }
+  ]
+}

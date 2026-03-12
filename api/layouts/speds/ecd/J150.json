@@ -1,0 +1,181 @@
+{
+  "registro": {
+    "codigo": "J150",
+    "titulo": "REGISTRO \n J150: Demonstração do Resultado do Exercício (DRE)",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "J150",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#J150"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:29:19.599885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo J150.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J150"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "NU_ORDEM",
+      "descricao": "Número de\nordem da linha\nna visualização\nda\ndemonstração.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Sequencial gerado na exportação, sempre iniciado em 1.\n É possível definir a ordenação das linhas gerada para o SPED ECD por meio da visão contábil através dos campos Ordenação no SPED e Ordem própria da tela F046VIS . Quando a visão contábil estiver com Ordem própria (E046VIS.ORDPRO) igual a N , o sistema gera conforme indicado acima. Se a Ordem própria for S , ele utiliza o valor do campo Ordenação no SPED ( E046VIS.NUMORD ) para preencher o campo NU_ORDEM .\n Obs.: o usuário deve informar um número para todas as linhas; caso o campo fique com valor zero, o campo NU_ORDEM também ficará zerado."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_AGL",
+      "descricao": "Código de aglutinação das linhas, atribuído pelo empresário ou sociedade empresária. \n Observação: caso o indicador de código de aglutinação seja totalizador (T), o código de aglutinação deve ser informado, mas não deve estar cadastrado no registro I052 - os códigos de aglutinação informados no registro I052 são somente para contas analíticas.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E046CMP.CODAGL"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_COD_AGL",
+      "descricao": "Indicador do tipo de código de aglutinação das linhas: \nT - Totalizador (nível que totaliza um ou mais níveis inferiores da demonstração financeira)\nD - Detalhe (nível mais detalhado da demonstração financeira)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se E046COL.INDTOT for igual a S” então será gerado T”, senão será gerado D”."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NIVEL_AGL",
+      "descricao": "Nível do Código de aglutinação (mesmo conceito do plano de contas - Registro I050).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E046PLA.NIVCTA"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "COD_AGL_SUP",
+      "descricao": "Código de aglutinação sintético/grupo de código de aglutinação de nível superior.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E045AGL.CODAGL do registro pai."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "DESCR_COD_AGL",
+      "descricao": "Descrição do Código de aglutinação.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E045AGL.DESAGL"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_CTA_INI",
+      "descricao": "Valor do saldo\nfinal da linha\nno período\nimediatamente\nanterior",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Soma do saldo de todas as contas que pertencem à aglutinação"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IND_DC_CTA_INI",
+      "descricao": "Indicador da\nsituação do\nvalor final da\nlinha no\nperíodo\nimediatamente\nanterior:\nD - Devedor\nC - Credor",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Para as linhas nas quais o campo IND_COD_AGL for igual a D:\n- para linhas de Natureza Credora, é verificado se o Valor da linha é Credor: caso sim, recebe C; senão recebe D;\n- para linhas de Natureza Devedora, é verificado se o Valor da linha é Devedora: caso sim, recebe D; senão recebe C.\nPara as linhas nas quais o campo IND_COD_AGL for igual a T, serão verificados os filhos dessa linha:\n- se para todos os filhos foi definido C, então recebe C;\n- se para todos os filhos foi definido D, então recebe D;\n- se os registros filhos possuem D ou C e a soma dos valores dos filhos definidos como C for maior que a dos definidos como D, então recebe C; senão recebe D."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "VL_CTA_FIN",
+      "descricao": "Valor final da\nlinha antes do\nencerramento\ndo exercício.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E046NEX.CODNEX"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "IND_DC_CTA_FIN",
+      "descricao": "Indicador da\nsituação do\nvalor final da\nlinha antes do\nencerramento\ndo exercício:\nD – Devedor;\nC – Credor.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Para as linhas nas quais o campo IND_COD_AGL for igual a D:\n- para linhas de Natureza Credora, é verificado se o Valor da linha é Credor: caso sim, recebe C; senão recebe D;\n- para linhas de Natureza Devedora, é verificado se o Valor da linha é Devedora: caso sim, recebe D; senão recebe C.\nPara as linhas nas quais o campo IND_COD_AGL for igual a T, serão verificados os filhos dessa linha:\n- se para todos os filhos foi definido C, então recebe C;\n- se para todos os filhos foi definido D, então recebe D;\n- se os registros filhos possuem D ou C e a soma dos valores dos filhos definidos como C for maior que a dos definidos como D, então recebe C; senão recebe D."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "IND_GRP_DRE",
+      "descricao": "Indicador de grupo da DRE: \n D - Linha totalizadora ou de detalhe da demonstração que, por sua natureza de despesa, represente redução do lucro. \n R - Linha totalizadora ou de detalhe da demonstração que, por sua natureza de receita, represente incremento do lucro.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se o campo IND_DC_CTA_FIN for igual a C, então recebe R;\nSe o campo IND_DC_CTA_FIN for igual a D, então recebe D."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "NOTA_EXP_REF",
+      "descricao": "Referência a numeração das notas explicativas relativas às demonstrações contábeis.",
+      "tipo": "C",
+      "tamanho": "12",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E046NEX.CODNEX"
+      }
+    }
+  ]
+}

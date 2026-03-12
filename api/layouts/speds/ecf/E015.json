@@ -1,0 +1,97 @@
+{
+  "registro": {
+    "codigo": "E015",
+    "titulo": "REGISTRO E015: CONTAS CONTÁBEIS MAPEADAS",
+    "bloco_origem": "bloco-e.htm",
+    "ancora": "E015",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-e.htm#E015"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:31:56.812836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (E015)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[E015]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA",
+      "descricao": "Código da Conta Contábil Analítica (K155)",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CCUS",
+      "descricao": "Código do Centro de Custos",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "DESC_CTA",
+      "descricao": "Descrição da Conta",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VAL_CTA",
+      "descricao": "Saldo Final da Conta: Saldo final da conta do registro K156 do último período da ECF\nimediatamente anterior, referente a conta contábil e centro de custos identificados no\nregistro K155 pai.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "IND_VAL_CTA",
+      "descricao": "Indicador do Saldo Final da Conta:\nC – Credor\nD – Devedor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[D;C]"
+      }
+    }
+  ]
+}

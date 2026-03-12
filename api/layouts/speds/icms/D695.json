@@ -1,0 +1,109 @@
+{
+  "registro": {
+    "codigo": "D695",
+    "id_guia": "130",
+    "titulo": "Registro D695 da EFD-ICMS/IPI (Consolidação da prestação de serviços - Notas de Serviço de Comunicação (código 21) e de Serviços de Telecomunicação (código 22) (Empresas obrigadas à entrega dos arquivos previstos no Convênio ICMS nº 115/03))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=130"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:07:50.458056+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D695\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "NRO_ORD_INI",
+      "descricao": "Número de ordem inicial.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "NRO_ORD_FIN",
+      "descricao": "Número de ordem final.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "DT_DOC_INI",
+      "descricao": "Data de emissão inicial dos documentos / Data inicial de vencimento da fatura.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "DT_DOC_FIN",
+      "descricao": "Data de emissão final dos documentos / Data final do vencimento da fatura.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "NOM_MEST",
+      "descricao": "Nome do arquivo Mestre de Documento Fiscal.",
+      "tipo": "C",
+      "tamanho": "033",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "CHV_COD_DIG",
+      "descricao": "Chave de codificação digital do arquivo Mestre de Documento Fiscal.",
+      "tipo": "C",
+      "tamanho": "032",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

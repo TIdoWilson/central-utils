@@ -1,0 +1,100 @@
+{
+  "registro": {
+    "codigo": "D160",
+    "id_guia": "102",
+    "titulo": "Registro D160 da EFD-ICMS/IPI (Carga transportada (Código 08, 8B, 09, 10, 11, 26 e 27))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=102"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:07:50.193462+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D160\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "DESPACHO",
+      "descricao": "Identificação do número do despacho.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "CNPJ_CPF_REM",
+      "descricao": "CNPJ ou CPF do remetente das mercadorias que constam na Nota Fiscal.",
+      "tipo": "N",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "IE_REM",
+      "descricao": "Inscrição Estadual (IE) do remetente das mercadorias que constam na Nota Fiscal.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_MUN_ORI",
+      "descricao": "Código do Município de origem conforme Tabela IBGE (Preencher com \"9999999\", se Exterior).",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "CNPJ_CPF_DEST",
+      "descricao": "CNPJ ou CPF do destnatário das mercadorias que constam na Nota Fiscal.",
+      "tipo": "N",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "IE_DEST",
+      "descricao": "Inscrição Estadual (IE) do destinatário das mercadorias que constam na Nota Fiscal.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "COD_MUN_DEST",
+      "descricao": "Código do Município de destino, conforme Tabela IBGE (Preencher com \"9999999\", se Exterior).",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

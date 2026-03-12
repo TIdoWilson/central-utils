@@ -1,0 +1,140 @@
+{
+  "registro": {
+    "codigo": "M610",
+    "titulo": "Registro M610 da EFD-Contribuições (Detalhamento da Contribuição para a Seguridade Social - Cofins do Período)",
+    "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=514"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:03:22.978382+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"M610\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CONT",
+      "descricao": "Código da contribuição social apurada no período, conforme a Tabela 4.3.5.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_REC_BRT",
+      "descricao": "Valor da Receita Bruta.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_BC_CONT",
+      "descricao": "Valor da Base de Cálculo da Contribuição.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota do COFINS (em percentual).",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "QUANT_BC_COFINS",
+      "descricao": "Quantidade – Base de cálculo COFINS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "ALIQ_COFINS_QUANT",
+      "descricao": "Alíquota do COFINS (em reais).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_CONT_APUR",
+      "descricao": "Valor total da contribuição social apurada.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_AJUS_ACRES",
+      "descricao": "Valor total dos ajustes de acréscimo.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_AJUS_REDUC",
+      "descricao": "Valor total dos ajustes de redução.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_CONT_DIFER",
+      "descricao": "Valor da contribuição a diferir no período.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_CONT_DIFER_ANT",
+      "descricao": "Valor da contribuição diferida em períodos anteriores.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_CONT_PER",
+      "descricao": "Valor Total da Contribuição do Período (08 + 09 – 10 – 11 +12).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    }
+  ]
+}

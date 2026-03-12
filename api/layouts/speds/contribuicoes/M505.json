@@ -1,0 +1,113 @@
+{
+  "registro": {
+    "codigo": "M505",
+    "titulo": "Registro M505 da EFD-Contribuições (Detalhamento da Base de Calculo do Crédito Apurado no Período – Cofins)",
+    "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=509"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:03:22.936107+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"M505\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "NAT_BC_CRED",
+      "descricao": "Código da Base de Cálculo do Crédito apurado no período, conforme a Tabela 4.3.7.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente ao crédito de COFINS (Tabela 4.3.4) vinculado ao tipo de crédito escriturado em M500.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_BC_COFINS_TOT",
+      "descricao": "Valor Total da Base de Cálculo escriturada nos documentos e operações (Blocos “A”, “C”, “D” e “F”), referente ao CST_COFINS informado no Campo 03..",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_BC_COFINS_CUM",
+      "descricao": "Parcela do Valor Total da Base de Cálculo informada no Campo 04, vinculada a receitas com incidência cumulativa.\nCampo de preenchimento específico para a pessoa jurídica sujeita ao regime cumulativo e não-cumulativo da contribuição (COD_INC_TRIB = 3 do Registro 0110).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_COFINS_NC",
+      "descricao": "Valor Total da Base de Cálculo do Crédito, vinculada a receitas com incidência não-cumulativa (Campo 04 – Campo 05)..",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da Base de Cálculo do Crédito, vinculada ao tipo de Crédito escriturado em M500.\n - Para os CST_COFINS = “50”, “51”, “52”, “60”, “61” e “62”: Informar o valor do Campo 06 (VL_BC_COFINS_NC);\n - Para os CST_COFINS = “53”, “54”, “55”, “56”, “63”, “64” “65” e “66” (Crédito sobre operações vinculadas a mais de um tipo de receita): Informar a parcela do valor do Campo 06 (VL_BC_COFINS_NC) vinculada especificamente ao tipo de crédito escriturado em M500.\nO valor deste campo será transportado para o Campo 04 (VL_BC_COFINS) do registro M500.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "QUANT_BC_COFINS_TOT",
+      "descricao": "Quantidade Total da Base de Cálculo do Crédito apurado em Unidade de Medida de Produto, escriturada nos documentos e operações (Blocos “A”, “C”, “D” e “F”), referente ao CST_COFINS informado no Campo 03.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "QUANT_BC_COFINS",
+      "descricao": "Parcela da base de cálculo do crédito em quantidade (campo 08) vinculada ao tipo de crédito escriturado em M500.\n - Para os CST_COFINS = “50”, “51” e “52”: Informar o valor do Campo 08 (QUANT_BC_COFINS);\n- Para os CST_COFINS = “53”, “54”, “55” e “56” (crédito vinculado a mais de um tipo de receita): Informar a parcela do valor do Campo 08 (QUANT_BC_COFINS) vinculada ao tipo de crédito escriturado em M500.\nO valor deste campo será transportado para o Campo 06 (QUANT_BC_COFINS) do registro M500.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "DESC_CRED",
+      "descricao": "Descrição do crédito.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

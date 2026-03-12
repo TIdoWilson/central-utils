@@ -1,0 +1,156 @@
+{
+  "registro": {
+    "codigo": "X420",
+    "titulo": "REGISTRO X420: ROYALTIES RECEBIDOS OU PAGOS A BENEFICIÁRIOS DO BRASIL E DO EXTERIOR",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x420",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x420"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:31:56.916572+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X420\".",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X420\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "TIP_ROY",
+      "descricao": "Indicar se são roylaties recebidos ou pagos a beneficiários no Brasil e no exterior.\nTipo dos royalties:\nR - Recebido\nP - Pago",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo dos Royalties",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "PAIS",
+      "descricao": "País ou a dependência de país de residência ou de domicílio da pessoa física ou jurídica que efetuou o pagamento ou a remessa do valor recebido ou pago pela pessoa jurídica declarante, observado os exemplos a seguir:\nExemplos:\n1) Pessoa jurídica domiciliada na França possui conta corrente no Canadá e a partir desta remete royalties para a pessoa jurídica declarante. Nesse caso, o país a ser selecionado é a França.\n2) Pessoa jurídica declarante efetua remessa, por conta e ordem do beneficiário do pagamento que é residente no Japão, para conta corrente localizada nos Estados Unidos da América. Nesse caso, o país a ser selecionado é o Japão.\nCódigo do país, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Pais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_EXPL_DIR_SW",
+      "descricao": "Valor da Exploração Econômica dos Direitos Patrimoniais do Autor Relativos a Software: Valor relativo aos royalties recebidos ou pagos ou remetidos referentes aos atos e aos contratos de licença ou cessão de direitos de comercialização, distribuição e reprodução de programa de computador, de que trata a Lei nº 9.609, de 19 de fevereiro de 1998. Informar também neste campo o valor relativo aos contratos que impliquem transferência de tecnologia de programa de computador, de que trata o art. 11 da Lei nº 9.609, de 1998. Ainda, deverá ser informado, neste campo, o valor recebido em decorrência dos contratos que envolvam concessão de licença para uso próprio do adquirente, sob a modalidade de cópia única.\nAtenção: Não incluir neste campo o valor recebido ou pago ou remetido a título de transferência total dos direitos patrimoniais do programa de computador.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Exploração Econômica dos Direitos Patrimoniais do Autor Relativos a Software",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_EXPL_DIR_AUT",
+      "descricao": "Valor da Exploração Econômica dos Direitos Patrimoniais do Autor, Exceto Software: Valor relativo aos royalties recebidos ou pagos ou remetidos referentes aos contratos que transferem a terceiros, por meio de licenciamento, concessão, cessão ou por outros meios admitidos em Direito, o direito de reproduzir, comercializar ou distribuir a obra protegida pelo Direito Autoral, de que trata o art. 7º da Lei nº 9.610, de 19 de fevereiro de1998, exceto programas de computador, tais como:\n- textos de obras literárias, artísticas ou científicas;\n- conferências, alocuções, sermões e outras obras da mesma natureza;\n- obras dramáticas e dramático-musicais;\n- obras coreográficas e pantomímicas, cuja execução cênica se fixe por escrito ou por qualquer outra forma;\n- composições musicais, tenham ou não letra;\n- obras audiovisuais, sonorizadas ou não, inclusive as cinematográficas;\n- obras fotográficas e as produzidas por qualquer processo análogo ao da fotografia;\n- obras de desenho, pintura, gravura, escultura, litografia e arte cinética;\n- ilustrações, cartas geográficas e outras obras da mesma natureza;\n- projetos, esboços e obras plásticas concernentes à geografia, engenharia, topografia, arquitetura, paisagismo, cenografia e ciência;\n- adaptações, traduções e outras transformações de obras originais, apresentadas como criação intelectual nova;\n- coletâneas ou compilações, antologias, enciclopédias, dicionários, bases de dados e outras obras, que, por sua seleção, organização ou disposição de seu conteúdo, constituam uma criação intelectual.\nAtenção: Não incluir neste campo o valor recebido ou pago ou remetido a título de transferência total dos direitos patrimoniais da obra protegida pelo Direito Autoral.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Exploração Econômica dos Direitos Patrimoniais do Autor, Exceto Software",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_EXPL_MARCA",
+      "descricao": "Valor relativo aos royalties recebidos ou pagos ou remetidos referentes aos contratos de licenciamento de uso de marca registrada ou de pedidos de registros depositados junto ao Instituto Nacional de Propriedade Industrial (INPI), de que trata a Lei nº 9.279, de 14 de maio de 1996.\nAtenção:\n1) Não incluir neste campo o valor recebido ou pago ou remetido a título de transferência total dos direitos patrimoniais da marca protegida pelo Direito da Propriedade Industrial.\n2) Não informar neste campo o valor recebido ou pago ou remetido correspondente aos contratos de uso de marcas relativos à concessão de franquia. Esse valor deve ser informado no campo “Exploração de Franquias”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Exploração Econômica dos Direitos Patrimoniais de Marcas",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_EXPL_PAT",
+      "descricao": "Valor relativo aos royalties recebidos ou pagos ou remetidos referentes aos contratos de licenciamento de patente ou de desenho industrial concedido ou de pedido de patente depositado junto ao Instituto Nacional de Propriedade Industrial (INPI), de que trata a Lei nº 9.279, de 14 de maio de 1996.\nAtenção:\n1) Não incluir neste campo o valor recebido ou pago ou remetido a título de transferência total dos direitos patrimoniais de patente ou desenho industrial protegidos pelo Direito da Propriedade Industrial.\n2) Não informar neste campo o valor recebido ou pago ou remetido correspondente aos contratos de patentes relativos à concessão de franquia. Esse valor deve ser informado no campo “Exploração de Franquias”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Exploração Econômica dos Direitos Patrimoniais de Patentes e de Desenho Industrial",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_EXPL_KNOW",
+      "descricao": "Valor relativo aos royalties recebidos ou pagos ou remetidos referentes aos contratos que disponibilizam conhecimentos, fórmulas e técnicas secretos, não amparados pelo Direito de Propriedade Industrial, destinados à produção ou à comercialização de bens e de serviços.\nAtenção:\n1) Não informar neste campo o valor recebido ou pago ou remetido correspondente aos contratos de know-how relativos à concessão de franquia. Esse valor deve ser informado no campo “Exploração de Franquias”.\n2) Não informar neste campo o valor recebido ou pago ou remetido correspondente aos contratos de assistência técnica, científica, administrativa e assemelhados que impliquem transferência de tecnologia e os referentes a serviços técnicos e de assistência que não impliquem transferência de tecnologia. Informações sobre esses contratos devem ser prestadas no Registro X430 – “Rendimentos Relativos a Serviços, Juros e Dividendos Recebidos do Brasil e do Exterior”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Exploração de Know-How",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "VL_EXPL_FRANQ",
+      "descricao": "Valor relativo aos royalties recebidos ou pagos ou remetidos referentes aos contratos de concessão temporária de direitos que envolvam uso de marcas, prestação de serviços de assistência técnica, combinadamente ou não, com qualquer outra modalidade de transferência de tecnologia necessária à consecução do contrato de franquia.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Exploração de Franquias",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "VL_EXPL_INT",
+      "descricao": "Valor relativo aos royalties recebidos ou pagos ou remetidos referentes à autorização concedida pelo titular da cultivar protegida para sua produção com fins comerciais, seu oferecimento à venda ou a comercialização do material de propagação da cultivar, de acordo com a Lei nº 9.456, de 25 de abril de 1997.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Exploração dos Direitos Relativos à\nPropriedade Intelectual Referente a Cultivares",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

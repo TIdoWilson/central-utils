@@ -1,0 +1,91 @@
+{
+  "registro": {
+    "codigo": "X352",
+    "titulo": "REGISTRO X352: DEMONSTRATIVO DE RESULTADOS NO EXTERIOR AUFERIDOS POR INTERMÉDIO DE COLIGADAS EM REGIME DE CAIXA",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x352",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x352"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:31:56.908341+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X352\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X352\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "RES_PER",
+      "descricao": "Resultado (positivo ou negativo) do período na moeda do país de domicílio.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado do Período",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "RES_PER_REAL",
+      "descricao": "Resultado (positivo ou negativo) do período em reais.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado do Período em Reais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "LUC_DISP",
+      "descricao": "Lucro disponibilizado no período na moeda do país de domicílio.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Lucro Disponibilizado no Período",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "LUC_DISP_REAL",
+      "descricao": "Lucro disponibilizado no período em reais.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Lucro Disponibilizado no Período em Reais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "registro": {
+    "codigo": "C116",
+    "id_guia": "30",
+    "titulo": "Registro C116 da EFD-ICMS/IPI (Cupom Fiscal Eletrônico referenciado)",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=30"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:07:49.382982+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C116\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "03",
+      "campo": "NR_SAT",
+      "descricao": "Número de Série do equipamento SAT.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "04",
+      "campo": "CHV_CFE",
+      "descricao": "Chave do CF-e.",
+      "tipo": "N",
+      "tamanho": "044",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "05",
+      "campo": "NUM_CFE",
+      "descricao": "Número do CF-e.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "06",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    }
+  ]
+}

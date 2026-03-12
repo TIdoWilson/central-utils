@@ -1,0 +1,172 @@
+{
+  "registro": {
+    "codigo": "D400",
+    "id_guia": "119",
+    "titulo": "Registro D400 da EFD-ICMS/IPI (Resumo de Movimento Diário - RMD (Código 18))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=119"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 16,
+    "extraido_em_utc": "2026-03-10T19:07:50.359956+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D400\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n- agência, filial ou posto.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1 .",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_SIT",
+      "descricao": "Código da situação do documento fiscal, conforme a Tabela 4.1.2.",
+      "tipo": "N",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "SUB",
+      "descricao": "Subsérie do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "NUM_DOC",
+      "descricao": "Número do documento fiscal resumo.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_DOC",
+      "descricao": "Valor total do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_DESC",
+      "descricao": "Valor acumulado dos descontos.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_SERV",
+      "descricao": "Valor acumulado da prestação de serviço.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor total da Base de Cálculo (BC) do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_ICMS",
+      "descricao": "Valor total do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS/Pasep.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da Cofins.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "16",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

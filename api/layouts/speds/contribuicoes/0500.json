@@ -1,0 +1,104 @@
+{
+  "registro": {
+    "codigo": "0500",
+    "titulo": "Registro 0500 da EFD-Contribuições (Plano de Contas Contábeis)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=368"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:03:21.685439+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “0500”",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_ALT",
+      "descricao": "Data da inclusão/alteração.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_ NAT_CC",
+      "descricao": "Código da natureza da conta/grupo de contas:\n01 - Contas de ativo\n02 - Contas de passivo;\n03 - Patrimônio líquido;\n04 - Contas de resultado;\n05 - Contas de compensação;\n09 - Outras.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "IND_CTA",
+      "descricao": "Indicador do tipo de conta:\nS - Sintética (grupo de contas);\nA - Analítica (conta).",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "NÍVEL",
+      "descricao": "Nível da conta analítica/grupo de contas.",
+      "tipo": "N",
+      "tamanho": "005",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica/grupo de contas.",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "NOME_CTA",
+      "descricao": "Nome da conta analítica/grupo de contas.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "COD_CTA_REF",
+      "descricao": "Código da conta correlacionada no Plano de Contas Referenciado, publicado pela RFB.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "CNPJ_EST",
+      "descricao": "CNPJ do estabelecimento, no caso da conta informada no campo COD_CTA ser específica de um estabelecimento.",
+      "tipo": "C",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "K356",
+    "titulo": "REGISTRO K356: MAPEAMENTO REFERENCIAL DOS SALDOS FINAIS DAS CONTA CONTÁBEIS DE RESULTADO ANTES DO ENCERRAMENTO",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "k356",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-k.htm#k356"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.829836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto Fixo Contendo a Identificação do Registro (K356)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"K356\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA_REF",
+      "descricao": "Código da Conta no Plano de Contas Referencial, conforme tabela do Sped. (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta no Plano de Contas Referencial",
+        "DOCUMENTAÇÃO": "Conta contábil do plano referencial ligada a conta contábil do registro K355."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VL_SLD_FIN",
+      "descricao": "Valor do Saldo Final Antes do Lançamento de Encerramento.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor do Saldo Final Antes do Lançamento de Encerramento",
+        "DOCUMENTAÇÃO": "Percentual (E043PPC.PERGER/E043PCC.PERRUR) do valor listado no campo 4 do registro K355."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_VL_SLD_FIN",
+      "descricao": "",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador da Situação do Saldo Final\nD - Devedor\nC - Credor",
+        "DOCUMENTAÇÃO": "Se o campo 03 for menor que 0 \"C\" senão recebe \"D\""
+      }
+    }
+  ]
+}

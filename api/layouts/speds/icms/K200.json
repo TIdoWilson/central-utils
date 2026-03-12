@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "K200",
+    "id_guia": "206",
+    "titulo": "Registro K200 da EFD-ICMS/IPI (Estoque escriturado)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=206"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:07:51.128996+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K200\".",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_EST",
+      "descricao": "Data do estoque final.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item (campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "60",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "QTD",
+      "descricao": "Quantidade em estoque.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "3",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "IND_EST",
+      "descricao": "Indicador do tipo de estoque:\n 0: Estoque de propriedade do informante e em seu poder;\n 1: Estoque de propriedade do informante e em posse de terceiros;\n 2: Estoque de propriedade de terceiros e em posse do informante.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n- proprietário/possuidor que não seja o informante do arquivo.",
+      "tipo": "C",
+      "tamanho": "60",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

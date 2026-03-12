@@ -1,0 +1,64 @@
+{
+  "registro": {
+    "codigo": "C178",
+    "id_guia": "54",
+    "titulo": "Registro C178 da EFD-ICMS/IPI (Operações com produtos sujeitos à tributação de IPI por unidade ou quantidade de produto)",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=54"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:49.245912+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C178\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "CL_ENQ",
+      "descricao": "Código da classe de enquadramento do IPI, conforme Tabela 4.5.1.",
+      "tipo": "C",
+      "tamanho": "005",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_UNID",
+      "descricao": "Valor por unidade padrão de tributação.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "QUANT_PAD",
+      "descricao": "Quantidade total de produtos na unidade padrão de tributação.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    }
+  ]
+}

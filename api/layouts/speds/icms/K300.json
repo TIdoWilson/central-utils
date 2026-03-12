@@ -1,0 +1,42 @@
+{
+  "registro": {
+    "codigo": "K300",
+    "id_guia": "308",
+    "titulo": "Registro K300 da EFD-ICMS/IPI (Produção conjunta - Industrialização efetuada por terceiros)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=308"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:51.271857+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K300\".",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_PROD",
+      "descricao": "Data do reconhecimento da produção ocorrida no terceiro.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

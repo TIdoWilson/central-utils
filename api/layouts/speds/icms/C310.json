@@ -1,0 +1,46 @@
+{
+  "registro": {
+    "codigo": "C310",
+    "id_guia": "59",
+    "titulo": "Registro C310 da EFD-ICMS/IPI (Documentos cancelados de Notas Fiscais de Venda a Consumidor (Código 02))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=59"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:49.445152+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C310\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_DOC_CANC",
+      "descricao": "Número do documento fiscal cancelado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

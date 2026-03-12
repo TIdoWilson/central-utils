@@ -1,0 +1,194 @@
+{
+  "registro": {
+    "codigo": "0010",
+    "titulo": "REGISTRO 0010: PARÂMETROS DE TRIBUTAÇÃO",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0010",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-0.htm#0010"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:31:56.786331+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo 0010.",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "0010"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "HASH_ECF_ANTERIOR",
+      "descricao": "Hashcode da ECF do período imediatamente anterior a ser recuperado (Escrituração da qual os saldos da parte B do e-LALUR foram recuperados). Campo preenchido automaticamente pelo sistema.",
+      "tipo": "C",
+      "tamanho": "40",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Hashcode da ECF do Período Imediatamente\nAnterior",
+        "DOCUMENTAÇÃO": "Campo preenchido pelo PVA."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "OPT_REFIS",
+      "descricao": "Indicador de Optante pelo Refis: \nS - Sim;\nN – Não. \nA pessoa jurídica deve assinalar este campo quando for optante pelo Programa de Recuperação Fiscal (Refis).\n Atenção: este campo só deve ser assinalado pela pessoa jurídica optante pelo Programa de Recuperação Fiscal (Refis) instituído pela Lei nº 9.964, de 10 de abril de 2000. A pessoa jurídica que for apenas optante pelo Parcelamento Especial (Paes) de que trata a Lei nº 10.684, de 30 de maio de 2003, não deve assinalar este campo.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Optante pelo Refis",
+        "DOCUMENTAÇÃO": "Atribuído automaticamente pelo ERP no caso de período do REFIS cadastrado na tabela E070PRF coincidir com o período de geração da ECF."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "FORMA_TRIB",
+      "descricao": "Forma de tributação no período: \n1 – Lucro Real;\n2 – Lucro Real/Arbitrado;\n3 – Lucro Presumido / Real;\n4 – Lucro Presumido / Real /Arbitrado;\n5 – Lucro Presumido;\n6 – Lucro Arbitrado;\n7 – Lucro Presumido/Arbitrado;\n8 – Imune de IRPJ;\n9 – Isento do IRPJ.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Forma de Tributação do Lucro",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "FORMA_APUR",
+      "descricao": "Indicador do Período de Apuração do IRPJ e da CSLL: \n T – Trimestral;\nA – Anual.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Período de Apuração do IRPJ e CSLL",
+        "DOCUMENTAÇÃO": "Periodicidade definida para os impostos (E055PAR.CODPRI) apurados. Na tela de entrada está definida na guia Forma de cálculo."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "COD_QUALIF_PJ",
+      "descricao": "Qualificação da Pessoa Jurídica: \n 01 – PJ em Geral;\n02 – PJ Componente do Sistema Financeiro;\n03 – Sociedades Seguradoras, de Capitalização ou Entidade Aberta de Previdência Complementar. \n Atenção: Não preencher no caso de imunes e isentas (preencher o 0010.TIP_ENT).",
+      "tipo": "N",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Qualificação da Pessoa Jurídica",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "FORMA_TRIB_PER",
+      "descricao": "Forma de tributação no período considerando para cada trimestre no formato XXXX onde X é igual a:\n 0 - ZERO (não informado – trimestre não compreendido no período de apuração);\nR (Real);\nP (Presumido);\nA (Arbitrado);\nE (Real Estimativa).",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Forma de Tributação no Período",
+        "DOCUMENTAÇÃO": "Campo apresentado na tela de entrada e definido a partir das informações constantes na guia Forma de cálculo."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "MES_BAL_RED",
+      "descricao": "Forma de Apuração da Estimativa Mensal: Indicação da forma de apuração da estimativa mensal, quando 0010.FORMA_APUR = A, considerando o formato XXXXXXXXXXXX onde X é referente a um mês e é igual a:\n 0 – Fora do Período: Fora do período de apuração/ Forma de tributação diferente de R ou E;\nE – Receita Bruta: Estimativa com base na receita bruta e acréscimos;\nB – Balanço ou Balancete: Estimativa com base no balanço ou balancete de suspensão/redução.\n Os meses correspondentes a trimestres marcados em 0010.FORMA_TRIB_PER como diferente de R e E devem estar preenchidos com zero 0.\nOs meses correspondentes a trimestres marcados em 0010.FORMA_TRIB_PER iguais a R ou E devem estar preenchidos com E ou B.",
+      "tipo": "C",
+      "tamanho": "12",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Indicação da Forma de Apuração da Estimativa",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada a partir das informações constantes na guia Forma de cálculo."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "TIP_ESC_PRE",
+      "descricao": "Escrituração:\nC – Obrigada a entregar a ECD ou entrega facultativa (haverá recuperação dos dados).\nL – Não obrigada a entregar a ECD/Livro Caixa (Opção do Lucro Presumido - parágrafo único do art. 45 da Lei nº 8.981, de 1995).\nAtenção:\n A hipótese prevista no §1o do art. 129, Instrução Normativa no 1.515/2014 prevê que a pessoa jurídica que mantiver escrituração contábil, na forma da legislação comercial, deverá controlar os recebimentos de suas receitas em conta específica, na qual, em cada lançamento, será indicada a nota fiscal a que corresponder o recebimento.\n A opção C contábil corresponde às pessoas jurídicas tributadas pelo lucro presumido ou imunes ou isentas que estão obrigadas a entregar a ECD (Escrituração Contábil Digital), de acordo com a Instrução Normativa no 1.420/2013.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Escrituração",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "TIP_ENT",
+      "descricao": "Tipo de Pessoa Jurídica Imune ou Isenta: \n 01 – Assistência Social;\n02 – Educacional;\n03 – Sindicato de Trabalhadores;\n04 – Associação Civil;\n05 – Cultural;\n06 – Entidade Fechada de Previdência Complementar;\n07 – Filantrópica;\n08 – Sindicato;\n09 – Recreativa;\n10 – Científica;\n11 – Associação de Poupança e Empréstimo;\n12 – Entidade Aberta de Previdência Complementar (Sem Fins Lucrativos);\n13 – Fifa e Entidades Relacionadas;\n14 – CIO e Entidades Relacionadas;\n15 – Partidos Políticos;\n99 – Outras. \n Observação: esse campo é obrigatório para 0010.FORMA_TRIB igual a 8 (Imune do IRPJ) ou 9 (Isenta do IRPJ).",
+      "tipo": "N",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Pessoa Jurídica Imune ou Isenta",
+        "DOCUMENTAÇÃO": "Recebe o valor do campo Tipo Pessoa Jurídica Imune ou Isenta da tela F070FEF."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "FORMA_APUR_I",
+      "descricao": "Apuração do IRPJ para Imunes ou Isentas: Existência ou não de atividade não abrangida pela imunidade ou isenção e tributada pelo IRPJ (para imunes ou isentas): \n A – Anual;\nT – Trimestral;\nD – Desobrigada.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Existência de Atividade Tributada pelo IRPJ para Imunes ou Isentas",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "APUR_CSLL",
+      "descricao": "Apuração da CSLL para Imunes ou Isentas:\n A – Anual, se optou pela apuração da CSLL sobre a base de cálculo estimada, facultada a opção pelo levantamento de balanço ou balancete de suspensão ou redução;\nT – Trimestral, no caso de ter adotado a apuração trimestral da CSLL;\nD – Desobrigada, na hipótese de pessoa jurídica imune ou isenta da CSLL.\n Atenção:\n1) As entidades sem fins lucrativos de que trata o inciso I do art. 12 do Decreto nº 3.048, de 6 de maio de 1999, que não se enquadram na imunidade e isenção da Lei nº 9.532, de 10 de dezembro de 1997, estão sujeitas à CSLL, devendo apurar a base de cálculo e a contribuição devida nos termos da legislação comercial.\n2) As associações de poupança e empréstimo devem apurar a contribuição social sobre o lucro líquido.\n3) São isentas da CSLL as entidades fechadas de previdência complementar, relativamente aos fatos geradores ocorridos a partir de 1º de janeiro de 2002.\n4) As entidades sujeitas a planificação contábil própria apuram a CSLL de acordo com essa planificação.\nObservação: Este campo é obrigatório para 0010.FORMA_TRIB igual a 8 (Imune do IRPJ) ou 9 (Isenta do IRPJ).",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Apuração da CSLL para Imunes e Isentas",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "IND_REC_RECEITA",
+      "descricao": "Critério de reconhecimento de receitas para empresas tributadas\npelo Lucro Presumido:\n1 - Regime de caixa\n2 - Regime de competência",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Indicativo de reconhecimento de receita",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

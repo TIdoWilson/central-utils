@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "Y550",
+    "titulo": "REGISTRO Y550: VENDAS A COMERCIAL EXPORTADORA COM FIM ESPECÍFICO DE EXPORTAÇÃO",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y550",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y550"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.929817+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y550\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y550\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ_EXP",
+      "descricao": "CNPJ da Comercial Exportadora adquirente",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_NCM",
+      "descricao": "Código NCM (Nomenclatura Comum do Mercosul).",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código NCM",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_VENDA",
+      "descricao": "Valor da mercadoria vendida. Deve-se totalizar o valor da venda por código NCM e Comercial Exportadora.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Venda",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

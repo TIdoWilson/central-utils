@@ -1,0 +1,140 @@
+{
+  "registro": {
+    "codigo": "C810",
+    "titulo": "Registro C810 da EFD-Contribuições (Detalhamento do Cupom Fiscal Eletrônico (Código 59) – PIS/Pasep e Cofins)",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=424"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:03:22.190295+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C810\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "CFOP",
+      "descricao": "Código fiscal de operação e prestação",
+      "tipo": "N",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_ITEM",
+      "descricao": "Valor total dos itens",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item (campo 02 do Registro 0200)",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária referente ao PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_PIS",
+      "descricao": "Valor da base de cálculo do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente a COFINS",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da COFINS",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da COFINS (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "13",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

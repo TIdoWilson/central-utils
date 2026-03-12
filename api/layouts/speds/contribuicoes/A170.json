@@ -1,0 +1,185 @@
+{
+  "registro": {
+    "codigo": "A170",
+    "titulo": "Registro A170 da EFD-Contribuições (Complemento do Documento - Itens do Documento)",
+    "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=379"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 18,
+    "extraido_em_utc": "2026-03-10T19:03:21.828978+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"A170\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_ITEM",
+      "descricao": "Número seqüencial do item no documento fiscal",
+      "tipo": "N",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item (campo 02 do Registro 0200)",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "DESCR_COMPL",
+      "descricao": "Descrição complementar do item como adotado no documento fiscal",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_ITEM",
+      "descricao": "Valor total do item (mercadorias ou serviços)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_DESC",
+      "descricao": "Valor do desconto comercial / exclusão da base de cálculo do PIS/PASEP e da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "NAT_BC_CRED",
+      "descricao": "Código da base de cálculo do crédito, conforme a Tabela indicada no item 4.3.7, caso seja informado código representativo de crédito no Campo 09 (CST_PIS) ou no Campo 13 (CST_COFINS).",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "IND_ORIG_CRED",
+      "descricao": "Indicador da origem do crédito:\n0 – Operação no Mercado Interno\n1 – Operação de Importação",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária referente ao PIS/PASEP – Tabela 4.3.3.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_BC_PIS",
+      "descricao": "Valor da base de cálculo do PIS/PASEP.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP (em percentual)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "13",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente ao COFINS – Tabela 4.3.4.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da COFINS",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota do COFINS (em percentual)",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "17",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "S",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "18",
+      "campo": "COD_CCUS",
+      "descricao": "Código do centro de custos",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

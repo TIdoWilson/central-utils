@@ -1,0 +1,41 @@
+{
+  "registro": {
+    "codigo": "9999",
+    "titulo": "Registro 9999 da EFD-Contribuições (Encerramento do Arquivo Digital)",
+    "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=557"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:03:23.352183+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"9999\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN",
+      "descricao": "Quantidade total de linhas do arquivo digital..",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

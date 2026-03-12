@@ -1,0 +1,181 @@
+{
+  "registro": {
+    "codigo": "0150",
+    "titulo": "REGISTRO 0150: Tabela de Cadastro do Participante",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0150",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-0.htm#0150"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:29:19.575386+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0150\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "\"0150\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PART",
+      "descricao": "Código de identificação do participante no arquivo.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo recebe \"CLI\" ou \"FOR\" seguido do Código do Cliente (E085CLI.CODCLI) ou Fornecedor (E095FOR.CODFOR)"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NOME",
+      "descricao": "Nome pessoal ou empresarial do participante.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo recebe E085CLI.NOMCLI ou E095FOR.NOMFOR"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "COD_PAIS",
+      "descricao": "Código do país do participante, conforme a tabela do Banco Central do Brasil.",
+      "tipo": "N",
+      "tamanho": "005",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E006PAI.CODPAI"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "CNPJ",
+      "descricao": "CNPJ do participante.",
+      "tipo": "N",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E085CLI.CGCCPF ou E095FOR.CGCCPF"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "CPF",
+      "descricao": "CPF do participante.",
+      "tipo": "N",
+      "tamanho": "011",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E085CLI.CGCCPF ou E095FOR.CGCCPF"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "NIT",
+      "descricao": "Número de Identificação do Trabalhador, PIS, PASEP, SUS.",
+      "tipo": "N",
+      "tamanho": "011",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "\"\""
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "UF",
+      "descricao": "Sigla da unidade da federação do participante.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E085CLI.SIGUFS ou E095FOR.SIGUFS"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IE",
+      "descricao": "Inscrição Estadual do participante.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E085CLI.INSEST ou E095FOR.INSEST"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "IE_ST",
+      "descricao": "Inscrição Estadual do participante na unidade da federação do destinatário, na condição de contribuinte substituto.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "\"\""
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "COD_MUN",
+      "descricao": "Código do município, conforme a tabela do IBGE.",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E008CEP.CODIBG"
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "IM",
+      "descricao": "Inscrição Municipal do participante.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E085CLI.INSMUN ou E095FOR.INSMUN"
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "SUFRAMA",
+      "descricao": "Número de inscrição do participante na Suframa.",
+      "tipo": "C",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E085CLI.CODSUF ou E095FOR.CODSUF"
+      }
+    }
+  ]
+}

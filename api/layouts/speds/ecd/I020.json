@@ -1,0 +1,97 @@
+{
+  "registro": {
+    "codigo": "I020",
+    "titulo": "REGISTRO I020: Campos Adicionais",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I020",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I020"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:29:19.579883+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I020",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I020"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "REG_COD",
+      "descricao": "Código do registro que recepciona o campo adicional.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "[do I050 ao I355]"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NUM_AD",
+      "descricao": "Número sequencial do campo adicional.",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "CAMPO",
+      "descricao": "Nome do campo adicional.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "DESCRIÇÃO",
+      "descricao": "Descrição do campo adicional.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "TIPO",
+      "descricao": "Indicação do tipo de dado:\n N - numérico \n C - caractere",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    }
+  ]
+}

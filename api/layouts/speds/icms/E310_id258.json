@@ -1,0 +1,222 @@
+{
+  "registro": {
+    "codigo": "E310",
+    "id_guia": "258",
+    "titulo": "Registro E310 da EFD-ICMS/IPI (Apuração do Fundo de combate a pobreza e do ICMS Diferencial de Alíquota - UF origem/destino EC 87/15 (Válido a partir de 01/01/2017))",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=258"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 22,
+    "extraido_em_utc": "2026-03-10T19:07:50.837053+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E310\".",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_MOV_FCP_DIFAL",
+      "descricao": "Indicador de movimento:\n0 - Sem operações\n1 - Com operações.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_SLD_CRED_ANT_DIFAL",
+      "descricao": "Valor do \"Saldo credor de período anterior - ICMS Diferencial de Alíquota da UF de Origem/Destino\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_TOT_DEBITOS_DIFAL",
+      "descricao": "Valor total dos débitos por \"Saídas e prestações com débito do ICMS referente ao diferencial de alíquota devido à UF de Origem/Destino\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_OUT_DEB_DIFAL",
+      "descricao": "Valor total dos ajustes \"Outros débitos ICMS Diferencial de Alíquota da UF de Origem/Destino\" e \"Estorno de créditos ICMS Diferencial de Alíquota da UF de Origem/Destino\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_TOT_CREDITOS_DIFAL",
+      "descricao": "Valor total dos créditos do ICMS referente ao diferencial de alíquota devido à UF de Origem/Destino.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_OUT_CRED_DIFAL",
+      "descricao": "Valor total de Ajustes \"Outros créditos ICMS Diferencial de Alíquota da UF de Origem/Destino\" e \"Estorno de débitos ICMS Diferencial de Alíquota da UF de Origem/Destino\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_SLD_DEV_ANT_DIFAL",
+      "descricao": "Valor total de \"Saldo devedor ICMS Diferencial de Alíquota da UF de Origem/Destino antes das deduções\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_DEDUÇÕES_DIFAL",
+      "descricao": "Valor total dos ajustes \"Deduções ICMS Diferencial de Alíquota da UF de Origem/Destino\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_RECOL_DIFAL",
+      "descricao": "Valor recolhido ou a recolher referente ao ICMS Diferencial de Alíquota da UF de Origem/Destino (08-09).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_SLD_CRED_TRANS PORTAR_DIFAL",
+      "descricao": "Saldo credor a transportar para o período seguinte referente ao ICMS Diferencial de Alíquota da UF de Origem/Destino.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "DEB_ESP_DIFAL",
+      "descricao": "Valores recolhidos ou a recolher, extraapuração - ICMS Diferencial de Alíquota da UF de Origem/Destino.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_SLD_CRED_ANT_FCP",
+      "descricao": "Valor do \"Saldo credor de período anterior - FCP\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_TOT_DEB_FCP",
+      "descricao": "Valor total dos débitos FCP por \"Saídas e prestações\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_OUT_DEB_FCP",
+      "descricao": "Valor total dos ajustes \"Outros débitos FCP\" e \"Estorno de créditos FCP\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_TOT_CRED_FCP",
+      "descricao": "Valor total dos créditos FCP por Entradas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "17",
+      "campo": "VL_OUT_CRED_FCP",
+      "descricao": "Valor total de Ajustes \"Outros créditos FCP\" e \"Estorno de débitos FCP\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "18",
+      "campo": "VL_SLD_DEV_ANT_FCP",
+      "descricao": "Valor total de Saldo devedor FCP antes das deduções.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "19",
+      "campo": "VL_DEDUÇÕES_FCP",
+      "descricao": "Valor total das deduções \"FCP\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "20",
+      "campo": "VL_RECOL_FCP",
+      "descricao": "Valor recolhido ou a recolher referente ao FCP (18-19).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "21",
+      "campo": "VL_SLD_CRED_TRANS PORTAR_FCP",
+      "descricao": "Saldo credor a transportar para o período seguinte referente ao FCP.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "22",
+      "campo": "DEB_ESP_FC",
+      "descricao": "Valores recolhidos ou a recolher, extra-apuração - FCP.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

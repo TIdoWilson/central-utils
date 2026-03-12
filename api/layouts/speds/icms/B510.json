@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "B510",
+    "id_guia": "329",
+    "titulo": "Registro B510 da EFD-ICMS/IPI (Uniprofissional - Empregados e sócios)",
+    "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=329"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:07:48.941832+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"B510\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_PROF",
+      "descricao": "Indicador de habilitação:\n 0: Profissional habilitado\n 1: Profissional não habilitado.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_ESC",
+      "descricao": "Indicador de escolaridade:\n 0: Nível superior\n 1: Nível médio.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "IND_SOC",
+      "descricao": "Indicador de participação societária:\n 0: Sócio\n 1: Não sócio.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "CPF",
+      "descricao": "Número de inscrição do profissional no CPF.",
+      "tipo": "C",
+      "tamanho": "011*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "NOME",
+      "descricao": "Nome do profissional.",
+      "tipo": "C",
+      "tamanho": "100",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

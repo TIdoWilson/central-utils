@@ -1,0 +1,42 @@
+{
+  "registro": {
+    "codigo": "0002",
+    "id_guia": "565",
+    "titulo": "Registro 0002 da EFD-ICMS/IPI (Classificação do estabelecimento industrial ou equiparado a industrial)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=565"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:48.597873+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0002\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "CLAS_ESTAB_IND",
+      "descricao": "Informar a classificação do estabelecimento conforme tabela 4.5.5.",
+      "tipo": "N",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

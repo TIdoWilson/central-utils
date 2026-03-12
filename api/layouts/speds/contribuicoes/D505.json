@@ -1,0 +1,95 @@
+{
+  "registro": {
+    "codigo": "D505",
+    "titulo": "Registro D505 da EFD-Contribuições (Complemento da Operação (Códigos 21 e 22) – Cofins)",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=449"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:03:22.428286+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D505\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente a COFINS",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_ITEM",
+      "descricao": "Valor Total dos Itens (Serviços)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "NAT_BC_CRED",
+      "descricao": "Código da Base de Cálculo do Crédito, conforme a Tabela indicada no item 4.3.7.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da COFINS (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "registro": {
+    "codigo": "M700",
+    "titulo": "Registro M700 da EFD-Contribuições (Cofins Diferida em Períodos Anteriores – Valores a Pagar no Período)",
+    "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=520"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:03:23.039181+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"M700\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CONT",
+      "descricao": "Código da contribuição social diferida em períodos anteriores, conforme a Tabela 4.3.5.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_CONT_APUR_DIFER",
+      "descricao": "Valor da Contribuição Apurada, diferida em períodos anteriores.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "NAT_CRED_DESC",
+      "descricao": "Natureza do Crédito Diferido, vinculado à receita tributada no mercado interno, a descontar:\n01 – Crédito a Alíquota Básica;\n02 – Crédito a Alíquota Diferenciada;\n03 – Crédito a Alíquota por Unidade de Produto;\n04 – Crédito Presumido da Agroindústria.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_CRED_DESC_DIFER",
+      "descricao": "Valor do Crédito a Descontar vinculado à contribuição diferida.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_CONT_DIFER_ANT",
+      "descricao": "Valor da Contribuição a Recolher, diferida em períodos anteriores (Campo 03 – Campo 05)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "PER_APUR",
+      "descricao": "Período de apuração da contribuição social e dos créditos diferidos (MMAAAA).",
+      "tipo": "N",
+      "tamanho": "006*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "DT_RECEB",
+      "descricao": "Data de recebimento da receita, objeto de diferimento.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

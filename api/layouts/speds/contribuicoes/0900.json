@@ -1,0 +1,158 @@
+{
+  "registro": {
+    "codigo": "0900",
+    "titulo": "Registro 0900 da EFD-Contribuições (Composição das Receitas do Período – Receita Bruta e Demais Receitas)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=584"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 15,
+    "extraido_em_utc": "2026-03-10T19:03:21.742086+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “0900”.",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "REC_TOTAL_BLOCO_A",
+      "descricao": "Receita total referente aos registros escriturados no Bloco A.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "REC_NRB_BLOCO_A",
+      "descricao": "Parcela da receita total escriturada no Bloco A (Campo 02), não classificada como receita bruta.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "04",
+      "campo": "REC_TOTAL_BLOCO_C",
+      "descricao": "Receita total referente aos registros escriturados no Bloco C.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "REC_NRB_BLOCO_C",
+      "descricao": "Parcela da receita total escriturada no Bloco C (Campo 04), não classificada como receita bruta.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "REC_TOTAL_BLOCO_D",
+      "descricao": "Receita total referente aos registros escriturados no Bloco D.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "REC_NRB_BLOCO_D",
+      "descricao": "Parcela da receita total escriturada no Bloco D (Campo 06), não classificada como receita bruta.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "REC_TOTAL_BLOCO_F",
+      "descricao": "Receita total referente aos registros escriturados no Bloco F.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "REC_NRB_BLOCO_F",
+      "descricao": "Parcela da receita total escriturada no Bloco F (Campo 08), não classificada como receita bruta.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "REC_TOTAL_BLOCO_I",
+      "descricao": "Receita total referente aos registros escriturados no Bloco I.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "REC_NRB_BLOCO_I",
+      "descricao": "Parcela da receita total escriturada no Bloco I (Campo 10) não classificada como receita bruta.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "REC_TOTAL_BLOCO_1",
+      "descricao": "Receita total referente aos registros escriturados no Bloco 1 (RET).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "REC_NRB_BLOCO_1",
+      "descricao": "Parcela da receita total escriturada no Bloco 1 (Campo 12), não classificada como receita bruta.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "REC_TOTAL_PERIODO",
+      "descricao": "Receita total (Soma dos Campos 02, 04, 06, 08, 10 e 12).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "15",
+      "campo": "REC_TOTAL_NRB_PERÍODO",
+      "descricao": "Parcela da receita total escriturada (Campo 14), não classificada como receita bruta (Soma dos Campos 03, 05, 07, 09, 11 e 13).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    }
+  ]
+}

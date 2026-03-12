@@ -1,0 +1,61 @@
+{
+  "registro": {
+    "codigo": "C150",
+    "titulo": "REGISTRO C150: SALDOS PERIÓDICOS – IDENTIFICAÇÃO DO PERÍODO",
+    "bloco_origem": "bloco-c.htm",
+    "ancora": "C150",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-c.htm#C150"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:31:56.807836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (C150)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[C150]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI",
+      "descricao": "Data do Início do período",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN",
+      "descricao": "Data do Fim do período",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    }
+  ]
+}

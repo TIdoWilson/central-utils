@@ -1,0 +1,42 @@
+{
+  "registro": {
+    "codigo": "E001",
+    "id_guia": "134",
+    "titulo": "Registro E001 da EFD-ICMS/IPI (Abertura do Bloco E)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=134"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:50.622472+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E001\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_MOV",
+      "descricao": "Indicador de movimento:\n 0: Bloco com dados informados;\n 1: Bloco sem dados informados.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

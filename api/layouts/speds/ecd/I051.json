@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "I051",
+    "titulo": "REGISTRO I051: Plano de Contas Referencial",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I051",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I051"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:29:19.582885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I051.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I051"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CUS",
+      "descricao": "Código do centro de custo.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E043RMP.CODCCU\nBusca do modelo de plano, conforme o código informado na tela de entrada. Obs.: um centro de custo de uma conta contábil deve corresponder a apenas uma conta referencial"
+      }
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "registro": {
+    "codigo": "V020",
+    "titulo": "Registro V020 - Responsável pela Movimentação",
+    "bloco_origem": "bloco-v.htm",
+    "ancora": "v020",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-v.htm#v020"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:31:56.889838+00:00"
+  },
+  "campos": [
+    {
+      "numero": "1",
+      "campo": "REG",
+      "descricao": "Texto Fixo Contendo a Identificação do Registro (V020).",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Fixo \"V020\""
+      }
+    },
+    {
+      "numero": "2",
+      "campo": "NOME",
+      "descricao": "Nome do responsável",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "3",
+      "campo": "ENDERECO",
+      "descricao": "Endereço do responsável",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "4",
+      "campo": "TIPO_DO_C",
+      "descricao": "Tipo de documento do responsável",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Conforme tabela SPEDECF_DEREX_DOCUMENTO"
+      }
+    },
+    {
+      "numero": "5",
+      "campo": "NI",
+      "descricao": "Número do documento do responsável",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "6",
+      "campo": "IDENT_CONTA",
+      "descricao": "Identificação das contas",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": ""
+      }
+    }
+  ]
+}

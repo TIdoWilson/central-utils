@@ -1,0 +1,301 @@
+{
+  "registro": {
+    "codigo": "0000",
+    "titulo": "REGISTRO 0000: Abertura do Arquivo Digital e Identificação do empresário ou da sociedade empresária",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0000",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-0.htm#0000"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 23,
+    "extraido_em_utc": "2026-03-10T19:29:19.570387+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0000\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "\"0000\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "LECD",
+      "descricao": "Texto fixo contendo \"LECD\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "\"LECD\""
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_INI",
+      "descricao": "Data inicial das informações contidas no arquivo.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela, filtros data"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "DT_FIN",
+      "descricao": "Data final das informações contidas no arquivo.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela, filtros data"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NOME",
+      "descricao": "Nome empresarial do empresário ou sociedade empresária.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E070FIL.NOMFIL"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição do empresário ou sociedade empresária no CNPJ.",
+      "tipo": "N",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E070FIL.NUMCGC"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "UF",
+      "descricao": "Sigla da unidade da federação do empresário ou sociedade empresária.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E070FIl.SIGUFS"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "IE",
+      "descricao": "Inscrição Estadual do empresário ou sociedade empresária.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E070FIL.INSEST"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "COD_MUN",
+      "descricao": "Código do município do domicílio fiscal do empresário ou sociedade empresária, conforme tabela do IBGE - Instituto Brasileiro de Geografia e Estatística.",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E008CEP.CODIBG"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "IM",
+      "descricao": "Inscrição Municipal do empresário ou sociedade empresária.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E070FIL.INSMUN"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "IND_SIT_ESP",
+      "descricao": "Indicador de situação especial (conforme tabela interna ao SPED), \n podendo ser:\n0 - Abertura;\n1 - Cisão;\n2 - Fusão;\n3 - Incorporação;\n4 - Extinção;\n5 - Transformação.",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "IND_SIT_INI_PER",
+      "descricao": "Indicador do inicio do período.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada, com as seguintes opções: \n 0 - Normal (início no primeiro dia do ano) \n 1 - Abertura \n 2 - Resultante de cisão/fusão ou remanescente de cisão ou realizou Incorporação \n 3 - Início da obrigatoriedade da entrega do ECD no curso do ano-calendário"
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "IND_NIRE",
+      "descricao": "Indicador de existência de NIRE:\n0 – Escrituração não possui registro na junta comercial (não possui NIRE)\n1 – Escrituração possui registro na junta comercial (possui NIRE)",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Quando o campo REGISTRO 0020.NIRE estiver informado este campo receberá 1, senão 0."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "IND_FIN_ESC",
+      "descricao": "Indicador de finalidade da escrituração:\n0 – Original\n1 – Substituta da escrituração com NIRE\n2 – Substituta da escrituração sem NIRE\n3 – Substituta da escrituração com troca de NIRE",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "COD_HASH_SUB",
+      "descricao": "Hash da escrituração substituída",
+      "tipo": "C",
+      "tamanho": "40",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "IND_GRANDE_\nPORTE",
+      "descricao": "Indicador de entidade\nsujeita a auditoria\nindependente:\n 0 – Empresa não é\nentidade sujeita a\nauditoria independente.\n 1 – Empresa é entidade\nsujeita a auditoria\nindependente – Ativo\nTotal superior a R$\n240.000.000,00 ou\nReceita Bruta Anual\nsuperior\nR$300.000.000,00.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, campo Empresa de grande porte da guia Registro 0000"
+      }
+    },
+    {
+      "numero": "17",
+      "campo": "TIP_ECD",
+      "descricao": "Indicador do tipo de ECD: \n 0 – ECD de empresa não participante de SCP como sócio ostensivo. \n 1 – ECD de empresa participante de SCP como sócio ostensivo. \n 2 – ECD da SCP.",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "18",
+      "campo": "COD_SCP",
+      "descricao": "Identificação da SCP (CNPJ – art. 52 da Instrução Normativa RFB no 1.470, de 30 de maio de 2014). \n Obs.: Só deve ser preenchido pela própria SCP com o CNPJ/Código da SCP (não é preenchido pelo sócio ostensivo).",
+      "tipo": "N",
+      "tamanho": "14",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "19",
+      "campo": "IDENT_MF",
+      "descricao": "Identificação de\nmoeda funcional:\nIndica que a\nescrituração abrange\nvalores com base na\nmoeda funcional.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "20",
+      "campo": "IND_ESC_CONS",
+      "descricao": "Escriturações Contábeis\nConsolidadas: Preenchido pela empresa\ncontroladora obrigada, nos\ntermos da lei, à apresentar\ninformações\ndemonstrações contábeis\nconsolidadas.\n\"S – Sim\"\ne \"N – Não\".",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, campo Escriturações contábeis consolidadas da guia Registro 0000"
+      }
+    },
+    {
+      "numero": "21",
+      "campo": "IND_CENTRALIZADA",
+      "descricao": "Indicador da\nmodalidade de\nescrituração\ncentralizada ou\ndescentralizada:\n0 – Escrituração\nCentralizada\n1 – Escrituração\nDescentralizada",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Indicador da modalidade de escrituração na tela de entrada"
+      }
+    },
+    {
+      "numero": "22",
+      "campo": "IND_MUDANC_PC",
+      "descricao": "Indicador de mudança\nde plano de contas:\n0 – Não houve\nmudança no plano de\ncontas\n1 – Houve mudança\nno plano de contas",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Indicador de mudança de plano de contas na tela de entrada"
+      }
+    },
+    {
+      "numero": "23",
+      "campo": "COD_PLAN_REF",
+      "descricao": "Código do Plano de\nContas Referencial\nque será utilizado\npara o mapeamento\nde todas as contas\nanalíticas:\n1 – PJ em Geral –\nLucro Real\n2 – PJ em Geral –\nLucro Presumido\n3 – Financeiras –\nLucro Real\n4 – Seguradoras –\nLucro Real\n5 – Imunes e Isentas\nem Geral\n6 – Imunes e Isentas –\nFinanceiras\n7 – Imunes e Isentas –\nSeguradoras\n8 – Entidades\nFechadas de\nPrevidência\nComplementar\n9 – Partidos Políticos\n10 – Financeiras –\nLucro Presumido",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Campo Código do Plano de Contas Referencial que será utilizado para o mapeamento de todas as contas analíticas na tela de entrada"
+      }
+    }
+  ]
+}

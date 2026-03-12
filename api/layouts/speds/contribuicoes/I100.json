@@ -1,0 +1,130 @@
+{
+  "registro": {
+    "codigo": "I100",
+    "titulo": "Registro I100 da EFD-Contribuições (Consolidação das Operações do Período)",
+    "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=484"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec."
+    ],
+    "total_campos": 12,
+    "extraido_em_utc": "2026-03-10T19:03:22.742345+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"I100\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "02",
+      "campo": "VL_REC",
+      "descricao": "Valor Total do Faturamento/Receita Bruta no Período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "03",
+      "campo": "CST_PIS_COFINS",
+      "descricao": "Código de Situação Tributária referente à Receita informada no Campo 02 (Tabelas 4.3.3 e 4.3.4)",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "04",
+      "campo": "VL_TOT_DED_GER",
+      "descricao": "Valor Total das Deduções e Exclusões de Caráter Geral",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "05",
+      "campo": "VL_TOT_DED_ESP",
+      "descricao": "Valor Total das Deduções e Exclusões de Caráter Específico",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_PIS",
+      "descricao": "Valor da base de cálculo do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "07",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "02",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "08",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "09",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da Cofins",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "10",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da COFINS (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "02",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "11",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "12",
+      "campo": "INFO_COMPL",
+      "descricao": "Informação Complementar dos dados informados no registro",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": ""
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "registro": {
+    "codigo": "X351",
+    "titulo": "REGISTRO X351: DEMONSTRATIVO DE RESULTADOS E DE IMPOSTO PAGO NO EXTERIOR",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x351",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x351"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 15,
+    "extraido_em_utc": "2026-03-10T19:31:56.906341+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “X351”",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X351\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "RES_INV_PER",
+      "descricao": "Resultado (positivo ou negativo) da própria investida em moeda do país de domicílio. Devem ser expurgados o valor do resultado positivo ou negativo de eventuais controladas indiretas e o valor do resultado de operações que gozem de isenção nos termos do art. 77, §3º, da Lei nº 12.973, de 13 de maio de 2014.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado da Investida no Período",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "RES_INV_PER_REAL",
+      "descricao": "Resultado (positivo ou negativo) da própria investida em Reais. Devem ser expurgados o valor do resultado positivo ou negativo de eventuais controladas indiretas e o valor do resultado de operações que gozem de isenção nos termos do art. 77, §3º, da Lei nº 12.973, de 13 de maio de 2014.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado do Período em Reais (R$).",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "RES_ISEN_PETR_PER",
+      "descricao": "Resultado (positivo ou negativo) da própria investida em moeda do país de domicílio apenas em operações decorrentes de afretamento por tempo ou casco nu, arrendamento mercantil operacional, aluguel, empréstimo de bens ou prestação de serviços diretamente relacionados à prospecção e exploração de petróleo e gás, em território brasileiro, que gozem de isenção nos termos do art. 77, §3º, da Lei nº 12.973, de 13 de maio de 2014. Deve ser expurgado o valor do resultado positivo ou negativo de eventuais controladas indiretas.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado da Investida em Operações que Gozem de Isenção Relacionada à Prospecção e Exploração de Petróleo e Gás",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "RES_ISEN_PETR_PER_REAL",
+      "descricao": "Resultado (positivo ou negativo) da própria investida em Reais apenas em operações decorrentes de afretamento por tempo ou casco nu, arrendamento mercantil operacional, aluguel, empréstimo de bens ou prestação de serviços diretamente relacionados à prospecção e exploração de petróleo e gás, em território brasileiro, que gozem de isenção nos termos do art. 77, §3º, da Lei nº 12.973, de 13 de maio de 2014. Deve ser expurgado o valor do resultado positivo ou negativo de eventuais controladas indiretas.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado da Investida em Operações que Gozem de Isenção Relacionada à Prospecção e Exploração de Petróleo e Gás em Reais (R$).",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "RES_NEG_ACUM",
+      "descricao": "Resultado negativo acumulado de anos anteriores da própria investida utilizado na compensação, na moeda do país de domicílio.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado Negativo Acumulado de Anos Anteriores",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "RES_POS_TRIB",
+      "descricao": "Resultado positivo a tributar na moeda do país de domicílio (deve ser informado o valor de X351.RES_INV_PER, caso seja resultado positivo, menos o valor do campo X351.RES_ISEN_PETR_PER).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado Positivo a Tributar",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "RES_POS_TRIB_REAL",
+      "descricao": "Resultado positivo a tributar em reais (R$).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado Positivo a Tributar a Reais (R$)",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IMP_LUCR",
+      "descricao": "Imposto incidente sobre o lucro distribuído no país de domicílio na moeda do país de domicílio (Instrução Normativa RFB no 1.520, art. 40, V).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Imposto Pago",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "IMP_LUCR_REAL",
+      "descricao": "Imposto incidente sobre o lucro distribuído no país de domicílio em reais (R$) (Instrução Normativa RFB no 1.520, art. 40, V).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Imposto Pago em Reais (R$)",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "IMP_PAG_REND",
+      "descricao": "Imposto pago no exterior sobre rendimentos recebidos na moeda do país de domicílio (Instrução Normativa RFB no 1.520, art. 36, X e art. 40, III).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Imposto Pago Sobre Rendimentos Recebidos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "IMP_PAG_REND_REAL",
+      "descricao": "Imposto pago no exterior sobre rendimentos recebidos em Reais (R$) (Instrução Normativa RFB no 1.520, art. 36, X e art. 40, III).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Imposto Pago Sobre Rendimentos Recebidos em Reais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "IMP_RET_EXT",
+      "descricao": "Imposto retido na fonte no exterior decorrente de rendimentos recebidos pela filial, sucursal ou controlada domiciliada no exterior, na moeda estrangeira (Instrução Normativa RFB no 1.520, art. 40, IV).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Imposto Retido na Fonte no Exterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "IMP_RET_EXT_REAL",
+      "descricao": "Imposto retido na fonte no exterior decorrente de rendimentos recebidos pela filial, sucursal ou controlada domiciliada no exterior, em reais (Instrução Normativa RFB no 1.520, art. 40, IV).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Imposto Retido na Fonte no Exterior em Reais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "IMP_RET_BR",
+      "descricao": "Imposto retido na fonte no Brasil decorrente de rendimentos recebidos pela filial, sucursal ou controlada domiciliada no exterior, em Reais (Instrução Normativa RFB no 1.520, art. 40, IV).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Imposto Retido na Fonte no Brasil",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

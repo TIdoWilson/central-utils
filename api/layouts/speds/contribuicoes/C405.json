@@ -1,0 +1,86 @@
+{
+  "registro": {
+    "codigo": "C405",
+    "titulo": "Registro C405 da EFD-Contribuições (Redução Z (Códigos 02 e 2D))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=407"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:03:21.954573+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C405\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_DOC",
+      "descricao": "Data do movimento a que se refere a Redução Z",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "CRO",
+      "descricao": "Posição do Contador de Reinício de Operação",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "CRZ",
+      "descricao": "Posição do Contador de Redução Z",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "NUM_COO_FIN",
+      "descricao": "Número do Contador de Ordem de Operação do último documento emitido no dia (Número do COO na Redução Z)",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "GT_FIN",
+      "descricao": "Valor do Grande Total final",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_BRT",
+      "descricao": "Valor da venda bruta",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    }
+  ]
+}

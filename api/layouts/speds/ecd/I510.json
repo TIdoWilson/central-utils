@@ -1,0 +1,109 @@
+{
+  "registro": {
+    "codigo": "I510",
+    "titulo": "REGISTRO \n I510: Definição dos Campos do Livro Razão Auxiliar com Leiaute Parametrizável",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I510",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I510"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:29:19.594885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I510.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I510"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "NM_CAMPO",
+      "descricao": "Nome do campo, sem espaços em branco ou caractere especial.",
+      "tipo": "C",
+      "tamanho": "016",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de Entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESC_CAMPO",
+      "descricao": "Descrição do campo que será utilizado na visualização do Livro Auxiliar.",
+      "tipo": "C",
+      "tamanho": "050",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "TIPO_CAMPO",
+      "descricao": "Tipo do campo:\n N numérico;\n C caractere.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "TAM_CAMPO",
+      "descricao": "Tamanho do campo.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "Dec._CAMPO",
+      "descricao": "Quantidade de casas decimais para campos tipo N.",
+      "tipo": "N",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": "N"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "COL_CAMPO",
+      "descricao": "Largura da coluna no relatório (em quantidade de caracteres).",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": "S"
+      }
+    }
+  ]
+}

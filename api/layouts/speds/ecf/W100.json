@@ -1,0 +1,204 @@
+{
+  "registro": {
+    "codigo": "W100",
+    "titulo": "REGISTRO W100: INFORMAÇÕES SOBRE O GRUPO MULTINACIONAL E A ENTIDADE DECLARANTE - DECLARAÇÃO PAÍS-A-PAÍS",
+    "bloco_origem": "bloco-w.htm",
+    "ancora": "w100",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-w.htm#w100"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 15,
+    "extraido_em_utc": "2026-03-10T19:31:56.893837+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto Fixo Contendo a Identificação do Registro",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "FIXO \"W100\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "NOME_MULTINACIONAL",
+      "descricao": "Nome d o Grupo Multinacional: Deve ser identificado o nome d o grupo multinacional o\nqual o contribuinte integra.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "IND_CONTROLADORA",
+      "descricao": "Indentifica se a Entidade é a Controladora Final do Grupo Multinacional.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "NOME_CONTROLADORA",
+      "descricao": "Nome da Controladora Final.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "JURISDICAO_CONTROLADORA",
+      "descricao": "Jurisdição d e Residência para fins Tributários d o Controlador Final, conforme tabela d o\nSped",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "TIN_CONTROLADORA",
+      "descricao": "Tax Identification Number (TIN): Número d e identificação fiscal utilizado pela\nadministração tributária d a jurisdição d e residência para fins tributários d o controlador\nfinal do grupo multinacional.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "IND_ENTREGA",
+      "descricao": "Identifica a Entidade Responsável pela Entrega d a Declaração País-a-País (entidade\ndeclarante).\nEntidade responsável pela entrega da Declaração País-a-País:\n1 - Grupo multinacional dispensado da entrega da Declaração País-a-País.\n2 - Controlador final do grupo multinacional.\n3 - Própria entidade declarante da ECF.\n4 - Outra entidade",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "IND_MODALIDADE",
+      "descricao": "Identifica a Modalidade de entrega da Declaração País-a-País:\n1 - Entidade substituta.\n2 - Preenchimento local.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "NOME_SUBSTITUTA",
+      "descricao": "Nome da Entidade Substituta/Entidade Local",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "JURISDICAO_SUBSTITUTA",
+      "descricao": "Jurisdição d e Residência para fins Tributários d a Entidade Substituta/Entidade Local,\nconforme tabela d o Sped",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "TIN_SUBSTITUTA",
+      "descricao": "Tax Identification Number (TIN): Número d e identificação fiscal utilizado pela\nadministração tributária d a jurisdição d e residência tributária d a Entidade Substituta o u\nd a entidade local.",
+      "tipo": "N",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "DT_INI",
+      "descricao": "Data de Início do Período Societário.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "DT_FIN",
+      "descricao": "Data Final do Período Societário.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "TIP_MOEDA",
+      "descricao": "Moeda",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "IND_IDIOMA",
+      "descricao": "Idioma Utilizado nas Informações Adicionais d a Declaração País-a-País: deve ser\nindicado o idioma utilizado nos campos d e informações adicionais d a DPP, fornecidas\nem texto livre, caso tenham sido prestadas:\nPT - Português.\nEN - Inglês.\nES - Espanhol.",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

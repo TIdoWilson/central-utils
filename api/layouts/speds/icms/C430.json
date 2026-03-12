@@ -1,0 +1,172 @@
+{
+  "registro": {
+    "codigo": "C430",
+    "id_guia": "570",
+    "titulo": "Registro C430 da EFD-ICMS/IPI (Informações complementares das operações de saída de mercadorias sujeitas à substituição tributária (Código 02, 2D e 60))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=570"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Obrig."
+    ],
+    "total_campos": 16,
+    "extraido_em_utc": "2026-03-10T19:07:49.862149+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C430\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não apresentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MOT_REST_COMPL",
+      "descricao": "Código do motivo da restituição ou complementação conforme Tabela 5.7.",
+      "tipo": "C",
+      "tamanho": "005*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QUANT_CONV",
+      "descricao": "Quantidade do item.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "UNID",
+      "descricao": "Unidade adotada para informar o campo QUANT_CONV.",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_UNIT_CONV",
+      "descricao": "Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_UNIT_ICMS_NA_OPERACAO_CONV",
+      "descricao": "Valor unitário para o ICMS na operação, caso não houvesse a ST, considerando unidade utilizada para informar o campo \"QUANT_CONV\", considerando redução da base de cálculo do ICMS ST na tributação, se houver.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_UNIT_ICMS_OP_CONV",
+      "descricao": "Valor unitário do ICMS OP calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo \"QUANT_CONV\", utilizado para cálculo de ressarcimento/restituição de ST, no desfazimento da substituição tributária, quando se utiliza a fórmula descrita nas instruções de preenchimento do campo 11, no item a1).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_UNIT_ICMS_OP_ESTOQUE_CONV",
+      "descricao": "Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_UNIT_ICMS_ST_ESTOQUE_CONV",
+      "descricao": "Valor médio unitário do ICMS ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV",
+      "descricao": "Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_UNIT_ICMS_ST_CONV_REST",
+      "descricao": "Valor unitário do total do ICMS ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_UNIT_FCP_ST_CONV_REST",
+      "descricao": "Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo \"VL_UNIT_ICMS_ST_CONV_REST\", considerando a unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_UNIT_ICMS_ST_CONV_COMPL",
+      "descricao": "Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_UNIT_FCP_ST_CONV_COMPL",
+      "descricao": "Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo \"VL_UNIT_ICMS_ST_CONV_COMPL\", considerando unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "15",
+      "campo": "CST_ICMS",
+      "descricao": "Código da Situação Tributária referente ao ICMS.",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "16",
+      "campo": "CFOP",
+      "descricao": "Código Fiscal de Operação e Prestação.",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

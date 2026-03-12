@@ -1,0 +1,42 @@
+{
+  "registro": {
+    "codigo": "K010",
+    "id_guia": "832",
+    "titulo": "Registro K010 da EFD-ICMS/IPI (Informação sobre o tipo de leiaute (simplificado/completo))",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=832"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:51.080998+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K010\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_TP_LEIAUTE",
+      "descricao": "Indicador de tipo de leiaute adotado:\n0 - Leiaute simplificado\n1 - Leiaute completo\n2 - Leiaute restrito aos saldos de estoque",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

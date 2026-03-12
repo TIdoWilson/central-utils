@@ -1,0 +1,130 @@
+{
+  "registro": {
+    "codigo": "Y570",
+    "titulo": "REGISTRO Y570: DEMONSTRATIVO DO IMPOSTO DE RENDA E CSLL RETIDOS NA FONTE",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y570",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y570"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:31:56.931822+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y570\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y570\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ_FON",
+      "descricao": "CNPJ da Fonte Pagadora",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NOM_EMP",
+      "descricao": "Nome da pessoa jurídica responsável pela retenção e recolhimento da fonte que estiver sendo compensado.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Nome Empresarial",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_ORG_PUB",
+      "descricao": "Indicador de Órgão Público:\nS - Sim\nN – Não\nSelecione “Sim” ou “Não” em relação à pessoa jurídica responsável pela retenção e recolhimento da fonte que estiver sendo compensado. Ao selecionar \"Sim\" serão disponibilizados os códigos de recolhimento utilizados pelos Órgãos Públicos Federais ou Entidades da Administração Pública Federal, ao selecionar \"Não\", serão disponibilizados os demais códigos.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Órgão Público",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "COD_REC",
+      "descricao": "Código de Receita Utilizado Para Recolhimento na Fonte, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas). \n Para o IRRF: busca o código de arrecadação da nota no campo Código tributação p/DARF dos dados gerais da nota de venda. \n Para a CSLL: busca o código de arrecadação do imposto 24 na tela Configuração de Impostos para a Filial (F055PPF).",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código de Receita",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_REND",
+      "descricao": "Rendimento Bruto: Valor bruto do rendimento que originou a retenção.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Rendimento Bruto/Receita",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "IR_RET",
+      "descricao": "Valor de todo o imposto de renda retido na fonte durante o período abrangido pela declaração, incidente sobre as receitas que compõem a base de cálculo do tributo devido, independentemente de a empresa ter apurado prejuízo fiscal ou imposto de renda devido menor que o retido na fonte durante o período.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "IR Retido na Fonte",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "CSLL_RET",
+      "descricao": "Valor de toda a contribuição social sobre o lucro líquido retida na fonte durante o período abrangido pela declaração, incidente sobre as receitas que compõem a base de cálculo do tributo devido, independentemente de a empresa ter apurado base de cálculo negativa ou CSLL devida menor que a retida na fonte durante o período.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CSLL Retida na Fonte",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "registro": {
+    "codigo": "1300",
+    "titulo": "Registro 1300 da EFD-Contribuições (Controle dos Valores Retidos na Fonte – PIS/Pasep)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=542"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:03:23.234682+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1300\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_NAT_RET",
+      "descricao": "Indicador de Natureza da Retenção na Fonte até 2013: \n 01 - Retenção por Órgãos, Autarquias e Fundações Federais\n 02 - Retenção por outras Entidades da Administração Pública Federal\n 03 - Retenção por Pessoas Jurídicas de Direito Privado\n 04 - Recolhimento por Sociedade Cooperativa\n 05 - Retenção por Fabricante de Máquinas e Veículos\n 99 - Outras Retenções\n Indicador de Natureza da Retenção na Fonte, a partir de 2014: \n Retenção Rendimentos sujeitos ao Regime Não Cumulativo (PJ Tributada pelo Lucro Real) e ao Regime Cumulativo (PJ Tributada pelo Lucro Presumido/Arbitrado): \n 01 - Retenção por Órgãos, Autarquias e Fundações Federais\n 02 - Retenção por outras Entidades da Administração Pública Federal\n 03 - Retenção por Pessoas Jurídicas de Direito Privado\n 04 - Recolhimento por Sociedade Cooperativa\n 05 - Retenção por Fabricante de Máquinas e Veículos\n 99 - Outras Retenções - Rendimentos sujeitos à regra geral de incidência (não cumulativa ou cumulativa)\n Retenção Rendimentos sujeitos ao Regime Cumulativo, auferido por Pessoa Jurídica Tributada pelo Lucro Real: \n 51 - Retenção por Órgãos, Autarquias e Fundações Federais\n 52 - Retenção por outras Entidades da Administração Pública Federal\n 53 - Retenção por Pessoas Jurídicas de Direito Privado\n 54 - Recolhimento por Sociedade Cooperativa\n 55 - Retenção por Fabricante de Máquinas e Veículos\n 59 - Outras Retenções - Rendimentos sujeitos à regra específica de incidência cumulativa (art. 8º da Lei nº 10.637/2002 e art. 10 da Lei nº 10.833/2003)",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "PR_REC_RET",
+      "descricao": "Período do Recebimento e da Retenção (MM/AAAA)",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_RET_APU",
+      "descricao": "Valor Total da Retenção",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_RET_DED",
+      "descricao": "Valor da Retenção deduzida da Contribuição devida no período da escrituração e em períodos anteriores.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_RET_PER",
+      "descricao": "Valor da Retenção utilizada mediante Pedido de Restituição.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_RET_DCOMP",
+      "descricao": "Valor da Retenção utilizada mediante Declaração de Compensação.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "SLD_RET",
+      "descricao": "Saldo de Retenção a utilizar em períodos de apuração futuros (04 – 05 - 06 - 07).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    }
+  ]
+}

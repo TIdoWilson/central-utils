@@ -1,0 +1,86 @@
+{
+  "registro": {
+    "codigo": "D205",
+    "titulo": "Registro D205 da EFD-Contribuições (Totalização do Resumo Diário – Cofins)",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=440"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:03:22.382953+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D205\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente a COFINS.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_ITEM",
+      "descricao": "Valor total dos itens.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da COFINS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da COFINS (em percentual).",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada.",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

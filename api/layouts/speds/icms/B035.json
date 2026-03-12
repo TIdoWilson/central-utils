@@ -1,0 +1,91 @@
+{
+  "registro": {
+    "codigo": "B035",
+    "id_guia": "322",
+    "titulo": "Registro B035 da EFD-ICMS/IPI (Detalhamento por combinação de alíquota e item da Lista de Serviços da LC 116/2003)",
+    "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=322"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:07:48.815569+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"B035\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "Não\nInfor\nmar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "VL_CONT_P",
+      "descricao": "Parcela correspondente ao \"Valor Contábil\" referente à combinação da alíquota e item da lista.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_BC_ISS_P",
+      "descricao": "Parcela correspondente ao \"Valor da base de cálculo do ISS\" referente à combinação da alíquota e item da lista.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "ALIQ_ISS",
+      "descricao": "Alíquota do ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_ISS_P",
+      "descricao": "Parcela correspondente ao \"Valor do ISS\" referente à combinação da alíquota e item da lista.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_ISNT_ISS_P",
+      "descricao": "Parcela correspondente ao \"Valor das operações isentas ou nãotributadas pelo ISS\" referente à combinação da alíquota e item da lista.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "COD_SERV",
+      "descricao": "Item da lista de serviços, conforme Tabela 4.6.3.",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

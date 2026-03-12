@@ -1,0 +1,41 @@
+{
+  "registro": {
+    "codigo": "M990",
+    "titulo": "Registro M990 da EFD-Contribuições (Encerramento do Bloco M)",
+    "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=523"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:03:23.072647+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"M990\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN_M",
+      "descricao": "Quantidade total de linhas do Bloco M",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

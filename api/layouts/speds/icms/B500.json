@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "B500",
+    "id_guia": "328",
+    "titulo": "Registro B500 da EFD-ICMS/IPI (Apuração do ISS sociedade unipessoal)",
+    "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=328"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:48.899681+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"B500\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_REC",
+      "descricao": "Valor mensal das receitas auferidas pela sociedade uniprofissional.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QTD_PROF",
+      "descricao": "Quantidade de profissionais habilitados.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_OR",
+      "descricao": "Valor do ISS devido.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

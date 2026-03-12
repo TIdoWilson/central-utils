@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "H020",
+    "id_guia": "163",
+    "titulo": "Registro H020 da EFD-ICMS/IPI (Informação complementar do inventário)",
+    "bloco": "3.7) Bloco H (Inventário físico):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=163"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:51.012177+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"H020\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "CST_ICMS",
+      "descricao": "Código da Situação Tributária (CST) referente ao ICMS, conforme a Tabela indicada no item 4.3.1 .",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "BC_ICMS",
+      "descricao": "Informe a Base de Cálculo (BC) do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_ICMS",
+      "descricao": "Informe o valor do ICMS a ser debitado ou creditado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "registro": {
+    "codigo": "P210",
+    "titulo": "Registro P210 da EFD-Contribuições (Ajuste da Contribuição Previdenciária Apurada Sobre a Receita Bruta)",
+    "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=530"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:03:23.162523+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"P210\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_AJ",
+      "descricao": "Indicador do tipo de ajuste:\n0- Ajuste de redução;\n1- Ajuste de acréscimo.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_AJ",
+      "descricao": "Valor do ajuste",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_AJ",
+      "descricao": "Código do ajuste, conforme a Tabela indicada no item 4.3.8., versão 1.01",
+      "tipo": "C",
+      "tamanho": "02",
+      "decimais": "",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "NUM_DOC",
+      "descricao": "Número do processo, documento ou ato concessório ao qual o ajuste está vinculado, se houver.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "DESCR_AJ",
+      "descricao": "Descrição resumida do ajuste.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "DT_REF",
+      "descricao": "Data de referência do ajuste (ddmmaaaa)",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

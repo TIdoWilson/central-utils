@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "D350",
+    "id_guia": "113",
+    "titulo": "Registro D350 da EFD-ICMS/IPI (Equipamento ECF (Códigos 2E, 13, 14, 15 e 16))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=113"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saídas"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:07:50.337574+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D350\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1 .",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "ECF_MOD",
+      "descricao": "Modelo do equipamento.",
+      "tipo": "C",
+      "tamanho": "020",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "ECF_FAB",
+      "descricao": "Número de série de fabricação do ECF.",
+      "tipo": "C",
+      "tamanho": "021",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "ECF_CX",
+      "descricao": "Número do caixa atribuído ao ECF.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

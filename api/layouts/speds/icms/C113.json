@@ -1,0 +1,145 @@
+{
+  "registro": {
+    "codigo": "C113",
+    "id_guia": "27",
+    "titulo": "Registro C113 da EFD-ICMS/IPI (Documento fiscal referenciado)",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=27"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:07:49.007933+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C113\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "IND_OPER",
+      "descricao": "Indicador do tipo de operação:\n 0: Entrada/aquisição;\n 1: Saída/prestação.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "03",
+      "campo": "IND_EMIT",
+      "descricao": "Indicador do emitente do título:\n 0: Emissão própria;\n 1: Terceiros.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "04",
+      "campo": "COD_PART",
+      "descricao": "Código do participante emitente (campo 02 do Registro 0150) do documento referenciado.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "05",
+      "campo": "COD_MOD",
+      "descricao": "Código do documento fiscal, conforme a Tabela 4.1.1.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "06",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    },
+    {
+      "numero": "07",
+      "campo": "SUB",
+      "descricao": "Subsérie do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    },
+    {
+      "numero": "08",
+      "campo": "NUM_DOC",
+      "descricao": "Número do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "09",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "10",
+      "campo": "CHV_DOCe",
+      "descricao": "Chave do Documento Eletrônico.",
+      "tipo": "N",
+      "tamanho": "044*",
+      "decimais": "-",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    }
+  ]
+}

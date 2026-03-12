@@ -1,0 +1,130 @@
+{
+  "registro": {
+    "codigo": "X355",
+    "titulo": "REGISTRO X355: DEMONSTRATIVO DE RENDAS ATIVAS E PASSIVAS",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x355",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x355"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:31:56.911341+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X355\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X355\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "REND_PASS_PROP",
+      "descricao": "Renda passiva própria do ano-calendário em moeda do país de domicílio.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Renda Passiva Própria",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "REND_PASS_PROP_REAL",
+      "descricao": "Renda passiva própria do ano-calendário em Reais (R$).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Renda Passiva Própria em Reais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "REND_TOTAL",
+      "descricao": "Renda total conforme definição do inciso II do art. 21 da Instrução Normativa RFB no 1.520/2014, do ano-calendário em moeda do país de domicílio.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Renda Total",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "REND_TOTAL_REAL",
+      "descricao": "Renda total conforme definição do inciso II do art. 21 da Instrução Normativa RFB no 1.520/2014, do ano-calendário em Reais (R$).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Renda Total em Reais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "REND_ATIV_PROP",
+      "descricao": "Renda ativa própria em moeda do país de domicílio (corresponde ao resultado da subtração do X355.REND_TOTAL pelo X355.REND_PASS_PROP).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Renda Ativa Própria",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "REND_ATIV_PROP_REAL",
+      "descricao": "Renda ativa própria em Reais (corresponde ao resultado da subtração do X355. REND_TOTAL_REAL pelo X355.REND_PASS_PROP_REAL).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Renda Ativa Própria em Reais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "PERCENTUAL",
+      "descricao": "Valor do percentual obtido mediante a razão entre o valor do campo X355.REND_ATIV_PROP e do campo do X355.REND_TOTAL.",
+      "tipo": "N",
+      "tamanho": "7",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Percentual",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

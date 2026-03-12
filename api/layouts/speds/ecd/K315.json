@@ -1,0 +1,85 @@
+{
+  "registro": {
+    "codigo": "K315",
+    "titulo": "Registro K315: Empresas Contrapartes das Parcelas do Valor Eliminado Total",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "K315",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-k.htm#K315"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:29:19.616885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nK315",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"K315\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "EMP_COD_CONTRA",
+      "descricao": "Código da\nempresa da\ncontrapartida",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E650ELI.EMPDES"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CON\nTRA",
+      "descricao": "Código da conta\nconsolidada da\ncontrapartida",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E650ELI.CTADES"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VALOR",
+      "descricao": "Parcela da\ncontrapartida do\nvalor eliminado\ntotal",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E650ELI.SALELI"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_VALOR",
+      "descricao": "Indicador da\nsituação do valor\neliminado:\n D – Devedor\n C – Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se E650ELI.SALELI for negativo recebe C, senão recebe D"
+      }
+    }
+  ]
+}

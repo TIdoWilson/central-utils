@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "X500",
+    "titulo": "REGISTRO X500: ZONAS DE PROCESSAMENTO DE EXPORTAÇÃO (ZPE)",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x500",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x500"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.925566+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X500\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X500\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CODIGO",
+      "descricao": "Código de acordo com tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código",
+        "DOCUMENTAÇÃO": "E669TDL.CODLIN"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESCRICAO",
+      "descricao": "Descrição de acordo com tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Descrição",
+        "DOCUMENTAÇÃO": "E669TDL.DESLIN"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VALOR",
+      "descricao": "Valor",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor",
+        "DOCUMENTAÇÃO": "E669TDL.VLRLIN"
+      }
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "registro": {
+    "codigo": "C160",
+    "id_guia": "44",
+    "titulo": "Registro C160 da EFD-ICMS/IPI (Volumes transportados (Código 01 e 04), exceto combustíveis)",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=44"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:07:49.089461+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C160\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (Campo 02 do Registro 0150):\n- transportador, se houver.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "VEIC_ID",
+      "descricao": "Placa de identificação do veículo automotor.",
+      "tipo": "C",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "QTD_VOL",
+      "descricao": "Quantidade de volumes transportados.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "PESO_BRT",
+      "descricao": "Peso bruto dos volumes transportados (em Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "PESO_LIQ",
+      "descricao": "Peso líquido dos volumes transportados (em Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "UF_ID",
+      "descricao": "Sigla da UF da placa do veículo.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

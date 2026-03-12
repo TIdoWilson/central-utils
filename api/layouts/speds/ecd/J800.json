@@ -1,0 +1,97 @@
+{
+  "registro": {
+    "codigo": "J800",
+    "titulo": "REGISTRO \n J800: Outras Informações",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "J800",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#J800"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:29:19.603885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo J800.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J800"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "TIPO_DOC",
+      "descricao": "Tipo de documento:\n 001: Demonstração do\nResultado Abrangente\ndo Período\n 002: Demonstração dos\nFluxos de Caixa\n 003: Demonstração do\nValor Adicionado\n 010: Notas\nExplicativas\n 011: Relatório da\nAdministração\n 012: Parecer dos\nAuditores\n099: Outros",
+      "tipo": "C",
+      "tamanho": "3",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, campo Tipo de documento da guia Registro J800"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESC_RTF",
+      "descricao": "Descrição do arquivo\n.rtf",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "HASH_RTF",
+      "descricao": "Hash do arquivo .rtf\nincluído. \n Observação: o HASH\né preenchido\nautomaticamente pelo\nsistema (não é editável\ne não pode ser\nalterado).",
+      "tipo": "C",
+      "tamanho": "41",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "ARQ_RTF",
+      "descricao": "Sequência de bytes que representem um único arquivo no formato RTF (Rich Text Format).",
+      "tipo": "C",
+      "tamanho": "(*)",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "IND_FIM_RTF",
+      "descricao": "Indicador de fim do arquivo RTF. Texto fixo contendo J800FIM.",
+      "tipo": "C",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J800FIM"
+      }
+    }
+  ]
+}

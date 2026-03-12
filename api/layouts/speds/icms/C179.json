@@ -1,0 +1,82 @@
+{
+  "registro": {
+    "codigo": "C179",
+    "id_guia": "55",
+    "titulo": "Registro C179 da EFD-ICMS/IPI (Informações Complementares ST (Código 01))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=55"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:07:49.573217+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C179\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "BC_ST_ORIG_DEST",
+      "descricao": "Valor da Base de Cálculo (BC) ST na origem/destino em operações interestaduais.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "ICMS_ST_REP",
+      "descricao": "Valor do ICMS-ST a repassar/deduzir em operações interestaduais.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "ICMS_ST_COMPL",
+      "descricao": "Valor do ICMS-ST a complementar à UF de destino.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "BC_RET",
+      "descricao": "Valor da BC de retenção em remessa promovida por Substituído intermediário.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "ICMS_RET",
+      "descricao": "Valor da parcela do imposto retido em remessa promovida por substituído intermediário.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    }
+  ]
+}

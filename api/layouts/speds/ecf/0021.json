@@ -1,0 +1,228 @@
+{
+  "registro": {
+    "codigo": "0021",
+    "titulo": "REGISTRO 0021: PARÂMETROS DE IDENTIFICAÇÃO DOS TIPOS DE PROGRAMA",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0021",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-0.htm#0021"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 17,
+    "extraido_em_utc": "2026-03-10T19:31:56.791334+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (0021)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "0021"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_REPES",
+      "descricao": "Regime Especial de Tributação para a Plataforma de Exportação de Serviços de Tecnologia da Informação (Repes): S - Sim N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "IND_RECAP",
+      "descricao": "Regime Especial d e Aquisição d e Bens d e Capital para Empresas Exportadoras (Recap): S - Sim N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_PADIS",
+      "descricao": "Programa de Apoio ao Desenvolvimento Tecnológico da Indústria de Semicondutores (Padis): S - Sim N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_REIDI",
+      "descricao": "Regime Especial de Incentivos para o Desenvolvimento da Infraestrutura (Reidi): S - Sim N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "IND_RECINE",
+      "descricao": "Regime Especial de Tributação para Desenvolvimento da Atividade de Exibição Cinematográfica (Recine): S - Sim N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "IND_RETID",
+      "descricao": "Regime Especial Tributário para a Indústria de Defesa (Retid): S - Sim N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "IND_OLEO_BUNKER",
+      "descricao": "Regime de Suspensão de Óleo Bunker: S - Sim N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IND_REPORTO",
+      "descricao": "Regime Tributário para o Incentivo à Modernização e à Ampliação da Estrutura Portuária (Reporto): S - Sim N – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "IND_RET_II",
+      "descricao": "Regime Especial de Tributação Aplicável às Incorporações Imobiliárias Objeto de Patrimônio de Afetação (RET-II): S - Sim N – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "IND_RET_PMCMV",
+      "descricao": "Regime Especial de Tributação Aplicável às Construções de Unidades Habitacionais Contratadas no Âmbito do Programa Minha Casa, Minha Vida (RET-PMCMV): S - Sim N – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "IND_RET_EEI",
+      "descricao": "Regime Especial de Tributação Aplicável às Construções ou Reformas de Estabelecimentos de Educação Infantil (RET-EEI): S - Sim N – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "IND_EBAS",
+      "descricao": "Entidade Beneficente de Assistência Social (EBAS): S - Sim N – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "IND_REPETRO_INDUSTRIALIZACAO",
+      "descricao": "Regime Especial de Industrialização de Bens Destinados às Atividades de Exploração, de Desenvolvimento e de Produção de Petróleo, de Gás Natural e de Outros Hidrocarbonetos Fluidos (REPETRO-INDUSTRIALIZAÇÃO): S - Sim N – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "IND_REPETRO_NACIONAL",
+      "descricao": "Regime Tributário e Aduaneiro Especial de Utilização Econômica de Bens Destinados às Atividades de Exploração, Desenvolvimento e Produção das Jazidas de Petróleo e de Gás Natural, na modalidade REPETRO-NACONAL: S - Sim N – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "IND_REPETRO_PERMANENTE",
+      "descricao": "Regime Tributário e Aduaneiro Especial de Utilização Econômica de Bens Destinados às Atividades de Exploração, Desenvolvimento e Produção das Jazidas de Petróleo e de Gás Natural, na modalidade REPETRO-PERMANENTE: S - Sim N – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "17",
+      "campo": "IND_REPETRO_TEMPORARIO",
+      "descricao": "Regime Tributário e Aduaneiro Especial de Utilização Econômica de Bens Destinados às Atividades de Exploração, Desenvolvimento e Produção das Jazidas de Petróleo e de Gás Natural, na modalidade REPETRO-TEMPORARIO: S - Sim N – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

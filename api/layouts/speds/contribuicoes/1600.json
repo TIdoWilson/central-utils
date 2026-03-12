@@ -1,0 +1,122 @@
+{
+  "registro": {
+    "codigo": "1600",
+    "titulo": "Registro 1600 da EFD-Contribuições (Contribuição Social Extemporânea – Cofins)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=546"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:03:23.286189+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1600\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "PER_APUR_ANT",
+      "descricao": "Período de Apuração da Contribuição Social Extemporânea (MMAAAA)",
+      "tipo": "N",
+      "tamanho": "006*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "NAT_CONT_REC",
+      "descricao": "Natureza da Contribuição a Recolher, conforme Tabela 4.3.5.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_CONT_APUR",
+      "descricao": "Valor da Contribuição Apurada",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_CRED_COFINS_DESC",
+      "descricao": "Valor do Crédito de COFINS a Descontar, da Contribuição Social Extemporânea.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_CONT_DEV",
+      "descricao": "Valor da Contribuição Social Extemporânea Devida.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_OUT_DED",
+      "descricao": "Valor de Outras Deduções.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_CONT_EXT",
+      "descricao": "Valor da Contribuição Social Extemporânea a pagar.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_MUL",
+      "descricao": "Valor da Multa.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_JUR",
+      "descricao": "Valor dos Juros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "DT_RECOL",
+      "descricao": "Data do Recolhimento.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

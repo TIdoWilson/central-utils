@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "T990",
+    "titulo": "REGISTRO T990: ENCERRAMENTO DO BLOCO T",
+    "bloco_origem": "bloco-t.htm",
+    "ancora": "t990",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-t.htm#t990"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.880836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “T990”.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN",
+      "descricao": "Quantidade total de linhas do Bloco T.",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Quantidade de Total de Registros do Bloco T",
+        "DOCUMENTAÇÃO": ""
+      }
+    }
+  ]
+}

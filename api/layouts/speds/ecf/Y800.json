@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "Y800",
+    "titulo": "REGISTRO Y800: OUTRAS INFORMAÇÕES",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y800",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y800"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "1 – Digite o documento que deseja anexar no Word;"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:31:56.954819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "1 – Digite o documento que deseja anexar no Word;": "2 – Salve o documento como .rtf;"
+      }
+    },
+    {
+      "numero": "",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "1 – Digite o documento que deseja anexar no Word;": "3 – Abra o documento no Bloco de Notas;"
+      }
+    },
+    {
+      "numero": "",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "1 – Digite o documento que deseja anexar no Word;": "4 – Copie todo o conteúdo do arquivo aberto no Bloco de Notas;"
+      }
+    },
+    {
+      "numero": "",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "1 – Digite o documento que deseja anexar no Word;": "5 – Cole o conteúdo copiado no registro Y800;"
+      }
+    },
+    {
+      "numero": "",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "1 – Digite o documento que deseja anexar no Word;": "6 – Importe o arquivo, de acordo com o Leiaute da ECF, para o programa da ECF."
+      }
+    }
+  ]
+}

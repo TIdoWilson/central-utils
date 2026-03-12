@@ -1,0 +1,56 @@
+{
+  "templateId": "icms-corretor-total-inventario",
+  "spedType": "icms",
+  "operation": "mixed",
+  "inputs": [
+    {
+      "key": "sped_txt",
+      "label": "Arquivo SPED com bloco H",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"],
+      "help": "Arquivo de entrada do SPED EFD ICMS/IPI."
+    }
+  ],
+  "fields": [
+    {
+      "key": "valor_esperado",
+      "label": "Valor esperado do inventario",
+      "type": "text",
+      "required": false,
+      "placeholder": "960758,73"
+    },
+    {
+      "key": "max_exclusoes",
+      "label": "Maximo de exclusoes",
+      "type": "number",
+      "required": false,
+      "defaultValue": 10
+    }
+  ],
+  "targets": {
+    "records": ["0200", "0205", "0210", "0220", "0221", "H005", "H010", "0990", "H990", "9900", "9990", "9999"],
+    "relationshipsFile": "api/layouts/speds/icms/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": true,
+    "onMissingDependency": "abort",
+    "onOrphanDetected": "abort"
+  },
+  "validators": {
+    "globalRelationshipValidation": true,
+    "duplicateKeyCheck": true,
+    "hierarchyCheck": true,
+    "rulesFile": "api/layouts/speds/icms/relationships/reference_domains.validator.json"
+  },
+  "totalizers": ["0990", "H990", "9900", "9990", "9999"],
+  "output": {
+    "formats": ["txt"],
+    "filenamePattern": "{input}_CORRIGIDO_INVENTARIO.txt"
+  },
+  "dryRun": {
+    "enabled": true,
+    "reportChanges": true,
+    "requireConfirmation": true
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "registro": {
+    "codigo": "0930",
+    "titulo": "REGISTRO 0930: IDENTIFICAÇÃO DOS SIGNATÁRIOS DA ECF",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0930",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-0.htm#0930"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:31:56.801836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo 0930.",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "0930"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IDENT_NOM",
+      "descricao": "Nome do signatário.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Nome Signatário",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "IDENT_CPF_CNPJ",
+      "descricao": "Número de Identificação do Signatário: O tamanho do campo deve ser exatamente: CPF (11) e CNPJ (14)",
+      "tipo": "N",
+      "tamanho": "11 ou 14",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CPF/CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IDENT_QUALIF",
+      "descricao": "Código de qualificação do assinante, conforme tabela do Sped:\n 203 - Diretor;\n204 - Conselheiro de Administração;\n205 - Administrador;\n206 - Administrador do Grupo;\n207 - Administrador de Sociedade Filiada;\n220 - Administrador Judicial / Pessoa Física;\n222 - Administrador Judicial / Pessoa Jurídica - Profissional Responsável;\n223 - Administrador Judicial / Gestor;\n226 - Gestor Judicial\n309 - Procurador;\n312 - Inventariante;\n313 - Liquidante;\n315 - Interventor;\n801 - Empresário;\n900 - Contador ou Contabilista;\n999 - Outros.",
+      "tipo": "C",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Qualificação Assinante",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_CRC",
+      "descricao": "Número de inscrição do contabilista no Conselho Regional de Contabilidade.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Inscrição Contabilista",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "EMAIL",
+      "descricao": "E-mail do Signatário.",
+      "tipo": "C",
+      "tamanho": "60",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "EMAIL",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "FONE",
+      "descricao": "DDD e telefone do Signatário.",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "FONE",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

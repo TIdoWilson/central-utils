@@ -1,0 +1,156 @@
+{
+  "registro": {
+    "codigo": "X450",
+    "titulo": "REGISTRO X450: PAGAMENTOS/REMESSAS RELATIVOS A SERVIÇOS, JUROS E DIVIDENDOS RECEBIDOS DO BRASIL E DO EXTERIOR",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x450",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x450"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:31:56.919568+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X450\".",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo do Registro",
+        "DOCUMENTAÇÃO": "\"X450\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "PAIS",
+      "descricao": "País ou a dependência de país de residência ou domicílio da pessoa física ou jurídica destinatária do pagamento ou da remessa efetuados pela pessoa jurídica declarante, observado o exemplo a seguir:\nExemplo: Pessoa jurídica declarante efetua remessa, por conta e ordem do beneficiário do pagamento que é residente no Japão, para conta corrente localizada nos Estados Unidos da América. Nesse caso, o país a ser selecionado é o Japão.\nCódigo do país, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "País",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VL_SERV_ASSIST",
+      "descricao": "Pagamentos ou as remessas efetuados a título de serviços de assistência técnica, científica, administrativa e assemelhados referentes aos contratos que, em conformidade com a Lei nº 9.279, de 14 maio de 1996, estipulam as condições de obtenção de técnicas, métodos de planejamento e programação, bem como pesquisas, estudos e projetos destinados à execução ou prestação de serviços especializados e que tenham sido objeto de registro no Instituto Nacional de Propriedade Industrial (INPI).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor dos Serviços de Assistência Técnica, Científica, Administrativa e Assemelhados com\nTransferência de Tecnologia",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_SERV_SEM_ASSIST",
+      "descricao": "Pagamentos ou as remessas efetuados a título de serviços técnicos e de assistência, prestados no Brasil, referentes aos contratos dispensados de averbação no Instituto Nacional de Propriedade Industrial (INPI) por não constituírem transferência de tecnologia, tais como:\n- agenciamento de compras, inclusive serviços de logística relativos ao embarque de mercadorias e liberação alfandegária e outros de natureza similar;\n- beneficiamento de produtos;\n- homologação e certificação de qualidade de produtos brasileiros com o objetivo de promover a exportação;\n- consultoria nas áreas comercial, financeira, jurídica, reorganização societária e licitações;\n- estudos de viabilidade econômica;\n- serviços de marketing;\n- serviços realizados sem a presença de técnicos da empresa tomadora do serviço e que não gerem quaisquer relatórios ou documentos;\n- serviços de manutenção de software realizados sem a presença dos técnicos da empresa tomadora no local da prestação, tais como os efetuados por meio de “help-desk”.\nAs pessoas jurídicas, também, devem informar, neste campo, os pagamentos ou as remessas efetuados pelos seguintes serviços de natureza financeira:\n- administração de fundos, loterias, sociedades de investimento, dentre outros de natureza similar;\n- taxas de administração de consórcios e similares;\n- tarifas e portes e comissões por prestação de serviços de cobrança, colocação de títulos e valores mobiliários por conta e ordem de terceiros;\n- serviços prestados na contratação de operações de câmbio, comissão “del credere” relativa à administração de ativos redescontados junto ao Bacen;\n- serviços prestados na intermediação de bolsas, custódia, bem como serviços prestados a partes ligadas;\n- portes e comissões decorrentes de serviços de ordem de pagamento, crédito e outras transferências de fundos;\n- outros serviços de natureza similar aos descritos acima.\nAtenção:\n1) Serviço prestado no Brasil é aquele em que o prestador do serviço se fez presente dentro do território brasileiro para executar a prestação do serviço.\n2) Não informar neste campo o valor dos pagamentos ou remessas correspondentes a direitos autorais relativos a contratos que envolvam o licenciamento ou a cessão de softwares para reprodução, distribuição e comercialização ou para uso próprio do adquirente, sob a modalidade de cópia única. O valor referente a essas transações deve ser informado no campo “Exploração Econômica dos Direitos Patrimoniais do Autor relativos a Software” do Registro X420 – “Royalties Recebidos ou Pagos a Beneficiários do Brasil e do Exterior”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor dos Serviços Técnicos e de Assistência sem Transferência de Tecnologia Prestados no Brasil",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_SERV_SEM_ASSIST_EXT",
+      "descricao": "Pagamentos ou as remessas efetuados a título de serviços técnicos e de assistência, prestados no exterior, referentes aos contratos dispensados de averbação no Instituto Nacional de Propriedade Industrial (INPI) por não constituírem transferência de tecnologia, tais como:\n- agenciamento de compras, inclusive serviços de logística relativos ao embarque de mercadorias e liberação alfandegária e outros de natureza similar;\n- beneficiamento de produtos;\n- homologação e certificação de qualidade de produtos brasileiros com o objetivo de promover a exportação;\n- consultoria nas áreas comercial, financeira, jurídica, reorganização societária e licitações;\n- estudos de viabilidade econômica;\n- serviços de marketing;\n- serviços realizados sem a presença de técnicos da empresa tomadora do serviço e que não gerem quaisquer relatórios ou documentos;\n- serviços de manutenção de softwares realizados sem a presença dos técnicos da empresa tomadora no local da prestação, tais como os efetuados por meio de “help-desk”.\nAs pessoas jurídicas, também, devem informar, neste campo, os pagamentos ou as remessas efetuados pelos seguintes serviços de natureza financeira:\n- administração de fundos, loterias, sociedades de investimento, dentre outros de natureza similar;\n- taxas de administração de consórcios e similares;\n- tarifas e portes e comissões por prestação de serviços de cobrança, colocação de títulos e valores mobiliários por conta e ordem de terceiros;\n- serviços prestados na contratação de operações de câmbio, comissão “del credere” relativa à administração de ativos redescontados junto ao Bacen;\n- serviços prestados na intermediação de bolsas, custódia, bem como serviços prestados a partes ligadas;\n- portes e comissões decorrentes de serviços de ordem de pagamento, crédito e outras transferências de fundos;\n- outros serviços de natureza similar aos descritos acima.\nAtenção:\n1) Serviço prestado no exterior é aquele em que o prestador do serviço não se fez presente dentro do território brasileiro para executar a prestação do serviço.\n2) Não informar neste campo o valor dos pagamentos ou remessas correspondentes a direitos autorais relativos a contratos que envolvam o licenciamento ou a cessão de softwares para reprodução, distribuição e comercialização ou para uso próprio do adquirente, sob a modalidade de cópia única. O valor referente a essas transações deve ser informado no campo “Exploração Econômica dos Direitos Patrimoniais do Autor relativos a Software” do Registro X420 – “Royalties Recebidos ou Pagos a Beneficiários do Brasil e do Exterior”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor dos Serviços Técnicos e de Assistência sem Transferência de Tecnologia Prestados no Exterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_JURO_PF",
+      "descricao": "Valor pago ou remetido à pessoa física residente ou domiciliada no Brasil ou no exterior a título de remuneração dos recursos investidos na pessoa jurídica declarante, de que trata o art. 9º da Lei nº 9.249, de 26 de dezembro de 1995.\nAtenção:\n1) Não informar neste campo o valor correspondente aos juros pagos ou remetidos durante o período que anteceder o início das operações sociais ou de implantação do empreendimento inicial de que trata a alínea “b” do parágrafo 1º do art. 15 do Decreto-Lei nº 1.598, de 26 de dezembro de 2012, e a alínea “g” do inciso II do art. 325 do Decreto nº 3.000, de 1999.\n2) As cooperativas não devem informar neste campo o valor relativo aos juros pagos aos associados correspondente à remuneração de até 12% sobre o capital integralizado de que trata o parágrafo único do art. 49 da Lei nº 4.506, de 30 de novembro de 1964, c/c parágrafo 3º do art. 24 da Lei nº 5.764, de 16 de dezembro de 1971, e o inciso II do art. 348 do Decreto nº 3.000, de 1999.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor dos Juros sobre o Capital Próprio Pagos a Pessoa Física",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_JURO_PJ",
+      "descricao": "Valor pago ou remetido pela pessoa jurídica a outra pessoa jurídica domiciliada no Brasil ou no exterior a título de remuneração dos recursos investidos na pessoa jurídica declarante, de que trata o art. 9º da Lei nº 9.249, de 26 de dezembro de 1995.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor dos Juros sobre o Capital Próprio Pagos a Pessoa Jurídica",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_DEMAIS_JUROS",
+      "descricao": "Valor pago ou remetido a título de juros decorrentes da remuneração de empréstimos tomados pela pessoa jurídica no Brasil ou no exterior por meio de contratos de financiamento e de mútuo registrados ou não no Banco Central do Brasil. Também deve ser informado neste campo o valor correspondente aos:\n- juros pagos ou remetidos durante o período que anteceder o início das operações sociais ou de implantação do empreendimento inicial de que trata a alínea “b” do parágrafo 1º do art. 15 do Decreto-Lei nº 1.598, de 26 de dezembro de 2012, e a alínea “g” do inciso II do art. 325 do Decreto nº 3.000, de 1999;\n- juros pagos ou remetidos por cooperativa à pessoa jurídica associada correspondentes à remuneração de até 12% sobre o capital integralizado, de que trata o parágrafo único do art. 49 da Lei nº 4.506, de 30 de novembro de 1964, c/c parágrafo 3º do art. 24 da Lei nº 5.764, de 16 de dezembro de 1971, e o inciso II do art. 348 do Decreto nº 3.000, de 1999;\n- juros pagos ou remetidos correspondentes a quaisquer transações realizadas pela pessoa jurídica.\nAtenção: O valor de juros pago ou remetido em decorrência da Resolução Bacen nº 3.844, de 23 de março de 2010, também deve ser informado neste campo, exceto se referir-se ao pagamento ou remessa de juros de capital próprio de que trata o art. 9º da Lei nº 9.249, de 1995.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor dos Demais Juros",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "VL_DIVID_PF",
+      "descricao": "Valor dos lucros ou dividendos pagos ou remetidos pela pessoa jurídica à pessoa física residente ou domiciliada no Brasil ou no exterior em decorrência de participação societária avaliada pelo método da equivalência patrimonial ou pelo custo de aquisição.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Dividendos pagos a Pessoa Física",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "VL_DIVID_PJ",
+      "descricao": "Valor dos lucros ou dividendos pagos ou remetidos pela pessoa jurídica a outra pessoa jurídica domiciliada no Brasil ou no exterior em decorrência de participação societária avaliada pelo método da equivalência patrimonial ou pelo custo de aquisição.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Dividendos pagos a Pessoa Jurídica",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

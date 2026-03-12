@@ -1,0 +1,77 @@
+{
+  "registro": {
+    "codigo": "M211",
+    "titulo": "Registro M211 da EFD-Contribuições (Sociedades Cooperativas – Composição da Base de Calculo – PIS/Pasep)",
+    "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=499"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:03:22.826313+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"M211\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_TIP_COOP",
+      "descricao": "Indicador do Tipo de Sociedade Cooperativa:\n01 – Cooperativa de Produção Agropecuária;\n02 – Cooperativa de Consumo;\n03 – Cooperativa de Crédito;\n04 – Cooperativa de Eletrificação Rural;\n05 – Cooperativa de Transporte Rodoviário de Cargas;\n06 – Cooperativa de Médicos;\n99 – Outras.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_BC_CONT_ANT_EXC_COOP",
+      "descricao": "Valor da Base de Cálculo da Contribuição, conforme Registros escriturados nos Blocos A, C, D e F, antes das Exclusões das Cooperativas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_EXC_COOP_GER",
+      "descricao": "Valor de Exclusão Especifica das Cooperativas em Geral, decorrente das Sobras Apuradas na DRE, destinadas a constituição do Fundo de Reserva e do FATES.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_EXC_ESP_COOP",
+      "descricao": "Valor das Exclusões da Base de Cálculo Especifica do Tipo da Sociedade Cooperativa, conforme Campo 02 (IND_TIP_COOP).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_CONT",
+      "descricao": "Valor da Base de Cálculo, Após as Exclusões Especificas da Sociedade Cooperativa (04 – 05 – 06) – Transportar para M210.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    }
+  ]
+}

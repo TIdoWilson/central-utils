@@ -1,0 +1,121 @@
+{
+  "registro": {
+    "codigo": "J900",
+    "titulo": "REGISTRO J900: Termo de Encerramento",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "J900",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#J900"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:29:19.604885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo J900.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J900"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DNRC_ENCER",
+      "descricao": "Texto fixo contendo TERMO DE ENCERRAMENTO.",
+      "tipo": "C",
+      "tamanho": "021",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "TERMO DE ENCERRAMENTO"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NUM_ORD",
+      "descricao": "Número de ordem do instrumento de escrituração.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "NAT_LIVRO",
+      "descricao": "Natureza do livro; finalidade a que se destinou o instrumento.",
+      "tipo": "C",
+      "tamanho": "80",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NOME",
+      "descricao": "Nome empresarial.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E070FIL.NOMFIL"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "QTD_LIN",
+      "descricao": "Quantidade total de linhas do arquivo digital.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Somatório das linhas do arquivo"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "DT_INI_ESCR",
+      "descricao": "Data de inicio da escrituração.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de Entrada, filtro Período inicial e final"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "DT_FIN_ESCR",
+      "descricao": "Data de término da escrituração.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "K230",
+    "id_guia": "208",
+    "titulo": "Registro K230 da EFD-ICMS/IPI (Itens produzidos)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=208"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:07:51.207696+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K230\".",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI_OP",
+      "descricao": "Data de início da ordem de produção.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN_OP",
+      "descricao": "Data de conclusão da ordem de produção.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_DOC_OP",
+      "descricao": "Código de identificação da ordem de produção.",
+      "tipo": "C",
+      "tamanho": "30",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item produzido (campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "60",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "QTD_ENC",
+      "descricao": "Quantidade de produção acabada.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "6",
+      "obrigatorio": "O"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "C177",
+    "id_guia": "313",
+    "titulo": "Registro C177 da EFD-ICMS/IPI (Complemento de item - Outras informações (Válido a partir de 01/01/2019))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=313"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:49.231912+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C177\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_INF_ITEM",
+      "descricao": "Código da informação adicional de acordo com tabela a ser publicada pelas SEFAZ, conforme tabela definida no item 5.6.",
+      "tipo": "C",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    }
+  ]
+}

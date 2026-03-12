@@ -1,0 +1,404 @@
+﻿{
+  "version": "1.0",
+  "updatedAt": "2026-03-11",
+  "templates": [
+    {
+      "id": "contribuicoes-conferidor-xml-nfe",
+      "spedType": "contribuicoes",
+      "title": "Contribuicoes - Conferidor XML NFe/NFCe",
+      "description": "Converte XMLs de NFe/NFCe em relatorio de produtos e tributacao.",
+      "script": {
+        "entry": "api/speds_scripts/conferidor_xml.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/conferidor_xml.py"
+      },
+      "inputs": [
+        {
+          "key": "xml_notas",
+          "label": "XML(s) de notas",
+          "required": true,
+          "multiple": true,
+          "acceptedExtensions": [".xml", ".zip", ".rar"],
+          "help": "Aceita XML individual ou lote compactado em ZIP/RAR."
+        }
+      ],
+      "fields": [
+        {
+          "key": "progress_every",
+          "label": "Progresso a cada N arquivos",
+          "type": "number",
+          "required": false,
+          "defaultValue": 500
+        }
+      ],
+      "outputFormats": ["xlsx"]
+    },
+    {
+      "id": "icms-ajustar-cfop-1152",
+      "spedType": "icms",
+      "title": "ICMS - Ajustar CFOP alvo",
+      "description": "Ajusta C170/C190/C100 para notas com CFOP alvo (script ajustar_cfop_1152.py).",
+      "script": {
+        "entry": "api/speds_scripts/icms/ajustar_cfop_1152.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/ajustar_cfop_1152.py"
+      },
+      "inputs": [
+        {
+          "key": "sped_txt",
+          "label": "Arquivo SPED ICMS",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"],
+          "help": "Arquivo de entrada do SPED EFD ICMS/IPI."
+        }
+      ],
+      "fields": [
+        {
+          "key": "cfop",
+          "label": "CFOP alvo",
+          "type": "text",
+          "required": true,
+          "defaultValue": "1152"
+        }
+      ],
+      "outputFormats": ["txt"]
+    },
+    {
+      "id": "icms-comparador-sped-relatorio",
+      "spedType": "icms",
+      "title": "ICMS - Comparador SPED x Relatorio",
+      "description": "Compara notas do SPED (entradas e saidas) contra relatorios de entradas/saidas e gera 4 abas objetivas.",
+      "script": {
+        "entry": "api/speds_scripts/icms/comparador.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/comparador.py"
+      },
+      "inputs": [
+        {
+          "key": "sped_txt",
+          "label": "Arquivo SPED",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"]
+        },
+        {
+          "key": "relatorio_entradas",
+          "label": "Relatorio de entradas",
+          "required": false,
+          "multiple": false,
+          "acceptedExtensions": [".csv", ".xlsx", ".slk", ".pdf"],
+          "help": "Envie junto com o relatorio de saidas sempre que possivel. Aceita executar com apenas um deles."
+        },
+        {
+          "key": "relatorio_saidas",
+          "label": "Relatorio de saidas",
+          "required": false,
+          "multiple": false,
+          "acceptedExtensions": [".csv", ".xlsx", ".slk", ".pdf"],
+          "help": "Envie junto com o relatorio de entradas sempre que possivel. Aceita executar com apenas um deles."
+        }
+      ],
+      "fields": [],
+      "outputFormats": ["xlsx"]
+    },
+    {
+      "id": "icms-corretor-total-inventario",
+      "spedType": "icms",
+      "title": "ICMS - Corretor total de inventario",
+      "description": "Corrige o total do inventario no bloco H ajustando quantidades H010.",
+      "script": {
+        "entry": "api/speds_scripts/icms/corretor_total_inventario.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/corretor_total_inventario.py"
+      },
+      "inputs": [
+        {
+          "key": "sped_txt",
+          "label": "Arquivo SPED com bloco H",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"]
+        }
+      ],
+      "fields": [
+        {
+          "key": "valor_esperado",
+          "label": "Valor esperado do inventario",
+          "type": "text",
+          "required": false,
+          "placeholder": "960758,73"
+        },
+        {
+          "key": "max_exclusoes",
+          "label": "Maximo de exclusoes",
+          "type": "number",
+          "required": false,
+          "defaultValue": 10
+        }
+      ],
+      "outputFormats": ["txt"]
+    },
+    {
+      "id": "icms-gerador-inventario",
+      "spedType": "icms",
+      "title": "ICMS - Gerador de inventario",
+      "description": "Gera registros 0200 + bloco H a partir de relatorio Excel/PDF.",
+      "script": {
+        "entry": "api/speds_scripts/icms/gerador_de_inventario.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/gerador_de_inventario.py"
+      },
+      "inputs": [
+        {
+          "key": "relatorio_inventario",
+          "label": "Relatorio de inventario",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".xlsx", ".xls", ".pdf"]
+        }
+      ],
+      "fields": [
+        { "key": "dt_inv", "label": "Data do inventario", "type": "text", "required": false, "placeholder": "dd/mm/aaaa" },
+        { "key": "mot_inv", "label": "Motivo inventario", "type": "text", "required": false, "defaultValue": "01" },
+        { "key": "tipo_item", "label": "Tipo item", "type": "text", "required": false, "defaultValue": "00" },
+        { "key": "default_unid", "label": "Unidade padrao", "type": "text", "required": false, "defaultValue": "UN" },
+        { "key": "ind_prop", "label": "Indicador propriedade", "type": "text", "required": false, "defaultValue": "0" },
+        { "key": "cod_part", "label": "COD_PART", "type": "text", "required": false, "defaultValue": "" },
+        { "key": "txt_compl", "label": "TXT_COMPL", "type": "text", "required": false, "defaultValue": "" },
+        { "key": "cod_cta", "label": "COD_CTA", "type": "text", "required": false, "defaultValue": "11216001000" },
+        {
+          "key": "preencher_vl_item_ir",
+          "label": "Preencher VL_ITEM_IR",
+          "type": "select",
+          "required": false,
+          "defaultValue": "nao",
+          "options": [
+            { "value": "nao", "label": "Nao" },
+            { "value": "sim", "label": "Sim" }
+          ]
+        },
+        {
+          "key": "gerar_h020",
+          "label": "Gerar H020",
+          "type": "select",
+          "required": false,
+          "defaultValue": "nao",
+          "options": [
+            { "value": "nao", "label": "Nao" },
+            { "value": "sim", "label": "Sim" }
+          ]
+        },
+        { "key": "h020_cst_icms", "label": "H020 CST ICMS", "type": "text", "required": false, "defaultValue": "000" },
+        { "key": "h020_aliq_icms", "label": "H020 Aliquota ICMS", "type": "text", "required": false, "defaultValue": "12" },
+        {
+          "key": "sem_perguntas",
+          "label": "Executar sem perguntas",
+          "type": "select",
+          "required": false,
+          "defaultValue": "sim",
+          "options": [
+            { "value": "sim", "label": "Sim" },
+            { "value": "nao", "label": "Nao" }
+          ]
+        }
+      ],
+      "outputFormats": ["txt"]
+    },
+    {
+      "id": "icms-integrar-inventario-sped",
+      "spedType": "icms",
+      "title": "ICMS - Integrar inventario no SPED",
+      "description": "Integra arquivo de inventario no SPED original e atualiza totalizadores.",
+      "script": {
+        "entry": "api/speds_scripts/icms/integrar_inventario_sped.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/integrar_inventario_sped.py"
+      },
+      "inputs": [
+        {
+          "key": "sped_original",
+          "label": "SPED original",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"]
+        },
+        {
+          "key": "inventario_gerado",
+          "label": "Inventario gerado",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"]
+        }
+      ],
+      "fields": [
+        {
+          "key": "default_cod_cta",
+          "label": "COD_CTA padrao",
+          "type": "text",
+          "required": false,
+          "defaultValue": "11216001000"
+        }
+      ],
+      "outputFormats": ["txt"]
+    },
+    {
+      "id": "icms-copiar-bloco-k-sped",
+      "spedType": "icms",
+      "title": "ICMS - Copiar Bloco K",
+      "description": "Copia o Bloco K da origem para o destino, valida produtos 0200 e ajusta totalizadores.",
+      "script": {
+        "entry": "api/speds_scripts/icms/copiar_bloco_k_sped.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/copiar_bloco_k_sped.py"
+      },
+      "inputs": [
+        {
+          "key": "sped_destino",
+          "label": "SPED destino (recebera o Bloco K)",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"]
+        },
+        {
+          "key": "sped_origem_k",
+          "label": "SPED origem (fonte do Bloco K)",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"]
+        }
+      ],
+      "fields": [
+        {
+          "key": "modo_produto_faltante",
+          "label": "Produto faltante no 0200 do destino",
+          "type": "select",
+          "required": false,
+          "defaultValue": "incluir",
+          "options": [
+            { "value": "incluir", "label": "Incluir 0200 da origem" },
+            { "value": "erro", "label": "Parar com erro" }
+          ]
+        }
+      ],
+      "outputFormats": ["txt"]
+    },
+    {
+      "id": "ecf-gerador-bloco-custo-l210",
+      "spedType": "ecf",
+      "title": "ECF - Gerador bloco custo L210",
+      "description": "Gera L210 de custo (revenda) a partir do razao de estoque e razao de custo.",
+      "script": {
+        "entry": "api/speds_scripts/ecf/gerador_bloco_custo.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/ECF/GERADOR_BLOCO_CUSTO.PY"
+      },
+      "inputs": [
+        {
+          "key": "razao_estoque",
+          "label": "Razao de estoque",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".xlsx", ".xls"]
+        },
+        {
+          "key": "razao_custo",
+          "label": "Razao de custo",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".xlsx", ".xls"]
+        }
+      ],
+      "fields": [
+        {
+          "key": "apuracao",
+          "label": "Apuracao",
+          "type": "select",
+          "required": true,
+          "defaultValue": "mensal",
+          "options": [
+            { "value": "mensal", "label": "Mensal" },
+            { "value": "trimestral", "label": "Trimestral" }
+          ]
+        },
+        {
+          "key": "tem_fabricacao",
+          "label": "Possui fabricacao propria",
+          "type": "select",
+          "required": false,
+          "defaultValue": "nao",
+          "options": [
+            { "value": "nao", "label": "Nao" },
+            { "value": "sim", "label": "Sim" }
+          ]
+        },
+        {
+          "key": "tem_revenda",
+          "label": "Possui revenda",
+          "type": "select",
+          "required": false,
+          "defaultValue": "sim",
+          "options": [
+            { "value": "sim", "label": "Sim" },
+            { "value": "nao", "label": "Nao" }
+          ]
+        }
+      ],
+      "outputFormats": ["txt"]
+    },
+    {
+      "id": "ecf-gerar-layouts-json",
+      "spedType": "ecf",
+      "title": "ECF - Gerar layouts JSON do manual",
+      "description": "Extrai layouts de registros do manual ECF em PDF e gera arquivos JSON.",
+      "script": {
+        "entry": "api/speds_scripts/ecf/gerar_layouts_ecf.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/ECF/gerar_layouts_ecf.py"
+      },
+      "inputs": [
+        {
+          "key": "manual_pdf",
+          "label": "Manual ECF (PDF)",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".pdf"],
+          "help": "Use o manual oficial para extracao dos layouts."
+        }
+      ],
+      "fields": [
+        {
+          "key": "sobrescrever_layouts",
+          "label": "Sobrescrever layouts existentes",
+          "type": "select",
+          "required": false,
+          "defaultValue": "nao",
+          "options": [
+            { "value": "nao", "label": "Nao" },
+            { "value": "sim", "label": "Sim" }
+          ]
+        }
+      ],
+      "outputFormats": ["txt", "xlsx"]
+    },
+    {
+      "id": "ecd-template-pendente",
+      "spedType": "ecd",
+      "title": "ECD - Template pendente",
+      "description": "Sem script Python no projeto sped para ECD neste momento. Template reservado para proximas rotinas.",
+      "script": {
+        "entry": "",
+        "source": ""
+      },
+      "inputs": [
+        {
+          "key": "sped_ecd",
+          "label": "Arquivo SPED ECD",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"]
+        }
+      ],
+      "fields": [
+        {
+          "key": "observacao",
+          "label": "Observacao",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "outputFormats": ["txt", "xlsx"]
+    }
+  ]
+}

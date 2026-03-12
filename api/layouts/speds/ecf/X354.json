@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "X354",
+    "titulo": "REGISTRO X354: DEMONSTRATIVO DE PREJUÍZOS ACUMULADOS",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x354",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x354"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.909342+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X354\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X354\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "RES_NEG",
+      "descricao": "Resultado negativo de períodos anteriores a 2015 e a 2014 em moeda do país de domicílio.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado Negativo de Períodos Anteriores a 2015 e a 2014",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "RES_NEG_REAL",
+      "descricao": "Resultado negativo de períodos anteriores a 2015 e a 2014 em em Reais (R$).",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado Negativo de Períodos Anteriores a 2015 e a 2014 em Reais.",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "SALDO_RES_NEG",
+      "descricao": "Saldo do resultado negativo acumulado em moeda do país de domicílio.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Saldo do Resultado Negativo Acumulado",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

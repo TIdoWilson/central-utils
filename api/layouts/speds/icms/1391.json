@@ -1,0 +1,231 @@
+{
+  "registro": {
+    "codigo": "1391",
+    "id_guia": "179",
+    "titulo": "Registro 1391 da EFD-ICMS/IPI (Produção diária da usina)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=179"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 23,
+    "extraido_em_utc": "2026-03-10T19:07:51.505629+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1391\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_REGISTRO",
+      "descricao": "Data de produção (DDMMAAAA).",
+      "tipo": "C",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QTD_MOID",
+      "descricao": "Quantidade de insumo esmagado (toneladas)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "ESTQ_INI",
+      "descricao": "Estoque inicial (litros / Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "QTD_PRODUZ",
+      "descricao": "Quantidade produzida (litros / Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "ENT_ANID_HID",
+      "descricao": "Entrada de álcool anidro decorrente da transformação do álcool hidratado ou Entrada de álcool hidratado decorrente da transformação do álcool anidro (litros).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "OUTR_ENTR",
+      "descricao": "Outras entradas (litros / Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "PERDA",
+      "descricao": "Evaporação (litros) ou Quebra de peso (Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "CONS",
+      "descricao": "Consumo (litros).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "SAI_ANI_HID",
+      "descricao": "Saída para transformação (litros).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "11",
+      "campo": "SAIDAS",
+      "descricao": "Saídas (litros / Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "12",
+      "campo": "ESTQ_FIN",
+      "descricao": "Estoque final (litros / Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "ESTQ_INI_MEL",
+      "descricao": "Estoque inicial de mel residual (Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "14",
+      "campo": "PROD_DIA_MEL",
+      "descricao": "Produção de mel residual (Kg) e entradas de mel (Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "15",
+      "campo": "UTIL_MEL",
+      "descricao": "Mel residual utilizado (Kg) e saídas de mel (Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "16",
+      "campo": "PROD_ALC_MEL",
+      "descricao": "Produção de álcool (litros) ou açúcar (Kg) proveniente do mel residual.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "17",
+      "campo": "OBS",
+      "descricao": "Observações.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "18",
+      "campo": "COD_ITEM",
+      "descricao": "Informar o insumo conforme código do item (campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "19",
+      "campo": "TP_RESIDUO",
+      "descricao": "Tipo de resíduo produzido:\n01 - Bagaço de cana\n02 - DDG\n03 - WDG\n04 - (DDG + WDG).",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "20",
+      "campo": "QTD_RESIDUO",
+      "descricao": "Quantidade de resíduo produzido (toneladas).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "21",
+      "campo": "QTD_RESIDUO_ DDG",
+      "descricao": "Quantidade de resíduo produzido de DDG (toneladas)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "22",
+      "campo": "QTD_RESIDUO_ WDG",
+      "descricao": "Quantidade de resíduo produzido de WDG (toneladas)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "23",
+      "campo": "QTD_RESIDUO_ CANA",
+      "descricao": "Quantidade de resíduo produzido de bagaço de cana (toneladas)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

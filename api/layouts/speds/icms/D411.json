@@ -1,0 +1,46 @@
+{
+  "registro": {
+    "codigo": "D411",
+    "id_guia": "121",
+    "titulo": "Registro D411 da EFD-ICMS/IPI (Documentos cancelados dos documentos informados (Código 13, 14, 15 e 16))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=121"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:50.344028+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D411\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_DOC_CANC",
+      "descricao": "Número do documento fiscal cancelado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

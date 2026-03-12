@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "E300",
+    "id_guia": "235",
+    "titulo": "Registro E300 da EFD-ICMS/IPI (Período de Apuração do ICMS Diferencial de Alíquota - UF origem/destino EC 87/15)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=235"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:50.847053+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E300\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "UF",
+      "descricao": "Sigla da Unidade da Federação a que se refere a apuração do FCP e do ICMS Diferencial de Alíquota da UF de Origem/Destino.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_INI",
+      "descricao": "Data inicial a que a apuração se refere.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "DT_FIN",
+      "descricao": "Data final a que a apuração se refere.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

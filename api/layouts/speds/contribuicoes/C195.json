@@ -1,0 +1,131 @@
+{
+  "registro": {
+    "codigo": "C195",
+    "titulo": "Registro C195 da EFD-Contribuições (Detalhamento da Consolidação - Operações de Aquisição Com Direito a Crédito, e Operações de Devolução de Compras e Vendas – Cofins)",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=398"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 12,
+    "extraido_em_utc": "2026-03-10T19:03:22.016494+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C195\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ_CPF_PART",
+      "descricao": "CNPJ/CPF do Participante a que se referem as operações consolidadas neste registro (pessoa jurídica ou pessoa física vendedora/remetente)",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "03",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente a COFINS.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "CFOP",
+      "descricao": "Código fiscal de operação e prestação",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_ITEM",
+      "descricao": "Valor do item",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_DESC",
+      "descricao": "Valor do desconto comercial / Exclusão",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da COFINS (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "QUANT_BC_COFINS",
+      "descricao": "Quantidade – Base de cálculo da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "ALIQ_COFINS_QUANT",
+      "descricao": "Alíquota da COFINS (em reais)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "registro": {
+    "codigo": "C172",
+    "id_guia": "48",
+    "titulo": "Registro C172 da EFD-ICMS/IPI (Operações com ISSQN (Código 01))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=48"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:49.781767+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C172\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "VL_BC_ISSQN",
+      "descricao": "Valor da Base de Cálculo (BC) do ISSQN.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "ALIQ_ISSQN",
+      "descricao": "Alíquota do ISSQN.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_ISSQN",
+      "descricao": "Valor do ISSQN.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

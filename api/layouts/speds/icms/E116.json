@@ -1,0 +1,114 @@
+{
+  "registro": {
+    "codigo": "E116",
+    "id_guia": "141",
+    "titulo": "Registro E116 da EFD-ICMS/IPI (Obrigações do ICMS Recolhido ou a Recolher - Operações Próprias)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=141"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:07:50.675578+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E116\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_OR",
+      "descricao": "Código da obrigação a recolher, conforme a Tabela 5.4.",
+      "tipo": "C",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_OR",
+      "descricao": "Valor da obrigação a recolher.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "DT_VCTO",
+      "descricao": "Data de vencimento da obrigação.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_REC",
+      "descricao": "Código de Receita referente à obrigação, próprio da Unidade da Federação (UF), conforme legislação Estadual.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "NUM_PROC",
+      "descricao": "Número do processo ou Auto de Infração ao qual a obrigação está vinculada, se houver.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "IND_PROC",
+      "descricao": "Indicador da origem do processo:\n 0: Sefaz;\n 1: Justiça Federal;\n 2: Justiça Estadual;\n 9: Outros.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "PROC",
+      "descricao": "Descrição resumida do processo que embasou o lançamento.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "TXT_COMPL",
+      "descricao": "Descrição complementar das obrigações a recolher.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "MES_REF *",
+      "descricao": "Informe o mês de referência no formato \"mmaaaa\".",
+      "tipo": "N",
+      "tamanho": "006*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

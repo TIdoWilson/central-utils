@@ -1,0 +1,247 @@
+{
+  "registro": {
+    "codigo": "Y600",
+    "titulo": "REGISTRO Y600: IDENTIFICAÇÃO E RENDIMENTOS DE DIRIGENTES, CONSELHEIROS, SÓCIOS OU TITULAS",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y600",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y600"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 17,
+    "extraido_em_utc": "2026-03-10T19:31:56.935827+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y600\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y600\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_ALT_SOC",
+      "descricao": "Data da Alteração no Quadro Societário. Pode ser uma data anterior ao ano da escrituração, inclusive da criação da Pessoa Jurídica. Atenção: No caso de preenchimento de Y600.DT_FIM_SOC, informar neste campo a data da última alteração da participação do sócio, antes da data da saída do quadro societário.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data de alteração no quadro societário",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIM_SOC",
+      "descricao": "Data da Saída do Quadro Societário.\nDeve ser preenchida somente se a saída do quadro societário ocorreu no ano da escrituração.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Data de saída do quadro sociaetário",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "PAIS",
+      "descricao": "País de Residência ou Domicílio da Pessoa Física ou Jurídica.\nCódigo do país, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "País",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_QUALIF",
+      "descricao": "Indicador de Qualificação do Sócio, Titular, Dirigente ou Conselheiro:\nPF - Pessoa Física\nPJ - Pessoa Jurídica\nFI – Fundo de Investimento",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Pessoa Física ou Pessoa Jurídica",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "CPF_CNPJ",
+      "descricao": "CPF ou CNPJ do Sócio, Titular, Dirigente ou Conselheiro.\nObrigatório se Código do País for igual a \"105\" (Brasil)\nCaso contrário, pode ser preenchido com branco(s).\nSe IND_QUALIF_SOCIO =” PF” preencher com CPF. Senão, preencher com CNPJ.",
+      "tipo": "N",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "CPF ou CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "NOM_EMP",
+      "descricao": "Nome/Nome empresarial do Sócio, Titular, Dirigente ou Conselheiro.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Nome Empresarial",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "QUALIF",
+      "descricao": "Qualificação do Sócio, Titular, Dirigente ou Conselheiro:\nSe PAIS = “105” (Brasil) E IND_QUALIF_SOCIO = “PF”: \n01 – Acionista Pessoa Física Domiciliado no Brasil \n02 – Sócio Pessoa Física Domiciliado no Brasil \n09 – Titular\n10 – Administrador sem Vínculo Empregatício\n11 – Diretor sem Vínculo Empregatício\n12 – Presidente sem Vínculo Empregatício\n13 – Administrador com Vínculo Empregatício\n14 – Conselheiro de Administração ou Fiscal\n15 – Diretor com Vínculo Empregatício\n16 – Fundador\n17 – Presidente com Vínculo Empregatício\n 18 - Usufrutuário de quotas ou ações \nSe PAIS = “105” (Brasil) E IND_QUALIF_SOCIO = \"PJ\": \n03 - Acionista Pessoa Jurídica Domiciliado no Brasil \n04 - Sócio Pessoa Jurídica Domiciliado no Brasil\nSe PAIS diferente de “105” (Brasil) E IND_QUALIF_SOCIO = \"PF\": \n05 - Acionista Pessoa Física Residente ou Domiciliado no Exterior \n06 - Sócio Pessoa Física Residente ou Domiciliado no Exterior\n14 – Conselheiro de Administração ou Fiscal\nSe PAIS diferente de “105” (Brasil) E IND_QUALIF_SOCIO = \"PJ\": \n07 - Acionista Pessoa Jurídica Residente ou Domiciliado no Exterior \n08 - Sócio Pessoa Jurídica Residente ou Domiciliado no Exterior",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Qualificação do Sócio ou Titular",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "PERC_CAP_TOT",
+      "descricao": "Percentual Relativo à Participação da Pessoa Física ou Jurídica, Sócio ou Titular, Conselheiro ou Dirigente no Capital Total.",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "4",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Percentual sobre o Capital Total",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "PERC_CAP_VOT",
+      "descricao": "Percentual Relativo à Participação da Pessoa Física ou Jurídica, Sócio ou Titular, Conselheiro ou Dirigente no Capital Votante.",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "4",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Percentual sobre o Capital Votante",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "CPF_REP_LEG",
+      "descricao": "No caso de residente ou domiciliado no exterior ou de pessoa física residente no Brasil legalmente representada.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "CPF do Representante Legal",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "QUALIF_REP_LEG",
+      "descricao": "Qualificação do Representante Legal:\nObrigatório se CPF_REP_LEG é diferente de vazio\nSe IND_QUALIF_SOCIO = “PF”\n01 - Procurador \n02 - Curador \n03 - Mãe \n04 - Pai \n05 - Tutor \n06 – Outro \nSe IND_QUALIF_SOCIO = “PJ” \n01 - Procurador \n06 - Outro",
+      "tipo": "N",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Qualificação do Representante Legal",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "VL_REM_TRAB",
+      "descricao": "Valor dos rendimentos pagos e escriturados, nos livros da escrituração\ncontábil ou no livro Caixa, a título de remuneração a dirigentes pela prestação de serviços, ou\nquaisquer outros pagamentos, tais como: pró-labore e aluguéis. Esses valores sujeitam-se à incidência\ndo imposto de renda na fonte e na declaração de rendimentos dos beneficiários.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "002",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Remuneração do Trabalho",
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "VL_LUC_DIV",
+      "descricao": "Valor dos lucros e dividendos efetivamente pagos no ano-calendário a sócios ou a\ntitular de empresa individual.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "002",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Lucros/Dividendos",
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "VL_JUR_CAP",
+      "descricao": "Valor dos juros pagos ou creditados a titular, ou a sócios ou acionistas,\na título de remuneração do capital próprio, antes de deduzido o imposto de renda na fonte, em\nconformidade com o disposto no art. 9o da Lei no 9.249, de 1995.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "002",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Juros Sobre o Capital Próprio",
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "VL_DEM_REND",
+      "descricao": "Valor, antes da dedução do imposto de renda retido na fonte, dos demais\nrendimentos pagos ou creditados a sócios, a acionistas ou a titular de empresa individual, inclusive os\nlucros e dividendos não apurados em balanço e distribuídos.\nInformar, também, o valor dos rendimentos pagos a sócios ou a titular de empresa individual que\nultrapassou a base de cálculo do imposto, deduzido somente do imposto de renda retido na fonte",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "002",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Demais Rendimentos",
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "17",
+      "campo": "VL_IR_RET",
+      "descricao": "Valor do imposto de renda retido na fonte por ocasião do pagamento de lucros ou\ndividendos não abrangidos pela isenção, e sobre os demais rendimentos pagos a dirigentes, a sócios, a\nacionistas ou a titular de empresa individual.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "002",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "IR Retido na Fonte",
+        "DOCUMENTAÇÃO": ""
+      }
+    }
+  ]
+}

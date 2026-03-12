@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "P030",
+    "titulo": "REGISTRO P030: IDENTIFICAÇÃO DOS PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL DAS EMPRESAS TRIBUTADAS PELO LUCRO PRESUMIDO",
+    "bloco_origem": "bloco-p.htm",
+    "ancora": "p030",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-p.htm#p030"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.864836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “P030”",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"P030\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI",
+      "descricao": "Data de Início do Período.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data do Saldo Inicial",
+        "DOCUMENTAÇÃO": "Conforme período definido na tela de entrada e forma de apuração dos impostos."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN",
+      "descricao": "Data de Fim do Período.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "RÓTULO": "Data do Saldo Final",
+        "DOCUMENTAÇÃO": "Sim"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "PER_APUR",
+      "descricao": "A00 – Anual (para registrar o Balanço Patrimonial anual e a DRE anual)\nT01 – 1º Trimestre\nT02 – 2º Trimestre\nT03 – 3º Trimestre\nT04 – 4º Trimestre\nSE 0010.FORMA_APUR = “T”\n- Deve existir um registro [T01..T04] para cada trimestre marcado no 0010.FORMA_TRIB_PER[1..4] como “P”",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Período de Apuração",
+        "DOCUMENTAÇÃO": "Se 0010.FORMA_APUR = “T”\n- Deverá existir um registro [T01..T04] para cada trimestre marcado na 0010.FORMA_TRIB_PER [1..4] (campo 8) como “P”, conforme o trimestre de referência."
+      }
+    }
+  ]
+}

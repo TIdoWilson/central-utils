@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "1600",
+    "id_guia": "183",
+    "titulo": "Registro 1600 da EFD-ICMS/IPI (Total das operações com cartão de crédito e/ou débito, loja (private label) e demais instrumentos de pagamentos eletrônicos (válido até 31/12/2021))",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=183"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:51.511628+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1600\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n - identificação da instituição financeira e/ou de pagamento.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "TOT_CREDITO",
+      "descricao": "Valor total das operações de crédito realizadas no período.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "TOT_DEBITO",
+      "descricao": "Valor total das operações de débito realizadas no período.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

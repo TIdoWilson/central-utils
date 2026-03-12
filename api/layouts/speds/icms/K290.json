@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "K290",
+    "id_guia": "304",
+    "titulo": "Registro K290 da EFD-ICMS/IPI (Produção conjunta - Ordem de Produção)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=304"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:51.220860+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K290\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI_OP",
+      "descricao": "Data de início da ordem de produção.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN_OP",
+      "descricao": "Data de conclusão da ordem de produção.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_DOC_OP",
+      "descricao": "Código de identificação da ordem de produção.",
+      "tipo": "C",
+      "tamanho": "30",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

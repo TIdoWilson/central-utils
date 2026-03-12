@@ -1,0 +1,208 @@
+{
+  "registro": {
+    "codigo": "D300",
+    "id_guia": "110",
+    "titulo": "Registro D300 da EFD-ICMS/IPI (Registro analítico dos Bilhetes Consolidados de Passagem Rodoviário (Cód. 13), de Passagem Aquaviário (Cód. 14), de Passagem e Nota de Bagagem (Cód. 15) e de Passagem Ferroviário (Cód. 16))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=110"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 20,
+    "extraido_em_utc": "2026-03-10T19:07:50.276239+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D300\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1 .",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "SUB",
+      "descricao": "Subsérie do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "NUM_DOC_INI",
+      "descricao": "Número do primeiro documento fiscal emitido (mesmo modelo, série e subsérie).",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "NUM_DOC_FIN",
+      "descricao": "Número do último documento fiscal emitido (mesmo modelo, série e subsérie).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "CST_ICMS",
+      "descricao": "Código da Situação Tributária (CST), conforme a Tabela 4.3.1 .",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "CFOP",
+      "descricao": "Código Fiscal de Operação e Prestação (CFOP) conforme Tabela de CFOP (4.2.2) .",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "ALIQ_ICMS",
+      "descricao": "Alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão dos documentos fiscais.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_OPR",
+      "descricao": "Valor total acumulado das operações correspondentes à combinação de CST_ICMS, CFOP e alíquota do ICMS, incluídas as despesas acessórias e acréscimos.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_DESC",
+      "descricao": "Valor total dos descontos.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_SERV",
+      "descricao": "Valor total da prestação de serviço.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_SEG",
+      "descricao": "Valor de seguro.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_OUT_DESP",
+      "descricao": "Valor de outras despesas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor total da Base de Cálculo (BC) do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "17",
+      "campo": "VL_ICMS",
+      "descricao": "Valor total do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "18",
+      "campo": "VL_RED_BC",
+      "descricao": "Valor não tributado em função da redução da BC do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "19",
+      "campo": "COD_OBS",
+      "descricao": "Código da observação do lançamento fiscal (Campo 02 do Registro 0460).",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "20",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

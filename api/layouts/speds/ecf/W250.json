@@ -1,0 +1,348 @@
+{
+  "registro": {
+    "codigo": "W250",
+    "titulo": "REGISTRO W250: DECLARAÇÃO PAÍS-A-PAÍS - ENTIDADES INTEGRANTES",
+    "bloco_origem": "bloco-w.htm",
+    "ancora": "w250",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-w.htm#w250"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 27,
+    "extraido_em_utc": "2026-03-10T19:31:56.896339+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto Fixo Contendo a Identificação do Registro",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "FIXO \"W250\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "JUR_DIFERENTE",
+      "descricao": "Jurisdição Tributária de Organização o u Incorporação, s e diferente d a jurisdição d e\nresidência para fins tributários",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NOME",
+      "descricao": "Nome/Razão Social da Entidade Integrante",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "TIN",
+      "descricao": "Tax Identification Number (TIN): Número de identificação fiscal utilizado pela\nadministração tributária da jurisdição de residência para fins tributários do controlador\nfinal do grupo multinacional",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "JURISDICAO_TIN",
+      "descricao": "Jurisdição de Emissão do TIN",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "NI",
+      "descricao": "Número de Identificação (NI)",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "JURISDICAO_NI",
+      "descricao": "Jurisdição de Emissão do NI",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "TIPO_NI",
+      "descricao": "Tipo d o NI",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "TIP_END",
+      "descricao": "Tipo do Endereço",
+      "tipo": "C",
+      "tamanho": "7",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "ENDEREÇO",
+      "descricao": "Endereço completo de residência permanente da\nentidade integrante reportada",
+      "tipo": "C",
+      "tamanho": "150",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "NUM_TEL",
+      "descricao": "Número de telefone completo da entidade integrante reportada",
+      "tipo": "C",
+      "tamanho": "15",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "EMAIL",
+      "descricao": "Endereço de e-mail para contato com a entidade integrante reportada",
+      "tipo": "C",
+      "tamanho": "115",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "ATIV_1",
+      "descricao": "Pesquisa e Desenvolvimento:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "ATIV_2",
+      "descricao": "Gestão de Propriedade Intelectual:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "ATIV_3",
+      "descricao": "Compras:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "ATIV_4",
+      "descricao": "Manufatura ou Produção:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "17",
+      "campo": "ATIV_5",
+      "descricao": "Vendas, Marketing ou Distribuição:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "18",
+      "campo": "ATIV_6",
+      "descricao": "Serviços Administrativos, de Gestão ou de Suporte:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "19",
+      "campo": "ATIV_7",
+      "descricao": "Prestação de Serviços a Partes Não Relacionadas:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "20",
+      "campo": "ATIV_8",
+      "descricao": "Departamento Financeiro do Grupo:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "21",
+      "campo": "ATIV_9",
+      "descricao": "Serviços Financeiros Regulamentados:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "22",
+      "campo": "ATIV_10",
+      "descricao": "Seguro:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "23",
+      "campo": "ATIV_11",
+      "descricao": "Gestão de Ações e Outros Instrumentos de Capital:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "24",
+      "campo": "ATIV_12",
+      "descricao": "Inativa:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "25",
+      "campo": "ATIV_13",
+      "descricao": "Outros:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "26",
+      "campo": "DESC_OUTROS",
+      "descricao": "Descrição d a Atividade Econômica Desempenhada",
+      "tipo": "C",
+      "tamanho": "225",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "27",
+      "campo": "OBSERVAÇÃO",
+      "descricao": "Outras Informações",
+      "tipo": "C",
+      "tamanho": "1000",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

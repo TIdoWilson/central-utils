@@ -1,0 +1,104 @@
+{
+  "registro": {
+    "codigo": "Y640",
+    "titulo": "REGISTRO Y640: PARTICIPAÇÕES EM CONSÓRCIOS DE EMPRESAS",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y640",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y640"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:31:56.940825+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y640\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y640\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ",
+      "descricao": "CNPJ do consórcio no qual a pessoa jurídica participou no período a que se refere esta declaração.",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COND_DECL",
+      "descricao": "Condição do Declarante no Consórcio:\n1 – Líder 2 – Participante\nAtenção: No caso de alteração da condição de liderança do consórcio no decorrer do ano-calendário, considera-se líder a pessoa jurídica que se enquadrar nessa condição no último dia do período a que se refere esta declaração ou na data de extinção do consórcio.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Condição do Declarante",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_CONS",
+      "descricao": "O líder indicará, neste campo, o valor do somatório das receitas auferidas por todos os consorciados no período considerado.\nAtenção: Este campo não deve ser preenchido para participante que não seja líder.\nObrigatório se COND_DECL=\"1\".\nSenão, não deve ser preenchido.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Receita do Consórcio",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "CNPJ_LID",
+      "descricao": "CNPJ da Empresa Líder do Consórcio.",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ da Empresa Líder",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_DECL",
+      "descricao": "Receita auferida pelo declarante no período a que se refere esta declaração, observado o disposto no caput do art. 3o da IN RFB no 1.199, de 2011.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Receita do Declarante no Consórcio",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

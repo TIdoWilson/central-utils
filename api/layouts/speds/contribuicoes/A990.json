@@ -1,0 +1,41 @@
+{
+  "registro": {
+    "codigo": "A990",
+    "titulo": "Registro A990 da EFD-Contribuições (Encerramento do Bloco A)",
+    "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=380"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:03:21.787726+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"A990\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN_A",
+      "descricao": "Quantidade total de linhas do Bloco A",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

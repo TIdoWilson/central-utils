@@ -1,0 +1,48 @@
+{
+  "registro": {
+    "codigo": "W990",
+    "titulo": "REGISTRO W990: ENCERRAMENTO DO BLOCO W",
+    "bloco_origem": "bloco-w.htm",
+    "ancora": "w990",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-w.htm#w990"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.898341+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "FIXO \"W990\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN",
+      "descricao": "Quantidade total de registros do Bloco W",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Somatório das linhas do Bloco Y"
+      }
+    }
+  ]
+}

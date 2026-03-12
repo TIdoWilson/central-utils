@@ -1,0 +1,50 @@
+{
+  "registro": {
+    "codigo": "D309",
+    "titulo": "Registro D309 da EFD-Contribuições (Processo Referenciado)",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=443"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:03:22.383953+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D309\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_PROC",
+      "descricao": "Identificação do processo ou ato concessório",
+      "tipo": "C",
+      "tamanho": "020",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_PROC",
+      "descricao": "Indicador da origem do processo:\n1 - Justiça Federal;\n3 – Secretaria da Receita Federal do Brasil;\n9 – Outros.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

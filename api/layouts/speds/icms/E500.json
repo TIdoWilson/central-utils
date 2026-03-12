@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "E500",
+    "id_guia": "148",
+    "titulo": "Registro E500 da EFD-ICMS/IPI (Período de Apuração do IPI)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=148"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:50.907146+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E500\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_APUR",
+      "descricao": "Indicador de período de apuração do IPI:\n 0: Mensal;\n 1: Decendial.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_INI",
+      "descricao": "Data inicial a que a apuração se refere.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "DT_FIN",
+      "descricao": "Data final a que a apuração se refere.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

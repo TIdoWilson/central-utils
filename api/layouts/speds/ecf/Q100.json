@@ -1,0 +1,108 @@
+{
+  "registro": {
+    "codigo": "Q100",
+    "titulo": "REGISTRO Q100 - DEMONSTRATIVO DO LIVRO CAIXA",
+    "bloco_origem": "bloco-q.htm",
+    "ancora": "q100",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-q.htm#q100"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:31:56.874836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “Q100”.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Texto Fixo Contendo a Identificação do Registro (Q100)."
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DATA",
+      "descricao": "",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data da entrada ou da saída dos recursos."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NUM_DOC",
+      "descricao": "",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Número do documento"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "HIST",
+      "descricao": "",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Histórico"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_ENTRADA",
+      "descricao": "",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor de entrada dos recursos"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_SAIDA",
+      "descricao": "",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor de saída dos recursos"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "SLD_FIN",
+      "descricao": "",
+      "tipo": "NS",
+      "tamanho": "019",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Saldo Final"
+      }
+    }
+  ]
+}

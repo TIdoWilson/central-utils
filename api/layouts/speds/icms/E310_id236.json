@@ -1,0 +1,150 @@
+{
+  "registro": {
+    "codigo": "E310",
+    "id_guia": "236",
+    "titulo": "Registro E310 da EFD-ICMS/IPI (Apuração do ICMS Diferencial de Alíquota - UF origem/destino EC 87/15 (Válido até 31/12/2016))",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=236"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 14,
+    "extraido_em_utc": "2026-03-10T19:07:50.770412+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E310\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_MOV_DIFAL",
+      "descricao": "Indicador de movimento:\n 0: Sem operações com ICMS Diferencial de Alíquota da UF de Origem/Destino;\n 1: Com operações de ICMS Diferencial de Alíquota da UF de Origem/Destino.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_SLD_CRED_ANT_DIFAL",
+      "descricao": "Valor do \"Saldo credor de período anterior - ICMS Diferencial de Alíquota da UF de Origem/Destino\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_TOT_DEBITOS_DIFAL",
+      "descricao": "Valor total dos débitos por \"Saídas e prestações com débito do ICMS referente ao diferencial de alíquota devido à UF do Remetente/Destinatário\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_OUT_DEB_DIFAL",
+      "descricao": "Valor Total dos ajustes \"Outros débitos ICMS Diferencial de Alíquota da UF de Origem/Destino\" \" e \"Estorno de créditos ICMS Diferencial de Alíquota da UF de Origem/Destino.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_TOT_DEB_FCP",
+      "descricao": "Valor total dos débitos FCP por \"Saídas e prestações\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_TOT_CREDITOS_DIFAL",
+      "descricao": "Valor total dos créditos do ICMS referente ao diferencial de alíquota devido à UF dos Remetente/ Destinatário.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_TOT_CRED_FCP",
+      "descricao": "Valor total dos créditos FCP por Entradas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_OUT_CRED_DIFAL",
+      "descricao": "Valor total de Ajustes \"Outros créditos ICMS Diferencial de Alíquota da UF de Origem/Destino\" e \"Estorno de débitos ICMS Diferencial de Alíquota da UF de Origem/Destino\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_SLD_DEV_ANT_DIFAL",
+      "descricao": "Valor total de Saldo devedor ICMS Diferencial de Alíquota da UF de Origem/Destino antes das deduções.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_DEDUÇÕES_DIFAL",
+      "descricao": "Valor total dos ajustes \"Deduções ICMS Diferencial de Alíquota da UF de Origem/Destino\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_RECOL",
+      "descricao": "Valor recolhido ou a recolher referente a FCP e Imposto do Diferencial de Alíquota da UF de Origem/Destino (10-11).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_SLD_CRED_TRANSPORTAR",
+      "descricao": "Saldo credor a transportar para o período seguinte referente a FCP e Imposto do Diferencial de Alíquota da UF de Origem/Destino.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "14",
+      "campo": "DEB_ESP_DIFAL",
+      "descricao": "Valores recolhidos ou a recolher, extraapuração.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

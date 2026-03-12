@@ -1,0 +1,96 @@
+{
+  "registro": {
+    "codigo": "K270",
+    "id_guia": "263",
+    "titulo": "Registro K270 da EFD-ICMS/IPI (Correção de apontamento dos Registros K210, K220, K230, K250, K260, K291, K292, K301 e K302)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=263"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:07:51.259857+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K270\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI_AP",
+      "descricao": "Data inicial do período de apuração em que ocorreu o apontamento que está sendo corrigido.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN_AP",
+      "descricao": "Data final do período de apuração em que ocorreu o apontamento que está sendo corrigido.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_OP_OS",
+      "descricao": "Código de identificação da ordem de produção ou da ordem de serviço que está sendo corrigida.",
+      "tipo": "C",
+      "tamanho": "030",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_ITEM",
+      "descricao": "Código da mercadoria que está sendo corrigido (campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "QTD_COR_POS",
+      "descricao": "Quantidade de correção positiva de apontamento ocorrido em período de apuração anterior.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "6",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "QTD_COR_NEG",
+      "descricao": "Quantidade de correção negativa de apontamento ocorrido em período de apuração anterior.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "6",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "ORIGEM",
+      "descricao": "1 – correção de apontamento de produção e/ou consumo relativo aos Registros K230/K235;\n 2 – correção de apontamento de produção e/ou consumo relativo aos Registros K250/K255;\n 3 – correção de apontamento de desmontagem e/ou consumo relativo aos Registros K210/K215;\n 4 – correção de apontamento de reprocessamento/reparo e/ou consumo relativo aos Registros K260/K265;\n 5 – correção de apontamento de movimentação interna relativo ao Registro K220.\n 6 – correção de apontamento de produção relativo ao Registro K291;\n 7 – correção de apontamento de consumo relativo ao Registro K292;\n 8 – correção de apontamento de produção relativo ao Registro K301;\n 9 – correção de apontamento de consumo relativo ao Registro K302.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

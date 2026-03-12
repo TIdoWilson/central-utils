@@ -1,0 +1,104 @@
+{
+  "registro": {
+    "codigo": "F800",
+    "titulo": "Registro F800 da EFD-Contribuições (Créditos Decorrentes de Eventos de Incorporação, Fusão e Cisão)",
+    "bloco": "3.5) Bloco F (Demais documentos e operações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=480"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:03:22.684999+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"F800\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_NAT_EVEN",
+      "descricao": "Indicador da Natureza do Evento de Sucessão:\n01 – Incorporação;\n02 – Fusão;\n03 – Cisão Total;\n04 – Cisão Parcial;\n99 – Outros.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_EVEN",
+      "descricao": "Data do Evento",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "CNPJ_SUCED",
+      "descricao": "CNPJ da Pessoa Jurídica Sucedida",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "PA_CONT_CRED",
+      "descricao": "Período de Apuração do Crédito – Mês/Ano (MM/AAAA)",
+      "tipo": "N",
+      "tamanho": "006*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_CRED",
+      "descricao": "Código do crédito transferido, conforme Tabela 4.3.6",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_CRED_PIS",
+      "descricao": "Valor do Crédito Transferido de PIS/Pasep",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_CRED_COFINS",
+      "descricao": "Valor do Crédito Transferido de Cofins",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "PER_CRED_CIS",
+      "descricao": "Percentual do crédito original transferido, no caso de evento de Cisão.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "N"
+    }
+  ]
+}

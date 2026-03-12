@@ -1,0 +1,145 @@
+{
+  "registro": {
+    "codigo": "K100",
+    "titulo": "Registro K100: Relação das Empresas Consolidadas",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "K100",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-k.htm#K100"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:29:19.611884+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nK100",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"K100\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PAIS",
+      "descricao": "Código do\npaís da\nempresa,\nconforme\ntabela do\nBanco Central\ndo Brasil",
+      "tipo": "N",
+      "tamanho": "5",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Empresa da grade Registro K100 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "EMP_COD",
+      "descricao": "Código de\nidentificação\nda empresa\nparticipante",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Código País da grade Registro K100 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "CNPJ",
+      "descricao": "CNPJ",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Campo CNPJ inicial da grade Registro K100 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NOME",
+      "descricao": "Nome\nempresarial",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Nome Empresa da grade Registro K100 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "PER_PART",
+      "descricao": "Percentual de\nparticipação\ntotal do\nconglomerado\nna empresa no\nfinal do\nperíodo\nconsolidado",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "4",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Percentual Participação da grade Registro K100 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "EVENTO",
+      "descricao": "Evento\nsocietário\nocorrido no\nperíodo:\n S - Sim\n N – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Evento Socientário da grade Registro K100 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "PER_CONS",
+      "descricao": "Percentual de\nconsolidação\nda empresa no\nfinal do\nperíodo\nconsolidado",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "4",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Percentual da Consolidação da grade Registro K100 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "DATA_INI_EM\nP",
+      "descricao": "Data inicial do\nperíodo da\nescrituração\ncontábil da\nempresa que\nfoi\nconsolidada",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Data Início da grade Registro K100 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "DATA_FIN_E\nMP",
+      "descricao": "Data final do\nperíodo da\nescrituração\ncontábil da\nempresa que\nfoi\nconsolidada",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Data Final da grade Registro K100 da guia Registro K030 da tela de entrada"
+      }
+    }
+  ]
+}

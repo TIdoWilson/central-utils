@@ -1,0 +1,121 @@
+{
+  "registro": {
+    "codigo": "K300",
+    "titulo": "Registro K300: Saldos das Contas Consolidadas",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "K300",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-k.htm#K300"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:29:19.614885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nK300",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"K300\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta\nconsolidada",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VAL_AG",
+      "descricao": "Valor absoluto\naglutinado",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E650SAL.SALMES"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_VAL\n_AG",
+      "descricao": "Indicador da\nsituação do valor\naglutinado:\n D – Devedor\n C – Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se E650SAL.SALMES for negativo recebe C, senão recebe D"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VAL_EL",
+      "descricao": "Valor absoluto\ndas eliminações",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E650ELI.SALELI"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "IND_VAL\n_EL",
+      "descricao": "Indicador da\nsituação do valor\neliminado:\n D – Devedor\n C – Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se E650ELI.SALELI for negativo recebe C, senão recebe D"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VAL_CS",
+      "descricao": "Valor absoluto\nconsolidado:\nVAL_CS =\nVAL_AG –\nVAL_EL",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "VAL_AG – VAL_EL"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "IND_VAL\n_CS",
+      "descricao": "Indicador da\nsituação do valor\nconsolidado:\n D – Devedor\n C – Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se VAL_CS for negativo recebe C, senão recebe D"
+      }
+    }
+  ]
+}

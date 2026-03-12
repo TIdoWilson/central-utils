@@ -1,0 +1,114 @@
+{
+  "registro": {
+    "codigo": "G110",
+    "id_guia": "154",
+    "titulo": "Registro G110 da EFD-ICMS/IPI (ICMS - Ativo Permanente - CIAP)",
+    "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=154"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:07:51.036582+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"G110\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI",
+      "descricao": "Data inicial a que se refere a apuração.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN",
+      "descricao": "Data final a que se refere a apuração.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "SALDO_IN_ICMS",
+      "descricao": "Saldo inicial de ICMS do CIAP, composto por ICMS de bens que entraram anteriormente ao período de apuração (somatório dos campos 05 a 08 do Registro G125).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "SOM_PARC",
+      "descricao": "Somatório das parcelas de ICMS passível de apropriação de cada bem (campo 10 do Registro G125).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_TRIB_EXP",
+      "descricao": "Valor do somatório das saídas tributadas e saídas para exportação.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_TOTAL",
+      "descricao": "Valor total de saídas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "IND_PER_SAI",
+      "descricao": "Índice de participação do valor do somatório das saídas tributadas e saídas para exportação no valor total de saídas (campo 06 dividido pelo campo 07).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "08",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "ICMS_APROP",
+      "descricao": "Valor de ICMS a ser apropriado na Apuração do ICMS, correspondente á multiplicação do campo 05 pelo campo 08.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "SOM_ICMS_OC",
+      "descricao": "Valor de outros créditos a ser apropriado na Apuração do ICMS, correspondente ao somatório do campo 09 do Registro G126.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "K100",
+    "id_guia": "205",
+    "titulo": "Registro K100 da EFD-ICMS/IPI (Período de Apuração do ICMS/IPI)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=205"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:07:51.076997+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K100\".",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI",
+      "descricao": "Data inicial a que a apuração se refere.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN",
+      "descricao": "Data final a que a apuração se refere.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

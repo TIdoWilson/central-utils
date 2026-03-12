@@ -1,6 +1,48 @@
 {
-  "generatedAt": "2026-02-13T10:45:12.852Z",
+  "generatedAt": "2026-03-10T14:04:54.470Z",
   "groups": [
+    {
+      "group": "Admin",
+      "tools": [
+        {
+          "slug": "checklist-ti-criacao-usuario",
+          "title": "Checklist TI Criacao de Usuario",
+          "path": "/checklist-ti-criacao-usuario",
+          "hasApi": true,
+          "apiBase": "/api/checklist-ti-criacao-usuario",
+          "adminOnly": true,
+          "aliases": []
+        }
+      ]
+    },
+    {
+      "group": "Declaracoes",
+      "tools": [
+        {
+          "slug": "giast",
+          "title": "GIAST",
+          "path": "/giast",
+          "hasApi": true,
+          "apiBase": "/api/giast",
+          "adminOnly": false,
+          "aliases": []
+        }
+      ]
+    },
+    {
+      "group": "Fiscal",
+      "tools": [
+        {
+          "slug": "speds",
+          "title": "SPEDS",
+          "path": "/speds",
+          "hasApi": true,
+          "apiBase": "/api/speds",
+          "adminOnly": false,
+          "aliases": []
+        }
+      ]
+    },
     {
       "group": "Geral",
       "tools": [
@@ -50,6 +92,15 @@
           "aliases": []
         },
         {
+          "slug": "cadastro-empresas-brasilapi",
+          "title": "Cadastro de Empresas (BrasilAPI)",
+          "path": "/cadastro-empresas-brasilapi",
+          "hasApi": true,
+          "apiBase": "/api/cadastro-empresas-brasilapi",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
           "slug": "calculadora-icms-st",
           "title": "Calculadora ICMS ST",
           "path": "/calculadora-icms-st",
@@ -68,6 +119,17 @@
           "aliases": []
         },
         {
+          "slug": "conciliador-cartao-tipo50",
+          "title": "Conciliador Cartao Tipo 50",
+          "path": "/conciliador-cartao-tipo50",
+          "hasApi": true,
+          "apiBase": "/api/conciliador-cartao-tipo50",
+          "adminOnly": false,
+          "aliases": [
+            "conciliador-cartao-wilson"
+          ]
+        },
+        {
           "slug": "conciliador-cartao-wilson",
           "title": "Conciliador Cartao Wilson",
           "path": "/conciliador-cartao-wilson",
@@ -82,6 +144,15 @@
           "path": "/conciliador-hausen-ocean",
           "hasApi": true,
           "apiBase": "/api/conciliador-hausen-ocean",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "conciliador-pis-cofins",
+          "title": "Conciliador PIS-COFINS",
+          "path": "/conciliador-pis-cofins",
+          "hasApi": true,
+          "apiBase": "/api/conciliador-pis-cofins",
           "adminOnly": false,
           "aliases": []
         },
@@ -271,6 +342,29 @@
           "path": "/tareffa-empresas-lote",
           "hasApi": true,
           "apiBase": "/api/tareffa-empresas-lote",
+          "adminOnly": false,
+          "aliases": []
+        }
+      ]
+    },
+    {
+      "group": "Pessoal",
+      "tools": [
+        {
+          "slug": "cartao-horas-iob",
+          "title": "Cartao Horas IOB",
+          "path": "/cartao-horas-iob",
+          "hasApi": true,
+          "apiBase": "/api/cartao-horas-iob",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "comparador-eventos-holerite",
+          "title": "Comparador Eventos Holerite",
+          "path": "/comparador-eventos-holerite",
+          "hasApi": true,
+          "apiBase": "/api/comparador-eventos-holerite",
           "adminOnly": false,
           "aliases": []
         }

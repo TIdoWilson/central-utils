@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "C053",
+    "titulo": "REGISTRO C053: SUBCONTAS CORRELATAS",
+    "bloco_origem": "bloco-c.htm",
+    "ancora": "C053",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-c.htm#C053"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.806836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (C053)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[C053]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_INT",
+      "descricao": "Código de Identificação do Grupo de Conta-Subconta(a)",
+      "tipo": "C",
+      "tamanho": "6",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CNT_CORR",
+      "descricao": "Código da Subconta Correlata (Deve estar no plano de contas)",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "NAT_SUB_CNT",
+      "descricao": "Natureza da Subconta Correlata",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    }
+  ]
+}

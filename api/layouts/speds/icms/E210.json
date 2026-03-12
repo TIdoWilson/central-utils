@@ -1,0 +1,159 @@
+{
+  "registro": {
+    "codigo": "E210",
+    "id_guia": "143",
+    "titulo": "Registro E210 da EFD-ICMS/IPI (Apuração do ICMS - Substituição Tributária)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=143"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 15,
+    "extraido_em_utc": "2026-03-10T19:07:50.786053+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E210\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_MOV_ST",
+      "descricao": "Indicador de movimento:\n 0: Sem operações com ST;\n 1: Com operações de ST.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_SLD_CRED_ANT_ST",
+      "descricao": "Valor do \"Saldo credor de período anterior - Substituição Tributária\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_DEVOL_ST",
+      "descricao": "Valor total do ICMS-ST de devolução de mercadorias.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_RESSARC_ST",
+      "descricao": "Valor total do ICMS-ST de ressarcimentos.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_OUT_CRED_ST",
+      "descricao": "Valor total de Ajustes \"Outros créditos ST\" e \"Estorno de débitos ST\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_AJ_CREDITOS_ST",
+      "descricao": "Valor total dos ajustes a crédito de ICMS-ST, provenientes de ajustes do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_RETENCAO_ST",
+      "descricao": "Valor Total do ICMS retido por Substituição Tributária.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_OUT_DEB_ST",
+      "descricao": "Valor Total dos ajustes \"Outros débitos ST\" \" e \"Estorno de créditos ST\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_AJ_DEBITOS_ST",
+      "descricao": "Valor total dos ajustes a débito de ICMS-ST, provenientes de ajustes do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_SLD_DEV_ANT_ST",
+      "descricao": "Valor total de Saldo devedor antes das deduções.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_DEDUCOES_ST",
+      "descricao": "Valor total dos ajustes \"Deduções ST\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_ICMS_RECOL_ST",
+      "descricao": "Imposto a recolher ST (11-12).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_SLD_CRED_ST_TRANSPORTAR",
+      "descricao": "Saldo credor de ST a transportar para o período seguinte [(03+04+05+06+07+12) - (08+09+10)].",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "15",
+      "campo": "DEB_ESP_ST",
+      "descricao": "Valores recolhidos ou a recolher, extra-apuração.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

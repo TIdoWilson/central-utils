@@ -1,0 +1,159 @@
+{
+  "registro": {
+    "codigo": "E110",
+    "id_guia": "136",
+    "titulo": "Registro E110 da EFD-ICMS/IPI (Apuração do ICMS - Operações próprias)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=136"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 15,
+    "extraido_em_utc": "2026-03-10T19:07:50.632473+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E110\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_TOT_DEBITOS",
+      "descricao": "Valor total dos débitos por \"Saídas e prestações com débito do imposto\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_AJ_DEBITOS",
+      "descricao": "Valor total dos ajustes a débito decorrentes do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_TOT_AJ_DEBITOS",
+      "descricao": "Valor total de \"Ajustes a débito\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_ESTORNOS_CRED",
+      "descricao": "Valor total de Ajustes \"Estornos de créditos\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_TOT_CREDITOS",
+      "descricao": "Valor total dos créditos por \"Entradas e aquisições com crédito do imposto\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_AJ_CREDITOS",
+      "descricao": "Valor total dos ajustes a crédito decorrentes do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_TOT_AJ_CREDITOS",
+      "descricao": "Valor total de \"Ajustes a crédito\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_ESTORNOS_DEB",
+      "descricao": "Valor total de Ajustes \"Estornos de Débitos\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_SLD_CREDOR_ANT",
+      "descricao": "Valor total de \"Saldo credor do período anterior\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_SLD_APURADO",
+      "descricao": "Valor do saldo devedor apurado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_TOT_DED",
+      "descricao": "Valor total de \"Deduções\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_ICMS_RECOLHER",
+      "descricao": "Valor total de \"ICMS a recolher\" (11-12).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_SLD_CREDOR_TRANSPORTAR",
+      "descricao": "Valor total de \"Saldo credor a transportar para o período seguinte\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "15",
+      "campo": "DEB_ESP",
+      "descricao": "Valores recolhidos ou a recolher, extra-apuração.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

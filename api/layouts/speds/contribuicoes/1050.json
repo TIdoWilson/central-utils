@@ -1,0 +1,194 @@
+{
+  "registro": {
+    "codigo": "1050",
+    "titulo": "Registro 1050 da EFD-Contribuições (Detalhamento de Ajustes de Base de Cálculo – Valores Extra Apuração)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=535"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 19,
+    "extraido_em_utc": "2026-03-10T19:03:23.186523+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1050\"",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_REF",
+      "descricao": "Data de referência do ajuste (ddmmaaaa)",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_AJ_BC",
+      "descricao": "Indicador da natureza do ajuste da base de cálculo, conforme Tabela Externa 4.3.18",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "CNPJ",
+      "descricao": "CNPJ do estabelecimento a que se refere o ajuste",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_AJ_TOT",
+      "descricao": "Valor total do ajuste",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_AJ_CST01",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 01",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_AJ_CST02",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 02",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_AJ_CST03",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 03",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_AJ_CST04",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 04",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_AJ_CST05",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 05",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_AJ_CST06",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 06",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_AJ_CST07",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 07",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_AJ_CST08",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 08",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_AJ_CST09",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 09",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_AJ_CST49",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 49",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_AJ_CST99",
+      "descricao": "Parcela do ajuste a apropriar na base de cálculo referente ao CST 99",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "17",
+      "campo": "IND_APROP",
+      "descricao": "Indicador de apropriação do ajuste:\n01 – Referente ao PIS/Pasep e a Cofins\n02 – Referente unicamente ao PIS/Pasep\n03 – Referente unicamente à Cofins",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "18",
+      "campo": "NUM_REC",
+      "descricao": "Número do recibo da escrituração a que se refere o ajuste",
+      "tipo": "C",
+      "tamanho": "80",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "19",
+      "campo": "INFO_COMPL",
+      "descricao": "Informação complementar do registro",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "registro": {
+    "codigo": "J801",
+    "titulo": "REGISTRO J801: Termo de Verificação para Fins de Substituição da ECD",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "J801",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#J801"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:29:19.604885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nJ801",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo J801."
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "TIPO_DOC",
+      "descricao": "Tipo de documento:\n001: Termo de Verificação para Fins Substituição da CD",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, campo Tipo de documento da guia Registro J801."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESC_RTF",
+      "descricao": "Descrição do arquivo\n.rtf",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "COD_MOT_SUBS",
+      "descricao": "Código do motivo da substituição:\n001 - Mudanças de saldos das contas que não podem ser realizadas por meio de lançamentos extemporâneos\n002 - Alteração de assinatura\n003 - Alteração de demonstrações contábeis\n004 - Alteração da forma de escrituração contábil\n005 - Alteração do número do livro\n099 - Outros \n Observação: o código a ser adotado deve ser aquele cujo motivo é o preponderante na substituição da ECD.",
+      "tipo": "C",
+      "tamanho": "010",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, campo Motivo da Substituição da guia Registro J801."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "HASH_RTF",
+      "descricao": "Hash do arquivo .rtf\nincluído. \n Observação: o HASH é preenchido automaticamente pelo sistema (não é editável e não pode ser alterado).",
+      "tipo": "C",
+      "tamanho": "041",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "-"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "ARQ_RTF",
+      "descricao": "Sequência de bytes que\nrepresentem um\núnico arquivo no\nformato RTF (Rich Text Format).",
+      "tipo": "C",
+      "tamanho": "Não existe limite de tamanho",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "IND_FIM_RTF",
+      "descricao": "Indicador de fim do arquivo RTF. Texto\nfixo contendo\nJ801FIM.",
+      "tipo": "C",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J801FIM."
+      }
+    }
+  ]
+}

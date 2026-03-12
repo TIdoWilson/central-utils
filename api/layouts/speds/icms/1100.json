@@ -1,0 +1,132 @@
+{
+  "registro": {
+    "codigo": "1100",
+    "id_guia": "167",
+    "titulo": "Registro 1100 da EFD-ICMS/IPI (Registro de informações sobre exportação)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=167"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 12,
+    "extraido_em_utc": "2026-03-10T19:07:51.337462+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1100\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_DOC",
+      "descricao": "Informe o tipo de documento:\n 0: Declaração de Exportação (DE);\n 1: Declaração Simplificada de Exportação (DSE);\n 2: Declaração Única de Exportação.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "NRO_DE",
+      "descricao": "Número da declaração.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "DT_DE",
+      "descricao": "Data da declaração (DDMMAAAA).",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "NAT_EXP",
+      "descricao": "Preencher com:\n 0: Exportação Direta;\n 1: Exportação Indireta.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "NRO_RE",
+      "descricao": "Número do RE.",
+      "tipo": "N",
+      "tamanho": "012",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "DT_RE",
+      "descricao": "Data do RE (DDMMAAAA).",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "CHC_EMB",
+      "descricao": "Número do Conhecimento de Embarque.",
+      "tipo": "C",
+      "tamanho": "018",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "DT_CHC",
+      "descricao": "Data do Conhecimento de Embarque (DDMMAAAA).",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "DT_AVB",
+      "descricao": "Data da averbação da DE (DDMMAAAA).",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "TP_CHC",
+      "descricao": "Informação do tipo de conhecimento de embarque:\n 01: AWB;\n 02: MAWB;\n 03: HAWB;\n 04: COMAT;\n 06: R. EXPRESSAS;\n 07: ETIQ. REXPRESSAS;\n 08: HR. EXPRESSAS;\n 09: AV7;\n 10: BL;\n 11: MBL;\n 12: HBL;\n 13: CRT;\n 14: DSIC;\n 16: COMAT BL;\n 17: RWB;\n 18: HRWB;\n 19: TIF/DTA;\n 20: CP2;\n 91: NÂO IATA;\n 92: MNAO IATA;\n 93: HNAO IATA;\n 99: OUTROS.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "PAIS",
+      "descricao": "Código do País de destino da mercadoria (Preencher conforme Tabela do Siscomex).",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

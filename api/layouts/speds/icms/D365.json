@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "D365",
+    "id_guia": "116",
+    "titulo": "Registro D365 da EFD-ICMS/IPI (Registro dos totalizadores parciais da Redução Z (Códigos 2E, 13, 14, 15 e 16))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=116"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saídas"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:07:50.321574+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D365\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_TOT_PAR",
+      "descricao": "Código do totalizador, conforme Tabela 4.4.6 .",
+      "tipo": "C",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VLR_ACUM_TOT",
+      "descricao": "Valor acumulado no totalizador, relativo à respectiva Redução Z.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "NR_TOT",
+      "descricao": "Número do totalizador quando ocorrer mais de uma situação com a mesma carga tributária efetiva.",
+      "tipo": "N",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "DESCR_NR_TOT",
+      "descricao": "Descrição da situação tributária relativa ao totalizador parcial, quando houver mais de um com a mesma carga tributária efetiva.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

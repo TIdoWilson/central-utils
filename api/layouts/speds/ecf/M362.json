@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "M362",
+    "titulo": "REGISTRO M362: CONTAS CONTÁBEIS RELACIONADAS AO LANÇAMENTO DA PARTE A DO e-LACS",
+    "bloco_origem": "bloco-m.htm",
+    "ancora": "m362",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m362"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.848837+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “M362”.",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo do Registro",
+        "DOCUMENTAÇÃO": "\"M362\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_LCTO",
+      "descricao": "Número do lançamento descrito na ECD (Escrituração Contábil Digital) no campo 2 (NUM_LCTO) registro “I200 – Lançamento Contábil”.",
+      "tipo": "C",
+      "tamanho": "50",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Número do Lançamento",
+        "DOCUMENTAÇÃO": "E664CBL.NUMLCT"
+      }
+    }
+  ]
+}

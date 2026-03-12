@@ -1,0 +1,42 @@
+{
+  "registro": {
+    "codigo": "B001",
+    "id_guia": "318",
+    "titulo": "Registro B001 da EFD-ICMS/IPI (Abertura do Bloco B)",
+    "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=318"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:48.839569+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"B001\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_DAD",
+      "descricao": "Indicador de movimento:\n 0: \"Bloco\" com dados informados;\n 1: \"Bloco\" sem dados informados.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

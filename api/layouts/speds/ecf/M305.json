@@ -1,0 +1,77 @@
+{
+  "registro": {
+    "codigo": "M305",
+    "titulo": "REGISTRO M305: CONTA DA PARTE B DO e-LALUR",
+    "bloco_origem": "bloco-m.htm",
+    "ancora": "m305",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m305"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.841836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “M305”",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"M305\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA_B",
+      "descricao": "Código da Conta na Parte B: Código unívoco atribuído pelo contribuinte à conta no e-Lalur no registro M010",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta da Parte B",
+        "DOCUMENTAÇÃO": "E664LCB.CODCON"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VL_CTA",
+      "descricao": "Valor total dos lançamentos adicionados ou excluídos da conta \nRegra: Valor deve ser menor ou igual ao saldo disponível do mesmo período de apuração da conta na parte B do registro M410.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor Total dos Lançamentos",
+        "DOCUMENTAÇÃO": "E664LCB.VLRLCT"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_ VL_CTA",
+      "descricao": "Indicador do Valor Total dos Lançamentos:\nD – Para prejuízos ou valores que reduzam o lucro real em períodos subsequentes.\nC – Para valores que aumentam o lucro real em períodos subsequentes.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do Lançamento",
+        "DOCUMENTAÇÃO": "Se o valor do saldo em E664LCB.VLRLCT for maior ou igual a 0\n- Deverá receber \"D\"\nSenão\n-Deverá receber \"C\""
+      }
+    }
+  ]
+}

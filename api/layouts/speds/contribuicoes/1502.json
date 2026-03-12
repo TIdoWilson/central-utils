@@ -1,0 +1,59 @@
+{
+  "registro": {
+    "codigo": "1502",
+    "titulo": "Registro 1502 da EFD-Contribuições (Detalhamento do Crédito Extemporâneo Vinculado a Mais de Um Tipo de Receita – Cofins)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=545"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:03:23.312168+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1502\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_CRED_COFINS_TRIB_MI",
+      "descricao": "Parcela do Crédito de COFINS, vinculada a Receita Tributada no Mercado Interno",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_CRED_COFINS_NT_MI",
+      "descricao": "Parcela do Crédito de COFINS, vinculada a Receita Não Tributada no Mercado Interno",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_CRED_COFINS_ EXP",
+      "descricao": "Parcela do Crédito de COFINS, vinculada a Receita de Exportação",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    }
+  ]
+}

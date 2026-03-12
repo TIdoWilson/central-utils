@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "D101",
+    "id_guia": "234",
+    "titulo": "Registro D101 da EFD-ICMS/IPI (Informação complementar dos documentos fiscais quando das prestações interestaduais destinadas a consumidor final não contribuinte EC 87/15 (códigos 57, 63 e 67))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=234"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saídas"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:50.093601+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D101\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "VL_FCP_UF_DEST",
+      "descricao": "Valor total relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "03",
+      "campo": "VL_ICMS_UF_DEST",
+      "descricao": "Valor total do ICMS Interestadual para a UF de destino.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "04",
+      "campo": "VL_ICMS_UF_REM",
+      "descricao": "Valor total do ICMS Interestadual para a UF do remetente.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "K292",
+    "id_guia": "307",
+    "titulo": "Registro K292 da EFD-ICMS/IPI (Produção conjunta - Insumos consumidos)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=307"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:07:51.324465+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K292\".",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_ITEM",
+      "descricao": "Código do insumo/componente consumido (campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "60",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QTD",
+      "descricao": "Quantidade consumida.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "6",
+      "obrigatorio": "O"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "registro": {
+    "codigo": "9001",
+    "titulo": "REGISTRO 9001: ABERTURA DO BLOCO 9",
+    "bloco_origem": "bloco-9.htm",
+    "ancora": "9001",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-9.htm#9001"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.955820+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (9001)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[9001]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_DAD",
+      "descricao": "Indicador de movimento: \n0 - Bloco com dados informados; \n1 - Bloco sem dados informados.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[0;1]"
+      }
+    }
+  ]
+}

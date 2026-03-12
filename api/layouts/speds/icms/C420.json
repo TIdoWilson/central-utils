@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "C420",
+    "id_guia": "73",
+    "titulo": "Registro C420 da EFD-ICMS/IPI (Registro dos totalizadores parciais da Redução Z (Código 02, 2D e 60))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=73"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:07:49.629815+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C420\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_TOT_PAR",
+      "descricao": "Código do totalizador, conforme Tabela 4.4.6.",
+      "tipo": "C",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VLR_ACUM_TOT",
+      "descricao": "Valor acumulado no totalizador, relativo à respectiva Redução Z.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "NR_TOT",
+      "descricao": "Número do totalizador quando ocorrer mais de uma situação com a mesma carga tributária efetiva.",
+      "tipo": "N",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "DESCR_NR_TOT",
+      "descricao": "Descrição da situação tributária relativa ao totalizador parcial, quando houver mais de um com a mesma carga tributária efetiva.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

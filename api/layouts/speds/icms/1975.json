@@ -1,0 +1,69 @@
+{
+  "registro": {
+    "codigo": "1975",
+    "id_guia": "316",
+    "titulo": "Registro 1975 da EFD-ICMS/IPI (GIAF 3 - Guia de Informação e Apuração de Incentivos Fiscais e Financeiros: Importação (Saídas intermas por faixa de alíquota))",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=316"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:07:51.709844+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1975\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "ALIQ_IMP_BASE",
+      "descricao": "Alíquota incidente sobre as importações-base.",
+      "tipo": "N",
+      "tamanho": "-*",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "G3_10",
+      "descricao": "Saídas incentivadas de PI.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "G3_11",
+      "descricao": "Importações-base para o crédito presumido.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "G3_12",
+      "descricao": "Crédito presumido nas saídas internas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

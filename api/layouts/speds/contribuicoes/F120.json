@@ -1,0 +1,185 @@
+{
+  "registro": {
+    "codigo": "F120",
+    "titulo": "Registro F120 da EFD-Contribuições (Bens Incorporados ao Ativo Imobilizado – Operações Geradoras de Créditos com Base nos Encargos de Depreciação e Amortização)",
+    "bloco": "3.5) Bloco F (Demais documentos e operações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=459"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 18,
+    "extraido_em_utc": "2026-03-10T19:03:22.519282+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"F120\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "NAT_BC_CRED",
+      "descricao": "Código da Base de Cálculo do Crédito sobre Bens Incorporados ao Ativo Imobilizado, conforme a Tabela indicada no item 4.3.7:\n09 = Crédito com Base nos Encargos de Depreciação;\n11 = Crédito com Base nos Encargos de Amortização",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IDENT_BEM_IMOB",
+      "descricao": "Identificação dos Bens/Grupo de Bens Incorporados ao Ativo Imobilizado:\n01 = Edificações e Benfeitorias em Imóveis Próprios;\n02 = Edificações e Benfeitorias em Imóveis de Terceiros;\n03 = Instalações;\n04 = Máquinas;\n05 = Equipamentos;\n06 = Veículos;\n99 = Outros.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "IND_ORIG_CRED",
+      "descricao": "Indicador da origem do bem incorporado ao ativo imobilizado, gerador de crédito:\n0 – Aquisição no Mercado Interno\n1 – Aquisição no Mercado Externo (Importação)",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "IND_UTIL_BEM_IMOB",
+      "descricao": "Indicador da Utilização dos Bens Incorporados ao Ativo Imobilizado:\n1 – Produção de Bens Destinados a Venda;\n2 – Prestação de Serviços;\n3 – Locação a Terceiros;\n9 – Outros.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_OPER_DEP",
+      "descricao": "Valor do Encargo de Depreciação/Amortização Incorrido no Período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "PARC_OPER_NAO_BC_CRED",
+      "descricao": "Parcela do Valor do Encargo de Depreciação/Amortização a excluir da base de cálculo de Crédito",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_BC_PIS",
+      "descricao": "Base de cálculo do Crédito de PIS/PASEP no período (06 – 07)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_PIS",
+      "descricao": "Valor do Crédito de PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente a COFINS, conforme a Tabela indicada no item 4.3.4.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Base de Cálculo do Crédito da COFINS no período (06 – 07)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da COFINS (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_COFINS",
+      "descricao": "Valor do crédito da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "16",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "17",
+      "campo": "COD_CCUS",
+      "descricao": "Código do Centro de Custos",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "18",
+      "campo": "DESC_ BEM_IMOB",
+      "descricao": "Descrição complementar do bem ou grupo de bens, com crédito apurado com base nos encargos de depreciação ou amortização.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "registro": {
+    "codigo": "B440",
+    "id_guia": "325",
+    "titulo": "Registro B440 da EFD-ICMS/IPI (Totalização dos valores retidos)",
+    "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=325"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:07:48.849574+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"B440\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "IND_OPER",
+      "descricao": "Indicador do tipo de operação: \n0- Aquisição; \n1- Prestação.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "03",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n- do prestador, no caso de aquisição de serviço pelo declarante;\n- do tomador, no caso de prestação de serviço pelo declarante.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "04",
+      "campo": "VL_CONT_RT",
+      "descricao": "Totalização do Valor Contábil das prestações e/ou aquisições do declarante pela combinação de tipo de operação e participante.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "05",
+      "campo": "VL_BC_ISS_RT",
+      "descricao": "Totalização do Valor da base de cálculo de retenção do ISS das prestações e/ou aquisições do declarante pela combinação de tipo de operação e participante.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "06",
+      "campo": "VL_ISS_RT",
+      "descricao": "Totalização do Valor do ISS retido pelo tomador das prestações e/ou aquisições do declarante pela combinação de tipo de operação e participante..",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    }
+  ]
+}

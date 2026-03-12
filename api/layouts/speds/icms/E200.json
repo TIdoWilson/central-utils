@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "E200",
+    "id_guia": "142",
+    "titulo": "Registro E200 da EFD-ICMS/IPI (Período de Apuração do ICMS - Substituição Tributária)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=142"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:50.702577+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E200\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "UF",
+      "descricao": "Sigla da UF a que se refere a apuração do ICMS-ST.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_INI",
+      "descricao": "Data inicial a que a apuração se refere a apuração do ICMS-ST.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "DT_FIN",
+      "descricao": "Data final a que a apuração se refere a apuração do ICMS-ST.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

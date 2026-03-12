@@ -1,29 +1,7 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-02-12T22:15:10.281Z",
+  "generatedAt": "2026-03-10T14:04:53.508Z",
   "tools": [
-    {
-      "slug": "cartao-horas-iob",
-      "title": "Cartao Horas IOB",
-      "group": "Pessoal",
-      "hasPage": true,
-      "hasApi": true,
-      "apiBase": "/api/cartao-horas-iob",
-      "adminOnly": false,
-      "aliases": [],
-      "sharedApisUsed": []
-    },
-    {
-      "slug": "comparador-eventos-holerite",
-      "title": "Comparador Eventos Holerite",
-      "group": "Pessoal",
-      "hasPage": true,
-      "hasApi": true,
-      "apiBase": "/api/comparador-eventos-holerite",
-      "adminOnly": false,
-      "aliases": [],
-      "sharedApisUsed": []
-    },
     {
       "slug": "acerto-lotes-toscan",
       "title": "Acerto Lotes Toscan",
@@ -80,12 +58,34 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "cadastro-empresas-brasilapi",
+      "title": "Cadastro de Empresas (BrasilAPI)",
+      "group": "Geral",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/cadastro-empresas-brasilapi",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "calculadora-icms-st",
       "title": "Calculadora ICMS ST",
       "group": "Geral",
       "hasPage": true,
       "hasApi": false,
       "apiBase": "/api/calculadora-icms-st",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "cartao-horas-iob",
+      "title": "Cartao Horas IOB",
+      "group": "Pessoal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/cartao-horas-iob",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -102,23 +102,23 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "comparador-eventos-holerite",
+      "title": "Comparador Eventos Holerite",
+      "group": "Pessoal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/comparador-eventos-holerite",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "comprimir-pdf",
       "title": "Comprimir PDF",
       "group": "Geral",
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/comprimir-pdf",
-      "adminOnly": false,
-      "aliases": [],
-      "sharedApisUsed": []
-    },
-    {
-      "slug": "conciliador-cartao-wilson",
-      "title": "Conciliador Cartao Wilson",
-      "group": "Geral",
-      "hasPage": true,
-      "hasApi": true,
-      "apiBase": "/api/conciliador-cartao-wilson",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -137,12 +137,12 @@
       "sharedApisUsed": []
     },
     {
-      "slug": "conciliador-pis-cofins",
-      "title": "Conciliador PIS-COFINS",
+      "slug": "conciliador-cartao-wilson",
+      "title": "Conciliador Cartao Wilson",
       "group": "Geral",
       "hasPage": true,
       "hasApi": true,
-      "apiBase": "/api/conciliador-pis-cofins",
+      "apiBase": "/api/conciliador-cartao-wilson",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -154,6 +154,17 @@
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/conciliador-hausen-ocean",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "conciliador-pis-cofins",
+      "title": "Conciliador PIS-COFINS",
+      "group": "Geral",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/conciliador-pis-cofins",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -220,6 +231,17 @@
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/gerador-atas",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "giast",
+      "title": "GIAST",
+      "group": "Declaracoes",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/giast",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -374,6 +396,17 @@
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/sn",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "speds",
+      "title": "SPEDS",
+      "group": "Fiscal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/speds",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []

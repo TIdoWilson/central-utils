@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "V010",
+    "titulo": "Registro V010 - DEREX - Instituição",
+    "bloco_origem": "bloco-v.htm",
+    "ancora": "v010",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-v.htm#v010"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.888839+00:00"
+  },
+  "campos": [
+    {
+      "numero": "1",
+      "campo": "REG",
+      "descricao": "Texto Fixo Contendo a Identificação do Registro (V010).",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Fixo \"V010\""
+      }
+    },
+    {
+      "numero": "2",
+      "campo": "NOME_INSTITUICAO",
+      "descricao": "Nome da Instituição",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "3",
+      "campo": "PAIS",
+      "descricao": "Código do País da Instituição",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Conforme tabela EFDFINANCEIRA_PAISES"
+      }
+    },
+    {
+      "numero": "4",
+      "campo": "TIP_MOEDA",
+      "descricao": "Deve ser selecionada a moeda utilizada na Declaração",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Conforme tabela SPEDECF_CBC_MOEDA"
+      }
+    }
+  ]
+}

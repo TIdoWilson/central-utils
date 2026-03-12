@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "K115",
+    "titulo": "Registro K115: Empresas Participantes do Evento Societário",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "K115",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-k.htm#K115"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:29:19.612886+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nK115",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"K115\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "EMP_CO\nD_PART",
+      "descricao": "Código da\nempresa\nenvolvida na\noperação",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Empresa da grade Registro K115 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COND_P\nART",
+      "descricao": "Condição da\nempresa\nrelacionada à\noperação:\n 1 – Sucessora;\n 2 – Adquirente;\n 3 – Alienante",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Condição da Empresa da grade Registro K115 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "PER_EVT",
+      "descricao": "Percentual da\nempresa\nparticipante\nenvolvido na\noperação",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Percentual do Evento da grade Registro K115 da guia Registro K030 da tela de entrada"
+      }
+    }
+  ]
+}

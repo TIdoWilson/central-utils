@@ -1,0 +1,59 @@
+{
+  "registro": {
+    "codigo": "0035",
+    "titulo": "Registro 0035 da EFD-Contribuições (Identificação de Sociedade em Conta de Participação – SCP)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=353"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:03:21.604232+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “0035”.",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "02",
+      "campo": "COD_SCP",
+      "descricao": "Identificação da SCP.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "03",
+      "campo": "DESC_SCP",
+      "descricao": "Descrição da SCP.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "04",
+      "campo": "INF_COMP",
+      "descricao": "Informação Complementar.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": ""
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "registro": {
+    "codigo": "M410",
+    "titulo": "REGISTRO M410: LANÇAMENTOS NA CONTA DA PARTE B DO e-LALUR e do e-LACS SEM REFLEXO NA PARTE A",
+    "bloco_origem": "bloco-m.htm",
+    "ancora": "m410",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m410"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:31:56.850841+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “M410”",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"M410\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA_B",
+      "descricao": "Código da conta do lançamento (conta da Parte B)",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta do Lançamento",
+        "DOCUMENTAÇÃO": "E664LCT.CODCON"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_TRIBUTO",
+      "descricao": "Código do tributo:\nI – Imposto de Renda\nC – Contribuição Social sobre o Lucro Líquido",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código do Tributo",
+        "DOCUMENTAÇÃO": "Se o tipo de imposto do imposto E664LCT.CODIMP for 53, 55, 57 ou 59\n- Deverá receber \"I\"\nSe o tipo de imposto do imposto E664LCT.CODIMP for 54, 56, 58 ou 60\n- Deverá receber \"C\""
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VAL_LAN_LALB_PB",
+      "descricao": "Valor do lançamento",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor do Lançamento",
+        "DOCUMENTAÇÃO": "E664LCT.VLRLCT"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_VAL_LAN_LALB_PB",
+      "descricao": "Indicador do lançamento:\nCR – Crédito\nDB – Débito\nPF - Prejuízo do exercício.\nBC - Base de cálculo negativa da CSLL.\nObs.: O indicador PF refere-se ao prejuízo apurado no exercício em curso.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do Lançamento",
+        "DOCUMENTAÇÃO": "E664LCT.INDLCT"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "COD_CTA_B_CTP",
+      "descricao": "Código unívoco da contrapartida (conta da Parte B) \nNão preencher quando:\nIND_VAL_LAN_LALB_PB for igual a “PF” ou “BC”.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta de Contrapartida",
+        "DOCUMENTAÇÃO": "E664LCT.CONCTP"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "HIST_LAN_LALB",
+      "descricao": "Histórico do lançamento",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Histórico",
+        "DOCUMENTAÇÃO": "Deverá receber o histórico montado com os campos E664LCT.CODHPD e E664LCT.CPLLCT"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "IND_LAN_ANT",
+      "descricao": "Lançamento para Realização de Valores Cuja Tributação Tenha Sido Diferida:\nS – Sim\nN – Não\nObservação: Marca-se “Sim” neste campo quando o contribuinte, em período anterior, realizou valores controlados na parte B do e-Lalur/e-Lacs e deve reajustar os saldos das contas em início de período de apuração tributado pelo lucro real.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Realização de Valores cuja Tributação Tenha Sido Diferida",
+        "DOCUMENTAÇÃO": "E664LCT.TRIDEF"
+      }
+    }
+  ]
+}

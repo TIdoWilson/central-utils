@@ -1,0 +1,61 @@
+{
+  "registro": {
+    "codigo": "K110",
+    "titulo": "Registro K110: Relação dos Eventos Societários",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "k110",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-k.htm#k110"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:29:19.611884+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nK110",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"K110\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "EVENTO",
+      "descricao": "Evento\nsocietário\nocorrido no\nperíodo:\n 1 – Aquisição\n 2 – Alienação\n 3 – Fusão\n 4 – Cisão\nParcial\n 5 – Cisão Total\n 6 –\nIncorporação\n 7 – Extinção\n 8 – Constituição",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Código Evento da grade Registro K110 da guia Registro K030 da tela de entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_EVE\nNTO",
+      "descricao": "Data do evento\nsocietário",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo Data Evento da grade Registro K110 da guia Registro K030 da tela de entrada"
+      }
+    }
+  ]
+}

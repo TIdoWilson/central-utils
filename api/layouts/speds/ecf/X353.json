@@ -1,0 +1,104 @@
+{
+  "registro": {
+    "codigo": "X353",
+    "titulo": "REGISTRO X353: DEMONSTRATIVO DE CONSOLIDAÇÃO",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x353",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x353"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:31:56.909342+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X353\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X353\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "RES_NEG_UTIL",
+      "descricao": "Resultado negativo utilizado na consolidação na moeda do país de domicílio.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado Negativo Utilizado",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "RES_NEG_UTIL_REAL",
+      "descricao": "Resultado negativo utilizado na consolidação em reais.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado Negativo Utilizado em Reais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "SALDO_RES_NEG_NAO_UTIL",
+      "descricao": "Saldo do resultado negativo não utilizado na moeda do país de domicílio.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Saldo do Resultado Negativo Não Utilizado",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "SALDO_RES_NEG_NAO_UTIL_REAL",
+      "descricao": "Saldo do resultado negativo não utilizado em reais.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Saldo do Resultado Negativo Não Utilizado em Reais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "RES_PROP",
+      "descricao": "Resultado (positivo ou negativo) próprio da controlada no período na moeda do país de domicílio",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Resultado (positivo ou negativo) Próprio da Controlada no Período na Moeda do País de Domicílio",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

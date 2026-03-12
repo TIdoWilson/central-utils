@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "0460",
+    "id_guia": "17",
+    "titulo": "Registro 0460 da EFD-ICMS/IPI (Tabela de Observações do Lançamento Fiscal)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=17"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:07:48.781570+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0460\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_OBS",
+      "descricao": "Código da Observação do lançamento fiscal.",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "TXT",
+      "descricao": "Descrição da observação vinculada ao lançamento fiscal.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

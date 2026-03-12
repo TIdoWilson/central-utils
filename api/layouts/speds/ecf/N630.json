@@ -1,0 +1,77 @@
+{
+  "registro": {
+    "codigo": "N630",
+    "titulo": "REGISTRO N630: CÁLCULO DO IRPJ COM BASE NO LUCRO REAL",
+    "bloco_origem": "bloco-n.htm",
+    "ancora": "n630",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-n.htm#n630"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.859837+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “N630”",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"N630\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CODIGO",
+      "descricao": "Código de acordo com tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código",
+        "DOCUMENTAÇÃO": "E661ALT.CODLIN"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESCRICAO",
+      "descricao": "Descrição de acordo com tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Descrição",
+        "DOCUMENTAÇÃO": "E661ALT.DESLIN"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VALOR",
+      "descricao": "Valor",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor",
+        "DOCUMENTAÇÃO": "E661ALT.VLRLIN"
+      }
+    }
+  ]
+}

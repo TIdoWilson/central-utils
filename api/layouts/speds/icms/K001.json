@@ -1,0 +1,42 @@
+{
+  "registro": {
+    "codigo": "K001",
+    "id_guia": "204",
+    "titulo": "Registro K001 da EFD-ICMS/IPI (Abertura do Bloco K)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=204"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:51.098630+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K001\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_MOV",
+      "descricao": "Indicador de movimento:\n 0: Bloco com dados informados;\n 1: Bloco sem dados informados.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

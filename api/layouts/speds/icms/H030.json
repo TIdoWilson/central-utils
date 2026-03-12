@@ -1,0 +1,69 @@
+{
+  "registro": {
+    "codigo": "H030",
+    "id_guia": "579",
+    "titulo": "Registro H030 da EFD-ICMS/IPI (Informações complementares do inventário das mercadorias sujeitas ao regime de substituição tributária)",
+    "bloco": "3.7) Bloco H (Inventário físico):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=579"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:07:51.046583+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"H030\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_ICMS_OP",
+      "descricao": "Valor médio unitário do ICMS OP.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_BC_ICMS_ST",
+      "descricao": "Valor médio unitário da base de cálculo do ICMS ST.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_ICMS_ST",
+      "descricao": "Valor médio unitário do ICMS ST.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_FCP",
+      "descricao": "Valor médio unitário do FCP.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    }
+  ]
+}

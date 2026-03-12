@@ -1,0 +1,212 @@
+{
+  "registro": {
+    "codigo": "A100",
+    "titulo": "Registro A100 da EFD-Contribuições (Documento - Nota Fiscal de Serviço)",
+    "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=375"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 21,
+    "extraido_em_utc": "2026-03-10T19:03:21.752317+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"A100\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_OPER",
+      "descricao": "Indicador do tipo de operação:\n0 - Serviço Contratado pelo Estabelecimento;\n1 - Serviço Prestado pelo Estabelecimento.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_EMIT",
+      "descricao": "Indicador do emitente do documento fiscal:\n0 - Emissão Própria;\n1 - Emissão de Terceiros",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n - do emitente do documento, no caso de emissão de terceiros;\n - do adquirente, no caso de serviços prestados.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_SIT",
+      "descricao": "Código da situação do documento fiscal:\n00 – Documento regular\n02 – Documento cancelado",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal",
+      "tipo": "C",
+      "tamanho": "020",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "SUB",
+      "descricao": "Subsérie do documento fiscal",
+      "tipo": "C",
+      "tamanho": "020",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "NUM_DOC",
+      "descricao": "Número do documento fiscal ou documento internacional equivalente",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "CHV_NFSE",
+      "descricao": "Chave/Código de Verificação da nota fiscal de serviço eletrônica",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão do documento fiscal",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "DT_EXE_SERV",
+      "descricao": "Data de Execução / Conclusão do Serviço",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_DOC",
+      "descricao": "Valor total do documento",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "IND_PGTO",
+      "descricao": "Indicador do tipo de pagamento:\n0- À vista;\n1- A prazo;\n9- Sem pagamento.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_DESC",
+      "descricao": "Valor total do desconto",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_BC_PIS",
+      "descricao": "Valor da base de cálculo do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_PIS",
+      "descricao": "Valor total do PIS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "17",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "18",
+      "campo": "VL_COFINS",
+      "descricao": "Valor total da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "19",
+      "campo": "VL_PIS_RET",
+      "descricao": "Valor total do PIS retido na fonte",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "20",
+      "campo": "VL_COFINS_RET",
+      "descricao": "Valor total da COFINS retido na fonte.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "21",
+      "campo": "VL_ISS",
+      "descricao": "Valor do ISS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    }
+  ]
+}

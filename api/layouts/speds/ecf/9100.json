@@ -1,0 +1,228 @@
+{
+  "registro": {
+    "codigo": "9100",
+    "titulo": "REGISTRO 9100: AVISOS DA ESCRITURAÇÃO",
+    "bloco_origem": "bloco-9.htm",
+    "ancora": "9100",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-9.htm#9100"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 17,
+    "extraido_em_utc": "2026-03-10T19:31:56.956820+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (9100).",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[9100]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "NOM_REGRA",
+      "descricao": "Identificação da regra",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "MSG_REGRA",
+      "descricao": "Mensagem: Mensagem associada ao aviso",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "REGISTRO",
+      "descricao": "Registro: Registro onde ocorreu o aviso",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "CAMPO",
+      "descricao": "Campo: Nome do campo no registro onde ocorreu",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "CONTEÚDO",
+      "descricao": "Conteúdo: Conteúdo do campo - Valor preenchido pelo usuário",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VALOR_ESPERADO",
+      "descricao": "Valor Original ou Calculado: Valor original ou calculado que era esperado como conteúdo do campo",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "PER_APUR",
+      "descricao": "Período de Apuração Fiscal",
+      "tipo": "C",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "COD_CTA",
+      "descricao": "Código da Conta",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "COD_CCUS",
+      "descricao": "Centro de Custos",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "COD_CTA_REF",
+      "descricao": "Código da Conta Referencial",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "CODIGO",
+      "descricao": "Código da linha na tabela dinâmica",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "NUM_ORDEM",
+      "descricao": "Número de Ordem (X300)",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "CNPJ_ESTAB",
+      "descricao": "CNPJ do Estabelecimento (Y540)",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "CNAE",
+      "descricao": "CNAE (Y450)",
+      "tipo": "N",
+      "tamanho": "7",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "COD_CTA_B",
+      "descricao": "Código da Conta da Parte B",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "17",
+      "campo": "COD_TRIBUTO",
+      "descricao": "Tributo Relacionado à Conta da Parte B",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    }
+  ]
+}

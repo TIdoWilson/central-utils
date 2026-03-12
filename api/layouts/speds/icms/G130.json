@@ -1,0 +1,105 @@
+{
+  "registro": {
+    "codigo": "G130",
+    "id_guia": "157",
+    "titulo": "Registro G130 da EFD-ICMS/IPI (Identificação do documento fiscal)",
+    "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=157"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:07:50.963234+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"G130\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_EMIT",
+      "descricao": "Indicador do emitente do documento fiscal:\n 0: Emissão própria;\n 1: Terceiros.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_PART",
+      "descricao": "Código do participante:\n- do emitente do documento ou do remetente das mercadorias, no caso de entradas;\n- do adquirente, no caso de saídas.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo de documento fiscal, conforme Tabela 4.1.1.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "SERIE",
+      "descricao": "Série do documento fiscal.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "NUM_DOC",
+      "descricao": "Número de documento fiscal.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "CHV_NFE_CTE",
+      "descricao": "Chave do documento fiscal eletrônico.",
+      "tipo": "N",
+      "tamanho": "044*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "NUM_DA",
+      "descricao": "Número do documento de arrecadação estadual, se houver.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

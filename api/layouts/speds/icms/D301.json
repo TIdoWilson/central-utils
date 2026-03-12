@@ -1,0 +1,46 @@
+{
+  "registro": {
+    "codigo": "D301",
+    "id_guia": "111",
+    "titulo": "Registro D301 da EFD-ICMS/IPI (Documentos Cancelados dos Bilhetes de Passagem Rodoviário (Cód. 13), de Passagem Aquaviário (Cód. 14), de Passagem e Nota de Bagagem (Cód. 15) e de Passagem Ferroviário (Cód. 16))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=111"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:50.537891+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D301\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_DOC_CANC",
+      "descricao": "Número do documento fiscal cancelado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

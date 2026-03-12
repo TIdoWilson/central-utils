@@ -1,0 +1,121 @@
+{
+  "registro": {
+    "codigo": "C050",
+    "titulo": "REGISTRO C050: PLANO DE CONTAS DA ECD",
+    "bloco_origem": "bloco-c.htm",
+    "ancora": "C050",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-c.htm#C050"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:31:56.804836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (C050)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[C050]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_ALT",
+      "descricao": "Data de Atualização (inclusão/alteração)",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_NAT",
+      "descricao": "Código da Natureza da Conta/Grupo de Contas",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_CTA",
+      "descricao": "Indicador do Tipo de Conta:\nS - Sintética (grupo de contas)\nA - Analítica (conta)",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[S; A]"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NÍVEL",
+      "descricao": "Nível da Conta Analítica/Sintética",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "COD_CTA",
+      "descricao": "Código da Conta Analítica/Sintética",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "COD_CTA_SUP",
+      "descricao": "Código da Conta Sintética de Nível Imediatamente Superior",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "CTA",
+      "descricao": "Número da Conta Analítica",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    }
+  ]
+}

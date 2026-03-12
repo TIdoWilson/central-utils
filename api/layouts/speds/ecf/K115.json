@@ -1,0 +1,142 @@
+{
+  "registro": {
+    "codigo": "K115",
+    "titulo": "REGISTRO K155: DETALHES DOS SALDOS CONTÁBEIS (DEPOIS DO ENCERRAMENTO DO RESULTADO DO PERÍODO)",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "k115",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-k.htm#k115"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:31:56.825836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K155\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"K155\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta",
+        "DOCUMENTAÇÃO": "Se na tela de entrada no campo Tipo de \n conta estiver com a opção:\n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta coforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta coforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CCUS",
+      "descricao": "Código do centro de custos",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código Centro Custos",
+        "DOCUMENTAÇÃO": "Quando gerar centro de custos E650SLC.CODCCU"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_SLD_INI",
+      "descricao": "Valor do Saldo Inicial do Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor do Saldo Inicial",
+        "DOCUMENTAÇÃO": "Se \"Tipo de escrituração contábil\" for igual a \"A\",\"Z\" campo recebe E652SAL.SALMES - E652SAL.DEBMES + E652SAL.CREMES senão campo recebe E650SAL.SALMES E650SAL.DEBMES + E650SAL.CREMES \nQuando gerar centro de custos, se \"Tipo de escrituração contábil\" for igual a \"A\",\"Z\" campo recebe E650SLC.SALMES - E650SLC.DEBMES + E650SLC.CREMES senão campo recebe E650SLC.SALMES E650SLC.DEBMES + E650SLC.CREMES"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_VL_SLD_INI",
+      "descricao": "Indicador da Situação do Saldo Inicial: \nD - Devedor\nC - Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Situação do Saldo Inicial",
+        "DOCUMENTAÇÃO": "Se o saldo inicial menor que \"0\" \"C\" senão recebe \"D\"."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_DEB",
+      "descricao": "Valor Total dos Débitos no Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor do Total de Débitos",
+        "DOCUMENTAÇÃO": "Se \"Tipo de escrituração contábil\" for igual a \"A\",\"Z\" campo recebe E652SAL.DEBMES senão campo recebe E650SAL.DEBMES. \nQuando gerar centro de custos, se \"Tipo de escrituração contábil\" for igual a \"A\",\"Z\" campo recebe E652SAL.DEBMES senão campo recebe E650SLC.DEBMES"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_CRED",
+      "descricao": "Valor Total dos Créditos no Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor do Total de Créditos",
+        "DOCUMENTAÇÃO": "Se \"Tipo de escrituração contábil\" for igual a \"A\",\"Z\" campo recebe E652SAL.CREMES senão campo recebe E650SAL.CREMES \nQuando gerar centro de custos, se \"Tipo de escrituração contábil\" for igual a \"A\",\"Z\" campo recebe E652SAL.CREMES senão campo recebe E650SLC.CREMES"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_SLD_FIN",
+      "descricao": "Valor do Saldo Final do Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor do Saldo Final",
+        "DOCUMENTAÇÃO": "Se \"Tipo de escrituração contábil\" for igual a \"A\",\"Z\" campo recebe E652SAL.SALMES senão campo recebe E650SAL.SALMES \nQuando gerar centro de custos, se \"Tipo de escrituração contábil\" for igual a \"A\",\"Z\" campo recebe E652SAL.SALMES senão campo recebe E650SLC.SALMES"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IND_VL_SLD_FIN",
+      "descricao": "Indicador da Situação do Saldo Final: \nD - Devedor\nC - Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Situação do Saldo Final",
+        "DOCUMENTAÇÃO": "Se o saldo inicial menor que \"0\" \"C\", senão recebe \"D\""
+      }
+    }
+  ]
+}

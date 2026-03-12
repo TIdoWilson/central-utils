@@ -1,0 +1,77 @@
+{
+  "registro": {
+    "codigo": "J100",
+    "titulo": "REGISTRO J100: CENTRO DE CUSTOS",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "j100",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-j.htm#j100"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.822836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"J100\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"J100\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_ALT",
+      "descricao": "Data da Inclusão/Alteração",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data da Alteração",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada, filtro Período Inicial"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CCUS",
+      "descricao": "Código do Centro de Custos",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código do Centro de Custos",
+        "DOCUMENTAÇÃO": "E044CCU.CODCCU"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "CCUS",
+      "descricao": "Nome do Centro de Custos",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Nome do Centro de Custos",
+        "DOCUMENTAÇÃO": "E044CCU.DESCCU"
+      }
+    }
+  ]
+}

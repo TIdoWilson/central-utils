@@ -1,0 +1,185 @@
+{
+  "registro": {
+    "codigo": "1100",
+    "titulo": "Registro 1100 da EFD-Contribuições (Controle de Créditos Fiscais – PIS/Pasep)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=536"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 18,
+    "extraido_em_utc": "2026-03-10T19:03:23.208381+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1100\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "PER_APU_CRED",
+      "descricao": "Período de Apuração do Crédito (MM/AAAA)",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "ORIG_CRED",
+      "descricao": "Indicador da origem do crédito:\n01 – Crédito decorrente de operações próprias;\n02 – Crédito transferido por pessoa jurídica sucedida.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "CNPJ_SUC",
+      "descricao": "CNPJ da pessoa jurídica cedente do crédito (se ORIG_CRED = 02).",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_CRED",
+      "descricao": "Código do Tipo do Crédito, conforme Tabela 4.3.6.",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_CRED_APU",
+      "descricao": "Valor total do crédito apurado na Escrituração Fiscal Digital (Registro M100) ou em demonstrativo DACON (Fichas 06A e 06B) de período anterior.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_CRED_EXT_APU",
+      "descricao": "Valor de Crédito Extemporâneo Apurado (Registro 1101), referente a Período Anterior, Informado no Campo 02 – PER_APU_CRED",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_TOT_CRED_APU",
+      "descricao": "Valor Total do Crédito Apurado (06 + 07)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_CRED_DESC_PA_ANT",
+      "descricao": "Valor do Crédito utilizado mediante Desconto, em Período(s) Anterior(es).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_CRED_PER_PA_ANT",
+      "descricao": "Valor do Crédito utilizado mediante Pedido de Ressarcimento, em Período(s) Anterior(es).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_CRED_DCOMP_PA_ANT",
+      "descricao": "Valor do Crédito utilizado mediante Declaração de Compensação Intermediária (Crédito de Exportação), em Período(s) Anterior(es).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "SD_CRED_DISP_EFD",
+      "descricao": "Saldo do Crédito Disponível para Utilização neste Período de Escrituração (08 – 09 – 10 - 11).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_CRED_DESC_EFD",
+      "descricao": "Valor do Crédito descontado neste período de escrituração.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_CRED_PER_EFD",
+      "descricao": "Valor do Crédito objeto de Pedido de Ressarcimento (PER) neste período de escrituração.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_CRED_DCOMP_EFD",
+      "descricao": "Valor do Crédito utilizado mediante Declaração de Compensação Intermediária neste período de escrituração.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_CRED_TRANS",
+      "descricao": "Valor do crédito transferido em evento de cisão, fusão ou incorporação.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "17",
+      "campo": "VL_CRED_OUT",
+      "descricao": "Valor do crédito utilizado por outras formas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "18",
+      "campo": "SLD_CRED_FIM",
+      "descricao": "Saldo de créditos a utilizar em período de apuração futuro (12 – 13 – 14 – 15 – 16 - 17).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    }
+  ]
+}

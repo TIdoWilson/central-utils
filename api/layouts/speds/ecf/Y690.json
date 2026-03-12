@@ -1,0 +1,65 @@
+{
+  "registro": {
+    "codigo": "Y690",
+    "titulo": "REGISTRO Y690: INFORMAÇÕES DE OPTANTES PELO PAES",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y690",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y690"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:31:56.950819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y690\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y690\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "MES",
+      "descricao": "Mês:\n01 - Janeiro\n02 - Fevereiro\n03 - Março\n04 - Abril\n05 - Maio\n06 - Junho\n07 - Julho\n08 - Agosto\n09 - Setembro\n10 - Outubro\n11 - Novembro\n12 - Dezembro",
+      "tipo": "N",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Mês",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VL_REC_BRU",
+      "descricao": "Receita bruta no mês",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Receita Bruta no Mês",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

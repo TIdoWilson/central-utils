@@ -1,0 +1,69 @@
+{
+  "registro": {
+    "codigo": "K235",
+    "id_guia": "209",
+    "titulo": "Registro K235 da EFD-ICMS/IPI (Insumos consumidos)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=209"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:07:51.180692+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K235\".",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_SAIDA",
+      "descricao": "Data de saída do estoque para alocação ao produto.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item componente/insumo (campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "60",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "QTD",
+      "descricao": "Quantidade consumida do item.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "6",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_INS_SUBST",
+      "descricao": "Código do insumo que foi substituído, caso ocorra a substituição (campo 02 do Registro 0210).",
+      "tipo": "C",
+      "tamanho": "60",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

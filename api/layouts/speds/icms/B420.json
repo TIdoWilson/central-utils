@@ -1,0 +1,91 @@
+{
+  "registro": {
+    "codigo": "B420",
+    "id_guia": "324",
+    "titulo": "Registro B420 da EFD-ICMS/IPI (Totalização dos valores de serviços prestados por combinação de alíquota e item da Lista se Serviços da LC 116/2003)",
+    "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=324"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:07:48.885681+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"B420\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "Não\nInfor\nmar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "VL_CONT",
+      "descricao": "Totalização do Valor Contábil das prestações do declarante referente à combinação da alíquota e item da lista.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_BC_ISS",
+      "descricao": "Totalização do Valor da base de cálculo do ISS das prestações do declarante referente à combinação da alíquota e item da lista.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "ALIQ_ISS",
+      "descricao": "Alíquota do ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_ISNT_ISS",
+      "descricao": "Totalização do valor das operações isentas ou não-tributadas pelo ISS referente à combinação da alíquota e item da lista.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_ISS",
+      "descricao": "Totalização, por combinação da alíquota e item da lista, do Valor do ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "COD_SERV",
+      "descricao": "Item da lista de serviços, conforme Tabela 4.6.3.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

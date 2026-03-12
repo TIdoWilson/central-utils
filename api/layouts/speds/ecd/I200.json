@@ -1,0 +1,109 @@
+{
+  "registro": {
+    "codigo": "I200",
+    "titulo": "REGISTRO \n I200: Lançamento Contábil",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I200",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I200"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:29:19.589885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I200.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I200"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_LCTO",
+      "descricao": "Número ou código de identificação única do lançamento contábil.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Como este registro necessita de partida dobrada no registro I250, este campo será preenchido com o número do lote E640LOT.NUMLOT. Para lançamentos sem lote serão feitos lotes diários, sendo que o primeiro lançamento encontrado será colocado neste campo E640LCT.NUMLCT, se o Tipo de escrituração contábil for igual a A campo recebe E642LCT.NUMLCT.\nSe o registro for gerado utilizando lista de prioridades este campo será preenchido da seguinte forma:\n > Lote único : U_ + Número do lote.\n > Lote diário : D_ + Número do lote + _ + Data do lçto.\n > Lançamento : L_ + Numero do lçto.\n > Fato Contábil: F_ + Número do Fato.\n Agrupamento: \n - Mensal: M_ + Data do lçto.\n - Diário: O_ + Data do lçto."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_LCTO",
+      "descricao": "Data do lançamento.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se o campo NUM_LCTO for referente ao lote campo recebe E640LOT.DATLOT, caso seja número do lançamento e Tipo de escrituração contábil for igual a A campo recebe E642LCT.DATLCT, senão campo recebe E640LCT.DATLCT"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_LCTO",
+      "descricao": "Valor do lançamento.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00\nSe Identificador de moeda funcional for igual a não então:\nSe o campo NUM_LCTO for referente ao lote campo recebe a soma das partidas do lote, caso seja número do lançamento o campo recebe soma dos lançamentos diários."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_LCTO",
+      "descricao": "Indicador do tipo de lançamento:\nN - Lançamento normal (todos os lançamentos, exceto os de encerramento das contas de resultado);\nE - Lançamento de encerramento de contas de resultado.\nX – Lançamento extemporâneo.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Caso o campo E640LOT.DESLOT for igual a LOTE ZERAMENTO e o campo E046HPD.TIPHPD for igual a Z o campo recebe E, caso contrário recebe N. \n Será X quando E640LCT.DatExt estiver preenchido."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "DT_LCTO_EXT",
+      "descricao": "Data de ocorrência dos fatos objeto do lançamento extemporâneo. \n Observação: Caso não seja possível precisar a data a que se refiram os fatos do lançamento extemporâneo, informar a data de encerramento do exercício em que ocorreram esses fatos.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "-"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_LCTO_MF",
+      "descricao": "Valor do lançamento em moeda funcional, convertido para reais.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": {
+        "Documentação": "Será E640LCT.DatExt quando o mesmo estiver preenchido, diferente disso será ."
+      }
+    }
+  ]
+}

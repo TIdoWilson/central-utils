@@ -1,0 +1,91 @@
+{
+  "registro": {
+    "codigo": "Y580",
+    "titulo": "REGISTRO Y580: DOAÇÕES A CAMPANHAS ELEITORAIS",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y580",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y580"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:31:56.932820+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y580\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y580\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição no Cadastro Nacional da Pessoa Jurídica (CNPJ) do partido político, do comitê financeiro de partido político ou do candidato a cargo eletivo beneficiário da doação.",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "TIP_BENEF",
+      "descricao": "Tipo de Beneficiário da Doação:\n01 - Candidato a Cargo Eletivo \n02 - Comitê Financeiro \n03 - Partido Político",
+      "tipo": "N",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Beneficiário",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "FORM_DOA",
+      "descricao": "Forma de Doação:\n01 - Cheque \n02 - Transferência Eletrônica \n03 - Depósito em Espécie \n04 - Outros Títulos de Crédito \n05 - Dinheiro \n06 - Bens \n07 - Serviços",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Forma de Doação",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_DOA",
+      "descricao": "Valor da doação efetuada. Caso a doação tenha sido efetuada na forma de bens ou serviços, informar o valor dos bens ou serviços fornecidos.",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "registro": {
+    "codigo": "Y671",
+    "titulo": "REGISTRO Y671: OUTRAS INFORMAÇÕES",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y671",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y671"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 14,
+    "extraido_em_utc": "2026-03-10T19:31:56.945819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y671\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y671\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "VL_AQ_MAQ",
+      "descricao": "Todas as pessoas jurídicas que tenham projeto aprovado para instalação, ampliação, modernização ou diversificação, enquadrado em setores da economia considerados prioritários para o desenvolvimento regional, em microrregiões menos desenvolvidas localizadas nas áreas de atuação da Sudene e da Sudam, deverão informar, nesta linha, o valor do dispêndio efetuado durante todo o ano-calendário, relativo à aquisição de máquinas, aparelhos, instrumentos e equipamentos novos, relacionados em regulamento, destinados à incorporação ao seu ativo imobilizado a fim de fazer jus ao benefício determinado pela Lei nº 11.196, de 2005, art. 31.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Aquisição de Máquinas, Aparelhos, Instrumentos e Equipamentos Novos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VL_DOA_CRIANCA",
+      "descricao": "Valor do dispêndio durante todo o ano-calendário relativo às doações aos fundos dos direitos da criança e do adolescente.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Doação aos Fundos dos Direitos da Criança e do\nAdolescente",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_DOA_IDOSO",
+      "descricao": "Valor do dispêndio durante todo o ano-calendário relativo às doações aos fundos nacional, estaduais ou municipais do idoso (Lei no 12.213/2010, art. 3o).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Doação aos Fundos Nacional, Estaduais ou Municipais do Idoso",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_AQ_IMOBILIZADO",
+      "descricao": "Valor das aquisições para o ativo imobilizado verificadas no período abrangido pela declaração.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Aquisições para o Ativo Imobilizado",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BX_IMOBILIZADO",
+      "descricao": "Valor contábil das baixas do ativo imobilizado verificadas no período abrangido pela declaração.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Baixas do Ativo Imobilizado",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_INC_INI",
+      "descricao": "Valor do saldo no início do período, dos bens sujeitos ao crédito relativo à Contribuição Social sobre o Lucro Líquido - CSLL, à razão de 25% (vinte e cinco por cento) sobre a depreciação contábil de máquinas, aparelhos, instrumentos e equipamentos, novos, relacionados em ato do Poder Executivo, adquiridos entre 1o de outubro de 2004 e 31 de dezembro de 2008, destinados ao ativo imobilizado e empregados em processo industrial do adquirente (Lei no 11.051, de 29 de dezembro de 2004, art. 1o, alterado pelo art. 14 da Lei no 11.452 de 27 de fevereiro de 2007).\nAtenção: Deve ser informado o valor de aquisição dos bens, sem dedução da depreciação acumulada.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Bens Sujeitos ao Incentivo de que Trata a Lei nº 11.051/2004 no Início do Período",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_INC_FIN",
+      "descricao": "Valor do saldo no fim do período, dos bens sujeitos ao crédito relativo à Contribuição Social sobre o Lucro Líquido - CSLL, à razão de 25% (vinte e cinco por cento) sobre a depreciação contábil de máquinas, aparelhos, instrumentos e equipamentos, novos, relacionados em ato do Poder Executivo, adquiridos entre 1o de outubro de 2004 e 31 de dezembro de 2008, destinados ao ativo imobilizado e empregados em processo industrial do adquirente (Lei no 11.051, de 29 de dezembro de 2004, art. 1o, alterado pelo art. 14 da Lei no 11.452 de 27 de fevereiro de 2007).\nAtenção: Deve ser informado o valor de aquisição dos bens, sem dedução da depreciação acumulada.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Bens Sujeitos ao Incentivo de que Trata a Lei nº 11.051/2004 no Fim do Período",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "VL_CSLL_DEPREC_INI",
+      "descricao": "Saldo de créditos de CSLL, de que trata o art. 1o da Lei nº 11.051, de 2004, utilizados nos anos-calendário anteriores e ainda não adicionados à CSLL devida.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Saldo de Créditos de CSLL sobre Depreciação no Início do Período",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "VL_OC_SEM_IOF",
+      "descricao": "Valor total das operações de contrato de câmbio com as pessoas físicas não residentes no País, empregadas ou de outra forma contratadas para trabalhar na organização e realização dos Eventos, que ingressarem no Brasil com visto temporário (vide art. 20, do Decreto no 7.578, de 2011) (Lei no 12.350/2010, art. 12).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor das Operações de Câmbio com Isenção de IOF",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "VL_FOLHA_ALIQ_RED",
+      "descricao": "Valor total da Folha de Pagamento, em relação aos segurados empregados, trabalhadores avulsos e contribuintes individuais, sujeita à alíquota reduzida de que trata o art. 14 da Lei no 11.774/2008.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor Total da Folha Sujeita à Alíquota Reduzida de que Trata a Lei nº 11.774/2008",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "VL_ALIQ_RED",
+      "descricao": "Valor da alíquota reduzida de que trata o art. 14 da Lei no 11.774/2008, em relação às empresas que prestam serviços de tecnologia da informação - TI e de tecnologia da informação e comunicação - TIC.",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Alíquota Reduzida de que Trata a Lei nº 11.774/2008",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "IND_ALTER_CAPITAL",
+      "descricao": "Alteração de Capital na Forma dos art. 22 e 23 da Lei no 9.249/1995:\n0 – Não Preenchido 1 – Não 2 – Sim\nIndicar se a pessoa jurídica teve, ou não, alteração de capital decorrente de:\na) devolução de participação no capital social a titular ou a sócio ou acionista, em conformidade com o disposto no art. 22 da Lei no 9.249, de 1995, e alterações posteriores;\nb) integralização de capital por pessoa física em bens e direitos, em conformidade com o disposto no art. 23 da Lei no 9.249, de 1995, e alterações posteriores.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Alteração de Capital na Forma dos art. 22 e 23 da Lei nº 9.249/1995",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "IND_BCN_CSLL",
+      "descricao": "Opção pela Escrituração, no Ativo, da Base de Cálculo Negativa da CSLL (MP no 1.807/1999, art. 8º):\n0 – Não Preenchido \n1 – Não \n2 – Sim",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Opção pela Escrituração, no Ativo, da Base de Cálculo Negativa da CSLL",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

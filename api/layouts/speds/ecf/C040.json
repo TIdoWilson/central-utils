@@ -1,0 +1,217 @@
+{
+  "registro": {
+    "codigo": "C040",
+    "titulo": "REGISTRO C040: IDENTIFICADOR DA ECD",
+    "bloco_origem": "bloco-c.htm",
+    "ancora": "C040",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-c.htm#C040"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 16,
+    "extraido_em_utc": "2026-03-10T19:31:56.804836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "REG Texto fixo contendo a identificação do registro (C040)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[C040]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "HASH_ECD",
+      "descricao": "Hashcode ECD Utilizada",
+      "tipo": "C",
+      "tamanho": "40",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_INI",
+      "descricao": "Data de Início da ECD",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "DT_FIN",
+      "descricao": "Data Final da ECD",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_SIT_ESTP",
+      "descricao": "Indicador de Situação Especial",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "CNPJ",
+      "descricao": "Número de Inscrição do Empresário ou Sociedade Empresária no CNPJ",
+      "tipo": "N",
+      "tamanho": "14",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "NUM_ORD",
+      "descricao": "Número de Ordem do Instrumento de Escrituração",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "NIRE",
+      "descricao": "Número de Identificação do Registro de Empresas da Junta Comercial",
+      "tipo": "N",
+      "tamanho": "11",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "NAT_LIVR",
+      "descricao": "Natureza do Livro: finalidade a que se destina o instrumento",
+      "tipo": "C",
+      "tamanho": "80",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "COD_VER_LC",
+      "descricao": "Código da Versão do Leiaute Contábil",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "IND_ESC",
+      "descricao": "Indicador da Forma de Escrituração Contábil:\nG - Livro Diário (Completo sem escrituração auxiliar)\nR - Livro Diário com Escrituração Resumida (com escrituração auxiliar)\nB- Livro Balancetes Diários e Balanços",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[G; R; B; S]"
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "IDENT_MF",
+      "descricao": "Identificação de moeda funcional: Indica que a escrituração abrange valores com base\nna moeda funcional (art. 287 da Instrução Normativa RFB nº 1.700, de 14 de março de\n2017)",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "IND_ESC_CONS",
+      "descricao": "Escriturações Contábeis Consolidadas: (Deve ser preenchido pela empresa controladora\nobrigada a informar demonstrações contábeis consolidadas, nos termos da Lei nº\n6.404/76 e/ou do Pronunciamento Técnico CPC 36 – Demonstrações Consolidadas)\nS – Sim\nN – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "IND_CENTRALIZADA",
+      "descricao": "Indicador da modalidade de escrituração centralizada ou descentralizada:\n0 – Escrituração Centralizada\n1 – Escrituração Descentralizada",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "IND_MUDANC_PC",
+      "descricao": "Indicador de mudança de plano de contas:\n0 – Não houve mudança no plano de contas\n1 – Houve mudança no plano de contas",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "COD_PLAN_REF",
+      "descricao": "Código do Plano de Contas Referencial que será utilizado para o mapeamento de todas\nas contas analíticas:\n1 – PJ em Geral – Lucro Real\n2 – PJ em Geral – Lucro Presumido\n3 – Financeiras – Lucro Real\n4 – Seguradoras – Lucro Real\n5 – Imunes e Isentas em Geral\n6 – Imunes e Isentas – Financeiras\n7 – Imunes e Isentas – Seguradoras\n8 – Entidades Fechadas de Previdência Complementar\n9 – Partidos Políticos\n10 – Financeiras – Lucro Presumido\nObservação: caso a pessoa jurídica não realize o mapeamento para os planos\nreferenciais na ECD, este campo deve ficar em branco.",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    }
+  ]
+}

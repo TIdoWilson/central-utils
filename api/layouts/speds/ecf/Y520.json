@@ -1,0 +1,104 @@
+{
+  "registro": {
+    "codigo": "Y520",
+    "titulo": "REGISTRO Y520: PAGAMENTOS/RECEBIMENTOS DO EXTERIOR OU DE NÃO RESIDENTES",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y520",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y520"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:31:56.928566+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y520\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y520\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "TIP_EXT",
+      "descricao": "Tipo: \nR - Rendimentos Recebidos; \nP - Pagamentos",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "PAIS",
+      "descricao": "País em que está situada a pessoa física ou jurídica que efetuou o pagamento ou beneficiária do pagamento.\nCódigo do País, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "País",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "FORMA",
+      "descricao": "Forma de Recebimento/Pagamento:\n“1” – Operação de Câmbio \n“2” – Transferência Internacional em Reais \n“3” – Cartão de Crédito \n“4” – Depósito em Conta do Exterior (só válido para TIP_EXT=\"R\")\n“5” – Utilização de Recursos Mantidos no Exterior (só válido para TIP_EXT=\"P\") \n“6” – Em Moeda Nacional ou Estrangeira",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Forma de Recebimento",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NAT_OPER",
+      "descricao": "Código da natureza-fato específico correspondente à motivação do recebimento/pagamento, conforme § 1o do artigo 23 da Lei no 4.131, de 03 de setembro de 1962, e que consta na Circular no 3.690, de 16 de dezembro de 2013, do Banco Central do Brasil.\nAtenção: As operações que não se enquadrem em nenhuma das classificações disponíveis serão identificadas pelo código que indique a melhor aproximação possível da natureza da transação.\nNatureza da operação, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "5",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Natureza da Operação",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_PERIODO",
+      "descricao": "Total dos valores recebidos ou pagos, provenientes do exterior, de acordo com o código indicativo da natureza da operação.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

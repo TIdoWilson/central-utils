@@ -1,0 +1,87 @@
+{
+  "registro": {
+    "codigo": "0300",
+    "id_guia": "13",
+    "titulo": "Registro 0300 da EFD-ICMS/IPI (Cadastro de bens ou componentes do Ativo Imobilizado)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=13"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:07:48.690414+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0300\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_IND_BEM",
+      "descricao": "Código individualizado do bem ou componente adotado no controle patrimonial do estabelecimento informante.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "IDENT_MERC",
+      "descricao": "Identificação do tipo de mercadoria:\n 1: Bem;\n 2: Componente.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "DESCR_ITEM",
+      "descricao": "Descrição do bem ou componente (modelo, marca e outras características necessárias a sua individualização).",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_PRNC",
+      "descricao": "Código de cadastro do bem principal nos casos em que o bem ou componente (campo 02) esteja vinculado a um bem principal.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica de contabilização do bem ou componente (campo 06 do Registro 0500).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "NR_PARC",
+      "descricao": "Número total de parcelas a serem apropriadas, segundo a legislação de cada Unidade Federada (UF).",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

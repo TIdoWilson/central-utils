@@ -1,0 +1,247 @@
+{
+  "registro": {
+    "codigo": "Y620",
+    "titulo": "REGISTRO Y620: PARTICIPAÇÕES AVALIADAS PELO MÉTODO DE EQUIVALÊNCIA PATRIMONIAL",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y620",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y620"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 17,
+    "extraido_em_utc": "2026-03-10T19:31:56.938821+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y620\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y620\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_EVENTO",
+      "descricao": "Data do evento societário que deu causa à classificação conforme o indicador do tipo de relacionamento (Y600.IND_RELAC) no formato DDMMYYYY.\nObservação: Poderá ser igual a Y600.DATA_AQUIS se a primeira aquisição foi causa do MEP.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data do Evento",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "IND_RELAC",
+      "descricao": "Indicador do tipo de relacionamento:\n1 - Controle \n2 - Controle Conjunto \n3 - Influência Significativa \n4 - Outras causas para aplicar MEP (mesmo grupo ou controle comum) \n5 - Exclusão do MEP",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do tipo de relacionamento",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "PAIS",
+      "descricao": "País onde a coligada ou controlada está domiciliada., conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "País",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "CNPJ",
+      "descricao": "CNPJ da coligada ou controlada.\nObrigatório se PAIS = 105 (Brasil)\nCaso contrário, o campo deve ser nulo",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "NOM_EMP",
+      "descricao": "Nome empresarial da coligada ou controlada.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Nome Empresarial",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VALOR_REAIS",
+      "descricao": "Valor Total da Participação em Reais (Cotação da data do evento).",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Participação em Reais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VALOR_ESTR",
+      "descricao": "Valor Total da Participação em Moeda Original do País da Empresa Investida.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Participação em Moeda Original do País",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "PERC_CAP_TOT",
+      "descricao": "Percentual de Participação no Capital Total da Coligada ou Controlada.",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Percentual sobre o Capital Total",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "PERC_CAP_VOT",
+      "descricao": "Percentual de Participação no Capital Votante da Coligada ou Controlada.",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Percentual sobre o Capital Votante",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "RES_EQ_PAT",
+      "descricao": "Resultado de Equivalência Patrimonial",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Resultado de Equivalência Patrimonial",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "DATA_AQUIS",
+      "descricao": "Data da Primeira Aquisição da Participação Societária\nObservação: Poderá ser igual a Y600.DT_EVENTO se a primeira aquisição foi causa do MEP.",
+      "tipo": "C",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data da Aquisição da Participação",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "IND_PROC_CART",
+      "descricao": "Informar se houve sumário registrado em cartório relativo ao Laudo de Avaliação do Valor Justo dos Ativos Líquidos da Investida (Mais-valia ou menos-valia) de acordo com o art. 92, § 5o da Instrução Normativa RFB no 1.515, de 24 de novembro de 2014:\nS - Sim\nN - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Sumário em Cartório",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "NUM_PROC_CART",
+      "descricao": "Informar o número do registro em cartório do sumário relativo ao Laudo de Avaliação do Valor Justo dos Ativos Líquidos da Investida (Mais-valia ou menos-valia) de acordo com o art. 92, § 5o da Instrução Normativa RFB no 1.515, de 24 de novembro de 2014.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Número do Registro no Cartório",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "NOME_CART",
+      "descricao": "Informar o nome e endereço do cartório onde foi registrado o sumário relativo ao Laudo de Avaliação do Valor Justo dos Ativos Líquidos da Investida (Mais-valia ou menos-valia) de acordo com o art. 92, § 5o da Instrução Normativa RFB no 1.515, de 24 de novembro de 2014.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Nome do Cartório",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "IND_PROC_RFB",
+      "descricao": "Informar se houve Laudo de Avaliação do Valor Justo dos Ativos Líquidos da Investida (Mais-valia ou menos-valia) de acordo com o art. 92, § 5o da Instrução Normativa RFB no 1.515, de 24 de novembro de 2014, protocolado na RFB:\nS - Sim\nN - Não\nObservação: Deverá ser informado também para os casos de aquisição ou venda ocorridos antes do período a que se refere essa ECF.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Laudo Protocolado na RFB",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "17",
+      "campo": "NUM_PROC_RFB",
+      "descricao": "Informar o número do processo eletrônico do Laudo de Avaliação do Valor Justo dos Ativos Líquidos da Investida protocolado na RFB (Mais-valia ou menos-valia) de acordo com o art. 92, § 5o da Instrução Normativa RFB no 1.515, de 24 de novembro de 2014.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Número do Processo",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

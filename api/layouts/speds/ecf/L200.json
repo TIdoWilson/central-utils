@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "L200",
+    "titulo": "REGISTRO L200: MÉTODO DE AVALIAÇÃO DO ESTOQUE FINAL",
+    "bloco_origem": "bloco-l.htm",
+    "ancora": "l200",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-l.htm#l200"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.835836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “L200”.",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"L200\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_AVAL_ESTOQ",
+      "descricao": "Método de Avaliação do Estoque Final:\n1 – Custo Médio Ponderado\n2 – PEPS (Primeiro que entra, primeiro que sai)\n3 – Arbitramento - art. 296, Inc. I e II, do RIR/99\n4 – Custo Específico\n5 – Valor Realizável Líquido\n6 – Inventário Periódico\n7 – Outros",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Método de Avaliação do Estoque final",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "registro": {
+    "codigo": "1010",
+    "id_guia": "166",
+    "titulo": "Registro 1010 da EFD-ICMS/IPI (Obrigatoriedade de Registros do Bloco 1)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=166"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 14,
+    "extraido_em_utc": "2026-03-10T19:07:51.347046+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1010\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_EXP",
+      "descricao": "Registro 1100: Ocorreu averbação (conclusão) de exportação no período:\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_CCRF",
+      "descricao": "Registro 1200: Existem informações acerca de créditos de ICMS a serem controlados, definidos pela Sefaz:\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "IND_COMB",
+      "descricao": "Registro 1300: É comercio varejista de combustíveis com movimentação e/ou estoque no período:\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "IND_USINA",
+      "descricao": "Registro 1390: Usinas de açúcar e/álcool - O estabelecimento é produtor de açúcar e/ou álcool carburante com movimentação e/ou estoque no período:\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "IND_VA",
+      "descricao": "Registro 1400: Sendo o Registro obrigatório em sua UF, existem informações a serem prestadas neste Registro:\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "IND_EE",
+      "descricao": "Registro 1500: A empresa é distribuidora de energia e ocorreu fornecimento de energia elétrica para consumidores de outra UF:\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "IND_CART",
+      "descricao": "Registro 1601: Realizou vendas com instrumentos eletrônicos de pagamento:\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "IND_FORM",
+      "descricao": "Registro 1700: Foram emitidos documentos fiscais em papel no período em UF que exija o controle de utilização de documentos fiscais:\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "IND_AER",
+      "descricao": "Registro 1800: A empresa prestou serviços de transporte aéreo de cargas e de passageiros:\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "ND_GIAF1",
+      "descricao": "Registro 1960: Possui informações GIAF1?\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "ND_GIAF3",
+      "descricao": "Registro 1970: Possui informações GIAF3?\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "ND_GIAF4",
+      "descricao": "Registro 1980: Possui informações GIAF4?\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "14",
+      "campo": "IND_REST_RESSARC_COMPL_ICMS",
+      "descricao": "Registro 1250: Possui informações consolidadas de saldos de restituição, ressarcimento e complementação do ICMS?\n S: Sim;\n N: Não.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

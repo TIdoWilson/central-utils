@@ -1,0 +1,145 @@
+{
+  "registro": {
+    "codigo": "C155",
+    "titulo": "REGISTRO C155: DETALHES DOS SALDOS CONTÁBEIS RECUPERADOS COM BASE NAS ECD",
+    "bloco_origem": "bloco-c.htm",
+    "ancora": "C155",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-c.htm#C155"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:31:56.807836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (C155)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[C155]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA",
+      "descricao": "Código da Conta Analítica",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CCUS",
+      "descricao": "Código do Centro de Custos",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_SLD_INI",
+      "descricao": "Valor do Saldo Inicial do Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_VL_SLD_INI",
+      "descricao": "Indicador da Situação do Saldo Inicial:\nD - Devedor\nC- Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[D; C]"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_DEB",
+      "descricao": "Valor Total dos Débitos no Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_CRED",
+      "descricao": "Valor Total dos Créditos no Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_SLD_FIN",
+      "descricao": "Valor do Saldo Final do Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IND_VL_SLD_FIN",
+      "descricao": "Indicador da Situação do Saldo Final:\nD - Devedor\nC - Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[D; C]"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "LINHA_ECD",
+      "descricao": "Número da Linha do Arquivo da ECD.\nObs.: É utilizado para identificação de possíveis inconsistências de saldo",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    }
+  ]
+}

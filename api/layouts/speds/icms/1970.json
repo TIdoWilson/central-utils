@@ -1,0 +1,132 @@
+{
+  "registro": {
+    "codigo": "1970",
+    "id_guia": "315",
+    "titulo": "Registro 1970 da EFD-ICMS/IPI (GIAF 3 - Guia de Informação e Apuração de incentivos Fiscais e Financeiros: Importação (Diferimento na entrada e crédito presumido na saída subsequente))",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=315"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 12,
+    "extraido_em_utc": "2026-03-10T19:07:51.662002+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1970\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_AP",
+      "descricao": "Indicador da sub-apuração por tipo de benefício (conforme tabela 4.7.1).",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "G3_01",
+      "descricao": "Importações com ICMS diferido.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "G3_02",
+      "descricao": "ICMS diferido nas importações.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "G3_03",
+      "descricao": "Saídas não incentivadas de PI.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "G3_04",
+      "descricao": "Percentual de incentivo nas saídas para fora do Estado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "G3_05",
+      "descricao": "Saídas incentivadas de PI para fora do Estado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "G3_06",
+      "descricao": "ICMS das saídas incentivadas de PI para fora do Estado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "G3_07",
+      "descricao": "Crédito presumido nas saídas para fora do Estado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "G3_T",
+      "descricao": "Dedução de incentivo da Importação (crédito presumido).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "G3_08",
+      "descricao": "Saldo devedor do ICMS antes das deduções do incentivo.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "G3_09",
+      "descricao": "Saldo devedor do ICMS após deduções do incentivo.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

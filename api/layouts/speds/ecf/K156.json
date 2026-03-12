@@ -1,0 +1,130 @@
+{
+  "registro": {
+    "codigo": "K156",
+    "titulo": "REGISTRO K156: MAPEAMENTO REFERENCIAL DO SALDO FINAL",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "k156",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-k.htm#k156"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:31:56.826836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto Fixo Contendo a Identificação do Registro (K156)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"K156\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA_REF",
+      "descricao": "Código da Conta no Plano de Contas Referencial, conforme tabela do SPED. (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta Referencial",
+        "DOCUMENTAÇÃO": "Conta contábil do plano referencial ligada a conta contábil do registro K155."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VL_SLD_INI",
+      "descricao": "Valor do Saldo Inicial do Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor do Saldo Inicial",
+        "DOCUMENTAÇÃO": "Percentual (E043PPC.PERGER/E043PCC.PERRUR) do valor listado no campo 4 do registro K155"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_VL_SLD_INICIAL",
+      "descricao": "Indicador da Situação do Saldo Inicial:\nD - Devedor\nC - Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Situação do Saldo Inicial",
+        "DOCUMENTAÇÃO": "Se o campo 03 for menor que 0 \"C\" senão recebe \"D\""
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_DEB",
+      "descricao": "Valor Total dos Débitos no Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor total dos Débitos",
+        "DOCUMENTAÇÃO": "Percentual (E043PPC.PERGER/E043PCC.PERRUR) do valor listado no campo 6 do registro K155"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_CRED",
+      "descricao": "Valor Total dos Créditos no Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor Total dos Créditos",
+        "DOCUMENTAÇÃO": "Percentual (E043PPC.PERGER/E043PCC.PERRUR) do valor listado no campo 7 do registro K15"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_SLD_FIN",
+      "descricao": "Valor do Saldo Final do Período",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor do Saldo Final",
+        "DOCUMENTAÇÃO": "Percentual (E043PPC.PERGER/E043PCC.PERRUR) do valor listado no campo 8 do registro K155"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "IND_VL_SLD_FIN",
+      "descricao": "",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Situação do Saldo Final",
+        "DOCUMENTAÇÃO": "Se o campo 07 for menor que 0 \"C\" senão recebe \"D\""
+      }
+    }
+  ]
+}

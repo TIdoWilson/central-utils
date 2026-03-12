@@ -1,0 +1,100 @@
+{
+  "registro": {
+    "codigo": "D161",
+    "id_guia": "103",
+    "titulo": "Registro D161 da EFD-ICMS/IPI (Local da coleta e entrega (Código 08, 8B, 09, 10, 11 e 26))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=103"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:07:50.185463+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D161\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "IND_CARGA",
+      "descricao": "Indicador do tipo de transporte da carga coletada:\n 0: Rodoviário;\n 1: Ferroviário;\n 2: Rodo-Ferroviário;\n 3: Aquaviário;\n 4: Dutoviário;\n 5: Aéreo;\n 9: Outros.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "CNPJ_CPF_COL",
+      "descricao": "Número do CNPJ ou CPF do local da coleta.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "IE_COL",
+      "descricao": "Inscrição Estadual (IE) do contribuinte do local de coleta.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_MUN_COL",
+      "descricao": "Código do Município do local de coleta, conforme Tabela IBGE (Preencher com 9999999, se Exterior).",
+      "tipo": "N",
+      "tamanho": "007*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "CNPJ_CPF_ENTG",
+      "descricao": "Número do CNPJ ou CPF do local da entrega.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "IE_ENTG",
+      "descricao": "IE do contribuinte do local de entrega.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "COD_MUN_ENTG",
+      "descricao": "Código do Município do local de entrega, conforme Tabela IBGE (Preencher com 9999999, se Exterior).",
+      "tipo": "N",
+      "tamanho": "007*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

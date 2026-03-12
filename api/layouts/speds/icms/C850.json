@@ -1,0 +1,100 @@
+{
+  "registro": {
+    "codigo": "C850",
+    "id_guia": "91",
+    "titulo": "Registro C850 da EFD-ICMS/IPI (Registro analítico do CF-e-SAT (Código 59))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=91"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:07:49.942941+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C850\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "CST_ICMS",
+      "descricao": "CST, conforme a Tabela indicada no item 4.3.1 .",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "CFOP",
+      "descricao": "CFOP do agrupamento de itens.",
+      "tipo": "N",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "ALIQ_ICMS",
+      "descricao": "Alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_OPR",
+      "descricao": "\"Valor total do CF-e\" na combinação de \"CST_ICMS\", CFOP e alíquota do ICMS, correspondente ao somatório do valor líquido dos itens.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor acumulado da Base de Cálculo (BC) do ICMS, referente à combinação de \"CST_ICMS\", CFOP, e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_ICMS",
+      "descricao": "Parcela correspondente ao \"Valor do ICMS\" referente à combinação de \"CST_ICMS\", CFOP e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "COD_OBS",
+      "descricao": "Código da observação do lançamento fiscal (campo 02 do Registro 0460).",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

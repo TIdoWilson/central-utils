@@ -1,0 +1,105 @@
+{
+  "registro": {
+    "codigo": "G126",
+    "id_guia": "156",
+    "titulo": "Registro G126 da EFD-ICMS/IPI (Outros créditos CIAP)",
+    "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=156"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:07:51.001063+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"G126\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI",
+      "descricao": "Data inicial do período de apuração.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIM",
+      "descricao": "Data final do período de apuração.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "NUM_PARC",
+      "descricao": "Número da parcela do ICMS.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_PARC_PASS",
+      "descricao": "Valor da parcela de ICMS passível de apropriação - antes da aplicação da participação percentual do valor das saídas tributadas/exportação sobre as saídas totais.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_TRIB_OC",
+      "descricao": "Valor do somatório das saídas tributadas e saídas para exportação no período indicado neste Registro.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_TOTAL",
+      "descricao": "Valor total de saídas no período indicado neste registro.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "IND_PER_SAI",
+      "descricao": "Índice de participação do valor do somatório das saídas tributadas e saídas para exportação no valor total de saídas (Campo 06 dividido pelo campo 07)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "08",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_PARC_APROP",
+      "descricao": "Valor de outros créditos de ICMS a ser apropriado na apuração (Campo 05 vezes o Campo 08).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

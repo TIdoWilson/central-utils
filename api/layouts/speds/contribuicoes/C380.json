@@ -1,0 +1,95 @@
+{
+  "registro": {
+    "codigo": "C380",
+    "titulo": "Registro C380 da EFD-Contribuições (Nota Fiscal de Venda a Consumidor (Código 02) - Consolidação de Documentos Emitidos)",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=401"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:03:21.929166+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C380”",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1 (Código 02 – Nota Fiscal de Venda a Consumidor)",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_DOC_INI",
+      "descricao": "Data de Emissão Inicial dos Documentos",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "DT_DOC_FIN",
+      "descricao": "Data de Emissão Final dos Documentos",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "NUM_DOC_INI",
+      "descricao": "Número do documento fiscal inicial",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "NUM_DOC_FIN",
+      "descricao": "Número do documento fiscal final",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_DOC",
+      "descricao": "Valor total dos documentos emitidos",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_DOC_CANC",
+      "descricao": "Valor total dos documentos cancelados",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    }
+  ]
+}

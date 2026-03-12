@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "K265",
+    "id_guia": "262",
+    "titulo": "Registro K265 da EFD-ICMS/IPI (Reprocessamento/reparo - Mercadorias consumidas e/ou retornadas)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=262"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:51.214859+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K265\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_ITEM",
+      "descricao": "Código da mercadoria (campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QTD_CONS",
+      "descricao": "Quantidade consumida - saída do estoque.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "6",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "QTD_RET",
+      "descricao": "Quantidade retornada - entrada em estoque.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "6",
+      "obrigatorio": "OC"
+    }
+  ]
+}

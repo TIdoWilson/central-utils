@@ -1,0 +1,123 @@
+{
+  "registro": {
+    "codigo": "1310",
+    "id_guia": "173",
+    "titulo": "Registro 1310 da EFD-ICMS/IPI (Movimentação Diária de Combustíveis por Tanque)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=173"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:07:51.397707+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1310\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_TANQUE",
+      "descricao": "Tanque que armazena o combustível.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "ESTQ_ABERT",
+      "descricao": "Estoque no inicio do dia, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VOL_ENTR",
+      "descricao": "Volume Recebido no dia (em litros).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VOL_DISP",
+      "descricao": "Volume Disponível (03 + 04), em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VOL_SAIDAS",
+      "descricao": "Volume Total das Saídas, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "ESTQ_ESCR",
+      "descricao": "Estoque Escritural (05 – 06), litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VAL_AJ_PERDA",
+      "descricao": "Valor da perda, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VAL_AJ_GANHO",
+      "descricao": "Valor do ganho, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "FECH_FISICO",
+      "descricao": "Volume aferido no tanque, em litros. Estoque de fechamento físico do tanque.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "CAP_TANQUE",
+      "descricao": "Capacidade de armazenagem, em litros.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

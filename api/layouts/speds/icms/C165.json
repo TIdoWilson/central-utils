@@ -1,0 +1,145 @@
+{
+  "registro": {
+    "codigo": "C165",
+    "id_guia": "45",
+    "titulo": "Registro C165 da EFD-ICMS/IPI (Operações com combustíveis  (Código 01))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=45"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:07:49.630818+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C165\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n- transportador, se houver.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "VEIC_ID",
+      "descricao": "Placa de identificação do veículo.",
+      "tipo": "C",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_AUT",
+      "descricao": "Código da autorização fornecido pela Sefaz (combustíveis).",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "NR_PASSE",
+      "descricao": "Número do Passe Fiscal.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "HORA",
+      "descricao": "Hora da saída das mercadorias.",
+      "tipo": "N",
+      "tamanho": "006*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "TEMPER",
+      "descricao": "Temperatura em graus Celsius utilizada para quantificação do volume de combustível.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "01",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "QTD_VOL",
+      "descricao": "Quantidade de volumes transportados.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "PESO_BRT",
+      "descricao": "Peso bruto dos volumes transportados (em Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "PESO_LIQ",
+      "descricao": "Peso líquido dos volumes transportados (em Kg).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "NOM_MOT",
+      "descricao": "Nome do motorista.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "12",
+      "campo": "CPF",
+      "descricao": "CPF do motorista.",
+      "tipo": "N",
+      "tamanho": "011*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "13",
+      "campo": "UF_ID",
+      "descricao": "Sigla da UF da placa do veículo.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

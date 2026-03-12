@@ -1,0 +1,260 @@
+{
+  "registro": {
+    "codigo": "Y672",
+    "titulo": "REGISTRO Y672: OUTRAS INFORMAÇÕES (LUCRO PRESUMIDO)",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y672",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y672"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 18,
+    "extraido_em_utc": "2026-03-10T19:31:56.946820+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “Y672”",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y672\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "VL_CAPITAL_ANT",
+      "descricao": "Valor do capital registrado, em órgão competente, no fim do “Ano Imediatamente Anterior”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Capital Registrado do Ano Anterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VL_CAPITAL",
+      "descricao": "Valor do capital registrado, em órgão competente, no fim do “Ano da Escrituração”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Capital Registrado",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_ESTOQUE_ANT",
+      "descricao": "Valor dos estoques no fim do “Ano Imediatamente Anterior”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Estoques do Ano Anterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_ESTOQUES",
+      "descricao": "Valor dos estoques no fim do “Ano da Escrituração”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Estoques",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_CAIXA_ANT",
+      "descricao": "Valor resultante da soma do saldo de caixa e dos saldos bancários registrados na escrituração comercial ou no livro Caixa, no fim do “Ano Imediatamente Anterior”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Saldo de Caixa e Bancos do Ano Anterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_CAIXA",
+      "descricao": "Valor resultante da soma do saldo de caixa e dos saldos bancários registrados na escrituração comercial ou no livro Caixa, no fim do “Ano da Escrituração”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Saldo de Caixa e Bancos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_APLIC_FIN_ANT",
+      "descricao": "Saldo das aplicações financeiras, seja no mercado de renda fixa, seja no mercado de renda variável, no fim do “Ano Imediatamente Anterior”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Saldo de Aplicações Financeiras do Ano Anterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "VL_APLIC_FIN",
+      "descricao": "Saldo das aplicações financeiras, seja no mercado de renda fixa, seja no mercado de renda variável, no fim do “Ano da Escrituração”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Saldo de Aplicações Financeiras",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "VL_CTA_REC_ANT",
+      "descricao": "Saldo das contas a receber no fim do “Ano Imediatamente Anterior”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Contas a Receber do Ano Anterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "VL_CTA_REC",
+      "descricao": "Saldo das contas a receber no fim do “Ano da Escrituração”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Contas a Receber",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "VL_CTA_PAG_ANT",
+      "descricao": "Saldo das contas a pagar no fim do “Ano Imediatamente Anterior”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Contas a Pagar do Ano Anterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "VL_CTA_PAG",
+      "descricao": "Saldo das contas a pagar no fim do “Ano da Escrituração”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Contas a Pagar",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "VL_COMPRA_MERC",
+      "descricao": "Valor das compras de mercadorias adquiridas no ano-calendário para revenda e as aquisições de materiais empregados nos produtos produzidos e serviços prestados.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Compras de Mercadorias no Ano-calendário",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "VL_COMPRA_ATIVO",
+      "descricao": "Valor das aquisições de elementos do ativo no ano-calendário, exceto os classificáveis no ativo circulante e ativo não circulante realizável a longo prazo.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Compras de Elementos do Ativo no Ano-Calendário, Exceto os Classificáveis no Ativo Circulante e Ativo Realizável a Longo Prazo",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "VL_RECEITAS",
+      "descricao": "Receitas e Rendimentos Não Tributáveis ou Tributados Exclusivamente na Fonte;\nInformar, neste campo, o valor das seguintes receitas e rendimentos:\na) as recuperações de créditos que não representem ingressos de novas receitas;\nb) a reversão de saldo de provisões anteriormente constituídas;\nc) os lucros e dividendos decorrentes de participações societárias avaliadas pelo custo de aquisição e a contrapartida do ajuste por aumento do valor de investimentos avaliados pelo método da equivalência patrimonial;\nd) as importâncias recebidas na forma do caput do art. 18 da Lei nº 11.196, de 2005, desde que utilizadas integralmente na realização da pesquisa ou desenvolvimento de inovação tecnológica; e\ne) as receitas decorrentes de valores em espécie pagos ou creditados pelos Estados, Distrito Federal e Municípios, relativos ao Imposto sobre Operações relativas à Circulação de Mercadorias e sobre Prestações de Serviços de Transporte Interestadual e Intermunicipal e de Comunicação - ICMS e ao Imposto sobre Serviços de Qualquer Natureza - ISS, no âmbito de programas de concessão de crédito voltados ao estímulo à solicitação de documento fiscal na aquisição de mercadorias e serviços. (Art. 4º, da Lei nº 11.945, de 4 de junho de 2009).\nf) de debêntures emitidas por SPE e de fundos de investimentos, tributados exclusivamente na fonte, à alíquota de 15% (quinze por cento), quando auferidos por pessoa jurídica tributada com base no presumido ou arbitrado (arts. 2º e 3º da Lei nº 12.431, de 2011).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Receitas e Rendimentos Não Tributáveis ou Tributados Exclusivamente na Fonte",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "17",
+      "campo": "TOT_ATIVO",
+      "descricao": "Valor total do Ativo no fim do “Ano da Declaração”.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Total do Ativo",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "18",
+      "campo": "IND_AVAL_ESTOQ",
+      "descricao": "Método de Avaliação de Estoques:\n1 – Custo Médio Ponderado\n2 – PEPS (Primeiro que entra, primeiro que sai)\n3 – Arbitramento - art. 296, Inc. I e II, do RIR/99\n4 – Custo Específico\n5 – Valor Realizável Líquido\n6 – Inventário Periódico\n7 – Outros\n8 – Não há (Exemplo: Empresas Prestadoras de Serviços)",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Método de Avaliação de Estoque",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

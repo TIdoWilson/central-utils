@@ -1,0 +1,59 @@
+{
+  "registro": {
+    "codigo": "1020",
+    "titulo": "Registro 1020 da EFD-Contribuições (Processo Referenciado – Processo Administrativo)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=534"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:03:23.172526+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "*Texto fixo contendo \"1020\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_PROC",
+      "descricao": "Identificação do Processo Administrativo ou da Decisão Administrativa",
+      "tipo": "C",
+      "tamanho": "020",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_NAT_ACAO",
+      "descricao": "Indicador da Natureza da Ação, decorrente de Processo Administrativo na Secretaria da Receita Federal do Brasil:\n01 – Processo Administrativo de Consulta;\n02 – Despacho Decisório;\n03 – Ato Declaratório Executivo;\n04 – Ato Declaratório Interpretativo;\n05 – Decisão Administrativa de DRJ ou do CARF;\n06 – Auto de Infração;\n99 – Outros.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "DT_DEC_ADM",
+      "descricao": "Data do Despacho/Decisão Administrativa",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

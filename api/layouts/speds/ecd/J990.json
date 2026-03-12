@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "J990",
+    "titulo": "REGISTRO \n J990: Encerramento do Bloco J",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "J990",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#J990"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:29:19.608885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo J990.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J990"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN_J",
+      "descricao": "Quantidade total de linhas do Bloco J.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Somatório das linhas do bloco J"
+      }
+    }
+  ]
+}

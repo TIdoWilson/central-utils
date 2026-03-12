@@ -1,0 +1,117 @@
+{
+  "registro": {
+    "codigo": "Y612",
+    "titulo": "REGISTRO Y612: RENDIMENTOS DE DIRIGENTES, CONSELHEIROS, SÓCIOS OU TITULAR",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y612",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y612"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:31:56.937819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “Y612”",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y612\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CPF",
+      "descricao": "CPF do dirigente ou conselheiro beneficiário dos rendimentos.",
+      "tipo": "N",
+      "tamanho": "011",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CPF",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NOME",
+      "descricao": "Nome do dirigente ou conselheiro beneficiário dos rendimentos.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Nome",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "QUALIF",
+      "descricao": "Qualificação: Qualificação do dirigente ou conselheiro beneficiário dos rendimentos:\n10 - Administrador sem Vínculo Empregatício\n11 - Diretor sem Vínculo Empregatício \n12 – Presidente sem Vínculo Empregatício\n13 - Administrador com Vínculo Empregatício \n14 - Conselheiro de Administração ou Fiscal \n15 - Diretor com Vínculo Empregatício \n16 - Fundador \n17 - Presidente com Vínculo Empregatício",
+      "tipo": "N",
+      "tamanho": "002",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Qualificação",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_REM_TRAB",
+      "descricao": "Valor dos rendimentos pagos e escriturados, nos livros da escrituração contábil ou no livro Caixa, a título de remuneração a dirigentes ou conselheiros pela prestação de serviços, ou quaisquer outros pagamentos, tais como: pró-labore e aluguéis. Esses valores sujeitam-se à incidência do imposto de renda na fonte e na declaração de rendimentos dos beneficiários.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Rendimentos do Trabalho",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_DEM_REND",
+      "descricao": "Valor de outros rendimentos não classificados como rendimento do trabalho, escriturados nos livros da escrituração contábil ou no livro Caixa, pagos aos dirigentes ou conselheiros. Esses valores sujeitam-se à incidência do imposto de renda na fonte e na declaração de rendimentos dos beneficiários.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Demais Rendimentos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_IR_RET",
+      "descricao": "Valor do imposto de renda retido na fonte por ocasião do pagamento dos rendimentos a dirigentes ou conselheiros da pessoa jurídica imune ou isenta de IRPJ.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "IR Retido na Fonte",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

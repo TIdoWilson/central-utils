@@ -1,0 +1,519 @@
+{
+  "fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/capa.htm",
+  "total_registros_esperados": 63,
+  "total_registros_gerados": 63,
+  "gerado_em_utc": "2026-03-10T19:29:19.618885+00:00",
+  "resumo_registros": [
+    {
+      "codigo": "0000",
+      "arquivo_json": "0000.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0000: Abertura do Arquivo Digital e Identificação do empresário ou da sociedade empresária",
+      "total_campos": 23,
+      "resumo": "Layout com 23 campo(s)."
+    },
+    {
+      "codigo": "0001",
+      "arquivo_json": "0001.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0001: Abertura do Bloco \n 0",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "0007",
+      "arquivo_json": "0007.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO \n 0007: Outras Inscrições Cadastrais da Pessoa Jurídica",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0020",
+      "arquivo_json": "0020.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0020: Escrituração Contábil Descentralizada",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "0035",
+      "arquivo_json": "0035.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0035: Identificação das SCP",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0150",
+      "arquivo_json": "0150.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0150: Tabela de Cadastro do Participante",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "0180",
+      "arquivo_json": "0180.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO \n 0180: Identificação do Relacionamento com o Participante",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "0990",
+      "arquivo_json": "0990.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO \n 0990: Encerramento do Bloco 0",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9001",
+      "arquivo_json": "9001.json",
+      "bloco_origem": "bloco-9.htm",
+      "titulo": "REGISTRO 9001: Abertura do Bloco \n 9",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9900",
+      "arquivo_json": "9900.json",
+      "bloco_origem": "bloco-9.htm",
+      "titulo": "REGISTRO 9900: Registros do Arquivo",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "9990",
+      "arquivo_json": "9990.json",
+      "bloco_origem": "bloco-9.htm",
+      "titulo": "REGISTRO \n 9990: Encerramento do Bloco 9",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9999",
+      "arquivo_json": "9999.json",
+      "bloco_origem": "bloco-9.htm",
+      "titulo": "REGISTRO \n 9999: Encerramento do Arquivo Digital",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I001",
+      "arquivo_json": "I001.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I001: Abertura do Bloco I",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I010",
+      "arquivo_json": "I010.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I010: Identificação da Escrituração Contábil",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "I012",
+      "arquivo_json": "I012.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I012: Livros Auxiliares ao Diário ou Livro Principal",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "I015",
+      "arquivo_json": "I015.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I015: Identificação das Contas da Escrituração Resumida a que se Refere a Escrituração Auxiliar",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I020",
+      "arquivo_json": "I020.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I020: Campos Adicionais",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "I030",
+      "arquivo_json": "I030.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I030: Termo de Abertura do Livro",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "I050",
+      "arquivo_json": "I050.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I050: Plano de Contas",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "I051",
+      "arquivo_json": "I051.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I051: Plano de Contas Referencial",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I052",
+      "arquivo_json": "I052.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I052: Indicação dos Códigos de Aglutinação",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "I053",
+      "arquivo_json": "I053.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I053: Subcontas Correlatas",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "I075",
+      "arquivo_json": "I075.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I075: Tabela de Histórico Padronizado",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "I100",
+      "arquivo_json": "I100.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I100: Centro de Custos",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "I150",
+      "arquivo_json": "I150.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I150: Saldos Periódicos - Identificação do Período",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "I151",
+      "arquivo_json": "I151.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "I151",
+      "total_campos": 0,
+      "resumo": "Layout n?o localizado na p?gina de origem."
+    },
+    {
+      "codigo": "I155",
+      "arquivo_json": "I155.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I155: Detalhe dos Saldos Periódicos",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "I157",
+      "arquivo_json": "I157.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I157: Transferência de Saldos de Plano de Contas Anterior",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "I200",
+      "arquivo_json": "I200.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I200: Lançamento Contábil",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "I250",
+      "arquivo_json": "I250.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I250: Partidas do Lançamento",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "I300",
+      "arquivo_json": "I300.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I300: Balancetes Diários - Identificação da Data",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I310",
+      "arquivo_json": "I310.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I310: Detalhes do Balancete Diário",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "I350",
+      "arquivo_json": "I350.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I350: Saldo das Contas de Resultado Antes do Encerramento – Identificação da Data",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I355",
+      "arquivo_json": "I355.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I355: Detalhes dos Saldos das Contas de Resultado Antes do Encerramento",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "I500",
+      "arquivo_json": "I500.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I500: Parâmetros de Impressão/Visualização do Livro Razão Auxiliar com Leiaute Parametrizável",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I510",
+      "arquivo_json": "I510.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I510: Definição dos Campos do Livro Razão Auxiliar com Leiaute Parametrizável",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "I550",
+      "arquivo_json": "I550.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO I550: Detalhes do Livro Razão Auxiliar com Leiaute Parametrizável",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I555",
+      "arquivo_json": "I555.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I555: Totais no Livro Razão Auxiliar com Leiaute Parametrizável",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I990",
+      "arquivo_json": "I990.json",
+      "bloco_origem": "bloco-i.htm",
+      "titulo": "REGISTRO \n I990: Encerramento do Bloco I",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "J001",
+      "arquivo_json": "J001.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J001: Abertura do Bloco J",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "J005",
+      "arquivo_json": "J005.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J005: Demonstrações Contábeis",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "J100",
+      "arquivo_json": "J100.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO \n J100: Balanço Patrimonial",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "J150",
+      "arquivo_json": "J150.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO \n J150: Demonstração do Resultado do Exercício (DRE)",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "J210",
+      "arquivo_json": "J210.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J210: Demonstração de Lucros ou Prejuízos Acumulados/DMPL – Demonstração de Mutações do Patrimônio Líquido",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "J215",
+      "arquivo_json": "J215.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J215: Fato Contábil que Altera a Conta Lucros Acumulados ou a Conta Prejuízos Acumulados ou Todo\no Patrimônio Líquido",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "J800",
+      "arquivo_json": "J800.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO \n J800: Outras Informações",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "J801",
+      "arquivo_json": "J801.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J801: Termo de Verificação para Fins de Substituição da ECD",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "J900",
+      "arquivo_json": "J900.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J900: Termo de Encerramento",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "J930",
+      "arquivo_json": "J930.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO \n J930: Signatários da Escrituração",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "J932",
+      "arquivo_json": "J932.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J932: Signatários do Termo de Verificação para Fins de Substituição da ECD",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "J935",
+      "arquivo_json": "J935.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO \n J935: Identificação dos Auditores Independentes",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "J990",
+      "arquivo_json": "J990.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO \n J990: Encerramento do Bloco J",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "K001",
+      "arquivo_json": "K001.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K001: Abertura do Bloco K",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "K030",
+      "arquivo_json": "K030.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K030: Período da escrituração contábil consolidada",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "K100",
+      "arquivo_json": "K100.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "Registro K100: Relação das Empresas Consolidadas",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "K110",
+      "arquivo_json": "K110.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "Registro K110: Relação dos Eventos Societários",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "K115",
+      "arquivo_json": "K115.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "Registro K115: Empresas Participantes do Evento Societário",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "K200",
+      "arquivo_json": "K200.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "Registro K200: Plano de Contas Consolidado",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "K210",
+      "arquivo_json": "K210.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "Registro K210: Mapeamento para Planos de Contas das Empresas Consolidadas",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "K300",
+      "arquivo_json": "K300.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "Registro K300: Saldos das Contas Consolidadas",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "K310",
+      "arquivo_json": "K310.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "Registro K310: Empresas Detentoras das Parcelas do Valor Eliminado Total",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "K315",
+      "arquivo_json": "K315.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "Registro K315: Empresas Contrapartes das Parcelas do Valor Eliminado Total",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "K990",
+      "arquivo_json": "K990.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "Registro K990: Encerramento do Bloco K",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    }
+  ],
+  "erros": [
+    {
+      "codigo": "I151",
+      "url": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I151",
+      "erro": "Registro/?ncora n?o encontrado na p?gina."
+    }
+  ]
+}

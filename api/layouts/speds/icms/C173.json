@@ -1,0 +1,121 @@
+{
+  "registro": {
+    "codigo": "C173",
+    "id_guia": "49",
+    "titulo": "Registro C173 da EFD-ICMS/IPI (Operações com medicamentos (Código 01 e 55))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=49"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:07:49.122052+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C173\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "LOTE_MED",
+      "descricao": "Número do lote de fabricação do medicamento.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "03",
+      "campo": "QTD_ITEM",
+      "descricao": "Quantidade de item por lote.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "003",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "04",
+      "campo": "DT_FAB",
+      "descricao": "Data de fabricação do medicamento.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "05",
+      "campo": "DT_VAL",
+      "descricao": "Data de expiração da validade do medicamento.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "06",
+      "campo": "IND_MED",
+      "descricao": "Indicador de tipo de referência da Base de Cálculo (BC) do ICMS-ST do produto farmacêutico:\n 0: BC referente ao preço tabelado ou preço máximo sugerido;\n 1: BC - Margem de valor agregado;\n 2: BC referente à Lista Negativa;\n 3: BC referente à Lista Positiva;\n 4: BC referente à Lista Neutra.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "07",
+      "campo": "TP_PROD",
+      "descricao": "Tipo de produto:\n 0: Similar;\n 1: Genérico;\n 2: Ético ou de marca.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "08",
+      "campo": "VL_TAB_MAX",
+      "descricao": "Valor do preço tabelado ou valor do preço máximo.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "registro": {
+    "codigo": "0035",
+    "titulo": "REGISTRO 0035: Identificação das SCP",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0035",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-0.htm#0035"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:29:19.574386+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0035\"",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"0035\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_SCP",
+      "descricao": "CNPJ da SCP\n(Art. 4º, XVII, da\nInstrução Normativa\nRFB nº 1.634, de 6 de\nmaio de 2016)",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo da tela de entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NOME_SCP",
+      "descricao": "Nome da SCP",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo da tela de entrada"
+      }
+    }
+  ]
+}

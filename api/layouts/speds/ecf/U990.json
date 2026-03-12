@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "U990",
+    "titulo": "REGISTRO U990: ENCERRAMENTO DO BLOCO U",
+    "bloco_origem": "bloco-u.htm",
+    "ancora": "u990",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-u.htm#u990"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.885838+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “U990”.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "“U990”"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN",
+      "descricao": "Quantidade total de registros do Grupo U.",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Quantidade de Total de Registros do Bloco U",
+        "DOCUMENTAÇÃO": "Somatório das linhas do Bloco U"
+      }
+    }
+  ]
+}

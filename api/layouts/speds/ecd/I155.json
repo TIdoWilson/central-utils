@@ -1,0 +1,205 @@
+{
+  "registro": {
+    "codigo": "I155",
+    "titulo": "REGISTRO \n I155: Detalhe dos Saldos Periódicos",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I155",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I155"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 15,
+    "extraido_em_utc": "2026-03-10T19:29:19.587885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I155.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I155"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se na tela de entrada o campo Tipo de escrituração contábil for igual a A ou Z, somente as duas opções abaixo estarão disponíveis para o campo Tipo de \n conta : Conta Reduzida - Gera o código da conta contábil conforme campo E045PCA.CTAAUX Conta Expandida - Gera a classificação contábil da conta conforme campo E045PCA.CLAAUX \n Se na tela de entrada o campo Tipo de escrituração contábil for igual a G, R ou B, todas as opções abaixo estarão disponíveis para o campo Tipo de \n conta : Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED Conta Expandida - Gera a classificação contábil da conta conforme campo E045PLA.CLACTA Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida Conta Expandida Paralela – Gera a classificação contábil paralela da conta conforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CCUS",
+      "descricao": "Código do centro de custos.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Quando gerar centro de custos: E650SLC.CODCCU"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_SLD_INI",
+      "descricao": "Valor do saldo inicial do período.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00\nSe Identificador de moeda funcional for igual a não então:\nSe Tipo de escrituração contábil for igual a A,Z campo recebe E652SAL.SALMES - E652SAL.DEBMES + E652SAL.CREMES senão campo recebe E650SAL.SALMES E650SAL.DEBMES + E650SAL.CREMES \nQuando gerar centro de custos, se Tipo de escrituração contábil for igual a A,Z campo recebe E650SLC.SALMES \n - E650SLC.DEBMES \n + E650SLC.CREMES senão campo recebe E650SLC.SALMES E650SLC.DEBMES \n + E650SLC.CREMES"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_DC_INI",
+      "descricao": "Indicador da situação do saldo inicial: \n D - Devedor;\n C - Credor.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, recebe 0,00\nSe Identificador de moeda funcional for igual a não, então: se o saldo inicial for menor que 0, recebe C; senão recebe D\nQuando o campo 04 - VL_SLD_INI for igual a zero, recebe \"E045PLA.NatCta - Natureza da conta\""
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_DEB",
+      "descricao": "Valor total dos débitos no período.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00\nSe Identificador de moeda funcional for igual a não, então:\nSe Tipo de escrituração contábil for igual a A,Z campo recebe E652SAL.DEBMES senão campo recebe E650SAL.DEBMES\nQuando gerar centro de custos, se Tipo de escrituração contábil for igual a A,Z campo recebe E652SAL.DEBMES senão campo recebe E650SLC.DEBMES"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_CRED",
+      "descricao": "Valor total dos créditos no período.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00\nSe Identificador de moeda funcional for igual a não, então:\nSe Tipo de escrituração contábil for igual a A,Z campo recebe E652SAL.CREMES senão campo recebe E650SAL.CREMES\nQuando gerar centro de custos, se Tipo de escrituração contábil for igual a A,Z campo recebe E652SAL.CREMES senão campo recebe E650SLC.CREMES"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_SLD_FIN",
+      "descricao": "Valor do saldo final do período.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00\nSe Identificador de moeda funcional for igual a não, então:\nSe Tipo de escrituração contábil for igual a A,Z campo recebe E652SAL.SALMES senão campo recebe E650SAL.SALMES\nQuando gerar centro de custos, se Tipo de escrituração contábil for igual a A,Z campo recebe E652SAL.SALMES, senão campo recebe E650SLC.SALMES"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IND_DC_FIN",
+      "descricao": "Indicador da situação do saldo final:\nD - Devedor;\nC - Credor.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, recebe 0,00\nSe Identificador de moeda funcional for igual a não, então: se o saldo inicial for menor que 0, recebe C; senão recebe D\nQuando o campo 08 - VL_SLD_FIN for igual a zero, recebe \"E045PLA.NatCta - Natureza da conta\""
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "VL_SLD_INI_MF",
+      "descricao": "Valor do saldo inicial do período\nem moeda funcional, convertida\npara reais.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "IND_DC_INI_MF",
+      "descricao": "Indicador da situação do saldo\ninicial em moeda funcional:\n D - Devedor;\n C - Credor.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "VL_DEB_MF",
+      "descricao": "Valor total dos débitos do\nperíodo em moeda funcional,\nconvertida para reais.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "VL_CRED_MF",
+      "descricao": "Valor total dos créditos do\nperíodo em moeda funcional",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "VL_SLD_FIN_MF",
+      "descricao": "Valor do saldo final do período\nem moeda funcional, convertida\npara reais",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "IND_DC_FIN_MF",
+      "descricao": "Indicador da situação do saldo\nfinal em moeda funcional:\n D - Devedor;\n C - Credor.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    }
+  ]
+}

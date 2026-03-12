@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "I015",
+    "titulo": "REGISTRO I015: Identificação das Contas da Escrituração Resumida a que se Refere a Escrituração Auxiliar",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I015",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I015"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:29:19.578386+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I015.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I015"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA_RES",
+      "descricao": "Código da(s)\nconta(s)\nanalítica(s) do\nLivro Diário com\nEscrituração\nResumida (R) que\nrecebe os\nlançamentos\nglobais (deve\ncorresponder a\numa conta\nsintética no livro\nauxiliar).",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se na tela de entrada no campo Tipo de \n conta estiver com a opção:\n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta conforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta conforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil. \n Campo origem: E642LCT.CTARED"
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "registro": {
+    "codigo": "Y710",
+    "titulo": "REGISTRO Y710: TRIBUTOS VINCULADOS A DIOR - INCLUSÃO DE REGISTRO",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y710",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y710"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.952819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo identificação \"Y710\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y710\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_TRIB",
+      "descricao": "Código do tributo envolvido no planejamento tributário: \n 1 - IRPF - Imposto sobre a Renda da Pessoa Física \n 2 - IRPJ - Imposto sobre a Renda da Pessoa Jurídica \n 3 - CSLL - Contribuição Social sobre o Lucro Líquido \n 4 - IRRF - Imposto de Renda Retido na Fonte \n 5 - PIS/COFINS \n 6- IOF - Imposto sobre Operações Financeiras \n 7 - Imposto de Importação e Exportação \n 8- Simples Nacional \n 9 - Contribuição Previdenciária \n 10 - Cide Combustíveis \n 11 - IPI - Imposto sobre Produtos Industrializados \n 12 - Outros",
+      "tipo": "N",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Cod. tributos planejamento tributário",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VL_TRIB",
+      "descricao": "Valor da repercussão do tributo no planejamento tributário.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor repercussão tributo planejamento tributário",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "ANO",
+      "descricao": "Ano da repercussão tributária do produto.",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Ano repercussão tributária tributo",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "registro": {
+    "codigo": "0000",
+    "titulo": "REGISTRO 000: ABERTURA DO ARQUIVO DIGITAL E IDENTIFICAÇÃO DA PESSOA JURÍDICA",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0000",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-0.htm#0000"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 15,
+    "extraido_em_utc": "2026-03-10T19:31:56.784379+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo 0000.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "0000"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "NOME_ESC",
+      "descricao": "Texto fixo contendo LECF",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Identificação do Tipo de SPED",
+        "DOCUMENTAÇÃO": "LECF"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_VER",
+      "descricao": "Código da versão do leiaute conforme ato da RFB.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código da Versão do Leiaute",
+        "DOCUMENTAÇÃO": "Campo definido na tela, filtro versão do leiaute. Somente leitura até surgir uma nova versão."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "CNPJ",
+      "descricao": "Preencher este campo com o número de inscrição no Cadastro Nacional da Pessoa Jurídica (CNPJ) do declarante.\nObservação: No caso de arquivo da SCP, deve ser informado neste campo o CNPJ do sócio ostensivo. O CNPJ/Código da SCP, no caso de arquivo da SCP, será informado no campo 0000.COD_SCP.",
+      "tipo": "N",
+      "tamanho": "014",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ",
+        "DOCUMENTAÇÃO": "E070FIL.NUMCGC"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NOME",
+      "descricao": "Nome empresarial da Pessoa Jurídica ou da Sociedade em Conta de Participação (SCP).",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Nome empresarial",
+        "DOCUMENTAÇÃO": "E070FIL.NOMFIL"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "IND_SIT_INI_PER",
+      "descricao": "Indicador do início do período:\n 0 – Regular (início no primeiro dia do ano);\n1 – Abertura (início de atividades no ano calendário);\n2 – Resultante de cisão/fusão ou remanescente de cisão, ou realizou incorporação;\n 3 – Resultante de Mudança de Qualificação da Pessoa Jurídica; \n4 – Início de obrigatoriedade da entrega no curso do ano calendário. (Ex. Exclusão do Simples Nacional ou desenquadramento como imune ou isenta do IRPJ). \n 0 – Regular (Início no primeiro dia do ano). \n 1 – Abertura (Início de atividades no ano-calendário). \n 2 – Resultante de fusão ou cisão total. \n 3 – Resultante de Mudança de Qualificação da Pessoa Jurídica. \n 4 – Início de obrigatoriedade da entrega no curso do ano calendário - Exclusão do Simples. \n 5 – Resultante de desenquadramento como imune ou isenta do IRPJ. \n 6 - Realizou incorporação ou remanescente de cisão parcial.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do início do período",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "SIT_ESPECIAL",
+      "descricao": "Indicador de situação especial:\n 0 – Normal (Sem ocorrência de situação especial ou evento);\n1 – Extinção;\n2 – Fusão;\n3 – Incorporação \\ Incorporada;\n4 – Incorporação \\ Incorporadora;\n5 – Cisão Total;\n6 – Cisão Parcial;\n 7 – Mudança de Qualificação da Pessoa Jurídica; \n8 – Desenquadramento de Imune/Isenta;\n9 – Inclusão no Simples Nacional.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de situação especial e outros eventos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "PAT_REMAN_CIS",
+      "descricao": "Patrimônio remanescente em caso de Cisão (%).\nObs.: Necessidade para o controle de saldos na conta da parte B do LALUR.",
+      "tipo": "N",
+      "tamanho": "5",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Patrimônio Remanescente Em Caso De Cisão (%)",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "DT_SIT_ESP",
+      "descricao": "Data da situação especial ou evento: Informar a data da deliberação do evento ou, em caso de extinção da pessoa jurídica, a data em que se ultimou a sua liquidação.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Data da Situação Especial/ Evento",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "DT_INI",
+      "descricao": "Data inicial das informações contidas no arquivo: Este campo deve ser preenchido com a data inicial do período correspondente ao ano-calendário a que se referir a ECF.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data Inicial",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "DT_FIN",
+      "descricao": "Data final das informações contidas no arquivo: A data correspondente ao período final é 31 de dezembro, no caso de situação normal. Nos demais casos, o período final é deve ser com base na data do evento.\n Atenção: considera-se período final, nos casos de situação especial, as seguintes datas:\n a) Extinção: a data em que se ultimou a liquidação da pessoa jurídica;\nb) Fusão, Incorporação/Incorporada, Incorporação/Incorporadora, Cisão Total, Cisão Parcial e Inclusão no Simples Nacional: a data da deliberação do evento de incorporação, fusão ou cisão.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data Final",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "RETIFICADORA",
+      "descricao": "A pessoa jurídica deve assinalar este campo no caso de declaração retificadora.\n S – ECF retificadora;\nN – ECF original;\nF – ECF original com mudança de forma de tributação (Art. 5o da Instrução Normativa no 166/1999).\n A pessoa jurídica poderá efetuar a remessa de arquivo em retificação ao arquivo anteriormente remetido, observando-se a permissão, as regras e prazos estabelecidos pela Secretaria da Receita Federal do Brasil (RFB). Como há controle de saldos, se houver retificação da ECF transmitida de anos anteriores, deverá ocorrer a retificação de todos os anos posteriores já transmitidos. Será possível fazer a retificação da ECF dos últimos 5 (cinco) anos.\n A retificação de arquivos já transmitidos deverá ser feita na sua íntegra, não se aceitando arquivos complementares para o mesmo período informado.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Escrituração retificadora",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "NUM_REC",
+      "descricao": "Número do Recibo da ECF Anterior (hashcode): este campo deve ser preenchido com o número constante no recibo de entrega da última ECF transmitida, nos casos de 0000.RETIFICADORA = S ou F.",
+      "tipo": "C",
+      "tamanho": "41",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Número do Recibo Anterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "TIP_ECF",
+      "descricao": "Indicador do tipo da ECF: \n0 – ECF de empresa não participante de SCP como sócio ostensivo ;\n1 – ECF de empresa participante de SCP como sócio ostensivo \n2 – ECF da SCP.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo da ECF",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "COD_SCP",
+      "descricao": "Identificação da SCP (CNPJ – art. 52 da Instrução Normativa RFB no 1.470, de 30 de maio de 2014).\n Observação : só deve ser preenchido pela própria SCP (não é preenchido pelo sócio ostensivo).\nTodos os dígitos devem ser preenchidos.",
+      "tipo": "N",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Identificação da SCP",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

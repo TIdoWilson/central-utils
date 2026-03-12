@@ -1,0 +1,123 @@
+{
+  "registro": {
+    "codigo": "1300",
+    "id_guia": "172",
+    "titulo": "Registro 1300 da EFD-ICMS/IPI (Movimentação diária de combustíveis)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=172"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:07:51.444121+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1300\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_ITEM",
+      "descricao": "Código do Produto, constante do Registro 0200.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FECH",
+      "descricao": "Data do fechamento da movimentação.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "ESTQ_ABERT",
+      "descricao": "Estoque no inicio do dia, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VOL_ENTR",
+      "descricao": "Volume Recebido no dia (em litros).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VOL_DISP",
+      "descricao": "Volume Disponível (04 + 05), em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VOL_SAIDAS",
+      "descricao": "Volume Total das Saídas, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "ESTQ_ESCR",
+      "descricao": "Estoque Escritural (06 - 07), litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VAL_AJ_PERDA",
+      "descricao": "Valor da Perda, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VAL_AJ_GANHO",
+      "descricao": "Valor do ganho, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "FECH_FISICO",
+      "descricao": "Estoque de Fechamento, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "registro": {
+    "codigo": "D690",
+    "id_guia": "129",
+    "titulo": "Registro D690 da EFD-ICMS/IPI (Registro analítico dos documentos (Código 21 e 22))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=129"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:07:50.773611+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D690\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "CST_ICMS",
+      "descricao": "CST, conforme a Tabela 4.3.1 .",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "CFOP",
+      "descricao": "CFOP, conforme a Tabela 4.2.2 .",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "ALIQ_ICMS",
+      "descricao": "Alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_OPR",
+      "descricao": "Valor da operação correspondente à combinação de CST_ICMS, CFOP, e alíquota do ICMS, incluídas as despesas acessórias e acréscimos.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Parcela correspondente ao \"Valor da Base de Cálculo (BC) do ICMS\" referente à combinação CST_ICMS, CFOP, e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_ICMS",
+      "descricao": "Parcela correspondente ao \"Valor do ICMS\" referente à combinação CST_ICMS, CFOP, e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_BC_ICMS_UF",
+      "descricao": "Parcela correspondente ao valor da BC do ICMS de outras Unidades da Federação (UFs), referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_ICMS_UF",
+      "descricao": "Parcela correspondente ao valor do ICMS de outras UFs, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_RED_BC",
+      "descricao": "Valor não tributado em função da redução da BC do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "COD_OBS",
+      "descricao": "Código da observação do lançamento fiscal (Campo 02 do Registro 0460).",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

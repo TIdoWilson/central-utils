@@ -1,0 +1,208 @@
+{
+  "registro": {
+    "codigo": "D510",
+    "id_guia": "124",
+    "titulo": "Registro D510 da EFD-ICMS/IPI (Itens do Documento - Nota Fiscal de Serviço de Comunicação (Código 21) e Serviço de Telecomunicação (Código 22))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=124"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saídas"
+    ],
+    "total_campos": 20,
+    "extraido_em_utc": "2026-03-10T19:07:50.381438+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D510\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_ITEM",
+      "descricao": "Número sequencial do item no documento fiscal.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item (Campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_CLASS",
+      "descricao": "Código de classificação do item do serviço de comunicação ou de telecomunicação, conforme a Tabela 4.4.1 .",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "QTD",
+      "descricao": "Quantidade do item.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "UNID",
+      "descricao": "Unidade do item (Campo 02 do Registro 0190).",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_ITEM",
+      "descricao": "Valor do item.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_DESC",
+      "descricao": "Valor total do desconto.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "CST_ICMS",
+      "descricao": "Código da Situação Tributária (CST), conforme a Tabela 4.3.1 .",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "CFOP",
+      "descricao": "Código Fiscal de Operação e Prestação (CFOP).",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor da Base de Cálculo (BC) do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "12",
+      "campo": "ALIQ_ICMS",
+      "descricao": "Alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_ICMS",
+      "descricao": "Valor do ICMS creditado/debitado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_BC_ICMS_UF",
+      "descricao": "Valor da BC do ICMS de outras UFs.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_ICMS_UF",
+      "descricao": "Valor do ICMS de outras UFs.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "16",
+      "campo": "IND_REC",
+      "descricao": "Indicador do tipo de receita:\n 0: Receita própria - serviços prestados;\n 1: Receita própria - cobrança de débitos;\n 2: Receita própria - venda de mercadorias;\n 3: Receita própria - venda de serviço pré-pago;\n 4: Outras receitas próprias;\n 5: Receitas de terceiros (co-faturamento);\n 9: Outras receitas de terceiros.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "17",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (Campo 02 do Registro 0150) receptor da receita, terceiro da operação, se houver.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "18",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "19",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "20",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

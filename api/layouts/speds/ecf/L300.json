@@ -1,0 +1,142 @@
+{
+  "registro": {
+    "codigo": "L300",
+    "titulo": "REGISTRO L300: DEMONSTRATIVO DO RESULTADO DO EXERCÍCIO",
+    "bloco_origem": "bloco-l.htm",
+    "ancora": "l300",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-l.htm#l300"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:31:56.837836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “L300”",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"L300\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CODIGO",
+      "descricao": "Código da Conta Referencial (Analíticas e Sintéticas) de acordo com a tabela do Sped",
+      "tipo": "C",
+      "tamanho": "50",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta referencial",
+        "DOCUMENTAÇÃO": "E043PCM.CLACTA"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESCRICAO",
+      "descricao": "Descrição da Conta Referencial",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Descrição",
+        "DOCUMENTAÇÃO": "E043PCM.DESCTA"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "TIPO",
+      "descricao": "Define o Tipo da Conta:\nS – Sintética\nA – Analítica",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo da Conta",
+        "DOCUMENTAÇÃO": "E043PCM.ANASIN"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NIVEL",
+      "descricao": "Nível da Conta",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Nível da Conta",
+        "DOCUMENTAÇÃO": "E043PCM.NIVCTA"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "COD_NAT",
+      "descricao": "Código Natureza da Conta:\n04 – Contas de Resultado",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Natureza da Conta",
+        "DOCUMENTAÇÃO": "E043PCM.NATCTA"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "COD_CTA_SUP",
+      "descricao": "Código da Conta Sintética de nível imediatamente superior.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta Superior",
+        "DOCUMENTAÇÃO": "E043PCM.CLACTA da conta pai da que está sendo gerada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VALOR",
+      "descricao": "Valor total transferido para a Conta Referencial",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor do Saldo Final da Conta Referencial",
+        "DOCUMENTAÇÃO": "Saldo final da conta referencial conforme a visão contábil para o período apurado."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IND_VALOR",
+      "descricao": "Indicador do sinal do saldo final da conta:\nC – Credor\nD – Devedor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do Saldo Final da Conta Referencial",
+        "DOCUMENTAÇÃO": "Será gerado conforme indicação da lista dinâmica relacionada ao aglutinador, informada na página do registro em \"Lista Dinâmica da Natureza dos Aglutinadores\", a natureza do saldo registrado para o aglutinador e o valor referente ao saldo final da conta referencial para o período."
+      }
+    }
+  ]
+}

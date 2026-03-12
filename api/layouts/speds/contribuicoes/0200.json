@@ -1,0 +1,140 @@
+{
+  "registro": {
+    "codigo": "0200",
+    "titulo": "Registro 0200 da EFD-Contribuições (Tabela de Identificação do Item (Produtos e Serviços))",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=362"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:03:21.669232+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0200\"",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "DESCR_ITEM",
+      "descricao": "Descrição do item",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_BARRA",
+      "descricao": "Representação alfanumérico do código de barra do produto, se houver.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_ANT_ITEM",
+      "descricao": "Código anterior do item com relação à última informação apresentada.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "UNID_INV",
+      "descricao": "Unidade de medida utilizada na quantificação de estoques.",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "TIPO_ITEM",
+      "descricao": "Tipo do item – Atividades Industriais, Comerciais e Serviços:\n00 – Mercadoria para Revenda;\n01 – Matéria-Prima;\n02 – Embalagem;\n03 – Produto em Processo;\n04 – Produto Acabado;\n05 – Subproduto;\n06 – Produto Intermediário;\n07 – Material de Uso e Consumo;\n08 – Ativo Imobilizado;\n09 – Serviços;\n10 – Outros insumos;\n99 – Outras.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "COD_NCM",
+      "descricao": "Código da Nomenclatura Comum do Mercosul",
+      "tipo": "C",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "EX_IPI",
+      "descricao": "Código EX, conforme a TIPI",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "COD_GEN",
+      "descricao": "Código do gênero do item, conforme a Tabela 4.2.1.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "COD_LST",
+      "descricao": "Código do serviço conforme lista do Anexo I da Lei Complementar Federal nº 116/03.",
+      "tipo": "N",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "Obs: A partir do período de apuração maio de 2015 (versão 2.11 do PVA), o código a ser informado neste campo poderá ser informado 05 (cinco) caracteres, no formato “XX.XX”, conforme a codificação adotada na Lei Complementar nº 116/2003 e na EFD-ICMS/IPI.",
+      "campo": "005",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "12",
+      "campo": "ALIQ_ICMS",
+      "descricao": "Alíquota de ICMS aplicável ao item nas operações internas",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

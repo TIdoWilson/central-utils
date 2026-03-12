@@ -1,0 +1,48 @@
+{
+  "registro": {
+    "codigo": "Q001",
+    "titulo": "REGISTRO Q001 - ABERTURA DO BLOCO Q",
+    "bloco_origem": "bloco-q.htm",
+    "ancora": "q001",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-q.htm#q001"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.873836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “Q001”.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Texto Fixo Contendo a Identificação do Registro (Q001)."
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_DAD",
+      "descricao": "0 – Bloco com dados informados;\n1 – Bloco sem dados informados.",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de movimento"
+      }
+    }
+  ]
+}

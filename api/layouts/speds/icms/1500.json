@@ -1,0 +1,267 @@
+{
+  "registro": {
+    "codigo": "1500",
+    "id_guia": "181",
+    "titulo": "Registro 1500 da EFD-ICMS/IPI (Nota Fiscal / Conta de Energia Elétrica (Código 06) - Operações Interestaduais)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=181"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 27,
+    "extraido_em_utc": "2026-03-10T19:07:51.485766+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1500\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_OPER",
+      "descricao": "Indicador do tipo de operação:\n 1: Saída.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_EMIT",
+      "descricao": "Indicador do emitente do documento fiscal:\n 0: Emissão própria.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150): \n - do adquirente, no caso das saídas.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1 .",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_SIT",
+      "descricao": "Código da situação do documento fiscal, conforme a Tabela 4.1.2.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "SUB",
+      "descricao": "Subsérie do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "COD_CONS",
+      "descricao": "Código de classe de consumo de energia elétrica:\n 01: Comercial;\n 02: Consumo Próprio;\n 03: Iluminação Pública;\n 04: Industrial;\n 05: Poder Público;\n 06: Residencial;\n 07: Rural;\n 08: Serviço Público.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "NUM_DOC",
+      "descricao": "Número do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "DT_E_S",
+      "descricao": "Data da entrada ou da saída.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_DOC",
+      "descricao": "Valor total do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_DESC",
+      "descricao": "Valor total do desconto.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_FORN",
+      "descricao": "Valor total fornecido/consumido.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_SERV_NT",
+      "descricao": "Valor total dos serviços não-tributados pelo ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "17",
+      "campo": "VL_TERC",
+      "descricao": "Valor total cobrado em nome de terceiros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "18",
+      "campo": "VL_DA",
+      "descricao": "Valor total de despesas acessórias indicadas no documento fiscal.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "19",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor acumulado da Base de Cálculo (BC) do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "20",
+      "campo": "VL_ICMS",
+      "descricao": "Valor acumulado do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "21",
+      "campo": "VL_BC_ICMS_ST",
+      "descricao": "Valor acumulado da BC do ICMS substituição tributária.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "22",
+      "campo": "VL_ICMS_ST",
+      "descricao": "Valor acumulado do ICMS retido por substituição tributária.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "23",
+      "campo": "COD_INF",
+      "descricao": "Código da informação complementar do documento fiscal (campo 02 do Registro 0450).",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "24",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS/Pasep.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "25",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da Cofins.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "26",
+      "campo": "TP_LIGACAO",
+      "descricao": "Código de tipo de Ligação:\n 1: Monofásico;\n 2: Bifásico;\n 3: Trifásico.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "27",
+      "campo": "COD_GRUPO_TENSAO",
+      "descricao": "Código de grupo de tensão:\n 01: A1 - Alta Tensão (230kV ou mais);\n 02: A2 - Alta Tensão (88 a 138kV);\n 03: A3 - Alta Tensão (69kV);\n 04: A3a - Alta Tensão (30kV a 44kV);\n 05: A4 - Alta Tensão (2,3kV a 25kV);\n 06: AS - Alta Tensão Subterrâneo 06;\n 07: B1 - Residencial 07;\n 08: B1 - Residencial Baixa Renda 08;\n 09: B2 - Rural 09;\n 10: B2 - Cooperativa de Eletrificação Rural;\n 11: B2 - Serviço Público de Irrigação;\n 12: B3 - Demais Classes;\n 13: B4a - Iluminação Pública - rede de distribuição;\n 14: B4b - Iluminação Pública - bulbo de lâmpada.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

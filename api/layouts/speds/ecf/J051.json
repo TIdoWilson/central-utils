@@ -1,0 +1,64 @@
+{
+  "registro": {
+    "codigo": "J051",
+    "titulo": "REGISTRO J051: PLANO DE CONTAS REFERENCIAL",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "j051",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-j.htm#j051"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:31:56.820836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"J051\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"J051\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CCUS",
+      "descricao": "Código do Centro de Custo",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código do Centro de Custo",
+        "DOCUMENTAÇÃO": "E043RMP.CODCCU \nBusca do modelo de plano, conforme o código informado na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CTA_REF",
+      "descricao": "Código da Conta no Plano de Contas Referencial definido no campo 0010.COD_QUALIF_PJ, conforme tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta Referencial",
+        "DOCUMENTAÇÃO": "E043PCM.CLACTA\nApresenta a classificação da conta contábil do plano referencial informado, que possui relacionamento com a conta contábil do plano da empresa, listado no registro J050."
+      }
+    }
+  ]
+}

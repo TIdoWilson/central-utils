@@ -1,0 +1,311 @@
+{
+  "registro": {
+    "codigo": "Y700",
+    "titulo": "REGISTRO Y700: DECLARAÇÃO DE INFORMAÇÕES DE OPERAÇÕES RELEVANTES (DIOR) - INCLUSÃO DE REGISTRO",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y700",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y700"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 22,
+    "extraido_em_utc": "2026-03-10T19:31:56.951820+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo identificação do Registro \"Y700\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y700\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_EDOSSIE",
+      "descricao": "Número do e-Dossiê relativo a DIOR.",
+      "tipo": "C",
+      "tamanho": "32",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Número e-Dossiê",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_INI_ATO",
+      "descricao": "Data de início do conjunto de operações que envolvam atos ou negócios jurídicos relativos a DIOR.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data Início",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "DT_FIN_ATO",
+      "descricao": "Data final do conjunto de operações que envolvam atos ou negócios jurídicos relativos a DIOR.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data final",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "ANO_INI",
+      "descricao": "Ano-calendário inicial da economia tributária relativa a DIOR.",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Ano inicial",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "ANO_FIN",
+      "descricao": "Ano-calendário final da economia tributária relativa a DIOR.",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Ano final",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "OP_PDEP_BRASIL",
+      "descricao": "Operações entre partes dependentes no Brasil. \n S - Sim \n N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Operações dependentes Brasil",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "OP_PDEP_EXT_TNF",
+      "descricao": "Operações entre partes dependentes no exterior, que não sejam pessoas residentes ou domiciliadas em país com tributação favorecida ou regime fiscal privilegiado (art. 24 e art. 24-A da Lei nº 9.430, de 27 de dezembro de 1996): \n S - Sim \n N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Operações dependentes exterior (Não residentes)",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "OP_PDEP_EXT_TF",
+      "descricao": "Operações entre partes dependentes no exterior, que sejam pessoas residentes ou domiciliadas em país com tributação favorecida ou regime fiscal privilegiado (art. 24 e art. 24-A da Lei nº 9.430, de 27 de dezembro de 1996):",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Operações dependentes exterior (Residentes)",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "OP_PINDEP-BRASIL",
+      "descricao": "Operações entre partes independentes no Brasil: \n S - Sim \n N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Operações independentes Brasil",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "OP_PINDEP_EXT_TNF",
+      "descricao": "Operações entre partes independentes no exterior, que não sejam pessoas residentes ou domiciliadas em país com tributação favorecida ou regime fiscal privilegiado (art. 24 e art. 24-A da Lei nº 9.430, de 27 de dezembro de 1996): S - Sim N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Operações independentes exterior (Não residentes)",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "OP_PINDEP_EXT_TF",
+      "descricao": "Operações entre partes independentes no exterior, que não sejam pessoas residentes ou domiciliadas em país com tributação favorecida ou regime fiscal privilegiado (art. 24 e art. 24-A da Lei nº 9.430, de 27 de dezembro de 1996): S - Sim N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Operações independentes exterior (Residentes)",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "GER_ATIV_FSICAL",
+      "descricao": "Geração de ativo fiscal diferido: \n S - Sim \n N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Geração ativo fiscal diferido",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "REORG_SOC",
+      "descricao": "Reorganização societária (fusão,cisão ou incorporação): \n S - Sim \n N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Reorganização societária (fusão, cisão ou incorporação)",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "GER_PAS_TERC",
+      "descricao": "Geração de passivo com terceiros: \n S - Sim \n N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Geração passivo terceiros",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "BENEF_GER_PAS",
+      "descricao": "Beneficiários de passivos com terceiros: \n 1 - Beneficiários finais identificados \n 2 - Beneficiários finais não identificados \n 3 - Beneficiários finais identificados e não identificados",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Beneficiários geração passivos terceiros",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "17",
+      "campo": "REDUC_BASE_TRIB",
+      "descricao": "Redução da base tributária no Brasil com transferência para o exterior: \n S - Sim \n N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Redução base tributária Brasil para exterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "18",
+      "campo": "REDUC_ATIVO",
+      "descricao": "Redução de ativos: \n S - Sim \n N - Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Redução ativos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "19",
+      "campo": "PERC_REDUC_ATIVO",
+      "descricao": "Percentual de redução de ativos: \n S - Sim \n N - Não",
+      "tipo": "N",
+      "tamanho": "6",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Percentual redução ativos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "20",
+      "campo": "DESC_SUM",
+      "descricao": "Descrição sumária dos fatos.",
+      "tipo": "C",
+      "tamanho": "1.024",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Descrição sumária fatos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "21",
+      "campo": "FUND_JUR",
+      "descricao": "Fundamentação jurídica.",
+      "tipo": "C",
+      "tamanho": "1.024",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Fundamentação jurídica",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "22",
+      "campo": "FUN_JUST_SUM",
+      "descricao": "Justificativa sumária do propósito negocial.",
+      "tipo": "C",
+      "tamanho": "1.024",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Justificativa sumária propósito negocial",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    }
+  ]
+}

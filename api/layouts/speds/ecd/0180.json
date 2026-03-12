@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "0180",
+    "titulo": "REGISTRO \n 0180: Identificação do Relacionamento com o Participante",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0180",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-0.htm#0180"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:29:19.576386+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0180\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "\"0180\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_REL",
+      "descricao": "Código do relacionamento conforme tabela interna ao SPED.",
+      "tipo": "N",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E049LLT.CODILT (Lista Dinâmica)"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_INI_REL",
+      "descricao": "Data do início do relacionamento.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E049LLT.DATGER"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "DT_FIN_REL",
+      "descricao": "Data do término do relacionamento.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E049LLT.DATGER (Data da geração do próximo relacionamento)"
+      }
+    }
+  ]
+}

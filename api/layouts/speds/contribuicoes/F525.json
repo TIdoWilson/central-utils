@@ -1,0 +1,122 @@
+{
+  "registro": {
+    "codigo": "F525",
+    "titulo": "Registro F525 da EFD-Contribuições (Composição da Receita Escriturada no Período – Detalhamento da Receita Recebida pelo Regime de Caixa)",
+    "bloco": "3.5) Bloco F (Demais documentos e operações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=473"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:03:22.596634+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"F525\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_REC",
+      "descricao": "Valor total da receita recebida, correspondente ao indicador informado no campo 03 (IND_REC)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_REC",
+      "descricao": "Indicador da composição da receita recebida no período (Campo 02), por:\n01- Clientes;\n02- Administradora de cartão de débito/crédito;\n03- Título de crédito - Duplicata, nota promissória, cheque, etc.;\n04- Documento fiscal;\n05- Item vendido (produtos e serviços);\n99- Outros (Detalhar no campo 10 – Informação Complementar).",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "CNPJ_CPF",
+      "descricao": "CNPJ/CPF do participante (cliente/pessoa física ou jurídica pagadora) ou da administradora de cartões (vendas por cartão de débito ou de crédito), no caso de detalhamento da receita recebida conforme os indicadores “01” ou “02”, respectivamente.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "NUM_DOC",
+      "descricao": "Número do título de crédito ou do documento fiscal, no caso de detalhamento da receita recebida conforme os indicadores “03” ou “04”, respectivamente.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item (campo 02 do Registro 0200), no caso de detalhamento da receita recebida por item vendido, conforme o indicador “05”.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_REC_DET",
+      "descricao": "Valor da receita detalhada, correspondente ao conteúdo informado no campo 04, 05, 06 ou 10.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária do PIS/Pasep",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária da Cofins",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "INFO_COMPL",
+      "descricao": "Informação complementar",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil representativa da receita recebida",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

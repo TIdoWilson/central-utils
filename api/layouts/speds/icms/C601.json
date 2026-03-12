@@ -1,0 +1,46 @@
+{
+  "registro": {
+    "codigo": "C601",
+    "id_guia": "84",
+    "titulo": "Registro C601 da EFD-ICMS/IPI (Documentos cancelados - Consolidação diária de NF/Contas de energia elétrica (Cód. 06), NF/Conta de fornecimento dágua canalizada (Cód. 29) e NF consumo fornecimento de gás (Cód. 28))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=84"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:49.908810+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C601\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_DOC_CANC",
+      "descricao": "Número do documento fiscal cancelado.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

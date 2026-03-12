@@ -1,0 +1,61 @@
+{
+  "registro": {
+    "codigo": "I075",
+    "titulo": "REGISTRO \n I075: Tabela de Histórico Padronizado",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I075",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I075"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:29:19.584885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I075.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I075"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_HIST",
+      "descricao": "Código do histórico padronizado.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E046HPD.CODHPD"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESCR_HIST",
+      "descricao": "Descrição do histórico padronizado.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E046HPD.DESHPD\nou (E046HPD.DESHPD caso o campo E046HPD.TITHPD esteja vazio)"
+      }
+    }
+  ]
+}

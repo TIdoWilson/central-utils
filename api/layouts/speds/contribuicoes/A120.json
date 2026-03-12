@@ -1,0 +1,104 @@
+{
+  "registro": {
+    "codigo": "A120",
+    "titulo": "Registro A120 da EFD-Contribuições (Informação Complementar - Operações de Importação)",
+    "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=378"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:03:21.758317+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"A120”",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_TOT_SERV",
+      "descricao": "Valor total do serviço, prestado por pessoa física ou jurídica domiciliada no exterior.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_BC_PIS",
+      "descricao": "Valor da base de cálculo da Operação – PIS/PASEP – Importação",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_PIS_IMP",
+      "descricao": "Valor pago/recolhido de PIS/PASEP – Importação",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "DT_PAG_PIS",
+      "descricao": "Data de pagamento do PIS/PASEP – Importação",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da Operação – COFINS – Importação",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_COFINS_IMP",
+      "descricao": "Valor pago/recolhido de COFINS – Importação",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "DT_PAG_COFINS",
+      "descricao": "Data de pagamento do COFINS – Importação",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "LOC_EXE_SERV",
+      "descricao": "Local da execução do serviço:\n0 – Executado no País;\n1 – Executado no Exterior, cujo resultado se verifique no País.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

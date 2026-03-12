@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "K001",
+    "titulo": "REGISTRO K001: Abertura do Bloco K",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "K001",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-k.htm#K001"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:29:19.608885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nK001",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"K001\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_DAD",
+      "descricao": "Indicador de\nmovimento:\n 0 - Bloco com dados\ninformados;\n 1 - Bloco sem dados\ninformados.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "\"0\""
+      }
+    }
+  ]
+}

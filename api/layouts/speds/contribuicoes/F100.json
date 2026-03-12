@@ -1,0 +1,194 @@
+{
+  "registro": {
+    "codigo": "F100",
+    "titulo": "Registro F100 da EFD-Contribuições (Demais Documentos e Operações Geradoras de Contribuição e Créditos)",
+    "bloco": "3.5) Bloco F (Demais documentos e operações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=457"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 19,
+    "extraido_em_utc": "2026-03-10T19:03:22.471195+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"F100\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_OPER",
+      "descricao": "Indicador do Tipo da Operação:\n0 – Operação Representativa de Aquisição, Custos, Despesa ou Encargos, ou Receitas, Sujeita à Incidência de Crédito de PIS/Pasep ou Cofins (CST 50 a 66).\n1 – Operação Representativa de Receita Auferida Sujeita ao Pagamento da Contribuição para o PIS/Pasep e da Cofins (CST 01, 02, 03 ou 05).\n2 - Operação Representativa de Receita Auferida Não Sujeita ao Pagamento da Contribuição para o PIS/Pasep e da Cofins (CST 04, 06, 07, 08, 09, 49 ou 99).",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (Campo 02 do Registro 0150)",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item (campo 02 do Registro 0200)",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "DT_OPER",
+      "descricao": "Data da Operação (ddmmaaaa)",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_OPER",
+      "descricao": "Valor da Operação/Item",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_BC_PIS",
+      "descricao": "Base de cálculo do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente a COFINS, conforme a Tabela indicada no item 4.3.4.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Base de cálculo da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "13",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da COFINS",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "NAT_BC_CRED",
+      "descricao": "Código da Base de Cálculo dos Créditos, conforme a tabela indicada no item 4.3.7, caso seja informado código representativo de crédito nos Campos 07 (CST_PIS) e 11 (CST_COFINS).",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "16",
+      "campo": "IND_ORIG_CRED",
+      "descricao": "Indicador da origem do crédito:\n0 – Operação no Mercado Interno\n1 – Operação de Importação",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "17",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "18",
+      "campo": "COD_CCUS",
+      "descricao": "Código do Centro de Custos",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "19",
+      "campo": "DESC_DOC_OPER",
+      "descricao": "Descrição do Documento/Operação",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

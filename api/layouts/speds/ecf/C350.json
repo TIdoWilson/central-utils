@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "C350",
+    "titulo": "REGISTRO C350: IDENTIFICAÇÃO DA DATA DOS SALDOS DAS CONTAS DE RESULTADO ANTES DO ENCERRAMENTO",
+    "bloco_origem": "bloco-c.htm",
+    "ancora": "C350",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-c.htm#C350"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.809836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (C350)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[C350]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_RES",
+      "descricao": "Data da Apuração do Resultado",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    }
+  ]
+}

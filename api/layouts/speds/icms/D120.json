@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "D120",
+    "id_guia": "98",
+    "titulo": "Registro D120 da EFD-ICMS/IPI (Complemento da Nota Fiscal de Serviços de Transporte (Código 07))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=98"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saídas"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:07:50.138721+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D120\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MUN_ORIG",
+      "descricao": "Código do Município de origem do serviço, conforme a Tabela IBGE (Preencher com \"9999999\", se Exterior).",
+      "tipo": "N",
+      "tamanho": "007*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_MUN_DEST",
+      "descricao": "Código do município de destino, conforme a Tabela IBGE (Preencher com \"9999999\", se Exterior).",
+      "tipo": "N",
+      "tamanho": "007*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VEIC_ID",
+      "descricao": "Placa de identificação do veículo.",
+      "tipo": "C",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "UF_ID",
+      "descricao": "Sigla da UF da placa do veículo.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

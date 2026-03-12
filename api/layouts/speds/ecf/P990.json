@@ -1,0 +1,52 @@
+{
+  "registro": {
+    "codigo": "P990",
+    "titulo": "REGISTRO P990: ENCERRAMENTO DO BLOCO P",
+    "bloco_origem": "bloco-p.htm",
+    "ancora": "p990",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-p.htm#p990"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.872837+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “P990”.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"P990\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN",
+      "descricao": "Quantidade total de linhas do Bloco P.",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Quantidade de Total de Registros do Bloco P",
+        "DOCUMENTAÇÃO": "Somatório das linhas do Bloco P"
+      }
+    }
+  ]
+}

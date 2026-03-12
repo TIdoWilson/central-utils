@@ -1,0 +1,50 @@
+{
+  "registro": {
+    "codigo": "C010",
+    "titulo": "Registro C010 da EFD-Contribuições (Identificação do Estabelecimento)",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=383"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:03:21.813977+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “C010”.",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição do estabelecimento no CNPJ.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_ESCRI",
+      "descricao": "Indicador da apuração das contribuições e créditos, na escrituração das operações por NF-e e ECF, no período:\n1 – Apuração com base nos registros de consolidação das operações por NF-e (C180 e C190) e por ECF (C490);\n2 – Apuração com base no registro individualizado de NF-e (C100 e C170) e de ECF (C400).",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "registro": {
+    "codigo": "0007",
+    "titulo": "REGISTRO \n 0007: Outras Inscrições Cadastrais da Pessoa Jurídica",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0007",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-0.htm#0007"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:29:19.571386+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0007\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "\"0007\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_ENT _REF",
+      "descricao": "Código da\ninstituição\nresponsável pela\nadministração do\ncadastro (conforme\ntabela publicada\npelo Sped).",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_INSCR",
+      "descricao": "Código cadastral da\npessoa jurídica na\ninstituição\nidentificada no\ncampo 02.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    }
+  ]
+}

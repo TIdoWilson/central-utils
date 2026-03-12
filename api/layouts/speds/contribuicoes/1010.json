@@ -1,0 +1,86 @@
+{
+  "registro": {
+    "codigo": "1010",
+    "titulo": "Registro 1010 da EFD-Contribuições (Processo Referenciado – Ação Judicial)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=533"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:03:23.171524+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1010\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_PROC",
+      "descricao": "Identificação do Número do Processo Judicial",
+      "tipo": "C",
+      "tamanho": "020",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "ID_SEC_JUD",
+      "descricao": "Identificação da Seção Judiciária",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "ID_VARA",
+      "descricao": "Identificação da Vara",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "IND_NAT_ACAO",
+      "descricao": "Indicador da Natureza da Ação Judicial, impetrada na Justiça Federal:\n01 – Decisão judicial transitada em julgado, a favor da pessoa jurídica.\n02 – Decisão judicial não transitada em julgado, a favor da pessoa jurídica.\n03 – Decisão judicial oriunda de liminar em mandado de segurança.\n04 – Decisão judicial oriunda de liminar em medida cautelar.\n05 – Decisão judicial oriunda de antecipação de tutela.\n06 - Decisão judicial vinculada a depósito administrativo ou judicial em montante integral.\n07 – Medida judicial em que a pessoa jurídica não é o autor.\n08 – Súmula vinculante aprovada pelo STF ou STJ.\n09 – Decisão judicial oriunda de liminar em mandado de segurança coletivo.\n12 – Decisão judicial não transitada em julgado, a favor da pessoa jurídica - Exigibilidade suspensa de contribuição.\n13 – Decisão judicial oriunda de liminar em mandado de segurança - Exigibilidade suspensa de contribuição. \n14 – Decisão judicial oriunda de liminar em medida cautelar - Exigibilidade suspensa de contribuição. \n15 – Decisão judicial oriunda de antecipação de tutela - Exigibilidade suspensa de contribuição. \n16 - Decisão judicial vinculada a depósito administrativo ou judicial em montante integral - Exigibilidade suspensa de contribuição. \n17 – Medida judicial em que a pessoa jurídica não é o autor - Exigibilidade suspensa de contribuição. \n19 – Decisão judicial oriunda de liminar em mandado de segurança coletivo - Exigibilidade suspensa de contribuição.\n99 - Outros.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "DESC_DEC_JUD",
+      "descricao": "Descrição Resumida dos Efeitos Tributários abrangidos pela Decisão Judicial proferida.",
+      "tipo": "C",
+      "tamanho": "100",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "DT_SENT_JUD",
+      "descricao": "Data da Sentença/Decisão Judicial",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

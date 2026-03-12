@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "9900",
+    "id_guia": "197",
+    "titulo": "Registro 9900 da EFD-ICMS/IPI (Registros do arquivo)",
+    "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=197"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:07:51.751667+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"9900\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "REG_BLC",
+      "descricao": "Registro que será totalizado no próximo campo.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QTD_REG_BLC",
+      "descricao": "Total de registros do tipo informado no campo anterior.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

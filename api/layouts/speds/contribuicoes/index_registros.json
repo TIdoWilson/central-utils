@@ -1,0 +1,1633 @@
+{
+  "fonte": "https://www.vriconsulting.com.br/guias/efd-contribuicoes.php",
+  "total_registros_esperados": 203,
+  "total_registros_gerados": 203,
+  "gerado_em_utc": "2026-03-10T19:03:23.377319+00:00",
+  "resumo_registros": [
+    {
+      "codigo": "0000",
+      "titulo": "Registro 0000 da EFD-Contribuições (Abertura, Identificação e Referências)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0000.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "0001",
+      "titulo": "Registro 0001 da EFD-Contribuições (Abertura do Bloco 0)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "0035",
+      "titulo": "Registro 0035 da EFD-Contribuições (Identificação de Sociedade em Conta de Participação – SCP)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0035.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "0100",
+      "titulo": "Registro 0100 da EFD-Contribuições (Dados do Contabilista)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0100.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "0110",
+      "titulo": "Registro 0110 da EFD-Contribuições (Regimes de Apuração da Contribuição Social e de Apropriação de Crédito)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0110.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "0111",
+      "titulo": "Registro 0111 da EFD-Contribuições (Tabela de Receita Bruta Mensal Para Fins de Rateio de Créditos Comuns)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0111.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "0120",
+      "titulo": "Registro 0120 da EFD-Contribuições (Identificação de EFD-Contribuições Sem Dados a Escriturar)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0120.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0140",
+      "titulo": "Registro 0140 da EFD-Contribuições (Tabela de Cadastro de Estabelecimentos)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0140.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "0145",
+      "titulo": "Registro 0145 da EFD-Contribuições (Regime de Apuração da Contribuição Previdenciária Sobre a Receita Bruta)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0145.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "0150",
+      "titulo": "Registro 0150 da EFD-Contribuições (Tabela de Cadastro do Participante)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0150.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "0190",
+      "titulo": "Registro 0190 da EFD-Contribuições (Identificação das Unidades de Medida)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0190.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0200",
+      "titulo": "Registro 0200 da EFD-Contribuições (Tabela de Identificação do Item (Produtos e Serviços))",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0200.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "0205",
+      "titulo": "Registro 0205 da EFD-Contribuições (Alteração do Item)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0205.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "0206",
+      "titulo": "Registro 0206 da EFD-Contribuições (Código de Produto Conforme Tabela ANP (Combustíveis))",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0206.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "0208",
+      "titulo": "Registro 0208 da EFD-Contribuições (Código de Grupos por Marca Comercial – Refri (bebidas frias))",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0208.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "0400",
+      "titulo": "Registro 0400 da EFD-Contribuições (Tabela de Natureza da Operação/Prestação)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0400.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0450",
+      "titulo": "Registro 0450 da EFD-Contribuições (Tabela de Informação Complementar do Documento Fiscal)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0450.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0500",
+      "titulo": "Registro 0500 da EFD-Contribuições (Plano de Contas Contábeis)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0500.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "0600",
+      "titulo": "Registro 0600 da EFD-Contribuições (Centro de Custos)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0600.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "0900",
+      "titulo": "Registro 0900 da EFD-Contribuições (Composição das Receitas do Período – Receita Bruta e Demais Receitas)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0900.json",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "0990",
+      "titulo": "Registro 0990 da EFD-Contribuições (Encerramento do Bloco 0)",
+      "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+      "arquivo_json": "0990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "1001",
+      "titulo": "Registro 1001 da EFD-Contribuições (Abertura do Bloco 1)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "1010",
+      "titulo": "Registro 1010 da EFD-Contribuições (Processo Referenciado – Ação Judicial)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1010.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "1011",
+      "titulo": "Registro 1011 da EFD-Contribuições (Detalhamento das Contribuições com Exigibilidade Suspensa)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1011.json",
+      "total_campos": 26,
+      "resumo": "Layout com 26 campo(s)."
+    },
+    {
+      "codigo": "1020",
+      "titulo": "Registro 1020 da EFD-Contribuições (Processo Referenciado – Processo Administrativo)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1020.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "1050",
+      "titulo": "Registro 1050 da EFD-Contribuições (Detalhamento de Ajustes de Base de Cálculo – Valores Extra Apuração)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1050.json",
+      "total_campos": 19,
+      "resumo": "Layout com 19 campo(s)."
+    },
+    {
+      "codigo": "1100",
+      "titulo": "Registro 1100 da EFD-Contribuições (Controle de Créditos Fiscais – PIS/Pasep)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1100.json",
+      "total_campos": 18,
+      "resumo": "Layout com 18 campo(s)."
+    },
+    {
+      "codigo": "1101",
+      "titulo": "Registro 1101 da EFD-Contribuições (Apuração de Crédito Extemporâneo - Documentos e Operações de Períodos Anteriores – PIS/Pasep)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1101.json",
+      "total_campos": 1,
+      "resumo": "Layout com 1 campo(s)."
+    },
+    {
+      "codigo": "1102",
+      "titulo": "Registro 1102 da EFD-Contribuições (Detalhamento do Crédito Extemporâneo Vinculado a Mais de Um Tipo de Receita – PIS/Pasep)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1102.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "1200",
+      "titulo": "Registro 1200 da EFD-Contribuições (Contribuição Social Extemporânea – PIS/Pasep)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1200.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "1210",
+      "titulo": "Registro 1210 da EFD-Contribuições (Detalhamento da Contribuição Social Extemporânea – PIS/Pasep)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1210.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "1220",
+      "titulo": "Registro 1220 da EFD-Contribuições (Demonstração do Crédito a Descontar a Contribuição Extemporânea – PIS/Pasep)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1220.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "1300",
+      "titulo": "Registro 1300 da EFD-Contribuições (Controle dos Valores Retidos na Fonte – PIS/Pasep)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1300.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "1500",
+      "titulo": "Registro 1500 da EFD-Contribuições (Controle de Créditos Fiscais – Cofins)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1500.json",
+      "total_campos": 18,
+      "resumo": "Layout com 18 campo(s)."
+    },
+    {
+      "codigo": "1501",
+      "titulo": "Registro 1501 da EFD-Contribuições (Apuração de Crédito Extemporâneo - Documentos e Operações de Períodos Anteriores – Cofins)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1501.json",
+      "total_campos": 1,
+      "resumo": "Layout com 1 campo(s)."
+    },
+    {
+      "codigo": "1502",
+      "titulo": "Registro 1502 da EFD-Contribuições (Detalhamento do Crédito Extemporâneo Vinculado a Mais de Um Tipo de Receita – Cofins)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1502.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "1600",
+      "titulo": "Registro 1600 da EFD-Contribuições (Contribuição Social Extemporânea – Cofins)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1600.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "1610",
+      "titulo": "Registro 1610 da EFD-Contribuições (Detalhamento da Contribuição Social Extemporânea – Cofins)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1610.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "1620",
+      "titulo": "Registro 1620 da EFD-Contribuições (Demonstração do Crédito a Descontar da Contribuição Extemporânea – Cofins)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1620.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "1700",
+      "titulo": "Registro 1700 da EFD-Contribuições (Controle dos Valores Retidos na Fonte – Cofins)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1700.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "1800",
+      "titulo": "Registro 1800 da EFD-Contribuições (Incorporação Imobiliária – RET)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1800.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "1809",
+      "titulo": "Registro 1809 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1809.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "1900",
+      "titulo": "Registro 1900 da EFD-Contribuições (Consolidação dos Documentos Emitidos no Período por Pessoa Jurídica Submetida ao Regime de Tributação com Base no Lucro Presumido–Regime de Caixa ou de Competência)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1900.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "1990",
+      "titulo": "Registro 1990 da EFD-Contribuições (Encerramento do Bloco 1)",
+      "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+      "arquivo_json": "1990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9001",
+      "titulo": "Registro 9001 da EFD-Contribuições (Abertura do Bloco 9)",
+      "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+      "arquivo_json": "9001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9900",
+      "titulo": "Registro 9900 da EFD-Contribuições (Registros do Arquivo)",
+      "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+      "arquivo_json": "9900.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "9990",
+      "titulo": "Registro 9990 da EFD-Contribuições (Encerramento do Bloco 9)",
+      "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+      "arquivo_json": "9990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9999",
+      "titulo": "Registro 9999 da EFD-Contribuições (Encerramento do Arquivo Digital)",
+      "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+      "arquivo_json": "9999.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "A001",
+      "titulo": "Registro A001 da EFD-Contribuições (Abertura do Bloco A)",
+      "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+      "arquivo_json": "A001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "A010",
+      "titulo": "Registro A010 da EFD-Contribuições (Identificação do Estabelecimento)",
+      "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+      "arquivo_json": "A010.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "A100",
+      "titulo": "Registro A100 da EFD-Contribuições (Documento - Nota Fiscal de Serviço)",
+      "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+      "arquivo_json": "A100.json",
+      "total_campos": 21,
+      "resumo": "Layout com 21 campo(s)."
+    },
+    {
+      "codigo": "A110",
+      "titulo": "Registro A110 da EFD-Contribuições (Complemento do Documento - Informação Complementar da NF)",
+      "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+      "arquivo_json": "A110.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "A111",
+      "titulo": "Registro A111 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+      "arquivo_json": "A111.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "A120",
+      "titulo": "Registro A120 da EFD-Contribuições (Informação Complementar - Operações de Importação)",
+      "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+      "arquivo_json": "A120.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "A170",
+      "titulo": "Registro A170 da EFD-Contribuições (Complemento do Documento - Itens do Documento)",
+      "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+      "arquivo_json": "A170.json",
+      "total_campos": 18,
+      "resumo": "Layout com 18 campo(s)."
+    },
+    {
+      "codigo": "A990",
+      "titulo": "Registro A990 da EFD-Contribuições (Encerramento do Bloco A)",
+      "bloco": "3.2) Bloco A (Documentos fiscais - Serviços (Sujeitos ao ISS)):",
+      "arquivo_json": "A990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "C001",
+      "titulo": "Registro C001 da EFD-Contribuições (Abertura do Bloco C)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "C010",
+      "titulo": "Registro C010 da EFD-Contribuições (Identificação do Estabelecimento)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C010.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C100",
+      "titulo": "Registro C100 da EFD-Contribuições (Documento - Nota Fiscal (Código 01), Nota Fiscal Avulsa (Código 1B), Nota Fiscal de Produtor (Código 04), NF-e (Código 55) e NFC-e (Código 65))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C100.json",
+      "total_campos": 32,
+      "resumo": "Layout com 32 campo(s)."
+    },
+    {
+      "codigo": "C110",
+      "titulo": "Registro C110 da EFD-Contribuições (Complemento do Documento - Informação Complementar da Nota Fiscal (Códigos 01, 1B, 04 e 55) da EFD-Contribuições)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C110.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C111",
+      "titulo": "Registro C111 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C111.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C120",
+      "titulo": "Registro C120 da EFD-Contribuições (Complemento do Documento - Operações de Importação (Código 01))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C120.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C170",
+      "titulo": "Registro C170 da EFD-Contribuições (Complemento do Documento - Itens do Documento (Códigos 01, 1B, 04 e 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C170.json",
+      "total_campos": 37,
+      "resumo": "Layout com 37 campo(s)."
+    },
+    {
+      "codigo": "C175",
+      "titulo": "Registro C175 da EFD-Contribuições (Registro Analítico do Documento (Código 65))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C175.json",
+      "total_campos": 18,
+      "resumo": "Layout com 18 campo(s)."
+    },
+    {
+      "codigo": "C180",
+      "titulo": "Registro C180 da EFD-Contribuições (Consolidação de Notas Fiscais Eletrônicas Emitidas Pela Pessoa Jurídica (Códigos 55 e 65) – Operações de Vendas)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C180.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C181",
+      "titulo": "Registro C181 da EFD-Contribuições (Detalhamento da Consolidação - Operações de Vendas - PIS/Pasep)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C181.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "C185",
+      "titulo": "Registro C185 da EFD-Contribuições (Detalhamento da Consolidação – Operações de Vendas – Cofins)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C185.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "C188",
+      "titulo": "Registro C188 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C188.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C190",
+      "titulo": "Registro C190 da EFD-Contribuições (Consolidação de Notas Fiscais Eletrônicas (Código 55) – Operações de Aquisição com Direito a Crédito, e Operações de Devolução de Compras e Vendas)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C190.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C191",
+      "titulo": "Registro C191 da EFD-Contribuições (Detalhamento da Consolidação – Operações de Aquisição Com Direito a Crédito, e Operações de Devolução de Compras e Vendas – PIS/Pasep)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C191.json",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "C195",
+      "titulo": "Registro C195 da EFD-Contribuições (Detalhamento da Consolidação - Operações de Aquisição Com Direito a Crédito, e Operações de Devolução de Compras e Vendas – Cofins)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C195.json",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "C198",
+      "titulo": "Registro C198 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C198.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C199",
+      "titulo": "Registro C199 da EFD-Contribuições (Complemento do Documento - Operações de Importação (Código 55))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C199.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C380",
+      "titulo": "Registro C380 da EFD-Contribuições (Nota Fiscal de Venda a Consumidor (Código 02) - Consolidação de Documentos Emitidos)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C380.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C381",
+      "titulo": "Registro C381 da EFD-Contribuições (Detalhamento da Consolidação – PIS/Pasep)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C381.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "C385",
+      "titulo": "Registro C385 da EFD-Contribuições (Detalhamento da Consolidação – Cofins)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C385.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "C395",
+      "titulo": "Registro C395 da EFD-Contribuições (Detalhamento da Consolidação – Cofins)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C395.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C396",
+      "titulo": "Registro C396 da EFD-Contribuições (Itens do Documento (Códigos 02, 2D, 2E, 59, 60 e 65) – Aquisições/Entradas com Crédito)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C396.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "C400",
+      "titulo": "Registro C400 da EFD-Contribuições (Equipamento ECF (Códigos 02 e 2D))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C400.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "C405",
+      "titulo": "Registro C405 da EFD-Contribuições (Redução Z (Códigos 02 e 2D))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C405.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "C481",
+      "titulo": "Registro C481 da EFD-Contribuições (Resumo Diário de Documentos Emitidos por ECF–PIS/Pasep (Código 02 e 2D))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C481.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "C485",
+      "titulo": "Registro C485 da EFD-Contribuições (Resumo Diário de Documentos Emitidos por ECF – Cofins (Códigos 02 e 2D))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C485.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "C489",
+      "titulo": "Registro C489 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C489.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C490",
+      "titulo": "Registro C490 da EFD-Contribuições (Consolidação de Documentos Emitidos por ECF (Códigos 02, 2D, 59 e 60))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C490.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C491",
+      "titulo": "Registro C491 da EFD-Contribuições (Detalhamento da Consolidação de Documentos Emitidos por ECF (Códigos 02, 2D, 59 e 60) – PIS/Pasep)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C491.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "C495",
+      "titulo": "Registro C495 da EFD-Contribuições (Detalhamento da Consolidação de Documentos Emitidos por ECF (Códigos 02, 2D, 59 e 60) – Cofins)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C495.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "C499",
+      "titulo": "Registro C499 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C499.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C500",
+      "titulo": "Registro C500 da EFD-Contribuições (Nota Fiscal/Conta de Energia Elétrica (Código 06), Nota Fiscal/Conta de Fornecimento Dágua Canalizada (Código 29) e Nota Fiscal Consumo Fornecimento de Gás (Código 28) e NF-e (Código 55) – Documentos de Entrada/Aquisição com Crédito)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C500.json",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "C501",
+      "titulo": "Registro C501 da EFD-Contribuições (Complemento da Operação (Códigos 06, 28 e 29) – PIS/Pasep)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C501.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C505",
+      "titulo": "Registro C505 da EFD-Contribuições (Complemento da Operação (Códigos 06, 28 e 29) – Cofins)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C505.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C509",
+      "titulo": "Registro C509 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C509.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C600",
+      "titulo": "Registro C600 da EFD-Contribuições (Consolidação Diária de Notas Fiscais/Contas Emitidas de Energia Elétrica (Código 06), Nota Fiscal de Energia Elétrica Eletrônica – NF3e (Código 66), Nota Fiscal/Conta de Fornecimento Dágua Canalizada (Código 29) e Nota Fiscal/Conta de Fornecimento de Gás (Código 28) (Empresas Obrigadas ou não Obrigadas ao Convenio ICMS 115/03) – Documentos de Saída)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C600.json",
+      "total_campos": 22,
+      "resumo": "Layout com 22 campo(s)."
+    },
+    {
+      "codigo": "C601",
+      "titulo": "Registro C601 da EFD-Contribuições (Complemento da Consolidação Diária (Códigos 06, 28 e 29) – Documentos de Saídas - PIS/Pasep)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C601.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "C605",
+      "titulo": "Registro C605 da EFD-Contribuições (Complemento da Consolidação Diária (Códigos 06, 28 e 29) – Documentos de Saídas - PIS/Pasep)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C605.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "C609",
+      "titulo": "Registro C609 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C609.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C800",
+      "titulo": "Registro C800 da EFD-Contribuições (Cupom Fiscal Eletrônico (Código 59))",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C800.json",
+      "total_campos": 17,
+      "resumo": "Layout com 17 campo(s)."
+    },
+    {
+      "codigo": "C810",
+      "titulo": "Registro C810 da EFD-Contribuições (Detalhamento do Cupom Fiscal Eletrônico (Código 59) – PIS/Pasep e Cofins)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C810.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "C820",
+      "titulo": "Registro C820 da EFD-Contribuições (Detalhamento do Cupom Fiscal Eletrônico (Código 59) – PIS/Pasep e Cofins Apurado por Unidade de Medida de Produto)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C820.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "C830",
+      "titulo": "Registro C830 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C830.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C860",
+      "titulo": "Registro C860 da EFD-Contribuições (Identificação do Equipamento SAT-CF-e)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C860.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C870",
+      "titulo": "Registro C870 da EFD-Contribuições (Resumo Diário de Documentos Emitidos por Equipamento SAT-Cf-e (Código 59) – PIS/Pasep e Cofins)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C870.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "C880",
+      "titulo": "Registro C880 da EFD-Contribuições (Resumo Diário de Documentos Emitidos por Equipamento SAT-Cf-e (Código 59) – PIS/Pasep e Cofins Apurado por Unidade de Medida de Produto)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C880.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "C890",
+      "titulo": "Registro C890 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C890.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C990",
+      "titulo": "Registro C990 da EFD-Contribuições (Encerramento do Bloco C)",
+      "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+      "arquivo_json": "C990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "D001",
+      "titulo": "Registro D001 da EFD-Contribuições (Abertura do Bloco D)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "D010",
+      "titulo": "Registro D010 da EFD-Contribuições (Identificação do Estabelecimento)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D010.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "D100",
+      "titulo": "Registro D100 da EFD-Contribuições (Aquisição de Serviços de Transporte - Nota Fiscal de Serviço de Transporte (Código 07), Conhecimento de Transporte Rodoviário de Cargas (Código 08), Conhecimento de Transporte de Cargas Avulso (Código 8B), Conhecimento de Transporte Aquaviário de Cargas (Código 09), Conhecimento de Transporte Aéreo (Código 10), Conhecimento de Transporte Ferroviário de Cargas (Código 11), Conhecimento de Transporte Multimodal de Cargas (Código 26), Nota Fiscal de Transporte Ferroviário de Carga (Código 27), Conhecimento de Transporte Eletrônico – CT-E (Código 57), Bilhete de Passagem Eletrônico - BP-e (Código 63) e Conhecimento de Transporte Eletrônico para Outros Serviços – CT-e OS, modelo 67)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D100.json",
+      "total_campos": 24,
+      "resumo": "Layout com 24 campo(s)."
+    },
+    {
+      "codigo": "D101",
+      "titulo": "Registro D101 da EFD-Contribuições (Complemento do Documento de Transporte (Códigos 07, 08, 8B, 09, 10, 11, 26, 27, 57, 63 e 67) – PIS/Pasep)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D101.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "D105",
+      "titulo": "Registro D105 da EFD-Contribuições (Complemento do Documento de Transporte (Códigos 07, 08, 8B, 09, 10, 11, 26, 27, 57, 63 e 67) – Cofins)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D105.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "D111",
+      "titulo": "Registro D111 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D111.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "D200",
+      "titulo": "Registro D200 da EFD-Contribuições (Resumo da Escrituração Diária – Prestação de Serviços de Transporte: Nota Fiscal de Serviço de Transporte (Código 07), Conhecimento de Transporte Rodoviário de Cargas (Código 08), Conhecimento de Transporte de Cargas Avulso (Código 8B), Conhecimento de Transporte Aquaviário de Cargas (Código 09), Conhecimento de Transporte Aéreo (Código 10), Conhecimento de Transporte Ferroviário de Cargas (Código 11), Conhecimento de Transporte Multimodal de Cargas (Código 26), Nota Fiscal de Transporte Ferroviário de Carga (Código 27), Conhecimento de Transporte Eletrônico – CT-E (Código 57), Bilhete de Passagem Eletrônico - BP-e (Código 63) e Conhecimento de Transporte Eletrônico para Outros Serviços – CT-e OS, modelo 67)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D200.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "D201",
+      "titulo": "Registro D201 da EFD-Contribuições (Totalização do Resumo Diário – PIS/Pasep)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D201.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "D205",
+      "titulo": "Registro D205 da EFD-Contribuições (Totalização do Resumo Diário – Cofins)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D205.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "D209",
+      "titulo": "Registro D209 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D209.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "D300",
+      "titulo": "Registro D300 da EFD-Contribuições (Resumo da Escrituração Diária - Bilhetes Consolidados de Passagem Rodoviário (Código 13), de Passagem Aquaviário (Código 14), de Passagem e Nota de Bagagem (Código 15), de Passagem Ferroviário (Código 16) e Resumo de Movimento Diário (Código 18))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D300.json",
+      "total_campos": 19,
+      "resumo": "Layout com 19 campo(s)."
+    },
+    {
+      "codigo": "D309",
+      "titulo": "Registro D309 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D309.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "D350",
+      "titulo": "Registro D350 da EFD-Contribuições (Resumo Diário de Cupom Fiscal Emitido Por ECF - (Código: 2E, 13, 14, 15 e 16))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D350.json",
+      "total_campos": 23,
+      "resumo": "Layout com 23 campo(s)."
+    },
+    {
+      "codigo": "D359",
+      "titulo": "Registro D359 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D359.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "D500",
+      "titulo": "Registro D500 da EFD-Contribuições (Nota Fiscal de Serviço de Comunicação (Código 21) e Nota Fiscal de Serviço de Telecomunicação (Código 22) – Documentos de Aquisição com Direito a Crédito)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D500.json",
+      "total_campos": 22,
+      "resumo": "Layout com 22 campo(s)."
+    },
+    {
+      "codigo": "D501",
+      "titulo": "Registro D501 da EFD-Contribuições (Complemento da Operação (Códigos 21 e 22) – PIS/Pasep)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D501.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "D505",
+      "titulo": "Registro D505 da EFD-Contribuições (Complemento da Operação (Códigos 21 e 22) – Cofins)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D505.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "D509",
+      "titulo": "Registro D509 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D509.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "D600",
+      "titulo": "Registro D600 da EFD-Contribuições (Consolidação da Prestação de Serviços - Notas de Serviço de Comunicação (Código 21) e de Serviço de Telecomunicação (Código 22))",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D600.json",
+      "total_campos": 19,
+      "resumo": "Layout com 19 campo(s)."
+    },
+    {
+      "codigo": "D601",
+      "titulo": "Registro D601 da EFD-Contribuições (Complemento da Consolidação da Prestação de Serviços (Códigos 21 e 22) - PIS/Pasep)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D601.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "D605",
+      "titulo": "Registro D605 da EFD-Contribuições (Complemento da Consolidação da Prestação de Serviços (Códigos 21 e 22) – Cofins)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D605.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "D609",
+      "titulo": "Registro D609 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D609.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "D990",
+      "titulo": "Registro D990 da EFD-Contribuições (Encerramento do Bloco D)",
+      "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+      "arquivo_json": "D990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "F001",
+      "titulo": "Registro F001 da EFD-Contribuições (Abertura do Bloco F)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "F010",
+      "titulo": "Registro F010 da EFD-Contribuições (Identificação do Estabelecimento)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F010.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "F100",
+      "titulo": "Registro F100 da EFD-Contribuições (Demais Documentos e Operações Geradoras de Contribuição e Créditos)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F100.json",
+      "total_campos": 19,
+      "resumo": "Layout com 19 campo(s)."
+    },
+    {
+      "codigo": "F111",
+      "titulo": "Registro F111 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F111.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "F120",
+      "titulo": "Registro F120 da EFD-Contribuições (Bens Incorporados ao Ativo Imobilizado – Operações Geradoras de Créditos com Base nos Encargos de Depreciação e Amortização)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F120.json",
+      "total_campos": 18,
+      "resumo": "Layout com 18 campo(s)."
+    },
+    {
+      "codigo": "F129",
+      "titulo": "Registro F129 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F129.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "F130",
+      "titulo": "Registro F130 da EFD-Contribuições (Bens Incorporados ao Ativo Imobilizado – Operações Geradoras de Créditos com Base no Valor de Aquisição/Contribuição)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F130.json",
+      "total_campos": 21,
+      "resumo": "Layout com 21 campo(s)."
+    },
+    {
+      "codigo": "F139",
+      "titulo": "Registro F139 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F139.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "F150",
+      "titulo": "Registro F150 da EFD-Contribuições (Crédito Presumido sobre Estoque de Abertura)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F150.json",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "F200",
+      "titulo": "Registro F200 da EFD-Contribuições (Operações da Atividade Imobiliária - Unidade Imobiliária Vendida)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F200.json",
+      "total_campos": 22,
+      "resumo": "Layout com 22 campo(s)."
+    },
+    {
+      "codigo": "F205",
+      "titulo": "Registro F205 da EFD-Contribuições (Operações da Atividade Imobiliária – Custo Incorrido da Unidade Imobiliária)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F205.json",
+      "total_campos": 18,
+      "resumo": "Layout com 18 campo(s)."
+    },
+    {
+      "codigo": "F210",
+      "titulo": "Registro F210 da EFD-Contribuições (Operações da Atividade Imobiliária - Custo Orçado da Unidade Imobiliária Vendida)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F210.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "F211",
+      "titulo": "Registro F211 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F211.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "F500",
+      "titulo": "Registro F500 da EFD-Contribuições (Consolidação das Operações da Pessoa Jurídica Submetida ao Regime de Tributação com Base no Lucro Presumido  – Incidência do PIS/Pasep e da Cofins pelo Regime de Caixa)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F500.json",
+      "total_campos": 16,
+      "resumo": "Layout com 16 campo(s)."
+    },
+    {
+      "codigo": "F509",
+      "titulo": "Registro F509 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F509.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "F510",
+      "titulo": "Registro F510 da EFD-Contribuições (Consolidação das Operações da Pessoa Jurídica Submetida ao Regime de Tributação Com Base no Lucro Presumido – Incidência do PIS/Pasep e da Cofins pelo Regime de Caixa (Apuração da Contribuição por Unidade de Medida de Produto – Alíquota em Reais))",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F510.json",
+      "total_campos": 16,
+      "resumo": "Layout com 16 campo(s)."
+    },
+    {
+      "codigo": "F519",
+      "titulo": "Registro F519 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F519.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "F525",
+      "titulo": "Registro F525 da EFD-Contribuições (Composição da Receita Escriturada no Período – Detalhamento da Receita Recebida pelo Regime de Caixa)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F525.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "F550",
+      "titulo": "Registro F550 da EFD-Contribuições (Consolidação das Operações da Pessoa Jurídica Submetida ao Regime de Tributação com Base no Lucro Presumido  – Incidência do PIS/Pasep e da Cofins pelo Regime de Competência)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F550.json",
+      "total_campos": 16,
+      "resumo": "Layout com 16 campo(s)."
+    },
+    {
+      "codigo": "F559",
+      "titulo": "Registro F559 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F559.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "F560",
+      "titulo": "Registro F560 da EFD-Contribuições (Consolidação das Operações da Pessoa Jurídica Submetida ao Regime de Tributação com Base no Lucro Presumido – Incidência do PIS/Pasep e da Cofins pelo Regime de Competência (Apuração da Contribuição por Unidade de Medida de Produto – Alíquota em Reais))",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F560.json",
+      "total_campos": 16,
+      "resumo": "Layout com 16 campo(s)."
+    },
+    {
+      "codigo": "F569",
+      "titulo": "Registro F569 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F569.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "F600",
+      "titulo": "Registro F600 da EFD-Contribuições (Contribuição Retida na Fonte)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F600.json",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "F700",
+      "titulo": "Registro F700 da EFD-Contribuições (Deduções Diversas)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F700.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "F800",
+      "titulo": "Registro F800 da EFD-Contribuições (Créditos Decorrentes de Eventos de Incorporação, Fusão e Cisão)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F800.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "F990",
+      "titulo": "Registro F990 da EFD-Contribuições (Encerramento do Bloco F)",
+      "bloco": "3.5) Bloco F (Demais documentos e operações):",
+      "arquivo_json": "F990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I001",
+      "titulo": "Registro I001 da EFD-Contribuições (Abertura do Bloco I)",
+      "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+      "arquivo_json": "I001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "I010",
+      "titulo": "Registro I010 da EFD-Contribuições (Identificação da Pessoa Jurídica/Estabelecimento)",
+      "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+      "arquivo_json": "I010.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "I100",
+      "titulo": "Registro I100 da EFD-Contribuições (Consolidação das Operações do Período)",
+      "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+      "arquivo_json": "I100.json",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "I199",
+      "titulo": "Registro I199 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+      "arquivo_json": "I199.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "I200",
+      "titulo": "Registro I200 da EFD-Contribuições (Composição das Receitas, Deduções e/ou Exclusões do Período)",
+      "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+      "arquivo_json": "I200.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "I299",
+      "titulo": "Registro I299 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+      "arquivo_json": "I299.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "I300",
+      "titulo": "Registro I300 da EFD-Contribuições (Complemento das Operações – Detalhamento das Receitas, Deduções e/ou Exclusões Do Período)",
+      "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+      "arquivo_json": "I300.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "I399",
+      "titulo": "Registro I399 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+      "arquivo_json": "I399.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "I990",
+      "titulo": "Registro I990 da EFD-Contribuições (Encerramento do Bloco I)",
+      "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+      "arquivo_json": "I990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "M001",
+      "titulo": "Registro M001 da EFD-Contribuições (Abertura do Bloco M)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "M100",
+      "titulo": "Registro M100 da EFD-Contribuições (Crédito de PIS/Pasep Relativo ao Período)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M100.json",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "M105",
+      "titulo": "Registro M105 da EFD-Contribuições (Detalhamento da Base de Calculo do Crédito Apurado no Período – PIS/Pasep)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M105.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "M110",
+      "titulo": "Registro M110 da EFD-Contribuições (Ajustes do Crédito de PIS/Pasep Apurado)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M110.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "M115",
+      "titulo": "Registro M115 da EFD-Contribuições (Detalhamento dos Ajustes do Crédito de PIS/Pasep Apurado)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M115.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "M200",
+      "titulo": "Registro M200 da EFD-Contribuições (Consolidação da Contribuição para o PIS/Pasep do Período)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M200.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "M205",
+      "titulo": "Registro M205 da EFD-Contribuições (Contribuição para o PIS/Pasep a Recolher–Detalhamento por Código de Receita)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M205.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "M210",
+      "titulo": "Registro M210 da EFD-Contribuições (Detalhamento da Contribuição para o PIS/Pasep do Período)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M210.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "M211",
+      "titulo": "Registro M211 da EFD-Contribuições (Sociedades Cooperativas – Composição da Base de Calculo – PIS/Pasep)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M211.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "M215",
+      "titulo": "Registro M215 da EFD-Contribuições (Ajustes da Base de Cálculo da Contribuição para o PIS/Pasep Apurada)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M215.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "M220",
+      "titulo": "Registro M220 da EFD-Contribuições (Ajustes da Contribuição para o PIS/Pasep Apurada)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M220.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "M225",
+      "titulo": "Registro M225 da EFD-Contribuições (Detalhamento dos Ajustes da Contribuição Para o Pis/Pasep Apurada)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M225.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "M230",
+      "titulo": "Registro M230 da EFD-Contribuições (Informações Adicionais de Diferimento)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M230.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "M300",
+      "titulo": "Registro M300 da EFD-Contribuições (Contribuição de PIS/Pasep Diferida em Períodos Anteriores – Valores a Pagar no Período)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M300.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "M350",
+      "titulo": "Registro M350 da EFD-Contribuições (Folha de Salários)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M350.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "M400",
+      "titulo": "Registro M400 da EFD-Contribuições (Receitas Isentas, não Alcançadas pela Incidência da Contribuição, Sujeitas a Alíquota Zero ou de Vendas com Suspensão – PIS/Pasep)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M400.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "M410",
+      "titulo": "Registro M410 da EFD-Contribuições (Detalhamento das Receitas Isentas, não Alcançadas pela Incidência da Contribuição, Sujeitas a Alíquota Zero ou de Vendas com Suspensão – Cofins)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M410.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "M500",
+      "titulo": "Registro M500 da EFD-Contribuições (Crédito de Cofins Relativo Ao Período)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M500.json",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "M505",
+      "titulo": "Registro M505 da EFD-Contribuições (Detalhamento da Base de Calculo do Crédito Apurado no Período – Cofins)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M505.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "M510",
+      "titulo": "Registro M510 da EFD-Contribuições (Ajustes do Crédito de Cofins Apurado)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M510.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "M515",
+      "titulo": "Registro M515 da EFD-Contribuições (Detalhamento dos Ajustes do Crédito de Cofins Apurado)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M515.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "M600",
+      "titulo": "Registro M600 da EFD-Contribuições (Consolidação da Contribuição para a Seguridade Social - Cofins do Período)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M600.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "M605",
+      "titulo": "Registro M605 da EFD-Contribuições (Cofins a Recolher – Detalhamento por Código de Receita)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M605.json",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "M610",
+      "titulo": "Registro M610 da EFD-Contribuições (Detalhamento da Contribuição para a Seguridade Social - Cofins do Período)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M610.json",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "M611",
+      "titulo": "Registro M611 da EFD-Contribuições (Sociedades Cooperativas – Composição da Base de Calculo – Cofins)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M611.json",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "M615",
+      "titulo": "Registro M615 da EFD-Contribuições (Ajustes da Base de Cálculo da COFINS Apurada)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M615.json",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "M620",
+      "titulo": "Registro M620 da EFD-Contribuições (Ajustes da Cofins Apurada)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M620.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "M625",
+      "titulo": "Registro M625 da EFD-Contribuições (Detalhamento dos Ajustes da Cofins Apurada)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M625.json",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "M630",
+      "titulo": "Registro M630 da EFD-Contribuições (Informações Adicionais de Diferimento)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M630.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "M700",
+      "titulo": "Registro M700 da EFD-Contribuições (Cofins Diferida em Períodos Anteriores – Valores a Pagar no Período)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M700.json",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "M800",
+      "titulo": "Registro M800 da EFD-Contribuições (Receitas Isentas, Não Alcançadas pela Incidência da Contribuição, Sujeitas a Alíquota Zero ou de Vendas Com Suspensão – Cofins)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M800.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "M810",
+      "titulo": "Registro M810 da EFD-Contribuições (Detalhamento das Receitas Isentas, Não Alcançadas pela Incidência da Contribuição, Sujeitas a Alíquota Zero ou de Vendas com Suspensão – Cofins)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M810.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "M990",
+      "titulo": "Registro M990 da EFD-Contribuições (Encerramento do Bloco M)",
+      "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+      "arquivo_json": "M990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "P001",
+      "titulo": "Registro P001 da EFD-Contribuições (Abertura do Bloco P)",
+      "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+      "arquivo_json": "P001.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "P010",
+      "titulo": "Registro P010 da EFD-Contribuições (Identificação do Estabelecimento)",
+      "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+      "arquivo_json": "P010.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "P100",
+      "titulo": "Registro P100 da EFD-Contribuições (Contribuição Previdenciária sobre a Receita Bruta)",
+      "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+      "arquivo_json": "P100.json",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "P110",
+      "titulo": "Registro P110 da EFD-Contribuições (Complemento da Escrituração – Detalhamento da Apuração da Contribuição)",
+      "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+      "arquivo_json": "P110.json",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "P199",
+      "titulo": "Registro P199 da EFD-Contribuições (Processo Referenciado)",
+      "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+      "arquivo_json": "P199.json",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "P200",
+      "titulo": "Registro P200 da EFD-Contribuições (Consolidação da Contribuição Previdenciária Sobre a Receita Bruta)",
+      "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+      "arquivo_json": "P200.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "P210",
+      "titulo": "Registro P210 da EFD-Contribuições (Ajuste da Contribuição Previdenciária Apurada Sobre a Receita Bruta)",
+      "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+      "arquivo_json": "P210.json",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "P990",
+      "titulo": "Registro P990 da EFD-Contribuições (Encerramento do Bloco P)",
+      "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+      "arquivo_json": "P990.json",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    }
+  ],
+  "erros": []
+}

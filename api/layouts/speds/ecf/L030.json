@@ -1,0 +1,77 @@
+{
+  "registro": {
+    "codigo": "L030",
+    "titulo": "REGISTRO L030: IDENTIFICAÇÃO DO PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL NO ANO-CALENDÁRIO",
+    "bloco_origem": "bloco-l.htm",
+    "ancora": "l030",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-l.htm#l030"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.832836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"L030\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"L030\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI",
+      "descricao": "Data de início do período.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data do Saldo Inicial",
+        "DOCUMENTAÇÃO": "Conforme período definido na tela de entrada e forma de apuração dos impostos."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN",
+      "descricao": "Data de fim do período.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "RÓTULO": "Data do Saldo Final",
+        "DOCUMENTAÇÃO": "Sim"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "PER_APUR",
+      "descricao": "Período de apuração:\nA00 – Anual\nA01 – Rec. Bruta de janeiro /Balanço suspensão redução até janeiro\nA02 – Rec. Bruta de fevereiro /Balanço suspensão redução até fevereiro\nA03 – Rec. Bruta de março /Balanço suspensão redução até março\nA04 – Rec. Bruta de abril /Balanço suspensão redução até abril\nA05 – Rec. Bruta de maio /Balanço suspensão redução até maio\nA06 – Rec. Bruta de junho /Balanço suspensão redução até junho\nA07 – Rec. Bruta de julho /Balanço suspensão redução até julho\nA08 – Rec. Bruta de agosto /Balanço suspensão redução até agosto\nA09 – Rec. Bruta de setembro /Balanço suspensão redução até setembro\nA10 – Rec. Bruta de outubro/Balanço suspensão redução até outubro\nA11 – Rec. Bruta de novembro /Balanço suspensão redução até novembro\nA12 – Rec. Bruta de dezembro/Balanço suspensão redução até dezembro\nou\nT01 – 1º Trimestre\nT02 – 2º Trimestre\nT03 – 3º Trimestre\nT04 – 4º Trimestre",
+      "tipo": "C",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Período de Apuração",
+        "DOCUMENTAÇÃO": "Se 0010.FORMA_APUR = “T” ou (0010.FORMA_APUR = “A” e 0010.FORMA_TRIB = 2)\n- Deverá existir um registro [T01..T04] para cada trimestre marcado na 0010.FORMA_TRIB_PER [1..4] (campo 8) como “R”, conforme o trimestre de referência.\nSe 0010.FORMA_APUR for igual a “A”\n- Deverá existir um registro A00 e um registro de [A01 a A12] para cada mês marcado no 0010.MES_BAL_RED [1..12] (campo 9) como “B”, conforme o mês de referência."
+      }
+    }
+  ]
+}

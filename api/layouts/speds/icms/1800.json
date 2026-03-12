@@ -1,0 +1,114 @@
+{
+  "registro": {
+    "codigo": "1800",
+    "id_guia": "186",
+    "titulo": "Registro 1800 da EFD-ICMS/IPI (DCTA - Demonstrativo de crédito do ICMS sobre transporte aéreo)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=186"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:07:51.553760+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1800\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_CARGA",
+      "descricao": "Valor das prestações cargas (Tributado).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_PASS",
+      "descricao": "Valor das prestações passageiros/cargas (Não Tributado).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_FAT",
+      "descricao": "Valor total do faturamento (2 + 3).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "IND_RAT",
+      "descricao": "Índice para rateio (2 / 4).",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_ICMS_ANT",
+      "descricao": "Valor total dos créditos do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor da Base de Cálculo (BC) do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_ICMS_APUR",
+      "descricao": "Valor do ICMS apurado no cálculo (5 X 6).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_BC_ICMS_APUR",
+      "descricao": "Valor da BC do ICMS apurada (5 X 7).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_DIF",
+      "descricao": "Valor da diferença a ser levada a estorno de crédito na apuração (6 - 8).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

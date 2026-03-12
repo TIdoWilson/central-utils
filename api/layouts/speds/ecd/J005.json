@@ -1,0 +1,85 @@
+{
+  "registro": {
+    "codigo": "J005",
+    "titulo": "REGISTRO J005: Demonstrações Contábeis",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "J005",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#J005"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:29:19.597885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo J005.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J005"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI",
+      "descricao": "Data inicial das demonstrações contábeis.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN",
+      "descricao": "Data final das demonstrações contábeis.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "ID_DEM",
+      "descricao": "Identificação das demonstrações:\n 1 - demonstrações contábeis do empresário ou sociedade empresária a que se refere a escrituração;\n2 - demonstrações consolidadas ou de outros empresários ou sociedades empresárias.",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "CAB_DEM",
+      "descricao": "Cabeçalho das demonstrações.",
+      "tipo": "C",
+      "tamanho": "65535",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": "N"
+      }
+    }
+  ]
+}

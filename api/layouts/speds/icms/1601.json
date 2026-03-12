@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "1601",
+    "id_guia": "830",
+    "titulo": "Registro 1601 da EFD-ICMS/IPI (Operações com instrumentos de pagamentos eletrônicos (válido a partir de 01/01/2022))",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=830"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:07:51.612676+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1601\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PART_IP",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n - identificação da instituição que efetuou o pagamento.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_PART_IT",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n - identificação do intermediador da transação.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "TOT_VS",
+      "descricao": "Valor total bruto das vendas e/ou prestações de serviços no campo de incidência do ICMS, incluindo operações com imunidade do imposto.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "TOT_ISS",
+      "descricao": "Valor total bruto das prestações de serviços no campo de incidência do ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "TOT_OUTROS",
+      "descricao": "Valor total de operações deduzido dos valores dos campos TOT_VS e TOT_ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

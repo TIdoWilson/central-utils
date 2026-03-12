@@ -1,0 +1,58 @@
+{
+  "registro": {
+    "codigo": "I010",
+    "titulo": "Registro I010 da EFD-Contribuições (Identificação da Pessoa Jurídica/Estabelecimento)",
+    "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=483"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:03:22.720780+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “I010”",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição da pessoa jurídica no CNPJ.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "03",
+      "campo": "IND_ATIV",
+      "descricao": "Indicador de operações realizadas no período:\n01 – Exclusivamente operações de Instituições Financeiras e Assemelhadas;\n02 – Exclusivamente operações de Seguros Privados;\n03 – Exclusivamente operações de Previdência Complementar;\n04 – Exclusivamente operações de Capitalização;\n05 – Exclusivamente operações de Planos de Assistência à Saúde;\n06 – Realizou operações referentes a mais de um dos indicadores acima.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "04",
+      "campo": "INFO_COMPL",
+      "descricao": "Informação Complementar",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": ""
+    }
+  ]
+}

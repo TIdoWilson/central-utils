@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "1900",
+    "id_guia": "187",
+    "titulo": "Registro 1900 da EFD-ICMS/IPI (Indicador de sub-apuração do ICMS)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=187"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:07:51.613679+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1900\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_APUR_ICMS",
+      "descricao": "Indicador de outra apuração do ICMS:\n 3: APURAÇÃO 1;\n 4: APURAÇÃO 2;\n 5: APURAÇÃO 3;\n 6: APURAÇÃO 4;\n 7: APURAÇÃO 5;\n 8: APURAÇÃO 6.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DESCR_COMPL_OUT_APUR",
+      "descricao": "Descrição complementar de Outra Apuração do ICMS.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

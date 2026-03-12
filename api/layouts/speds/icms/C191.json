@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "C191",
+    "id_guia": "312",
+    "titulo": "Registro C191 da EFD-ICMS/IPI (Informações do Fundo de Combate à Pobreza - FCP - Na N-Fe (Código 55) e na NFC-e (Código 65))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=312"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:49.351756+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C191\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "VL_FCP_OP",
+      "descricao": "Valor do Fundo de Combate à Pobreza (FCP) vinculado à operação própria, na combinação de CST_ICMS, CFOP e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    },
+    {
+      "numero": "03",
+      "campo": "VL_FCP_ST",
+      "descricao": "Valor do Fundo de Combate à Pobreza (FCP) vinculado à operação de substituição tributária, na combinação de CST_ICMS, CFOP e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    },
+    {
+      "numero": "04",
+      "campo": "VL_FCP_RET",
+      "descricao": "Valor relativo ao Fundo de Combate à Pobreza (FCP) retido anteriormente nas operações com Substituição Tributárias, na combinação de CST_ICMS, CFOP e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "registro": {
+    "codigo": "M365",
+    "titulo": "REGISTRO M365: IDENTIFICAÇÃO DE PROCESSOS JUDICIAIS E ADMINISTRATIVOS REFERENTES AO LANÇAMENTO",
+    "bloco_origem": "bloco-m.htm",
+    "ancora": "m365",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m365"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:31:56.849836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “M365”",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"M365\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_PROC",
+      "descricao": "Tipo do processo:\n1 - Judicial\n2 - Administrativo",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo do Processo",
+        "DOCUMENTAÇÃO": "E051DIS.ORIPRS"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NUM_PROC",
+      "descricao": "Número do processo",
+      "tipo": "C",
+      "tamanho": "20",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Número do Processo",
+        "DOCUMENTAÇÃO": "E051DIS.NUMPRS"
+      }
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "registro": {
+    "codigo": "Y720",
+    "titulo": "REGISTRO Y720: INFORMAÇÕES DE PERÍODOS ANTERIORES",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y720",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y720"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:31:56.953819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo identificação \"Y720\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y720\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "LUC_LIQ",
+      "descricao": "Lucro Líquido antes da incidência do imposto sobre a renda e da contribuição social sobre o lucro líquido do último período de apuração informado, atualizado pela taxa referencial do Selic, até o termo final de encerramento do período a que se refere a escrituração. (art. 183, da Instrução Normativa RFB nº 1.515/2014). \n Caso não tenha existido lucro líquido no último período de apuração, deverá ser informado valor zero.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Lucro líquido",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_LUC_LIQ",
+      "descricao": "Data do final do período de apuração do lucro líquido informado acima.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data final",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "4",
+      "campo": "REC_BRUT_ANT",
+      "descricao": "Receita bruta do período anterior.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Receita bruta do período anterior.",
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "5",
+      "campo": "INTIMACAO",
+      "descricao": "S – Sim\nN – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Houve termo de intimação pela RFB para a entrega desta ECF?",
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    },
+    {
+      "numero": "6",
+      "campo": "INT_ATRASO",
+      "descricao": "S – Sim\nN – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "A transmissão desta ECF está dentro do prazo previsto na intimação?",
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "registro": {
+    "codigo": "F150",
+    "titulo": "Registro F150 da EFD-Contribuições (Crédito Presumido sobre Estoque de Abertura)",
+    "bloco": "3.5) Bloco F (Demais documentos e operações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=463"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 14,
+    "extraido_em_utc": "2026-03-10T19:03:22.501131+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"F150\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "NAT_BC_CRED",
+      "descricao": "Texto fixo contendo \"18\".\nCódigo da Base de Cálculo do Crédito sobre Estoque de Abertura, conforme a Tabela indicada no item 4.3.7.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_TOT_EST",
+      "descricao": "Valor Total do Estoque de Abertura",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "002",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "EST_IMP",
+      "descricao": "Parcela do estoque de abertura referente a bens, produtos e mercadorias importados, ou adquiridas no mercado interno sem direito ao crédito",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "002",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_BC_EST",
+      "descricao": "Valor da Base de Cálculo do Crédito sobre o Estoque de Abertura (03 – 04)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "002",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_MEN_EST",
+      "descricao": "Valor da Base de Cálculo Mensal do Crédito sobre o Estoque de Abertura (1/12 avos do campo 05)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "2",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_CRED_PIS",
+      "descricao": "Valor Mensal do Crédito Presumido Apurado para o Período - PIS/PASEP (06 x 08)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente ao COFINS, conforme a Tabela indicada no item 4.3.4",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota do COFINS (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_CRED_ COFINS",
+      "descricao": "Valor Mensal do Crédito Presumido Apurado para o Período - COFINS (06 x 11)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "DESC_EST",
+      "descricao": "Descrição do estoque",
+      "tipo": "C",
+      "tamanho": "100",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

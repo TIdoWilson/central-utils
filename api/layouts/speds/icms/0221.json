@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "0221",
+    "id_guia": "835",
+    "titulo": "Registro 0221 da EFD-ICMS/IPI (Correlação entre códigos de itens comercializados)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=835"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:07:48.659900+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0221\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_ITEM_ATOMICO",
+      "descricao": "Informar o código do item atômico contido no item informado no 0200 Pai.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QTD_CONTIDA",
+      "descricao": "Informar quantos itens atômicos estão contidos no item informado no 0200 Pai.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "6",
+      "obrigatorio": "O"
+    }
+  ]
+}

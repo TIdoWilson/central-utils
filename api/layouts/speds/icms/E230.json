@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "E230",
+    "id_guia": "145",
+    "titulo": "Registro E230 da EFD-ICMS/IPI (Ajuste / Benefício / Incentivo da Apuração do ICMS Substituição Tributária)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=145"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:07:50.827053+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E230\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_DA",
+      "descricao": "Número do documento de arrecadação Estadual, se houver.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "NUM_PROC",
+      "descricao": "Número do processo ao qual o ajuste está vinculado, se houver.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "IND_PROC",
+      "descricao": "Indicador da origem do processo:\n 0: Sefaz;\n 1: Justiça Federal;\n 2: Justiça Estadual;\n 9: Outros.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "PROC",
+      "descricao": "Descrição resumida do processo que embasou o lançamento.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "TXT_COMPL",
+      "descricao": "Descrição complementar.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "registro": {
+    "codigo": "1920",
+    "id_guia": "189",
+    "titulo": "Registro 1920 da EFD-ICMS/IPI (Sub-Apuração do ICMS)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=189"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:07:51.586283+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1920\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_TOT_TRANSF_DEBITOS_OA",
+      "descricao": "Valor total dos débitos por \"Saídas e prestações com débito do imposto\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_TOT_AJ_DEBITOS_OA",
+      "descricao": "Valor total de \"Ajustes a débito\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_ESTORNOS_CRED_OA",
+      "descricao": "Valor total de Ajustes \"Estornos de créditos\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_TOT_TRANSF_CREDITOS_OA",
+      "descricao": "Valor total dos créditos por \"Entradas e aquisições com crédito do imposto\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_TOT_AJ_CREDITOS_OA",
+      "descricao": "Valor total de \"Ajustes a crédito\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_ESTORNOS_DEB_OA",
+      "descricao": "Valor total de Ajustes \"Estornos de Débitos\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_SLD_CREDOR_ANT_OA",
+      "descricao": "Valor total de \"Saldo credor do período anterior\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_SLD_APURADO_OA",
+      "descricao": "Valor do saldo devedor apurado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_TOT_DED",
+      "descricao": "Valor total de \"Deduções\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_ICMS_RECOLHER_OA",
+      "descricao": "Valor total de \"ICMS a recolher (09-10).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_SLD_CREDOR_TRANSP_OA",
+      "descricao": "Valor total de \"Saldo credor a transportar para o período seguinte\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "DEB_ESP_OA",
+      "descricao": "Valores recolhidos ou a recolher, extra-apuração.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

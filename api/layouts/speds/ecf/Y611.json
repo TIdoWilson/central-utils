@@ -1,0 +1,169 @@
+{
+  "registro": {
+    "codigo": "Y611",
+    "titulo": "REGISTRO Y611: RENDIMENTOS DE DIRIGENTES, CONSELHEIROS, SÓCIOS OU TITULAR",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y611",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y611"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:31:56.936819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y611\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y611\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "PAIS",
+      "descricao": "Código do País: País de residência ou domicílio da pessoa física ou jurídica beneficiária do rendimento, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "País",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "IND_PF_PJ",
+      "descricao": "Indicador da Natureza do Dirigente, Sócio ou Titular, Se Pessoa Física ou Jurídica:\nPF - Pessoa Física\nPJ - Pessoa Jurídica",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Pessoa Física ou Pessoa Jurídica",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "CPF_CNPJ",
+      "descricao": "CPF ou CNPJ do Dirigente, Sócio ou Titular.\nObrigatório se Código do País for igual a \"105\" (Brasil)\nCaso contrário, não deve ser preenchido.\nSe IND_PF_PJ = “PF” preencher com CPF. Caso contrário, preencher com CNPJ.",
+      "tipo": "N",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "CPF ou CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NOM_EMP",
+      "descricao": "Nome/Nome Empresarial da Pessoa Física ou Jurídica Beneficiária do Rendimento.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Nome Empresarial",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "QUALIF",
+      "descricao": "Qualificação da Pessoa Física ou Jurídica Beneficiária do Rendimento.\nSe PAIS = 105 (Brasil) E IND_PF_PJ = \"PF\"\n01 - Acionista Pessoa Física Domiciliado no Brasil\n02 - Sócio Pessoa Física Domiciliado no Brasil \n09 - Titular \n10 - Administrador sem Vínculo Empregatício\n11 - Diretor sem Vínculo Empregatício\n12 – Presidente sem Vínculo Empregatício \n13 - Administrador com Vínculo Empregatício \n14 - Conselheiro de Administração ou Fiscal \n15 - Diretor com Vínculo Empregatício \n17 - Presidente com Vínculo Empregatício\nSe PAIS = “105” (Brasil) E IND_PF_PJ = “PJ”: \n03 - Acionista Pessoa Jurídica Domiciliado no Brasil \n04 - Sócio Pessoa Jurídica Domiciliado no Brasil\nSe PAIS diferente de 105 (Brasil) E IND_PF_PJ = “PF”\n05 - Acionista Pessoa Física Residente ou Domiciliado no Exterior \n06 - Sócio Pessoa Física Residente ou Domiciliado no Exterior\nSe PAIS diferente de 105 (Brasil) E IND_PF_PJ = “PJ”\n07 - Acionista Pessoa Jurídica Domiciliado no Exterior \n08 - Sócio Pessoa Jurídica Domiciliado no Exterior",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Qualificação",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_REM_TRAB",
+      "descricao": "Valor dos rendimentos pagos e escriturados, nos livros da escrituração contábil ou no livro Caixa, a título de remuneração a dirigentes pela prestação de serviços, ou quaisquer outros pagamentos, tais como: pró-labore e aluguéis. Esses valores sujeitam-se à incidência do imposto de renda na fonte e na declaração de rendimentos dos beneficiários.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Remuneração do Trabalho",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_LUC_DIV",
+      "descricao": "Valor dos lucros e dividendos efetivamente pagos no ano-calendário a sócios ou a titular de empresa individual.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Lucros/Dividendos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "VL_JUR_CAP",
+      "descricao": "Valor dos juros pagos ou creditados a titular, ou a sócios ou acionistas, a título de remuneração do capital próprio, antes de deduzido o imposto de renda na fonte, em conformidade com o disposto no art. 9o da Lei no 9.249, de 1995.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Juros sobre o Capital Próprio",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "VL_DEM_REND",
+      "descricao": "Valor, antes da dedução do imposto de renda retido na fonte, dos demais rendimentos pagos ou creditados a sócios, a acionistas ou a titular de empresa individual, inclusive os lucros e dividendos não apurados em balanço e distribuídos.\nInformar, também, o valor dos rendimentos pagos a sócios ou a titular de empresa individual que ultrapassou a base de cálculo do imposto, deduzido somente do imposto de renda retido na fonte.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Demais Rendimentos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "VL_IR_RET",
+      "descricao": "Valor do imposto de renda retido na fonte por ocasião do pagamento de lucros ou dividendos não abrangidos pela isenção, e sobre os demais rendimentos pagos a dirigentes, a sócios, a acionistas ou a titular de empresa individual.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "IR Retido na Fonte",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

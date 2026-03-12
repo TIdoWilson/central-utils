@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "K310",
+    "titulo": "Registro K310: Empresas Detentoras das Parcelas do Valor Eliminado Total",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "K310",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-k.htm#K310"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:29:19.615885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nK310",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"K310\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "EMP_COD_PARTE",
+      "descricao": "Código da\nempresa\ndetentora do\nvalor aglutinado\nque foi eliminado",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E650ELI.EMPDES"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VALOR",
+      "descricao": "Parcela do valor\neliminado total",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E650ELI.SALELI"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_VALOR",
+      "descricao": "Indicador da\nsituação do valor\neliminado:\n D – Devedor\n C – Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se E650ELI.SALELI for negativo recebe C, senão recebe D"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1441 @@
+{
+  "fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/capa.htm",
+  "total_registros_esperados": 179,
+  "total_registros_gerados": 179,
+  "gerado_em_utc": "2026-03-10T19:31:56.959819+00:00",
+  "resumo_registros": [
+    {
+      "codigo": "0000",
+      "arquivo_json": "0000.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 000: ABERTURA DO ARQUIVO DIGITAL E IDENTIFICAÇÃO DA PESSOA JURÍDICA",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "0001",
+      "arquivo_json": "0001.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0001: ABERTURA DO BLOCO 0",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "0010",
+      "arquivo_json": "0010.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0010: PARÂMETROS DE TRIBUTAÇÃO",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "0020",
+      "arquivo_json": "0020.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0020: PARÂMETROS DE TRIBUTAÇÃO",
+      "total_campos": 31,
+      "resumo": "Layout com 31 campo(s)."
+    },
+    {
+      "codigo": "0021",
+      "arquivo_json": "0021.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0021: PARÂMETROS DE IDENTIFICAÇÃO DOS TIPOS DE PROGRAMA",
+      "total_campos": 17,
+      "resumo": "Layout com 17 campo(s)."
+    },
+    {
+      "codigo": "0030",
+      "arquivo_json": "0030.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0030: DADOS CADASTRAIS",
+      "total_campos": 12,
+      "resumo": "Layout com 12 campo(s)."
+    },
+    {
+      "codigo": "0035",
+      "arquivo_json": "0035.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0035: IDENTIFICAÇÃO DAS SCPS",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "0930",
+      "arquivo_json": "0930.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0930: IDENTIFICAÇÃO DOS SIGNATÁRIOS DA ECF",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "0990",
+      "arquivo_json": "0990.json",
+      "bloco_origem": "bloco-0.htm",
+      "titulo": "REGISTRO 0990: ENCERRAMENTO DO BLOCO 0",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9001",
+      "arquivo_json": "9001.json",
+      "bloco_origem": "bloco-9.htm",
+      "titulo": "REGISTRO 9001: ABERTURA DO BLOCO 9",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9100",
+      "arquivo_json": "9100.json",
+      "bloco_origem": "bloco-9.htm",
+      "titulo": "REGISTRO 9100: AVISOS DA ESCRITURAÇÃO",
+      "total_campos": 17,
+      "resumo": "Layout com 17 campo(s)."
+    },
+    {
+      "codigo": "9900",
+      "arquivo_json": "9900.json",
+      "bloco_origem": "bloco-9.htm",
+      "titulo": "REGISTRO 9900: REGISTROS DO ARQUIVO",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "9990",
+      "arquivo_json": "9990.json",
+      "bloco_origem": "bloco-9.htm",
+      "titulo": "REGISTRO 9990: ENCERRAMENTO DO BLOCO 9",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "9999",
+      "arquivo_json": "9999.json",
+      "bloco_origem": "bloco-9.htm",
+      "titulo": "REGISTRO 9999: ENCERRAMENTO DO ARQUIVO DIGITAL",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "C001",
+      "arquivo_json": "C001.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C001: ABERTURA DO BLOCO C",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "C040",
+      "arquivo_json": "C040.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C040: IDENTIFICADOR DA ECD",
+      "total_campos": 16,
+      "resumo": "Layout com 16 campo(s)."
+    },
+    {
+      "codigo": "C050",
+      "arquivo_json": "C050.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C050: PLANO DE CONTAS DA ECD",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "C051",
+      "arquivo_json": "C051.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C051: PLANO DE CONTAS REFERENCIAL",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C053",
+      "arquivo_json": "C053.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C053: SUBCONTAS CORRELATAS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C100",
+      "arquivo_json": "C100.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C100: CENTRO DE CUSTOS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "C150",
+      "arquivo_json": "C150.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C150: SALDOS PERIÓDICOS – IDENTIFICAÇÃO DO PERÍODO",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "C155",
+      "arquivo_json": "C155.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C155: DETALHES DOS SALDOS CONTÁBEIS RECUPERADOS COM BASE NAS ECD",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "C157",
+      "arquivo_json": "C157.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C157: TRANSFERÊNCIA DE SALDOS DO PLANO DE CONTAS ANTERIOR",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C350",
+      "arquivo_json": "C350.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C350: IDENTIFICAÇÃO DA DATA DOS SALDOS DAS CONTAS DE RESULTADO ANTES DO ENCERRAMENTO",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "C355",
+      "arquivo_json": "C355.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C355: DETALHES DOS SALDOS DAS CONTAS DE RESULTADO ANTES DO ENCERRAMENTO",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "C990",
+      "arquivo_json": "C990.json",
+      "bloco_origem": "bloco-c.htm",
+      "titulo": "REGISTRO C990: ENCERRAMENTO DO BLOCO C",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "E001",
+      "arquivo_json": "E001.json",
+      "bloco_origem": "bloco-e.htm",
+      "titulo": "REGISTRO E001: ABERTURA DO BLOCO E",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "E010",
+      "arquivo_json": "E010.json",
+      "bloco_origem": "bloco-e.htm",
+      "titulo": "REGISTRO E010: SALDOS FINAIS RECUPERADOS DA ECF ANTERIOR",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "E015",
+      "arquivo_json": "E015.json",
+      "bloco_origem": "bloco-e.htm",
+      "titulo": "REGISTRO E015: CONTAS CONTÁBEIS MAPEADAS",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "E020",
+      "arquivo_json": "E020.json",
+      "bloco_origem": "bloco-e.htm",
+      "titulo": "REGISTRO E020: SALDOS FINAIS DAS CONTAS NA PARTE B DO e-LALUR DA ECF IMEDIATAMENTE ANTERIOR",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "E030",
+      "arquivo_json": "E030.json",
+      "bloco_origem": "bloco-e.htm",
+      "titulo": "REGISTRO E030: IDENTIFICAÇÃO DO PERÍODO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "E155",
+      "arquivo_json": "E155.json",
+      "bloco_origem": "bloco-e.htm",
+      "titulo": "REGISTRO E155: DETALHES DOS SALDOS CONTÁBEIS CALCULADOS COM BASE NAS ECD",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "E355",
+      "arquivo_json": "E355.json",
+      "bloco_origem": "bloco-e.htm",
+      "titulo": "REGISTRO E355: DETALHES DOS SALDOS DAS CONTAS DE RESULTADO ANTES DO ENCERRAMENTO",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "E990",
+      "arquivo_json": "E990.json",
+      "bloco_origem": "bloco-e.htm",
+      "titulo": "REGISTRO E990: ENCERRAMENTO DO BLOCO E",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "J001",
+      "arquivo_json": "J001.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J001: ABERTURA DO BLOCO J",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "J050",
+      "arquivo_json": "J050.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J050: PLANO DE CONTAS DO CONTRIBUINTE",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "J051",
+      "arquivo_json": "J051.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J051: PLANO DE CONTAS REFERENCIAL",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "J053",
+      "arquivo_json": "J053.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J053: SUBCONTAS CORRELATAS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "J100",
+      "arquivo_json": "J100.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J100: CENTRO DE CUSTOS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "J990",
+      "arquivo_json": "J990.json",
+      "bloco_origem": "bloco-j.htm",
+      "titulo": "REGISTRO J990: ENCERRAMENTO DO BLOCO J",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "K001",
+      "arquivo_json": "K001.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K001: ABERTURA DO BLOCO K",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "K030",
+      "arquivo_json": "K030.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K030: IDENTIFICAÇÃO DO PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL NO ANO-CALENDÁRIO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "K115",
+      "arquivo_json": "K115.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K155: DETALHES DOS SALDOS CONTÁBEIS (DEPOIS DO ENCERRAMENTO DO RESULTADO DO PERÍODO)",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "K156",
+      "arquivo_json": "K156.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K156: MAPEAMENTO REFERENCIAL DO SALDO FINAL",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "K355",
+      "arquivo_json": "K355.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K355: SALDOS FINAIS DAS CONTA CONTÁBEIS DE RESULTADO ANTES DO ENCERRAMENTO",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "K356",
+      "arquivo_json": "K356.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K356: MAPEAMENTO REFERENCIAL DOS SALDOS FINAIS DAS CONTA CONTÁBEIS DE RESULTADO ANTES DO ENCERRAMENTO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "K915",
+      "arquivo_json": "K915.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K915: JUSTIFICATIVA PARA DIVERGÊNCIA DE SALDOS CONTÁBEIS DAS CONTAS PATRIMONIAIS RECUPERADOS DA ECD",
+      "total_campos": 0,
+      "resumo": "Layout com 0 campo(s)."
+    },
+    {
+      "codigo": "K935",
+      "arquivo_json": "K935.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K935: JUSTIFICATIVA PARA DIVERGÊNCIA DE SALDOS CONTÁBEIS DAS CONTAS DE RESULTADO RECUPERADOS DA ECD",
+      "total_campos": 0,
+      "resumo": "Layout com 0 campo(s)."
+    },
+    {
+      "codigo": "K990",
+      "arquivo_json": "K990.json",
+      "bloco_origem": "bloco-k.htm",
+      "titulo": "REGISTRO K990: ENCERRAMENTO DO BLOCO K",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "L001",
+      "arquivo_json": "L001.json",
+      "bloco_origem": "bloco-l.htm",
+      "titulo": "REGISTRO L001: ABERTURA DO BLOCO L",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "L030",
+      "arquivo_json": "L030.json",
+      "bloco_origem": "bloco-l.htm",
+      "titulo": "REGISTRO L030: IDENTIFICAÇÃO DO PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL NO ANO-CALENDÁRIO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "L100",
+      "arquivo_json": "L100.json",
+      "bloco_origem": "bloco-l.htm",
+      "titulo": "REGISTRO L100: BALANÇO PATRIMONIAL",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "L200",
+      "arquivo_json": "L200.json",
+      "bloco_origem": "bloco-l.htm",
+      "titulo": "REGISTRO L200: MÉTODO DE AVALIAÇÃO DO ESTOQUE FINAL",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "L210",
+      "arquivo_json": "L210.json",
+      "bloco_origem": "bloco-l.htm",
+      "titulo": "REGISTRO L210: INFORMATIVO DE COMPOSIÇÃO DE CUSTOS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "L300",
+      "arquivo_json": "L300.json",
+      "bloco_origem": "bloco-l.htm",
+      "titulo": "REGISTRO L300: DEMONSTRATIVO DO RESULTADO DO EXERCÍCIO",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "L990",
+      "arquivo_json": "L990.json",
+      "bloco_origem": "bloco-l.htm",
+      "titulo": "REGISTRO L990: ENCERRAMENTO DO BLOCO L",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "M001",
+      "arquivo_json": "M001.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M001: ABERTURA DO BLOCO M",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "M010",
+      "arquivo_json": "M010.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M010: IDENTIFICAÇÃO DA CONTA NA PARTE B DO e-LALUR E DO e-LACS",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "M030",
+      "arquivo_json": "M030.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M030: IDENTIFICAÇÃO DOS PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL DAS EMPRESAS TRIBUTADAS PELO LUCRO REAL",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "M300",
+      "arquivo_json": "M300.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M300: LANÇAMENTOS DA PARTE A DO e-LALUR",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "M305",
+      "arquivo_json": "M305.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M305: CONTA DA PARTE B DO e-LALUR",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "M310",
+      "arquivo_json": "M310.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M310: CONTAS CONTÁBEIS RELACIONADAS AO LANÇAMENTO DA PARTE A DO e-LALUR",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "M312",
+      "arquivo_json": "M312.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M312: CONTAS CONTABEIS RELACIONADAS AO LANÇAMENTO DA PARTE A DO e-LALUR",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "M315",
+      "arquivo_json": "M315.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M315: IDENTIFICAÇÃO DE PROCESSOS JUDICIAIS E ADMINISTRATIVOS REFERENTES AO LANÇAMENTO",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "M350",
+      "arquivo_json": "M350.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M350: LANÇAMENTOS DA PARTE A DO e-LACS",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "M355",
+      "arquivo_json": "M355.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M355: CONTA DA PARTE B DO e-LACS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "M360",
+      "arquivo_json": "M360.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M360: CONTAS CONTÁBEIS RELACIONADAS AO LANÇAMENTO DA PARTE A DO e-LACS",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "M362",
+      "arquivo_json": "M362.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M362: CONTAS CONTÁBEIS RELACIONADAS AO LANÇAMENTO DA PARTE A DO e-LACS",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "M365",
+      "arquivo_json": "M365.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M365: IDENTIFICAÇÃO DE PROCESSOS JUDICIAIS E ADMINISTRATIVOS REFERENTES AO LANÇAMENTO",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "M410",
+      "arquivo_json": "M410.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M410: LANÇAMENTOS NA CONTA DA PARTE B DO e-LALUR e do e-LACS SEM REFLEXO NA PARTE A",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "M415",
+      "arquivo_json": "M415.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M415: IDENTIFICAÇÃO DE PROCESSOS JUDICIAIS E ADMINISTRATIVOS REFERENTES AO LANÇAMENTO",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "M500",
+      "arquivo_json": "M500.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M500: CONTROLE DE SALDOS DAS CONTAS DA PARTE B DO e-LALUR E DO e-LACS",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "M510",
+      "arquivo_json": "M510.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M510: CONTROLE DE SALDOS DAS CONTAS PADRÃO DA PARTE B DO e-LALUR E DO e-LACS",
+      "total_campos": 0,
+      "resumo": "Layout com 0 campo(s)."
+    },
+    {
+      "codigo": "M990",
+      "arquivo_json": "M990.json",
+      "bloco_origem": "bloco-m.htm",
+      "titulo": "REGISTRO M990: ENCERRAMENTO DO BLOCO M",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "N001",
+      "arquivo_json": "N001.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N001: ABERTURA DO BLOCO N",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "N030",
+      "arquivo_json": "N030.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N030: IDENTIFICAÇÃO DOS PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL DAS EMPRESAS TRIBUTADAS PELO LUCRO REAL",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "N500",
+      "arquivo_json": "N500.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N500: BASE DE CÁLCULO DO IRPJ SOBRE O LUCRO RELA APÓS AS COMPENSAÇÕES DE PREJUÍZOS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "N600",
+      "arquivo_json": "N600.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N600: DEMONSTRAÇÃO DO LUCRO DA EXPLORAÇÃO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "N610",
+      "arquivo_json": "N610.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N610: CÁLCULO DA ISENÇÃO E REDUÇÃO DO IMPOSTO SOBRE LUCRO REAL",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "N615",
+      "arquivo_json": "N615.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N615: INFORMAÇÕES DA BASE DE CÁLCULO DOS INCENTIVOS FISCAIS",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "N620",
+      "arquivo_json": "N620.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N620: CÁLCULO DO IRPJ MENSAL POR ESTIMATIVA",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "N630",
+      "arquivo_json": "N630.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N630: CÁLCULO DO IRPJ COM BASE NO LUCRO REAL",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "N650",
+      "arquivo_json": "N650.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N650: BASE DE CÁLCULO DA CSLL APÓS AS COMPENSAÇÕES DA BASE DE CÁLCULO NEGATIVA",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "N660",
+      "arquivo_json": "N660.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N660: CÁLCULO DA CSLL MENSAL POR ESTIMATIVA",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "N670",
+      "arquivo_json": "N670.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N670: CÁLCULO DA CSLL COM BASE NO LUCRO REAL",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "N990",
+      "arquivo_json": "N990.json",
+      "bloco_origem": "bloco-n.htm",
+      "titulo": "REGISTRO N990: ENCERRAMENTO DO BLOCO N",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "P001",
+      "arquivo_json": "P001.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P001 - ABERTURA DO BLOCO P",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "P030",
+      "arquivo_json": "P030.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P030: IDENTIFICAÇÃO DOS PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL DAS EMPRESAS TRIBUTADAS PELO LUCRO PRESUMIDO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "P100",
+      "arquivo_json": "P100.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P100: BALANÇO PATRIMONIAL",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "P130",
+      "arquivo_json": "P130.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P130: DEMONSTRAÇÃO DAS RECEITAS INCENTIVADAS DO LUCRO PRESUMIDO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "P150",
+      "arquivo_json": "P150.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P150: DEMONSTRATIVO DO RESULTADO DO EXERCÍCIO",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "P200",
+      "arquivo_json": "P200.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P200: APURAÇÃO DA BASE DE CÁLCULO DO LUCRO PRESUMIDO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "P230",
+      "arquivo_json": "P230.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P230: CÁLCULO DA ISENÇÃO E REDUÇÃO DO LUCRO PRESUMIDO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "P300",
+      "arquivo_json": "P300.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P300: CÁLCULO DO IRPJ COM BASE DO LUCRO PRESUMIDO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "P400",
+      "arquivo_json": "P400.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P400: APURAÇÃO DA BASE DE CÁLCULO DA CSLL COM BASE DO LUCRO PRESUMIDO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "P500",
+      "arquivo_json": "P500.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P500: CÁLCULO DA CSLL COM BASE DO LUCRO PRESUMIDO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "P990",
+      "arquivo_json": "P990.json",
+      "bloco_origem": "bloco-p.htm",
+      "titulo": "REGISTRO P990: ENCERRAMENTO DO BLOCO P",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "Q001",
+      "arquivo_json": "Q001.json",
+      "bloco_origem": "bloco-q.htm",
+      "titulo": "REGISTRO Q001 - ABERTURA DO BLOCO Q",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "Q100",
+      "arquivo_json": "Q100.json",
+      "bloco_origem": "bloco-q.htm",
+      "titulo": "REGISTRO Q100 - DEMONSTRATIVO DO LIVRO CAIXA",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "Q990",
+      "arquivo_json": "Q990.json",
+      "bloco_origem": "bloco-q.htm",
+      "titulo": "REGISTRO Q990 - ENCERRAMENTO DO BLOCO Q",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "T001",
+      "arquivo_json": "T001.json",
+      "bloco_origem": "bloco-t.htm",
+      "titulo": "REGISTRO T001 - ABERTURA DO BLOCO T",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "T030",
+      "arquivo_json": "T030.json",
+      "bloco_origem": "bloco-t.htm",
+      "titulo": "REGISTRO T030: IDENTIFICAÇÃO DOS PERÍODOS E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL DAS EMPRESAS TRIBUTADAS PELO LUCRO ARBITRADO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "T120",
+      "arquivo_json": "T120.json",
+      "bloco_origem": "bloco-t.htm",
+      "titulo": "REGISTRO T120: APURAÇÃO DA BASE DE CÁLCULO DO IRPJ COM BASE NO LUCRO ARBITRADO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "T150",
+      "arquivo_json": "T150.json",
+      "bloco_origem": "bloco-t.htm",
+      "titulo": "REGISTRO T150: CÁLCULO DO IRPJ COM BASE NO LUCRO ARBITRADO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "T170",
+      "arquivo_json": "T170.json",
+      "bloco_origem": "bloco-t.htm",
+      "titulo": "REGISTRO T170: APURAÇÃO DA BASE DE CÁLCULO DA CSLL COM BASE NO LUCRO ARBITRADO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "T181",
+      "arquivo_json": "T181.json",
+      "bloco_origem": "bloco-t.htm",
+      "titulo": "REGISTRO T181: CÁLCULO DA CSLL COM BASE NO LUCRO ARBITRADO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "T990",
+      "arquivo_json": "T990.json",
+      "bloco_origem": "bloco-t.htm",
+      "titulo": "REGISTRO T990: ENCERRAMENTO DO BLOCO T",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "U001",
+      "arquivo_json": "U001.json",
+      "bloco_origem": "bloco-u.htm",
+      "titulo": "REGISTRO U001: ABERTURA DO BLOCO U",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "U030",
+      "arquivo_json": "U030.json",
+      "bloco_origem": "bloco-u.htm",
+      "titulo": "REGISTRO U030: IDENTIFICAÇÃO DOS PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL DAS EMPRESAS IMUNES E ISENTAS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "U100",
+      "arquivo_json": "U100.json",
+      "bloco_origem": "bloco-u.htm",
+      "titulo": "REGISTRO U100: BALANÇO PATRIMONIAL",
+      "total_campos": 13,
+      "resumo": "Layout com 13 campo(s)."
+    },
+    {
+      "codigo": "U150",
+      "arquivo_json": "U150.json",
+      "bloco_origem": "bloco-u.htm",
+      "titulo": "REGISTRO U150: DEMONSTRAÇÃO DO RESULTADO",
+      "total_campos": 9,
+      "resumo": "Layout com 9 campo(s)."
+    },
+    {
+      "codigo": "U180",
+      "arquivo_json": "U180.json",
+      "bloco_origem": "bloco-u.htm",
+      "titulo": "REGISTRO U180: CÁLCULO DO IRPJ DAS EMPRESAS IMUNES OU ISENTAS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "U182",
+      "arquivo_json": "U182.json",
+      "bloco_origem": "bloco-u.htm",
+      "titulo": "REGISTRO U182: CÁLCULO DA CSLL DAS EMPRESAS IMUNES E ISENTAS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "U990",
+      "arquivo_json": "U990.json",
+      "bloco_origem": "bloco-u.htm",
+      "titulo": "REGISTRO U990: ENCERRAMENTO DO BLOCO U",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "V001",
+      "arquivo_json": "V001.json",
+      "bloco_origem": "bloco-v.htm",
+      "titulo": "Registro V001: Abertura do Bloco V",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "V010",
+      "arquivo_json": "V010.json",
+      "bloco_origem": "bloco-v.htm",
+      "titulo": "Registro V010 - DEREX - Instituição",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "V020",
+      "arquivo_json": "V020.json",
+      "bloco_origem": "bloco-v.htm",
+      "titulo": "Registro V020 - Responsável pela Movimentação",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "V030",
+      "arquivo_json": "V030.json",
+      "bloco_origem": "bloco-v.htm",
+      "titulo": "Registro V030 - DEREX – Período - Mês",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "V100",
+      "arquivo_json": "V100.json",
+      "bloco_origem": "bloco-v.htm",
+      "titulo": "Registro V100 - Demonstrativo dos recursos em moeda estrangeira decorrentes do recebimento de exportações",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "V990",
+      "arquivo_json": "V990.json",
+      "bloco_origem": "bloco-v.htm",
+      "titulo": "Registro V990: Encerramento do Bloco V",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "W001",
+      "arquivo_json": "W001.json",
+      "bloco_origem": "bloco-w.htm",
+      "titulo": "REGISTRO W001: ABERTURA DO BLOCO W",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "W100",
+      "arquivo_json": "W100.json",
+      "bloco_origem": "bloco-w.htm",
+      "titulo": "REGISTRO W100: INFORMAÇÕES SOBRE O GRUPO MULTINACIONAL E A ENTIDADE DECLARANTE - DECLARAÇÃO PAÍS-A-PAÍS",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "W200",
+      "arquivo_json": "W200.json",
+      "bloco_origem": "bloco-w.htm",
+      "titulo": "REGISTRO W200: DECLARAÇÃO PAÍS-A-PAÍS",
+      "total_campos": 21,
+      "resumo": "Layout com 21 campo(s)."
+    },
+    {
+      "codigo": "W250",
+      "arquivo_json": "W250.json",
+      "bloco_origem": "bloco-w.htm",
+      "titulo": "REGISTRO W250: DECLARAÇÃO PAÍS-A-PAÍS - ENTIDADES INTEGRANTES",
+      "total_campos": 27,
+      "resumo": "Layout com 27 campo(s)."
+    },
+    {
+      "codigo": "W300",
+      "arquivo_json": "W300.json",
+      "bloco_origem": "bloco-w.htm",
+      "titulo": "REGISTRO W300: OBSERVAÇÕES ADICIONAIS – DECLARAÇÃO PAÍS-A-PAÍS",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "W990",
+      "arquivo_json": "W990.json",
+      "bloco_origem": "bloco-w.htm",
+      "titulo": "REGISTRO W990: ENCERRAMENTO DO BLOCO W",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "X001",
+      "arquivo_json": "X001.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X001: ABERTURA DO BLOCO X",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "X280",
+      "arquivo_json": "X280.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X280: ATIVIDADES INCENTIVADAS – PJ EM GERAL",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "X292",
+      "arquivo_json": "X292.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X292: OPERAÇÕES COM O EXTERIOR – PESSOA NÃO VINCULADA/NÃO INTERPOSTA/PAÍS SEM TRIBUTAÇÃO FAVORECIDA",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X340",
+      "arquivo_json": "X340.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X340: IDENTIFICAÇÃO DA PARTICIPAÇÃO NO EXTERIOR",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "X350",
+      "arquivo_json": "X350.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X350: PARTICIPAÇÕES NO EXTERIOR – RESULTADO DO PERÍODO DE APURAÇÃO",
+      "total_campos": 19,
+      "resumo": "Layout com 19 campo(s)."
+    },
+    {
+      "codigo": "X351",
+      "arquivo_json": "X351.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X351: DEMONSTRATIVO DE RESULTADOS E DE IMPOSTO PAGO NO EXTERIOR",
+      "total_campos": 15,
+      "resumo": "Layout com 15 campo(s)."
+    },
+    {
+      "codigo": "X352",
+      "arquivo_json": "X352.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X352: DEMONSTRATIVO DE RESULTADOS NO EXTERIOR AUFERIDOS POR INTERMÉDIO DE COLIGADAS EM REGIME DE CAIXA",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "X353",
+      "arquivo_json": "X353.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X353: DEMONSTRATIVO DE CONSOLIDAÇÃO",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "X354",
+      "arquivo_json": "X354.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X354: DEMONSTRATIVO DE PREJUÍZOS ACUMULADOS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X355",
+      "arquivo_json": "X355.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X355: DEMONSTRATIVO DE RENDAS ATIVAS E PASSIVAS",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "X356",
+      "arquivo_json": "X356.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X356: DEMONSTRATIVO DE ESTRUTURA SOCIETÁRIA",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X357",
+      "arquivo_json": "X357.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X357: INVESTIDORAS DIRETAS",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "X390",
+      "arquivo_json": "X390.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X390: ORIGENS E APLICAÇÕES DE RECURSOS – IMUNES E ISENTAS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X400",
+      "arquivo_json": "X400.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X400: COMÉRCIO ELETRÔNICO E TECNOLOGIA DA INFORMAÇÃO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X410",
+      "arquivo_json": "X410.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X410: COMÉRCIO ELETRÔNICO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X420",
+      "arquivo_json": "X420.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X420: ROYALTIES RECEBIDOS OU PAGOS A BENEFICIÁRIOS DO BRASIL E DO EXTERIOR",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "X430",
+      "arquivo_json": "X430.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X430: RENDIMENTOS RELATIVOS A SERVIÇOS, JUROS E DIVIDENDOS RECEBIDOS DO BRASIL E DO EXTERIOR",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "X450",
+      "arquivo_json": "X450.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X450: PAGAMENTOS/REMESSAS RELATIVOS A SERVIÇOS, JUROS E DIVIDENDOS RECEBIDOS DO BRASIL E DO EXTERIOR",
+      "total_campos": 10,
+      "resumo": "Layout com 10 campo(s)."
+    },
+    {
+      "codigo": "X460",
+      "arquivo_json": "X460.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X460: INOVAÇÃO TECNOLÓGICA E DESENVOLVIMENTO TECNOLÓGICO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X470",
+      "arquivo_json": "X470.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X470: CAPACITAÇÃO DE INFORMÁTICA E INCLUSÃO DIGITAL",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X480",
+      "arquivo_json": "X480.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X480: BENEFÍCIOS FISCAIS - PARTE I",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X490",
+      "arquivo_json": "X490.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X490: PÓLO INDUSTRIAL DE MANAUS E AMAZÔNIA OCIDENTAL",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X500",
+      "arquivo_json": "X500.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X500: ZONAS DE PROCESSAMENTO DE EXPORTAÇÃO (ZPE)",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X510",
+      "arquivo_json": "X510.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X510: ÁREAS DE LIVRE COMÉRCIO (ALC)",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "X990",
+      "arquivo_json": "X990.json",
+      "bloco_origem": "bloco-x.htm",
+      "titulo": "REGISTRO X990: ENCERRAMENTO DO BLOCO X",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "Y001",
+      "arquivo_json": "Y001.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y001: ABERTURA DO BLOCO Y",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "Y520",
+      "arquivo_json": "Y520.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y520: PAGAMENTOS/RECEBIMENTOS DO EXTERIOR OU DE NÃO RESIDENTES",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "Y540",
+      "arquivo_json": "Y540.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y540: DISCRIMINAÇÃO DA RECEITA DE VENDAS DOS ESTABELECIMENTOS POR ATIVIDADE ECONÔMICA",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "Y550",
+      "arquivo_json": "Y550.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y550: VENDAS A COMERCIAL EXPORTADORA COM FIM ESPECÍFICO DE EXPORTAÇÃO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "Y560",
+      "arquivo_json": "Y560.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y560: DETALHAMENTO DAS EXPORTAÇÕES DA COMERCIAL EXPORTADORA",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "Y570",
+      "arquivo_json": "Y570.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y570: DEMONSTRATIVO DO IMPOSTO DE RENDA E CSLL RETIDOS NA FONTE",
+      "total_campos": 8,
+      "resumo": "Layout com 8 campo(s)."
+    },
+    {
+      "codigo": "Y580",
+      "arquivo_json": "Y580.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y580: DOAÇÕES A CAMPANHAS ELEITORAIS",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "Y590",
+      "arquivo_json": "Y590.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y590: ATIVOS NO EXTERIOR",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "Y600",
+      "arquivo_json": "Y600.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y600: IDENTIFICAÇÃO E RENDIMENTOS DE DIRIGENTES, CONSELHEIROS, SÓCIOS OU TITULAS",
+      "total_campos": 17,
+      "resumo": "Layout com 17 campo(s)."
+    },
+    {
+      "codigo": "Y611",
+      "arquivo_json": "Y611.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y611: RENDIMENTOS DE DIRIGENTES, CONSELHEIROS, SÓCIOS OU TITULAR",
+      "total_campos": 11,
+      "resumo": "Layout com 11 campo(s)."
+    },
+    {
+      "codigo": "Y612",
+      "arquivo_json": "Y612.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y612: RENDIMENTOS DE DIRIGENTES, CONSELHEIROS, SÓCIOS OU TITULAR",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "Y620",
+      "arquivo_json": "Y620.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y620: PARTICIPAÇÕES AVALIADAS PELO MÉTODO DE EQUIVALÊNCIA PATRIMONIAL",
+      "total_campos": 17,
+      "resumo": "Layout com 17 campo(s)."
+    },
+    {
+      "codigo": "Y630",
+      "arquivo_json": "Y630.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y630: FUNDOS/CLUBES DE INVESTIMENTO",
+      "total_campos": 7,
+      "resumo": "Layout com 7 campo(s)."
+    },
+    {
+      "codigo": "Y640",
+      "arquivo_json": "Y640.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y640: PARTICIPAÇÕES EM CONSÓRCIOS DE EMPRESAS",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "Y650",
+      "arquivo_json": "Y650.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y650: PARTICIPANTES DO CONSÓRCIO",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "Y660",
+      "arquivo_json": "Y660.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y660: DADOS DE SUCESSORAS",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "Y665",
+      "arquivo_json": "Y665.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y665: DEMONSTRATIVO DAS DIFERENÇAS NA ADOÇÃO INICIAL",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "Y671",
+      "arquivo_json": "Y671.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y671: OUTRAS INFORMAÇÕES",
+      "total_campos": 14,
+      "resumo": "Layout com 14 campo(s)."
+    },
+    {
+      "codigo": "Y672",
+      "arquivo_json": "Y672.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y672: OUTRAS INFORMAÇÕES (LUCRO PRESUMIDO)",
+      "total_campos": 18,
+      "resumo": "Layout com 18 campo(s)."
+    },
+    {
+      "codigo": "Y680",
+      "arquivo_json": "Y680.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y680: MÊS DAS INFORMAÇÕES DE OPTANTES PELO REFIS (LUCROS REAL, PRESUMIDO E ARBITRADO)",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    },
+    {
+      "codigo": "Y681",
+      "arquivo_json": "Y681.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y681: INFORMAÇÕES DE OPTANTES PELO REFIS (LUCROS REAL, PRESUMIDO E ARBITRADO)",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "Y682",
+      "arquivo_json": "Y682.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y682: INFORMAÇÕES DE OPTANTES PELO REFIS (IMUNES OU ISENTAS)",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "Y690",
+      "arquivo_json": "Y690.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y690: INFORMAÇÕES DE OPTANTES PELO PAES",
+      "total_campos": 3,
+      "resumo": "Layout com 3 campo(s)."
+    },
+    {
+      "codigo": "Y700",
+      "arquivo_json": "Y700.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y700: DECLARAÇÃO DE INFORMAÇÕES DE OPERAÇÕES RELEVANTES (DIOR) - INCLUSÃO DE REGISTRO",
+      "total_campos": 22,
+      "resumo": "Layout com 22 campo(s)."
+    },
+    {
+      "codigo": "Y710",
+      "arquivo_json": "Y710.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y710: TRIBUTOS VINCULADOS A DIOR - INCLUSÃO DE REGISTRO",
+      "total_campos": 4,
+      "resumo": "Layout com 4 campo(s)."
+    },
+    {
+      "codigo": "Y720",
+      "arquivo_json": "Y720.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y720: INFORMAÇÕES DE PERÍODOS ANTERIORES",
+      "total_campos": 6,
+      "resumo": "Layout com 6 campo(s)."
+    },
+    {
+      "codigo": "Y800",
+      "arquivo_json": "Y800.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y800: OUTRAS INFORMAÇÕES",
+      "total_campos": 5,
+      "resumo": "Layout com 5 campo(s)."
+    },
+    {
+      "codigo": "Y990",
+      "arquivo_json": "Y990.json",
+      "bloco_origem": "bloco-y.htm",
+      "titulo": "REGISTRO Y990: ENCERRAMENTO DO BLOCO Y",
+      "total_campos": 2,
+      "resumo": "Layout com 2 campo(s)."
+    }
+  ],
+  "erros": []
+}

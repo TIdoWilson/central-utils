@@ -1,0 +1,109 @@
+{
+  "registro": {
+    "codigo": "I355",
+    "titulo": "REGISTRO I355: Detalhes dos Saldos das Contas de Resultado Antes do Encerramento",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I355",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I355"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:29:19.592885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I355.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I355"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica de resultado",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se na tela de entrada no campo Tipo de \n conta estiver com a opção:\n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta conforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta conforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CCUS",
+      "descricao": "Código do centro de custos.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E044CCU.CODCCU"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_CTA",
+      "descricao": "Valor do saldo final antes do lançamento de encerramento.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00, senão \nUsado as funções de programador: \nCarregaSaldoContabilZer\n - Período definido na tela de entrada Inicial e Final\nSaldo - Busca o saldo da conta E045PLA.CTARED conforme carregado pela função acima.\nQuando gerar centro de custos:\nCarregaSaldoCCustoZer - Carrega o saldo contábil por centro de custo conforme período definido na tela de entrada.\n Saldo - Busca o saldo da conta/centro de custo conforme carregado pela função acima."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_DC",
+      "descricao": "Indicador da situação do saldo final: \n D - Devedor;\n C - Credor.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00, senão \nSe o saldo inicial menor que 0 C senão recebe D"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_CTA_MF",
+      "descricao": "Valor do saldo final\nantes do lançamento\nde encerramento.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "-"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "IND_DC_MF",
+      "descricao": "Indicador da situação\ndo saldo final:\n D - Devedor;\n C - Credor",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "-"
+      }
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "registro": {
+    "codigo": "0030",
+    "titulo": "REGISTRO 0030: DADOS CADASTRAIS",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0030",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-0.htm#0030"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 12,
+    "extraido_em_utc": "2026-03-10T19:31:56.792331+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo 0030",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "0030"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_NAT",
+      "descricao": "Código da Natureza Jurídica, conforme tabela do Sped.",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Natureza Jurídica",
+        "DOCUMENTAÇÃO": "E070CTB.NATPES"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "CNAE_FISCAL",
+      "descricao": "Código da atividade econômica (CNAE-Fiscal), conforme tabela do Sped\nAtenção: Se houver mais de uma atividade, indicar a de maior faturamento.",
+      "tipo": "N",
+      "tamanho": "7",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código da Atividade Econômica (CNAEFiscal)",
+        "DOCUMENTAÇÃO": "E070CTB.CTBCFF"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "ENDERECO",
+      "descricao": "Endereço",
+      "tipo": "C",
+      "tamanho": "150",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Endereço",
+        "DOCUMENTAÇÃO": "E070FIL.ENDFIL"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NUM",
+      "descricao": "Número",
+      "tipo": "C",
+      "tamanho": "6",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Número",
+        "DOCUMENTAÇÃO": "E070FIL.NEMFIL"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "COMPL",
+      "descricao": "Complemento",
+      "tipo": "C",
+      "tamanho": "50",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Complemento",
+        "DOCUMENTAÇÃO": "E070FIL.CPLEND"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "BAIRRO",
+      "descricao": "Bairro/Distrito",
+      "tipo": "C",
+      "tamanho": "50",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Bairro/Distrito",
+        "DOCUMENTAÇÃO": "E070FIL.BAIFIL"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "UF",
+      "descricao": "Unidade da Federação, conforme tabela do Sped",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "UF",
+        "DOCUMENTAÇÃO": "E070FIL.SIGUFS"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "COD_MUN",
+      "descricao": "Município, conforme tabela do Sped",
+      "tipo": "C",
+      "tamanho": "7",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código do Município",
+        "DOCUMENTAÇÃO": "E070FIL.CIDFIL"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "CEP",
+      "descricao": "CEP",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CEP",
+        "DOCUMENTAÇÃO": "E070FIL.CEPFIL"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "NUM_TEL",
+      "descricao": "DDD + número de telefone.",
+      "tipo": "C",
+      "tamanho": "15",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Telefone",
+        "DOCUMENTAÇÃO": "E070FIL.NUMFON"
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "EMAIL",
+      "descricao": "Correio Eletrônico",
+      "tipo": "C",
+      "tamanho": "115",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Correio Eletrônico",
+        "DOCUMENTAÇÃO": "E070FIL.INTNET"
+      }
+    }
+  ]
+}

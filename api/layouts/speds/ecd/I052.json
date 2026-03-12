@@ -1,0 +1,61 @@
+{
+  "registro": {
+    "codigo": "I052",
+    "titulo": "REGISTRO I052: Indicação dos Códigos de Aglutinação",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I052",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I052"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:29:19.583885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I052.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I052"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CCUS",
+      "descricao": "Código do centro de custo.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_AGL",
+      "descricao": "Código de aglutinação\nutilizado nas demonstrações\ncontábeis do bloco J\n(Somente para as contas\nanalíticas).",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E046CMP.CODAGL"
+      }
+    }
+  ]
+}

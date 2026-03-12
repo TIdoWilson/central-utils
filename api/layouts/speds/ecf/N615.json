@@ -1,0 +1,155 @@
+{
+  "registro": {
+    "codigo": "N615",
+    "titulo": "REGISTRO N615: INFORMAÇÕES DA BASE DE CÁLCULO DOS INCENTIVOS FISCAIS",
+    "bloco_origem": "bloco-n.htm",
+    "ancora": "n615",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-n.htm#n615"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:31:56.857837+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “N615”",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"N615\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "BASE_CALC",
+      "descricao": "Base de cálculo dos incentivos fiscais: Para fins de determinação da base de cálculo dos incentivos, deve-se observar a forma de apuração do imposto de renda da pessoa jurídica, as deduções permitidas.\na) Regra Geral: O valor desta linha, quando a apuração do imposto de renda for com base no lucro real trimestral e no lucro real apurado em 31 de dezembro do ano-calendário (ajuste anual) será calculado pela seguinte fórmula:\nBASE_CALC = A - (B + C + D + E + F + G + H + I + J + L + M+ N + O + P), onde:\nA = Imposto de Renda devido à alíquota de 15% (Linha ECF N630/2)\nB = Atividades Culturais e Artísticas (Linha ECF N630/4) (art. 18, e §§ 1º e 3º, e art. 25 e 26 da Lei nº 8.313, de 1991, com as alterações do art. 1º, da Lei nº 9.874, de 1999, do art. 53 da MP nº 2.228, de 2001)\nC = Operações de Aquisição de Vale-Cultura (Linha ECF N630/5) (Lei nº 12.761/2012, art. 10)\nD = Programa de Alimentação ao Trabalhador (Linha ECF N630/6)\nE = Desenvolvimento Tecnológico Industrial/Agropecuário (Linha ECF N630/7)\nF = Atividade Audiovisual (Linha ECF N630/8)\nG = Fundo dos Direitos da Criança e do Adolescente (Linha ECF N630/9)\nH = Fundos Nacional, Estaduais ou Municipais do Idoso (Linha ECF N630/10) (Lei nº 12.213, de 2010, art. 3º).\nI = Atividades de Caráter Desportivo (Linha ECF N630/11)\nJ = Programa Nacional de Apoio à Atenção Oncológica - PRONON (Linha ECF N630/12) - (Lei nº 12.715/2012, arts. 1º e 4º)\nL = Programa Nacional de Apoio à Atenção da Saúde da Pessoa com Deficiência - PRONAS/PCD (Linha ECF N630/13) (Lei nº 12.715, de 2012, arts. 3º e 4º)\nM= Valor da Remuneração da Prorrogação da Licença-Maternidade (Linha ECF N630/14) (Lei nº 11.770, de 2008, art. 5º)\nN = 3,33 x Redução por Reinvestimento (Linha ECF N630/16)\nO = Imposto devido no Brasil à alíquota de 15% incidente sobre lucros, rendimentos e ganhos de capital oriundos do exterior (Linha ECF N630/17)\nP = Imposto de renda sobre a diferença entre o Custo Orçado e o Custo Efetivo (Linha ECF N630/25)\nb) Pessoa Jurídica com Direito à Isenção e/ou Redução do Imposto\nA pessoa jurídica que tiver direito à redução ou isenção do imposto (Linha ECF N630/15) deve, com base nas informações do Registro N610 - Cálculo da Isenção e Redução do Imposto Sobre o Lucro Real, deduzir do valor determinado pela aplicação da Regra Geral (item \"a\") o seguinte valor (Z):\nZ = [Linhas ECF N610/7 + N610/12 - BM10/12 + N610/17 + (N610/47 x 75%) + (N610/52 x 70%) + (N610/57x 50%) + (N610/62 x 33,33%) + (N610/67 x 25%) + (N610/72 x 12,50%)]\nO valor desta linha passa, então, a ser determinado pela seguinte fórmula:\nBASE_CALC = A - (Z + B + C + D + E + F + G + H + I + J + L + M + N + O + P)\nAtenção:\n1) Também compõe a base de cálculo dos incentivos (fórmula da letra a ou b) o valor correspondente à soma do imposto sobre a renda pago por SCP tributada com base no lucro real, exclusive adicional, das quais a declarante seja sócia ostensiva. Sendo que a opção somente poderá ser efetuada em relação à parte do imposto devido, exclusive o adicional, pertencente à pessoa jurídica sócia ostensiva, quer dizer, não pode ser efetivada em relação à parte do imposto que cabe aos demais sócios da SCP.\n2) Observar as instruções deste manual, com relação às deduções de incentivos fiscais, quando o imposto for calculado sobre a base de cálculo estimada.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Base de Cálculo",
+        "DOCUMENTAÇÃO": "E661CIF.BASCAL"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "PER_INCEN_FINOR",
+      "descricao": "Percentual do incentivo FINOR (até 6%)",
+      "tipo": "N",
+      "tamanho": "5",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Percentual do incentivo FINOR (até 6%)",
+        "DOCUMENTAÇÃO": "E661CIF.PERFNR"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_LIQ_INCEN_FINOR",
+      "descricao": "Valor líquido do incentivo FINOR",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor Líquido do Incentivo",
+        "DOCUMENTAÇÃO": "E661CIF.VLRFNR"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "PER_INCEN_FINAM",
+      "descricao": "Percentual do incentivo FINAM (até 6%)",
+      "tipo": "N",
+      "tamanho": "5",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Percentual do incentivo FINAM (até 6%)",
+        "DOCUMENTAÇÃO": "E661CIF.PERFNM"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_LIQ_INCEN_ FINAM",
+      "descricao": "Valor líquido do incentivo FINAM",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor líquido do incentivo",
+        "DOCUMENTAÇÃO": "E661CIF.VLRFNM"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_SUBTOTAL",
+      "descricao": "Subtotal líquido do incentivo (VL_LIQ_INCEN_FINOR + VL_LIQ_INCEN_FINAN)",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Subtotal até 6%",
+        "DOCUMENTAÇÃO": "E661CIF.SUBTOT"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "PER_INCEN_FUNRES",
+      "descricao": "Percentual do incentivo FUNRES (até 9%)",
+      "tipo": "N",
+      "tamanho": "5",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Percentual do incentivo FUNRES (até 9%)",
+        "DOCUMENTAÇÃO": "E661CIF.PERFNS"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "VL_LIQ_INCEN_ FUNRES",
+      "descricao": "Valor líquido do incentivo FUNRES",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor líquido do incentivo",
+        "DOCUMENTAÇÃO": "E661CIF.VLRFNS"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "VL_TOTAL",
+      "descricao": "Total dos Incentivos",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Total dos Incentivos",
+        "DOCUMENTAÇÃO": "E661CIF.VLRTOT"
+      }
+    }
+  ]
+}

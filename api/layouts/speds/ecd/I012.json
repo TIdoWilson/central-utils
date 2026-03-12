@@ -1,0 +1,85 @@
+{
+  "registro": {
+    "codigo": "I012",
+    "titulo": "REGISTRO I012: Livros Auxiliares ao Diário ou Livro Principal",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I012",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I012"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:29:19.578386+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I012.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I012"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_ORD",
+      "descricao": "Número de ordem do instrumento associado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de Entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NAT_LIVR",
+      "descricao": "Natureza do livro associado; finalidade a que se destina o instrumento.",
+      "tipo": "C",
+      "tamanho": "80",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "TIPO",
+      "descricao": "Tipo de\nescrituração do\nlivro associado:\n0 – Digital\n(incluído no\nSPED)\n1 – Outros",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "0 - Digital"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "COD_HASH_AUX",
+      "descricao": "Código Hash\ndo arquivo\ncorrespondente\nao livro\nauxiliar\nutilizado na\nassinatura\ndigital.",
+      "tipo": "C",
+      "tamanho": "40",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de Entrada"
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "registro": {
+    "codigo": "C590",
+    "id_guia": "82",
+    "titulo": "Registro C590 da EFD-ICMS/IPI (Registro Analítico do Documento - Nota Fiscal/Conta de Energia Elétrica (Código 06), Nota Fiscal de Energia Elétrica Eletrônica - NF3e (Código 66), Nota Fiscal/Conta de Fornecimento DÁgua Canalizada (Código 29) e Nota Fiscal Consumo Fornecimento de Gás (Código 28))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=82"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:07:49.814295+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C590\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "CST_ICMS",
+      "descricao": "Código da Situação Tributária, conforme a Tabela 4.3.1.",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "03",
+      "campo": "CFOP",
+      "descricao": "Código Fiscal de Operação e Prestação do agrupamento de itens.",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "04",
+      "campo": "ALIQ_ICMS",
+      "descricao": "Alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    },
+    {
+      "numero": "05",
+      "campo": "VL_OPR",
+      "descricao": "Valor da operação correspondente à combinação de \"CST_ICMS\", \"CFOP\", e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Parcela correspondente ao \"Valor da Base de Cálculo (BC) do ICMS\" referente à combinação de \"CST_ICMS\", \"CFOP\" e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "07",
+      "campo": "VL_ICMS",
+      "descricao": "Parcela correspondente ao \"Valor do ICMS\" referente à combinação de \"CST_ICMS\", \"CFOP\" e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "08",
+      "campo": "VL_BC_ICMS_ST",
+      "descricao": "Parcela correspondente ao \"Valor da Base de Cálculo do ICMS\" da substituição tributária referente à combinação de \"CST_ICMS\", \"CFOP\" e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "09",
+      "campo": "VL_ICMS_ST",
+      "descricao": "Parcela correspondente ao valor creditado/debitado do ICMS da substituição tributária, referente à combinação de \"CST_ICMS\", \"CFOP\" e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "10",
+      "campo": "VL_RED_BC",
+      "descricao": "Valor não tributado em função da redução da BC do ICMS, referente à combinação de \"CST_ICMS\", \"CFOP\" e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "11",
+      "campo": "COD_OBS",
+      "descricao": "Código da observação do lançamento fiscal (campo 02 do Registro 0460)",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    }
+  ]
+}

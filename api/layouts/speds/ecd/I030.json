@@ -1,0 +1,169 @@
+{
+  "registro": {
+    "codigo": "I030",
+    "titulo": "REGISTRO \n I030: Termo de Abertura do Livro",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I030",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I030"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 12,
+    "extraido_em_utc": "2026-03-10T19:29:19.580885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I030.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I030"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DNRC_ABERT",
+      "descricao": "Texto fixo contendo TERMO DE ABERTURA.",
+      "tipo": "C",
+      "tamanho": "017",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "TERMO DE ABERTURA"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NUM_ORD",
+      "descricao": "Número de ordem do instrumento de escrituração.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de Entrada"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "NAT_LIVR",
+      "descricao": "Natureza do livro; finalidade a que se destina o instrumento.",
+      "tipo": "C",
+      "tamanho": "80",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "QTD_LIN",
+      "descricao": "Quantidade total de linhas do arquivo digital.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Somatória das linhas do arquivo"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "NOME",
+      "descricao": "Nome empresarial",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E070FIL.NOMFIL"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "NIRE",
+      "descricao": "Número de Identificação do Registro de Empresas da Junta Comercial.",
+      "tipo": "N",
+      "tamanho": "011",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E070FIL.CTBNRJ"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição no CNPJ \n .",
+      "tipo": "N",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E070FIL.NUMCGC"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "DT_ARQ",
+      "descricao": "Data do arquivamento dos atos constitutivos.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E070FIL.CTBDRJ"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "DT_ARQ_CONV",
+      "descricao": "Data de arquivamento do ato de conversão de sociedade simples em sociedade empresária.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de Entrada"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "DESC_MUN",
+      "descricao": "Município.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E070FIL.CIDFIL"
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "DT_EX_SOCIAL",
+      "descricao": "Data de encerramento do exercício social",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

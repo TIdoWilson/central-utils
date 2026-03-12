@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "I555",
+    "titulo": "REGISTRO \n I555: Totais no Livro Razão Auxiliar com Leiaute Parametrizável",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I555",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I555"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:29:19.596885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I555.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I555"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "RZ_CONT_TOT",
+      "descricao": "Conteúdo dos campos mencionados no Registro I510.",
+      "tipo": "-",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "A cada nível de contas analíticas geradas (I550) será gerado o totalizador (Conta Sintética). \nE652SAL.CTAAUX|E652SAL.DESCTA|TOTAL DÉBITO (SOMA DO I550 - TOTAL DÉBITO)|TOTAL CREDITO (SOMA DO I550 - TOTAL CREDITO)|SALDO (TOTAL DÉBITO - TOTAL CREDITO)|D/C (SALDO MAIOR QUE 0 D, SENÃO C)\nQuando a razão auxiliar for utilizada, este campo é preenchido com os lançamentos vinculados às subcontas (E640DRS - Esta tabela está vinculada com a E640RAS, que controla os períodos e as filiais)."
+      }
+    }
+  ]
+}

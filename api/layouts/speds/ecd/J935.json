@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "J935",
+    "titulo": "REGISTRO \n J935: Identificação dos Auditores Independentes",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "J935",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#J935"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:29:19.607885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo J935.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J935"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "NI_CPF_CNPJ",
+      "descricao": "CPF do auditor independente/CNPJ da pessoa jurídica de auditoria independente.",
+      "tipo": "C",
+      "tamanho": "CPF (11)\nCNPJ (14)",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NOME_AUDITOR_FIRMA",
+      "descricao": "Nome do auditor independente ou pessoa jurídica de auditoria independente.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "COD_CVM_AUDITOR",
+      "descricao": "Registro do auditor independente na CVM.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

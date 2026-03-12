@@ -1,0 +1,86 @@
+{
+  "registro": {
+    "codigo": "M510",
+    "titulo": "Registro M510 da EFD-Contribuições (Ajustes do Crédito de Cofins Apurado)",
+    "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=510"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:03:22.958205+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"M510\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_AJ",
+      "descricao": "Indicador do tipo de ajuste:\n0- Ajuste de redução;\n1- Ajuste de acréscimo.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_AJ",
+      "descricao": "Valor do ajuste.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_AJ",
+      "descricao": "Código do ajuste, conforme a Tabela indicada no item 4.3.8.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "NUM_DOC",
+      "descricao": "Número do processo, documento ou ato concessório ao qual o ajuste está vinculado, se houver.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "DESCR_AJ",
+      "descricao": "Descrição resumida do ajuste.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "DT_REF",
+      "descricao": "Data de referência do ajuste (ddmmaaaa).",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

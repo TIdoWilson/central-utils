@@ -1,0 +1,206 @@
+{
+  "meta": {
+    "sped": "ICMS_IPI",
+    "version": "1.0.0",
+    "generated_at": "2026-03-12T00:00:00Z",
+    "purpose": "Mapa base de hierarquia e chaves para operacoes de alteracao/exclusao com seguranca de cascata."
+  },
+  "block_wrappers": [
+    { "block": "0", "open": "0001", "close": "0990" },
+    { "block": "B", "open": "B001", "close": "B990" },
+    { "block": "C", "open": "C001", "close": "C990" },
+    { "block": "D", "open": "D001", "close": "D990" },
+    { "block": "E", "open": "E001", "close": "E990" },
+    { "block": "G", "open": "G001", "close": "G990" },
+    { "block": "H", "open": "H001", "close": "H990" },
+    { "block": "K", "open": "K001", "close": "K990" },
+    { "block": "9", "open": "9001", "close": "9999" }
+  ],
+  "parent_child_edges": [
+    {
+      "parent": "0200",
+      "children": ["0205", "0206", "0210", "0220", "0221"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "0300",
+      "children": ["0305"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "C100",
+      "children": ["C101", "C105", "C110", "C111", "C112", "C113", "C114", "C115", "C116", "C120", "C130", "C140", "C141", "C160", "C165", "C170", "C190", "C191", "C195", "C197"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "C170",
+      "children": ["C171", "C172", "C173", "C174", "C175", "C176", "C177", "C178", "C179"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "D100",
+      "children": ["D101", "D110", "D120", "D130", "D140", "D150", "D160", "D161", "D162", "D170", "D180", "D190", "D195", "D197"],
+      "child_scope": "inside_parent_document",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "E100",
+      "children": ["E110", "E111", "E112", "E113", "E115", "E116"],
+      "child_scope": "inside_period",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "E200",
+      "children": ["E210", "E220", "E230", "E240", "E250"],
+      "child_scope": "inside_period",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "H001",
+      "children": ["H005", "H010", "H020", "H030", "H990"],
+      "child_scope": "inside_block",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "H005",
+      "children": ["H010"],
+      "child_scope": "inside_inventory_snapshot",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "H010",
+      "children": ["H020", "H030"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "high"
+    },
+    {
+      "parent": "K200",
+      "children": ["K210", "K215"],
+      "child_scope": "inside_period",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "K230",
+      "children": ["K235"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "K250",
+      "children": ["K255"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "K260",
+      "children": ["K265"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "K270",
+      "children": ["K275"],
+      "child_scope": "contiguous_after_parent",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "K280",
+      "children": ["K290", "K291", "K292"],
+      "child_scope": "inside_adjustment",
+      "ordered": true,
+      "confidence": "medium"
+    },
+    {
+      "parent": "9001",
+      "children": ["9900", "9990", "9999"],
+      "child_scope": "inside_block_9",
+      "ordered": true,
+      "confidence": "high"
+    }
+  ],
+  "cross_record_links": [
+    {
+      "from": { "record": "0200", "field": "UNID_INV" },
+      "to": { "record": "0190", "field": "UNID" },
+      "type": "lookup_ref",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "0220", "field": "UNID_CONV" },
+      "to": { "record": "0190", "field": "UNID" },
+      "type": "lookup_ref",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "H010", "field": "COD_ITEM" },
+      "to": { "record": "0200", "field": "COD_ITEM" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "H010", "field": "UNID" },
+      "to": { "record": "0190", "field": "UNID" },
+      "type": "lookup_ref",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "H010", "field": "COD_CTA" },
+      "to": { "record": "0500", "field": "COD_CTA" },
+      "type": "account_ref",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "C170", "field": "COD_ITEM" },
+      "to": { "record": "0200", "field": "COD_ITEM" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "K200", "field": "COD_ITEM" },
+      "to": { "record": "0200", "field": "COD_ITEM" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "C100", "field": "COD_PART" },
+      "to": { "record": "0150", "field": "COD_PART" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    },
+    {
+      "from": { "record": "D100", "field": "COD_PART" },
+      "to": { "record": "0150", "field": "COD_PART" },
+      "type": "foreign_key",
+      "cardinality": "many_to_one",
+      "confidence": "high"
+    }
+  ],
+  "totalizer_records": ["0990", "H990", "9900", "9990", "9999"]
+}

@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "H005",
+    "id_guia": "161",
+    "titulo": "Registro H005 da EFD-ICMS/IPI (Totais do inventário)",
+    "bloco": "3.7) Bloco H (Inventário físico):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=161"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:51.060586+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"H005\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INV",
+      "descricao": "Data do inventário.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_INV",
+      "descricao": "Valor total do estoque.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "MOT_INV",
+      "descricao": "Informe o motivo do Inventário:\n01 - No final no período;\n02 - Na mudança de forma de tributação da mercadoria (ICMS);\n03 - Na solicitação da baixa cadastral, paralisação temporária e outras situações;\n04 - Na alteração de regime de pagamento - condição do contribuinte;\n05 - Por determinação dos fiscos;\n06 - Para controle das mercadorias sujeitas ao regime de substituição tributária - restituição/ ressarcimento/ complementação.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

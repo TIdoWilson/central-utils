@@ -1,0 +1,114 @@
+{
+  "registro": {
+    "codigo": "1110",
+    "id_guia": "169",
+    "titulo": "Registro 1110 da EFD-ICMS/IPI (Operações de Exportação Indireta - Mercadorias de Terceiros)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=169"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:07:51.343045+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1110\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PART",
+      "descricao": "Código do participante - Fornecedor da Mercadoria destinada à exportação (Campo 02 do Registro 0150).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_MOD",
+      "descricao": "Código do documento fiscal, conforme a Tabela 4.1.1 .",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal recebido com fins específicos de exportação.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "NUM_DOC",
+      "descricao": "Número do documento fiscal recebido com fins específicos de exportação.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão do documento fiscal recebido com fins específicos de exportação.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "CHV_NFE",
+      "descricao": "Chave da Nota Fiscal Eletrônica (NF-e).",
+      "tipo": "N",
+      "tamanho": "044",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "NR_MEMO",
+      "descricao": "Número do Memorando de Exportação.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "QTD",
+      "descricao": "Quantidade do item efetivamente exportado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "UNID",
+      "descricao": "Unidade do item (Campo 02 do Registro 0190).",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

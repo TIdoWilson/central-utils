@@ -1,0 +1,61 @@
+{
+  "registro": {
+    "codigo": "9900",
+    "titulo": "REGISTRO 9900: Registros do Arquivo",
+    "bloco_origem": "bloco-9.htm",
+    "ancora": "9900",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-9.htm#9900"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:29:19.617885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"9900\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "\"9900\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "REG_BLC",
+      "descricao": "Registro que será totalizado no próximo campo.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Identificação do registro a ser totalizado"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "QTD_REG_BLC",
+      "descricao": "Total de registros do tipo informado no campo anterior.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Somatório dos registros do campo anterior"
+      }
+    }
+  ]
+}

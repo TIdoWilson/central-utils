@@ -1,0 +1,48 @@
+{
+  "registro": {
+    "codigo": "9990",
+    "titulo": "REGISTRO 9990: ENCERRAMENTO DO BLOCO 9",
+    "bloco_origem": "bloco-9.htm",
+    "ancora": "9990",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-9.htm#9990"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.958819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (9990).",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[9990]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN",
+      "descricao": "Quantidade total de registros do Bloco 9",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "registro": {
+    "codigo": "0120",
+    "titulo": "Registro 0120 da EFD-Contribuições (Identificação de EFD-Contribuições Sem Dados a Escriturar)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=357"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:03:21.607232+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0120”",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "MES_REFER",
+      "descricao": "Mês de referência do ano-calendário da escrituração sem dados, dispensada da entrega. Campo a ser preenchido no formato “mmaaaa”.",
+      "tipo": "C",
+      "tamanho": "006*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "INF_COMP",
+      "descricao": "Informação complementar do registro. No caso de escrituração sem dados, deve ser informado o real motivo dessa situação, conforme indicadores abaixo:\n 01 - Pessoa jurídica imune ou isenta do IRPJ\n 02 - Órgãos públicos, autarquias e fundações públicas\n 03 - Pessoa jurídica inativa \n 04 - Pessoa jurídica em geral, que não realizou operações geradoras de receitas (tributáveis ou não) ou de créditos\n 05 - Sociedade em Conta de Participação - SCP, que não realizou operações geradoras de receitas (tributáveis ou não) ou de créditos\n 06 - Sociedade Cooperativa, que não realizou operações geradoras de receitas (tributáveis ou não) ou de créditos\n 07 - Escrituração decorrente de incorporação, fusão ou cisão, sem operações geradoras de receitas (tributáveis ou não) ou de créditos\n 99 - Demais hipóteses de dispensa de escrituração, relacionadas no art. 5º, da IN RFB nº 1.252, de 2012",
+      "tipo": "C",
+      "tamanho": "090",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

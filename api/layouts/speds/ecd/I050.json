@@ -1,0 +1,121 @@
+{
+  "registro": {
+    "codigo": "I050",
+    "titulo": "REGISTRO I050: Plano de Contas",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I050",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I050"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:29:19.581885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I050.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I050"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_ALT",
+      "descricao": "Data da inclusão/alteração.",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo recebe a data de ligação ( E045PCA.DATLIG ). Caso a data for igual a zero, o campo recebe a data do início das atividades da empresa ( E070FIL.CTBDIA ). Caso a conta possua data de alteração e essa for menor que a data de geração do arquivo, o campo recebe a data de alteração ( E045PCA.DATALT )."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_NAT",
+      "descricao": "Código da natureza da conta/grupo de contas, conforme tabela interna ao SPED.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se o Tipo de escrituração contábil for igual a A ou Z, busca o campo Definição do grupo da conta contábil (E045PLA.DEFGRU) da tabela Plano de Contas por meio da conta contábil vinculada à conta auxiliar. Caso haja mais de uma conta contábil vinculada a uma conta auxiliar, será verificado se todas elas possuem a mesma definição do grupo. Caso não, o campo receberá o valor de E045PCA.DEFGRU da tabela Plano de Composição Auxiliar. Conforme definido no campo DefGru , o campo COD_NAT será gerado com o código da tabela interna:\nDefGru = A = 01\nDefGru = P = 02\nDefGru = L = 03\nDefGru = X, D ou R = 04\nDefGru = T = 05 \nDefGru = M, N, V, C, S e E = 09. Obs.: com o parâmetro dinâmico EMPRESA.ECD.REGISTROI050.NATUREZACONTADECUSTOCOMODESPESA igual a S-Sim , os códigos M, N, V, C, S e E geram o valor 4."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_CTA",
+      "descricao": "Indicador do tipo de conta:\n S - Sintética (grupo de contas);\n A - Analítica (conta).",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Tipo de escrituração contábil for igual a A, Z E045PCA.ANASIN, senão E045PLA.ANASIN"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "NIVEL",
+      "descricao": "Nível da conta analítica/grupo de contas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Tipo de escrituração contábil for igual a A, Z E045PCA.NIVAUX, senão E045PLA.NIVCTA"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica/grupo de contas.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se na tela de entrada o campo Tipo de escrituração contábil for igual a A ou Z, somente as duas opções abaixo estarão disponíveis para o campo Tipo de \n conta : \n Conta Reduzida - Gera o código da conta contábil conforme campo E045PCA.CTAAUX \n Conta Expandida - Gera a classificação contábil da conta conforme campo E045PCA.CLAAUX. \nSe na tela de entrada o campo Tipo de escrituração contábil for igual a G, R ou B, todas as opções abaixo estarão disponíveis para o campo Tipo de \n conta : \n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta conforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta conforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "COD_CTA_SUP",
+      "descricao": "Código da conta sintética /grupo de contas de nível imediatamente superior.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Se na tela de entrada o campo Tipo de escrituração contábil for igual a A ou Z, somente as duas opções abaixo estarão disponíveis para o campo Tipo de \n conta : \n Conta Reduzida - Gera o código da conta contábil conforme campo E045PCA.CTAAUX \n Conta Expandida - Gera a classificação contábil da conta conforme campo E045PCA.CLAAUX. \nSe na tela de entrada o campo Tipo de escrituração contábil for igual a G, R ou B, todas as opções abaixo estarão disponíveis para o campo Tipo de \n conta : \n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta conforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta conforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "CTA",
+      "descricao": "Nome da conta analítica/grupo de contas.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Tipo de escrituração contábil for igual a A,Z E045PCA.DESCTA senão E045PLA.DESCTA"
+      }
+    }
+  ]
+}

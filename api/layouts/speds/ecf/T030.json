@@ -1,0 +1,77 @@
+{
+  "registro": {
+    "codigo": "T030",
+    "titulo": "REGISTRO T030: IDENTIFICAÇÃO DOS PERÍODOS E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL DAS EMPRESAS TRIBUTADAS PELO LUCRO ARBITRADO",
+    "bloco_origem": "bloco-t.htm",
+    "ancora": "t030",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-t.htm#t030"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.876836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “T030”",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI",
+      "descricao": "Data de início do período",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data do Saldo Inicial",
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN",
+      "descricao": "Data de fim do período",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Data do Saldo Final",
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "PER_APUR",
+      "descricao": "T01 – 1º Trimestre; T02 – 2º Trimestre; T03 – 3º Trimestre; T04 – 4º Trimestre\nRegra: o período deve estar compreendido entre a data início e data fim da escrituração.\nSE 0010.FORMA_APUR = “T”\n- Deve existir um registro [T01..T04] para cada trimestre marcado no\n0010.FORMA_TRIB_PER[1..4] como “A”",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Período de Apuração",
+        "DOCUMENTAÇÃO": ""
+      }
+    }
+  ]
+}

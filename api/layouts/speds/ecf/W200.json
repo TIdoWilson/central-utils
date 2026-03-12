@@ -1,0 +1,276 @@
+{
+  "registro": {
+    "codigo": "W200",
+    "titulo": "REGISTRO W200: DECLARAÇÃO PAÍS-A-PAÍS",
+    "bloco_origem": "bloco-w.htm",
+    "ancora": "w200",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-w.htm#w200"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 21,
+    "extraido_em_utc": "2026-03-10T19:31:56.894837+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto Fixo Contendo a Identificação do Registro",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "FIXO \"W200\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "JURISDICAO",
+      "descricao": "Jurisdição d e Residência para fins Tributários, conforme tabela d o Sped",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VL_REC_NAO_REL_EST",
+      "descricao": "Receitas Provenientes d e Partes Não Relacionadas e mMoeda Estrangeira (",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_REC_NAO_REL",
+      "descricao": "Receitas Provenientes d e Partes Não Relacionadas",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_REC_REL_EST",
+      "descricao": "Receitas Provenientes d e Partes Relacionadas e m Moeda Estrangeira",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_REC_REL",
+      "descricao": "Receitas Provenientes de Partes Relacionadas",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_REC_TOTAL_EST",
+      "descricao": "Receita Total em Moeda Estrangeira",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_REC_TOTAL",
+      "descricao": "Receita Total: Soma das receitas provenientes d e partes não relacionadas e das receitas\nprovenientes d e partes relacionadas, caso tenham sido informadas e m reais.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "VL_LUC_PREJ_ANTES\n_IR_EST",
+      "descricao": "Lucro o u Prejuízo Antes d o IR e m Moeda Estrangeira (",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "VL_LUC_PREJ_ANTES\n_IR",
+      "descricao": "Lucro o u Prejuízo Antes d o IR",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "VL_IR_PAGO_EST",
+      "descricao": "Imposto d e Renda Pago, e m moeda estrangeira",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "VL_IR_PAGO",
+      "descricao": "Imposto d e Renda Pago",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "VL_IR_DEVIDO_EST",
+      "descricao": "Imposto d e Renda Devido, e m moeda estrangeira",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "VL_IR_DEVIDO",
+      "descricao": "Imposto d e Renda Devido",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "VL_CAP_SOC_EST",
+      "descricao": "Capital Social e m Moeda Estrangeira",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "VL_CAP_SOC",
+      "descricao": "Capital Social",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "17",
+      "campo": "VL_LUC_ACUM_EST",
+      "descricao": "Lucros Acumulados e m Moeda Estrangeira",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "18",
+      "campo": "VL_LUC_ACUM",
+      "descricao": "Lucros Acumulados",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "19",
+      "campo": "VL_ATIV_TANG_EST",
+      "descricao": "Ativos Tangíveis (exceto caixa e equivalentes d e caixa) e m Moeda Estrangeira",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "20",
+      "campo": "VL_ATIV_TANG",
+      "descricao": "Ativos Tangíveis (exceto caixa e equivalentes d e caixa)",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "21",
+      "campo": "NUM_EMP",
+      "descricao": "Número d e Empregados",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

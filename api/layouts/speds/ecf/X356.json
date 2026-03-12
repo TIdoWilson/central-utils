@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "X356",
+    "titulo": "REGISTRO X356: DEMONSTRATIVO DE ESTRUTURA SOCIETÁRIA",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x356",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x356"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.911341+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X356\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X356\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "PERC_PART",
+      "descricao": "Percentual de Participação",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Percentual de Participação da Investidora Direta(%)",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "ATIVO_TOTAL",
+      "descricao": "Ativo total de cada controlada, direta ou indireta, equiparada ou coligada em regime de competência.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Ativo Total",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "PAT_LIQUIDO",
+      "descricao": "Patrimônio líquido de cada controlada, direta ou indireta, equiparada ou coligada em regime de competência.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Patrimônio Líquido",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

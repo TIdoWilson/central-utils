@@ -1,0 +1,95 @@
+{
+  "registro": {
+    "codigo": "F700",
+    "titulo": "Registro F700 da EFD-Contribuições (Deduções Diversas)",
+    "bloco": "3.5) Bloco F (Demais documentos e operações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=479"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:03:22.643144+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"F700\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_ORI_DED",
+      "descricao": "Indicador de Origem de Deduções Diversas:\n01 – Créditos Presumidos - Medicamentos;\n02 – Créditos Admitidos no Regime Cumulativo – Bebidas Frias;\n03 – Contribuição Paga pelo Substituto Tributário - ZFM;\n04 – Substituição Tributária – Não Ocorrência do Fato Gerador Presumido;\n99 - Outras Deduções.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_NAT_DED",
+      "descricao": "Indicador da Natureza da Dedução:\n0 – Dedução de Natureza Não Cumulativa;\n1 – Dedução de Natureza Cumulativa.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_DED_PIS",
+      "descricao": "Valor a Deduzir - PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_DED_COFINS",
+      "descricao": "Valor a Deduzir – Cofins",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_OPER",
+      "descricao": "Valor da Base de Cálculo da Operação que ensejou o Valor a Deduzir informado nos Campos 04 e 05",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "CNPJ",
+      "descricao": "CNPJ da Pessoa Jurídica relacionada à Operação que ensejou o Valor a Deduzir informado nos Campos 04 e 05.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "INF_COMP",
+      "descricao": "Informações Complementares do Documento/Operação que ensejou o Valor a Deduzir informado nos Campos 04 e 05.",
+      "tipo": "C",
+      "tamanho": "090",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "registro": {
+    "codigo": "D530",
+    "id_guia": "125",
+    "titulo": "Registro D530 da EFD-ICMS/IPI (Terminal faturado)",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=125"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saídas"
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:07:50.586471+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D530\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "IND_SERV",
+      "descricao": "Indicador do tipo de serviço prestado:\n 0: Telefonia;\n 1: Comunicação de dados;\n 2: TV por assinatura;\n 3: Provimento de acesso à Internet;\n 4: Multimídia;\n 9: Outros.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_INI_SERV",
+      "descricao": "Data em que se iniciou a prestação do serviço.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "DT_FIM_SERV",
+      "descricao": "Data em que se encerrou a prestação do serviço.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "PER_FISCAL",
+      "descricao": "Período fiscal da prestação do serviço (\"MMAAAA\").",
+      "tipo": "N",
+      "tamanho": "006*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_AREA",
+      "descricao": "Código de área do terminal faturado.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "TERMINAL",
+      "descricao": "Identificação do terminal faturado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

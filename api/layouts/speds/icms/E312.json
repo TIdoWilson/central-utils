@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "E312",
+    "id_guia": "238",
+    "titulo": "Registro E312 da EFD-ICMS/IPI (Informações adicionais aos ajustes da apuração do ICMS Diferencial de Alíquota UF origem/destino EC 8715)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=238"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:07:50.816053+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E312\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_DA",
+      "descricao": "Número do documento de arrecadação estadual, se houver.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "NUM_PROC",
+      "descricao": "Número do processo ao qual o ajuste está vinculado, se houver.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "IND_PROC",
+      "descricao": "Indicador da origem do processo:\n 0: Sefaz;\n 1: Justiça Federal;\n 2: Justiça Estadual;\n 9: Outros.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "05",
+        "PROC",
+        "Descrição resumida do processo que embasou o lançamento.",
+        "C",
+        "-",
+        "-",
+        "OC"
+      ]
+    },
+    {
+      "numero": "06",
+      "campo": "TXT_COMPL",
+      "descricao": "Descrição complementar.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

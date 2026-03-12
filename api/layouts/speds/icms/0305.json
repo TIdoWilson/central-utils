@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "0305",
+    "id_guia": "14",
+    "titulo": "Registro 0305 da EFD-ICMS/IPI (Informação sobre a utilização do bem)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=14"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:48.711414+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0305\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CCUS",
+      "descricao": "Código do centro de custo onde o bem está sendo ou será utilizado (campo 03 do Registro 0600).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "FUNC",
+      "descricao": "Descrição sucinta da função do bem na atividade do estabelecimento.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VIDA_UTIL",
+      "descricao": "Vida útil estimada do bem, em número de meses.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "registro": {
+    "codigo": "0000",
+    "id_guia": "1",
+    "titulo": "Registro 0000 da EFD-ICMS/IPI (Abertura do arquivo digital e identificação da entidade)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=1"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 15,
+    "extraido_em_utc": "2026-03-10T19:07:48.675414+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0000\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_VER",
+      "descricao": "Código da versão do leiaute conforme a Tabela indicada no Ato Cotepe.",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_FIN",
+      "descricao": "Código da finalidade do arquivo:\n 0: Remessa do arquivo original; ou\n 1: Remessa do arquivo substituto.",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "DT_INI",
+      "descricao": "Data inicial das informações contidas no arquivo.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "DT_FIN",
+      "descricao": "Data final das informações contidas no arquivo.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "NOME",
+      "descricao": "Nome empresarial da entidade.",
+      "tipo": "C",
+      "tamanho": "100",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição da entidade no CNPJ.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "CPF",
+      "descricao": "Número de inscrição da entidade no CPF.",
+      "tipo": "N",
+      "tamanho": "011*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "UF",
+      "descricao": "Sigla da UF da entidade.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "IE",
+      "descricao": "IE da entidade.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "COD_MUN",
+      "descricao": "Código do Município do domicílio fiscal da entidade, conforme a Tabela IBGE .",
+      "tipo": "N",
+      "tamanho": "007*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "IM",
+      "descricao": "Inscrição Municipal da entidade.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "13",
+      "campo": "SUFRAMA",
+      "descricao": "Inscrição da entidade na Suframa.",
+      "tipo": "C",
+      "tamanho": "009*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "14",
+      "campo": "IND_PERFIL",
+      "descricao": "Perfil de apresentação do arquivo fiscal:\n A: Perfil A;\n B: Perfil B; ou C: Perfil C.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "15",
+      "campo": "IND_ATIV",
+      "descricao": "Indicador de tipo de atividade:\n 0: Industrial ou equiparado a industrial; ou\n 1: Outros.",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

@@ -1,0 +1,271 @@
+{
+  "registro": {
+    "codigo": "C176",
+    "id_guia": "52",
+    "titulo": "Registro C176 da EFD-ICMS/IPI (Ressarcimento de ICMS e Fundo de Combate à Pobreza (FCP) em operações com Substituição Tributária (Códigos 01 e 55))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=52"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 27,
+    "extraido_em_utc": "2026-03-10T19:07:49.565708+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C176\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsen\ntar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MOD_ ULT_E",
+      "descricao": "Código do modelo do documento fiscal relativa a última entrada.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "NUM_DOC_ ULT_E",
+      "descricao": "Número do documento fiscal relativa a última entrada.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "SER_ULT_E",
+      "descricao": "Série do documento fiscal relativa a última entrada.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "DT_ULT_E",
+      "descricao": "Data relativa a última entrada da mercadoria.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_PART_ ULT_E",
+      "descricao": "Código do participante (do emitente do documento relativa a última entrada).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "QUANT_ULT_E",
+      "descricao": "Quantidade do item relativa a última entrada.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_UNIT_ ULT_E",
+      "descricao": "Valor unitário da mercadoria constante na NF relativa a última entrada inclusive despesas acessórias.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_UNIT_ BC_ST",
+      "descricao": "Valor unitário da base de cálculo do imposto pago por substituição.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "CHAVE_NFE _ULT_E",
+      "descricao": "Número completo da chave da NFe relativo à última entrada.",
+      "tipo": "N",
+      "tamanho": "044*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "11",
+      "campo": "NUM_ITEM _ULT_E",
+      "descricao": "Número sequencial do item na NF entrada que corresponde à mercadoria objeto de pedido de ressarcimento.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_UNIT_BC _ICMS_ULT_E",
+      "descricao": "Valor unitário da base de cálculo da operação própria do remetente sob o regime comum de tributação.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "ALIQ_ICMS _ULT_E",
+      "descricao": "Alíquota do ICMS aplicável à última entrada da mercadoria.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_UNIT_ LIMITE_BC _ICMS_ULT_E",
+      "descricao": "Valor unitário da base de cálculo do ICMS relativo à última entrada da mercadoria, limitado ao valor da BC da retenção (corresponde ao menor valor entre os campos VL_UNIT_BC_ST e VL_UNIT_BC_ICMS_ULT_E ).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_UNIT_ICMS _ULT_E",
+      "descricao": "Valor unitário do crédito de ICMS sobre operações próprias do remetente, relativo à última entrada da mercadoria, decorrente da quebra da ST – equivalente a multiplicação entre os campos 13 e 14.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "16",
+      "campo": "ALIQ_ST_ ULT_E",
+      "descricao": "Alíquota do ICMS ST relativa à última entrada da mercadoria.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "17",
+      "campo": "VL_UNIT_RES",
+      "descricao": "Valor unitário do ressarcimento (parcial ou completo) de ICMS decorrente da quebra da ST.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "18",
+      "campo": "COD_RESP _RET",
+      "descricao": "Código que indica o responsável pela retenção do ICMS ST:\n1 - Remetente Direto Regime Comum;\n2 - Remetente Indireto;\n3 - Próprio declarante\n4 - Remetente Direto Simples Nacional.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "19",
+      "campo": "COD_MOT _RES",
+      "descricao": "Código do motivo do ressarcimento:\n1 - Saída para outra UF;\n2 - Saída amparada por isenção ou não incidência;\n3 - Perda ou deterioração;\n4 - Furto ou roubo;\n5 - Exportação;\n6 - Venda interna para Simples Nacional;\n9 - Outros.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "20",
+      "campo": "CHAVE_NFE _RET",
+      "descricao": "Número completo da chave da NF-e emitida pelo substituto, na qual consta o valor do ICMS ST retido.",
+      "tipo": "N",
+      "tamanho": "044*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "21",
+      "campo": "COD_PART _NFE_ RET",
+      "descricao": "Código do participante do emitente da NF-e em que houve a retenção do ICMS ST – campo 02 do registro 0150.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "22",
+      "campo": "SER_NFE _RET",
+      "descricao": "Série da NF-e em que houve a retenção do ICMS ST.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "23",
+      "campo": "NUM_NFE _RET",
+      "descricao": "Número da NF-e em que houve a retenção do ICMS ST.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "24",
+      "campo": "ITEM_NFE _RET",
+      "descricao": "Número sequencial do item na NF-e em que houve a retenção do ICMS-ST, que corresponde à mercadoria objeto de pedido de ressarcimento.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "25",
+      "campo": "COD_DA",
+      "descricao": "Código do modelo do documento de arrecadação:\n0 - documento estadual de arrecadação\n1 - GNRE.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "26",
+      "campo": "NUM_DA",
+      "descricao": "Número do documento de arrecadação estadual, se houver.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "27",
+      "campo": "VL_UNIT_RES_FCP_ST",
+      "descricao": "Valor unitário do ressarcimento (parcial ou completo) de FCP decorrente da quebra da ST.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "OC"
+    }
+  ]
+}

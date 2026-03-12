@@ -1,0 +1,155 @@
+{
+  "registro": {
+    "codigo": "X340",
+    "titulo": "REGISTRO X340: IDENTIFICAÇÃO DA PARTICIPAÇÃO NO EXTERIOR",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x340",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x340"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:31:56.902341+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X340\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X340\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "RAZ_SOCIAL",
+      "descricao": "Razão Social de cada controlada, direta ou indireta, equiparada ou coligada em regime de competência.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Razão Social",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NIF",
+      "descricao": "Número de identificação fiscal de cada investida (“CNPJ” da investida no exterior).",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "NIF",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_CONTROLE",
+      "descricao": "Indicador de controle:\n1 – Controlada Direta\n2 – Controlada Indireta\n3 – Equiparada a Controlada\n4 – Coligada em Regime de Competência\n5 – Filial ou Sucursal\n6 – Coligada em Regime de Caixa\n7 – Joint Venture\n8 – Partnership\n9 – Trust\n10 – Coligada em Regime de Competência por Opção\n11 - Coligada em regime misto",
+      "tipo": "N",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Controle",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "PAIS",
+      "descricao": "País de cada controlada, direta ou indireta, equiparada ou coligada em regime de competência.\nCódigo do país, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "País",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "IND_REPETRO",
+      "descricao": "Informar parcela de lucro decorrente de afretamento por tempo ou casco nu, arrendamento mercantil operacional, aluguel, empréstimo de bens ou prestação de serviços diretamente relacionados à prospecção e exploração de petróleo e gás, em território brasileiro, que goze de isenção nos termos do art. 77, §3º, da Lei nº 12.973 de 13 de maio de 2014:\nS = Sim\nN = Não",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Repetro",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "IND_CONSOL",
+      "descricao": "Informar se a investida terá os resultados positivos e negativos consolidados:\nS = Sim\nN = Não",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Consolidação",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "MOT_NAO_CONSOL",
+      "descricao": "Motivo da não consolidação conforme tabela abaixo:\n1 – Opção;\n2 – Domiciliada em país com o qual o Brasil não mantenha tratado ou ato com cláusula específica para troca de informações para fins tributários;\n3 – Domiciliada em país ou dependência com tributação favorecida, ou é beneficiária de regime fiscal privilegiado, de que tratam os arts. 24 e 24-A da Lei nº 9.430, de 27 de dezembro de 1996, listados na Instrução Normativa RFB nº 1.037, de;\n4 – Submetida a regime de tributação definido no inciso III do caput do art. 22;\n5 – Controlada, direta ou indiretamente, por pessoa jurídica submetida a tratamento tributário previsto nos incisos II e III do art. 13;\n6 – Teve renda ativa própria inferior a 80% (oitenta por cento) da renda total no período, nos termos definidos no art. 22.",
+      "tipo": "N",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Motivo da Não Consolidação",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "CNPJ",
+      "descricao": "CNPJ da Investida no Brasil: Hipótese do art. 41, parágrafo único, da Instrução Normativa RFB nº\n1.520/2014",
+      "tipo": "N",
+      "tamanho": "014",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ da Investida no Brasil",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "TIP_MOEDA",
+      "descricao": "Moeda do País de Domicílio.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Moeda do País de Domicílio",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

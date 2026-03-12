@@ -1,0 +1,55 @@
+{
+  "registro": {
+    "codigo": "C177",
+    "id_guia": "53",
+    "titulo": "Registro C177 da EFD-ICMS/IPI (Operações com produtos sujeitos a selo de controle do IPI (Válido até 31/12/2018))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=53"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:07:49.211912+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C177\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_SELO_IPI",
+      "descricao": "Código do selo de controle do IPI, conforme Tabela 4.5.2.",
+      "tipo": "C",
+      "tamanho": "006*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QT_SELO_IPI",
+      "descricao": "Quantidade de selo de controle do IPI aplicada.",
+      "tipo": "N",
+      "tamanho": "012",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

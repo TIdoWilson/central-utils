@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "X400",
+    "titulo": "REGISTRO X400: COMÉRCIO ELETRÔNICO E TECNOLOGIA DA INFORMAÇÃO",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x400",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x400"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.914566+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X400\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X400\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CODIGO",
+      "descricao": "Código de acordo com tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "6",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código",
+        "DOCUMENTAÇÃO": "E669TDL.CODLIN"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESCRICAO",
+      "descricao": "Descrição de acordo com tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Descrição",
+        "DOCUMENTAÇÃO": "E669TDL.DESLIN"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VALOR",
+      "descricao": "Valor",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor",
+        "DOCUMENTAÇÃO": "E669TDL.VLRLIN"
+      }
+    }
+  ]
+}

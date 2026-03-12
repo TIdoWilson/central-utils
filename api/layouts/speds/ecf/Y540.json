@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "Y540",
+    "titulo": "REGISTRO Y540: DISCRIMINAÇÃO DA RECEITA DE VENDAS DOS ESTABELECIMENTOS POR ATIVIDADE ECONÔMICA",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y540",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y540"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.928566+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y540\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y540\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ_ESTAB",
+      "descricao": "CNPJ da matriz e de cada um dos estabelecimentos da pessoa jurídica (os 8 primeiros dígitos devem ser idênticos ao campo 0000.CNPJ).",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "VL_REC_ESTAB",
+      "descricao": "Valor total da receita decorrente das vendas de bens e serviços realizadas pelo estabelecimento, deduzidas das vendas canceladas, devoluções e descontos incondicionais concedidos na Nota Fiscal.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Receita de Vendas",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "CNAE",
+      "descricao": "Código da atividade econômica do estabelecimento, conforme Tabela de Atividade Econômica disponível em C:\\Arquivos de Programas\\Programas SPED\\ECF\\SpedEcf\\recursos\\tabelas. Se houver mais de uma atividade, indicar o código correspondente à receita de vendas preponderante do estabelecimento.",
+      "tipo": "N",
+      "tamanho": "7",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CNAE",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

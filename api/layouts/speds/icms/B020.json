@@ -1,0 +1,277 @@
+{
+  "registro": {
+    "codigo": "B020",
+    "id_guia": "319",
+    "titulo": "Registro B020 da EFD-ICMS/IPI (Nota Fiscal (Código 01), Nota Fiscal de serviços (Código 03), Nota Fiscal de serviços avulsa (Código 3B), Nota Fiscal de produtor (Código 04), Conhecimento de Transporte Rodoviário de Cargas (Código 08), NF-e (Código 55), NFC-e (Código 65) e NF3-e (Código 66))",
+    "bloco": "3.2) Bloco B (Escrituração e apuração do ISSQN):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=319"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 21,
+    "extraido_em_utc": "2026-03-10T19:07:48.870641+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"B020\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "IND_OPER",
+      "descricao": "Indicador do tipo de operação:\n 0: Aquisição;\n 1: Prestação.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "03",
+      "campo": "IND_EMIT",
+      "descricao": "Indicador do emitente do documento fiscal:\n 0: Emissão própria;\n 1: Terceiros.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "04",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n - do prestador, no caso de declarante na condição de tomador;\n - do tomador, no caso de declarante na condição de prestador.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "OC"
+      ]
+    },
+    {
+      "numero": "05",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.3.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "06",
+      "campo": "COD_SIT",
+      "descricao": "Código da situação do documento conforme tabela 4.1.2.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "07",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    },
+    {
+      "numero": "08",
+      "campo": "NUM_DOC",
+      "descricao": "Número do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "09",
+      "campo": "CHV_NFE",
+      "descricao": "Chave da Nota Fiscal Eletrônica.",
+      "tipo": "N",
+      "tamanho": "044*",
+      "decimais": "-",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    },
+    {
+      "numero": "10",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "11",
+      "campo": "COD_MUN_SERV",
+      "descricao": "Código do município onde o serviço foi prestado, conforme a tabela IBGE.",
+      "tipo": "C",
+      "tamanho": "007*",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "12",
+      "campo": "VL_CONT",
+      "descricao": "Valor contábil (valor total do documento).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "13",
+      "campo": "VL_MAT_TERC",
+      "descricao": "Valor do material fornecido por terceiros na prestação do serviço.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "14",
+      "campo": "VL_SUB",
+      "descricao": "Valor da subempreitada.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "15",
+      "campo": "VL_ISNT_ISS",
+      "descricao": "Valor das operações isentas ou não-tributadas pelo ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "16",
+      "campo": "VL_DED_BC",
+      "descricao": "Valor da dedução da base de cálculo.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "17",
+      "campo": "VL_BC_ISS",
+      "descricao": "Valor da base de cálculo do ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "18",
+      "campo": "VL_BC_ISS_RT",
+      "descricao": "Valor da base de cálculo de retenção do ISS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "19",
+      "campo": "VL_ISS_RT",
+      "descricao": "Valor do ISS retido pelo tomador.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "20",
+      "campo": "VL_ ISS",
+      "descricao": "Valor do ISS destacado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "21",
+      "campo": "COD_INF_OBS",
+      "descricao": "Código da observação do lançamento fiscal (campo 02 do Registro 0460).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC",
+      "colunas_extras": [
+        "OC"
+      ]
+    }
+  ]
+}

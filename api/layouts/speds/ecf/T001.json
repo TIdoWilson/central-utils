@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "T001",
+    "titulo": "REGISTRO T001 - ABERTURA DO BLOCO T",
+    "bloco_origem": "bloco-t.htm",
+    "ancora": "t001",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-t.htm#t001"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.875835+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “T001”.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_DAD",
+      "descricao": "Indicador de movimento:\n0- Bloco com dados informados;\n1- Bloco sem dados informados.",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Movimento",
+        "DOCUMENTAÇÃO": ""
+      }
+    }
+  ]
+}

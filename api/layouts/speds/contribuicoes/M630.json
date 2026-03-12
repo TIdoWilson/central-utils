@@ -1,0 +1,86 @@
+{
+  "registro": {
+    "codigo": "M630",
+    "titulo": "Registro M630 da EFD-Contribuições (Informações Adicionais de Diferimento)",
+    "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=519"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:03:23.034844+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"M630\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "CNPJ",
+      "descricao": "CNPJ da pessoa jurídica de direito público, empresa pública, sociedade de economia mista ou suas subsidiárias.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_VEND",
+      "descricao": "Valor Total das vendas no período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_NAO_RECEB",
+      "descricao": "Valor Total não recebido no período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_CONT_DIF",
+      "descricao": "Valor da Contribuição diferida no período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_CRED_DIF",
+      "descricao": "Valor do Crédito diferido no período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "COD_CRED",
+      "descricao": "Código de Tipo de Crédito diferido no período, conforme a Tabela 4.3.6.",
+      "tipo": "C",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

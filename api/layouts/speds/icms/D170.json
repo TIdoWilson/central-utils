@@ -1,0 +1,154 @@
+{
+  "registro": {
+    "codigo": "D170",
+    "id_guia": "105",
+    "titulo": "Registro D170 da EFD-ICMS/IPI (Complemento do Conhecimento Multimodal de Cargas (Código 26))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=105"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 14,
+    "extraido_em_utc": "2026-03-10T19:07:50.222474+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D170\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PART_CONSG",
+      "descricao": "Código do participante (Campo 02 do Registro 0150):\n - consignatário, se houver.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_PART_RED",
+      "descricao": "Código do participante (Campo 02 do Registro 0150):\n - redespachante, se houver.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_MUN_ORIG",
+      "descricao": "Código do Município de origem do serviço, conforme a Tabela IBGE (Preencher com \"9999999\", se Exterior).",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_MUN_DEST",
+      "descricao": "Código do Município de destino, conforme a Tabela IBGE (Preencher com \"9999999\", se Exterior).",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "OTM",
+      "descricao": "Registro do operador de transporte multimodal.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "IND_NAT_FRT",
+      "descricao": "Indicador da natureza do frete:\n 0: Negociável;\n 1: Não negociável.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_LIQ_FRT",
+      "descricao": "Valor líquido do frete.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_GRIS",
+      "descricao": "Valor do gris (gerenciamento de risco).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_PDG",
+      "descricao": "Somatório dos valores de pedágio.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_OUT",
+      "descricao": "Outros valores.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_FRT",
+      "descricao": "Valor total do frete.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "VEIC_ID",
+      "descricao": "Placa de identificação do veículo.",
+      "tipo": "C",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "14",
+      "campo": "UF_ID",
+      "descricao": "Sigla da UF da placa do veículo.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

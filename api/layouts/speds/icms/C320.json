@@ -1,0 +1,109 @@
+{
+  "registro": {
+    "codigo": "C320",
+    "id_guia": "61",
+    "titulo": "Registro C320 da EFD-ICMS/IPI (Registro analítico do resumo diário das Notas Fiscais de Venda a Consumidor (Código 02))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=61"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:07:49.485646+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C320\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "CST_ICMS",
+      "descricao": "Código da Situação Tributária do ICMS, conforme a Tabela indicada no item 4.3.1 .",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "CFOP",
+      "descricao": "Código Fiscal de Operação e Prestação.",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "ALIQ_ICMS",
+      "descricao": "Alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_OPR",
+      "descricao": "Valor total acumulado das operações correspondentes à combinação de CST_ICMS, CFOP e alíquota do ICMS, incluídas as despesas acessórias e acréscimos.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor acumulado da Base de Cálculo (BC) do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_ICMS",
+      "descricao": "Valor acumulado do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_RED_BC",
+      "descricao": "Valor não tributado em função da redução da Base de Cálculo (BC) do ICMS, referente à combinação de CST_ICMS, CFOP, e alíquota do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "COD_OBS",
+      "descricao": "Código da observação do lançamento fiscal (campo 02 do Registro 0460).",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

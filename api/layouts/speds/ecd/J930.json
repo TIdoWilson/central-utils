@@ -1,0 +1,169 @@
+{
+  "registro": {
+    "codigo": "J930",
+    "titulo": "REGISTRO \n J930: Signatários da Escrituração",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "J930",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#J930"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 12,
+    "extraido_em_utc": "2026-03-10T19:29:19.605885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo J930.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J930"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IDENT_NOM",
+      "descricao": "Nome do signatário.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "IDENT_CPF_CNPJ",
+      "descricao": "CPF ou CNPJ",
+      "tipo": "N",
+      "tamanho": "14",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IDENT_QUALIF",
+      "descricao": "Qualificação do assinante, conforme tabela do Departamento Nacional de Registro do Comércio - DNRC.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "COD_ASSIM",
+      "descricao": "Código de qualificação do assinante, conforme tabela do Departamento Nacional de Registro do Comércio - DNRC.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "IND_CRC",
+      "descricao": "Número de inscrição do contabilista no Conselho Regional de Contabilidade.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": "N"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "EMAIL",
+      "descricao": "E-mail do signatário",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": "N"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "FONE",
+      "descricao": "Telefone do signatário",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": "N"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "UF_CRC",
+      "descricao": "Indicação do CRC do expedidor",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": "N"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "NUM_SEQ_CRC",
+      "descricao": "Numeração sequencial no seguinte formato: UF/ano/número",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": "N"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "DT_CRC",
+      "descricao": "Data de validade da declaração de Habilitação Profissional do Contabilista",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": "N"
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "IND_RESP_LEGAL",
+      "descricao": "Identificação\ndo signatário\nque será\nvalidado como\nresponsável\nlegal da\nempresa junto\nas bases da\nRFB:\n S – Sim\n N – Não",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Definido na tela de entrada, coluna Responsável legal da guia Registro J930"
+      }
+    }
+  ]
+}

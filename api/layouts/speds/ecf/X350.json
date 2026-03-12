@@ -1,0 +1,273 @@
+{
+  "registro": {
+    "codigo": "X350",
+    "titulo": "REGISTRO X350: PARTICIPAÇÕES NO EXTERIOR – RESULTADO DO PERÍODO DE APURAÇÃO",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x350",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x350"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 19,
+    "extraido_em_utc": "2026-03-10T19:31:56.904340+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X350\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X350\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "REC_LIQ",
+      "descricao": "Receita líquida de todas as atividades exploradas pela filial, sucursal, controlada ou coligada residente ou domiciliada no exterior.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Receita Líquida",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "CUSTOS",
+      "descricao": "Total dos custos das atividades exploradas pela filial, sucursal, controlada ou coligada domiciliada no exterior.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Custos dos Bens e Serviços Vendidos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "LUC_BRUTO",
+      "descricao": "Lucro bruto deve ser igual a (X350.REC_LIQ – X350.CUSTOS)",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Lucro Bruto",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "REC_AUFERIDAS",
+      "descricao": "Valor total das receitas financeiras auferidas pela filial, sucursal, controlada ou coligada domiciliada no exterior nas operações efetuadas com a pessoa jurídica vinculada domiciliada no Brasil.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Receitas Financeiras Auferidas com a Vinculada no Brasil",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "REC_OUTRAS_OPER",
+      "descricao": "Valor total das outras receitas operacionais da filial, sucursal, controlada ou coligada domiciliada no exterior.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Outras Receitas Operacionais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "DESP_BRASIL",
+      "descricao": "Valor total das despesas financeiras pagas ou creditadas pela filial, sucursal, controlada ou coligada domiciliada no exterior nas operações efetuadas com a pessoa jurídica vinculada domiciliada no Brasil.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Despesas Financeiras Pagas ou Creditadas à Vinculada no Brasil",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "DESP_OPER",
+      "descricao": "Valor total das despesas operacionais da filial, sucursal, controlada ou coligada residente ou domiciliada no exterior.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Despesas Operacionais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "LUC_OPER",
+      "descricao": "Lucro operacional deve ser igual a (X350.LUC_BRUTO + X350.REC_AUFERIDAS + X350.REC_OUTRAS_OPER – X350.DESP_BRASIL – X350.DESP_OPER)",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Lucro Operacional",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "REC_PARTIC",
+      "descricao": "Valor total das receitas de participação em controladas, coligadas, filiais ou sucursais residentes ou domiciliadas no exterior.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Receita de Participação em Controladas, Coligadas, Filiais ou Sucursais",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "REC_OUTRAS",
+      "descricao": "Valor total das demais receitas, ou seja, daquelas que não estão ligadas a atividade principal ou acessória da filial, sucursal, controlada ou coligada domiciliada no exterior.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Outras Receitas",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "DESP_OUTRAS",
+      "descricao": "Valor total das demais despesas, ou seja, daquelas que não estão ligadas a atividade principal ou acessória da filial, sucursal, controlada ou coligada domiciliada no exterior.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Outras Despesas",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "LUC_LIQ_ANT_IR",
+      "descricao": "Lucro líquido antes do imposto de renda deve ser igual a (X350.LUC_OPER + X350.REC_PARTIC + X350.REC_OUTRAS – X350.DESP_OUTRAS)",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Lucro Líquido Antes do Imposto de Renda",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "LUC_ARB_ANT_IR",
+      "descricao": "",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Lucro Arbitrado Antes do Imposto de Renda",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "15",
+      "campo": "IMP_DEV",
+      "descricao": "Valor do tributo incidente sobre o lucro devido no país de domicílio da filial, sucursal, controlada ou coligada.\nO tributo pago no exterior, a ser compensado com o imposto devido no Brasil, deve ser convertido em Reais.",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Imposto Devido",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "16",
+      "campo": "LUC_LIQ",
+      "descricao": "Lucro líquido do período de apuração deve ser igual a (X350.LUC_LIQ_ANT_IR + X350.LUC_ARB_ANT_IR – X350.IMP_DEV)",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Lucro Líquido do Período de Apuração",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "17",
+      "campo": "LUC_ARB_ANT_IMP",
+      "descricao": "Informar, nesta linha, os lucros da filial, sucursal e controlada arbitrados, com observância das mesmas normas aplicáveis às pessoas jurídicas domiciliadas no Brasil, quando não for possível a determinação de seu resultado (Lei no 9430/1996, art. 16, II).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Lucro Arbitrado no Período de Apuração Antes do Imposto (Lei nº 9.430/1996, art. 16, II)",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "18",
+      "campo": "IMP_DEV_ARB",
+      "descricao": "Valor do tributo incidente sobre o lucro, devido no país de domicílio da filial, sucursal ou controlada, bem como o pago relativamente a rendimentos e ganhos de capital.\nO tributo pago no exterior, a ser compensado com o imposto devido no Brasil, deve ser convertido em Reais.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Imposto Devido",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "19",
+      "campo": "LUC_ARB_PER_APUR",
+      "descricao": "Lucro arbitrado no período de apuração após o imposto deve ser igual a (X350.LUC_ARB_ANT_IMP – X350.IMP_DEV_ARB)",
+      "tipo": "NS",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Lucro Arbitrado no Período de Apuração após o Imposto",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

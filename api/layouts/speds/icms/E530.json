@@ -1,0 +1,87 @@
+{
+  "registro": {
+    "codigo": "E530",
+    "id_guia": "151",
+    "titulo": "Registro E530 da EFD-ICMS/IPI (Ajustes da Apuração do IPI)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=151"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:07:50.873545+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E530\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_AJ",
+      "descricao": "Indicador do tipo de ajuste:\n 0: Ajuste a débito;\n 1: Ajuste a crédito.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_AJ",
+      "descricao": "Valor do ajuste.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_AJ",
+      "descricao": "Código do ajuste da apuração, conforme a Tabela indicada no item 4.5.4.",
+      "tipo": "C",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "IND_DOC",
+      "descricao": "Indicador da origem do documento vinculado ao ajuste:\n 0: Processo Judicial;\n 1: Processo Administrativo;\n 2: PER/DComp;\n 3: Documento Fiscal;\n 9: Outros.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "NUM_DOC",
+      "descricao": "Número do documento / processo / declaração ao qual o ajuste está vinculado, se houver.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "DESCR_AJ",
+      "descricao": "Descrição detalhada do ajuste, com citação dos documentos fiscais.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

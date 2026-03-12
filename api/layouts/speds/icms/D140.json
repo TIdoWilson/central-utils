@@ -1,0 +1,154 @@
+{
+  "registro": {
+    "codigo": "D140",
+    "id_guia": "100",
+    "titulo": "Registro D140 da EFD-ICMS/IPI (Complemento do Conhecimento Aquaviário de Cargas Avulso (Código 09))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=100"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 14,
+    "extraido_em_utc": "2026-03-10T19:07:50.122242+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D140\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "Não\nApre\nsentar",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PART_CONSG",
+      "descricao": "Código do participante (Campo 02 do Registro 0150):\n- consignatário, se houver.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_MUN_ORIG",
+      "descricao": "Código do município de origem do serviço, conforme a Tabela IBGE (Preencher com \"9999999\", se Exterior).",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_MUN_DEST",
+      "descricao": "Código do município de destino, conforme a Tabela IBGE (Preencher com \"9999999\", se Exterior).",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "IND_VEIC",
+      "descricao": "Indicador do tipo do veículo transportador:\n 0: Embarcação;\n 1: Empurrador/rebocador.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VEIC_ID",
+      "descricao": "Identificação da embarcação (IRIM ou Registro CPP).",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "IND_NAV",
+      "descricao": "Indicador do tipo da navegação:\n 0: Interior;\n 1: Cabotagem.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VIAGEM",
+      "descricao": "Número da viagem.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_FRT_LIQ",
+      "descricao": "Valor líquido do frete.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_DESP_PORT",
+      "descricao": "Valor das despesas portuárias.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_DESP_CAR_DESC",
+      "descricao": "Valor das despesas com carga e descarga.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_OUT",
+      "descricao": "Outros valores.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_FRT_BRT",
+      "descricao": "Valor bruto do frete.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_FRT_MM",
+      "descricao": "Valor do Adicional do Frete para Renovação da Marinha Mercante (AFRMM).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    }
+  ]
+}

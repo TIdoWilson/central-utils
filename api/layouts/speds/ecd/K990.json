@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "K990",
+    "titulo": "Registro K990: Encerramento do Bloco K",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "K990",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-k.htm#K990"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:29:19.616885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nK990",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"K990\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN_K",
+      "descricao": "Quantidade total\nde linhas do Bloco\nK",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Somatório das linhas do bloco K"
+      }
+    }
+  ]
+}

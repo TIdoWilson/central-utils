@@ -1,0 +1,230 @@
+{
+  "registro": {
+    "codigo": "D350",
+    "titulo": "Registro D350 da EFD-Contribuições (Resumo Diário de Cupom Fiscal Emitido Por ECF - (Código: 2E, 13, 14, 15 e 16))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=444"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 23,
+    "extraido_em_utc": "2026-03-10T19:03:22.355954+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D350\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "ECF_MOD",
+      "descricao": "Modelo do equipamento.",
+      "tipo": "C",
+      "tamanho": "020",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "ECF_FAB",
+      "descricao": "Número de série de fabricação do ECF.",
+      "tipo": "C",
+      "tamanho": "021",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "DT_DOC",
+      "descricao": "Data do movimento a que se refere a Redução Z.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "CRO",
+      "descricao": "Posição do Contador de Reinício de Operação.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "CRZ",
+      "descricao": "Posição do Contador de Redução Z.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "NUM_COO_FIN",
+      "descricao": "Número do Contador de Ordem de Operação do último documento emitido no dia. (Número do COO na Redução Z).",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "GT_FIN",
+      "descricao": "Valor do Grande Total final.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_BRT",
+      "descricao": "Valor da venda bruta.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária referente ao PIS/PASEP.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_BC_PIS",
+      "descricao": "Valor da base de cálculo do PIS/PASEP.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "13",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP (em percentual).",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "QUANT_BC_PIS",
+      "descricao": "Quantidade – Base de cálculo PIS/PASEP.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "ALIQ_PIS_QUANT",
+      "descricao": "Alíquota do PIS/PASEP (em reais).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS/PASEP.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "17",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente a COFINS.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "18",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da COFINS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "19",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da COFINS (em percentual).",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "20",
+      "campo": "QUANT_BC_COFINS",
+      "descricao": "Quantidade – Base de cálculo da COFINS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "21",
+      "campo": "ALIQ_COFINS_QUANT",
+      "descricao": "Alíquota da COFINS (em reais).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "22",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "23",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada.",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

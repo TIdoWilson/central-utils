@@ -1,0 +1,239 @@
+{
+  "registro": {
+    "codigo": "D100",
+    "titulo": "Registro D100 da EFD-Contribuições (Aquisição de Serviços de Transporte - Nota Fiscal de Serviço de Transporte (Código 07), Conhecimento de Transporte Rodoviário de Cargas (Código 08), Conhecimento de Transporte de Cargas Avulso (Código 8B), Conhecimento de Transporte Aquaviário de Cargas (Código 09), Conhecimento de Transporte Aéreo (Código 10), Conhecimento de Transporte Ferroviário de Cargas (Código 11), Conhecimento de Transporte Multimodal de Cargas (Código 26), Nota Fiscal de Transporte Ferroviário de Carga (Código 27), Conhecimento de Transporte Eletrônico – CT-E (Código 57), Bilhete de Passagem Eletrônico - BP-e (Código 63) e Conhecimento de Transporte Eletrônico para Outros Serviços – CT-e OS, modelo 67)",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=434"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 24,
+    "extraido_em_utc": "2026-03-10T19:03:22.296802+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D100\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_OPER",
+      "descricao": "Indicador do tipo de operação:\n0- Aquisição",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_EMIT",
+      "descricao": "Indicador do emitente do documento fiscal:\n0- Emissão Própria;\n1- Emissão por Terceiros.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_SIT",
+      "descricao": "Código da situação do documento fiscal, conforme a Tabela 4.1.2",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "SUB",
+      "descricao": "Subsérie do documento fiscal",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "NUM_DOC",
+      "descricao": "Número do documento fiscal",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "CHV_CTE",
+      "descricao": "Chave do Conhecimento de Transporte Eletrônico",
+      "tipo": "N",
+      "tamanho": "044*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "DT_DOC",
+      "descricao": "Data de referência/emissão dos documentos fiscais",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "DT_A_P",
+      "descricao": "Data da aquisição ou da prestação do serviço",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "13",
+      "campo": "TP_CT-e",
+      "descricao": "Tipo de Conhecimento de Transporte Eletrônico conforme definido no Manual de Integração do CT-e",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "CHV_CTE_REF",
+      "descricao": "Chave do CT-e de referência cujos valores foram complementados (opção “1” do campo anterior) ou cujo débito foi anulado (opção “2” do campo anterior).",
+      "tipo": "N",
+      "tamanho": "044*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_DOC",
+      "descricao": "Valor total do documento fiscal",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_DESC",
+      "descricao": "Valor total do desconto",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "17",
+      "campo": "IND_FRT",
+      "descricao": "Indicador do tipo do frete:\n0- Por conta de terceiros;\n1- Por conta do emitente;\n2- Por conta do destinatário;\n9- Sem cobrança de frete.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "Obs.: A partir de 01/07/2012 passará a ser:\nIndicador do tipo do frete:\n0- Por conta do emitente;\n1- Por conta do destinatário/remetente;\n2- Por conta de terceiros;\n9- Sem cobrança de frete.",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "18",
+      "campo": "VL_SERV",
+      "descricao": "Valor total da prestação de serviço",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "19",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor da base de cálculo do ICMS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "20",
+      "campo": "VL_ICMS",
+      "descricao": "Valor do ICMS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "21",
+      "campo": "VL_NT",
+      "descricao": "Valor não-tributado do ICMS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "22",
+      "campo": "COD_INF",
+      "descricao": "Código da informação complementar do documento fiscal (campo 02 do Registro 0450)",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "23",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

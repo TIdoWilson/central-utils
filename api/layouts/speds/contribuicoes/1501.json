@@ -1,0 +1,26 @@
+{
+  "registro": {
+    "codigo": "1501",
+    "titulo": "Registro 1501 da EFD-Contribuições (Apuração de Crédito Extemporâneo - Documentos e Operações de Períodos Anteriores – Cofins)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=544"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "ESCLARECIMENTOS IMPORTANTES QUANTO A NÃO VALIDAÇÃO DE REGISTROS DE CRÉDITOS EXTEMPORANEOS, A PARTIR DE AGOSTO DE 2013."
+    ],
+    "total_campos": 1,
+    "extraido_em_utc": "2026-03-10T19:03:23.283188+00:00"
+  },
+  "campos": [
+    {
+      "numero": "1. Os registros para informação extemporânea de créditos ( registros 1101, 1102, 1501, 1502 ) e de contribuições ( 1200, 1210,1220 e 1600,1610,1620 ), passíveis de escrituração para os fatos geradores ocorridos até 31/07/2013, tanto na versão 2.04a como na nova versão 2.05 , tinha a sua justificativa de escrituração apenas para os casos em que o período de apuração a que dissesse respeito a operação/documento fiscal, geradora de contribuição ou crédito, ainda não informada em escrituração já transmitida, não pudesse ser mais objeto de retificação, por ter expirado o prazo de retificação até então vigente na redação original da IN RFB 1.252/2012 (retificação até o término do ano calendário seguinte ao que se refere a escrituração original), conforme consta orientação no próprio Guia Prático da Escrituração, de que estes registros só deveriam ser utilizados, na impossibilidade de retificar as escriturações referentes às operações ainda não escrituradas. \n 2. Com o novo disciplinamento referente à retificação da EFD-Contribuições determinado pela IN RFB nº 1.387/2013, permitindo a escrituração e transmissão de arquivo retificador no prazo decadencial das contribuições , ou seja, em até cinco anos, a contar do período de apuração da EFD-Contribuições a ser retificada, deixa de ter qualquer fundamento de aplicabilidade e de validade os referidos registros, uma vez que todas as normas editadas pela Receita Federal quanto às obrigações acessórias, inclusive as do Sped, estabelece o instituto da retificação, para o contribuinte acrescentar, informar, registrar, sanear, qualquer fato que deveria ser incluído na declaração/escrituração original, conforme prazo e condições de retificação definidos para cada obrigação acessória. \n 3. No tocante à EFD-Contribuições, o prazo em vigor para retificação é agora de cinco anos, de forma que eventual documento ou operação que não tenha sido devidamente escriturado em qualquer escrituração dos anos de 2011, 2012 ou 2013, podem agora ser regularizados, mediante a retificação da escrituração original correspondente, nos Blocos A, C, de F. \n 4. Registre-se que, diferentemente da EFD-ICMS/IPI, a EFD-Contribuições não limita ou recusa na escrituração de documentos e operações nos Blocos A, C, D ou F, a escrituração de documentos cuja data de emissão seja diferente (meses anteriores ou posteriores) ao que se refere a escrituração. \n Assim, na EFD-Contribuições do Período de Apuração referente a agosto de 2013, por exemplo, pode ser incluído documentos que, mesmo emitidos em meses anteriores a agosto/2013, ou emitidos em meses posteriores a agosto/2013, desde que o fato (receita ou operação geradora de crédito) tenha por período de competência, o mês da escrituração, ou seja, agosto de 2013. Em resumo, a EFD-Contribuições nunca validou como extemporâneo um documento, ou deixou de considerar como válido o documento/operação, em função deste vir a ter data de emissão diferente ao do período de apuração a que se refere. \n O PVA nas versões disponibilizadas em ambiente de produção continua validando eventual registro extemporâneo, se o arquivo txt importado se referir a PA igual ou anterior a julho de 2013. Para as escriturações com período de apuração a partir de agosto de 2013, o PVA não valida nem permite a geração de registros de operação extemporânea, gerando ocorrência de erro de escrituração.",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": ""
+    }
+  ]
+}

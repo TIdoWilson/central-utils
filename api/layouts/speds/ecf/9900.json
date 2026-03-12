@@ -1,0 +1,84 @@
+{
+  "registro": {
+    "codigo": "9900",
+    "titulo": "REGISTRO 9900: REGISTROS DO ARQUIVO",
+    "bloco_origem": "bloco-9.htm",
+    "ancora": "9900",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-9.htm#9900"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:31:56.957819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo a identificação do registro (9900).",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "[9900]"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "REG_BLC",
+      "descricao": "Registro: Registro que será totalizado em 9900.QTD_REG_BLC",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "QTD_REG_BLC",
+      "descricao": "Total de Registros por Tipo: Total de registros por tipo informado em 9900.REG.BLC",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VERSAO",
+      "descricao": "Versão: Versão da tabela dinâmica utilizada. Será preenchido somente para registros dinâmicos",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "5",
+      "campo": "ID_TAB_DIN",
+      "descricao": "Identificação da Tabela Dinâmica Utilizada",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "-"
+      }
+    }
+  ]
+}

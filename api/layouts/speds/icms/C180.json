@@ -1,0 +1,127 @@
+{
+  "registro": {
+    "codigo": "C180",
+    "id_guia": "566",
+    "titulo": "Registro C180 da EFD-ICMS/IPI (Informações complementares das operações de entrada de mercadorias sujeitas à substituição tributária (Código 01, 1B, 04 e 55))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=566"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:07:49.658864+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C180\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "Não apresentar"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_RESP_RET",
+      "descricao": "Código que indica o responsável pela retenção do ICMS-ST:\n1-Remetente Direto;\n2-Remetente Indireto;\n3-Próprio declarante.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QUANT_CONV",
+      "descricao": "Quantidade do item.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "UNID",
+      "descricao": "Unidade adotada para informar o campo QUANT_CONV.",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_UNIT_CONV",
+      "descricao": "Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_UNIT_ICMS_OP_CONV",
+      "descricao": "Valor unitário do ICMS operação própria que o informante teria direito ao crédito caso a mercadoria estivesse sob o regime comum de tributação, considerando unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_UNIT_BC_ICMS_ST_CONV",
+      "descricao": "Valor unitário da base de cálculo do imposto pago ou retido anteriormente por substituição, considerando a unidade utilizada para informar o campo \"QUANT_CONV\", aplicando-se redução, se houver.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_UNIT_ICMS_ST_CONV",
+      "descricao": "Valor unitário do imposto pago ou retido anteriormente por substituição, inclusive FCP se devido, considerando a unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_UNIT_FCP_ST_CONV",
+      "descricao": "Valor unitário do FCP_ST agregado ao valor informado no campo \"VL_UNIT_ICMS_ST_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "COD_DA",
+      "descricao": "Código do modelo do documento de arrecadação:\n0 – Documento estadual de arrecadação;\n1 – GNRE.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "11",
+      "campo": "NUM_DA",
+      "descricao": "Número do documento de arrecadação, se houver.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

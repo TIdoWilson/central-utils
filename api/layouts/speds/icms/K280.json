@@ -1,0 +1,87 @@
+{
+  "registro": {
+    "codigo": "K280",
+    "id_guia": "265",
+    "titulo": "Registro K280 da EFD-ICMS/IPI (Correção de apontamento - Estoque escriturado)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=265"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:07:51.287850+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K280\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_EST",
+      "descricao": "Data do estoque final escriturado que está sendo corrigido.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item (campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "QTD_COR_POS",
+      "descricao": "Quantidade de correção positiva de apontamento ocorrido em período de apuração anterior.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "QTD_COR_NEG",
+      "descricao": "Quantidade de correção negativa de apontamento ocorrido em período de apuração anterior.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "IND_EST",
+      "descricao": "Indicador do tipo de estoque:\n0 = Estoque de propriedade do informante e em seu poder;\n1 = Estoque de propriedade do informante e em posse de terceiros;\n2 = Estoque de propriedade de terceiros e em posse do informante.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n- proprietário/possuidor que não seja o informante do arquivo.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

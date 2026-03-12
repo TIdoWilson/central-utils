@@ -1,0 +1,185 @@
+{
+  "registro": {
+    "codigo": "C175",
+    "titulo": "Registro C175 da EFD-Contribuições (Registro Analítico do Documento (Código 65))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=391"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 18,
+    "extraido_em_utc": "2026-03-10T19:03:21.849978+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C175”.",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "CFOP",
+      "descricao": "Código fiscal de operação e prestação.",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_OPR",
+      "descricao": "Valor da operação na combinação de CFOP, CST e alíquotas, correspondente ao somatório do valor das mercadorias e produtos constantes no documento.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_DESC",
+      "descricao": "Valor do desconto comercial / exclusão da base de cálculo do PIS/PASEP e da COFINS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_PIS",
+      "descricao": "Valor da base de cálculo do PIS/PASEP (em valor).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP (em percentual).",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "QUANT_BC_PIS",
+      "descricao": "Base de cálculo PIS/PASEP (em quantidade).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "ALIQ_PIS_QUANT",
+      "descricao": "Alíquota do PIS (em reais).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS/PASEP.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente a Cofins, conforme a Tabela indicada no item 4.3.4.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da Cofins.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "13",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da Cofins (em percentual).",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "QUANT_BC_COFINS",
+      "descricao": "Base de cálculo COFINS (em quantidade).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "ALIQ_COFINS_QUANT",
+      "descricao": "Alíquota da COFINS (em reais).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da Cofins.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "17",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada.",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "18",
+      "campo": "INFO_COMPL",
+      "descricao": "Informação complementar.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

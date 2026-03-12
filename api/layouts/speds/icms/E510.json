@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "E510",
+    "id_guia": "149",
+    "titulo": "Registro E510 da EFD-ICMS/IPI (Consolidação dos valores do IPI)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=149"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:07:50.937232+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E510\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "CFOP",
+      "descricao": "CFOP do agrupamento de itens.",
+      "tipo": "N",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "CST_IPI",
+      "descricao": "CST referente ao IPI, conforme a Tabela indicada no item 4.3.2.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_CONT_IPI",
+      "descricao": "Parcela correspondente ao \"Valor Contábil\" referente ao CFOP e ao Código de Tributação do IPI.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_BC_IPI",
+      "descricao": "Parcela correspondente ao \"Valor da BC do IPI\" referente ao CFOP e ao Código de Tributação do IPI, para operações tributadas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_IPI",
+      "descricao": "Parcela correspondente ao \"Valor do IPI\" referente ao CFOP e ao Código de Tributação do IPI, para operações tributadas.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

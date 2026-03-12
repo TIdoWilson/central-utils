@@ -1,0 +1,123 @@
+{
+  "registro": {
+    "codigo": "1320",
+    "id_guia": "174",
+    "titulo": "Registro 1320 da EFD-ICMS/IPI (Volume de vendas)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=174"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:07:51.458459+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1320\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_BICO",
+      "descricao": "Bico Ligado à Bomba.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "NR_INTERV",
+      "descricao": "Número da intervenção.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "MOT_INTERV",
+      "descricao": "Motivo da Intervenção.",
+      "tipo": "C",
+      "tamanho": "050",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "NOM_INTERV",
+      "descricao": "Nome do Interventor.",
+      "tipo": "C",
+      "tamanho": "030",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "CNPJ_INTERV",
+      "descricao": "CNPJ da empresa responsável pela intervenção.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "CPF_INTERV",
+      "descricao": "CPF do técnico responsável pela intervenção.",
+      "tipo": "N",
+      "tamanho": "011*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "VAL_FECHA",
+      "descricao": "Valor da leitura final do contador, no fechamento do bico.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "VAL_ABERT",
+      "descricao": "Valor da leitura inicial do contador, na abertura do bico.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "VOL_AFERI",
+      "descricao": "Aferições da Bomba, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "11",
+      "campo": "VOL_VENDAS",
+      "descricao": "Vendas (08 - 09 - 10 ) do bico, em litros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    }
+  ]
+}

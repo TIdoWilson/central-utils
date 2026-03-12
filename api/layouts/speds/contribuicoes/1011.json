@@ -1,0 +1,257 @@
+{
+  "registro": {
+    "codigo": "1011",
+    "titulo": "Registro 1011 da EFD-Contribuições (Detalhamento das Contribuições com Exigibilidade Suspensa)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=585"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 26,
+    "extraido_em_utc": "2026-03-10T19:03:23.202528+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1011\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "REG_REF",
+      "descricao": "Registro da escrituração que terá o detalhamento das contribuições sociais com exigibilidade suspensa (Blocos A, C, D, F e I, 1800)",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "03",
+      "campo": "CHAVE_DOC",
+      "descricao": "Chave do documento eletrônico",
+      "tipo": "C",
+      "tamanho": "090",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (Campo 02 do Registro 0150)",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item (campo 02 do Registro 0200)",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "DT_OPER",
+      "descricao": "Data da Operação (ddmmaaaa)",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_OPER",
+      "descricao": "Valor da Operação/Item",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária conforme escrituração, referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_BC_PIS",
+      "descricao": "Base de cálculo do PIS/PASEP, conforme escrituração",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP, conforme escrituração",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS/PASEP, conforme escrituração",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária conforme escrituração, referente a COFINS, conforme a Tabela indicada no item 4.3.4.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Base de cálculo da COFINS, conforme escrituração",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota da COFINS, conforme escrituração",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS, conforme escrituração",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "16",
+      "campo": "CST_PIS_SUSP",
+      "descricao": "Código da Situação Tributária conforme decisão judicial, referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "17",
+      "campo": "VL_BC_PIS_SUSP",
+      "descricao": "Base de cálculo do PIS/PASEP, conforme decisão judicial",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "18",
+      "campo": "ALIQ_PIS_SUSP",
+      "descricao": "Alíquota do PIS/PASEP, conforme decisão judicial",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "19",
+      "campo": "VL_PIS_SUSP",
+      "descricao": "Valor do PIS/PASEP, conforme decisão judicial",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "20",
+      "campo": "CST_COFINS_SUSP",
+      "descricao": "Código da Situação Tributária conforme decisão judicial, referente a COFINS, conforme a Tabela indicada no item 4.3.4.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "21",
+      "campo": "VL_BC_COFINS_SUSP",
+      "descricao": "Base de cálculo da COFINS, conforme decisão judicial",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "22",
+      "campo": "ALIQ_COFINS_SUSP",
+      "descricao": "Alíquota da COFINS, conforme decisão judicial",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "23",
+      "campo": "VL_COFINS_SUSP",
+      "descricao": "Valor da COFINS, conforme decisão judicial",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "24",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "25",
+      "campo": "COD_CCUS",
+      "descricao": "Código do Centro de Custos",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "26",
+      "campo": "DESC_DOC_OPER",
+      "descricao": "Descrição do Documento/Operação",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "I500",
+    "titulo": "REGISTRO I500: Parâmetros de Impressão/Visualização do Livro Razão Auxiliar com Leiaute Parametrizável",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I500",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I500"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:29:19.593889+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I500.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I500"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "TAM_FONT",
+      "descricao": "Tamanho da fonte.",
+      "tipo": "N",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de Entrada (valor padrão: 10)"
+      }
+    }
+  ]
+}

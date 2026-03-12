@@ -1,0 +1,158 @@
+{
+  "registro": {
+    "codigo": "M100",
+    "titulo": "Registro M100 da EFD-Contribuições (Crédito de PIS/Pasep Relativo ao Período)",
+    "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=492"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 15,
+    "extraido_em_utc": "2026-03-10T19:03:22.817806+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"M100\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CRED",
+      "descricao": "Código de Tipo de Crédito apurado no período, conforme a Tabela 4.3.6.",
+      "tipo": "C",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_CRED_ORI",
+      "descricao": "Indicador de Crédito Oriundo de:\n0 – Operações próprias;\n1 – Evento de incorporação, cisão ou fusão.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_BC_PIS",
+      "descricao": "Valor da Base de Cálculo do Crédito",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "QUANT_BC_PIS",
+      "descricao": "Quantidade – Base de cálculo PIS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "ALIQ_PIS_QUANT",
+      "descricao": "Alíquota do PIS (em reais)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_CRED",
+      "descricao": "Valor total do crédito apurado no período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_AJUS_ACRES",
+      "descricao": "Valor total dos ajustes de acréscimo",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_AJUS_REDUC",
+      "descricao": "Valor total dos ajustes de redução",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_CRED_DIF",
+      "descricao": "Valor total do crédito diferido no período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_CRED_DISP",
+      "descricao": "Valor Total do Crédito Disponível relativo ao Período (08 + 09 – 10 – 11)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "IND_DESC_CRED",
+      "descricao": "Indicador de opção de utilização do crédito disponível no período:\n0 – Utilização do valor total para desconto da contribuição apurada no período, no Registro M200;\n1 – Utilização de valor parcial para desconto da contribuição apurada no período, no Registro M200.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_CRED_DESC",
+      "descricao": "Valor do Crédito disponível, descontado da contribuição apurada no próprio período.\nSe IND_DESC_CRED=0, informar o valor total do Campo 12;\nSe IND_DESC_CRED=1, informar o valor parcial do Campo 12.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "SLD_CRED",
+      "descricao": "Saldo de créditos a utilizar em períodos futuros (12 – 14)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    }
+  ]
+}

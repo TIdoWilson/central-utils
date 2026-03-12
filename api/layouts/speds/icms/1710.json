@@ -1,0 +1,51 @@
+{
+  "registro": {
+    "codigo": "1710",
+    "id_guia": "185",
+    "titulo": "Registro 1710 da EFD-ICMS/IPI (Documentos fiscais cancelados/inutilizados)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=185"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:07:51.598284+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1710\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_DOC_INI",
+      "descricao": "Número do dispositivo autorizado (inutilizado) inicial.",
+      "tipo": "N",
+      "tamanho": "012",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "NUM_DOC_FIN",
+      "descricao": "Número do dispositivo autorizado (inutilizado) final.",
+      "tipo": "N",
+      "tamanho": "012",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

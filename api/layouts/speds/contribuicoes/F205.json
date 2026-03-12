@@ -1,0 +1,185 @@
+{
+  "registro": {
+    "codigo": "F205",
+    "titulo": "Registro F205 da EFD-Contribuições (Operações da Atividade Imobiliária – Custo Incorrido da Unidade Imobiliária)",
+    "bloco": "3.5) Bloco F (Demais documentos e operações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=465"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 18,
+    "extraido_em_utc": "2026-03-10T19:03:22.530282+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"F205\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_CUS_INC_ACUM_ANT",
+      "descricao": "Valor Total do Custo Incorrido da unidade imobiliária acumulado até o mês anterior ao da escrituração",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_CUS_INC_PER_ESC",
+      "descricao": "Valor Total do Custo Incorrido da unidade imobiliária no mês da escrituração",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_CUS_INC_ACUM",
+      "descricao": "Valor Total do Custo Incorrido da unidade imobiliária acumulado até o mês da escrituração (Campo 02 + 03)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_EXC_BC_CUS_INC_ACUM",
+      "descricao": "Parcela do Custo Incorrido sem direito ao crédito da atividade imobiliária, acumulado até o período.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_BC_CUS_INC",
+      "descricao": "Valor da Base de Cálculo do Crédito sobre o Custo Incorrido, acumulado até o período da escrituração (Campo 04 – 05)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS/PASEP (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_CRED_PIS_ACUM",
+      "descricao": "Valor Total do Crédito Acumulado sobre o custo incorrido – PIS/PASEP (Campo 06 x 08)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_CRED_PIS_DESC_ANT",
+      "descricao": "Parcela do crédito descontada até o período anterior da escrituração – PIS/PASEP (proporcional à receita recebida até o mês anterior).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_CRED_PIS_DESC",
+      "descricao": "Parcela a descontar no período da escrituração – PIS/PASEP (proporcional à receita recebida no mês).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_CRED_PIS_DESC_FUT",
+      "descricao": "Parcela a descontar em períodos futuros – PIS/PASEP (Campo 09 – 10 – 11).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente ao COFINS, conforme a Tabela indicada no item 4.3.4.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "14",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota do COFINS (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_CRED_COFINS_ACUM",
+      "descricao": "Valor Total do Crédito Acumulado sobre o custo incorrido - COFINS (Campo 06 x 14)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_CRED_COFINS_DESC_ANT",
+      "descricao": "Parcela do crédito descontada até o período anterior da escrituração – COFINS (proporcional à receita recebida até o mês anterior).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "17",
+      "campo": "VL_CRED_COFINS_DESC",
+      "descricao": "Parcela a descontar no período da escrituração – COFINS (proporcional à receita recebida no mês).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "18",
+      "campo": "VL_CRED_COFINS_DESC_FUT",
+      "descricao": "Parcela a descontar em períodos futuros – COFINS (Campo 15 – 16 – 17).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    }
+  ]
+}

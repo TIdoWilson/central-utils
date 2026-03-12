@@ -1,0 +1,149 @@
+{
+  "registro": {
+    "codigo": "0000",
+    "titulo": "Registro 0000 da EFD-Contribuições (Abertura, Identificação e Referências)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=351"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 14,
+    "extraido_em_utc": "2026-03-10T19:03:21.597517+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “0000”.",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_VER",
+      "descricao": "Código da versão do leiaute conforme a tabela 3.1.1.",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "TIPO_ESCRIT",
+      "descricao": "Tipo de escrituração:\n0 - Original;\n1 – Retificadora.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "IND_SIT_ESP",
+      "descricao": "Indicador de situação especial:\n0 - Abertura\n1 - Cisão\n2 - Fusão\n3 - Incorporação\n4 – Encerramento.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "NUM_REC_ANTERIOR",
+      "descricao": "Número do Recibo da Escrituração anterior a ser retificada, utilizado quando TIPO_ESCRIT for igual a 1.",
+      "tipo": "C",
+      "tamanho": "041*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "DT_INI",
+      "descricao": "Data inicial das informações contidas no arquivo.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "DT_FIN",
+      "descricao": "Data final das informações contidas no arquivo.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "NOME",
+      "descricao": "Nome empresarial da pessoa jurídica.",
+      "tipo": "C",
+      "tamanho": "100",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição do estabelecimento matriz da pessoa jurídica no CNPJ.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "UF",
+      "descricao": "Sigla da Unidade da Federação da pessoa jurídica.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "COD_MUN",
+      "descricao": "Código do município do domicílio fiscal da pessoa jurídica, conforme a tabela IBGE.",
+      "tipo": "N",
+      "tamanho": "007*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "SUFRAMA",
+      "descricao": "Inscrição da pessoa jurídica na Suframa.",
+      "tipo": "C",
+      "tamanho": "009*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "13",
+      "campo": "IND_NAT_PJ",
+      "descricao": "Indicador da natureza da pessoa jurídica:\n00 – Pessoa jurídica em geral\n01 – Sociedade cooperativa\n02 – Entidade sujeita ao PIS/Pasep exclusivamente com base na Folha de Salários.\n Indicador da natureza da pessoa jurídica, a partir do ano-calendário de 2014: \n00 – Pessoa jurídica em geral (não participante de SCP como sócia ostensiva)\n01 – Sociedade cooperativa (não participante de SCP como sócia ostensiva)\n02 – Entidade sujeita ao PIS/Pasep exclusivamente com base na Folha de Salários\n03 - Pessoa jurídica em geral participante de SCP como sócia ostensiva\n04 – Sociedade cooperativa participante de SCP como sócia ostensiva\n05 – Sociedade em Conta de Participação - SCP",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "IND_ATIV",
+      "descricao": "Indicador de tipo de atividade preponderante:\n0 – Industrial ou equiparado a industrial;\n1 – Prestador de serviços;\n2 - Atividade de comércio;\n3 – Pessoas jurídicas referidas nos §§ 6º, 8º e 9º do art. 3º da Lei nº 9.718, de 1998;\n4 – Atividade imobiliária;\n9 – Outros.",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

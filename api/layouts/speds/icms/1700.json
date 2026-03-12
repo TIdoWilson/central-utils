@@ -1,0 +1,96 @@
+{
+  "registro": {
+    "codigo": "1700",
+    "id_guia": "184",
+    "titulo": "Registro 1700 da EFD-ICMS/IPI (Documentos fiscais utilizados)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=184"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:07:51.631870+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1700\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_DISP",
+      "descricao": "Código dispositivo autorizado:\n 00: Formulário de Segurança (FS) - impressor autônomo;\n 01: FS-DA - Formulário de Segurança para Impressão de Danfe;\n 02: Formulário de segurança - NF-e;\n 03: Formulário Contínuo;\n 04: Blocos;\n 05: Jogos Soltos.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do dispositivo autorizado, conforme a Tabela 4.1.1 .",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "SER",
+      "descricao": "Série do dispositivo autorizado.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "SUB",
+      "descricao": "Subsérie do dispositivo autorizado.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "NUM_DOC_INI",
+      "descricao": "Número do dispositivo autorizado (utilizado) inicial.",
+      "tipo": "N",
+      "tamanho": "012",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "NUM_DOC_FIN",
+      "descricao": "Número do dispositivo autorizado (utilizado) final.",
+      "tipo": "N",
+      "tamanho": "012",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "NUM_AUT",
+      "descricao": "Número da autorização, conforme dispositivo autorizado.",
+      "tipo": "N",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

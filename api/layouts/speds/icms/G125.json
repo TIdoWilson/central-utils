@@ -1,0 +1,114 @@
+{
+  "registro": {
+    "codigo": "G125",
+    "id_guia": "155",
+    "titulo": "Registro G125 da EFD-ICMS/IPI (Movimentação de bem ou componente do Ativo Imobilizado)",
+    "bloco": "3.6) Bloco G (Controle do crédito de ICMS do Ativo Permanente - CIAP):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=155"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 10,
+    "extraido_em_utc": "2026-03-10T19:07:50.953238+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"G125\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_IND_BEM",
+      "descricao": "Código individualizado do bem ou componente adotado no controle patrimonial do estabelecimento informante.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_MOV",
+      "descricao": "Data da movimentação ou do saldo inicial.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "TIPO_MOV",
+      "descricao": "Tipo de movimentação do bem ou componente:\n SI: Saldo inicial de bens imobilizados;\n IM: Imobilização de bem individual;\n IA: Imobilização em Andamento - Componente;\n CI: Conclusão de Imobilização em Andamento – Bem Resultante;\n MC: Imobilização oriunda do Ativo Circulante;\n BA: Baixa do bem - Fim do período de apropriação;\n AT: Alienação ou Transferência;\n PE: Perecimento, Extravio ou Deterioração;\n OT: Outras Saídas do Imobilizado.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_IMOB_ICMS_OP",
+      "descricao": "Valor do ICMS da Operação Própria na entrada do bem ou componente.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_IMOB_ICMS_ST",
+      "descricao": "Valor do ICMS da Operação por Substituição Tributária na entrada do bem ou componente.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_IMOB_ICMS_FRT",
+      "descricao": "Valor do ICMS sobre Frete do Conhecimento de Transporte na entrada do bem ou componente.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_IMOB_ICMS_DIF",
+      "descricao": "Valor do ICMS - Diferencial de Alíquota, conforme Documento de Arrecadação, na entrada do bem ou componente.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "NUM_PARC",
+      "descricao": "Número da parcela do ICMS. (1)",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_PARC_PASS",
+      "descricao": "Valor da parcela de ICMS passível de apropriação (antes da aplicação da participação percentual do valor das saídas tributadas/exportação sobre as saídas totais). (1)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    }
+  ]
+}

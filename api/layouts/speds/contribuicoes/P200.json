@@ -1,0 +1,86 @@
+{
+  "registro": {
+    "codigo": "P200",
+    "titulo": "Registro P200 da EFD-Contribuições (Consolidação da Contribuição Previdenciária Sobre a Receita Bruta)",
+    "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=529"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:03:23.095584+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"P200\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "PER_REF",
+      "descricao": "Período de referencia da escrituração (MMAAAA)",
+      "tipo": "N",
+      "tamanho": "006*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_TOT_CONT_APU",
+      "descricao": "Valor total apurado da Contribuição Previdenciária sobre a Receita Bruta (Somatório do Campo 10 “VL_CONT_APU“, do(s) Registro(s) P100)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_TOT_AJ_REDUC",
+      "descricao": "Valor total de “Ajustes de redução” (Registro P210, Campo 03, quando Campo 02 = “0”)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_TOT_AJ_ACRES",
+      "descricao": "Valor total de “Ajustes de acréscimo” (Registro P210, Campo 03, quando Campo 02 = “1”)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_TOT_CONT_DEV",
+      "descricao": "Valor total da Contribuição Previdenciária sobre a Receita Bruta a recolher (Campo 03 – Campo 04 + Campo 05)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "COD_REC",
+      "descricao": "Código de Receita referente à Contribuição Previdenciária, conforme informado em DCTF",
+      "tipo": "C",
+      "tamanho": "006*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

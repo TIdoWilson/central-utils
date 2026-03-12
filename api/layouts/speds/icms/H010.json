@@ -1,0 +1,123 @@
+{
+  "registro": {
+    "codigo": "H010",
+    "id_guia": "162",
+    "titulo": "Registro H010 da EFD-ICMS/IPI (Inventário)",
+    "bloco": "3.7) Bloco H (Inventário físico):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=162"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:07:51.116998+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"H010\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item (Campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "UNID",
+      "descricao": "Unidade do item.",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "QTD",
+      "descricao": "Quantidade do item.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_UNIT",
+      "descricao": "Valor unitário do item.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_ITEM",
+      "descricao": "Valor do item.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "IND_PROP",
+      "descricao": "Indicador de propriedade/posse do item:\n 0: Item de propriedade do informante e em seu poder;\n 1: Item de propriedade do informante em posse de terceiros;\n 2: Item de propriedade de terceiros em posse do informante.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150): - proprietário/possuidor que não seja o informante do arquivo.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "TXT_COMPL",
+      "descricao": "Descrição complementar.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_ITEM_IR",
+      "descricao": "Valor do item para efeitos do Imposto de Renda.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "OC"
+    }
+  ]
+}

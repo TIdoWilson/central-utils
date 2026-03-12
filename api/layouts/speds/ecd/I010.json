@@ -1,0 +1,61 @@
+{
+  "registro": {
+    "codigo": "I010",
+    "titulo": "REGISTRO I010: Identificação da Escrituração Contábil",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I010",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I010"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:29:19.578386+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I010.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I010"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_ESC",
+      "descricao": "Indicador da forma de escrituração contábil: \nG - Livro\nDiário (Completo sem\nescrituração auxiliar).\nR - Livro Diário com\nEscrituração Resumida\n(com escrituração\nauxiliar).\nA - Livro Diário\nAuxiliar ao Diário com\nEscrituração Resumida.\nB - Livro Balancetes\nDiários e Balanços.\nZ – Razão Auxiliar\n(Livro Contábil\nAuxiliar conforme\nleiaute definido nos\nregistros I500 a I555).",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_VER_LC",
+      "descricao": "Código da Versão do Leiaute Contábil.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

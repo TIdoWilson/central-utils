@@ -1,0 +1,60 @@
+{
+  "registro": {
+    "codigo": "E111",
+    "id_guia": "137",
+    "titulo": "Registro E111 da EFD-ICMS/IPI (Ajuste / benefício / incentivo da Apuração do ICMS)",
+    "bloco": "3.5) Bloco E (Apuração do ICMS e do IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=137"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:07:50.640471+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"E111\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_AJ_APUR",
+      "descricao": "Código do ajuste da apuração e dedução, conforme a Tabela indicada no Item 5.1.1 do Ato COTEPE/ICMS nº 09/2008 .",
+      "tipo": "C",
+      "tamanho": "008",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "DESCR_COMPL_AJ",
+      "descricao": "Descrição complementar do ajuste da apuração.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_AJ_APUR",
+      "descricao": "Valor do ajuste da apuração.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

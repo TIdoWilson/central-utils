@@ -1,0 +1,78 @@
+{
+  "registro": {
+    "codigo": "K210",
+    "id_guia": "259",
+    "titulo": "Registro K210 da EFD-ICMS/IPI (Desmontagem de mercadorias - Item de origem)",
+    "bloco": "3.8) Bloco K (Controle da produção e do estoque):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=259"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:07:51.136996+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"K210\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI_OS",
+      "descricao": "Data de início da ordem de serviço.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN_OS",
+      "descricao": "Data de conclusão da ordem de serviço.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_DOC_OS",
+      "descricao": "Código de identificação da ordem de serviço.",
+      "tipo": "C",
+      "tamanho": "030",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_ITEM_ORI",
+      "descricao": "Código do item de origem (campo 02 do Registro 0200).",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "QTD_ORI",
+      "descricao": "Quantidade de origem - saída do estoque.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "6",
+      "obrigatorio": "O"
+    }
+  ]
+}

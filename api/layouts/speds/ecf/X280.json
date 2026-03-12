@@ -1,0 +1,169 @@
+{
+  "registro": {
+    "codigo": "X280",
+    "titulo": "REGISTRO X280: ATIVIDADES INCENTIVADAS – PJ EM GERAL",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x280",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x280"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:31:56.900341+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X280\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X280\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_ATIV",
+      "descricao": "Benefício fiscal:\n00 – Não preenchido\n01 – Isenção\n02 – Redução de 100%\n03 – Redução de 75%\n04 – Redução de 70%\n05 – Redução de 50%\n06 – Redução de 33,33%\n07 – Redução de 25%\n08 – Redução de 12,5%\n09 – Redução por Reinvestimento\n10 - PERSE\n11 - Subvenção para investimento\n99 - Outros",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Benefício Fiscal",
+        "DOCUMENTAÇÃO": "E055BNF.TIPBNF"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "IND_CONCEDENTE",
+      "descricao": "AM: Sudam – Superintendência de Desenvolvimento da Amanzônia\nNE: Sudene – Superintendência de Desenvolvimento do Nordeste\nOu: Outros",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Órgão Concessor da Isenção/Redução",
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_PROJ",
+      "descricao": "Projeto\n00 – Não preenchido\n01 – Novo Empreendimento\n02 – Modernização\n03 – Ampliação\n04 – Diversificação\n05 – Manutenção do Empreendimento\n06 – Prouni\n07 - Padis\n08 – Eventos Fifa\n09 – Serviços da Fifa (SPE)\n10 – Eventos CIO\n11 – Serviços do CIO (SPE)\n99 – Outros",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Projeto",
+        "DOCUMENTAÇÃO": "E055BNF.INDPRJ"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "ATO_CONC",
+      "descricao": "Ato Concessório - Natureza e Número: Informar neste campo o número do ato concessório do benefício fiscal.\nAtenção: No caso de projeto nas áreas de atuação da Sudam e da Sudene, informar neste campo o número do ato da unidade da RFB editado para reconhecimento do direito ao benefício fiscal.",
+      "tipo": "C",
+      "tamanho": "30",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Ato Concessório",
+        "DOCUMENTAÇÃO": "E055BNF.ATOCON"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VIG_INI",
+      "descricao": "Prazo de Vigência – Início\nInformar a data de início de fruição do benefício conforme consignada no Ato Concessório.",
+      "tipo": "D",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Início da Vigência",
+        "DOCUMENTAÇÃO": "E055BNF.PERINI"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VIG_FIM",
+      "descricao": "Prazo de Vigência – Fim\nInformar a data de encerramento do prazo de fruição do benefício conforme consignada no Ato Concessório.",
+      "tipo": "D",
+      "tamanho": "8",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Fim da Vigência",
+        "DOCUMENTAÇÃO": "E055BNF.PERFIM"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "CNPJ_INCENTIVO",
+      "descricao": "-",
+      "tipo": "N",
+      "tamanho": "14",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "CNPJ do Estabelecimento com Isenção/Redução/Redução por Reinvestimento\nInformar o CNPJ completo do estabelecimento",
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "NCM_INCENTIVO",
+      "descricao": "-",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código NCN do Produto Sujeito à Isenção/Redução/Redução por Reinvestimento",
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "REC_LIQ_INCENTIVO",
+      "descricao": "-",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Receita Líquida Relativa à Isenção/Redução/Redução por Reinvestimento",
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "VL_INCENTIVO",
+      "descricao": "-",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Isenção/Redução/Redução por Reinvestimento",
+        "DOCUMENTAÇÃO": "Campo da tela de entrada"
+      }
+    }
+  ]
+}

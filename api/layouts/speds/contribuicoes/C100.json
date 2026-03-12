@@ -1,0 +1,311 @@
+{
+  "registro": {
+    "codigo": "C100",
+    "titulo": "Registro C100 da EFD-Contribuições (Documento - Nota Fiscal (Código 01), Nota Fiscal Avulsa (Código 1B), Nota Fiscal de Produtor (Código 04), NF-e (Código 55) e NFC-e (Código 65))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=384"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 32,
+    "extraido_em_utc": "2026-03-10T19:03:21.802729+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C100\"",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_OPER",
+      "descricao": "Indicador do tipo de operação:\n0- Entrada;\n1- Saída",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "IND_EMIT",
+      "descricao": "Indicador do emitente do documento fiscal:\n0- Emissão própria;\n1- Terceiros",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_PART",
+      "descricao": "Código do participante (campo 02 do Registro 0150):\n- do emitente do documento ou do remetente das mercadorias, no caso de entradas;\n- do adquirente, no caso de saídas",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_SIT",
+      "descricao": "Código da situação do documento fiscal, conforme a Tabela 4.1.2",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "NUM_DOC",
+      "descricao": "Número do documento fiscal",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "CHV_NFE",
+      "descricao": "Chave da Nota Fiscal Eletrônica ou da NFC-e",
+      "tipo": "N",
+      "tamanho": "044*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão do documento fiscal",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "DT_E_S",
+      "descricao": "Data da entrada ou da saída",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_DOC",
+      "descricao": "Valor total do documento fiscal",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "IND_PGTO",
+      "descricao": "Indicador do tipo de pagamento:\n0- À vista;\n1- A prazo;\n9- Sem pagamento.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "Obs.: A partir de 01/07/2012 passará a ser:\nIndicador do tipo de pagamento:\n0- À vista;\n1- A prazo;\n2 - Outros",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "14",
+      "campo": "VL_DESC",
+      "descricao": "Valor total do desconto",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_ABAT_NT",
+      "descricao": "Abatimento não tributado e não comercial Ex. desconto ICMS nas remessas para ZFM.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_MERC",
+      "descricao": "Valor total das mercadorias e serviços",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "17",
+      "campo": "IND_FRT",
+      "descricao": "Indicador do tipo do frete:\n0- Por conta de terceiros;\n1- Por conta do emitente;\n2- Por conta do destinatário;\n9- Sem cobrança de frete.",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "Obs.: A partir de 01/01/2012 passará a ser:\nIndicador do tipo do frete:\n0- Por conta do emitente;\n1- Por conta do destinatário/remetente;\n2- Por conta de terceiros;\n9- Sem cobrança de frete.",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "Obs.: A partir de 01/10/2017 passará a ser:\nIndicador do tipo de frete/transporte:\n0 - Frete por conta do remetente (CIF);\n1 - Frete por conta do destinatário (FOB);\n2 - Frete por conta de terceiros;\n3 – Transporte próprio por conta do remetente;\n4 – Transporte próprio por conta do destinatário;\n9 - Sem ocorrência de transporte.",
+      "campo": "",
+      "descricao": "",
+      "tipo": "",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "18",
+      "campo": "VL_FRT",
+      "descricao": "Valor do frete indicado no documento fiscal",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "19",
+      "campo": "VL_SEG",
+      "descricao": "Valor do seguro indicado no documento fiscal",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "20",
+      "campo": "VL_OUT_DA",
+      "descricao": "Valor de outras despesas acessórias",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "21",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor da base de cálculo do ICMS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "22",
+      "campo": "VL_ICMS",
+      "descricao": "Valor do ICMS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "23",
+      "campo": "VL_BC_ICMS_ST",
+      "descricao": "Valor da base de cálculo do ICMS substituição tributária",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "24",
+      "campo": "VL_ICMS_ST",
+      "descricao": "Valor do ICMS retido por substituição tributária",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "25",
+      "campo": "VL_IPI",
+      "descricao": "Valor total do IPI",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "26",
+      "campo": "VL_PIS",
+      "descricao": "Valor total do PIS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "27",
+      "campo": "VL_COFINS",
+      "descricao": "Valor total da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "28",
+      "campo": "VL_PIS_ST",
+      "descricao": "Valor total do PIS retido por substituição tributária",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "29",
+      "campo": "VL_COFINS_ST",
+      "descricao": "Valor total da COFINS retido por substituição tributária",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    }
+  ]
+}

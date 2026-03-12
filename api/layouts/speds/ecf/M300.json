@@ -1,0 +1,116 @@
+{
+  "registro": {
+    "codigo": "M300",
+    "titulo": "REGISTRO M300: LANÇAMENTOS DA PARTE A DO e-LALUR",
+    "bloco_origem": "bloco-m.htm",
+    "ancora": "m300",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m300"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:31:56.841836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “M300”.",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"M300\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "CODIGO",
+      "descricao": "Código do lançamento no e-Lalur, conforme tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código do Lançamento",
+        "DOCUMENTAÇÃO": "E661ALT.CODLIN"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESCRICAO",
+      "descricao": "Descrição do tipo de lançamento no e-Lalur, conforme tabela publicada no Sped.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Descrição",
+        "DOCUMENTAÇÃO": "E661ALT.DESLIN"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "TIPO_LANCAMENTO",
+      "descricao": "Indicador do tipo de lançamento conforme tabela publicada pela RFB:\nA- Adição\nE - Exclusão.\nP - Compensação de Prejuízo\nL - Lucro\nObservação: O tipo “R” (Rótulo) é para linhas de títulos, que aparecem na interface do programa. Portanto, não deve ser utilizado neste campo.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Lançamento",
+        "DOCUMENTAÇÃO": "E661ALT.TIPLAN"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_RELACAO",
+      "descricao": "Indicador de Relacionamento do Lançamento da Parte A:\n1 - Com Conta da Parte B\n2 - Com Conta Contábil\n3 – Com Conta da parte B e Conta Contábil\n4 - Sem Relacionamento\nObservação: O valor do lançamento do tipo 3 pode considerar o saldo contas da parte B ou somatório dos saldos das contas da parte B com os saldos das contas contábeis. Para isso, o valor do lançamento correto na parte A deve ser preenchido pela empresa.",
+      "tipo": "N",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Relacionamento",
+        "DOCUMENTAÇÃO": "E661ALT.TIPREL"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VALOR",
+      "descricao": "Valor do lançamento no e-Lalur",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Valor",
+        "DOCUMENTAÇÃO": "E661ALT.VLRLIN"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "HIST_LAN_LAL",
+      "descricao": "Histórico do lançamento no e-Lalur",
+      "tipo": "C",
+      "tamanho": "500",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Histórico",
+        "DOCUMENTAÇÃO": "Se M300.IND_RELACAO (campo 5) for igual a 1, 2 ou 3\n- Deverá receber o histórico montado com os campos E664LCT.CODHPD e E664LCT.CPLLCT"
+      }
+    }
+  ]
+}

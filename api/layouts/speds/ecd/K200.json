@@ -1,0 +1,109 @@
+{
+  "registro": {
+    "codigo": "K200",
+    "titulo": "Registro K200: Plano de Contas Consolidado",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "K200",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-k.htm#K200"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:29:19.613885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nK200",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"K200\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_NA\nT",
+      "descricao": "Código da\nnatureza da\nconta/grupo de\ncontas,\nconforme tabela\npublicada pelo\nSped",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E045PLA.DEFGRU"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "IND_CTA",
+      "descricao": "Indicador do\ntipo de conta:\n S - Sintética\n(grupo de\ncontas);\n A - Analítica\n(conta).",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E045PLA.AnaSin"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "NIVEL",
+      "descricao": "Nível da conta",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E045PLA.NivCta"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E045PLA.CTARED"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "COD_CTA_SUP",
+      "descricao": "Código da conta\nsuperior",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E045PLA.CTARED"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "CTA",
+      "descricao": "Nome da conta",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E045PLA.DESCTA"
+      }
+    }
+  ]
+}

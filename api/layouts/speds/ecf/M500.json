@@ -1,0 +1,168 @@
+{
+  "registro": {
+    "codigo": "M500",
+    "titulo": "REGISTRO M500: CONTROLE DE SALDOS DAS CONTAS DA PARTE B DO e-LALUR E DO e-LACS",
+    "bloco_origem": "bloco-m.htm",
+    "ancora": "m500",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m500"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:31:56.852837+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “M500”.",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"M500\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA_B",
+      "descricao": "Código unívoco atribuído pelo contribuinte à conta no e-Lalur e no e-Lacs (deve existir no M010.COD_CTA_B)",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta no e-Lalur ou no e-Lacs",
+        "DOCUMENTAÇÃO": "E664SAL.CODCON"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_TRIBUTO",
+      "descricao": "Código do tributo:\nI – Imposto de Renda\nC – Contribuição Social Sobre o Lucro Líquido",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código do Tributo",
+        "DOCUMENTAÇÃO": "Se o tipo de imposto do imposto E664SAL.CODIMP for 53, 55, 57 ou 59\n- Deverá receber \"I\"\nSe o tipo de imposto do imposto E664SAL.CODIMP for 54, 56, 58 ou 60\n- Deverá receber \"C\""
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "SD_INI_LAL",
+      "descricao": "Saldo inicial da conta no período de apuração",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Saldo inicial",
+        "DOCUMENTAÇÃO": "E664SAL.SALINI"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_ SD_INI_LAL",
+      "descricao": "Indicador de saldo inicial:\nD – para prejuízos ou valores que serão excluídos do lucro real ou da base de cálculo da contribuição social em períodos subsequentes.\nC – para valores que serão adicionados ao lucro real ou à base de cálculo da contribuição social em períodos subsequentes.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do Saldo Inicial",
+        "DOCUMENTAÇÃO": "Se o valor do saldo em E664SAL.SALINI for maior ou igual a 0\n- Deverá receber \"C\"\nSenão\n-Deverá receber \"D\""
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_LCTO_PARTE_A",
+      "descricao": "Somatório dos lançamentos da parte B com reflexo na parte A no período.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Lançamentos da Parte B com Reflexo na Parte A",
+        "DOCUMENTAÇÃO": "E664SAL.TOTPTA"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "IND_VL_LCTO_PARTE_A",
+      "descricao": "Indicador do somatório dos lançamentos da parte B com reflexo na parte A no período:\nC – para prejuízos ou valores que serão excluídos do lucro real ou da base de cálculo da contribuição social em períodos subsequentes.\nD – para valores que serão adicionados ao lucro real ou à base de cálculo da contribuição social em períodos subsequentes.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do Lançamento da Parte B com Reflexo na Parte A",
+        "DOCUMENTAÇÃO": "Se o valor do saldo em E664SAL.TOTPTA for maior ou igual a 0\n- Deverá receber \"D\"\nSenão\n-Deverá receber \"C\""
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "VL_LCTO_PARTE_B",
+      "descricao": "Somatório dos Lançamentos da parte B sem reflexo na parte A no período (entre contas da parte B).",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Lançamentos da Parte B sem Reflexo na parte A (entre contas da parte B)",
+        "DOCUMENTAÇÃO": "E664SAL.TOTPTB"
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IND_VL_LCTO_PARTE_B",
+      "descricao": "Indicador do lançamento da parte B sem reflexo na parte A no período (entre contas da parte B):\nC – para prejuízos ou valores que serão excluídos do lucro real ou da base de cálculo da contribuição social em períodos subsequentes.\nD – para valores que serão adicionados ao lucro real ou à base de cálculo da contribuição social em períodos subsequentes.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do Lançamento da Parte B sem Reflexo na Parte A (entre contas da parte B)",
+        "DOCUMENTAÇÃO": "Se o valor do saldo em E664SAL.TOTPTB for maior ou igual a 0\n- Deverá receber \"D\"\nSenão\n-Deverá receber \"C\""
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "SD_FIM_LAL",
+      "descricao": "Saldo Final da conta no período de apuração",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Saldo Final",
+        "DOCUMENTAÇÃO": "E664SAL.SALFIN"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "IND_ SD_FIM_LAL",
+      "descricao": "Indicador de saldo final:\nD – para prejuízos ou valores que serão excluídos do lucro real ou da base de cálculo da contribuição social em períodos subsequentes.\nC – para valores que serão adicionados ao lucro real ou à base de cálculo da contribuição social em períodos subsequentes.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de saldo Final",
+        "DOCUMENTAÇÃO": "Se o valor do saldo em E664SAL.SALFIN for maior ou igual a 0\n- Deverá receber \"C\"\nSenão\n-Deverá receber \"D\""
+      }
+    }
+  ]
+}

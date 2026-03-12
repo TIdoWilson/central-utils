@@ -1,0 +1,229 @@
+{
+  "registro": {
+    "codigo": "D750",
+    "id_guia": "845",
+    "titulo": "Registro D750 da EFD-ICMS/IPI (Escrituração consolidada da Nota Fiscal Fatura Eletrônica de serviços de comunicação - NFCom (Código 62))",
+    "bloco": "3.4) Bloco D (Documentos fiscais II - serviços - ICMS):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=845"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr",
+      "Saída"
+    ],
+    "total_campos": 17,
+    "extraido_em_utc": "2026-03-10T19:07:50.542959+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"D750\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MOD",
+      "descricao": "Código do modelo do documento fiscal, conforme a Tabela 4.1.1.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "03",
+      "campo": "SER",
+      "descricao": "Série do documento fiscal.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "04",
+      "campo": "DT_DOC",
+      "descricao": "Data da emissão dos documentos.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "05",
+      "campo": "QTD_CONS",
+      "descricao": "Quantidade de documentos consolidados neste registro.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "06",
+      "campo": "IND_PREPAGO",
+      "descricao": "Forma de pagamento:\n0 - pré pago\n1 - pós pago",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "07",
+      "campo": "VL_DOC",
+      "descricao": "Valor total dos documentos.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "08",
+      "campo": "VL_SERV",
+      "descricao": "Valor dos serviços tributados pelo ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "09",
+      "campo": "VL_SERV_NT",
+      "descricao": "Valores cobrados em nome do prestador sem destaque de ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "10",
+      "campo": "VL_TERC",
+      "descricao": "Valor total cobrado em nome de terceiros.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "11",
+      "campo": "VL_DESC",
+      "descricao": "Valor total dos descontos.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "12",
+      "campo": "VL_DA",
+      "descricao": "Valor total das despesas acessórias.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "13",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor total da base de cálculo do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "14",
+      "campo": "VL_ICMS",
+      "descricao": "Valor total do ICMS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "O"
+      ]
+    },
+    {
+      "numero": "15",
+      "campo": "VL_PIS",
+      "descricao": "Valor total do PIS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "OC"
+      ]
+    },
+    {
+      "numero": "16",
+      "campo": "VL_COFINS",
+      "descricao": "Valor total da COFINS.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "OC"
+      ]
+    },
+    {
+      "numero": "17",
+      "campo": "DED",
+      "descricao": "Deduções.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "-",
+      "colunas_extras": [
+        "OC"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "registro": {
+    "codigo": "0500",
+    "id_guia": "18",
+    "titulo": "Registro 0500 da EFD-ICMS/IPI (Plano de Contas Contábeis)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=18"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:07:48.763799+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0500\".",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_ALT",
+      "descricao": "Data da inclusão/alteração.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_NAT_CC",
+      "descricao": "Código da natureza da conta/grupo de contas:\n 01: Contas de ativo;\n 02: Contas de passivo;\n 03: Patrimônio líquido;\n 04: Contas de resultado;\n 05: Contas de compensação;\n 09: Outras.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "IND_CTA",
+      "descricao": "Indicador do tipo de conta:\n S: Sintética (grupo de contas);\n A: Analítica (conta).",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "NIVEL",
+      "descricao": "Nível da conta analítica/grupo de contas.",
+      "tipo": "N",
+      "tamanho": "005",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica/grupo de contas.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "NOME_CTA",
+      "descricao": "Nome da conta analítica/grupo de contas.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

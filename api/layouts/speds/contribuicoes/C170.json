@@ -1,0 +1,356 @@
+{
+  "registro": {
+    "codigo": "C170",
+    "titulo": "Registro C170 da EFD-Contribuições (Complemento do Documento - Itens do Documento (Códigos 01, 1B, 04 e 55))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=390"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 37,
+    "extraido_em_utc": "2026-03-10T19:03:21.861428+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C170\"",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_ITEM",
+      "descricao": "Número seqüencial do item no documento fiscal",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "COD_ITEM",
+      "descricao": "Código do item (campo 02 do Registro 0200)",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "DESCR_COMPL",
+      "descricao": "Descrição complementar do item como adotado no documento fiscal",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "QTD",
+      "descricao": "Quantidade do item",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "05",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "UNID",
+      "descricao": "Unidade do item (Campo 02 do registro 0190)",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_ITEM",
+      "descricao": "Valor total do item (mercadorias ou serviços)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_DESC",
+      "descricao": "Valor do desconto comercial / exclusão da base de cálculo do PIS/PASEP e da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "IND_MOV",
+      "descricao": "Movimentação física do ITEM/PRODUTO:\n0. SIM\n1. NÃO",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "CST_ICMS",
+      "descricao": "Código da Situação Tributária referente ao ICMS, conforme a Tabela indicada no item 4.3.1",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "CFOP",
+      "descricao": "Código Fiscal de Operação e Prestação",
+      "tipo": "N",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "COD_NAT",
+      "descricao": "Código da natureza da operação (campo 02 do Registro 0400)",
+      "tipo": "C",
+      "tamanho": "010",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_BC_ICMS",
+      "descricao": "Valor da base de cálculo do ICMS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "14",
+      "campo": "ALIQ_ICMS",
+      "descricao": "Alíquota do ICMS",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_ICMS",
+      "descricao": "Valor do ICMS creditado/debitado",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_BC_ICMS_ST",
+      "descricao": "Valor da base de cálculo referente à substituição tributária",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "17",
+      "campo": "ALIQ_ST",
+      "descricao": "Alíquota do ICMS da substituição tributária na unidade da federação de destino",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "18",
+      "campo": "VL_ICMS_ST",
+      "descricao": "Valor do ICMS referente à substituição tributária",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "19",
+      "campo": "IND_APUR",
+      "descricao": "Indicador de período de apuração do IPI:\n0 - Mensal;\n1 Decendial",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "20",
+      "campo": "CST_IPI",
+      "descricao": "Código da Situação Tributária referente ao IPI, conforme a Tabela indicada no item 4.3.2.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "21",
+      "campo": "COD_ENQ",
+      "descricao": "Código de enquadramento legal do IPI, conforme tabela indicada no item 4.5.3.",
+      "tipo": "C",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "22",
+      "campo": "VL_BC_IPI",
+      "descricao": "Valor da base de cálculo do IPI",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "23",
+      "campo": "ALIQ_IPI",
+      "descricao": "Alíquota do IPI",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "24",
+      "campo": "VL_IPI",
+      "descricao": "Valor do IPI creditado/debitado",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "25",
+      "campo": "CST_PIS",
+      "descricao": "Código da Situação Tributária referente ao PIS.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "26",
+      "campo": "VL_BC_PIS",
+      "descricao": "Valor da base de cálculo do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "27",
+      "campo": "ALIQ_PIS",
+      "descricao": "Alíquota do PIS (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "28",
+      "campo": "QUANT_BC_PIS",
+      "descricao": "Quantidade – Base de cálculo PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "29",
+      "campo": "ALIQ_PIS_QUANT",
+      "descricao": "Alíquota do PIS/PASEP (em reais)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "30",
+      "campo": "VL_PIS",
+      "descricao": "Valor do PIS/PASEP",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "31",
+      "campo": "CST_COFINS",
+      "descricao": "Código da Situação Tributária referente ao COFINS.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "32",
+      "campo": "VL_BC_COFINS",
+      "descricao": "Valor da base de cálculo da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "33",
+      "campo": "ALIQ_COFINS",
+      "descricao": "Alíquota do COFINS (em percentual)",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "34",
+      "campo": "QUANT_BC_COFINS",
+      "descricao": "Quantidade – Base de cálculo COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "03",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "35",
+      "campo": "ALIQ_COFINS_QUANT",
+      "descricao": "Alíquota da COFINS (em reais)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "36",
+      "campo": "VL_COFINS",
+      "descricao": "Valor da COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "37",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil debitada/creditada",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "registro": {
+    "codigo": "I250",
+    "titulo": "REGISTRO I250: Partidas do Lançamento",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I250",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I250"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:29:19.590885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I250.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I250"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica debitada/creditada.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Tipo de escrituração contábil for igual a A o campo recebe E642LCT.CTAAUX, senão campo recebe E640LCT.CTADEB ou E640LCT.CTACRE.\n Quando gerar centro de custos, recebe \n E640RAT.CTARED \n Se na tela de entrada o campo Tipo de escrituração contábil for igual a A, somente as duas opções abaixo estarão disponíveis para o campo Tipo de \n conta : \n Conta Reduzida - Gera o código da conta contábil conforme campo E045PCA.CTAAUX \n Conta Expandida - Gera a classificação contábil da conta conforme campo E045PCA.CLAAUX. \nSe na tela de entrada o campo Tipo de escrituração contábil for igual a G, R, Z ou B, todas as opções abaixo estarão disponíveis para o campo Tipo de \n conta : \n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta conforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta conforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil. \n Campos origem: Se Tipo de escrituração contábil for igual a A então E642LCT.CTAAUX, senão E640LCT.CTADEB ou E640LCT.CTACRE.\n Quando gerar centro de custos, recebe \n E640RAT.CTARED."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CCUS",
+      "descricao": "Código do centro de custos.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Quando gerar por centro de custos, recebe E640RAT.CODCCU."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_DC",
+      "descricao": "Valor da partida.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00, senão \nSe Tipo de escrituração contábil for igual a A o campo recebe E642LCT.VLRLCT, senão campo recebe E640LCT.VLRLCT. Quando gerar centro de custos, recebe E640RAT.VLRRAT"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_DC",
+      "descricao": "Indicador da natureza da partida:\n D - Débito;\n C - Crédito.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00, senão \nSe Tipo de escrituração contábil for igual a A o campo recebe E642LCT.DEBCRE, senão se o campo E640LCT.CTADEB for maior que 0 (zero) então D - Débito, se E640LCT.CTACRE for maior que 0 (zero) recebe C - Crédito"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "NUM_ARQ",
+      "descricao": "Número, código ou caminho de localização dos documentos arquivados.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Se Tipo de escrituração contábil for igual a A campo recebe E642LCT.NUMLCT, senão E640LCT.NUMLCT"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "COD_HIST_PAD",
+      "descricao": "Código do histórico padrão, conforme tabela I075.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Se Tipo de escrituração contábil for igual a A campo recebe\n E642LCT.CODHPD senão E640LCT.CODHPD. Listará nulo quando não houver histórico padrão no lançamento"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "HIST",
+      "descricao": "Histórico completo da partida ou histórico complementar.\n Observação: caso o lançamento seja do tipo X – lançamento extemporâneo - em qualquer das formas de retificação, o histórico do lançamento extemporâneo deve especificar o motivo da correção, a data e o número do lançamento de origem (item 32 do ITG 2000 (R1)).",
+      "tipo": "C",
+      "tamanho": "65535",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Se Tipo de escrituração contábil for igual a A monta o histórico padrão conforme E642LCT.CODHPD e E642LCT.CPLLCT, senão monta com E640LCT.CODHPD e E640LCT.CPLLCT."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "COD_PART",
+      "descricao": "Código de identificação do participante na partida conforme tabela 0150 (preencher somente quando identificado o tipo de participação no registro 0180).",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Recebe CLI ou FOR seguido do Código do Cliente ou Código do Fornecedor (E085CLI.CODCLI ou E095FOR.CODFOR)"
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "VL_DC_MF",
+      "descricao": "Valor da partida em moeda\nfuncional, convertida para reais",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "-"
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "IND_DC_MF",
+      "descricao": "Indicador da natureza da partida em\nmoeda funcional:\n D - Débito;\n C - Crédito.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "-"
+      }
+    }
+  ]
+}

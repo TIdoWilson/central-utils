@@ -1,0 +1,61 @@
+{
+  "registro": {
+    "codigo": "K210",
+    "titulo": "Registro K210: Mapeamento para Planos de Contas das Empresas Consolidadas",
+    "bloco_origem": "bloco-k.htm",
+    "ancora": "K210",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-k.htm#K210"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:29:19.614885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo\nK210",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Fixo \"K210\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_EMP",
+      "descricao": "Código de\nidentificação da\nempresa\nparticipante",
+      "tipo": "N",
+      "tamanho": "4",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Empresa informada no K030"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CTA\n_EMP",
+      "descricao": "Código da conta\nda empresa\nparticipante",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E650SAL.CTARED"
+      }
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "registro": {
+    "codigo": "J215",
+    "titulo": "REGISTRO J215: Fato Contábil que Altera a Conta Lucros Acumulados ou a Conta Prejuízos Acumulados ou Todo\no Patrimônio Líquido",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "J215",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#J215"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:29:19.602885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo J215.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J215"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_HIST_FAT",
+      "descricao": "Código do histórico do fato contábil.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E640FTC.NUMFTC"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "DESC_FAT",
+      "descricao": "Descrição do Fato Contábil",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "-"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_FAT_CONT",
+      "descricao": "Valor do fato contábil.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "2",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Soma do valor das partidas dos lançamentos que pertence a composição do fato contábil, das quais apenas as partidas que possuem as contas do aglutinador do registro J210 serão consideradas."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_DC_FAT",
+      "descricao": "Indicador da situação do saldo informado no campo anterior:\n D – Devedor;\n C – Credor;\n P – Subtotal ou total positivo;\n N – Subtotal ou total negativo.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "[D”,”C”,”P”,”N”]"
+      }
+    }
+  ]
+}

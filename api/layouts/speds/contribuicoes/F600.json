@@ -1,0 +1,122 @@
+{
+  "registro": {
+    "codigo": "F600",
+    "titulo": "Registro F600 da EFD-Contribuições (Contribuição Retida na Fonte)",
+    "bloco": "3.5) Bloco F (Demais documentos e operações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=478"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 11,
+    "extraido_em_utc": "2026-03-10T19:03:22.681511+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"F600\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_NAT_RET",
+      "descricao": "Indicador de Natureza da Retenção na Fonte:\n01 - Retenção por Órgãos, Autarquias e Fundações Federais;\n02 - Retenção por outras Entidades da Administração Pública Federal;\n03 - Retenção por Pessoas Jurídicas de Direito Privado;\n04 - Recolhimento por Sociedade Cooperativa;\n05 - Retenção por Fabricante de Máquinas e Veículos;\n99 - Outras Retenções.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_RET",
+      "descricao": "Data da Retenção",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_BC_RET",
+      "descricao": "Base de calculo da retenção ou do recolhimento (sociedade cooperativa)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "04",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_RET",
+      "descricao": "Valor Total Retido na Fonte / Recolhido (sociedade cooperativa)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "COD_REC",
+      "descricao": "Código da Receita",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "IND_NAT_REC",
+      "descricao": "Indicador da Natureza da Receita:\n0 – Receita de Natureza Não Cumulativa;\n1 – Receita de Natureza Cumulativa.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "CNPJ",
+      "descricao": "CNPJ referente a:\n- Fonte Pagadora Responsável pela Retenção / Recolhimento (no caso de o registro ser escriturado pela pessoa jurídica beneficiária da retenção); ou\n- Pessoa Jurídica Beneficiária da Retenção / Recolhimento (no caso de o registro ser escriturado pela pessoa jurídica responsável pela retenção).",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_RET_PIS",
+      "descricao": "Valor Retido na Fonte – Parcela Referente ao PIS/Pasep",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_RET_COFINS",
+      "descricao": "Valor Retido na Fonte – Parcela Referente a COFINS",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "IND_DEC",
+      "descricao": "Indicador da condição da pessoa jurídica declarante:\n0 – Beneficiária da Retenção / Recolhimento;\n1- Responsável pelo Recolhimento.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    }
+  ]
+}

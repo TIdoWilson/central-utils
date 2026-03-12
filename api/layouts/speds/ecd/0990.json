@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "0990",
+    "titulo": "REGISTRO \n 0990: Encerramento do Bloco 0",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0990",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-0.htm#0990"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:29:19.577387+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0990\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "\"0990\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN_0",
+      "descricao": "Quantidade total de linhas do Bloco 0.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Somatório das linhas do bloco 0"
+      }
+    }
+  ]
+}

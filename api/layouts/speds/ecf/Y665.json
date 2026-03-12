@@ -1,0 +1,208 @@
+{
+  "registro": {
+    "codigo": "Y665",
+    "titulo": "REGISTRO Y665: DEMONSTRATIVO DAS DIFERENÇAS NA ADOÇÃO INICIAL",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y665",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y665"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 14,
+    "extraido_em_utc": "2026-03-10T19:31:56.943819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y665\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y665\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA",
+      "descricao": "Apresenta o código da conta contábil analítica, que deve estar presente no plano de contas da empresa (registros E050 e J050).",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código da Conta",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CCUS",
+      "descricao": "Apresenta o código do centro de custos, caso exista.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Centro de Custos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_SALDO_SOC",
+      "descricao": "Valor do saldo societário da conta",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Saldo Societário",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_VL_SALDO_SOC",
+      "descricao": "Indicador do valor do saldo societário:\nD – Devedor\nC – Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do Valor do Saldo Societário",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_SALDO_FIS",
+      "descricao": "Valor do saldo fiscal da conta",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Saldo Fiscal",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "IND_VL_SALDO_FIS",
+      "descricao": "Indicador do Valor do Saldo Fiscal:\nD – Devedor\nC – Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do Valor do Saldo Fiscal",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "DIF_SALDOS",
+      "descricao": "Diferença entre os saldos societário e fiscal das contas",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Diferença de Saldos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "IND_DIF_SALDOS",
+      "descricao": "Indicador da diferença de saldos:\nD – Devedor\nC – Credor",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador da Diferença de Saldos",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "10",
+      "campo": "MET_CONTR",
+      "descricao": "Método de Controle da Subconta:\nA) É controlada por subconta;\nB) É controlada por subconta, mas na forma prevista nos §§ 3º e 4º do art. 169 da Instrução Normativa RFB no 1.515/2014;\nC) Não é controlada por subconta, mas é controlada na forma prevista no § 5º do art. 169 da Instrução Normativa RFB no 1.515/2014; ou\nD) Não é controlada por subconta porque não haverá ajustes decorrentes das diferenças na forma prevista nos arts. 160 a 168, tais como nas participações em coligadas e controladas (art. 173 da Instrução Normativa RFB no 1.515/2014) e nos contratos de concessão de serviços públicos (art. 174 da Instrução Normativa RFB no 1.515/2014).\nE) Sem controles por subcontas (diferença, se positiva, será adicionada no lucro real ou, se negativa, não poderá será excluída) (Arts. 160 a 169, e art. 176, § 2o da Instrução Normativa RFB no 1.515/2014).\nF) É controlada por subconta em 01/01/2015, nos termos do art. 176, § 1o, III, da Instrução Normativa RFB no 1.515/2014.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Método de Controle",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "11",
+      "campo": "COD_SUBCONT",
+      "descricao": "Código da Subconta Contábil Analítica.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código da Subconta",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "12",
+      "campo": "COD_CCUS_SUB",
+      "descricao": "Código do Centro de Custos da Subconta Contábil Analítica.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código do Centro de Custos da Subconta",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "13",
+      "campo": "COD_SUBCONT_AUX",
+      "descricao": "Preenchido caso a pessoa jurídica utilize as subcontas auxiliares previstas nos art. 164, 165, 167 e 168 da Instrução Normativa RFB nº1.515, de 24 de novembro de 2014, alterados pela Instrução Normativa RFB nº 1.575, de 27 de julho de 2015.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código da Subconta Auxiliar Contábil Analítica",
+        "DOCUMENTAÇÃO": "-"
+      }
+    },
+    {
+      "numero": "14",
+      "campo": "COD_CCUS_SUB_AUX",
+      "descricao": "Código do Centro de Custos da Subconta Auxiliar Contábil Analítica",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código do Centro de Custos da Subconta",
+        "DOCUMENTAÇÃO": "-"
+      }
+    }
+  ]
+}

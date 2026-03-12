@@ -1,0 +1,140 @@
+{
+  "registro": {
+    "codigo": "0150",
+    "titulo": "Registro 0150 da EFD-Contribuições (Tabela de Cadastro do Participante)",
+    "bloco": "3.1) Bloco 0 (Abertura, identificação e referências):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=360"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:03:21.637232+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “0150”.",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_PART",
+      "descricao": "Código de identificação do participante no arquivo.",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "NOME",
+      "descricao": "Nome pessoal ou empresarial do participante.",
+      "tipo": "C",
+      "tamanho": "100",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_PAIS",
+      "descricao": "Código do país do participante, conforme a tabela indicada no item 3.2.1.",
+      "tipo": "N",
+      "tamanho": "005",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "CNPJ",
+      "descricao": "CNPJ do participante.",
+      "tipo": "N",
+      "tamanho": "014*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "CPF",
+      "descricao": "CPF do participante.",
+      "tipo": "N",
+      "tamanho": "011*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "07",
+      "campo": "IE",
+      "descricao": "Inscrição Estadual do participante.",
+      "tipo": "C",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "COD_MUN",
+      "descricao": "Código do município, conforme a tabela IBGE.",
+      "tipo": "N",
+      "tamanho": "007*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "SUFRAMA",
+      "descricao": "Número de inscrição do participante na Suframa",
+      "tipo": "C",
+      "tamanho": "009*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "10",
+      "campo": "END",
+      "descricao": "Logradouro e endereço do imóvel",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "11",
+      "campo": "NUM",
+      "descricao": "Número do imóvel",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "COMPL",
+      "descricao": "Dados complementares do endereço",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "13",
+      "campo": "BAIRRO",
+      "descricao": "Bairro em que o imóvel está situado",
+      "tipo": "C",
+      "tamanho": "060",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

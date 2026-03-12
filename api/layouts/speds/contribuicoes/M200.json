@@ -1,0 +1,140 @@
+{
+  "registro": {
+    "codigo": "M200",
+    "titulo": "Registro M200 da EFD-Contribuições (Consolidação da Contribuição para o PIS/Pasep do Período)",
+    "bloco": "3.7) Bloco M (Apuração da contribuição e crédito do PIS/Pasep e da Cofins):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=496"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:03:22.850900+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"M200\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "VL_TOT_CONT_NC_PER",
+      "descricao": "Valor Total da Contribuição Não Cumulativa do Período (recuperado do campo 13 do Registro M210, quando o campo “COD_CONT” = 01, 02, 03, 04, 32 e 71)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "VL_TOT_CRED_DESC",
+      "descricao": "Valor do Crédito Descontado, Apurado no Próprio Período da Escrituração (recuperado do campo 14 do Registro M100)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_TOT_CRED_DESC_ANT",
+      "descricao": "Valor do Crédito Descontado, Apurado em Período de Apuração Anterior (recuperado do campo 13 do Registro 1100)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_TOT_CONT_NC_DEV",
+      "descricao": "Valor Total da Contribuição Não Cumulativa Devida (02 – 03 - 04)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_RET_NC",
+      "descricao": "Valor Retido na Fonte Deduzido no Período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_OUT_DED_NC",
+      "descricao": "Outras Deduções no Período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_CONT_NC_REC",
+      "descricao": "Valor da Contribuição Não Cumulativa a Recolher/Pagar (05 – 06 - 07)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "VL_TOT_CONT_CUM_PER",
+      "descricao": "Valor Total da Contribuição Cumulativa do Período (recuperado do campo 13 do Registro M210, quando o campo “COD_CONT” = 31, 32, 51, 52, 53, 54 e 72)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_RET_CUM",
+      "descricao": "Valor Retido na Fonte Deduzido no Período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "VL_OUT_DED_CUM",
+      "descricao": "Outras Deduções no Período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_CONT_CUM_REC",
+      "descricao": "Valor da Contribuição Cumulativa a Recolher/Pagar (09 - 10 – 11)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_TOT_CONT_REC",
+      "descricao": "Valor Total da Contribuição a Recolher/Pagar no Período (08 + 12)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "registro": {
+    "codigo": "X410",
+    "titulo": "REGISTRO X410: COMÉRCIO ELETRÔNICO",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x410",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x410"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.915566+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X410\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X410\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "PAIS",
+      "descricao": "País em que disponibiliza homepage ou mantém servidor à sua disposição.\nCódigo do país, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "País",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "IND_HOME_DISP",
+      "descricao": "A pessoa jurídica deverá marcar “Sim” ou “Não”, para cada país selecionado, onde tenha o domínio de sua homepage registrado, caso disponibilize, ou não, efetivamente sua homepage. A disponibilização efetiva da homepage se dá por meio do conhecer ao público de seu conteúdo.\nAtenção: Deve assinalar “Não” neste campo, a pessoa jurídica que tenha efetuado somente o registro de sua homepage num determinado país e não tenha construído ou disponibilizado efetivamente essa homepage para o público.\nIndicador de Homepage disponível:\nS – Sim\nN – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Homepage Disponível",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "IND_SERV_DISP",
+      "descricao": "A pessoa jurídica que, por meio de sua homepage, aceite pedidos de compra, receba pagamentos, preste serviços ou efetue a entrega de bens digitais por meio de download deve selecionar “Sim” neste campo, para cada país selecionado, para informar o país onde mantém os servidores que estão à sua disposição. Para que um servidor seja considerado à sua disposição basta que ele seja o meio pelo qual a pessoa jurídica atue no comércio eletrônico. Esses servidores podem pertencer à pessoa jurídica, como podem ser alugados, arrendados ou cedidos a título gratuito ou oneroso.\nIndicador de disponibilidade de servidor:\nS – Sim\nN – Não",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador de Disponibilidade de Servidor",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

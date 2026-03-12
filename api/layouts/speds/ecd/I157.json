@@ -1,0 +1,109 @@
+{
+  "registro": {
+    "codigo": "I157",
+    "titulo": "REGISTRO I157: Transferência de Saldos de Plano de Contas Anterior",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I157",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I157"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 7,
+    "extraido_em_utc": "2026-03-10T19:29:19.588885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I157.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I157"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica do plano de contas anterior",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se na tela de entrada no campo Tipo de \n conta estiver com a opção:\n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta conforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta conforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil. \n Campo origem: E043PCM.CTARED"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CCUS",
+      "descricao": "Código do centro de custos do plano de contas anterior",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E043PCM.CODCCU"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_SLD_INI",
+      "descricao": "Valor do saldo inicial do período",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00, senão E650SAL.SALMES"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_DC_INI",
+      "descricao": "Indicador da situação do saldo inicial:\n D – Devedor\n C – Credor",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "Se Identificador de moeda funcional for igual a sim, 0,00, senão [D, C]"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_SLD_INI_MF",
+      "descricao": "Valor do saldo inicial do período\nem moeda funcional, convertida\npara reais",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "02",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "IND_DC_INI_MF",
+      "descricao": "Indicador da situação do saldo\ninicial em moeda funcional:\n D - Devedor;\n C - Credor",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": ""
+      }
+    }
+  ]
+}

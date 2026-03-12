@@ -1,0 +1,73 @@
+{
+  "registro": {
+    "codigo": "V100",
+    "titulo": "Registro V100 - Demonstrativo dos recursos em moeda estrangeira decorrentes do recebimento de exportações",
+    "bloco_origem": "bloco-v.htm",
+    "ancora": "v100",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-v.htm#v100"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 4,
+    "extraido_em_utc": "2026-03-10T19:31:56.890838+00:00"
+  },
+  "campos": [
+    {
+      "numero": "1",
+      "campo": "REG",
+      "descricao": "Texto Fixo Contendo a Identificação do Registro (V100)",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Fixo \"V100\""
+      }
+    },
+    {
+      "numero": "2",
+      "campo": "CODIGO",
+      "descricao": "Identificação da linha, conforme tabela publicada pela RFB",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Conforme tabela SPEDECF_V100"
+      }
+    },
+    {
+      "numero": "3",
+      "campo": "DESCRICAO",
+      "descricao": "Descrição da linha, conforme tabela publicada pela RFB",
+      "tipo": "C",
+      "tamanho": "1000",
+      "decimais": "",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": ""
+      }
+    },
+    {
+      "numero": "4",
+      "campo": "VALOR",
+      "descricao": "Valor da Linha",
+      "tipo": "C",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": ""
+      }
+    }
+  ]
+}

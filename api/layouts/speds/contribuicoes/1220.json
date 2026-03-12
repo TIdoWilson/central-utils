@@ -1,0 +1,68 @@
+{
+  "registro": {
+    "codigo": "1220",
+    "titulo": "Registro 1220 da EFD-Contribuições (Demonstração do Crédito a Descontar a Contribuição Extemporânea – PIS/Pasep)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=541"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:03:23.244678+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1220\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "PER_APU_CRED",
+      "descricao": "Período de Apuração do Crédito (MM/AAAA)",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "ORIG_CRED",
+      "descricao": "Indicador da origem do crédito:\n01 – Crédito decorrente de operações próprias;\n02 – Crédito transferido por pessoa jurídica sucedida.",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "COD_CRED",
+      "descricao": "Código do Tipo do Crédito, conforme Tabela 4.3.6.",
+      "tipo": "N",
+      "tamanho": "003*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_CRED",
+      "descricao": "Valor do Crédito a Descontar",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "002",
+      "obrigatorio": "S"
+    }
+  ]
+}

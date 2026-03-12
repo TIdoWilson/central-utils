@@ -1,0 +1,141 @@
+{
+  "registro": {
+    "codigo": "1960",
+    "id_guia": "314",
+    "titulo": "Registro 1960 da EFD-ICMS/IPI (GIAF 1 - Guia de Informação e Apuração de incentivos Fiscais e Financeiros: Indústria (Crédito presumido))",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=314"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 13,
+    "extraido_em_utc": "2026-03-10T19:07:51.655704+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1960\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_AP",
+      "descricao": "Indicador da sub-apuração por tipo de benefício (conforme tabela 4.7.1).",
+      "tipo": "N",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "G1_01",
+      "descricao": "Percentual de crédito presumido.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "G1_02",
+      "descricao": "Saídas não incentivadas de PI.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "G1_03",
+      "descricao": "Saídas incentivadas de PI.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "G1_04",
+      "descricao": "Saídas incentivadas de PI para fora do Nordeste.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "07",
+      "campo": "G1_05",
+      "descricao": "Saldo devedor do ICMS antes das deduções do incentivo.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "08",
+      "campo": "G1_06",
+      "descricao": "Saldo devedor do ICMS relativo à faixa incentivada de PI.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "09",
+      "campo": "G1_07",
+      "descricao": "Crédito presumido nas saídas incentivadas de PI para fora do Nordeste.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "10",
+      "campo": "G1_08",
+      "descricao": "Saldo devedor relativo à faixa incentivada de PI após o crédito presumido nas saídas para fora do Nordeste.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "G1_09",
+      "descricao": "Crédito presumido.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "12",
+      "campo": "G1_10",
+      "descricao": "Dedução de incentivo da Indústria (crédito presumido).",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "13",
+      "campo": "G1_11",
+      "descricao": "Saldo devedor do ICMS após deduções.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    }
+  ]
+}

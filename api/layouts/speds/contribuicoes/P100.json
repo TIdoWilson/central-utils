@@ -1,0 +1,131 @@
+{
+  "registro": {
+    "codigo": "P100",
+    "titulo": "Registro P100 da EFD-Contribuições (Contribuição Previdenciária sobre a Receita Bruta)",
+    "bloco": "3.8) Bloco P (Apuração da contribuição previdenciária sobre a receita bruta (CPRB)):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=526"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 12,
+    "extraido_em_utc": "2026-03-10T19:03:23.093584+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"P100\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "DT_INI",
+      "descricao": "Data inicial a que a apuração se refere",
+      "tipo": "C",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "DT_FIN",
+      "descricao": "Data final a que a apuração se refere",
+      "tipo": "C",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_REC_TOT_EST",
+      "descricao": "Valor da Receita Bruta Total do Estabelecimento no Período",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_ATIV_ECON",
+      "descricao": "Código indicador correspondente à atividade sujeita a incidência da Contribuição Previdenciária sobre a Receita Bruta, conforme Tabela 5.1.1.",
+      "tipo": "C",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "VL_REC_ATIV_ESTAB",
+      "descricao": "Valor da Receita Bruta do Estabelecimento, correspondente às atividades/produtos referidos no Campo 05 (COD_ATIV_ECON)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_EXC",
+      "descricao": "Valor das Exclusões da Receita Bruta informada no Campo 06",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "08",
+      "campo": "VL_BC_CONT",
+      "descricao": "Valor da Base de Cálculo da Contribuição Previdenciária sobre a Receita Bruta\n(Campo 08 = Campo 06 – Campo 07)",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "09",
+      "campo": "02",
+      "descricao": "Alíquota da Contribuição Previdenciária sobre a Receita Bruta",
+      "tipo": "N",
+      "tamanho": "008",
+      "decimais": "04",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "10",
+      "campo": "VL_CONT_APU",
+      "descricao": "Valor da Contribuição Previdenciária Apurada sobre a Receita Bruta",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "11",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta analítica contábil referente à Contribuição Previdenciária sobre a Receita Bruta",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "12",
+      "campo": "INFO_COMPL",
+      "descricao": "Informação complementar do registro",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

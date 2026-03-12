@@ -1,0 +1,69 @@
+{
+  "registro": {
+    "codigo": "1210",
+    "id_guia": "171",
+    "titulo": "Registro 1210 da EFD-ICMS/IPI (Utilização de créditos fiscais - ICMS)",
+    "bloco": "3.9) Bloco 1 (Outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=171"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:07:51.423121+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1210\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "TIPO_UTIL",
+      "descricao": "Tipo de utilização do crédito, conforme Tabela indicada no item 5.5 do Ato COTEPE/ICMS nº 09/2008 .",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "NR_DOC",
+      "descricao": "Número do documento utilizado na baixa de créditos.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_CRED_UTIL",
+      "descricao": "Total de crédito utilizado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "CHV_DOCe",
+      "descricao": "Chave do Documento Eletrônico.",
+      "tipo": "N",
+      "tamanho": "044*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    }
+  ]
+}

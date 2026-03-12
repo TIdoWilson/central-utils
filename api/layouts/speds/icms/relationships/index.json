@@ -1,0 +1,21 @@
+{
+  "sped": "ICMS_IPI",
+  "version": "1.0.0",
+  "files": [
+    {
+      "id": "hierarchy",
+      "path": "api/layouts/speds/icms/relationships/hierarchy.parent_child.json",
+      "description": "Mapa de hierarquia pai/filho e links de chave entre registros."
+    },
+    {
+      "id": "dependencies",
+      "path": "api/layouts/speds/icms/relationships/dependencies.cross_record.json",
+      "description": "Regras de impacto entre registros para operacoes de insert/update/delete."
+    },
+    {
+      "id": "reference_domains_validator",
+      "path": "api/layouts/speds/icms/relationships/reference_domains.validator.json",
+      "description": "Dominios internos de referencia para validacao global de relacionamentos no arquivo inteiro."
+    }
+  ]
+}

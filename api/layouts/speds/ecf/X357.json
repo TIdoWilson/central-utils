@@ -1,0 +1,91 @@
+{
+  "registro": {
+    "codigo": "X357",
+    "titulo": "REGISTRO X357: INVESTIDORAS DIRETAS",
+    "bloco_origem": "bloco-x.htm",
+    "ancora": "x357",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-x.htm#x357"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:31:56.912341+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"X357\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"X357\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "PAIS",
+      "descricao": "País: País de cada investidora direta.\nCódigo do país, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivo de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "País",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "NIF/CNPJ",
+      "descricao": "NIF: Número de identificação fiscal de cada investidora direta (\"CNPJ\" da investida no exterior) ou CNPJ.\nObservação:\n1 - Caso a investidora direta não possua NIF, utilize \"0000\"\n2 - Para investidoras diretas de um mesmo país diferente do Brasil que não possuam NIF, utilizar \"0000\", \"0001\", \"0002\", e assim por diante, conforme a quantidade de investidoras diretas.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "NIF/CNPJ",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "RAZAO_SOCIAL",
+      "descricao": "Razão Social: Razão social de cada controlada, direta ou indireta, equiparada ou coligada em regime de competência.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Razão Social",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "PERCENTUAL",
+      "descricao": "Percentual: Valor do percentual e participação da investidora direta na investida informada no registro X340.",
+      "tipo": "N",
+      "tamanho": "8",
+      "decimais": "4",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Percentual",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

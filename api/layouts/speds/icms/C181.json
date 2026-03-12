@@ -1,0 +1,217 @@
+{
+  "registro": {
+    "codigo": "C181",
+    "id_guia": "733",
+    "titulo": "Registro C181 da EFD-ICMS/IPI (Informações complementares das operações de devolução de saídas de mercadorias sujeitas à substituição tributária (Código 01, 1B, 04 e 55))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=733"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Entr.",
+      "Saída"
+    ],
+    "total_campos": 21,
+    "extraido_em_utc": "2026-03-10T19:07:49.283755+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C181\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O",
+      "colunas_extras": [
+        "Não apresentar"
+      ]
+    },
+    {
+      "numero": "02",
+      "campo": "COD_MOT_REST_COMPL",
+      "descricao": "Código do motivo da restituição ou complementação conforme Tabela 5.7.",
+      "tipo": "C",
+      "tamanho": "005*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "03",
+      "campo": "QUANT_CONV",
+      "descricao": "Quantidade do item.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "04",
+      "campo": "UNID",
+      "descricao": "Unidade adotada para informar o campo QUANT_CONV.",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "05",
+      "campo": "COD_MOD_SAIDA",
+      "descricao": "Código do modelo do documento fiscal de saída, conforme a tabela indicada no item 4.1.1.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "06",
+      "campo": "SERIE_SAIDA",
+      "descricao": "Número de série do documento de saída em papel.",
+      "tipo": "C",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "07",
+      "campo": "ECF_FAB_SAIDA",
+      "descricao": "Número de série de fabricação do equipamento ECF.",
+      "tipo": "C",
+      "tamanho": "021",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "08",
+      "campo": "NUM_DOC_SAIDA",
+      "descricao": "Número do documento fiscal de saída.",
+      "tipo": "N",
+      "tamanho": "009",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "09",
+      "campo": "CHV_DFE_SAIDA",
+      "descricao": "Chave do documento fiscal eletrônico de saída.",
+      "tipo": "N",
+      "tamanho": "044*",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "10",
+      "campo": "DT_DOC_SAIDA",
+      "descricao": "Data da emissão do documento fiscal de saída.",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "11",
+      "campo": "NUM_ITEM_SAIDA",
+      "descricao": "Número do item em que foi escriturada a saída em um registro C185, C380, C480 ou C815 quando o contribuinte informar a saída em um arquivo de perfil A.",
+      "tipo": "N",
+      "tamanho": "003",
+      "decimais": "-",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "12",
+      "campo": "VL_UNIT_CONV_SAIDA",
+      "descricao": "Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo \"QUANT_CONV\", correspondente ao valor do campo VL_UNIT_CONV, preenchido na ocasião da saída.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "13",
+      "campo": "VL_UNIT_ICMS_OP_ESTOQUE_CONV_SAIDA",
+      "descricao": "Valor médio unitário do ICMS OP, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_OP_ESTOQUE_CONV, preenchido na ocasião da saída.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "14",
+      "campo": "VL_UNIT_ICMS_ST_ESTOQUE_CONV_SAIDA",
+      "descricao": "Valor médio unitário do ICMS ST, incluindo FCP ST, das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "15",
+      "campo": "VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV_SAIDA",
+      "descricao": "Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, correspondente ao valor do campo VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, preenchido na ocasião da saída.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "16",
+      "campo": "VL_UNIT_ICMS_NA_OPERACAO_CONV_SAIDA",
+      "descricao": "Valor unitário para o ICMS na operação, correspondente ao valor do campo VL_UNIT_ICMS_NA_OPERACAO_CONV, preenchido na ocasião da saída.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "17",
+      "campo": "VL_UNIT_ICMS_OP_CONV_SAIDA",
+      "descricao": "Valor unitário do ICMS correspondente ao valor do campo VL_UNIT_ICMS_OP_CONV, preenchido na ocasião da saída.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "18",
+      "campo": "VL_UNIT_ICMS_ST_CONV_REST",
+      "descricao": "Valor unitário do total do ICMS ST, incluindo FCP ST, a ser restituído/ressarcido, correspondente ao estorno do complemento apurado na operação de saída.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "19",
+      "campo": "VL_UNIT_FCP_ST_CONV_REST",
+      "descricao": "Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo \"VL_UNIT_ICMS_ST_CONV_REST\", considerando a unidade utilizada para informar o campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "20",
+      "campo": "VL_UNIT_ICMS_ST_CONV_COMPL",
+      "descricao": "Valor unitário do estorno do ressarcimento/restituição, incluindo FCP ST, apurado na operação de saída.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    },
+    {
+      "numero": "21",
+      "campo": "VL_UNIT_FCP_ST_CONV_COMPL",
+      "descricao": "Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo \"VL_UNIT_ICMS_ST_CONV_COMPL\",considerando unidade utilizada para informaro campo \"QUANT_CONV\".",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "06",
+      "obrigatorio": "OC"
+    }
+  ]
+}

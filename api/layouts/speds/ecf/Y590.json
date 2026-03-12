@@ -1,0 +1,104 @@
+{
+  "registro": {
+    "codigo": "Y590",
+    "titulo": "REGISTRO Y590: ATIVOS NO EXTERIOR",
+    "bloco_origem": "bloco-y.htm",
+    "ancora": "y590",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y590"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:31:56.933819+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"Y590\"",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"Y590\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "TIP_ATIVO",
+      "descricao": "Tipo do Ativo que Possui no Exterior, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "C",
+      "tamanho": "14",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Ativo",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "PAIS",
+      "descricao": "País onde se localiza o ativo no exterior, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas).",
+      "tipo": "N",
+      "tamanho": "3",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "País",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "DISCRIMINACAO",
+      "descricao": "Detalhar, neste campo, as informações correspondentes aos ativos, tais como: tipo, localização, data de aquisição e de venda, de quem foi adquirido, a quem foi alienado, instituição que intermediou a operação, valor de aquisição e/ou de venda em moeda estrangeira, instituição financeira e agência, tratando-se de aplicação financeira ou depósito e, na hipótese de participações societárias, espécie de participação e empresa investida.",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Discriminação",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_ANT",
+      "descricao": "Informar o valor contábil do ativo no exterior no final do período anterior.\nAtenção:\n1) Caso o período abrangido pela ECF não se inicie em 01/01, a exemplo de início de atividades ou ocorrência de situação especial no ano-calendário, deve ser informado o valor em reais (R$) do ativo no exterior na data de início do período abrangido pela ECF.\n2) Caso o ativo tenha sido adquirido no curso do período abrangido pela ECF, deve ser informado, neste campo, o valor \"zero\" e no campo “Discriminação” a data e o valor da aquisição.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor Anterior",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "VL_ATUAL",
+      "descricao": "Valor contábil do ativo no final do período atual.\nAtenção: Caso o ativo tenha sido alienado no curso do período abrangido pela ECF, deve ser informado, neste campo, o valor \"zero\" e no campo “Discriminação” a data e o valor da alienação.",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "2",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor Atual",
+        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
+      }
+    }
+  ]
+}

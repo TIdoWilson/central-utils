@@ -1,0 +1,76 @@
+{
+  "registro": {
+    "codigo": "I200",
+    "titulo": "Registro I200 da EFD-Contribuições (Composição das Receitas, Deduções e/ou Exclusões do Período)",
+    "bloco": "3.6) Bloco I (Operações das instituições financeiras, seguradoras, entidades de previdência privada, operações de planos de assistência à saúde e demais pessoas jurídicas referenciadas no art. 3, §§ 6º, 8º e 9º da Lei nº 9.718/1998):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=486"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec."
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:03:22.712111+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"I200\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "02",
+      "campo": "NUM_CAMPO",
+      "descricao": "Informar o número do campo do registro “I100” (Campos 02, 04 ou 05), objeto de informação neste registro.",
+      "tipo": "C",
+      "tamanho": "002*",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "03",
+      "campo": "COD_DET",
+      "descricao": "Código do tipo de detalhamento, conforme Tabelas 7.1.1 e/ou 7.1.2",
+      "tipo": "C",
+      "tamanho": "005*",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "04",
+      "campo": "DET_VALOR",
+      "descricao": "Valor detalhado referente ao campo 03 (COD_DET) deste registro",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "05",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta contábil referente ao valor informado no campo 04 (DET_VALOR)",
+      "tipo": "C",
+      "tamanho": "255",
+      "decimais": "-",
+      "obrigatorio": ""
+    },
+    {
+      "numero": "06",
+      "campo": "INFO_COMPL",
+      "descricao": "Informação Complementar dos dados informados no registro",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": ""
+    }
+  ]
+}

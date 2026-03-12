@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "V030",
+    "titulo": "Registro V030 - DEREX – Período - Mês",
+    "bloco_origem": "bloco-v.htm",
+    "ancora": "v030",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-v.htm#v030"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "DESCRIÇÃO",
+      "TIPO",
+      "TAMANHO",
+      "DECIMAL",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:31:56.890838+00:00"
+  },
+  "campos": [
+    {
+      "numero": "1",
+      "campo": "REG",
+      "descricao": "Texto Fixo Contendo a Identificação do Registro (V030).",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "Fixo \"V030\""
+      }
+    },
+    {
+      "numero": "2",
+      "campo": "MES",
+      "descricao": "Mês",
+      "tipo": "C",
+      "tamanho": "2",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "DOCUMENTAÇÃO": "01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12"
+      }
+    }
+  ]
+}

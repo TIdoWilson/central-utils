@@ -1,0 +1,133 @@
+{
+  "registro": {
+    "codigo": "J210",
+    "titulo": "REGISTRO J210: Demonstração de Lucros ou Prejuízos Acumulados/DMPL – Demonstração de Mutações do Patrimônio Líquido",
+    "bloco_origem": "bloco-j.htm",
+    "ancora": "J210",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-j.htm#J210"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:29:19.601885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo J210.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "J210"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_TIP",
+      "descricao": "Indicador do tipo de demonstração:\n 0 – DLPA - Demonstração de lucros ou prejuízos acumulados.\n 1 – DMPL - Demonstração de mutações do patrimônio líquido.",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "[0,1]"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_AGL",
+      "descricao": "Código de aglutinação das contas analíticas do patrimônio líquido, atribuído pela empresa.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E046CMP.CODAGL"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "DESCR_COD_AGL",
+      "descricao": "Descrição do Código de aglutinação.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E045AGL.DESAGL"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "VL_CTA_INI",
+      "descricao": "Saldo inicial do código de aglutinação na demonstração do período informado.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "2",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Soma do saldo de todas as contas que pertencem a aglutinação, da competência anterior ao período informado."
+      }
+    },
+    {
+      "numero": "006",
+      "campo": "IND_DC_CTA_INI",
+      "descricao": "Indicador da situação do saldo informado no campo anterior:\n D – Devedor;\n C – Credor.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Caso o Valor do Saldo Final for negativo e a Descrição da conta não possuir indicativo de redução (-): \n Se a lista dinâmica estiver como D- Devedor o sistema irá inverter o sinal, gerando o registro como C- Credor . \n Se a lista dinâmica estiver como C- Credor o sistema irá inverter o sinal, gerando o registro como D- Devedor . \n Caso o Valor do Saldo Final seja positivo e a Descrição da conta possuir indicativo de redução (-): \n Se a lista dinâmica estiver como D- Devedor o sistema irá inverter o sinal, gerando o registro como C- Credor . \n Se a lista dinâmica estiver como C- Credor o sistema irá inverter o sinal, gerando o registro como D- Devedor ."
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "VL_CTA_FIN",
+      "descricao": "Saldo final do código de aglutinação na demonstração do período informado.",
+      "tipo": "N",
+      "tamanho": "019",
+      "decimais": "2",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Soma do saldo de todas as contas que pertencem a aglutinação, da competência atual."
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "IND_DC_CTA_FIN",
+      "descricao": "Indicador da situação do saldo final informado no campo anterior:\nD – Devedor;\nC – Credor.",
+      "tipo": "C",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Caso Valor do Saldo Inicial for negativo e a Descrição da conta não possuir indicativo de redução (-): \n Se a lista dinâmica estiver como D- Devedor o sistema irá inverter o sinal, gerando o registro como C- Credor . \n Se a lista dinâmica estiver como C- Credor o sistema irá inverter o sinal, gerando o registro como D- Devedor . \n Caso Valor do Saldo Inicial seja positivo e a Descrição da conta possuir indicativo de redução (-): \n Se a lista dinâmica estiver como D- Devedor o sistema irá inverter o sinal, gerando o registro como C- Credor . \n Se a lista dinâmica estiver como C- Credor o sistema irá inverter o sinal, gerando o registro como D- Devedor ."
+      }
+    },
+    {
+      "numero": "09",
+      "campo": "NOTAS_EXP_REF",
+      "descricao": "Referência à numeração das notas explicativas relativas às demonstrações contábeis.",
+      "tipo": "C",
+      "tamanho": "12",
+      "decimais": "",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E046NEX.CodNex"
+      }
+    }
+  ]
+}

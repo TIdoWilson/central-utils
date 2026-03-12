@@ -1,0 +1,121 @@
+{
+  "registro": {
+    "codigo": "0020",
+    "titulo": "REGISTRO 0020: Escrituração Contábil Descentralizada",
+    "bloco_origem": "bloco-0.htm",
+    "ancora": "0020",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-0.htm#0020"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 8,
+    "extraido_em_utc": "2026-03-10T19:29:19.574386+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"0020\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "\"0020\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "IND_DEC",
+      "descricao": "Indicador de descentralização:\n 0 - Escrituração da matriz;\n 1 - Escrituração da filial.",
+      "tipo": "N",
+      "tamanho": "001",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Caso seja apresentada a escrituração de mais de uma filial será considerada “0”, caso seja de somente uma filial será “1”."
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "CNPJ",
+      "descricao": "Número de inscrição do empresário ou sociedade empresária no CNPJ da matriz ou da filial.",
+      "tipo": "N",
+      "tamanho": "014",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E070FIL.NUMCGC"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "UF",
+      "descricao": "Sigla da unidade da federação da matriz ou da filial.",
+      "tipo": "C",
+      "tamanho": "002",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "E070FIL.SIGUFS"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IE",
+      "descricao": "Inscrição estadual da matriz ou da filial.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E070FIL.INSEST"
+      }
+    },
+    {
+      "numero": "06",
+      "campo": "COD_MUN",
+      "descricao": "Código do município do domicílio da matriz ou da filial.",
+      "tipo": "N",
+      "tamanho": "007",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E070FIL.CODRAI"
+      }
+    },
+    {
+      "numero": "07",
+      "campo": "IM",
+      "descricao": "Número de Inscrição Municipal da matriz ou da filial.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E070FIL.INSMUN"
+      }
+    },
+    {
+      "numero": "08",
+      "campo": "NIRE",
+      "descricao": "Número de\nIdentificação do\nRegistro de Empresas\nda matriz ou da filial\nna Junta Comercial.",
+      "tipo": "N",
+      "tamanho": "011",
+      "decimais": "-",
+      "obrigatorio": "N",
+      "colunas_extras": {
+        "Documentação": "E070FIL.CTBNRJ"
+      }
+    }
+  ]
+}

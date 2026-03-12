@@ -1,0 +1,49 @@
+{
+  "registro": {
+    "codigo": "I990",
+    "titulo": "REGISTRO \n I990: Encerramento do Bloco I",
+    "bloco_origem": "bloco-i.htm",
+    "ancora": "I990",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-ecd/bloco-i.htm#I990"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Documentação",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:29:19.596885+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo I990.",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "I990"
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "QTD_LIN_I",
+      "descricao": "Quantidade total de linhas do Bloco I.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "S",
+      "colunas_extras": {
+        "Documentação": "Somatório das linhas do bloco \n I"
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "registro": {
+    "codigo": "C110",
+    "titulo": "Registro C110 da EFD-Contribuições (Complemento do Documento - Informação Complementar da Nota Fiscal (Códigos 01, 1B, 04 e 55) da EFD-Contribuições)",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=385"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 3,
+    "extraido_em_utc": "2026-03-10T19:03:21.779726+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C110\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "01",
+      "campo": "COD_INF",
+      "descricao": "Código da informação complementar do documento fiscal (campo 02 do Registro 0450).",
+      "tipo": "C",
+      "tamanho": "006",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "01",
+      "campo": "TXT_COMPL",
+      "descricao": "Descrição complementar do código de referência.",
+      "tipo": "C",
+      "tamanho": "-",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

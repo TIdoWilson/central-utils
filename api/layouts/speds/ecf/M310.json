@@ -1,0 +1,90 @@
+{
+  "registro": {
+    "codigo": "M310",
+    "titulo": "REGISTRO M310: CONTAS CONTÁBEIS RELACIONADAS AO LANÇAMENTO DA PARTE A DO e-LALUR",
+    "bloco_origem": "bloco-m.htm",
+    "ancora": "m310",
+    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m310"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "CAMPO",
+      "RÓTULO",
+      "TIPO",
+      "TAMANHO",
+      "DESCRIÇÃO",
+      "DOCUMENTAÇÃO",
+      "OBRIGATÓRIO"
+    ],
+    "total_campos": 5,
+    "extraido_em_utc": "2026-03-10T19:31:56.842836+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo “M310”",
+      "tipo": "C",
+      "tamanho": "4",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Tipo de Registro",
+        "DOCUMENTAÇÃO": "\"M310\""
+      }
+    },
+    {
+      "numero": "02",
+      "campo": "COD_CTA",
+      "descricao": "Código da conta ou subconta contábil patrimonial onde está registrado o valor a ser adicionado ou excluído, quando possível sua identificação (deve existir no J050)",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Código de Conta Contábil",
+        "DOCUMENTAÇÃO": "Se na tela de entrada no campo Tipo de \n conta estiver com a opção:\n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta coforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta coforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil. \n Campo origem: E664CTB.CTARED"
+      }
+    },
+    {
+      "numero": "03",
+      "campo": "COD_CCUS",
+      "descricao": "Código do Centro de Custos (deve existir no J100)",
+      "tipo": "C",
+      "tamanho": "",
+      "decimais": "",
+      "obrigatorio": "Não",
+      "colunas_extras": {
+        "RÓTULO": "Código do Centro de Custos",
+        "DOCUMENTAÇÃO": "E664CTB.CODCCU"
+      }
+    },
+    {
+      "numero": "04",
+      "campo": "VL_CTA",
+      "descricao": "Valor da conta utilizado no lançamento da parte A",
+      "tipo": "N",
+      "tamanho": "19",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Valor da Conta",
+        "DOCUMENTAÇÃO": "E664CTB.VLRCTB"
+      }
+    },
+    {
+      "numero": "05",
+      "campo": "IND_VL_CTA",
+      "descricao": "Indicador do Valor do Lançamento:\nD – Devedor.\nC – Credor.",
+      "tipo": "C",
+      "tamanho": "1",
+      "decimais": "",
+      "obrigatorio": "Sim",
+      "colunas_extras": {
+        "RÓTULO": "Indicador do Saldo da Conta",
+        "DOCUMENTAÇÃO": "Se o valor do saldo em E664CTB.VLRCTB for maior ou igual a 0\n- Deverá receber \"D\"\nSenão\n-Deverá receber \"C\""
+      }
+    }
+  ]
+}

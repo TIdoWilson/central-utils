@@ -1,0 +1,77 @@
+{
+  "registro": {
+    "codigo": "C120",
+    "titulo": "Registro C120 da EFD-Contribuições (Complemento do Documento - Operações de Importação (Código 01))",
+    "bloco": "3.3) Bloco C (Documentos fiscais I - mercadorias - ICMS/IPI):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=389"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 6,
+    "extraido_em_utc": "2026-03-10T19:03:21.835978+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"C120\"",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "COD_DOC_IMP",
+      "descricao": "Documento de importação:\n0 – Declaração de Importação;\n1 – Declaração Simplificada de Importação;\n__________________________________\nA partir dos fatos geradores ocorridos em 01/2019:\nDocumento de importação:\n0 – Declaração de Importação;\n1 – Declaração Simplificada de Importação;\n2 – Declaração Única de Importação",
+      "tipo": "C",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "NUM_DOC_IMP",
+      "descricao": "Número do documento de Importação.",
+      "tipo": "C",
+      "tamanho": "015",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "VL_PIS_IMP",
+      "descricao": "Valor pago de PIS na importação",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "VL_COFINS_IMP",
+      "descricao": "Valor pago de COFINS na importação",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "06",
+      "campo": "NUM_ACDRAW",
+      "descricao": "Número do Ato Concessório do regime Drawback",
+      "tipo": "C",
+      "tamanho": "020",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}

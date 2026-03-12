@@ -1,0 +1,42 @@
+{
+  "registro": {
+    "codigo": "9001",
+    "id_guia": "196",
+    "titulo": "Registro 9001 da EFD-ICMS/IPI (Abertura do Bloco 9)",
+    "bloco": "3.10) Bloco 9 (Controle e encerramento do arquivo digital):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=196"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 2,
+    "extraido_em_utc": "2026-03-10T19:07:51.746667+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"9001\".",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "O"
+    },
+    {
+      "numero": "02",
+      "campo": "IND_MOV",
+      "descricao": "Indicador de movimento:\n 0: Bloco com dados informados;\n 1: Bloco sem dados informados.",
+      "tipo": "N",
+      "tamanho": "001*",
+      "decimais": "-",
+      "obrigatorio": "O"
+    }
+  ]
+}

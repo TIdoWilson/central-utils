@@ -1,0 +1,104 @@
+{
+  "registro": {
+    "codigo": "1800",
+    "titulo": "Registro 1800 da EFD-Contribuições (Incorporação Imobiliária – RET)",
+    "bloco": "3.9) Bloco 1 (Complemento da escrituração - Controle de saldos de créditos e de retenções, operações extemporâneas e outras informações):",
+    "url_fonte": "https://www.vriconsulting.com.br/guias/guiasIndex.php?idGuia=550"
+  },
+  "layout": {
+    "cabecalho_colunas": [
+      "Nº",
+      "Campo",
+      "Descrição",
+      "Tipo",
+      "Tam.",
+      "Dec.",
+      "Obrig."
+    ],
+    "total_campos": 9,
+    "extraido_em_utc": "2026-03-10T19:03:23.309168+00:00"
+  },
+  "campos": [
+    {
+      "numero": "01",
+      "campo": "REG",
+      "descricao": "Texto fixo contendo \"1800\"",
+      "tipo": "C",
+      "tamanho": "004*",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "02",
+      "campo": "INC_IMOB",
+      "descricao": "Empreendimento objeto de Incorporação Imobiliária, optante pelo RET.",
+      "tipo": "C",
+      "tamanho": "090",
+      "decimais": "-",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "03",
+      "campo": "REC_RECEB_RET",
+      "descricao": "Receitas recebidas pela incorporadora na venda das unidades imobiliárias que compõem a incorporação.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "04",
+      "campo": "REC_FIN_RET",
+      "descricao": "Receitas Financeiras e Variações Monetárias decorrentes das vendas submetidas ao RET.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "05",
+      "campo": "BC_RET",
+      "descricao": "Base de Cálculo do Recolhimento Unificado",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "06",
+      "campo": "ALIQ_RET",
+      "descricao": "Alíquota do Recolhimento Unificado.",
+      "tipo": "N",
+      "tamanho": "006",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "07",
+      "campo": "VL_REC_UNI",
+      "descricao": "Valor do Recolhimento Unificado.",
+      "tipo": "N",
+      "tamanho": "-",
+      "decimais": "02",
+      "obrigatorio": "S"
+    },
+    {
+      "numero": "08",
+      "campo": "DT_REC_UNI",
+      "descricao": "Data do recolhimento unificado",
+      "tipo": "N",
+      "tamanho": "008*",
+      "decimais": "-",
+      "obrigatorio": "N"
+    },
+    {
+      "numero": "09",
+      "campo": "COD_REC",
+      "descricao": "Código da Receita",
+      "tipo": "C",
+      "tamanho": "004",
+      "decimais": "-",
+      "obrigatorio": "N"
+    }
+  ]
+}
