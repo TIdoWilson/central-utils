@@ -108,6 +108,10 @@
         "entry": "api/speds_scripts/icms/corretor_total_inventario.py",
         "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/corretor_total_inventario.py"
       },
+      "manifest": {
+        "path": "api/layouts/speds/icms/manifests/icms-corretor-total-inventario.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
+      },
       "inputs": [
         {
           "key": "sped_txt",
@@ -208,6 +212,10 @@
       "script": {
         "entry": "api/speds_scripts/icms/integrar_inventario_sped.py",
         "source": "C:/Users/Usuario/Desktop/projeto sped/sped icms/integrar_inventario_sped.py"
+      },
+      "manifest": {
+        "path": "api/layouts/speds/icms/manifests/icms-integrar-inventario-sped.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
       },
       "inputs": [
         {
