@@ -1,4 +1,4 @@
-﻿/* global AuthClient, inicializarSidebar */
+/* global AuthClient, inicializarSidebar */
 
 (function () {
   const UFS = [
@@ -450,10 +450,10 @@
 
     function createRowItem(row = {}) {
       const dueDate = row.dueDate || getDefaultDueDate();
-      const valueIcms = row.valueIcms ?? '';
-      const valueFcp = row.valueFcp ?? '';
-      const valueDevolutions = row.valueDevolutions ?? '';
-      const valuePrepayments = row.valuePrepayments ?? '';
+      const valueIcms = row.valueIcms - '';
+      const valueFcp = row.valueFcp - '';
+      const valueDevolutions = row.valueDevolutions - '';
+      const valuePrepayments = row.valuePrepayments - '';
 
       const tr = document.createElement('tr');
       tr.innerHTML = `

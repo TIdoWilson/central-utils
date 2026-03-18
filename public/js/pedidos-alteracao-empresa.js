@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (typeof inicializarSidebar === 'function') {
     try { await inicializarSidebar('pedidos-alteracao-empresa'); } catch (_) {}
   }

@@ -6,6 +6,12 @@ Este arquivo é gerado automaticamente a partir de `src/core/tool-catalog.json`.
 
 - **Checklist TI Criacao de Usuario** — `/checklist-ti-criacao-usuario` • API: `/api/checklist-ti-criacao-usuario` • **ADMIN**
 
+## Contabil
+
+- **Conversor Extrato PDF para OFX** — `/conversor-extrato-pdf-ofx` • API: `/api/conversor-extrato-pdf-ofx`
+- **Gerador TXT GFBR** — `/gfbr-gerador-txt` • API: `/api/gfbr-gerador-txt`
+- **Lotes TXT** — `/lotes-txt`
+
 ## Declaracoes
 
 - **GIAST** — `/giast` • API: `/api/giast`

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin - Dashboards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="app-body nfe-body page-dashboards">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">WL</span>
+            <span class="logo-text">Portal</span>
+          </div>
+
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <h1>Administração - Dashboards</h1>
+          <p>Métricas de erro de processamento e acessos do portal.</p>
+
+          <div class="nfe-table-actions" style="margin-top: 10px">
+            <button class="btn btn-secondary" id="btnRefreshDashboards" type="button">Atualizar</button>
+            <button class="btn btn-ghost-danger" id="btnLogout" type="button">Sair</button>
+          </div>
+
+          <div id="whoami" class="nfe-card-subtitle" style="margin-top: 8px"></div>
+          <div id="dashboardsMessage" class="auth-message" aria-live="polite"></div>
+        </header>
+
+        <section class="nfe-card">
+          <div class="nfe-card-header">
+            <h2>Resumo Geral</h2>
+          </div>
+
+          <div class="dashboard-kpi-grid">
+            <article class="dashboard-kpi-card">
+              <span class="dashboard-kpi-label">Processamentos mapeados</span>
+              <strong id="metricProcessingTotal">0</strong>
+            </article>
+            <article class="dashboard-kpi-card dashboard-kpi-card-success">
+              <span class="dashboard-kpi-label">Sucessos</span>
+              <strong id="metricProcessingSuccess">0</strong>
+            </article>
+            <article class="dashboard-kpi-card dashboard-kpi-card-error">
+              <span class="dashboard-kpi-label">Erros</span>
+              <strong id="metricProcessingError">0</strong>
+            </article>
+            <article class="dashboard-kpi-card">
+              <span class="dashboard-kpi-label">Acessos (últimos 7 dias)</span>
+              <strong id="metricAccessLast7Days">0</strong>
+            </article>
+            <article class="dashboard-kpi-card">
+              <span class="dashboard-kpi-label">Acessos (total geral)</span>
+              <strong id="metricAccessTotal">0</strong>
+            </article>
+            <article class="dashboard-kpi-card">
+              <span class="dashboard-kpi-label">Usuários mapeados</span>
+              <strong id="metricUsersMapped">0</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="nfe-card">
+          <div class="dashboard-charts-grid">
+            <article class="dashboard-chart-card">
+              <h3>Percentual de erro de processamento</h3>
+              <p class="nfe-card-subtitle">
+                Cálculo com base nos eventos de auditoria de processamento de arquivos (status ok/error).
+              </p>
+              <div class="dashboard-donut-wrap">
+                <div id="errorRateDonut" class="dashboard-donut" style="--error-pct: 0%">
+                  <span id="errorRateCenter" class="dashboard-donut-center">0%</span>
+                </div>
+                <div class="dashboard-donut-legend">
+                  <div><span class="legend-dot legend-dot-error"></span><strong id="metricErrorPercent">0%</strong> erro</div>
+                  <div><span class="legend-dot legend-dot-success"></span><strong id="metricSuccessPercent">0%</strong> sucesso</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="dashboard-chart-card">
+              <h3>Acessos nos últimos 7 dias</h3>
+              <p class="nfe-card-subtitle">Visão diária dos acessos registrados (eventos page_view_*).</p>
+              <div id="accessByDayChart" class="dashboard-bars"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="nfe-card nfe-card-table">
+          <div class="nfe-card-header">
+            <h2>Acessos por Usuário</h2>
+            <p class="nfe-card-subtitle">Mapeamento por usuário com recorte de 7 dias e total geral.</p>
+          </div>
+
+          <div class="nfe-table-wrapper">
+            <table class="nfe-table">
+              <thead>
+                <tr>
+                  <th>Usuário</th>
+                  <th>E-mail</th>
+                  <th>Acessos (7 dias)</th>
+                  <th>Acessos (total)</th>
+                  <th>Último acesso</th>
+                </tr>
+              </thead>
+              <tbody id="accessByUserTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/dashboards.js"></script>
+  </body>
+</html>
+

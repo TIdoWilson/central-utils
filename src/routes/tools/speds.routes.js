@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const createSpedsService = require('../../services/speds.service');
 
 function parseJsonSafely(raw, fallback = {}) {

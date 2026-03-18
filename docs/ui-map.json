@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-10T14:04:54.470Z",
+  "generatedAt": "2026-03-16T12:19:01.541Z",
   "groups": [
     {
       "group": "Admin",
@@ -11,6 +11,38 @@
           "hasApi": true,
           "apiBase": "/api/checklist-ti-criacao-usuario",
           "adminOnly": true,
+          "aliases": []
+        }
+      ]
+    },
+    {
+      "group": "Contabil",
+      "tools": [
+        {
+          "slug": "conversor-extrato-pdf-ofx",
+          "title": "Conversor Extrato PDF para OFX",
+          "path": "/conversor-extrato-pdf-ofx",
+          "hasApi": true,
+          "apiBase": "/api/conversor-extrato-pdf-ofx",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "gfbr-gerador-txt",
+          "title": "Gerador TXT GFBR",
+          "path": "/gfbr-gerador-txt",
+          "hasApi": true,
+          "apiBase": "/api/gfbr-gerador-txt",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "lotes-txt",
+          "title": "Lotes TXT",
+          "path": "/lotes-txt",
+          "hasApi": false,
+          "apiBase": null,
+          "adminOnly": false,
           "aliases": []
         }
       ]

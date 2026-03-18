@@ -39,6 +39,10 @@
 
 
     <section class="hero">
+        <div class="home-search-wrap">
+            <input id="homeSearchInput" type="search" placeholder="Buscar ferramenta..." autocomplete="off">
+            <button id="homeSearchClear" type="button">Limpar</button>
+        </div>
         <h1>Central de Utilitários</h1>
         <p>Selecione uma categoria abaixo para acessar suas ferramentas.</p>
     </section>
@@ -222,7 +226,46 @@
                     </div>
                 </div>
 
+                <div class="carousel-card" data-script="lotes-txt">
+                    <div class="card-icon">&#128196;</div>
+                    <h3 class="card-title">Lotes TXT</h3>
+                    <p class="card-subtitle">
+                        Leia o TXT de lote Cont&aacute;bil, totalize d&eacute;bitos/cr&eacute;ditos e preencha contas ausentes para gerar
+                        novamente o arquivo pronto para importa&ccedil;&atilde;o no ERP.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Cont&aacute;bil</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Anexe o TXT, confira totais, ajuste os lan&ccedil;amentos sem conta (n&uacute;mero da linha, conta,
+                            valor e hist&oacute;rico) e baixe o arquivo atualizado ap&oacute;s preencher todas as pend&ecirc;ncias.
+                        </p>
+                        <a href="/lotes-txt" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
                 <!-- home.html – dentro da sessão Contábil -->
+                <div class="carousel-card" data-script="gfbr-gerador-txt">
+                    <div class="card-icon">&#128221;</div>
+                    <h3 class="card-title">Gerador TXT GFBR</h3>
+                    <p class="card-subtitle">
+                        Converte o diario GFBR para layout IOB e gera o arquivo final como LOTD0000.txt.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Contabil</span>
+                        <span class="tag">Python</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Envie a planilha do diario, aplique as regras de mapeamento e baixe o TXT
+                            no padrao do lotes-txt, com CSV de pendencias e exclusoes.
+                        </p>
+                        <a href="/gfbr-gerador-txt" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+
                 <div class="carousel-card" data-script="ajuste-diario-gfbr-c">
                     <div class="card-icon">📊</div>
                     <h3 class="card-title">Ajuste Diário GFBR</h3>
@@ -482,39 +525,6 @@
         </div>
     </section>
 
-    <!-- ===== FERRAMENTAS PDF ===== -->
-    <section class="session session--pdf" id="ferramentas-pdf">
-        <button class="session-header" type="button">
-            <div class="session-header-text">
-                <span class="session-pill session-pill-pdf">Ferramentas PDF</span>
-                <span class="session-subtitle">
-                    Conversões e validações de documentos em PDF.
-                </span>
-            </div>
-            <span class="session-chevron">⌄</span>
-        </button>
-
-        <div class="session-body">
-            <div class="session-grid">
-                <div class="carousel-card" data-script="pdfa">
-                    <div class="card-icon">📄</div>
-                    <h3 class="card-title">Conversor PDF → PDF/A</h3>
-                    <p class="card-subtitle">Converta arquivos para o padrão PDF/A.</p>
-                    <div class="card-tags">
-                        <span>PDF</span>
-                        <span>Conversão</span>
-                    </div>
-                    <div class="card-hover">
-                        <p>
-                            Envie um PDF (ou outro formato suportado) e receba a versão em PDF/A pronta para uso.
-                        </p>
-                        <a href="/pdf-a" class="btn-card">Acessar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
 
     <!-- ===== GERAL ===== -->
     <section class="session session--geral" id="geral">
@@ -531,6 +541,21 @@
         <div class="session-body">
             <div class="session-grid">
                 <!-- Geral -->
+                <div class="carousel-card" data-script="pdfa">
+                    <div class="card-icon">&#128196;</div>
+                    <h3 class="card-title">Conversor PDF &rarr; PDF/A</h3>
+                    <p class="card-subtitle">Converta arquivos para o padr&atilde;o PDF/A.</p>
+                    <div class="card-tags">
+                        <span class="tag">Geral</span>
+                        <span class="tag">Convers&atilde;o</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Envie um PDF (ou outro formato suportado) e receba a vers&atilde;o em PDF/A pronta para uso.
+                        </p>
+                        <a href="/pdf-a" class="btn-card">Acessar</a>
+                    </div>
+                </div>
                 <div class="carousel-card" data-script="gerador-atas">
                     <div class="card-icon">📑</div>
                     <h3 class="card-title">Gerador de Atas Societárias</h3>
@@ -879,6 +904,22 @@
                     </div>
                 </div>
 
+                <div class="carousel-card" data-script="dashboards">
+                    <div class="card-icon">&#128202;</div>
+                    <h3 class="card-title">Dashboards</h3>
+                    <p class="card-subtitle">Acompanhe erros de processamento e acessos do portal.</p>
+                    <div class="card-tags">
+                        <span class="tag">Admin</span>
+                        <span class="tag">M&eacute;tricas</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Visualize percentual de erro em processamentos, acessos nos &uacute;ltimos 7 dias, total geral
+                            e detalhamento por usu&aacute;rio.
+                        </p>
+                        <a href="/dashboards" class="btn-card">Acessar</a>
+                    </div>
+                </div>
                 <div class="carousel-card" data-script="checklist-ti-criacao-usuario">
                     <div class="card-icon">📝</div>
                     <h3 class="card-title">Checklist TI - Criação de Usuário</h3>

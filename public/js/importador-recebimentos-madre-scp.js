@@ -110,8 +110,8 @@ function renderizarResumoMadre(resumoEl, tableBody, downloadLink, data) {
 
   if (resumoEl) {
     resumoEl.innerHTML = `
-      <p><strong>Registros processados:</strong> ${resumo.total_registros ?? 0}</p>
-      <p><strong>Clientes distintos:</strong> ${resumo.total_clientes ?? 0}</p>
+      <p><strong>Registros processados:</strong> ${resumo.total_registros - 0}</p>
+      <p><strong>Clientes distintos:</strong> ${resumo.total_clientes - 0}</p>
       <p>
         <strong>Totais (R$):</strong>
         Vl. baixa = ${formatMoney(totais.vl_baixa)}

@@ -20,6 +20,8 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 import pandas as pd
 
+DEC_2 = Decimal("0.01")
+
 
 DATE_PATTERNS: List[Tuple[str, re.Pattern[str]]] = [
     ("%d/%m/%Y", re.compile(r"^\d{2}/\d{2}/\d{4}$")),
@@ -89,13 +91,13 @@ class AggregatedItem:
     cod_barra: str = ""
     aliq_icms: str = ""
     cest: str = ""
-    qtd: float = 0.0
-    vl_item: float = 0.0
+    qtd: Decimal = Decimal("0")
+    vl_item: Decimal = Decimal("0")
 
     @property
-    def vl_unit(self) -> float:
-        if abs(self.qtd) <= 1e-12:
-            return 0.0
+    def vl_unit(self) -> Decimal:
+        if self.qtd == 0:
+            return Decimal("0")
         return self.vl_item / self.qtd
 
 
@@ -114,13 +116,13 @@ def parse_date_any(x: Any) -> Optional[date]:
     return None
 
 
-def to_decimal_ptbr(x: Any) -> Optional[float]:
+def to_decimal_ptbr(x: Any) -> Optional[Decimal]:
     if x is None:
         return None
     if isinstance(x, (int, float)):
         if pd.isna(x):
             return None
-        return float(x)
+        return Decimal(str(x))
 
     s = str(x).strip()
     if not s:
@@ -134,20 +136,24 @@ def to_decimal_ptbr(x: Any) -> Optional[float]:
         neg = True
         s = s[1:-1]
 
-    if "," in s:
+    if "," in s and "." in s:
+        if s.rfind(",") > s.rfind("."):
+            s = s.replace(".", "").replace(",", ".")
+        else:
+            s = s.replace(",", "")
+    elif "," in s:
         s = s.replace(".", "").replace(",", ".")
-    else:
-        if not re.fullmatch(r"[+-]?\d+\.\d{1,8}", s):
-            s = s.replace(".", "")
+    elif s.count(".") > 1:
+        s = s.replace(".", "")
 
     try:
-        v = float(s)
+        v = Decimal(s)
         return -v if neg else v
-    except ValueError:
+    except Exception:
         return None
 
 
-def format_sped_decimal(value: float, decimals: int) -> str:
+def format_sped_decimal(value: Decimal | float | int, decimals: int) -> str:
     q = Decimal(str(value)).quantize(
         Decimal("1." + ("0" * decimals)),
         rounding=ROUND_HALF_UP,
@@ -155,6 +161,10 @@ def format_sped_decimal(value: float, decimals: int) -> str:
     if q == Decimal("-0." + ("0" * decimals)):
         q = Decimal("0." + ("0" * decimals))
     return f"{q:.{decimals}f}".replace(".", ",")
+
+
+def round_decimal(value: Decimal | float | int, decimals: int = 2) -> Decimal:
+    return Decimal(str(value)).quantize(Decimal("1." + ("0" * decimals)), rounding=ROUND_HALF_UP)
 
 
 def format_sped_cst(value: str, default: str = "000") -> str:
@@ -570,11 +580,11 @@ def build_items(
         if vl_item is None and qtd is not None and vl_unit is not None:
             vl_item = qtd * vl_unit
         if qtd is None:
-            qtd = 0.0
+            qtd = Decimal("0")
         if vl_item is None:
-            vl_item = 0.0
+            vl_item = Decimal("0")
 
-        if abs(qtd) <= 1e-12 and abs(vl_item) <= 1e-12:
+        if qtd == 0 and vl_item == 0:
             continue
 
         ncm = normalize_ncm(row.get(col_ncm)) if col_ncm else ""
@@ -594,13 +604,13 @@ def build_items(
                 cod_barra=cod_barra[:80],
                 aliq_icms=aliq_icms,
                 cest=cest,
-                qtd=float(qtd),
-                vl_item=float(vl_item),
+                qtd=qtd,
+                vl_item=vl_item,
             )
             continue
 
-        existing.qtd += float(qtd)
-        existing.vl_item += float(vl_item)
+        existing.qtd += qtd
+        existing.vl_item += vl_item
         if not existing.descr_item and descr:
             existing.descr_item = descr[:255]
         if not existing.ncm and ncm:
@@ -672,26 +682,30 @@ def build_bloco_h_lines(
     preencher_vl_item_ir: bool,
     gerar_h020: bool,
     h020_cst_icms: str,
-    h020_aliq_icms: float,
+    h020_aliq_icms: Decimal,
 ) -> List[str]:
     lines: List[str] = []
     has_items = len(items) > 0
     lines.append(sped_line(["H001", "0" if has_items else "1"]))
 
     if has_items:
-        vl_inv = sum(i.vl_item for i in items)
+        vl_inv = Decimal("0")
         lines.append(
             sped_line(
                 [
                     "H005",
                     dt_inv.strftime("%d%m%Y"),
-                    format_sped_decimal(vl_inv, 2),
+                    "",  # Preenchido apos montar os H010, para bater com soma arredondada.
                     mot_inv,
                 ]
             )
         )
+        h005_idx = len(lines) - 1
         for it in items:
-            vl_item_ir = format_sped_decimal(it.vl_item, 2) if preencher_vl_item_ir else ""
+            vl_item_2 = round_decimal(it.vl_item, 2)
+            vl_unit_6 = round_decimal(it.vl_unit, 6)
+            vl_inv += vl_item_2
+            vl_item_ir = format_sped_decimal(vl_item_2, 2) if preencher_vl_item_ir else ""
             lines.append(
                 sped_line(
                     [
@@ -699,8 +713,8 @@ def build_bloco_h_lines(
                         it.cod_item,
                         it.unid,
                         format_sped_decimal(it.qtd, 3),
-                        format_sped_decimal(it.vl_unit, 6),
-                        format_sped_decimal(it.vl_item, 2),
+                        format_sped_decimal(vl_unit_6, 6),
+                        format_sped_decimal(vl_item_2, 2),
                         ind_prop,
                         cod_part,
                         txt_compl,
@@ -710,8 +724,8 @@ def build_bloco_h_lines(
                 )
             )
             if gerar_h020:
-                bc_icms = it.vl_item
-                vl_icms = bc_icms * (h020_aliq_icms / 100.0)
+                bc_icms = vl_item_2
+                vl_icms = bc_icms * (h020_aliq_icms / Decimal("100"))
                 lines.append(
                     sped_line(
                         [
@@ -722,6 +736,10 @@ def build_bloco_h_lines(
                         ]
                     )
                 )
+        h005_parts = lines[h005_idx].split("|")
+        if len(h005_parts) > 3:
+            h005_parts[3] = format_sped_decimal(vl_inv, 2)
+            lines[h005_idx] = "|".join(h005_parts)
 
     qtd_lin_h = len(lines) + 1
     lines.append(sped_line(["H990", str(qtd_lin_h)]))

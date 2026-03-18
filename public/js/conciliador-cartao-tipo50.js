@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   inicializarSidebar('conciliador-cartao-tipo50');
 
   const form = document.getElementById('formTipo50');

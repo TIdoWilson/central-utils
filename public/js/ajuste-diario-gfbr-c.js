@@ -195,10 +195,10 @@ function finalizarProgressoC(sucesso) {
 }
 
 function atualizarResumoAjusteC(resumo) {
-  const total = resumo.total_rows ?? 0;
-  const finais = resumo.rows_final ?? 0;
-  const removidas = resumo.rows_removed ?? 0;
-  const estornos = resumo.num_linhas_estornos ?? 0;
+  const total = resumo.total_rows - 0;
+  const finais = resumo.rows_final - 0;
+  const removidas = resumo.rows_removed - 0;
+  const estornos = resumo.num_linhas_estornos - 0;
 
   const metricTotal = document.getElementById('metricTotalLinhasC');
   const metricFinais = document.getElementById('metricLinhasFinaisC');

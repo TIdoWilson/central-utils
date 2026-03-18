@@ -1,4 +1,4 @@
-﻿// public/js/ecd-status.js
+// public/js/ecd-status.js
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (typeof inicializarSidebar === 'function') {

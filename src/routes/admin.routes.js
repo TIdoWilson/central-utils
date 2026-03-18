@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 
 const TOOL_PERM_RE = /^tool:[A-Za-z0-9._-]+$|^tool:\*$/;
 const REQUEST_SOURCE_CONFIG = {
@@ -55,19 +55,19 @@ function buildMailerFromEnv() {
   const from = String(process.env.EMAIL_FROM || user || '').trim();
 
   if (!host || !portRaw || !user || !pass || !from) {
-    return { enabled: false, from, sendMail: null, reason: 'ConfiguraÃ§Ãµes de e-mail ausentes.' };
+    return { enabled: false, from, sendMail: null, reason: 'Configurações de e-mail ausentes.' };
   }
 
   const port = Number(portRaw);
   if (!Number.isFinite(port) || port <= 0) {
-    return { enabled: false, from, sendMail: null, reason: 'EMAIL_PORT invÃ¡lido.' };
+    return { enabled: false, from, sendMail: null, reason: 'EMAIL_PORT inválido.' };
   }
 
   let nodemailer;
   try {
     nodemailer = require('nodemailer');
   } catch (_) {
-    return { enabled: false, from, sendMail: null, reason: 'DependÃªncia nodemailer nÃ£o instalada.' };
+    return { enabled: false, from, sendMail: null, reason: 'Dependência nodemailer não instalada.' };
   }
 
   const secureEnv = String(process.env.EMAIL_SECURE || '').trim().toLowerCase();
@@ -116,7 +116,7 @@ function buildDecisionEmailTemplate({ source, requestType, decision, companyName
 
 async function sendDecisionEmail({ mailer, to, fullName, source, requestType, decision, companyName, details, requestId }) {
   if (!mailer?.enabled || typeof mailer.sendMail !== 'function') {
-    return { sent: false, error: mailer?.reason || 'E-mail indisponÃ­vel.' };
+    return { sent: false, error: mailer?.reason || 'E-mail indisponível.' };
   }
   if (!to) return { sent: false, error: 'Solicitante sem e-mail cadastrado.' };
 
@@ -190,7 +190,7 @@ module.exports = function createAdminRoutes(deps) {
     const role = normalizeRole(req.body?.role);
 
     if (!name || !isValidEmail(email) || password.length < 6) {
-      return res.status(400).json({ error: 'Dados invÃ¡lidos (nome, e-mail, senha>=6)' });
+      return res.status(400).json({ error: 'Dados inválidos (nome, e-mail, senha>=6)' });
     }
 
     const hash = await bcrypt.hash(password, 10);
@@ -207,7 +207,7 @@ module.exports = function createAdminRoutes(deps) {
       return res.json({ user: sanitizeUserRow(rows[0]) });
     } catch (e) {
       if (String(e.message || '').includes('unique')) {
-        return res.status(409).json({ error: 'E-mail jÃ¡ existe' });
+        return res.status(409).json({ error: 'E-mail já existe' });
       }
       console.error(e);
       await auditLog(req, 'user_create', 'error', { target_email: email, reason: 'server_error' });
@@ -217,10 +217,10 @@ module.exports = function createAdminRoutes(deps) {
 
   router.patch('/users/:id', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
     const id = Number(req.params.id);
-    if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID invÃ¡lido' });
+    if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID inválido' });
 
     if (req.body?.is_active === false && req.user?.id === id) {
-      return res.status(400).json({ error: 'VocÃª nÃ£o pode desativar seu prÃ³prio usuÃ¡rio' });
+      return res.status(400).json({ error: 'Você não pode desativar seu próprio usuário' });
     }
 
     const name = String(req.body?.name || '').trim();
@@ -229,7 +229,7 @@ module.exports = function createAdminRoutes(deps) {
     const isActive = req.body?.is_active;
 
     if (!name || !isValidEmail(email) || (isActive !== undefined && typeof isActive !== 'boolean')) {
-      return res.status(400).json({ error: 'Dados invÃ¡lidos' });
+      return res.status(400).json({ error: 'Dados inválidos' });
     }
 
     const { rows } = await pool.query(
@@ -240,7 +240,7 @@ module.exports = function createAdminRoutes(deps) {
       [name, email, role, isActive ?? null, id]
     );
 
-    if (!rows[0]) return res.status(404).json({ error: 'UsuÃ¡rio nÃ£o encontrado' });
+    if (!rows[0]) return res.status(404).json({ error: 'Usuário não encontrado' });
 
     await auditLog(req, 'user_update', 'ok', { target_user_id: id, target_email: email });
     res.json({ user: sanitizeUserRow(rows[0]) });
@@ -249,7 +249,7 @@ module.exports = function createAdminRoutes(deps) {
   router.patch('/users/:id/password', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
     const id = Number(req.params.id);
     const password = String(req.body?.password || '');
-    if (!Number.isFinite(id) || password.length < 6) return res.status(400).json({ error: 'Dados invÃ¡lidos' });
+    if (!Number.isFinite(id) || password.length < 6) return res.status(400).json({ error: 'Dados inválidos' });
 
     const hash = await bcrypt.hash(password, 10);
 
@@ -262,9 +262,9 @@ module.exports = function createAdminRoutes(deps) {
 
   router.delete('/users/:id', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
     const id = Number(req.params.id);
-    if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID invÃ¡lido' });
+    if (!Number.isFinite(id)) return res.status(400).json({ error: 'ID inválido' });
 
-    if (req.user?.id === id) return res.status(400).json({ error: 'VocÃª nÃ£o pode excluir seu prÃ³prio usuÃ¡rio' });
+    if (req.user?.id === id) return res.status(400).json({ error: 'Você não pode excluir seu próprio usuário' });
 
     await pool.query(`DELETE FROM auth_users WHERE id=$1`, [id]);
     await auditLog(req, 'user_delete', 'ok', { target_user_id: id });
@@ -278,7 +278,7 @@ module.exports = function createAdminRoutes(deps) {
     let text = usersText;
     if (!text && fileBuf) text = fileBuf.toString('utf-8');
 
-    if (!text) return res.status(400).json({ error: 'Envie um arquivo ou cole o texto para importaÃ§Ã£o.' });
+    if (!text) return res.status(400).json({ error: 'Envie um arquivo ou cole o texto para importação.' });
 
     const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
     if (lines.length === 0) return res.status(400).json({ error: 'Arquivo/vazio.' });
@@ -297,7 +297,7 @@ module.exports = function createAdminRoutes(deps) {
       const role = normalizeRole(parts[3] || 'USER');
 
       if (!name || !isValidEmail(email) || pass.length < 6) {
-        results.errors.push({ line: i + 1, error: 'Linha invÃ¡lida (nome/email/senha/role)', raw: lines[i] });
+        results.errors.push({ line: i + 1, error: 'Linha inválida (nome/email/senha/role)', raw: lines[i] });
         continue;
       }
 
@@ -348,9 +348,159 @@ module.exports = function createAdminRoutes(deps) {
     res.json({ logs: rows });
   });
 
+  router.get('/dashboard-metrics', requireAuth, requireRole('ADMIN'), async (req, res) => {
+    try {
+      const processingActionWhitelist = [
+        'pdfa_convert',
+        'dimob_parse_sped',
+        'office_companies_import_manual',
+        'office_companies_import_file',
+        'office_companies_refresh',
+        'office_companies_refresh_all',
+      ];
+
+      const processingSql = `
+        WITH processing_logs AS (
+          SELECT status
+          FROM audit_logs
+          WHERE status IN ('ok', 'error')
+            AND action NOT LIKE 'page_view_%'
+            AND action NOT IN ('login_success', 'login_failed', 'logout')
+            AND (
+              action LIKE 'job_create_%'
+              OR action LIKE 'job_error_%'
+              OR action = ANY($1::text[])
+              OR (
+                meta IS NOT NULL
+                AND (
+                  meta ? 'files'
+                  OR meta ? 'file'
+                  OR meta ? 'fileId'
+                  OR meta ? 'filename'
+                  OR meta ? 'arquivo'
+                  OR meta ? 'jobId'
+                )
+              )
+            )
+        )
+        SELECT
+          COUNT(*)::bigint AS total,
+          COUNT(*) FILTER (WHERE status = 'ok')::bigint AS success,
+          COUNT(*) FILTER (WHERE status = 'error')::bigint AS error
+        FROM processing_logs
+      `;
+
+      const accessTotalsSql = `
+        SELECT
+          COUNT(*) FILTER (WHERE action LIKE 'page_view_%')::bigint AS total,
+          COUNT(*) FILTER (
+            WHERE action LIKE 'page_view_%'
+              AND created_at >= (NOW() - INTERVAL '7 day')
+          )::bigint AS last_7_days
+        FROM audit_logs
+      `;
+
+      const accessPerDaySql = `
+        WITH days AS (
+          SELECT (date_trunc('day', NOW()) - (offs * INTERVAL '1 day'))::date AS day
+          FROM generate_series(6, 0, -1) AS offs
+        ),
+        hits AS (
+          SELECT date_trunc('day', created_at)::date AS day, COUNT(*)::bigint AS accesses
+          FROM audit_logs
+          WHERE action LIKE 'page_view_%'
+            AND created_at >= (date_trunc('day', NOW()) - INTERVAL '6 day')
+          GROUP BY 1
+        )
+        SELECT
+          TO_CHAR(days.day, 'YYYY-MM-DD') AS day,
+          COALESCE(hits.accesses, 0)::bigint AS accesses
+        FROM days
+        LEFT JOIN hits ON hits.day = days.day
+        ORDER BY days.day ASC
+      `;
+
+      const accessByUserSql = `
+        SELECT
+          COALESCE(NULLIF(u.name, ''), NULLIF(split_part(a.email, '@', 1), ''), 'Usuário removido') AS user_name,
+          COALESCE(NULLIF(a.email, ''), NULLIF(u.email, ''), 'sem-email') AS email,
+          COUNT(*)::bigint AS accesses_total,
+          COUNT(*) FILTER (
+            WHERE a.created_at >= (NOW() - INTERVAL '7 day')
+          )::bigint AS accesses_last_7_days,
+          MAX(a.created_at) AS last_access_at
+        FROM audit_logs a
+        LEFT JOIN auth_users u ON u.id = a.user_id
+        WHERE a.action LIKE 'page_view_%'
+        GROUP BY 1, 2
+        ORDER BY accesses_total DESC, accesses_last_7_days DESC, email ASC
+        LIMIT 200
+      `;
+
+      const [
+        processingResp,
+        accessTotalsResp,
+        accessPerDayResp,
+        accessByUserResp,
+      ] = await Promise.all([
+        pool.query(processingSql, [processingActionWhitelist]),
+        pool.query(accessTotalsSql),
+        pool.query(accessPerDaySql),
+        pool.query(accessByUserSql),
+      ]);
+
+      const processingRow = processingResp.rows?.[0] || {};
+      const totalProcessing = Number(processingRow.total || 0);
+      const successProcessing = Number(processingRow.success || 0);
+      const errorProcessing = Number(processingRow.error || 0);
+      const errorPercent = totalProcessing > 0
+        ? Number(((errorProcessing * 100) / totalProcessing).toFixed(2))
+        : 0;
+      const successPercent = totalProcessing > 0
+        ? Number(((successProcessing * 100) / totalProcessing).toFixed(2))
+        : 0;
+
+      const accessTotalsRow = accessTotalsResp.rows?.[0] || {};
+      const totalAccesses = Number(accessTotalsRow.total || 0);
+      const last7DaysAccesses = Number(accessTotalsRow.last_7_days || 0);
+
+      const accessesByDay = (accessPerDayResp.rows || []).map((row) => ({
+        day: String(row.day || ''),
+        accesses: Number(row.accesses || 0),
+      }));
+
+      const accessesByUser = (accessByUserResp.rows || []).map((row) => ({
+        userName: String(row.user_name || 'Usuário removido'),
+        email: String(row.email || 'sem-email'),
+        accessesTotal: Number(row.accesses_total || 0),
+        accessesLast7Days: Number(row.accesses_last_7_days || 0),
+        lastAccessAt: row.last_access_at || null,
+      }));
+
+      return res.json({
+        processing: {
+          total: totalProcessing,
+          success: successProcessing,
+          error: errorProcessing,
+          errorPercent,
+          successPercent,
+        },
+        accesses: {
+          total: totalAccesses,
+          last7Days: last7DaysAccesses,
+          byDay: accessesByDay,
+          byUser: accessesByUser,
+        },
+      });
+    } catch (e) {
+      console.error('admin dashboard metrics error:', e?.message || e);
+      return res.status(500).json({ error: 'Erro ao carregar métricas do dashboard.' });
+    }
+  });
+
   router.get('/users/:id/permissions', requireAuth, requireRole('ADMIN'), async (req, res) => {
     const userId = Number(req.params.id);
-    if (!Number.isFinite(userId)) return res.status(400).json({ error: 'ID invÃ¡lido' });
+    if (!Number.isFinite(userId)) return res.status(400).json({ error: 'ID inválido' });
 
     const { rows } = await pool.query(
       `SELECT perm FROM auth_user_permissions WHERE user_id = $1 ORDER BY perm ASC`,
@@ -362,7 +512,7 @@ module.exports = function createAdminRoutes(deps) {
 
   router.put('/users/:id/permissions', requireAuth, requireRole('ADMIN'), requireCsrf, async (req, res) => {
     const userId = Number(req.params.id);
-    if (!Number.isFinite(userId)) return res.status(400).json({ error: 'ID invÃ¡lido' });
+    if (!Number.isFinite(userId)) return res.status(400).json({ error: 'ID inválido' });
 
     const permissionsRaw = Array.isArray(req.body?.permissions) ? req.body.permissions : [];
     const permissions = [...new Set(permissionsRaw.map((p) => String(p || '').trim()).filter((p) => TOOL_PERM_RE.test(p)))];

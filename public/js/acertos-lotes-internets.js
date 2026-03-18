@@ -157,10 +157,10 @@ function atualizarMetricas(total, mantidas, removidas, pares) {
 }
 
 function renderizarResultadoLoteInternets(data, originalName) {
-  const total = data.totalLines ?? 0;
-  const mantidas = data.keptLines ?? 0;
-  const removidas = data.removedLines ?? 0;
-  const pares = data.removedPairs ?? Math.floor(removidas / 2);
+  const total = data.totalLines - 0;
+  const mantidas = data.keptLines - 0;
+  const removidas = data.removedLines - 0;
+  const pares = data.removedPairs - Math.floor(removidas / 2);
 
   atualizarMetricas(total, mantidas, removidas, pares);
 

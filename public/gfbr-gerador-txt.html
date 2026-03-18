@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gerador TXT GFBR</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* Remover sobreposição amarela ao arrastar arquivos */
+    body.wl-page-dragover::before,
+    body.wl-page-dragover::after {
+      display: none !important;
+    }
+
+    .gfbr-grid-row {
+      display: grid;
+      grid-template-columns: 320px minmax(50ch, 1fr) 320px;
+      gap: 20px;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e1e4e8;
+    }
+
+    .gfbr-grid-row:last-of-type {
+      border-bottom: none;
+    }
+
+    @media (max-width: 900px) {
+      .gfbr-grid-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body class="app-body nfe-body">
+  <div class="nfe-layout">
+    <aside class="nfe-sidebar">
+      <div class="nfe-sidebar-top">
+        <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+    </aside>
+
+    <main class="nfe-main">
+      <header class="nfe-header">
+        <div class="nfe-breadcrumb">Portal / Contabil / Gerador TXT GFBR</div>
+        <h1>Gerador TXT GFBR</h1>
+        <p>
+          Envie o diario em Excel e gere o TXT no layout IOB (padrao do lotes-txt),
+          com arquivo final nomeado como <code>LOTD0000.txt</code>.
+        </p>
+      </header>
+
+      <section class="nfe-row">
+        <article class="nfe-card">
+          <h2>1) Uploads</h2>
+          <form id="gfbrGeradorTxtForm" class="nfe-upload-form" style="gap: 10px;">
+            <!-- Área Maior - Excel Principal -->
+            <div class="gfbr-grid-row">
+              <label class="nfe-input-file-label" style="margin-bottom: 0;">
+                <span>1. Diário Principal (.xlsx, .xlsm)</span>
+                <input id="arquivoDiario" name="arquivoDiario" type="file" accept=".xlsx,.xlsm"
+                  data-wl-primary-upload="1" />
+              </label>
+
+              <div style="font-size: 13px; color: #666; text-align: left;" class="wl-upload-summary-target">
+                <!-- O helper de upload vai injetar o resumo aqui ou logo após o label se não achar -->
+              </div>
+
+              <label style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 13px; font-weight: 600;">Nome da aba (Opcional)</span>
+                <input id="abaOrigem" type="text" placeholder="Em branco = primeira aba"
+                  style="height: 36px; padding: 0 12px; font-size: 13px;" />
+              </label>
+            </div>
+
+            <!-- Área Menor 1 - Itaú PDF 1 -->
+            <div class="gfbr-grid-row">
+              <label class="nfe-input-file-label nfe-input-file-label--small" style="margin-bottom: 0;">
+                <span>Anexar PDF Itaú 1</span>
+                <input id="pdfItau1" name="pdfItau1" type="file" accept=".pdf" />
+              </label>
+
+              <div style="font-size: 13px; color: #666; text-align: left;" class="wl-upload-summary-target"></div>
+
+              <label style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 13px; font-weight: 600;">Conta Contábil da Aplicação 1</span>
+                <input id="contaAplicacao1" type="text" placeholder="Ex: 111020101"
+                  style="height: 36px; padding: 0 12px; font-size: 13px;" />
+              </label>
+            </div>
+
+            <!-- Área Menor 2 - Itaú PDF 2 -->
+            <div class="gfbr-grid-row">
+              <label class="nfe-input-file-label nfe-input-file-label--small" style="margin-bottom: 0;">
+                <span>Anexar PDF Itaú 2</span>
+                <input id="pdfItau2" name="pdfItau2" type="file" accept=".pdf" />
+              </label>
+
+              <div style="font-size: 13px; color: #666; text-align: left;" class="wl-upload-summary-target"></div>
+
+              <label style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 13px; font-weight: 600;">Conta Contábil da Aplicação 2</span>
+                <input id="contaAplicacao2" type="text" placeholder="Ex: 111020102"
+                  style="height: 36px; padding: 0 12px; font-size: 13px;" />
+              </label>
+            </div>
+
+            <p style="font-size: 13px; color: #666; font-style: italic; margin: 4px 0 0;">Nota: Você pode enviar apenas o Excel, apenas os PDFs, ou ambos juntos.</p>
+            <button id="btnProcessar" type="submit" class="btn btn-primary">Processar e gerar TXT Único</button>
+          </form>
+
+          <div id="status" class="nfe-upload-message"></div>
+        </article>
+
+        <article class="nfe-card">
+          <h2>2) Resumo</h2>
+          <div class="nfe-metrics">
+            <div class="nfe-metric">
+              <span class="label">Lancamentos lidos</span>
+              <strong id="metricLidos">0</strong>
+            </div>
+            <div class="nfe-metric">
+              <span class="label">Lancamentos excluidos</span>
+              <strong id="metricExcluidos">0</strong>
+            </div>
+            <div class="nfe-metric">
+              <span class="label">Partidas geradas (L)</span>
+              <strong id="metricLinhasL">0</strong>
+            </div>
+            <div class="nfe-metric">
+              <span class="label">Pendencias</span>
+              <strong id="metricPendencias">0</strong>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="nfe-card">
+        <section class="nfe-card">
+          <h2>3) Arquivos Gerados</h2>
+          <p class="nfe-card-subtitle">
+            O TXT final de todas as entradas será gerado como <strong>LOTD0000.txt</strong>.
+          </p>
+
+          <div class="nfe-upload-form" style="margin-bottom: 16px;">
+            <button id="btnDownloadTxt" type="button" class="btn btn-primary" disabled>Baixar LOTD0000.txt</button>
+            <button id="btnDownloadPendencias" type="button" class="btn btn-secondary" disabled>Baixar Pendências
+              (CSV)</button>
+          </div>
+
+          <!-- Seção de Advertências -->
+          <div id="advertenciasContainer"
+            style="display: none; background-color: #fffbdf; border: 1px solid #f2e29e; border-radius: 6px; padding: 12px; margin-top: 10px;">
+            <h3
+              style="color: #8c761b; font-size: 15px; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+              ⚠️ Advertências (Revisar Lançamentos)
+            </h3>
+            <ul id="listaAdvertencias" style="margin: 0; padding-left: 18px; color: #6a5914; font-size: 13px;">
+            </ul>
+          </div>
+
+        </section>
+    </main>
+  </div>
+
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
+  <script src="/js/upload-helper.js"></script>
+  <script src="/js/gfbr-gerador-txt.js"></script>
+</body>
+
+</html>

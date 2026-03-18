@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const createGiastService = require('../../services/giast.service');
 
 const giastService = createGiastService();

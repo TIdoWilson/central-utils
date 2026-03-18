@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 
 module.exports = function createConciliadorCartaoTipo50Routes(deps) {
   const { requireCsrf, upload, axios, PY_API_URL } = deps;

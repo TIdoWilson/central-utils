@@ -74,6 +74,24 @@ function createToolStorage({ dataDir, dimobService }) {
   });
   const uploadAjusteDiarioGfbr = multer({ storage: storageAjusteDiarioGfbr });
 
+  // GFBR Gerador TXT
+  const gfbrGeradorTxtUploadsDir = path.join(dataDir, 'uploads', 'gfbr-gerador-txt');
+  ensureDir(gfbrGeradorTxtUploadsDir);
+  const storageGfbrGeradorTxt = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, gfbrGeradorTxtUploadsDir);
+    },
+    filename: function (req, file, cb) {
+      const ext = path.extname(file.originalname) || '.xlsx';
+      const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
+      cb(null, unique + ext);
+    },
+  });
+  const uploadGfbrGeradorTxt = multer({
+    storage: storageGfbrGeradorTxt,
+    limits: { fileSize: 50 * 1024 * 1024, files: 1 },
+  });
+
   // Separador CSV baixa automatica
   const SEPARADOR_CSV_BASE_DIR = path.join(dataDir, 'separador-csv-baixa-automatica');
   const SEPARADOR_CSV_UPLOAD_DIR = path.join(SEPARADOR_CSV_BASE_DIR, 'uploads');
@@ -144,6 +162,8 @@ function createToolStorage({ dataDir, dimobService }) {
     uploadMadreScp,
     ajusteDiarioGfbrUploadsDir,
     uploadAjusteDiarioGfbr,
+    gfbrGeradorTxtUploadsDir,
+    uploadGfbrGeradorTxt,
     SEPARADOR_CSV_OUTPUT_DIR,
     uploadSeparadorCsv,
     EXCEL_ABAS_PDF_DIR,

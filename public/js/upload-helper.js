@@ -9,13 +9,40 @@
     e.stopPropagation();
   }
 
+  function assignFilesToInput(input, droppedFiles) {
+    if (!input || !droppedFiles || !droppedFiles.length) return false;
+
+    if (window.DataTransfer) {
+      const dataTransfer = new DataTransfer();
+      const max = input.multiple ? droppedFiles.length : 1;
+      for (let i = 0; i < max; i += 1) {
+        dataTransfer.items.add(droppedFiles[i]);
+      }
+      input.files = dataTransfer.files;
+      return true;
+    }
+
+    try {
+      input.files = droppedFiles;
+      return true;
+    } catch (err) {
+      console.warn('Nao foi possivel atribuir files via drop:', err);
+      return false;
+    }
+  }
+
+  function notifyInputChanged(input) {
+    if (!input) return;
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
   function enhanceFileInput(input) {
     if (!input || input.dataset.wlUploadEnhanced === '1') return;
     input.dataset.wlUploadEnhanced = '1';
 
     enhancedInputs.push(input);
 
-    // Área de drop "local": tenta usar o label estilizado; se não achar, usa o pai
+    // Area de drop local: tenta usar o label estilizado; se nao achar, usa o pai.
     const area =
       input.closest('.nfe-input-file-label') ||
       input.closest('.wl-upload-area') ||
@@ -23,13 +50,25 @@
 
     if (!area) return;
 
-    // Cria (ou reaproveita) um elemento para mostrar os arquivos selecionados
-    let summaryEl = area.nextElementSibling;
+    // Tenta encontrar um alvo ja existente para o sumario (para estabilidade de layout)
+    let summaryEl = area.parentElement.querySelector('.wl-upload-summary-target');
+    
+    if (!summaryEl) {
+      summaryEl = area.nextElementSibling;
+    }
+
     if (!summaryEl || !summaryEl.classList.contains('wl-upload-summary')) {
-      summaryEl = document.createElement('div');
-      summaryEl.className = 'wl-upload-summary';
-      summaryEl.textContent = 'Nenhum arquivo selecionado.';
-      area.insertAdjacentElement('afterend', summaryEl);
+      const newEl = document.createElement('div');
+      newEl.className = 'wl-upload-summary';
+      newEl.textContent = 'Nenhum arquivo selecionado.';
+      
+      if (summaryEl && summaryEl.classList.contains('wl-upload-summary-target')) {
+         summaryEl.appendChild(newEl);
+         summaryEl = newEl;
+      } else {
+         area.insertAdjacentElement('afterend', newEl);
+         summaryEl = newEl;
+      }
     }
 
     function formatFiles(files) {
@@ -54,13 +93,13 @@
       summaryEl.textContent = formatFiles(input.files);
     }
 
-    // Deixa acessível para o drop global
+    // Mantido para compatibilidade com possiveis chamadas externas.
     input.__wlUpdateSummary = updateSummary;
 
     input.addEventListener('change', updateSummary);
 
     // -----------------------
-    // Drag & Drop LOCAL (no botão/label)
+    // Drag & Drop LOCAL (no botao/label)
     // -----------------------
     ['dragenter', 'dragover'].forEach((eventName) => {
       area.addEventListener(eventName, (e) => {
@@ -75,24 +114,10 @@
         if (eventName === 'drop') {
           const dt = e.dataTransfer;
           if (dt && dt.files && dt.files.length) {
-            const droppedFiles = dt.files;
-
-            if (window.DataTransfer) {
-              const dataTransfer = new DataTransfer();
-              const max = input.multiple ? droppedFiles.length : 1;
-              for (let i = 0; i < max; i += 1) {
-                dataTransfer.items.add(droppedFiles[i]);
-              }
-              input.files = dataTransfer.files;
-            } else {
-              try {
-                input.files = droppedFiles;
-              } catch (err) {
-                console.warn('Não foi possível atribuir files via drop:', err);
-              }
+            const applied = assignFilesToInput(input, dt.files);
+            if (applied) {
+              notifyInputChanged(input);
             }
-
-            updateSummary();
           }
         }
         area.classList.remove('wl-upload-area--dragover');
@@ -106,18 +131,18 @@
   function getPrimaryFileInput() {
     if (!enhancedInputs.length) return null;
 
-    // Se algum input estiver marcado como "primário", usa ele
+    // Se algum input estiver marcado como "primario", usa ele.
     const preferred = enhancedInputs.find(
       (inp) => inp.dataset.wlPrimaryUpload === '1'
     );
     if (preferred) return preferred;
 
-    // Senão, usa o primeiro da página (na maioria das telas só existe um mesmo)
+    // Senao, usa o primeiro da pagina (na maioria das telas so existe um).
     return enhancedInputs[0];
   }
 
   // -----------------------
-  // Drag & Drop GLOBAL (qualquer lugar da página)
+  // Drag & Drop GLOBAL (qualquer lugar da pagina)
   // -----------------------
   function initGlobalPageDragDrop() {
     if (pageDnDInitialized) return;
@@ -148,37 +173,18 @@
       dragCounter = 0;
       document.body.classList.remove('wl-page-dragover');
 
-      // Se o drop foi dentro de uma área de upload específica,
-      // ela já tratou o evento (por causa do stopPropagation)
-      // Aqui tratamos o drop "no resto da página"
+      // Se o drop foi dentro de uma area de upload especifica,
+      // ela ja tratou o evento (por causa do stopPropagation).
+      // Aqui tratamos o drop no resto da pagina.
       const dt = e.dataTransfer;
       if (!dt || !dt.files || !dt.files.length) return;
 
       const input = getPrimaryFileInput();
       if (!input) return;
 
-      const droppedFiles = dt.files;
-
-      if (window.DataTransfer) {
-        const dataTransfer = new DataTransfer();
-        const max = input.multiple ? droppedFiles.length : 1;
-        for (let i = 0; i < max; i += 1) {
-          dataTransfer.items.add(droppedFiles[i]);
-        }
-        input.files = dataTransfer.files;
-      } else {
-        try {
-          input.files = droppedFiles;
-        } catch (err) {
-          console.warn('Não foi possível atribuir files via drop (global):', err);
-        }
-      }
-
-      if (typeof input.__wlUpdateSummary === 'function') {
-        input.__wlUpdateSummary();
-      } else {
-        const event = new Event('change', { bubbles: true });
-        input.dispatchEvent(event);
+      const applied = assignFilesToInput(input, dt.files);
+      if (applied) {
+        notifyInputChanged(input);
       }
     });
   }

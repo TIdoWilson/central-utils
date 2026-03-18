@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 
 function normalizeRequestType(value) {
   const raw = String(value || '').trim().toUpperCase();

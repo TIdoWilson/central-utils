@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conversor Extrato PDF para OFX</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="app-body nfe-body">
+  <div class="nfe-layout">
+    <aside class="nfe-sidebar">
+      <div class="nfe-sidebar-top">
+        <div class="nfe-sidebar-logo">
+          <span class="logo-circle">CU</span>
+          <span class="logo-text">Portal</span>
+        </div>
+        <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+    </aside>
+
+    <main class="nfe-main">
+      <header class="nfe-header">
+        <div class="nfe-breadcrumb">Portal / Contábil / Conversor Extrato PDF para OFX</div>
+        <h1>Conversor Extrato PDF para OFX</h1>
+        <p>Converte extratos PDF (Sicredi e Evolua) para OFX e gera download em lote.</p>
+      </header>
+
+      <section class="nfe-row">
+        <div class="nfe-card nfe-card-upload">
+          <h2>Arquivos e parâmetros</h2>
+          <p class="nfe-card-subtitle">Envie um ou mais PDFs e ajuste BANKID/ACCTID quando necessário.</p>
+
+          <form id="formConversorOfx" class="nfe-upload-form">
+            <label class="nfe-input-file-label">
+              <span>Extratos PDF</span>
+              <input type="file" id="arquivosPdf" name="arquivos" accept="application/pdf" multiple required />
+            </label>
+
+            <label class="nfe-input-file-label">
+              <span>BANKID</span>
+              <input type="text" id="bankid" name="bankid" value="0000" />
+            </label>
+
+            <label class="nfe-input-file-label">
+              <span>ACCTID (opcional)</span>
+              <input type="text" id="acctid" name="acctid" placeholder="Detecta automaticamente se vazio" />
+            </label>
+
+            <div class="nfe-table-actions" style="margin-top: 12px">
+              <button type="submit" class="btn btn-primary" id="btnConverter">Converter</button>
+              <button type="button" class="btn btn-secondary" id="btnBaixarZip" disabled>Baixar ZIP</button>
+              <button type="button" class="btn btn-secondary" id="btnLimpar">Limpar</button>
+            </div>
+
+            <div id="statusMsg" class="nfe-upload-message" aria-live="polite" style="margin-top: 10px"></div>
+          </form>
+        </div>
+
+        <div class="nfe-card">
+          <h2>Resumo</h2>
+          <div id="resumoBox">
+            <p>Nenhum processamento realizado.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="nfe-row">
+        <div class="nfe-card nfe-card-table">
+          <h2>Resultados</h2>
+          <div class="nfe-table-wrapper">
+            <table class="nfe-table">
+              <thead>
+                <tr>
+                  <th>Entrada</th>
+                  <th>Saída</th>
+                  <th>Banco</th>
+                  <th>Lançamentos</th>
+                  <th>Status</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody id="tblResultados"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
+  <script src="/js/upload-helper.js"></script>
+  <script src="/js/conversor-extrato-pdf-ofx.js"></script>
+</body>
+</html>

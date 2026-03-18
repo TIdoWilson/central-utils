@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const { PDFDocument } = require('pdf-lib');
 
 const { resolveConfiguredPath } = require('../../core/path-resolver');

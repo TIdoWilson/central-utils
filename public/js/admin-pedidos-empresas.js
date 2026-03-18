@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async () => {
   inicializarSidebar('admin-pedidos-empresas');
 
   if (!window.AuthClient) {

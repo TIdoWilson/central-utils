@@ -1,4 +1,4 @@
-﻿const COLUMN_PREFS_KEY = 'cadastro_empresas_brasilapi_columns_v2';
+const COLUMN_PREFS_KEY = 'cadastro_empresas_brasilapi_columns_v2';
 
 const COLUMN_DEFS = [
   { key: 'cnpjFormatted', label: 'CNPJ', defaultVisible: true, render: (row) => esc(row.cnpjFormatted || row.cnpj) },
@@ -467,9 +467,9 @@ function buildRegimeHtml(item) {
           <tbody>
             ${historico.map((row) => `
               <tr>
-                <td>${esc(row.ano ?? '-')}</td>
+                <td>${esc(row.ano - '-')}</td>
                 <td>${esc(row.formaDeTributacao || '-')}</td>
-                <td>${esc(row.quantidadeDeEscrituracoes ?? '-')}</td>
+                <td>${esc(row.quantidadeDeEscrituracoes - '-')}</td>
                 <td>${esc(row.cnpjDaScp || '-')}</td>
               </tr>
             `).join('')}

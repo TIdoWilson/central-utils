@@ -93,9 +93,19 @@ def to_decimal_ptbr(x: Any) -> Optional[float]:
     neg = s.startswith("(") and s.endswith(")")
     if neg:
         s = s[1:-1]
-    if "," in s:
+
+    # Resolve ambiguidades de separador decimal com heuristica:
+    # - quando ha "," e ".", o ultimo separador tende a ser o decimal.
+    # - quando ha apenas ",", assume formato pt-BR.
+    # - quando ha varios ".", assume milhares e remove todos.
+    if "," in s and "." in s:
+        if s.rfind(",") > s.rfind("."):
+            s = s.replace(".", "").replace(",", ".")
+        else:
+            s = s.replace(",", "")
+    elif "," in s:
         s = s.replace(".", "").replace(",", ".")
-    elif not re.fullmatch(r"[+-]?\d+\.\d{1,2}", s):
+    elif s.count(".") > 1:
         s = s.replace(".", "")
     try:
         v = float(s)
@@ -297,10 +307,11 @@ class NoteRow:
     origem: str
     registro: str
 
-    def compare_id(self) -> Tuple[str, str]:
+    def compare_id(self) -> Tuple[str, str, str]:
         return (
             normalize_doc_key(self.numero_nota),
             normalize_doc_key(self.serie),
+            normalize_cfop(self.cfop),
         )
 
     def export_row(self) -> Dict[str, Any]:
@@ -946,7 +957,7 @@ def extract_report_notes(
 
 
 def aggregate_notes_for_compare(notes: List[NoteRow]) -> List[NoteRow]:
-    groups: Dict[Tuple[str, str], Dict[str, Any]] = {}
+    groups: Dict[Tuple[str, str, str], Dict[str, Any]] = {}
 
     for note in notes:
         key = note.compare_id()
@@ -965,7 +976,7 @@ def aggregate_notes_for_compare(notes: List[NoteRow]) -> List[NoteRow]:
             },
         )
 
-        bucket["valor"] = round2(bucket["valor"] + note.valor)
+        bucket["valor"] += note.valor
         if note.data:
             bucket["datas"].append(note.data)
         if note.serie:

@@ -65,8 +65,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Preencher resumo
       empresaLabel.textContent = data.empresa || 'sem_empresa';
-      totalPaginasEl.textContent = data.total_paginas ?? 0;
-      totalFuncionariosEl.textContent = data.total_funcionarios ?? 0;
+      totalPaginasEl.textContent = data.total_paginas - 0;
+      totalFuncionariosEl.textContent = data.total_funcionarios - 0;
 
       // Preencher tabela de arquivos
       if (Array.isArray(data.arquivos)) {

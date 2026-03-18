@@ -29,3 +29,18 @@
 - O carregamento do modulo foi alterado para acontecer sob demanda, apenas quando o endpoint `/api/cartao-horas-iob/processar` e chamado.
 - Em ambientes sem o script auxiliar, o endpoint agora responde `503` com mensagem especifica, sem derrubar a API Python inteira.
 - Para usar a ferramenta neste ambiente, copie o script auxiliar esperado para a pasta `python/` ou mantenha a ferramenta apenas no ambiente local Windows.
+
+### Sintoma (upload por arrastar/soltar)
+
+- Ao arrastar e soltar o PDF na pagina, o nome do arquivo aparece, mas o preview e a previa automatica nao atualizam.
+- O fluxo passa a funcionar apenas quando o arquivo e escolhido pelo seletor nativo (`Selecionar PDF do cartao`).
+
+### Causa provavel (upload por arrastar/soltar)
+
+- O helper global de upload (`public/js/upload-helper.js`) atribuia `input.files` no evento `drop`, mas no drop local nao disparava o evento `change`.
+- Como a tela `cartao-horas-iob` depende do `change` para atualizar preview, status e processamento automatico, o arquivo ficava sem processamento.
+
+### Solucao (upload por arrastar/soltar)
+
+- O helper foi ajustado para sempre disparar `change` apos aplicar arquivos via drag-and-drop (drop local e drop global).
+- Com isso, arrastar/soltar e selecionar pelo popup passam a seguir o mesmo fluxo de processamento da ferramenta.

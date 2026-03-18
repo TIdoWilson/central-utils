@@ -5,6 +5,11 @@ Esta lista é gerada automaticamente a partir de `src/core/tool-catalog.json`.
 ## Admin
 
 - [Checklist TI Criacao de Usuario](./checklist-ti-criacao-usuario.md) — `/checklist-ti-criacao-usuario` • API: `/api/checklist-ti-criacao-usuario`
+## Contabil
+
+- [Conversor Extrato PDF para OFX](./conversor-extrato-pdf-ofx.md) — `/conversor-extrato-pdf-ofx` • API: `/api/conversor-extrato-pdf-ofx`
+- [Gerador TXT GFBR](./gfbr-gerador-txt.md) — `/gfbr-gerador-txt` • API: `/api/gfbr-gerador-txt`
+- [Lotes TXT](./lotes-txt.md) — `/lotes-txt`
 ## Declaracoes
 
 - [GIAST](./giast.md) — `/giast` • API: `/api/giast`

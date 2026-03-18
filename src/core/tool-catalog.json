@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-10T14:04:53.508Z",
+  "generatedAt": "2026-03-13T13:21:42.340Z",
   "tools": [
     {
       "slug": "acerto-lotes-toscan",
@@ -170,6 +170,17 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "conversor-extrato-pdf-ofx",
+      "title": "Conversor Extrato PDF para OFX",
+      "group": "Contabil",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/conversor-extrato-pdf-ofx",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "dimob",
       "title": "Dimob",
       "group": "Geral",
@@ -225,6 +236,17 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "gfbr-gerador-txt",
+      "title": "Gerador TXT GFBR",
+      "group": "Contabil",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/gfbr-gerador-txt",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "gerador-atas",
       "title": "Gerador Atas",
       "group": "Geral",
@@ -275,6 +297,17 @@
       "hasPage": true,
       "hasApi": false,
       "apiBase": "/api/irpf-carne-leao",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "lotes-txt",
+      "title": "Lotes TXT",
+      "group": "Contabil",
+      "hasPage": true,
+      "hasApi": false,
+      "apiBase": null,
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []

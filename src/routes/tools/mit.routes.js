@@ -90,7 +90,7 @@ module.exports = function createMitRoutes(deps) {
           return res.status(500).json({
             ok: false,
             error:
-              'access_token ou jwt_token nÃ£o retornado pelo SERPRO. Verifique o endpoint /authenticate e as credenciais.'
+              'access_token ou jwt_token não retornado pelo SERPRO. Verifique o endpoint /authenticate e as credenciais.'
           });
         }
 

@@ -20,6 +20,8 @@ const MENU_CONFIG = [
     items: [
       { id: 'acertos-lotes-internets', label: 'Acertos Lotes Internets', href: '/acertos-lotes-internets', icon: '&#128202;' },
       { id: 'acerto-lotes-toscan', label: 'Acerto Lotes Toscan', href: '/acerto-lotes-toscan', icon: '&#128196;' },
+      { id: 'lotes-txt', label: 'Lotes TXT', href: '/lotes-txt', icon: '&#128209;' },
+      { id: 'gfbr-gerador-txt', label: 'Gerador TXT GFBR', href: '/gfbr-gerador-txt', icon: '&#128221;' },
       { id: 'ajuste-diario-gfbr-c', label: 'Ajuste Diario GFBR', href: '/ajuste-diario-gfbr-c', icon: '&#128196;' },
       { id: 'balancete-transitorio', label: 'Conciliador Conta Transit&oacute;ria', href: '/balancete-transitorio', icon: '&#128196;' },
       { id: 'conciliador-hausen-ocean', label: 'Conciliador Hausen e Ocean', href: '/conciliador-hausen-ocean', icon: '&#128202;' },
@@ -42,19 +44,12 @@ const MENU_CONFIG = [
     ],
   },
   {
-    id: 'ferramentas-pdf',
-    label: 'Ferramentas PDF',
-    icon: '&#128196;',
-    items: [
-      { id: 'pdfa', label: 'Conversor PDF &rarr; PDF/A', href: '/pdf-a', icon: '&#128196;' },
-    ],
-  },
-  {
     id: 'geral',
     label: 'Geral',
     icon: '&#129513;',
     items: [
       { id: 'gerador-atas', label: 'Gerador de Atas', icon: '&#128209;', href: '/gerador-atas' },
+      { id: 'pdfa', label: 'Conversor PDF &rarr; PDF/A', href: '/pdf-a', icon: '&#128196;' },
       { id: 'comprimir-pdf', label: 'Comprimir PDF', icon: '&#129513;', href: '/comprimir-pdf' },
       { id: 'extrator-zip-rar', label: 'Extrator ZIP/RAR', href: '/extrator-zip-rar', icon: '&#128230;' },
       { id: 'excel-abas-pdf', label: 'Excel &rarr; Abas em PDF', icon: '&#128196;', href: '/excel-abas-pdf' },
@@ -84,6 +79,7 @@ const MENU_CONFIG = [
     adminOnly: true,
     items: [
       { id: 'admin-usuarios', label: 'Usu&aacute;rios', href: '/admin-usuarios', icon: '&#128101;', adminOnly: true },
+      { id: 'dashboards', label: 'Dashboards', href: '/dashboards', icon: '&#128202;', adminOnly: true },
       { id: 'admin-pedidos-empresas', label: 'Pedidos de Empresas', href: '/admin-pedidos-empresas', icon: '&#127970;', adminOnly: true },
       { id: 'checklist-ti-criacao-usuario', label: 'Checklist TI - Criacao de Usuario', href: '/checklist-ti-criacao-usuario', icon: '&#128221;', adminOnly: true },
       { id: 'audit-logs', label: 'Logs / Auditoria', href: '/logs', icon: '&#129534;', adminOnly: true },

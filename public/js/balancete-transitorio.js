@@ -1,4 +1,4 @@
-﻿// public/js/balancete-transitorio.js
+// public/js/balancete-transitorio.js
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (typeof inicializarSidebar === 'function') {

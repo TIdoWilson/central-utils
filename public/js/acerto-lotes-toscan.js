@@ -156,10 +156,10 @@ function processarArquivoToscan(conteudoBruto) {
 
   let i = 0;
   while (i < linhas.length) {
-    const linhaAtual = linhas[i] ?? '';
+    const linhaAtual = linhas[i] - '';
 
     if (linhaAtual.startsWith('L') && i + 1 < linhas.length) {
-      const proximaLinha = linhas[i + 1] ?? '';
+      const proximaLinha = linhas[i + 1] - '';
 
       if (PADRAO_HISTORICO_VAZIO.test(proximaLinha)) {
         // Remove L e H (adiciona ambas em "removidas")

@@ -36,6 +36,7 @@ const createExcelAbasPdfRoutes = require('./routes/tools/excel-abas-pdf.routes')
 const createImportadorRecebimentosMadreScpRoutes = require('./routes/tools/importador-recebimentos-madre-scp.routes');
 const createMitRoutes = require('./routes/tools/mit.routes');
 const createAjusteDiarioGfbrRoutes = require('./routes/tools/ajuste-diario-gfbr.routes');
+const createGfbrGeradorTxtRoutes = require('./routes/tools/gfbr-gerador-txt.routes');
 const createSeparadorCsvBaixaAutomaticaRoutes = require('./routes/tools/separador-csv-baixa-automatica.routes');
 const createAjusteDiarioGfbrCRoutes = require('./routes/tools/ajuste-diario-gfbr-c.routes');
 const createDimobRoutes = require('./routes/tools/dimob.routes');
@@ -48,6 +49,7 @@ const createChecklistTiCriacaoUsuarioRoutes = require('./routes/tools/checklist-
 const createCadastroEmpresasBrasilApiRoutes = require('./routes/tools/cadastro-empresas-brasilapi.routes');
 const createIrpfRoutes = require('./routes/tools/irpf.routes');
 const createGiastRoutes = require('./routes/tools/giast.routes');
+const createConversorExtratoPdfOfxRoutes = require('./routes/tools/conversor-extrato-pdf-ofx.routes');
 const createNfeLegacyRoutes = require('./routes/tools/nfe-legacy.routes');
 const createPedidosAlteracaoEmpresaRoutes = require('./routes/tools/pedidos-alteracao-empresa.routes');
 const createComparadorEventosHoleriteRoutes = require('./routes/tools/comparador-eventos-holerite.routes');
@@ -123,6 +125,8 @@ const {
   uploadMadreScp,
   ajusteDiarioGfbrUploadsDir,
   uploadAjusteDiarioGfbr,
+  gfbrGeradorTxtUploadsDir,
+  uploadGfbrGeradorTxt,
   SEPARADOR_CSV_OUTPUT_DIR,
   uploadSeparadorCsv,
   EXCEL_ABAS_PDF_DIR,
@@ -901,6 +905,10 @@ app.get('/logs', requireAuthPage, requireAdminPage, logPageView('page_view_audit
   res.sendFile(path.join(publicDir, 'logs.html'));
 });
 
+app.get('/dashboards', requireAuthPage, requireAdminPage, logPageView('page_view_dashboards'), (req, res) => {
+  res.sendFile(path.join(publicDir, 'dashboards.html'));
+});
+
 app.get('/admin-pedidos-empresas', requireAuthPage, requireAdminPage, logPageView('page_view_admin_company_requests'), (req, res) => {
   res.sendFile(path.join(publicDir, 'admin-pedidos-empresas.html'));
 });
@@ -1132,6 +1140,20 @@ app.use(
   })
 );
 app.use(
+  '/api/gfbr-gerador-txt',
+  requireAuth,
+  requireToolApi('gfbr-gerador-txt'),
+  createGfbrGeradorTxtRoutes({
+    requireCsrf,
+    uploadGfbrGeradorTxt,
+    axios,
+    gfbrGeradorTxtUploadsDir,
+    fs,
+    path,
+    PY_API_URL,
+  })
+);
+app.use(
   '/api/separador-csv-baixa-automatica',
   requireAuth,
   requireToolApi('separador-csv-baixa-automatica'),
@@ -1196,6 +1218,17 @@ app.use(
     requireCsrf,
     pool,
     auditLog,
+    axios,
+    PY_API_URL,
+  })
+);
+app.use(
+  '/api/conversor-extrato-pdf-ofx',
+  requireAuth,
+  requireToolApi('conversor-extrato-pdf-ofx'),
+  createConversorExtratoPdfOfxRoutes({
+    requireCsrf,
+    upload,
     axios,
     PY_API_URL,
   })
@@ -1348,6 +1381,7 @@ const RESERVED_DYNAMIC_SLUGS = new Set([
   'socket.io',
   'login',
   'admin-usuarios',
+  'dashboards',
   'logs',
   'favicon.ico',
   'robots.txt',
@@ -1380,7 +1414,13 @@ app.get('/:toolSlug', requireAuthPage, async (req, res, next) => {
     if (!filePath) return next();
 
     const slug = normalizeToolSlug(rawSlug);
-    if ((slug === 'admin-usuarios' || slug === 'logs' || slug === 'checklist-ti-criacao-usuario') && String(req.user?.role || '').toUpperCase() !== 'ADMIN') {
+    if (
+      (slug === 'admin-usuarios'
+        || slug === 'dashboards'
+        || slug === 'logs'
+        || slug === 'checklist-ti-criacao-usuario')
+      && String(req.user?.role || '').toUpperCase() !== 'ADMIN'
+    ) {
       return sendForbiddenPageHtml(res);
     }
     return requireToolPage(slug)(req, res, async () => {

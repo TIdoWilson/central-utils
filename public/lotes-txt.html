@@ -1,0 +1,357 @@
+﻿<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lotes TXT</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .lotes-txt-row {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .lotes-txt-form-actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .lotes-txt-form-actions .btn {
+      min-width: 200px;
+    }
+
+    .lotes-txt-periodo {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .lotes-txt-periodo label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .lotes-txt-periodo input[type='date'] {
+      border: 1px solid #d4d8e0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    .lotes-txt-periodo-info {
+      margin-top: 8px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .lotes-txt-table-actions {
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .lotes-txt-dropzone {
+      border: 2px dashed #b8c4d8;
+      border-radius: 10px;
+      background: #f8fbff;
+      padding: 12px;
+      display: block;
+      transition: border-color .15s ease, background-color .15s ease;
+    }
+
+    .lotes-txt-dropzone.is-dragover {
+      border-color: #2f6fed;
+      background: #ebf2ff;
+    }
+
+    .lotes-txt-dropzone-note {
+      margin-top: 8px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .lotes-txt-hint {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-top: 8px;
+    }
+
+    .lotes-txt-table-wrap {
+      width: 100%;
+      overflow: auto;
+      border: 1px solid #d9d9d9;
+      border-radius: 10px;
+    }
+
+    .lotes-txt-table {
+      width: 100%;
+      min-width: 980px;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    .lotes-txt-table th,
+    .lotes-txt-table td {
+      border-bottom: 1px solid #e7e7e7;
+      padding: 10px;
+      font-size: 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .lotes-txt-table th {
+      background: #f6f8fc;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .lotes-txt-account-input {
+      width: 120px;
+      max-width: 100%;
+      border: 1px solid #d4d8e0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+
+    .lotes-txt-account-input.invalid {
+      border-color: #cf3e3e;
+      background: #fff3f3;
+    }
+
+    .lotes-txt-value-input {
+      width: 130px;
+      max-width: 100%;
+      border: 1px solid #d4d8e0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+
+    .lotes-txt-value-input.invalid {
+      border-color: #cf3e3e;
+      background: #fff3f3;
+    }
+
+    .lotes-txt-hist {
+      white-space: pre-wrap;
+      max-width: 560px;
+      line-height: 1.4;
+    }
+
+    .lotes-txt-kpis {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .lotes-txt-kpi {
+      background: #f6f8fc;
+      border: 1px solid #e5e8ef;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .lotes-txt-kpi .label {
+      display: block;
+      font-size: 12px;
+      opacity: 0.8;
+      margin-bottom: 6px;
+    }
+
+    .lotes-txt-kpi strong {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .lotes-txt-kpi strong.is-alert {
+      color: #b42318;
+    }
+  </style>
+</head>
+
+<body class="app-body nfe-body">
+  <div class="nfe-layout collapsed">
+    <aside class="nfe-sidebar">
+      <div class="nfe-sidebar-top">
+        <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+    </aside>
+
+    <main class="nfe-main">
+      <header class="nfe-header">
+        <div class="nfe-breadcrumb">Portal / Contabil / Lotes TXT</div>
+        <h1>Lotes TXT</h1>
+        <p>
+          Leia o TXT de lote contabil, totalize debitos e creditos, corrija contas ausentes e baixe o arquivo pronto
+          para importacao no ERP.
+        </p>
+      </header>
+
+      <section class="lotes-txt-row">
+        <article class="nfe-card">
+          <h2>1) Enviar arquivo</h2>
+          <form id="lotesTxtForm">
+            <label class="nfe-input-file-label lotes-txt-dropzone" id="lotesTxtDropZone">
+              <span id="dropZoneText">Selecionar TXT de lote ou arrastar o arquivo para esta area...</span>
+              <input id="lotesTxtFile" type="file" accept=".txt,text/plain" required />
+              <div class="lotes-txt-dropzone-note">Solte aqui um arquivo .txt</div>
+            </label>
+
+            <div class="lotes-txt-form-actions">
+              <button id="btnProcessar" type="submit" class="btn btn-primary">Ler arquivo</button>
+            </div>
+          </form>
+
+          <p class="lotes-txt-hint">
+            Baseado no layout IOB (Lote Normal): registro <code>L</code> para lancamento e <code>H</code> para
+            historico especial. Aceita conta reduzida e classificacao contabil.
+          </p>
+          <div id="status" class="nfe-upload-message"></div>
+        </article>
+
+        <article class="nfe-card">
+          <h2>2) Totais</h2>
+          <div class="lotes-txt-kpis">
+            <div class="lotes-txt-kpi">
+              <span class="label">Total Debitos</span>
+              <strong id="kpiDebitos">R$ 0,00</strong>
+            </div>
+            <div class="lotes-txt-kpi">
+              <span class="label">Total Creditos</span>
+              <strong id="kpiCreditos">R$ 0,00</strong>
+            </div>
+            <div class="lotes-txt-kpi">
+              <span class="label">Diferencas (Debitos - Creditos)</span>
+              <strong id="kpiDiferencas">R$ 0,00</strong>
+            </div>
+            <div class="lotes-txt-kpi">
+              <span class="label">Pendencias de conta</span>
+              <strong id="kpiPendencias">0</strong>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="nfe-card">
+        <h2>3) Dividir periodo (opcional)</h2>
+        <p>
+          Estes campos sao somente para quando voce quiser dividir o TXT por periodo.
+          Se nao preencher, o arquivo completo sera mantido.
+        </p>
+
+        <div class="lotes-txt-periodo">
+          <label>
+            Periodo inicial
+            <input id="periodoInicio" type="date" />
+          </label>
+          <label>
+            Periodo final
+            <input id="periodoFim" type="date" />
+          </label>
+        </div>
+        <div id="periodoInfo" class="lotes-txt-periodo-info"></div>
+      </section>
+
+      <section class="nfe-card">
+        <h2>4) Diagnostico de diferencas</h2>
+        <p>
+          Primeiro localizamos os dias com diferenca entre debitos e creditos. Depois listamos os lancamentos linha a
+          linha (sem consolidar) que sao suspeitos da causa da diferenca, para ajuste de valor quando necessario.
+        </p>
+
+        <div id="diffSummary" class="nfe-upload-message"></div>
+
+        <div class="lotes-txt-table-wrap" style="margin-top: 10px;">
+          <table class="lotes-txt-table">
+            <thead>
+              <tr>
+                <th>Dia</th>
+                <th>Total Debitos</th>
+                <th>Total Creditos</th>
+                <th>Diferenca</th>
+              </tr>
+            </thead>
+            <tbody id="diffDaysBody">
+              <tr>
+                <td colspan="4">Nenhuma analise realizada.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="lotes-txt-table-wrap" style="margin-top: 12px;">
+          <table class="lotes-txt-table">
+            <thead>
+              <tr>
+                <th>Dia</th>
+                <th>Linha</th>
+                <th>Conta debito</th>
+                <th>Conta credito</th>
+                <th>Lado</th>
+                <th>Motivo suspeita</th>
+                <th>Valor (editavel)</th>
+                <th>Complemento + Historico especial</th>
+              </tr>
+            </thead>
+            <tbody id="diffLancBody">
+              <tr>
+                <td colspan="8">Nenhuma analise realizada.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="nfe-card">
+        <h2>5) Lancamentos sem conta</h2>
+        <p>
+          Informe debito e/ou credito na mesma linha. O TXT pode ser gerado quando houver ao menos um campo preenchido.
+        </p>
+
+        <div class="lotes-txt-table-actions">
+          <button id="btnDownload" type="button" class="btn btn-primary" disabled>Baixar TXT ajustado</button>
+        </div>
+
+        <div class="lotes-txt-table-wrap">
+          <table class="lotes-txt-table">
+            <thead>
+              <tr>
+                <th>Numero da linha</th>
+                <th>Debito</th>
+                <th>Credito</th>
+                <th>Valor</th>
+                <th>Historico + Historico especial</th>
+              </tr>
+            </thead>
+            <tbody id="pendenciasBody">
+              <tr>
+                <td colspan="5">Nenhum arquivo processado.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
+  <script src="/js/upload-helper.js"></script>
+  <script src="/js/shared/erp-txt-layouts.js"></script>
+  <script src="/js/lotes-txt.js"></script>
+</body>
+</html>

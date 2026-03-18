@@ -1,4 +1,4 @@
-﻿// public/js/pdfa.js
+// public/js/pdfa.js
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (typeof inicializarSidebar === 'function') {

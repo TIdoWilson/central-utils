@@ -4,6 +4,8 @@ from pathlib import Path
 import tempfile
 import shutil
 import json
+import io
+import zipfile
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel
 
@@ -39,11 +41,13 @@ from api.importador_recebimentos_madre_scp_core import (
 )
 
 from api.ajuste_diario_gfbr_core import ajustar_diario_gfbr
+from api.gfbr_gerador_txt_core import processar_gfbr_gerador_txt
 
 from api.conciliador_cartao_wilson_core import conciliar_cartao_wilson, VALOR_TOLERANCIA_PADRAO
 from api.conciliador_cartao_tipo50_core import conciliar_cartao_tipo50
 from api.conciliador_pis_cofins_core import conciliar_pis_cofins
 from api.giast_core import gerar_giast_txt
+from api.conversor_extrato_pdf_ofx_core import converter_pdf_para_ofx_bytes
 
 
 @app.post("/api/comparador-eventos-holerite/processar")
@@ -397,6 +401,33 @@ def processar_ajuste_diario_gfbr(params: ParametrosAjusteDiarioGfbr):
       "resumo": resumo,
   }
 
+
+class ParametrosGfbrGeradorTxt(BaseModel):
+  input_path: Optional[str] = None
+  aba_origem: Optional[str] = None
+  pdf_itau_1_path: Optional[str] = None
+  conta_aplicacao_1: Optional[str] = None
+  pdf_itau_2_path: Optional[str] = None
+  conta_aplicacao_2: Optional[str] = None
+  output_dir: Optional[str] = None
+
+
+@app.post("/api/gfbr-gerador-txt/processar")
+def processar_gfbr_gerador_txt_endpoint(params: ParametrosGfbrGeradorTxt):
+  resumo = processar_gfbr_gerador_txt(
+      input_path=params.input_path,
+      aba_origem=params.aba_origem,
+      pdf_itau_1_path=params.pdf_itau_1_path,
+      conta_aplicacao_1=params.conta_aplicacao_1,
+      pdf_itau_2_path=params.pdf_itau_2_path,
+      conta_aplicacao_2=params.conta_aplicacao_2,
+      output_dir=params.output_dir,
+  )
+  return {
+      "ok": True,
+      "resumo": resumo,
+  }
+
 class ParametrosSeparadorCSVBaixaAutomatica(BaseModel):
   input_path: str
   output_dir: str
@@ -553,3 +584,94 @@ def api_giast_gerar(params: GiastGenerateParams):
     except Exception as exc:
         print("Erro ao gerar GIAST:", exc)
         raise HTTPException(status_code=500, detail="Erro interno ao gerar arquivo GIAST.")
+
+
+@app.post("/api/conversor-extrato-pdf-ofx/processar")
+async def api_conversor_extrato_pdf_ofx(
+    arquivos: List[UploadFile] = File(...),
+    bankid: str = Form("0000"),
+    acctid: str | None = Form(None),
+):
+    try:
+        if not arquivos:
+            raise HTTPException(status_code=400, detail="Envie pelo menos um PDF.")
+
+        resultados: list[dict] = []
+        ofx_gerados: list[tuple[str, bytes]] = []
+
+        for arquivo in arquivos:
+            nome = arquivo.filename or "extrato.pdf"
+            conteudo = await arquivo.read()
+            if not conteudo:
+                resultados.append(
+                    {
+                        "ok": False,
+                        "arquivoEntrada": nome,
+                        "erro": "Arquivo vazio.",
+                    }
+                )
+                continue
+            if len(conteudo) > 25 * 1024 * 1024:
+                resultados.append(
+                    {
+                        "ok": False,
+                        "arquivoEntrada": nome,
+                        "erro": "Arquivo muito grande (limite 25MB).",
+                    }
+                )
+                continue
+
+            try:
+                convertido = converter_pdf_para_ofx_bytes(
+                    pdf_bytes=conteudo,
+                    nome_arquivo_origem=nome,
+                    bankid=bankid,
+                    acctid=(acctid or None),
+                )
+                ofx_bytes = convertido["ofx_bytes"]
+                ofx_nome = convertido["nome_saida"]
+                ofx_gerados.append((ofx_nome, ofx_bytes))
+                resultados.append(
+                    {
+                        "ok": True,
+                        "arquivoEntrada": nome,
+                        "arquivoSaida": ofx_nome,
+                        "banco": convertido["banco"],
+                        "contaDetectada": convertido["conta_detectada"],
+                        "contaFinal": convertido["conta_final"],
+                        "totalLancamentos": convertido["total_lancamentos"],
+                        "saldoFinal": convertido["saldo_final"],
+                        "ofxBase64": base64.b64encode(ofx_bytes).decode("ascii"),
+                    }
+                )
+            except Exception as exc:
+                resultados.append(
+                    {
+                        "ok": False,
+                        "arquivoEntrada": nome,
+                        "erro": str(exc),
+                    }
+                )
+
+        if not ofx_gerados:
+            raise HTTPException(status_code=400, detail="Nenhum OFX foi gerado. Verifique os arquivos enviados.")
+
+        zip_buffer = io.BytesIO()
+        with zipfile.ZipFile(zip_buffer, mode="w", compression=zipfile.ZIP_DEFLATED) as zf:
+            for nome_ofx, ofx_bytes in ofx_gerados:
+                zf.writestr(nome_ofx, ofx_bytes)
+
+        zip_nome = "extratos_convertidos_ofx.zip"
+        return {
+            "ok": True,
+            "totalArquivos": len(arquivos),
+            "totalConvertidos": len(ofx_gerados),
+            "resultados": resultados,
+            "zipFileName": zip_nome,
+            "zipBase64": base64.b64encode(zip_buffer.getvalue()).decode("ascii"),
+        }
+    except HTTPException:
+        raise
+    except Exception as exc:
+        print("Erro no conversor de extrato PDF para OFX:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao converter extratos para OFX.")
