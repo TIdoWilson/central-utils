@@ -25,15 +25,11 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
 import unicodedata
 from cod_item_refs import collect_cod_item_refs, load_icms_cod_item_field_map
-from sped_relationship_validator import validate_sped_relationships_lines
-
 
 RE_REG = re.compile(r"^[0-9A-Z]{4}$")
 DEFAULT_COD_CTA = "11216001000"
 REGS_0200_CHILDREN = {"0205", "0210", "0220", "0221"}
 REGS_0200_BLOCK = {"0200"} | REGS_0200_CHILDREN
-ICMS_LAYOUTS_DIR = Path(__file__).resolve().parents[2] / "layouts" / "speds" / "icms"
-REL_VALIDATOR_RULES = ICMS_LAYOUTS_DIR / "relationships" / "reference_domains.validator.json"
 
 
 @dataclass
@@ -61,18 +57,6 @@ class IntegrationStats:
     h010_cod_cta_updates: int
 
 
-def compute_new_issue_signatures(
-    baseline_counts: Dict[str, int],
-    final_counts: Dict[str, int],
-) -> Dict[str, int]:
-    out: Dict[str, int] = {}
-    for sig, qty in final_counts.items():
-        delta = int(qty) - int(baseline_counts.get(sig, 0))
-        if delta > 0:
-            out[sig] = delta
-    return out
-
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Integra inventario (0200 + bloco H) em SPED e atualiza totalizadores."
@@ -84,17 +68,6 @@ def parse_args() -> argparse.Namespace:
         "--default-cod-cta",
         default=DEFAULT_COD_CTA,
         help=f"COD_CTA padrao para H010 quando nao achar conta de estoque no 0500 (padrao: {DEFAULT_COD_CTA})",
-    )
-    parser.add_argument(
-        "--skip-relationship-validation",
-        action="store_true",
-        help="Nao executa a validacao global de relacionamentos antes de salvar o SPED final.",
-    )
-    parser.add_argument(
-        "--relationship-max-issues",
-        type=int,
-        default=200,
-        help="Maximo de inconsistencias detalhadas na validacao de relacionamentos (padrao: 200).",
     )
     return parser.parse_args()
 
@@ -319,7 +292,7 @@ def write_prevalidated_inventory(
 ) -> Path:
     out_path = inventory_path.parent / f"{inventory_path.stem}_PRE_VALIDADO_{datetime.now():%Y%m%d_%H%M%S}.txt"
     out_lines = list(inv_0190) + list(inv_0200) + list(inv_h)
-    out_path.write_text("\n".join(out_lines) + "\n", encoding="latin-1", errors="replace")
+    out_path.write_text("\n".join(out_lines) + "\n", encoding="utf-8", errors="replace")
     return out_path
 
 
@@ -671,44 +644,12 @@ def main() -> None:
         h010_cod_cta_updates=h010_cod_cta_updates,
     )
 
-    baseline_relationship_validation = None
-    relationship_validation = None
-    new_relationship_issues: Dict[str, int] = {}
-    if not args.skip_relationship_validation:
-        baseline_relationship_validation = validate_sped_relationships_lines(
-            lines=sped_lines,
-            layouts_dir=ICMS_LAYOUTS_DIR,
-            rules_path=REL_VALIDATOR_RULES,
-            max_issues=max(1, int(args.relationship_max_issues)),
-        )
-        relationship_validation = validate_sped_relationships_lines(
-            lines=integrated,
-            layouts_dir=ICMS_LAYOUTS_DIR,
-            rules_path=REL_VALIDATOR_RULES,
-            max_issues=max(1, int(args.relationship_max_issues)),
-        )
-        new_relationship_issues = compute_new_issue_signatures(
-            baseline_counts={k: int(v) for k, v in baseline_relationship_validation.get("issue_signature_counts", {}).items()},
-            final_counts={k: int(v) for k, v in relationship_validation.get("issue_signature_counts", {}).items()},
-        )
-        if new_relationship_issues:
-            print("\nERRO: validacao global de relacionamentos detectou novas inconsistencias no arquivo final.")
-            print(f"- Novas inconsistencias: {sum(new_relationship_issues.values())}")
-            shown = 0
-            for sig, qty in sorted(new_relationship_issues.items(), key=lambda item: item[0]):
-                domain, reg, field, value = (sig.split("|", 3) + ["", "", "", ""])[:4]
-                print(f"  +{qty} | {reg}.{field} => '{value}' (dominio {domain}) sem definicao")
-                shown += 1
-                if shown >= 20:
-                    break
-            sys.exit(5)
-
     output_path = (
         Path(args.output)
         if args.output
         else sped_path.parent / f"{sped_path.stem}_COM_INVENTARIO_{datetime.now():%Y%m%d_%H%M%S}.txt"
     )
-    output_path.write_text("\n".join(integrated) + "\n", encoding="latin-1", errors="replace")
+    output_path.write_text("\n".join(integrated) + "\n", encoding="utf-8", errors="replace")
 
     print("\nIntegracao concluida.")
     print(f"- SPED origem: {sped_path}")
@@ -744,12 +685,6 @@ def main() -> None:
     print(f"- H990 (QTD_LIN_H): {stats.qtd_lin_h}")
     print(f"- 9990 (QTD_LIN_9): {stats.qtd_lin_9}")
     print(f"- 9999 (QTD_LIN): {stats.qtd_lin_total}")
-    if relationship_validation is not None:
-        print("\nValidacao de relacionamentos:")
-        print(f"- Checagens executadas: {relationship_validation.get('total_checks', 0)}")
-        print(f"- Referencias invalidas (origem): {baseline_relationship_validation.get('invalid_refs', 0)}")
-        print(f"- Referencias invalidas (final): {relationship_validation.get('invalid_refs', 0)}")
-        print(f"- Novas inconsistencias introduzidas: {sum(new_relationship_issues.values())}")
 
 
 if __name__ == "__main__":

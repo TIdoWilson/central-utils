@@ -54,8 +54,14 @@ const createNfeLegacyRoutes = require('./routes/tools/nfe-legacy.routes');
 const createPedidosAlteracaoEmpresaRoutes = require('./routes/tools/pedidos-alteracao-empresa.routes');
 const createComparadorEventosHoleriteRoutes = require('./routes/tools/comparador-eventos-holerite.routes');
 const createCartaoHorasIobRoutes = require('./routes/tools/cartao-horas-iob.routes');
+const createCartaoHorasBandeiraTransportesRoutes = require('./routes/tools/cartao-horas-bandeira-transportes.routes');
+const createCctRoutes = require('./routes/tools/cct.routes');
+const createParcelamentosRoutes = require('./routes/tools/parcelamentos.routes');
 const createSpedsRoutes = require('./routes/tools/speds.routes');
 const { createDimobService } = require('./services/dimob.service');
+const { createCctService } = require('./services/cct.service');
+const { createParcelamentosService } = require('./services/parcelamentos.service');
+const { createCctIntakeService } = require('./services/cct-intake.service');
 const { createEcdStatusService } = require('./services/ecd-status.service');
 const { createToolStorage } = require('./services/tool-storage.service');
 const { createNfeService } = require('./services/nfe.service');
@@ -80,6 +86,7 @@ const {
   applyRegra2026IfNeeded,
 } = require('./services/irpf.service');
 const { createSnService } = require('./services/sn.service');
+const { createCctEmailService } = require('./services/cct-email.service');
 let pool;
 const DATA_DIR = path.join(__dirname, '..', 'data');
 if (!fs.existsSync(DATA_DIR)) {
@@ -187,6 +194,19 @@ const tareffaService = createTareffaEmpresasLoteService({
   JOB_STATUS,
 });
 const snService = createSnService({ pool, fs, dataDir: DATA_DIR });
+const cctService = createCctService({ pool });
+const parcelamentosService = createParcelamentosService({ pool });
+const cctEmailService = createCctEmailService({
+  projectRoot: path.join(__dirname, '..'),
+  emailListPath: path.join(__dirname, '..', 'data', 'cct', 'email.txt'),
+  siteUrl: process.env.CCT_SITE_URL || 'http://localhost:3000/cct',
+});
+const cctIntakeService = createCctIntakeService({
+  projectRoot: path.join(__dirname, '..'),
+  cctDir: path.join(__dirname, '..', 'data', 'cct'),
+  pythonBin: process.env.CCT_PYTHON_BIN || process.env.PYTHON_BIN,
+  emailService: cctEmailService,
+});
 const {
   dbGetSnCompanies,
   dbCreateSnCompany,
@@ -279,6 +299,7 @@ async function auditLog(arg1, action, status = 'ok', meta = null, user = null) {
 }
 
 const uploadAdminUsers = multer({ storage: multer.memoryStorage(), limits: { fileSize: 2 * 1024 * 1024 } });
+const uploadParcelamentosImport = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
 
 function normalizeRole(s) {
   const r = String(s || '').trim().toUpperCase();
@@ -804,6 +825,34 @@ async function initSecuritySchemaAndBootstrap() {
   `);
 
   await pool.query(`
+    CREATE TABLE IF NOT EXISTS parcelamentos_impostos (
+      id BIGSERIAL PRIMARY KEY,
+      company_name TEXT NOT NULL,
+      cnpj TEXT NOT NULL,
+      parcelamento_type TEXT NOT NULL,
+      parcelamento_number TEXT NOT NULL,
+      start_date DATE NOT NULL,
+      debit_account BOOLEAN NOT NULL DEFAULT false,
+      observations TEXT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_parcelamentos_impostos_created_at
+    ON parcelamentos_impostos (created_at DESC)
+  `);
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_parcelamentos_impostos_start_date
+    ON parcelamentos_impostos (start_date DESC)
+  `);
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_parcelamentos_impostos_cnpj
+    ON parcelamentos_impostos (cnpj)
+  `);
+
+  await pool.query(`
     CREATE TABLE IF NOT EXISTS checklist_ti_user_creation_forms (
       id BIGSERIAL PRIMARY KEY,
       process_number TEXT NULL,
@@ -1304,10 +1353,43 @@ app.use(
   })
 );
 app.use(
+  '/api/cct',
+  requireAuth,
+  requireToolApi('cct'),
+  createCctRoutes({
+    auditLog,
+    service: cctService,
+    intakeService: cctIntakeService,
+    requireCsrf,
+  })
+);
+app.use(
+  '/api/parcelamentos',
+  requireAuth,
+  requireToolApi('parcelamentos'),
+  createParcelamentosRoutes({
+    auditLog,
+    upload: uploadParcelamentosImport,
+    service: parcelamentosService,
+    requireCsrf,
+  })
+);
+app.use(
   '/api/cartao-horas-iob',
   requireAuth,
   requireToolApi('cartao-horas-iob'),
   createCartaoHorasIobRoutes({
+    requireCsrf,
+    upload,
+    axios,
+    PY_API_URL,
+  })
+);
+app.use(
+  '/api/cartao-horas-bandeira-transportes',
+  requireAuth,
+  requireToolApi('importador-cartao-horas-bandeira-transportes'),
+  createCartaoHorasBandeiraTransportesRoutes({
     requireCsrf,
     upload,
     axios,

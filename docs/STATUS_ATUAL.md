@@ -1,6 +1,6 @@
 # STATUS_ATUAL.md
 
-Data de referencia: 2026-03-12
+Data de referencia: 2026-03-25
 
 ## Concluido recentemente
 1. Projeto `Central utilitarios` estruturado no Linear com resumo, descricao, lead, prioridade, datas e milestones.
@@ -11,13 +11,23 @@ Data de referencia: 2026-03-12
    - subtarefas `WIL-52`, `WIL-53`, `WIL-55` e `WIL-54` em `Todo`.
 4. Documento de governanca do Linear criado em `docs/LINEAR_PLAYBOOK.md`.
 5. Regras de sincronizacao docs + Linear adicionadas ao fluxo do projeto.
+6. HUB de `Parcelamentos de Impostos` criado no portal com rota, tela interna, cadastro em banco, modal de inclusao, importacao por upload da planilha, agrupamentos por tipo fixo, ordenacao em lista, edicao manual e limpeza temporaria da base, com documentacao inicial.
+7. Integrador `icms-integrar-inventario-sped` ajustado para apenas integrar o inventario e recalcular totalizadores, sem validacao global de relacionamento.
+8. Saidas TXT dos scripts SPEDS padronizadas em `UTF-8` sem BOM.
+9. Corretor `icms-corretor-total-inventario` ajustado para apenas corrigir o inventario e recalcular totalizadores, sem validacao global de relacionamento.
+10. Gerador `gfbr-gerador-txt` passou a excluir automaticamente lancamentos de renda/rendimento com classificacao resolvida iniciando em `11102`.
+11. Gerador `gfbr-gerador-txt` ajustado para aplicar a direcao correta dos PDFs Itaú: aplicação debita a aplicação e credita a conta corrente; resgate faz o inverso.
+12. Upload do `gfbr-gerador-txt` passou a aceitar Excel + PDF juntos no mesmo envio, corrigindo o limite de arquivos do multer.
+11. `acerto-lotes-toscan` corrigido para ler TXT de layout fixo sem quebrar no processamento e identificar historico vazio pelo trecho util da linha.
+
+13. Templates locais de correcao de participantes adicionados na pagina `/speds` para `ICMS` e `Contribuicoes`, com selecao de arquivos via upload e suporte a XML/ZIP/RAR conforme o script.
 
 ## Estado tecnico atual
 - Arquitetura multicamadas consolidada (Node.js, Python/FastAPI, PostgreSQL e filesystem).
 - Catalogo operacional de ferramentas ativo e documentado (`docs/UI_MAP.md`, `docs/tools/index.md`).
 - Runbooks de diagnostico e operacao disponiveis para ferramentas criticas.
 - Fluxo de deploy VPS documentado com checks de release e migrations.
-- Correcoes relevantes registradas nos docs de ferramentas (SN, MIT, GIAST, SPEDS).
+- Correcoes relevantes registradas nos docs de ferramentas (SN, MIT, GIAST, SPEDS, correcao de participantes local).
 
 ## Pendencias ativas (Linear)
 1. `WIL-52` - implementar endpoint real da API do Conciliador Hausen Ocean.

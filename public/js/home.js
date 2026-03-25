@@ -10,6 +10,7 @@ const ICON_FALLBACK = buildMonoIcon('mdi:application-cog-outline');
 const TOOL_ICON_MAP = {
   'comparador-eventos-holerite': buildMonoIcon('mdi:compare-horizontal'),
   'cartao-horas-iob': buildMonoIcon('mdi:clock-time-four-outline'),
+  'importador-cartao-horas-bandeira-transportes': buildMonoIcon('mdi:truck-clock'),
   'separador-ferias-funcionario': buildMonoIcon('mdi:palm-tree'),
   'separador-holerites-por-empresa': buildMonoIcon('mdi:file-account-outline'),
   'separador-pdf-relatorio-de-ferias': buildMonoIcon('mdi:file-document-multiple-outline'),
@@ -153,6 +154,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const role = ctx.user.role;
   const perms = Array.isArray(ctx.user.permissions) ? ctx.user.permissions : [];
+  const permList = perms.map((p) => String(p || '').toLowerCase());
   const allowAll = hasGlobalToolAccessOnHome(ctx);
 
   const cards = Array.from(document.querySelectorAll('.carousel-card'));
@@ -183,7 +185,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const needed = `tool:${slug}`;
-    const permList = perms.map((p) => String(p || '').toLowerCase());
     if (!allowAll && !permList.includes(needed.toLowerCase()) && !permList.includes('tool:*')) {
       card.style.display = 'none';
     }
@@ -236,7 +237,7 @@ function setupHomeSearch() {
 
     sections.forEach((section) => {
       const hasVisible = Array.from(section.querySelectorAll('.carousel-card'))
-        .some((card) => card.style.display !== 'none');
+        .some((el) => el.style.display !== 'none');
       if (!hasVisible) {
         section.style.display = 'none';
         return;
@@ -272,6 +273,7 @@ function getAllVisibleToolPermsOnHome() {
     if (['admin-usuarios', 'dashboards', 'admin-pedidos-empresas', 'logs', 'checklist-ti-criacao-usuario'].includes(slug)) continue;
     perms.add(`tool:${slug}`.toLowerCase());
   }
+
   return perms;
 }
 

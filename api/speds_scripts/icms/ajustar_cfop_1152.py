@@ -330,7 +330,7 @@ def adjust_file(
         affected,
     )
 
-    output_path.write_text("\n".join(lines) + "\n", encoding="latin-1", errors="replace")
+    output_path.write_text("\n".join(lines) + "\n", encoding="utf-8", errors="replace")
     return affected, total_c170_changed, total_c190_changed
 
 

@@ -43,11 +43,17 @@
               <span>BANKID</span>
               <input type="text" id="bankid" name="bankid" value="0000" />
             </label>
+            <p class="nfe-card-subtitle" style="margin: -4px 0 0">
+              Codigo do banco gravado no OFX. Use o codigo que o seu importador espera para este extrato.
+            </p>
 
             <label class="nfe-input-file-label">
               <span>ACCTID (opcional)</span>
               <input type="text" id="acctid" name="acctid" placeholder="Detecta automaticamente se vazio" />
             </label>
+            <p class="nfe-card-subtitle" style="margin: -4px 0 0">
+              Numero ou identificador da conta no OFX. Se ficar em branco, a ferramenta tenta detectar a conta no proprio PDF.
+            </p>
 
             <div class="nfe-table-actions" style="margin-top: 12px">
               <button type="submit" class="btn btn-primary" id="btnConverter">Converter</button>

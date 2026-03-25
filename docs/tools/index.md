@@ -51,7 +51,12 @@ Esta lista é gerada automaticamente a partir de `src/core/tool-catalog.json`.
 - [Separador PDF Relatorio DE Ferias](./separador-pdf-relatorio-de-ferias.md) — `/separador-pdf-relatorio-de-ferias` • API: `/api/separador-pdf-relatorio-de-ferias`
 - [SN](./sn.md) — `/sn` • API: `/api/sn`
 - [Tareffa Empresas Lote](./tareffa-empresas-lote.md) — `/tareffa-empresas-lote` • API: `/api/tareffa-empresas-lote`
+## Parcelamentos
+
+- [Parcelamentos de Impostos](./parcelamentos.md) — `/parcelamentos` • API: `/api/parcelamentos`
 ## Pessoal
 
 - [Cartao Horas IOB](./cartao-horas-iob.md) — `/cartao-horas-iob` • API: `/api/cartao-horas-iob`
+- [Consulta CCT](./cct.md) — `/cct` • API: `/api/cct`
 - [Comparador Eventos Holerite](./comparador-eventos-holerite.md) — `/comparador-eventos-holerite` • API: `/api/comparador-eventos-holerite`
+- [Importador Cartao de Horas Bandeira Transportes](./importador-cartao-horas-bandeira-transportes.md) — `/importador-cartao-horas-bandeira-transportes` • API: `/api/cartao-horas-bandeira-transportes`

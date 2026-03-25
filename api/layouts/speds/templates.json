@@ -1,6 +1,6 @@
 ﻿{
   "version": "1.0",
-  "updatedAt": "2026-03-11",
+  "updatedAt": "2026-03-25",
   "templates": [
     {
       "id": "contribuicoes-conferidor-xml-nfe",
@@ -70,6 +70,40 @@
       "outputFormats": ["txt", "xlsx"]
     },
     {
+      "id": "contribuicoes-corrigir-participantes-sped",
+      "spedType": "contribuicoes",
+      "title": "Contribuicoes - Corrigir participantes",
+      "description": "Corrige os campos de endereco dos participantes 0150 a partir de XMLs de notas fiscais.",
+      "script": {
+        "entry": "C:/Users/Usuario/Desktop/projeto sped/corrigir_participantes_sped_contribuicoes.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/corrigir_participantes_sped_contribuicoes.py"
+      },
+      "manifest": {
+        "path": "api/layouts/speds/contribuicoes/manifests/contribuicoes-corrigir-participantes-sped.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
+      },
+      "inputs": [
+        {
+          "key": "sped_txt",
+          "label": "Arquivo SPED Contribuicoes",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"],
+          "help": "Arquivo SPED EFD-Contribuicoes que recebera a correcao."
+        },
+        {
+          "key": "xml_notas",
+          "label": "Notas XML/ZIP/RAR",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".xml", ".zip", ".rar"],
+          "help": "Selecione um XML unico ou um pacote ZIP/RAR com as notas."
+        }
+      ],
+      "fields": [],
+      "outputFormats": ["txt"]
+    },
+    {
       "id": "icms-ajustar-cfop-1152",
       "spedType": "icms",
       "title": "ICMS - Ajustar CFOP alvo",
@@ -101,6 +135,40 @@
           "defaultValue": "1152"
         }
       ],
+      "outputFormats": ["txt"]
+    },
+    {
+      "id": "icms-corrigir-participantes-sped",
+      "spedType": "icms",
+      "title": "ICMS - Corrigir participantes",
+      "description": "Corrige os campos de endereco dos participantes 0150 a partir de XMLs NF-e em lote.",
+      "script": {
+        "entry": "C:/Users/Usuario/Desktop/projeto sped/corrigir_participantes_sped_icms.py",
+        "source": "C:/Users/Usuario/Desktop/projeto sped/corrigir_participantes_sped_icms.py"
+      },
+      "manifest": {
+        "path": "api/layouts/speds/icms/manifests/icms-corrigir-participantes-sped.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
+      },
+      "inputs": [
+        {
+          "key": "sped_txt",
+          "label": "Arquivo SPED ICMS",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"],
+          "help": "Arquivo SPED EFD ICMS/IPI que recebera a correcao."
+        },
+        {
+          "key": "xml_arquivos",
+          "label": "XMLs NF-e em ZIP/RAR",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".zip", ".rar"],
+          "help": "Selecione um arquivo compactado com os XMLs da empresa."
+        }
+      ],
+      "fields": [],
       "outputFormats": ["txt"]
     },
     {

@@ -57,7 +57,13 @@ Este arquivo é gerado automaticamente a partir de `src/core/tool-catalog.json`.
 - **SN** — `/sn` • API: `/api/sn`
 - **Tareffa Empresas Lote** — `/tareffa-empresas-lote` • API: `/api/tareffa-empresas-lote`
 
+## Parcelamentos
+
+- **Parcelamentos de Impostos** — `/parcelamentos` • API: `/api/parcelamentos`
+
 ## Pessoal
 
 - **Cartao Horas IOB** — `/cartao-horas-iob` • API: `/api/cartao-horas-iob`
 - **Comparador Eventos Holerite** — `/comparador-eventos-holerite` • API: `/api/comparador-eventos-holerite`
+- **Consulta CCT** — `/cct` • API: `/api/cct`
+- **Importador Cartao de Horas Bandeira Transportes** — `/importador-cartao-horas-bandeira-transportes` • API: `/api/cartao-horas-bandeira-transportes`

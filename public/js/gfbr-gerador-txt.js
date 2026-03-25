@@ -98,6 +98,12 @@
     const c2 = ($('contaAplicacao2')?.value || '').trim();
     if (c2) formData.append('contaAplicacao2', c2);
 
+    const contaCorrente1 = ($('contaCorrente1')?.value || '').trim();
+    if (contaCorrente1) formData.append('contaCorrente1', contaCorrente1);
+
+    const contaCorrente2 = ($('contaCorrente2')?.value || '').trim();
+    if (contaCorrente2) formData.append('contaCorrente2', contaCorrente2);
+
     setStatus('Processando arquivo...', false);
     resetResumo();
     setDownloadButtons(null);

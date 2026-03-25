@@ -1289,6 +1289,32 @@ module.exports = function createSpedsService(deps = {}) {
     });
   }
 
+  async function runContribuicoesCorrigirParticipantesTemplate({ template, filesByInput, outputDir }) {
+    const spedFile = getSingleInputFile(filesByInput, 'sped_txt');
+    const notesFile = getSingleInputFile(filesByInput, 'xml_notas');
+    if (!spedFile?.path || !notesFile?.path) {
+      throw createValidationError('Envie o SPED e o arquivo XML/ZIP/RAR para corrigir participantes.');
+    }
+
+    const inputName = spedFile.originalName || path.basename(spedFile.path);
+    const inputStem = sanitizeBaseName(path.parse(inputName).name, 'sped_contribuicoes');
+    const outputPath = path.join(outputDir, `${inputStem}_PARTICIPANTES_CONTRIBUICOES_CORRIGIDOS.txt`);
+    const pyArgs = [
+      spedFile.path,
+      '--notes-source',
+      notesFile.path,
+      '--output',
+      outputPath,
+    ];
+
+    return executeTemplateScript({
+      template,
+      scriptArgs: pyArgs,
+      outputPath,
+      failureLabel: 'Falha ao processar a correcao de participantes do SPED Contribuicoes.',
+    });
+  }
+
   async function runIcmsAjustarCfopTemplate({ template, filesByInput, fields, outputDir }) {
     const spedFile = getSingleInputFile(filesByInput, 'sped_txt');
     if (!spedFile?.path) {
@@ -1313,6 +1339,32 @@ module.exports = function createSpedsService(deps = {}) {
       scriptArgs: pyArgs,
       outputPath,
       failureLabel: 'Falha ao processar o Ajustar CFOP alvo.',
+    });
+  }
+
+  async function runIcmsCorrigirParticipantesTemplate({ template, filesByInput, outputDir }) {
+    const spedFile = getSingleInputFile(filesByInput, 'sped_txt');
+    const notesFile = getSingleInputFile(filesByInput, 'xml_arquivos');
+    if (!spedFile?.path || !notesFile?.path) {
+      throw createValidationError('Envie o SPED e o ZIP/RAR com XMLs para corrigir participantes.');
+    }
+
+    const inputName = spedFile.originalName || path.basename(spedFile.path);
+    const inputStem = sanitizeBaseName(path.parse(inputName).name, 'sped_icms');
+    const outputPath = path.join(outputDir, `${inputStem}_PARTICIPANTES_ICMS_CORRIGIDOS.txt`);
+    const pyArgs = [
+      spedFile.path,
+      '--xml-archive',
+      notesFile.path,
+      '--output',
+      outputPath,
+    ];
+
+    return executeTemplateScript({
+      template,
+      scriptArgs: pyArgs,
+      outputPath,
+      failureLabel: 'Falha ao processar a correcao de participantes do SPED ICMS.',
     });
   }
 
@@ -1532,8 +1584,10 @@ module.exports = function createSpedsService(deps = {}) {
 
   const TEMPLATE_RUNNERS = {
     'contribuicoes-conferidor-xml-nfe': runContribuicoesConferidorXmlTemplate,
+    'contribuicoes-corrigir-participantes-sped': runContribuicoesCorrigirParticipantesTemplate,
     'contribuicoes-validador-sped': runContribuicoesValidadorSpedTemplate,
     'icms-ajustar-cfop-1152': runIcmsAjustarCfopTemplate,
+    'icms-corrigir-participantes-sped': runIcmsCorrigirParticipantesTemplate,
     'icms-comparador-sped-relatorio': runIcmsComparadorTemplate,
     'icms-corretor-total-inventario': runIcmsCorretorTotalInventarioTemplate,
     'icms-gerador-inventario': runIcmsGeradorInventarioTemplate,

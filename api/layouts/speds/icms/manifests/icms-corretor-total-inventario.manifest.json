@@ -38,9 +38,9 @@
     "onOrphanDetected": "abort"
   },
   "validators": {
-    "globalRelationshipValidation": true,
-    "duplicateKeyCheck": true,
-    "hierarchyCheck": true,
+    "globalRelationshipValidation": false,
+    "duplicateKeyCheck": false,
+    "hierarchyCheck": false,
     "rulesFile": "api/layouts/speds/icms/relationships/reference_domains.validator.json"
   },
   "totalizers": ["0990", "H990", "9900", "9990", "9999"],

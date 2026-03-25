@@ -6,6 +6,7 @@
 
 ## O que esta ferramenta faz
 Executa templates de processamento de SPED (ICMS, Contribuicoes, ECD e ECF) com upload de arquivos e download do artefato final gerado por script Python.
+Tambem centraliza rotinas locais de correcao de participantes com base em XMLs de notas.
 
 ## Como acessar
 - Pagina: `/speds` (rota dinamica)
@@ -36,10 +37,32 @@ Executa templates de processamento de SPED (ICMS, Contribuicoes, ECD e ECF) com 
 - `api/layouts/speds/contribuicoes/relationships/index.json`
 - validador reutilizavel: `api/speds_scripts/icms/sped_relationship_validator.py` (informar `--layouts-dir` e `--rules-file`)
 
+### Templates locais adicionados
+#### Contribuicoes - Corrigir participantes
+- ID: `contribuicoes-corrigir-participantes-sped`
+- Script local: `C:/Users/Usuario/Desktop/projeto sped/corrigir_participantes_sped_contribuicoes.py`
+- Entradas:
+  - `sped_txt` (`.txt`)
+  - `xml_notas` (`.xml`, `.zip`, `.rar`)
+- Saida: `.txt`
+- Finalidade: preencher os campos de endereco dos registros `0150` com dados das notas XML.
+- Classificacao operacional: `local-only`
+
+#### ICMS - Corrigir participantes
+- ID: `icms-corrigir-participantes-sped`
+- Script local: `C:/Users/Usuario/Desktop/projeto sped/corrigir_participantes_sped_icms.py`
+- Entradas:
+  - `sped_txt` (`.txt`)
+  - `xml_arquivos` (`.zip`, `.rar`)
+- Saida: `.txt`
+- Finalidade: preencher os campos de endereco dos registros `0150` com dados de XMLs NF-e.
+- Classificacao operacional: `local-only`
+
 ## Observacoes de seguranca
 - Mutacoes exigem `x-csrf-token`.
 - Nao servir HTML por static; pagina acessada sem `.html`.
 - Nao criar botao local de logout na pagina.
+- Arquivos TXT exportados pelos scripts SPEDS devem sair em `UTF-8` sem BOM.
 
 ## Template novo: Copiar Bloco K
 - ID: `icms-copiar-bloco-k-sped`
@@ -91,7 +114,8 @@ Executa templates de processamento de SPED (ICMS, Contribuicoes, ECD e ECF) com 
 ## Estado atual apos as ultimas mudancas
 - O validador global de relacionamentos esta em `api/speds_scripts/icms/sped_relationship_validator.py`.
 - O validador compara o arquivo inteiro (de `0000` a `9999`) com base nos layouts JSON e nos dominios de `api/layouts/speds/icms/relationships/reference_domains.validator.json`.
-- Os templates `icms-corretor-total-inventario` e `icms-integrar-inventario-sped` ja executam comparacao de integridade origem x final e bloqueiam somente inconsistencias novas.
+- O template `icms-corretor-total-inventario` nao executa mais validacao global: ele apenas corrige o inventario e recalcula os totalizadores afetados.
+- O template `icms-integrar-inventario-sped` nao executa mais validacao global: ele apenas integra o inventario e recalcula os totalizadores afetados.
 - A hierarquia `0200` -> filhos (`0205`, `0210`, `0220`, `0221`) esta preservada nos fluxos de exclusao e integracao de inventario.
 - Cobertura de manifesto no ICMS: 6/6 templates com `manifest` referenciado em `api/layouts/speds/templates.json`.
 - Cobertura de manifesto no Contribuicoes: 2/2 templates com `manifest` referenciado em `api/layouts/speds/templates.json`.
@@ -163,6 +187,15 @@ Executa templates de processamento de SPED (ICMS, Contribuicoes, ECD e ECF) com 
 - Fase 5: testes automatizados por template com fixture real e fixture de borda.
 
 ## Troubleshooting
+### Sintoma
+Os templates de correcao de participantes do SPEDS nao apareciam na pagina `/speds`.
+
+### Causa provavel
+Os scripts locais ainda nao estavam registrados em `api/layouts/speds/templates.json` nem mapeados em `src/services/speds.service.js`.
+
+### Solucao
+Adicionar os templates `contribuicoes-corrigir-participantes-sped` e `icms-corrigir-participantes-sped` com manifestos proprios, vinculo ao script local e runners dedicados no backend.
+
 ### Sintoma
 Templates SPEDS retornavam apenas arquivo `.txt` de resumo (`<template>_<job>.txt`) em vez do arquivo final processado pelo script.
 
@@ -236,10 +269,28 @@ O resumo final do script tambem deve informar:
 - quantidade ignorada por nao ter referencia.
 
 ### Sintoma
-No template `icms-corretor-total-inventario`, um `0200` podia ser removido mesmo ainda referenciado em registros diferentes de `C170`, causando inconsistencias no PVA.
+No template `icms-integrar-inventario-sped`, o processamento podia ser interrompido por uma validacao global do SPED final, mesmo quando a intencao era apenas integrar o inventario e ajustar os totalizadores.
 
 ### Causa provavel
-A regra de exclusao do corretor considerava apenas referencias no `C170` para decidir se um `COD_ITEM` podia ser removido.
+A rotina fazia uma checagem extra de relacionamento origem x final, exigindo ausencia de novas inconsistencias em todo o arquivo.
+
+### Solucao
+No `api/speds_scripts/icms/integrar_inventario_sped.py` e no manifesto `api/layouts/speds/icms/manifests/icms-integrar-inventario-sped.manifest.json`, remover a validacao global e manter apenas a integracao dos registros tocados com o recalculo dos totalizadores afetados (`0990`, `H990`, `9900`, `9990`, `9999`).
+
+### Sintoma
+No template `icms-corretor-total-inventario`, o processamento podia ser interrompido por validacao global de relacionamentos, mesmo quando a intencao era apenas ajustar o total do inventario.
+
+### Causa provavel
+A rotina fazia uma checagem extra de relacionamentos origem x final antes de gravar o arquivo final.
+
+### Solucao
+No `api/speds_scripts/icms/corretor_total_inventario.py` e no manifesto `api/layouts/speds/icms/manifests/icms-corretor-total-inventario.manifest.json`, remover a validacao global e manter apenas a correcao do inventario, com recalculo dos totalizadores afetados (`0990`, `H990`, `9900`, `9990`, `9999`).
+
+### Sintoma
+Um `0200` podia ser removido mesmo ainda referenciado em registros diferentes de `C170`, causando inconsistencias no PVA.
+
+### Causa provavel
+A regra de exclusao do corretor considerava apenas referencias em alguns registros para decidir se um `COD_ITEM` podia ser removido.
 
 ### Solucao
 No `api/speds_scripts/icms/corretor_total_inventario.py`, bloquear exclusao de `COD_ITEM` quando houver referencia externa em qualquer registro mapeado nos layouts `api/layouts/speds/icms/*.json` com campo `COD_ITEM*` (excluindo apenas `H010` e `0200`, que sao tratados pela propria rotina de ajuste).

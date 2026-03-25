@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-16T12:19:01.541Z",
+  "generatedAt": "2026-03-20T12:27:25.405Z",
   "groups": [
     {
       "group": "Admin",
@@ -380,6 +380,20 @@
       ]
     },
     {
+      "group": "Parcelamentos",
+      "tools": [
+        {
+          "slug": "parcelamentos",
+          "title": "Parcelamentos de Impostos",
+          "path": "/parcelamentos",
+          "hasApi": true,
+          "apiBase": "/api/parcelamentos",
+          "adminOnly": false,
+          "aliases": []
+        }
+      ]
+    },
+    {
       "group": "Pessoal",
       "tools": [
         {
@@ -397,6 +411,24 @@
           "path": "/comparador-eventos-holerite",
           "hasApi": true,
           "apiBase": "/api/comparador-eventos-holerite",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "cct",
+          "title": "Consulta CCT",
+          "path": "/cct",
+          "hasApi": true,
+          "apiBase": "/api/cct",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "importador-cartao-horas-bandeira-transportes",
+          "title": "Importador Cartao de Horas Bandeira Transportes",
+          "path": "/importador-cartao-horas-bandeira-transportes",
+          "hasApi": true,
+          "apiBase": "/api/cartao-horas-bandeira-transportes",
           "adminOnly": false,
           "aliases": []
         }

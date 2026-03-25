@@ -144,6 +144,80 @@ async def processar_cartao_horas_iob_endpoint(
         print("Erro ao processar cartao horas IOB:", exc)
         raise HTTPException(status_code=500, detail="Erro interno ao processar o PDF do cartao.")
 # =========================
+@app.post("/api/cartao-horas-bandeira-transportes/processar")
+async def processar_cartao_horas_bandeira_transportes_endpoint(
+    arquivo: UploadFile = File(...),
+    ids_json: str = Form("{}"),
+):
+    try:
+        from api.cartao_horas_bandeira_transportes_core import processar_pdf_cartao_bandeira
+
+        pdf_bytes = await arquivo.read()
+        try:
+            ids_por_chave = json.loads(ids_json or "{}")
+        except json.JSONDecodeError as exc:
+            raise HTTPException(status_code=400, detail="Configuracao de IDs invalida.") from exc
+
+        resultado = processar_pdf_cartao_bandeira(
+            pdf_bytes=pdf_bytes,
+            nome_arquivo=arquivo.filename or "arquivo.pdf",
+            ids_por_chave=ids_por_chave,
+        )
+
+        previa = resultado.get("preview", {})
+        return {
+            "ok": True,
+            "nomeArquivo": resultado.get("nome_saida", "arquivo.txt"),
+            "txtBase64": resultado.get("txt_base64", ""),
+            "totalRegistrosTxt": len(resultado.get("linhas", [])),
+            "previewLinhas": (resultado.get("linhas") or [])[:30],
+            "empresa": previa.get("empresa", ""),
+            "periodoInicial": previa.get("periodo_inicial", ""),
+            "periodoFinal": previa.get("periodo_final", ""),
+            "funcionarios": resultado.get("funcionarios", []),
+            "itens": previa.get("itens", []),
+            "somaItens": previa.get("soma_itens", "0,00"),
+            "totalItens": previa.get("total_itens", 0),
+            "listaFuncionariosArquivo": resultado.get("lista_funcionarios_arquivo", ""),
+        }
+    except FileNotFoundError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="Ferramenta indisponivel neste ambiente: script/planilha do Bandeira nao localizados.",
+        ) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except HTTPException:
+        raise
+    except Exception as exc:
+        print("Erro ao processar cartao horas Bandeira Transportes:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao processar o PDF.")
+
+
+class SalvarFuncionarioBandeiraPayload(BaseModel):
+    nome: str
+    cpf: str
+    matricula: str
+
+
+@app.post("/api/cartao-horas-bandeira-transportes/salvar-funcionario")
+def salvar_funcionario_bandeira_endpoint(payload: SalvarFuncionarioBandeiraPayload):
+    try:
+        from api.cartao_horas_bandeira_transportes_core import salvar_funcionario_lista
+
+        resultado = salvar_funcionario_lista(
+            nome=payload.nome,
+            cpf=payload.cpf,
+            matricula=payload.matricula,
+        )
+        return {"ok": True, **resultado}
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=503, detail=str(exc))
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as exc:
+        print("Erro ao salvar funcionario na lista Bandeira:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao salvar funcionario na lista.")
 # MODELO DE ENTRADA (FÉRIAS)
 # =========================
 
@@ -407,8 +481,10 @@ class ParametrosGfbrGeradorTxt(BaseModel):
   aba_origem: Optional[str] = None
   pdf_itau_1_path: Optional[str] = None
   conta_aplicacao_1: Optional[str] = None
+  conta_corrente_1: Optional[str] = None
   pdf_itau_2_path: Optional[str] = None
   conta_aplicacao_2: Optional[str] = None
+  conta_corrente_2: Optional[str] = None
   output_dir: Optional[str] = None
 
 
@@ -419,8 +495,10 @@ def processar_gfbr_gerador_txt_endpoint(params: ParametrosGfbrGeradorTxt):
       aba_origem=params.aba_origem,
       pdf_itau_1_path=params.pdf_itau_1_path,
       conta_aplicacao_1=params.conta_aplicacao_1,
+      conta_corrente_1=params.conta_corrente_1,
       pdf_itau_2_path=params.pdf_itau_2_path,
       conta_aplicacao_2=params.conta_aplicacao_2,
+      conta_corrente_2=params.conta_corrente_2,
       output_dir=params.output_dir,
   )
   return {

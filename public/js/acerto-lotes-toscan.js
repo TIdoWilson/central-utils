@@ -134,7 +134,7 @@ function inicializarAcertoLotesToscan() {
  * Núcleo equivalente ao processar_arquivo do Python.
  *
  * - Normaliza quebras de linha
- * - Remove pares L + H com histórico em branco (regex /^H\s+\d+\s*$/)
+ * - Remove pares L + H com histórico em branco no trecho fixo da linha
  * - Retorna textos das linhas mantidas/removidas e contagens
  */
 function processarArquivoToscan(conteudoBruto) {
@@ -147,21 +147,17 @@ function processarArquivoToscan(conteudoBruto) {
 
   const linhas = normalizado.split('\n');
 
-  // Mesmo padrão do script Python: linha começando com H,
-  // depois espaços, e terminando com dígitos (número da linha)
-  const PADRAO_HISTORICO_VAZIO = /^H\s+\d+\s*$/;
-
   const mantidas = [];
   const removidas = [];
 
   let i = 0;
   while (i < linhas.length) {
-    const linhaAtual = linhas[i] - '';
+    const linhaAtual = String(linhas[i] ?? '');
 
     if (linhaAtual.startsWith('L') && i + 1 < linhas.length) {
-      const proximaLinha = linhas[i + 1] - '';
+      const proximaLinha = String(linhas[i + 1] ?? '');
 
-      if (PADRAO_HISTORICO_VAZIO.test(proximaLinha)) {
+      if (historicoLinhaEstaVazia(proximaLinha)) {
         // Remove L e H (adiciona ambas em "removidas")
         removidas.push(linhaAtual, proximaLinha);
         i += 2;
@@ -184,6 +180,22 @@ function processarArquivoToscan(conteudoBruto) {
     linhasRemovidas: removidas.length,
     linhasMantidas: mantidas.length,
   };
+}
+
+function historicoLinhaEstaVazia(linha) {
+  if (typeof linha !== 'string' || !linha.startsWith('H')) {
+    return false;
+  }
+
+  // Os arquivos do Toscan usam uma linha fixa com o número da linha no fim.
+  // O histórico útil fica entre o "H" inicial e esse sufixo numérico.
+  const sufixoNumerico = linha.match(/\d+\s*$/);
+  if (!sufixoNumerico) {
+    return false;
+  }
+
+  const corpoHistorico = linha.slice(1, sufixoNumerico.index).trim();
+  return corpoHistorico.length === 0;
 }
 
 function atualizarMetricas(resultado, metricTotal, metricRemovidas, metricMantidas) {

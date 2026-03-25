@@ -313,6 +313,10 @@ body.app-body {
   background: #ffffff;
 }
 
+.session--parcelamentos .session-header {
+  background: #ffffff;
+}
+
 .session--admin .session-header {
   background: #ffffff;
 }
@@ -345,6 +349,10 @@ body.app-body {
 .session--declaracoes .session-body {
    background: #f9fafb;
  }
+
+.session--parcelamentos .session-body {
+  background: #f9fafb;
+}
 
 .session--pdf .session-body {
   background: #f9fafb;
@@ -1215,6 +1223,333 @@ body.nfe-body {
 
 .nfe-card-header-with-actions {
   gap: 16px;
+}
+
+.page-parcelamentos .modal-content {
+  width: min(860px, calc(100vw - 32px));
+  max-width: none;
+  border-radius: 24px;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(244, 247, 251, 0.99) 100%);
+  box-shadow: 0 24px 55px rgba(15, 23, 42, 0.26);
+}
+
+.page-parcelamentos .modal-overlay {
+  backdrop-filter: blur(5px);
+  background: rgba(15, 23, 42, 0.34);
+}
+
+.page-parcelamentos .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.page-parcelamentos .modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.page-parcelamentos .modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #0f172a;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-parcelamentos .modal-close:hover {
+  background: #f8fafc;
+}
+
+.page-parcelamentos .parcelamentos-modal-hint {
+  margin: 0 0 16px;
+  color: #475569;
+}
+
+.page-parcelamentos .parcelamentos-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.page-parcelamentos .parcelamentos-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 1px solid #dbe4f0;
+  border-radius: 12px;
+  background: #f9fafb;
+  box-sizing: border-box;
+}
+
+.page-parcelamentos .parcelamentos-field input,
+.page-parcelamentos .parcelamentos-field textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  padding: 10px 12px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.page-parcelamentos .parcelamentos-debit-field,
+.page-parcelamentos .parcelamentos-textarea-field {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border: 1px solid #dbe4f0;
+  border-radius: 12px;
+  background: #f9fafb;
+  box-sizing: border-box;
+}
+
+.page-parcelamentos .parcelamentos-debit-field input {
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.page-parcelamentos .parcelamentos-debit-field span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.page-parcelamentos .parcelamentos-debit-field small {
+  color: #64748b;
+  font-weight: 400;
+}
+
+.page-parcelamentos .parcelamentos-textarea-field {
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+.page-parcelamentos .parcelamentos-textarea-field textarea {
+  min-height: 180px;
+  resize: vertical;
+  width: 100%;
+}
+
+.page-parcelamentos .parcelamentos-modal-actions {
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.page-parcelamentos .parcelamentos-group {
+  margin-top: 22px;
+}
+
+.page-parcelamentos .parcelamentos-group:first-child {
+  margin-top: 0;
+}
+
+.page-parcelamentos .parcelamentos-group-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.page-parcelamentos .parcelamentos-group-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.page-parcelamentos .parcelamentos-group-header p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.page-parcelamentos .parcelamentos-table-wrap {
+  margin-top: 16px;
+  overflow-x: auto;
+}
+
+.page-parcelamentos .parcelamentos-table {
+  width: 100%;
+  min-width: 1120px;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.page-parcelamentos .parcelamentos-table th,
+.page-parcelamentos .parcelamentos-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+  text-align: left;
+}
+
+.page-parcelamentos .parcelamentos-table thead th {
+  background: #f8fafc;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.page-parcelamentos .parcelamentos-col-company {
+  width: 30%;
+}
+
+.page-parcelamentos .parcelamentos-col-number {
+  width: 16%;
+}
+
+.page-parcelamentos .parcelamentos-col-debit {
+  width: 12%;
+}
+
+.page-parcelamentos .parcelamentos-col-observations {
+  width: 32%;
+}
+
+.page-parcelamentos .parcelamentos-col-actions {
+  width: 10%;
+}
+
+.page-parcelamentos .parcelamentos-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.page-parcelamentos .parcelamentos-sort-btn strong {
+  font-size: 11px;
+  line-height: 1;
+  color: #64748b;
+}
+
+.page-parcelamentos .parcelamentos-sort-btn.is-active strong {
+  color: #0f172a;
+}
+
+.page-parcelamentos .parcelamentos-table tbody tr:nth-child(even) td {
+  background: #fcfdff;
+}
+
+.page-parcelamentos .parcelamentos-table tbody tr:hover td {
+  background: #f8fafc;
+}
+
+.page-parcelamentos .parcelamentos-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.page-parcelamentos .parcelamentos-table-empty {
+  text-align: center;
+  color: #64748b;
+  padding: 28px 18px;
+}
+
+.page-parcelamentos .parcelamentos-company-cell {
+  min-width: 220px;
+}
+
+.page-parcelamentos .parcelamentos-company-cell strong {
+  display: block;
+  color: #0f172a;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.page-parcelamentos .parcelamentos-company-cell span {
+  display: block;
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.page-parcelamentos .parcelamentos-debit-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.page-parcelamentos .parcelamentos-debit-pill.is-on {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.page-parcelamentos .parcelamentos-debit-pill.is-off {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.page-parcelamentos .parcelamentos-observations-cell {
+  color: #334155;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  vertical-align: top;
+  min-height: 56px;
+}
+
+.page-parcelamentos .parcelamentos-actions-cell {
+  white-space: nowrap;
+}
+
+.page-parcelamentos .parcelamentos-edit-btn {
+  min-width: 84px;
+}
+
+@media (max-width: 900px) {
+  .page-parcelamentos .nfe-row,
+  .page-parcelamentos .parcelamentos-form {
+    grid-template-columns: 1fr;
+  }
+
+  .page-parcelamentos .parcelamentos-group-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 /* UPLOAD */

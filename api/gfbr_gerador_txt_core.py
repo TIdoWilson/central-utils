@@ -42,6 +42,13 @@ PALAVRAS_CANCELAMENTO = (
     "reversed",
 )
 
+PALAVRAS_RENDA = (
+    "renda",
+    "rendas",
+    "rendimento",
+    "rendimentos",
+)
+
 PARTNER_PREFIX_TO_ACCOUNT = {
     "TG": "112020401",
     "CL": "112010101",
@@ -358,6 +365,17 @@ def texto_observacoes_lancamento(lancamento: Dict[str, Any]) -> str:
     return " | ".join(p for p in partes if p)
 
 
+def texto_descritivo_lancamento(lancamento: Dict[str, Any]) -> str:
+    partes = [
+        lancamento.get("observacao_principal", ""),
+        lancamento.get("historico", ""),
+    ]
+    for item in lancamento.get("itens_contabeis", []) or lancamento.get("itens", []):
+        partes.append(item.get("descricao_original", "") or item.get("descricao", ""))
+        partes.append(item.get("observacao", ""))
+    return " | ".join(p for p in partes if p)
+
+
 def contem_termo(texto: str, termos: Iterable[str]) -> bool:
     texto_norm = normalizar_texto(texto)
     return any(normalizar_texto(t) in texto_norm for t in termos)
@@ -373,6 +391,20 @@ def tem_conta_com_prefixo_cl(lancamento: Dict[str, Any]) -> bool:
 
 def eh_lancamento_de_exclusao_direta(lancamento: Dict[str, Any]) -> bool:
     return contem_termo(texto_observacoes_lancamento(lancamento), PALAVRAS_EXCLUSAO_DIRETA)
+
+
+def conta_com_prefixo_11102(lancamento: Dict[str, Any]) -> bool:
+    for item in lancamento.get("itens_contabeis", []) or lancamento.get("itens", []):
+        conta = re.sub(r"\D", "", to_str_limpo(item.get("conta_final", "")))
+        if conta.startswith("11102"):
+            return True
+    return False
+
+
+def eh_lancamento_renda_11102(lancamento: Dict[str, Any]) -> bool:
+    if not conta_com_prefixo_11102(lancamento):
+        return False
+    return contem_termo(texto_descritivo_lancamento(lancamento), PALAVRAS_RENDA)
 
 
 def identificar_lancamentos_cancelatorios(
@@ -402,7 +434,7 @@ def construir_registro_exclusao(
         "numero_transacao": lancamento.get("numero_transacao", ""),
         "numero_doc": lancamento.get("numero_doc", ""),
         "data": data_para_yyyymmdd(lancamento.get("data_lancamento")),
-        "observacao": lancamento.get("observacao_principal", ""),
+        "observacao": lancamento.get("observacao_principal", "") or lancamento.get("historico", ""),
         "motivo_exclusao": motivo,
         "transacao_par_vinculada": transacao_par,
     }
@@ -847,26 +879,65 @@ def gerar_relatorio_exclusoes(exclusoes: List[Dict[str, Any]], caminho_saida: Pa
             writer.writerow(exc)
 
 
+ITAU_MESES_ANO_REGEX = re.compile(
+    r"\b(?:jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)\s+(\d{4})\b",
+    re.IGNORECASE,
+)
+ITAU_RESUMO_ANO_REGEX = re.compile(r"resumo\s*-\s*m[êe]s\s+\d{2}/(\d{4})", re.IGNORECASE)
+ITAU_MOVIMENTACAO_HEADER_REGEX = re.compile(
+    r"movimenta[cç][aã]o\s*-\s*aplica[cç][oõ]es/resgates antecipados e vencimentos",
+    re.IGNORECASE,
+)
+ITAU_MOVIMENTACAO_ROW_REGEX = re.compile(
+    r"^(?P<data>\d{2}/\d{2})\s+"
+    r"(?P<aplicacao>[\d.]+,\d{2})\s+"
+    r"(?P<resgate_principal>[\d.]+,\d{2})\s+"
+    r"(?P<rend_bruto>[\d.]+,\d{2})\s+"
+    r"(?P<iof>[\d.]+,\d{2})\s+"
+    r"(?P<irrf>[\d.]+,\d{2})\s+"
+    r"(?P<rend_liquido>[\d.]+,\d{2})"
+    r"(?:\s+(?P<saldo_principal>[\d.]+,\d{2}))?$"
+)
+
+
+def extrair_ano_itau(linha: str, ano_atual: str) -> str:
+    m_resumo = ITAU_RESUMO_ANO_REGEX.search(linha)
+    if m_resumo:
+        return m_resumo.group(1)
+    m_mes = ITAU_MESES_ANO_REGEX.search(linha)
+    if m_mes:
+        return m_mes.group(1)
+    return ano_atual
+
+
+def montar_partida_itau(
+    data_lancamento: date,
+    debito_conta: str,
+    credito_conta: str,
+    valor: Decimal,
+    complemento: str,
+    historico_h: str,
+) -> Dict[str, Any]:
+    return {
+        "data_ddmmyyyy": data_para_ddmmyyyy(data_lancamento),
+        "debito_conta": debito_conta,
+        "credito_conta": credito_conta,
+        "valor": valor,
+        "complemento": texto_ascii(complemento, 25),
+        "historico_h": texto_ascii(historico_h, 50),
+    }
+
+
 def processar_pdf_itau_aplicacoes_interno(
-    pdf_path: Path, conta_aplicacao: Optional[str]
+    pdf_path: Path, conta_aplicacao: Optional[str], conta_corrente: Optional[str]
 ) -> List[Dict[str, Any]]:
-    if not conta_aplicacao:
+    if not conta_aplicacao or not conta_corrente:
         return []
 
     conta_aplicacao = str(conta_aplicacao).strip()
+    conta_corrente = str(conta_corrente).strip()
     partidas: List[Dict[str, Any]] = []
-
-    regex_ano = re.compile(r"resumo - m[êe]s \d{2}/(\d{4})", re.IGNORECASE)
-    regex_linha = re.compile(
-        r"^(\d{2}/\d{2})\s+"
-        r"([\d.,]+)\s+"
-        r"([\d.,]+)\s+"
-        r"([\d.,]+)\s+"
-        r"([\d.,]+)\s+"
-        r"([\d.,]+)\s+"
-        r"([\d.,]+)"
-        r"(?:\s+[\d.,]+)?$"
-    )
+    dentro_quadro = False
 
     ano_atual = str(datetime.now().year)
 
@@ -874,64 +945,98 @@ def processar_pdf_itau_aplicacoes_interno(
         for page in pdf.pages:
             texto = page.extract_text() or ""
             linhas = texto.split("\n")
-            
+
             for linha in linhas:
                 linha = linha.strip()
-                m_ano = regex_ano.search(linha)
-                if m_ano:
-                    ano_atual = m_ano.group(1)
+                if not linha:
                     continue
-                
-                m = regex_linha.search(linha)
+
+                ano_atual = extrair_ano_itau(linha, ano_atual)
+
+                if ITAU_MOVIMENTACAO_HEADER_REGEX.search(linha):
+                    dentro_quadro = True
+                    continue
+
+                if not dentro_quadro:
+                    continue
+
+                m = ITAU_MOVIMENTACAO_ROW_REGEX.match(linha)
                 if not m:
                     continue
-                
-                dia_mes = m.group(1)
-                rend_bruto_str = m.group(4)
-                iof_str = m.group(5)
-                irrf_str = m.group(6)
 
-                rend_bruto = parse_decimal(rend_bruto_str) or Decimal("0")
-                iof = parse_decimal(iof_str) or Decimal("0")
-                irrf = parse_decimal(irrf_str) or Decimal("0")
-
-                data_str = f"{ano_atual}-{dia_mes[3:5]}-{dia_mes[:2]}"
+                data_bruta = m.group("data")
+                data_str = f"{ano_atual}-{data_bruta[3:5]}-{data_bruta[:2]}"
                 dt = parse_data(data_str)
                 if not dt:
                     continue
 
-                if rend_bruto > 0 or iof > 0 or irrf > 0:
-                    historico_base = f"REND APL EXT ITAU {dt.strftime('%d/%m/%Y')}"
-                    
-                    if rend_bruto > 0:
-                        partidas.append({
-                            "data_ddmmyyyy": data_para_ddmmyyyy(dt),
-                            "debito_conta": conta_aplicacao,
-                            "credito_conta": "514010201",
-                            "valor": rend_bruto,
-                            "complemento": "REND APL",
-                            "historico_h": historico_base,
-                        })
-                    
-                    if iof > 0:
-                        partidas.append({
-                            "data_ddmmyyyy": data_para_ddmmyyyy(dt),
-                            "debito_conta": "514010103",
-                            "credito_conta": conta_aplicacao,
-                            "valor": iof,
-                            "complemento": "IOF RETIDO",
-                            "historico_h": historico_base,
-                        })
-                    
-                    if irrf > 0:
-                        partidas.append({
-                            "data_ddmmyyyy": data_para_ddmmyyyy(dt),
-                            "debito_conta": "112030107",
-                            "credito_conta": conta_aplicacao,
-                            "valor": irrf,
-                            "complemento": "IRRF RETIDO",
-                            "historico_h": historico_base,
-                        })
+                aplicacao = parse_decimal(m.group("aplicacao")) or Decimal("0")
+                resgate_principal = parse_decimal(m.group("resgate_principal")) or Decimal("0")
+                rend_bruto = parse_decimal(m.group("rend_bruto")) or Decimal("0")
+                iof = parse_decimal(m.group("iof")) or Decimal("0")
+                irrf = parse_decimal(m.group("irrf")) or Decimal("0")
+
+                historico_base = f"ITAU APLICACOES {dt.strftime('%d/%m/%Y')}"
+
+                if aplicacao > 0:
+                    partidas.append(
+                        montar_partida_itau(
+                            dt,
+                            conta_aplicacao,
+                            conta_corrente,
+                            aplicacao,
+                            "APLICACAO ITAU",
+                            historico_base,
+                        )
+                    )
+
+                if resgate_principal > 0:
+                    partidas.append(
+                        montar_partida_itau(
+                            dt,
+                            conta_corrente,
+                            conta_aplicacao,
+                            resgate_principal,
+                            "RESGATE ITAU",
+                            historico_base,
+                        )
+                    )
+
+                if rend_bruto > 0:
+                    partidas.append(
+                        montar_partida_itau(
+                            dt,
+                            conta_aplicacao,
+                            "514010201",
+                            rend_bruto,
+                            "REND APLIC",
+                            historico_base,
+                        )
+                    )
+
+                if iof > 0:
+                    partidas.append(
+                        montar_partida_itau(
+                            dt,
+                            "514010103",
+                            conta_aplicacao,
+                            iof,
+                            "IOF RETIDO",
+                            historico_base,
+                        )
+                    )
+
+                if irrf > 0:
+                    partidas.append(
+                        montar_partida_itau(
+                            dt,
+                            "112030107",
+                            conta_aplicacao,
+                            irrf,
+                            "IRRF RETIDO",
+                            historico_base,
+                        )
+                    )
 
     return partidas
 
@@ -941,8 +1046,10 @@ def processar_gfbr_gerador_txt(
     aba_origem: Optional[str] = None,
     pdf_itau_1_path: Optional[str] = None,
     conta_aplicacao_1: Optional[str] = None,
+    conta_corrente_1: Optional[str] = None,
     pdf_itau_2_path: Optional[str] = None,
     conta_aplicacao_2: Optional[str] = None,
+    conta_corrente_2: Optional[str] = None,
     output_dir: Optional[str] = None,
 ) -> Dict[str, Any]:
     # Determine base directory
@@ -987,24 +1094,49 @@ def processar_gfbr_gerador_txt(
             normalizado = normalizar_lancamento(bruto, pendencias)
             if normalizado:
                 lancamentos_norm.append(normalizado)
-                
-        partidas_excel = criar_partidas_iob(lancamentos_norm, pendencias)
+
+        lancamentos_norm_filtrados: List[Dict[str, Any]] = []
+        for lancamento_norm in lancamentos_norm:
+            if eh_lancamento_renda_11102(lancamento_norm):
+                lancamentos_excluidos += 1
+                exclusoes.append(
+                    construir_registro_exclusao(
+                        lancamento_norm,
+                        "exclusao_renda_classificacao_11102",
+                    )
+                )
+                continue
+            lancamentos_norm_filtrados.append(lancamento_norm)
+
+        partidas_excel = criar_partidas_iob(lancamentos_norm_filtrados, pendencias)
         todas_partidas.extend(partidas_excel)
         
         lancamentos_lidos += len(lancamentos_brutos)
         lancamentos_excluidos += len(excluidos_ids)
-        lancamentos_exportados += len(lancamentos_norm)
+        lancamentos_exportados += len(lancamentos_norm_filtrados)
 
     # 2. Process Itaú PDF 1
     if pdf_itau_1_path and Path(pdf_itau_1_path).exists() and conta_aplicacao_1:
-        partidas_pdf1 = processar_pdf_itau_aplicacoes_interno(Path(pdf_itau_1_path), conta_aplicacao_1)
+        if not conta_corrente_1:
+            raise ValueError("Informe a conta contábil da conta corrente do PDF Itaú 1.")
+        partidas_pdf1 = processar_pdf_itau_aplicacoes_interno(
+            Path(pdf_itau_1_path),
+            conta_aplicacao_1,
+            conta_corrente_1,
+        )
         todas_partidas.extend(partidas_pdf1)
         lancamentos_lidos += len(partidas_pdf1)
         lancamentos_exportados += len(partidas_pdf1)
 
     # 3. Process Itaú PDF 2
     if pdf_itau_2_path and Path(pdf_itau_2_path).exists() and conta_aplicacao_2:
-        partidas_pdf2 = processar_pdf_itau_aplicacoes_interno(Path(pdf_itau_2_path), conta_aplicacao_2)
+        if not conta_corrente_2:
+            raise ValueError("Informe a conta contábil da conta corrente do PDF Itaú 2.")
+        partidas_pdf2 = processar_pdf_itau_aplicacoes_interno(
+            Path(pdf_itau_2_path),
+            conta_aplicacao_2,
+            conta_corrente_2,
+        )
         todas_partidas.extend(partidas_pdf2)
         lancamentos_lidos += len(partidas_pdf2)
         lancamentos_exportados += len(partidas_pdf2)
@@ -1055,4 +1187,3 @@ def processar_gfbr_gerador_txt(
         "arquivo_pendencias": str(arquivo_pendencias),
         "advertencias": advertencias,
     }
-

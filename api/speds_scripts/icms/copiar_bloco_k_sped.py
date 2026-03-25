@@ -378,7 +378,7 @@ def main() -> None:
         if args.output
         else destino_path.parent / f"{destino_path.stem}_COM_BLOCO_K_{datetime.now():%Y%m%d_%H%M%S}.txt"
     )
-    output_path.write_text("\n".join(integrated) + "\n", encoding="latin-1", errors="replace")
+    output_path.write_text("\n".join(integrated) + "\n", encoding="utf-8", errors="replace")
 
     print("\nCopia do Bloco K concluida.")
     print(f"- SPED destino: {destino_path}")

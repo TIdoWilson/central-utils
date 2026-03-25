@@ -55,6 +55,9 @@ Remove do TXT do Toscan os lançamentos cuja linha de histórico (H) está em br
 - **404 em endpoint:** validar rota no `router` e base URL consumida no JS.
 - **422/400:** revisar campos obrigatórios e estrutura do arquivo enviado.
 - **500:** inspecionar logs do Node e, quando existir, logs do processamento Python.
+- **Sintoma recente:** `Erro ao processar o arquivo. Verifique se o TXT está no formato esperado.`
+  - **Causa provável:** o parser antigo convertia a linha com `- ''`, o que quebrava a leitura, e ainda assumia histórico `H` sem texto.
+  - **Solução:** usar o parser atualizado, que lê as linhas como texto puro e identifica o histórico vazio pelo trecho fixo da linha.
 
 ## 9. Observações de Manutenção
 

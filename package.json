@@ -12,6 +12,9 @@
     "dev:py": ".venv\\Scripts\\python.exe -m uvicorn api.integra_api:app --host 127.0.0.1 --port 8001",
     "dev": "concurrently --kill-others-on-fail \"npm run dev:node\" \"npm run dev:py\" \"npm run dev:go\"",
     "dev:go": "cd go-api && go run .",
+    "cct:sync-db": "node scripts/cct-sync-db.mjs",
+    "cct:test-email": "node scripts/cct-test-email.mjs",
+    "cct:schedule-test-run": "node scripts/cct-schedule-test-run.mjs",
     "verify": "node scripts/verify.mjs",
     "migrate": "node scripts/migrate.mjs",
     "compare:env:vps": "node scripts/compare-env-vps.mjs",
@@ -25,6 +28,8 @@
     "scaffold:tool": "node scripts/scaffold-tool.mjs",
     "gen:docs": "node scripts/gen-docs.mjs",
     "gen:ui": "node scripts/gen-ui.mjs",
+    "parcelamentos:import": "node scripts/import-parcelamentos.mjs",
+    "parcelamentos:import:apply": "node scripts/import-parcelamentos.mjs --apply --replace",
     "tool:new": "node scripts/tool-new.mjs",
     "deploy:vps": "bash scripts/deploy-vps.sh",
     "release:vps": "node scripts/release-vps.mjs"

@@ -576,7 +576,7 @@ def save_outputs(
     csv_path.parent.mkdir(parents=True, exist_ok=True)
 
     txt_lines = [row.to_sped_line() for row in rows]
-    txt_path.write_text("\n".join(txt_lines) + "\n", encoding="latin-1", errors="replace")
+    txt_path.write_text("\n".join(txt_lines) + "\n", encoding="utf-8", errors="replace")
 
     df = dataframe_from_rows(rows)
     metadata = pd.DataFrame(

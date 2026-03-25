@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal - Importador Cartao Horas Bandeira Transportes</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">WL</span>
+            <span class="logo-text">Portal</span>
+          </div>
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Pessoal / Importador Cartao Horas Bandeira Transportes</div>
+          <h1>Importador cartao de horas Bandeira Tranposrtes</h1>
+          <p>Leitura exclusiva da ultima pagina do PDF, com preview, edicao de ficha do funcionario e geracao do TXT no layout antigo.</p>
+        </header>
+
+        <section class="nfe-row" style="grid-template-columns: minmax(340px, 420px) 1fr; gap: 16px;">
+          <div class="nfe-card nfe-card-upload">
+            <h2>Arquivo</h2>
+            <p class="nfe-card-subtitle">O processamento usa sempre a ultima pagina do PDF.</p>
+
+            <form id="formBandeira" class="nfe-upload-form">
+              <label class="nfe-input-file-label">
+                <span>Selecionar PDF</span>
+                <input type="file" id="arquivoBandeira" name="arquivo" accept="application/pdf" required />
+              </label>
+
+              <div class="nfe-table-actions" style="margin-top: 14px;">
+                <button type="submit" class="btn btn-primary" id="btnGerarBandeira">Gerar TXT</button>
+                <button type="button" class="btn btn-secondary" id="btnBaixarBandeira" disabled>Baixar TXT</button>
+              </div>
+            </form>
+
+            <div id="statusBandeira" class="nfe-upload-message" style="margin-top: 10px;"></div>
+          </div>
+
+          <div class="nfe-card">
+            <h2>Preview do PDF</h2>
+            <p class="nfe-card-subtitle">A visualizacao do PDF aparece assim que o arquivo for selecionado.</p>
+            <div id="infoArquivoBandeira" class="nfe-card-subtitle" style="margin-bottom: 10px;">
+              <p>Nenhum PDF selecionado.</p>
+            </div>
+            <iframe
+              id="previewPdfBandeira"
+              title="Preview do PDF Bandeira"
+              src="about:blank"
+              style="width: 100%; min-height: 620px; border: 1px solid #dbe4ee; border-radius: 12px; background: #fff;"
+            ></iframe>
+          </div>
+        </section>
+
+        <section class="nfe-card">
+          <h2>Ficha de funcionarios</h2>
+          <p class="nfe-card-subtitle">Edite a matricula quando necessario. Ao salvar, a lista original e atualizada para os proximos processamentos.</p>
+          <div id="listaArquivoBandeira" class="nfe-card-subtitle"></div>
+          <div id="fichasBandeira" class="nfe-table-wrapper" style="margin-top: 10px;"></div>
+        </section>
+
+        <section class="nfe-card">
+          <h2>Resumo</h2>
+          <div id="resumoBandeira" class="nfe-card-subtitle">
+            <p>Nenhum processamento ainda.</p>
+          </div>
+        </section>
+
+        <section class="nfe-card">
+          <h2>Valores identificados</h2>
+          <div id="valoresBandeira" class="nfe-table-wrapper">
+            <p class="nfe-card-subtitle">Nenhum PDF processado ainda.</p>
+          </div>
+        </section>
+
+        <section class="nfe-card nfe-card-table">
+          <div class="nfe-card-header nfe-card-header-with-actions">
+            <div>
+              <h2>Preview do TXT</h2>
+              <p class="nfe-card-subtitle">Confira as primeiras linhas antes de baixar.</p>
+            </div>
+          </div>
+          <div class="nfe-table-wrapper">
+            <table class="nfe-table">
+              <thead>
+                <tr>
+                  <th>Linha</th>
+                  <th>Conteudo</th>
+                </tr>
+              </thead>
+              <tbody id="previewTxtBandeira"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/importador-cartao-horas-bandeira-transportes.js"></script>
+  </body>
+</html>

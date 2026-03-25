@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${item.arquivoEntrada || ""}</td>
         <td>${item.arquivoSaida || "-"}</td>
         <td>${item.banco || "-"}</td>
-        <td>${item.totalLancamentos - "-"}</td>
+        <td>${Number.isFinite(item.totalLancamentos) ? item.totalLancamentos : "-"}</td>
         <td>${item.ok ? "OK" : (item.erro || "Erro")}</td>
       `;
       tr.appendChild(acao);

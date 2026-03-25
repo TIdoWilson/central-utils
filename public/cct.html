@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Consulta CCT | Portal Wilson Lopes</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .cct-stage {
+        min-height: 42vh;
+        display: block;
+        width: 100%;
+      }
+
+      .cct-stage-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+        gap: 20px;
+        align-items: stretch;
+        width: min(1320px, 100%);
+        margin: 0 auto;
+        padding: 0 16px;
+        box-sizing: border-box;
+      }
+
+      .cct-search-panel {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 28px;
+        border: 1px solid #d7e0ea;
+        border-radius: 26px;
+        background:
+          radial-gradient(circle at top left, rgba(11, 76, 111, 0.12), transparent 28%),
+          linear-gradient(180deg, #ffffff 0%, #f7fbfe 100%);
+        box-shadow: 0 22px 55px rgba(15, 23, 42, 0.08);
+      }
+
+      .cct-request-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 28px;
+        border: 1px solid #d7e0ea;
+        border-radius: 26px;
+        background:
+          radial-gradient(circle at top right, rgba(15, 107, 136, 0.16), transparent 28%),
+          linear-gradient(180deg, #ffffff 0%, #f6fbfc 100%);
+        box-shadow: 0 22px 55px rgba(15, 23, 42, 0.08);
+      }
+
+      .cct-search-heading {
+        text-align: center;
+        margin-bottom: 22px;
+      }
+
+      .cct-search-heading h2 {
+        margin: 0 0 10px;
+        font-size: 30px;
+        color: #12324a;
+      }
+
+      .cct-search-heading p {
+        margin: 0;
+        color: #49647b;
+        font-size: 15px;
+      }
+
+      .cct-search-box {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .cct-request-heading {
+        text-align: left;
+      }
+
+      .cct-request-heading h2 {
+        margin: 0 0 10px;
+        font-size: 25px;
+        color: #12324a;
+      }
+
+      .cct-request-heading p {
+        margin: 0;
+        color: #4c6479;
+        line-height: 1.5;
+      }
+
+      .cct-request-form {
+        display: grid;
+        gap: 14px;
+      }
+
+      .cct-request-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: end;
+      }
+
+      .cct-request-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .cct-request-actions .btn {
+        min-width: 120px;
+      }
+
+      .cct-history-panel {
+        display: grid;
+        gap: 12px;
+        border-top: 1px solid #d7e0ea;
+        padding-top: 16px;
+      }
+
+      .cct-history-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .cct-history-header-copy {
+        min-width: 0;
+      }
+
+      .cct-history-header h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+        color: #12324a;
+      }
+
+      .cct-history-header p {
+        margin: 0;
+        color: #557087;
+        line-height: 1.45;
+      }
+
+      .cct-history-list {
+        display: grid;
+        gap: 10px;
+        max-height: 340px;
+        overflow: auto;
+        padding-right: 4px;
+      }
+
+      .cct-history-line {
+        border: 1px solid #d8e2ec;
+        border-radius: 12px;
+        padding: 10px 12px;
+        background: #fff;
+        color: #27465d;
+        font-size: 13px;
+        line-height: 1.45;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .cct-search-box input,
+      .cct-filter-field input,
+      .cct-filter-field select {
+        width: 100%;
+        min-height: 48px;
+        border: 1px solid #c8d5e4;
+        border-radius: 14px;
+        padding: 0 14px;
+        font-size: 14px;
+        color: #102133;
+        background: #fff;
+        box-sizing: border-box;
+      }
+
+      .cct-filter-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+      }
+
+      .cct-filter-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .cct-filter-field label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: #42637d;
+        text-transform: uppercase;
+      }
+
+      .cct-filter-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .cct-results-header,
+      .cct-detail-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+
+      .cct-results-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .cct-detail-header-actions {
+        justify-content: flex-end;
+      }
+
+      .cct-results-header h2,
+      .cct-detail-header h2 {
+        margin: 0 0 6px;
+      }
+
+      .cct-results-header p,
+      .cct-detail-header p {
+        margin: 0;
+        color: #5b7185;
+      }
+
+      .cct-results-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .cct-results-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid #d8e2ec;
+      }
+
+      .cct-pagination-info {
+        flex: 1;
+        text-align: center;
+        color: #4d657a;
+        font-weight: 600;
+      }
+
+      .cct-results-footer .btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      .cct-card {
+        border: 1px solid #d8e2ec;
+        border-radius: 18px;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .cct-card-main {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 18px 20px;
+        border: 0;
+        background: transparent;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .cct-card-main > div {
+        min-width: 0;
+      }
+
+      .cct-card.active {
+        border-color: #0f6b88;
+        box-shadow: 0 0 0 3px rgba(15, 107, 136, 0.12);
+      }
+
+      .cct-card-title {
+        margin: 0 0 8px;
+        font-size: 19px;
+        color: #12324a;
+      }
+
+      .cct-card-meta,
+      .cct-card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .cct-card-tags-top {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .cct-card-tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        width: max-content;
+        min-height: 28px;
+        border-radius: 999px;
+        padding: 0 10px;
+        font-size: 11px;
+        background: #eef5fb;
+        color: #32546f;
+        white-space: nowrap;
+      }
+
+      .cct-tag-territorial {
+        flex: 0 1 auto;
+        max-width: min(100%, 360px);
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .cct-card-description {
+        margin: 12px 0 0;
+        color: #4f6578;
+        line-height: 1.55;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+
+      .cct-status-vigente {
+        background: #dff5e7 !important;
+        color: #146c43 !important;
+      }
+
+      .cct-status-nao-vigente {
+        background: #fde7e7 !important;
+        color: #9a2626 !important;
+      }
+
+      .cct-empty {
+        border: 1px dashed #c8d5e4;
+        border-radius: 18px;
+        padding: 26px 20px;
+        text-align: center;
+        color: #557087;
+        background: #f8fbfe;
+      }
+
+      .cct-detail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+
+      .cct-detail-box {
+        border: 1px solid #d8e2ec;
+        border-radius: 18px;
+        padding: 18px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbfe 100%);
+      }
+
+      .cct-detail-box strong {
+        display: block;
+        font-size: 12px;
+        color: #516b82;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        margin-bottom: 8px;
+      }
+
+      .cct-detail-box span,
+      .cct-detail-box p {
+        margin: 0;
+        color: #122a3b;
+        line-height: 1.55;
+      }
+
+      .cct-detail-copy {
+        position: relative;
+      }
+
+      .cct-detail-text {
+        line-height: 1.55;
+        color: #122a3b;
+      }
+
+      .cct-detail-box-expandable .cct-detail-text {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+        overflow: hidden;
+      }
+
+      .cct-detail-box-expandable.expanded .cct-detail-text {
+        display: block;
+        -webkit-line-clamp: unset;
+      }
+
+      .cct-more-btn {
+        margin-top: 10px;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        color: #0f6b88;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .cct-sumario {
+        margin-bottom: 24px;
+      }
+
+      .cct-sumario-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 8px;
+      }
+
+      .cct-sumario-card {
+        border: 1px solid #d8e2ec;
+        border-radius: 18px;
+        padding: 14px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbfe 100%);
+      }
+
+      .cct-sumario-card h3 {
+        margin: 0 0 10px;
+        font-size: 15px;
+        color: #14324a;
+      }
+
+      .cct-sumario-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 6px;
+      }
+
+      .cct-sumario-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
+        border: 1px solid #d8e2ec;
+        border-radius: 12px;
+        padding: 8px 10px;
+        background: #fff;
+        color: #17344d;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .cct-sumario-item span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 48px;
+        padding: 3px 7px;
+        border-radius: 999px;
+        background: #eef5fb;
+        color: #32546f;
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      .cct-sumario-item strong {
+        flex: 1;
+        font-size: 13px;
+        line-height: 1.4;
+        color: #17344d;
+        max-height: 2.8em;
+        overflow: hidden;
+      }
+
+      .cct-sumario-card .cct-empty {
+        padding: 14px;
+        border-radius: 12px;
+      }
+
+      .cct-inline-detail {
+        padding: 0 20px 18px;
+      }
+
+      .cct-download-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 14px;
+        border-radius: 12px;
+        border: 1px solid #c6d6e4;
+        color: #12324a;
+        background: #fff;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .cct-download-link.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
+      .cct-clause-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .cct-clause-card {
+        border: 1px solid #d8e2ec;
+        border-radius: 18px;
+        padding: 18px;
+        background: #fff;
+      }
+
+      .cct-clause-card h3 {
+        margin: 0 0 8px;
+        font-size: 15px;
+        color: #14324a;
+      }
+
+      .cct-clause-card p {
+        margin: 0;
+        color: #425c73;
+        line-height: 1.6;
+        white-space: pre-line;
+      }
+
+      .cct-feedback {
+        min-height: 22px;
+        margin-top: 12px;
+        color: #47637c;
+      }
+
+       .cct-scroll-top {
+          position: fixed;
+          right: 24px;
+          bottom: 96px;
+        z-index: 120;
+        width: 64px;
+        height: 64px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: #0f6b88;
+        color: #fff;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+       box-shadow: 0 18px 36px rgba(8, 36, 54, 0.24);
+        cursor: pointer;
+      }
+
+      .cct-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(8, 22, 36, 0.52);
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        z-index: 1500;
+      }
+
+      .cct-modal-backdrop[hidden] {
+        display: none !important;
+      }
+
+      .cct-modal {
+        width: min(980px, 100%);
+        max-height: min(88vh, 900px);
+        border: 1px solid #cedbe8;
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 24px 55px rgba(5, 23, 41, 0.34);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        overflow: hidden;
+      }
+
+      .cct-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 16px 18px;
+        border-bottom: 1px solid #d8e2ec;
+      }
+
+      .cct-modal-header h3 {
+        margin: 0;
+        font-size: 19px;
+        color: #12324a;
+      }
+
+      .cct-modal-close {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1px solid #c8d5e4;
+        background: #fff;
+        cursor: pointer;
+        font-size: 18px;
+        line-height: 1;
+        color: #12324a;
+      }
+
+      .cct-modal-body {
+        padding: 14px 18px;
+        overflow: auto;
+        display: grid;
+        gap: 8px;
+      }
+
+      .cct-modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 18px;
+        border-top: 1px solid #d8e2ec;
+      }
+
+      .cct-modal-pagination-info {
+        flex: 1;
+        text-align: center;
+        color: #4d657a;
+        font-weight: 600;
+      }
+
+      @media (max-width: 1180px) {
+        .cct-stage-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 960px) {
+        .cct-stage-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cct-detail-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .cct-stage {
+          min-height: auto;
+        }
+.cct-search-panel {
+          padding: 22px 18px;
+        }
+
+        .cct-request-panel {
+          padding: 22px 18px;
+        }
+
+        .cct-search-heading h2 {
+          font-size: 24px;
+        }
+
+        .cct-request-heading h2 {
+          font-size: 22px;
+        }
+
+        .cct-search-box {
+          grid-template-columns: 1fr;
+        }
+
+        .cct-request-actions {
+          flex-direction: column;
+        }
+
+        .cct-request-actions .btn {
+          width: 100%;
+        }
+
+        .cct-filter-actions,
+        .cct-results-header,
+        .cct-detail-header {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .cct-results-header-actions {
+          justify-content: flex-start;
+        }
+
+        .cct-results-footer {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .cct-pagination-info {
+          text-align: left;
+        }
+
+         .cct-scroll-top {
+            right: 16px;
+            bottom: 84px;
+          width: 56px;
+          height: 56px;
+          font-size: 22px;
+        }
+
+        .cct-modal-backdrop {
+          padding: 10px;
+        }
+
+        .cct-modal-footer {
+          flex-wrap: wrap;
+        }
+
+      }
+    </style>
+  </head>
+
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo"><span class="logo-circle">WL</span><span class="logo-text">Portal</span></div>
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Abrir menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Pessoal / CCT</div>
+          <h1>Consulta de Convencoes Coletivas</h1>
+          <p>Pesquise por nome, periodo, data-base e abrangencia. Toque em uma convencao para ver os detalhes logo abaixo dela.</p>
+        </header>
+
+        <section class="cct-stage">
+          <div class="cct-stage-grid">
+            <div class="cct-search-panel">
+              <div class="cct-search-heading">
+                <h2>CCT</h2>
+                <p>Busca centralizada com atualizacao automatica sempre que uma nova convencao entrar na pasta.</p>
+              </div>
+
+              <form id="cctFilterForm">
+                <div class="cct-search-box">
+                  <input
+                    id="filtroNome"
+                    name="nome"
+                    type="search"
+                    placeholder="Nome da convencao, sindicato, registro ou solicitacao"
+                    autocomplete="off"
+                  />
+                  <button id="btnBuscarCct" type="submit" class="btn btn-primary">Pesquisar</button>
+                </div>
+
+                <div class="cct-filter-grid">
+                  <div class="cct-filter-field">
+                    <label for="filtroVigencia">Periodo</label>
+                    <select id="filtroVigencia" name="vigencia">
+                      <option value="todos">Todos</option>
+                      <option value="vigente">Vigente</option>
+                      <option value="nao-vigente">Nao vigente</option>
+                    </select>
+                  </div>
+
+                  <div class="cct-filter-field">
+                    <label for="filtroDataBaseMes">Data-base</label>
+                    <select id="filtroDataBaseMes" name="dataBaseMes">
+                      <option value="">Todos</option>
+                      <option value="01">Janeiro</option>
+                      <option value="02">Fevereiro</option>
+                      <option value="03">Marco</option>
+                      <option value="04">Abril</option>
+                      <option value="05">Maio</option>
+                      <option value="06">Junho</option>
+                      <option value="07">Julho</option>
+                      <option value="08">Agosto</option>
+                      <option value="09">Setembro</option>
+                      <option value="10">Outubro</option>
+                      <option value="11">Novembro</option>
+                      <option value="12">Dezembro</option>
+                    </select>
+                  </div>
+
+                  <div class="cct-filter-field">
+                    <label for="filtroAbrangencia">O que cobre</label>
+                    <input id="filtroAbrangencia" name="abrangencia" type="text" placeholder="Filtro parcial" autocomplete="off" />
+                  </div>
+
+                  <div class="cct-filter-field">
+                    <label for="filtroAbrangenciaTerritorial">Onde vale</label>
+                    <input id="filtroAbrangenciaTerritorial" name="abrangenciaTerritorial" type="text" placeholder="Ex.: PR, SC, Curitiba" autocomplete="off" />
+                  </div>
+                </div>
+
+                <div class="cct-filter-actions">
+                  <button id="btnLimparFiltrosCct" type="button" class="btn btn-secondary">Limpar</button>
+                </div>
+              </form>
+
+              <div id="cctFeedback" class="cct-feedback" aria-live="polite"></div>
+            </div>
+
+            <div class="cct-request-panel">
+              <div class="cct-request-heading">
+                <h2>Requisitar novo sindicato</h2>
+                <p>Inclua um CNPJ para entrar na fila do MTE. O site evita duplicidade e registra os resultados no historico simples.</p>
+              </div>
+
+              <form id="cctRequestForm" class="cct-request-form">
+                <div class="cct-request-row">
+                  <input
+                    id="cctRequestCnpj"
+                    name="cnpj"
+                    type="text"
+                    inputmode="numeric"
+                    placeholder="Digite o CNPJ do sindicato"
+                    autocomplete="off"
+                  />
+                  <button id="btnCctIncluir" type="submit" class="btn btn-primary">Incluir</button>
+                </div>
+              </form>
+
+              <div id="cctRequestFeedback" class="cct-feedback" aria-live="polite"></div>
+              <div class="cct-request-actions cct-request-history-actions">
+                <button id="btnCctHistorico" type="button" class="btn btn-secondary">Historico completo</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="nfe-card" data-cct-results-anchor="1">
+          <div class="cct-results-header">
+            <div>
+              <h2>Convencoes</h2>
+              <p id="cctResultsInfo">Carregando dados...</p>
+            </div>
+            <div class="cct-results-header-actions">
+              <button id="btnCctPrevPageTop" type="button" class="btn btn-secondary">Anterior</button>
+              <button id="btnCctNextPageTop" type="button" class="btn btn-secondary">Proxima</button>
+            </div>
+          </div>
+          <div id="cctResults" class="cct-results-grid"></div>
+          <div class="cct-results-footer">
+            <button id="btnCctPrevPageBottom" type="button" class="btn btn-secondary">Anterior</button>
+            <div id="cctPaginationInfo" class="cct-pagination-info">Carregando pagina...</div>
+            <button id="btnCctNextPageBottom" type="button" class="btn btn-secondary">Proxima</button>
+          </div>
+        </section>
+      </main>
+
+      <button id="cctScrollTop" class="cct-scroll-top" type="button" hidden aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
+
+      <div id="cctHistoryModal" class="cct-modal-backdrop" hidden>
+        <section class="cct-modal" role="dialog" aria-modal="true" aria-labelledby="cctHistoryModalTitle">
+          <header class="cct-modal-header">
+            <h3 id="cctHistoryModalTitle">Historico completo</h3>
+            <button id="btnCctHistoryClose" type="button" class="cct-modal-close" aria-label="Fechar historico completo">x</button>
+          </header>
+          <div id="cctHistoryModalList" class="cct-modal-body"></div>
+          <footer class="cct-modal-footer">
+            <button id="btnCctHistoryPrev" type="button" class="btn btn-secondary">Anterior</button>
+            <div id="cctHistoryModalInfo" class="cct-modal-pagination-info">Carregando historico...</div>
+            <button id="btnCctHistoryNext" type="button" class="btn btn-secondary">Proxima</button>
+          </footer>
+        </section>
+      </div>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/cct.js"></script>
+  </body>
+</html>

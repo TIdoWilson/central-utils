@@ -89,7 +89,8 @@ function createToolStorage({ dataDir, dimobService }) {
   });
   const uploadGfbrGeradorTxt = multer({
     storage: storageGfbrGeradorTxt,
-    limits: { fileSize: 50 * 1024 * 1024, files: 1 },
+    // Aceita o diario Excel e os dois PDFs Itaú no mesmo envio.
+    limits: { fileSize: 50 * 1024 * 1024, files: 3 },
   });
 
   // Separador CSV baixa automatica

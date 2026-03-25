@@ -963,7 +963,7 @@ def main() -> None:
     )
 
     all_lines = lines_0190 + lines_0200 + lines_h
-    output_path.write_text("\n".join(all_lines) + "\n", encoding="latin-1", errors="replace")
+    output_path.write_text("\n".join(all_lines) + "\n", encoding="utf-8", errors="replace")
 
     vl_total = sum(i.vl_item for i in items)
     print("\nResumo:")
