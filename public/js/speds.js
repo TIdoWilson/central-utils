@@ -1,4 +1,4 @@
-﻿/* global AuthClient, inicializarSidebar */
+/* global AuthClient, inicializarSidebar */
 
 (function () {
   const SLUG = 'speds';
@@ -230,7 +230,7 @@
       return `
         <div class="speds-requirement">
           <strong>${escapeHtml(input.label)}</strong>
-          <div class="speds-muted">${req} • ${multi}</div>
+          <div class="speds-muted">${req} - ${multi}</div>
           <div class="speds-muted">Aceita: ${escapeHtml(accepts)}</div>
         </div>
       `;

@@ -6,7 +6,9 @@ const MENU_CONFIG = [
     label: 'Pessoal',
     icon: '&#128578;',
     items: [
+      { id: 'cct', label: 'CCT', href: '/cct', icon: '&#128218;' },
       { id: 'cartao-horas-iob', label: 'Importador Cart&atilde;o Horas IOB', href: '/cartao-horas-iob', icon: '&#128339;' },
+      { id: 'importador-cartao-horas-bandeira-transportes', label: 'Importador Cart&atilde;o Horas Bandeira Transportes', href: '/importador-cartao-horas-bandeira-transportes', icon: '&#128666;' },
       { id: 'comparador-eventos-holerite', label: 'Comparador de Eventos de Holerite', href: '/comparador-eventos-holerite', icon: '&#128176;' },
       { id: 'ferias-funcionario', label: 'F&eacute;rias por Funcion&aacute;rio', href: '/separador-ferias-funcionario', icon: '&#127958;&#65039;' },
       { id: 'holerites-empresa', label: 'Holerites por Empresa', href: '/separador-holerites-por-empresa', icon: '&#128196;' },
@@ -22,7 +24,7 @@ const MENU_CONFIG = [
       { id: 'acerto-lotes-toscan', label: 'Acerto Lotes Toscan', href: '/acerto-lotes-toscan', icon: '&#128196;' },
       { id: 'lotes-txt', label: 'Lotes TXT', href: '/lotes-txt', icon: '&#128209;' },
       { id: 'gfbr-gerador-txt', label: 'Gerador TXT GFBR', href: '/gfbr-gerador-txt', icon: '&#128221;' },
-      { id: 'ajuste-diario-gfbr-c', label: 'Ajuste Diario GFBR', href: '/ajuste-diario-gfbr-c', icon: '&#128196;' },
+      { id: 'conversor-extrato-pdf-ofx', label: 'Conversor Extrato PDF para OFX', href: '/conversor-extrato-pdf-ofx', icon: '&#127974;' },
       { id: 'balancete-transitorio', label: 'Conciliador Conta Transit&oacute;ria', href: '/balancete-transitorio', icon: '&#128196;' },
       { id: 'conciliador-hausen-ocean', label: 'Conciliador Hausen e Ocean', href: '/conciliador-hausen-ocean', icon: '&#128202;' },
       { id: 'conciliador-pis-cofins', label: 'Conciliador PIS-COFINS', href: '/conciliador-pis-cofins', icon: '&#128176;' },
@@ -58,6 +60,15 @@ const MENU_CONFIG = [
       { id: 'tareffa-empresas-lote', label: 'Tareffa Empresas Lote', icon: '&#128196;', href: '/tareffa-empresas-lote' },
       { id: 'pedidos-alteracao-empresa', label: 'Pedidos de Altera&ccedil;&atilde;o de Empresa', icon: '&#127970;', href: '/pedidos-alteracao-empresa' },
       { id: 'pedidos-inclusao-exclusao-empresa', label: 'Pedidos de Inclus&atilde;o e Exclus&atilde;o de Empresa', icon: '&#127970;', href: '/pedidos-inclusao-exclusao-empresa' },
+    ],
+  },
+  {
+    id: 'parcelamentos',
+    label: 'Parcelamentos',
+    icon: '&#128179;',
+    directNavigation: true,
+    items: [
+      { id: 'parcelamentos', label: 'HUB de Parcelamentos', href: '/parcelamentos', icon: '&#128179;' },
     ],
   },
   {
@@ -200,6 +211,18 @@ function gerarSidebarHtml(activePageId, ctx) {
 
     const visibleItems = (group.items || []).filter((item) => canSeeItem(item, ctx));
     if (visibleItems.length === 0) return;
+
+    if (group.directNavigation && visibleItems.length === 1) {
+      const item = visibleItems[0];
+      const activeClass = item.id === activePageId ? ' active' : '';
+      html += `
+        <a href="${item.href}" class="nfe-menu-item nfe-menu-direct${activeClass}" data-group="${group.id}">
+          <span class="icon">${item.icon || group.icon || '&#128193;'}</span>
+          <span class="label">${item.label || group.label}</span>
+        </a>
+      `;
+      return;
+    }
 
     const hasActive = visibleItems.some((item) => item.id === activePageId);
     const openClass = hasActive ? 'open' : '';

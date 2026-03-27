@@ -1,77 +1,81 @@
 {
-  "registro": {
-    "codigo": "N670",
-    "titulo": "REGISTRO N670: CÁLCULO DA CSLL COM BASE NO LUCRO REAL",
-    "bloco_origem": "bloco-n.htm",
-    "ancora": "n670",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-n.htm#n670"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 4,
-    "extraido_em_utc": "2026-03-10T19:31:56.862836+00:00"
+  "sped": "ECF",
+  "registro": "N670",
+  "bloco": "N",
+  "status": "ok",
+  "titulo": "Cálculo da CSLL Com Base no Lucro Real",
+  "descricao_registro": "Apresenta o cálculo da CSLL com base no lucro real.",
+  "nivel_hierarquico": "3",
+  "ocorrencia": "0:N",
+  "campos_chave": [
+    "CODIGO"
+  ],
+  "regras_validacao_registro": [],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 129,
+      "fim": 129
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
       "descricao": "Texto fixo contendo “N670”",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"N670\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[N670]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "CODIGO",
+      "pos": 2,
+      "nome": "CODIGO",
+      "rotulo": "Código",
       "descricao": "Código de acordo com tabela publicada no Sped.",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código",
-        "DOCUMENTAÇÃO": "E661ALT.CODLIN"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "03",
-      "campo": "DESCRICAO",
+      "pos": 3,
+      "nome": "DESCRICAO",
+      "rotulo": "Descrição",
       "descricao": "Descrição de acordo com tabela publicada no Sped.",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Descrição",
-        "DOCUMENTAÇÃO": "E661ALT.DESLIN"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "04",
-      "campo": "VALOR",
+      "pos": 4,
+      "nome": "VALOR",
+      "rotulo": "Valor",
       "descricao": "Valor",
       "tipo": "NS",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Valor",
-        "DOCUMENTAÇÃO": "E661ALT.VLRLIN"
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     }
-  ]
+  ],
+  "notas_extracao": []
 }

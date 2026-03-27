@@ -11,6 +11,8 @@ Data de referencia: 2026-03-12
    - subtarefas `WIL-52`, `WIL-53`, `WIL-55` e `WIL-54` em `Todo`.
 4. Documento de governanca do Linear criado em `docs/LINEAR_PLAYBOOK.md`.
 5. Regras de sincronizacao docs + Linear adicionadas ao fluxo do projeto.
+6. `parcelamentos` restaurado para a versão com modal de cadastro, tabelas agrupadas, importação por planilha e edição manual sem alterar débito em conta.
+7. GFBR alinhado novamente após a perda de atualização: upload com até 3 arquivos e contrato da API Python aceitando `conta_corrente_1`/`conta_corrente_2` para PDFs Itaú.
 
 ## Estado tecnico atual
 - Arquitetura multicamadas consolidada (Node.js, Python/FastAPI, PostgreSQL e filesystem).

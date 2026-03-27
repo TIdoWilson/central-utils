@@ -1,116 +1,141 @@
 {
-  "registro": {
-    "codigo": "M350",
-    "titulo": "REGISTRO M350: LANÇAMENTOS DA PARTE A DO e-LACS",
-    "bloco_origem": "bloco-m.htm",
-    "ancora": "m350",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m350"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 7,
-    "extraido_em_utc": "2026-03-10T19:31:56.845836+00:00"
+  "sped": "ECF",
+  "registro": "M350",
+  "bloco": "M",
+  "status": "ok",
+  "titulo": "Lançamentos da Parte A do e-Lacs",
+  "descricao_registro": "Apresenta os lançamentos da parte A do e-Lacs. Este registro demonstrará a apuração da base de cálculo da CSLL anual, trimestral e nos meses com estimativa apurada com base no balanço/balancete.",
+  "nivel_hierarquico": "3",
+  "ocorrencia": "1:N",
+  "campos_chave": [
+    "CODIGO"
+  ],
+  "regras_validacao_registro": [
+    "REGRA_VALOR_DETALHADO"
+  ],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 110,
+      "fim": 111
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
       "descricao": "Texto fixo contendo “M350”.",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"M350\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[M350]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "CODIGO",
+      "pos": 2,
+      "nome": "CODIGO",
+      "rotulo": "Código do Lançamento",
       "descricao": "Código do lançamento no e-Lalur, conforme tabela publicada no Sped.",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Código do Lançamento",
-        "DOCUMENTAÇÃO": "E661ALT.CODLIN"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "03",
-      "campo": "DESCRICAO",
+      "pos": 3,
+      "nome": "DESCRICAO",
+      "rotulo": "Descrição",
       "descricao": "Descrição do tipo de lançamento no e-Lalur, conforme tabela publicada no Sped.",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Descrição",
-        "DOCUMENTAÇÃO": "E661ALT.DESLIN"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "04",
-      "campo": "TIPO_LANCAMENTO",
-      "descricao": "Indicador do Tipo de Lançamento:\nA- Adição\nE- Exclusão.\nP – Compensação de Prejuízo\nL – Lucro",
+      "pos": 4,
+      "nome": "TIPO",
+      "rotulo": "Tipo de Dados da Linha",
+      "descricao": "Define o tipo dos dados da linha: T – Título: Utilizado como um label separador E – Editavel",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Lançamento",
-        "DOCUMENTAÇÃO": "E661ALT.TIPLAN"
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[T; E]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "05",
-      "campo": "IND_RELACAO",
-      "descricao": "Indicador de relacionamento do lançamento da parte A:\n1 - Com Conta da Parte B\n2 - Com Conta Contábil\n3 – Com conta da parte B e Conta contábil\n4 - Sem relacionamento\nObservação: O valor do lançamento do tipo 3 pode considerar o saldo contas da parte B ou somatório dos saldos das contas da parte B com os saldos das contas contábeis. Para isso, o valor do lançamento correto na parte A deve ser preenchido pela empresa.",
-      "tipo": "N",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Relacionamento",
-        "DOCUMENTAÇÃO": "E661ALT.TIPREL"
-      }
+      "pos": 5,
+      "nome": "TIPO_LANCAMENTO",
+      "rotulo": "Tipo de Lançamento",
+      "descricao": "Indicador do tipo de lançamento conforme tabela publicada pela RFB: A- Adição E- Exclusã. P – compensação de prejuízo",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "06",
-      "campo": "VALOR",
+      "pos": 6,
+      "nome": "IND_RELACAO",
+      "rotulo": "Tipo de Relacionamento",
+      "descricao": "Indicador de relacionamento do lançamento da parte A: 1 - Com Conta da Parte B 2 - Com Conta Contábil 3 – Com conta da parte B e Conta contábil 4 - Sem relacionamento",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[1; 2; 3; 4; 5]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
+    },
+    {
+      "pos": 7,
+      "nome": "VALOR",
+      "rotulo": "Valor",
       "descricao": "Valor do lançamento no e-Lacs",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Valor",
-        "DOCUMENTAÇÃO": "E661ALT.VLRLIN"
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "07",
-      "campo": "HIST_LAN_LAL",
+      "pos": 9,
+      "nome": "HIST_LAN_LAL",
+      "rotulo": "Histórico",
       "descricao": "Histórico do lançamento no e-Lacs",
       "tipo": "C",
-      "tamanho": "500",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Histórico",
-        "DOCUMENTAÇÃO": "Se M350.IND_RELACAO (campo 5) for igual a 1, 2 ou 3\n- Deverá receber o histórico montado com os campos E664LCT.CODHPD e E664LCT.CPLLCT"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     }
+  ],
+  "notas_extracao": [
+    "A numeracao dos campos no manual apresenta salto(s): 8."
   ]
 }

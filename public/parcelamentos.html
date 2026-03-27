@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Parcelamentos de Impostos</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="app-body nfe-body page-parcelamentos">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">WL</span>
+            <span class="logo-text">Portal</span>
+          </div>
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Parcelamentos / HUB de Parcelamentos</div>
+          <h1>HUB de Parcelamentos de Impostos</h1>
+          <p>
+            Cadastre e visualize os parcelamentos de cada empresa em um banco de dados unico,
+            com débito em conta travado no momento do cadastro.
+          </p>
+          <div class="nfe-header-actions">
+            <span id="whoami" class="nfe-breadcrumb"></span>
+          </div>
+        </header>
+
+        <section class="nfe-row">
+          <div class="nfe-card parcelamentos-info-card">
+            <div class="nfe-card-header">
+              <div>
+                <h2>Regras do HUB</h2>
+                <p class="nfe-card-subtitle">Estrutura pensada para consulta rápida e integração futura.</p>
+              </div>
+            </div>
+
+            <ul class="parcelamentos-notes">
+              <li>Os registros ficam salvos no banco e aparecem em ordem de atualização.</li>
+              <li>O campo de débito em conta é definido somente no cadastro inicial.</li>
+              <li>Esta base já pode receber automações futuras para busca de guias.</li>
+            </ul>
+
+            <div class="parcelamentos-stat">
+              <strong id="parcelamentosTotal">0</strong>
+              <span>parcelamentos cadastrados</span>
+            </div>
+          </div>
+
+          <div class="nfe-card parcelamentos-help-card">
+            <div class="nfe-card-header">
+              <div>
+                <h2>Uso rápido</h2>
+                <p class="nfe-card-subtitle">Crie, importe e ajuste os parcelamentos pela própria tela.</p>
+              </div>
+            </div>
+
+            <ul class="parcelamentos-notes">
+              <li>Use <strong>+ Novo parcelamento</strong> para abrir o popup de cadastro.</li>
+              <li>Use <strong>Importar planilha</strong> para substituir a base pela versão atualizada.</li>
+              <li>As tabelas aceitam ordenação ao clicar nos títulos das colunas.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="nfe-card nfe-card-table">
+          <div class="nfe-card-header nfe-card-header-with-actions">
+            <div>
+              <h2>Parcelamentos cadastrados</h2>
+              <p class="nfe-card-subtitle">
+                Nome da empresa, CNPJ, tipo, número e observações.
+              </p>
+            </div>
+            <div class="nfe-table-actions">
+              <button type="button" class="btn btn-primary" id="btnOpenParcelamentoModal">
+                + Novo parcelamento
+              </button>
+              <button type="button" class="btn btn-secondary" id="btnImportParcelamentos">
+                Importar planilha
+              </button>
+              <button type="button" class="btn btn-secondary" id="btnRefreshList">
+                Atualizar lista
+              </button>
+              <input
+                type="file"
+                id="parcelamentosImportInput"
+                class="hidden"
+                accept=".xlsx,.xls"
+              />
+            </div>
+          </div>
+
+          <div id="parcelamentosSummary" class="nfe-upload-message"></div>
+          <div id="parcelamentosList" class="parcelamentos-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="parcelamentosModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-overlay" id="parcelamentosModalOverlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="parcelamentosModalTitle">Novo parcelamento</h2>
+          <button type="button" class="modal-close" id="btnCloseParcelamentoModal" aria-label="Fechar modal">×</button>
+        </div>
+        <p id="parcelamentosModalHint" class="parcelamentos-modal-hint">
+          Preencha os campos para cadastrar um novo parcelamento.
+        </p>
+
+        <form id="parcelamentosForm" class="parcelamentos-form">
+          <input type="hidden" id="parcelamentosEditingId" />
+
+          <label class="nfe-input-file-label parcelamentos-field">
+            <span>Nome da empresa</span>
+            <input type="text" id="companyName" maxlength="180" required placeholder="Ex.: Portal do Sol" />
+          </label>
+
+          <label class="nfe-input-file-label parcelamentos-field">
+            <span>CNPJ</span>
+            <input type="text" id="cnpj" maxlength="18" inputmode="numeric" required placeholder="00.000.000/0000-00" />
+          </label>
+
+          <label class="nfe-input-file-label parcelamentos-field">
+            <span>Tipo do parcelamento</span>
+            <input type="text" id="parcelamentoType" maxlength="180" required placeholder="Ex.: PGFN, SIMPLIFICADO, ICMS SC..." />
+          </label>
+
+          <label class="nfe-input-file-label parcelamentos-field">
+            <span>Número do parcelamento</span>
+            <input type="text" id="parcelamentoNumber" maxlength="120" required placeholder="Ex.: 001.460.693" />
+          </label>
+
+          <label class="nfe-input-file-label parcelamentos-field">
+            <span>Data de início</span>
+            <input type="date" id="startDate" required />
+          </label>
+
+          <label class="parcelamentos-debit-field">
+            <input type="checkbox" id="debitAccount" />
+            <span>
+              Débito em conta
+              <small>Marcado no cadastro e mantido apenas como informação.</small>
+            </span>
+          </label>
+
+          <label class="parcelamentos-textarea-field">
+            <span>Observações</span>
+            <textarea
+              id="observations"
+              class="auth-textarea"
+              rows="5"
+              maxlength="4000"
+              placeholder="Observações de acompanhamento, guia, vencimento ou instruções internas."
+            ></textarea>
+          </label>
+
+          <div class="nfe-table-actions parcelamentos-modal-actions">
+            <button type="button" class="btn btn-secondary" id="btnCancelParcelamentoModal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveParcelamento">Cadastrar parcelamento</button>
+          </div>
+
+          <div id="parcelamentosMessage" class="nfe-upload-message" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/parcelamentos.js"></script>
+  </body>
+</html>

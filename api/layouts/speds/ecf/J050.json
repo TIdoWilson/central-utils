@@ -1,129 +1,140 @@
 {
-  "registro": {
-    "codigo": "J050",
-    "titulo": "REGISTRO J050: PLANO DE CONTAS DO CONTRIBUINTE",
-    "bloco_origem": "bloco-j.htm",
-    "ancora": "j050",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-j.htm#j050"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 8,
-    "extraido_em_utc": "2026-03-10T19:31:56.819836+00:00"
+  "sped": "ECF",
+  "registro": "J050",
+  "bloco": "J",
+  "status": "ok",
+  "titulo": "Plano de Contas do Contribuinte",
+  "descricao_registro": "Registro onde deve ser informado o plano de contas da empresa.",
+  "nivel_hierarquico": "2",
+  "ocorrencia": "0:N",
+  "campos_chave": [
+    "DT_ALT",
+    "COD_CTA"
+  ],
+  "regras_validacao_registro": [
+    "REGRA_REGISTRO_OBRIGATORIO_J051"
+  ],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 80,
+      "fim": 81
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
-      "descricao": "Texto fixo contendo \"J050\"",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
+      "descricao": "Texto fixo contendo “J050”",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"J050\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[J050]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "DT_ALT",
-      "descricao": "Data de Atualização (Inclusão/Alteração)",
+      "pos": 2,
+      "nome": "DT_ALT",
+      "rotulo": "Data de Atualização",
+      "descricao": "Data de atualização (inclusão/ alteração).",
       "tipo": "N",
-      "tamanho": "8",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Data de Atualização",
-        "DOCUMENTAÇÃO": "Se houver alteração em data inferior ou igual a data final de geração do SPED busca o campo E045PLA.DATALT caso contrário E045PLA.DATLIG."
-      }
+      "tamanho": "008",
+      "tamanho_int": 8,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "03",
-      "campo": "COD_NAT",
-      "descricao": "Código natureza da conta Analítica ou Sintética:\n01 – Contas do Ativo\n02 – Contas do Passivo\n03 – Contas do Patrimônio Líquido\n04 – Contas de Resultado\n05 – Contas de Compensação\n09 – Outras",
+      "pos": 3,
+      "nome": "COD_NAT",
+      "rotulo": "Código da Natureza",
+      "descricao": "Código natureza da conta/grupo de contas: 01 – Contas do Ativo 02 – Contas do Passivo 03 – Contas do Patrimônio Líquido 04 – Contas de Resultado 05 – Contas de Compensação 09 – Outras",
       "tipo": "C",
-      "tamanho": "2",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código da Natureza",
-        "DOCUMENTAÇÃO": "E045PLA (Plano Contábil). Conforme definido no campo \"DefGru\" será gerado com o código da tabela interna:\nDefGru = \"A\" > \"01\"\nDefGru = \"P\" > \"02\"\nDefGru = \"L\" > \"03\"\nDefGru = \"X\", \"D\" ou \"R\" > \"04\"\nDefGru = \"T\" > \"05\"\nDefGru = Demais > \"09\""
-      }
+      "tamanho": "002",
+      "tamanho_int": 2,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[01; 02; 03; 04; 05; 09]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "04",
-      "campo": "IND_CTA",
-      "descricao": "Indicador do Tipo de Conta: \nS - Sintética (grupo de contas)\nA - Analítica (conta)",
+      "pos": 4,
+      "nome": "IND_CTA",
+      "rotulo": "Tipo de Conta",
+      "descricao": "Indicador do tipo de conta: S - Sintética (grupo de contas) A - Analítica (conta)",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Conta",
-        "DOCUMENTAÇÃO": "E045PLA.ANASIN"
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[S; A]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "05",
-      "campo": "NÍVEL",
-      "descricao": "Nível da Conta Analítica/Sintética: \nNúmero crescente a partir da conta de menor detalhamento (Ativo, Passivo, etc.). Deve ser acrescido de “1” a cada mudança de nível.\nExemplo:\nNível 1 = Ativo\nNível 2 = Ativo Circulante\nNível 3 = Disponível\nNível 4 = Caixa Geral\nNível 5 = Caixa",
+      "pos": 5,
+      "nome": "N_VEL",
+      "rotulo": "Nível da Conta",
+      "descricao": "Nível da conta analítica/grupo de contas",
       "tipo": "N",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Nível da Conta",
-        "DOCUMENTAÇÃO": "E045PLA.NIVCTA"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "06",
-      "campo": "COD_CTA",
-      "descricao": "Código da Conta Analítica/Sintética.",
+      "pos": 6,
+      "nome": "COD_CTA",
+      "rotulo": "Código da Conta",
+      "descricao": "Código da conta analítica/grupo de contas",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código da Conta",
-        "DOCUMENTAÇÃO": "Se na tela de entrada no campo Tipo de \n conta estiver com a opção:\n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta coforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta coforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil."
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "07",
-      "campo": "COD_CTA_SUP",
-      "descricao": "Código da Conta Sintética de nível imediatamente superior.",
+      "pos": 7,
+      "nome": "COD_CTA_SUP",
+      "rotulo": "Código da Conta Superior",
+      "descricao": "Código da conta sintética /grupo de contas de nível imediatamente superior",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Código da Conta Superior",
-        "DOCUMENTAÇÃO": "Se na tela de entrada no campo Tipo de \n conta estiver com a opção:\n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED. \n Conta Expandida - Gera a classificação contábil da conta coforme campo E045PLA.CLACTA. \n Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida. \n Conta Expandida Paralela – Gera a classificação contábil paralela da conta coforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil."
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "08",
-      "campo": "CTA",
-      "descricao": "Nome da Conta Analítica/Sintética.",
+      "pos": 8,
+      "nome": "CTA",
+      "rotulo": "Nome da Conta",
+      "descricao": "Nome da conta analítica/grupo de contas.",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Nome da Conta",
-        "DOCUMENTAÇÃO": "E045PLA.DESCTA"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     }
-  ]
+  ],
+  "notas_extracao": []
 }

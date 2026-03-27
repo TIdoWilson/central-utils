@@ -36,3 +36,11 @@ Thumbs.db
 *.pyo
 *.rar
 *.bak
+*.txt
+/logs/
+/backups/*
+!/backups/correcoes_calculo_20260313_170352/
+/backups/correcoes_calculo_20260313_170352/*
+!/backups/correcoes_calculo_20260313_170352/comparador.py
+!/backups/correcoes_calculo_20260313_170352/corretor_total_inventario.py
+!/backups/correcoes_calculo_20260313_170352/gerador_de_inventario.py

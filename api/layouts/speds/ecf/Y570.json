@@ -1,130 +1,152 @@
 {
-  "registro": {
-    "codigo": "Y570",
-    "titulo": "REGISTRO Y570: DEMONSTRATIVO DO IMPOSTO DE RENDA E CSLL RETIDOS NA FONTE",
-    "bloco_origem": "bloco-y.htm",
-    "ancora": "y570",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-y.htm#y570"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DECIMAL",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 8,
-    "extraido_em_utc": "2026-03-10T19:31:56.931822+00:00"
+  "sped": "ECF",
+  "registro": "Y570",
+  "bloco": "Y",
+  "status": "ok",
+  "titulo": "Demonstrativo do Imposto de Renda, CSLL e Contribuiçao Previdenciária Retidos na Fonte",
+  "descricao_registro": "Apresenta o demonstrativo do imposto de renda, CSLL e contribuição previdenciária retidos na fonte para as empresas do lucro real, lucro presumido e lucro arbitrado.",
+  "nivel_hierarquico": "2",
+  "ocorrencia": "0:N",
+  "campos_chave": [
+    "CNPJ_FON",
+    "COD_REC"
+  ],
+  "regras_validacao_registro": [],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 183,
+      "fim": 183
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
-      "descricao": "Texto fixo contendo \"Y570\"",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
+      "descricao": "Texto fixo contendo “Y570”",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"Y570\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[Y570]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "CNPJ_FON",
-      "descricao": "CNPJ da Fonte Pagadora",
+      "pos": 2,
+      "nome": "CNPJ_FON",
+      "rotulo": "CNPJ",
+      "descricao": "CNPJ da fonta pagadora",
       "tipo": "C",
-      "tamanho": "14",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "CNPJ",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "014",
+      "tamanho_int": 14,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "03",
-      "campo": "NOM_EMP",
-      "descricao": "Nome da pessoa jurídica responsável pela retenção e recolhimento da fonte que estiver sendo compensado.",
+      "pos": 3,
+      "nome": "NOM_EMP",
+      "rotulo": "Nome Empresarial",
+      "descricao": "Nome empresarial",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Nome Empresarial",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "04",
-      "campo": "IND_ORG_PUB",
-      "descricao": "Indicador de Órgão Público:\nS - Sim\nN – Não\nSelecione “Sim” ou “Não” em relação à pessoa jurídica responsável pela retenção e recolhimento da fonte que estiver sendo compensado. Ao selecionar \"Sim\" serão disponibilizados os códigos de recolhimento utilizados pelos Órgãos Públicos Federais ou Entidades da Administração Pública Federal, ao selecionar \"Não\", serão disponibilizados os demais códigos.",
+      "pos": 4,
+      "nome": "IND_ORG_PUB",
+      "rotulo": "Indicador de Órgão Público",
+      "descricao": "Indicador de órgão público: S - Sim N - Não",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador de Órgão Público",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[S; N]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "05",
-      "campo": "COD_REC",
-      "descricao": "Código de Receita Utilizado Para Recolhimento na Fonte, conforme tabela do Sped (Disponibilizada no programa da ECF no diretório Arquivos de Programas/Programas Sped/ECf/SpedEcf/Recursos/Tabelas). \n Para o IRRF: busca o código de arrecadação da nota no campo Código tributação p/DARF dos dados gerais da nota de venda. \n Para a CSLL: busca o código de arrecadação do imposto 24 na tela Configuração de Impostos para a Filial (F055PPF).",
+      "pos": 5,
+      "nome": "COD_REC",
+      "rotulo": "Código de Receita",
+      "descricao": "Código da receita, conforme \" Tabela de Códigos de Retenção na Fonte\" publicada pela RFB",
       "tipo": "N",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código de Receita",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "06",
-      "campo": "VL_REND",
-      "descricao": "Rendimento Bruto: Valor bruto do rendimento que originou a retenção.",
+      "pos": 6,
+      "nome": "VL_REND",
+      "rotulo": "Rendimento Bruto/Receita",
+      "descricao": "Rendimento bruto/receita",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "2",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Rendimento Bruto/Receita",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "07",
-      "campo": "IR_RET",
-      "descricao": "Valor de todo o imposto de renda retido na fonte durante o período abrangido pela declaração, incidente sobre as receitas que compõem a base de cálculo do tributo devido, independentemente de a empresa ter apurado prejuízo fiscal ou imposto de renda devido menor que o retido na fonte durante o período.",
+      "pos": 7,
+      "nome": "IR_RET",
+      "rotulo": "IR Retido na Fonte",
+      "descricao": "IR retido na fonte",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "2",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "IR Retido na Fonte",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "08",
-      "campo": "CSLL_RET",
-      "descricao": "Valor de toda a contribuição social sobre o lucro líquido retida na fonte durante o período abrangido pela declaração, incidente sobre as receitas que compõem a base de cálculo do tributo devido, independentemente de a empresa ter apurado base de cálculo negativa ou CSLL devida menor que a retida na fonte durante o período.",
+      "pos": 8,
+      "nome": "CSLL_RET",
+      "rotulo": "CSLL Retida na Fonte",
+      "descricao": "CSLL retida na fonte",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "2",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "CSLL Retida na Fonte",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 9,
+      "nome": "PREV_RET",
+      "rotulo": "Contribuição Previdenciária Retida na Fonte",
+      "descricao": "Contribuição previdenciária retida na fonte",
+      "tipo": "N",
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     }
-  ]
+  ],
+  "notas_extracao": []
 }

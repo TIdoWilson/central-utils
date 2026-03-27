@@ -1,91 +1,98 @@
 {
-  "registro": {
-    "codigo": "K355",
-    "titulo": "REGISTRO K355: SALDOS FINAIS DAS CONTA CONTÁBEIS DE RESULTADO ANTES DO ENCERRAMENTO",
-    "bloco_origem": "bloco-k.htm",
-    "ancora": "k355",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-k.htm#k355"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DECIMAL",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 5,
-    "extraido_em_utc": "2026-03-10T19:31:56.828836+00:00"
+  "sped": "ECF",
+  "registro": "K355",
+  "bloco": "K",
+  "status": "ok",
+  "titulo": "Saldos Finais das Contas Contábeis de Resultado Antes do Encerramento",
+  "descricao_registro": "Registro onde devem ser informados os saldos finais de todas as contas de resultado da escrituração societária da pessoa jurídica antes do encerramento. Poderá ser preenchido das seguintes formas: - Edição pelo programa da ECF; - Calculado pelo sistema através da funcionalidade de recuperar ECD; e - Importado de arquivo digital.",
+  "nivel_hierarquico": "3",
+  "ocorrencia": "1:N",
+  "campos_chave": [
+    "COD_CTA",
+    "COD_CCUS"
+  ],
+  "regras_validacao_registro": [
+    "REGRA_CONTA_ANALITICA, REGRA_COMPATIBILIDADE_K355_E355, REGRA_COMPATIBILIDADE_E355_K355"
+  ],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 91,
+      "fim": 92
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
-      "descricao": "Texto fixo contendo \"K355\"",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
+      "descricao": "Texto fixo contendo “K355”",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"K355\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[K355]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "COD_CTA",
-      "descricao": "Código da Conta Analítica de Resultado.",
+      "pos": 2,
+      "nome": "COD_CTA",
+      "rotulo": "Código da Conta",
+      "descricao": "Código da conta analítica de resultado",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código da Conta",
-        "DOCUMENTAÇÃO": "Se, na tela de entrada, o campo Tipo de \n conta estiver com a opção:\n Conta Reduzida - Gera o código da conta contábil conforme campo E045PLA.CTARED Conta Expandida - Gera a classificação contábil da conta coforme campo E045PLA.CLACTA Conta Reduzida Paralela – Gera o código da conta contábil reduzida paralela conforme campo E045PLA.CTAPAR. Caso a conta contábil não possua a informação paralela o sistema irá preencher os registros com a conta reduzida Conta Expandida Paralela – Gera a classificação contábil paralela da conta coforme campo E045PLA.CLAPAR. Caso a classificação paralela não possua a informação paralela o sistema irá preencher os registros com classificação contábil"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "03",
-      "campo": "COD_CCUS",
-      "descricao": "Código do Centro de Custos.",
+      "pos": 3,
+      "nome": "COD_CCUS",
+      "rotulo": "Centro de Custos",
+      "descricao": "Código do centro de custos",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Centro de Custos",
-        "DOCUMENTAÇÃO": "E044CCU.CODCCU"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "04",
-      "campo": "VL_SLD_FIN",
-      "descricao": "Valor do Saldo Final Antes do Lançamento de Encerramento.",
+      "pos": 4,
+      "nome": "VAL_CTA_REF_FIN",
+      "rotulo": "Valor do Saldo Final",
+      "descricao": "Valor do saldo final antes do lançamento de encerramento.",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "2",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Valor do Saldo Final",
-        "DOCUMENTAÇÃO": "Usando as funções de programador: \nCarregaSaldoContabilZer - Período definido na tela de entrada Inicial e Final\nSaldo - Busca o saldo da conta E045PLA.CTARED conforme carregado pela função acima\n Quando gerar centro de custos: \nCarregaSaldoCCustoZer - Carrega o saldo contábil por centro de custo conforme período definido na tela de entrada\nSaldo - Busca o saldo da conta/centro de custo conforme carregado pela função acima"
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "05",
-      "campo": "IND_VL_SLD_FIN",
-      "descricao": "Indicador da Situação do Saldo Final: \nD - Devedor \nC - Credor",
+      "pos": 5,
+      "nome": "IND_VAL_CTA_REF_FIN",
+      "rotulo": "Situação do Saldo Final",
+      "descricao": "Indicador da situação do saldo final: D - Devedor C – Credor",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Situação do Saldo Final",
-        "DOCUMENTAÇÃO": "Se o saldo inicial menor que 0 \"C\"; senão recebe \"D\""
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[D; C]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     }
-  ]
+  ],
+  "notas_extracao": []
 }

@@ -35,10 +35,8 @@ const createComprimirPdfRoutes = require('./routes/tools/comprimir-pdf.routes');
 const createExcelAbasPdfRoutes = require('./routes/tools/excel-abas-pdf.routes');
 const createImportadorRecebimentosMadreScpRoutes = require('./routes/tools/importador-recebimentos-madre-scp.routes');
 const createMitRoutes = require('./routes/tools/mit.routes');
-const createAjusteDiarioGfbrRoutes = require('./routes/tools/ajuste-diario-gfbr.routes');
 const createGfbrGeradorTxtRoutes = require('./routes/tools/gfbr-gerador-txt.routes');
 const createSeparadorCsvBaixaAutomaticaRoutes = require('./routes/tools/separador-csv-baixa-automatica.routes');
-const createAjusteDiarioGfbrCRoutes = require('./routes/tools/ajuste-diario-gfbr-c.routes');
 const createDimobRoutes = require('./routes/tools/dimob.routes');
 const createTareffaEmpresasLoteRoutes = require('./routes/tools/tareffa-empresas-lote.routes');
 const createConciliadorCartaoWilsonRoutes = require('./routes/tools/conciliador-cartao-wilson.routes');
@@ -54,8 +52,14 @@ const createNfeLegacyRoutes = require('./routes/tools/nfe-legacy.routes');
 const createPedidosAlteracaoEmpresaRoutes = require('./routes/tools/pedidos-alteracao-empresa.routes');
 const createComparadorEventosHoleriteRoutes = require('./routes/tools/comparador-eventos-holerite.routes');
 const createCartaoHorasIobRoutes = require('./routes/tools/cartao-horas-iob.routes');
+const createCartaoHorasBandeiraTransportesRoutes = require('./routes/tools/cartao-horas-bandeira-transportes.routes');
+const createCctRoutes = require('./routes/tools/cct.routes');
+const createParcelamentosRoutes = require('./routes/tools/parcelamentos.routes');
 const createSpedsRoutes = require('./routes/tools/speds.routes');
 const { createDimobService } = require('./services/dimob.service');
+const { createCctService } = require('./services/cct.service');
+const { createParcelamentosService } = require('./services/parcelamentos.service');
+const { createCctIntakeService } = require('./services/cct-intake.service');
 const { createEcdStatusService } = require('./services/ecd-status.service');
 const { createToolStorage } = require('./services/tool-storage.service');
 const { createNfeService } = require('./services/nfe.service');
@@ -80,6 +84,7 @@ const {
   applyRegra2026IfNeeded,
 } = require('./services/irpf.service');
 const { createSnService } = require('./services/sn.service');
+const { createCctEmailService } = require('./services/cct-email.service');
 let pool;
 const DATA_DIR = path.join(__dirname, '..', 'data');
 if (!fs.existsSync(DATA_DIR)) {
@@ -123,8 +128,6 @@ const {
   uploadSeparadorFerias,
   uploadExtratorZipRar,
   uploadMadreScp,
-  ajusteDiarioGfbrUploadsDir,
-  uploadAjusteDiarioGfbr,
   gfbrGeradorTxtUploadsDir,
   uploadGfbrGeradorTxt,
   SEPARADOR_CSV_OUTPUT_DIR,
@@ -187,6 +190,30 @@ const tareffaService = createTareffaEmpresasLoteService({
   JOB_STATUS,
 });
 const snService = createSnService({ pool, fs, dataDir: DATA_DIR });
+const cctService = createCctService();
+void cctService.listConventions({ page: 1, limit: 1 })
+  .then(() => {
+    console.log('[CCT] Catalogo inicial carregado em cache/indice local.');
+  })
+  .catch((error) => {
+    console.warn('[CCT] Falha ao aquecer catalogo inicial:', error?.message || error);
+  });
+const parcelamentosService = createParcelamentosService({ pool });
+const cctEmailService = createCctEmailService({
+  projectRoot: path.join(__dirname, '..'),
+  emailListPath: path.join(__dirname, '..', 'data', 'cct', 'email.txt'),
+  siteUrl: process.env.CCT_SITE_URL || '',
+});
+const cctIntakeService = createCctIntakeService({
+  projectRoot: path.join(__dirname, '..'),
+  cctDir: path.join(__dirname, '..', 'data', 'cct'),
+  pythonBin: process.env.CCT_PYTHON_BIN || process.env.PYTHON_BIN,
+  emailService: cctEmailService,
+});
+async function bootstrapCctDatabase() {
+  return { skipped: true, reason: 'cct-json-only' };
+}
+
 const {
   dbGetSnCompanies,
   dbCreateSnCompany,
@@ -279,6 +306,7 @@ async function auditLog(arg1, action, status = 'ok', meta = null, user = null) {
 }
 
 const uploadAdminUsers = multer({ storage: multer.memoryStorage(), limits: { fileSize: 2 * 1024 * 1024 } });
+const uploadParcelamentosImport = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
 
 function normalizeRole(s) {
   const r = String(s || '').trim().toUpperCase();
@@ -618,6 +646,16 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, '..', 'public'), {
   index: false,
   redirect: false,
+  setHeaders: (res, filePath) => {
+    const ext = path.extname(filePath || '').toLowerCase();
+    const textLikeExts = new Set(['.html', '.js', '.css', '.json', '.svg', '.txt']);
+    if (!textLikeExts.has(ext)) return;
+
+    const current = res.getHeader('Content-Type');
+    if (typeof current === 'string' && !/charset=/i.test(current)) {
+      res.setHeader('Content-Type', `${current}; charset=utf-8`);
+    }
+  },
 }));
 
 app.get('/', requireAuthPage, logPageView('page_view_home'), (req, res) => {
@@ -801,6 +839,34 @@ async function initSecuritySchemaAndBootstrap() {
   await pool.query(`
     CREATE INDEX IF NOT EXISTS idx_company_include_exclude_requests_type_created_at
     ON company_include_exclude_requests (request_type, created_at DESC)
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS parcelamentos_impostos (
+      id BIGSERIAL PRIMARY KEY,
+      company_name TEXT NOT NULL,
+      cnpj TEXT NOT NULL,
+      parcelamento_type TEXT NOT NULL,
+      parcelamento_number TEXT NOT NULL,
+      start_date DATE NOT NULL,
+      debit_account BOOLEAN NOT NULL DEFAULT false,
+      observations TEXT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_parcelamentos_impostos_created_at
+    ON parcelamentos_impostos (created_at DESC)
+  `);
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_parcelamentos_impostos_start_date
+    ON parcelamentos_impostos (start_date DESC)
+  `);
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_parcelamentos_impostos_cnpj
+    ON parcelamentos_impostos (cnpj)
   `);
 
   await pool.query(`
@@ -1127,19 +1193,6 @@ app.use(
   })
 );
 app.use(
-  '/api/ajuste-diario-gfbr',
-  requireAuth,
-  requireToolApi('ajuste-diario-gfbr'),
-  createAjusteDiarioGfbrRoutes({
-    requireCsrf,
-    uploadAjusteDiarioGfbr,
-    axios,
-    ajusteDiarioGfbrUploadsDir,
-    fs,
-    path,
-  })
-);
-app.use(
   '/api/gfbr-gerador-txt',
   requireAuth,
   requireToolApi('gfbr-gerador-txt'),
@@ -1165,18 +1218,6 @@ app.use(
     fs,
     path,
     archiver,
-  })
-);
-app.use(
-  '/api/ajuste-diario-gfbr-c',
-  requireAuth,
-  requireToolApi('ajuste-diario-gfbr-c'),
-  createAjusteDiarioGfbrCRoutes({
-    requireCsrf,
-    upload,
-    axios,
-    fs,
-    path,
   })
 );
 app.use(
@@ -1304,10 +1345,43 @@ app.use(
   })
 );
 app.use(
+  '/api/cct',
+  requireAuth,
+  requireToolApi('cct'),
+  createCctRoutes({
+    auditLog,
+    service: cctService,
+    intakeService: cctIntakeService,
+    requireCsrf,
+  })
+);
+app.use(
+  '/api/parcelamentos',
+  requireAuth,
+  requireToolApi('parcelamentos'),
+  createParcelamentosRoutes({
+    auditLog,
+    upload: uploadParcelamentosImport,
+    service: parcelamentosService,
+    requireCsrf,
+  })
+);
+app.use(
   '/api/cartao-horas-iob',
   requireAuth,
   requireToolApi('cartao-horas-iob'),
   createCartaoHorasIobRoutes({
+    requireCsrf,
+    upload,
+    axios,
+    PY_API_URL,
+  })
+);
+app.use(
+  '/api/cartao-horas-bandeira-transportes',
+  requireAuth,
+  requireToolApi('importador-cartao-horas-bandeira-transportes'),
+  createCartaoHorasBandeiraTransportesRoutes({
     requireCsrf,
     upload,
     axios,
@@ -1436,4 +1510,5 @@ app.get('/:toolSlug', requireAuthPage, async (req, res, next) => {
 module.exports = {
   server,
   io,
+  bootstrapCctDatabase,
 };

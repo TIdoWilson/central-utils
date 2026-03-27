@@ -1,168 +1,165 @@
 {
-  "registro": {
-    "codigo": "M500",
-    "titulo": "REGISTRO M500: CONTROLE DE SALDOS DAS CONTAS DA PARTE B DO e-LALUR E DO e-LACS",
-    "bloco_origem": "bloco-m.htm",
-    "ancora": "m500",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m500"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 11,
-    "extraido_em_utc": "2026-03-10T19:31:56.852837+00:00"
+  "sped": "ECF",
+  "registro": "M500",
+  "bloco": "M",
+  "status": "ok",
+  "titulo": "Controle de Saldos das Contas da Parte B do e-Lalur e do e-Lacs",
+  "descricao_registro": "Apresenta a visão sintética do controle de saldos das contas da parte B do e-LALUR e e-LACS. Registro gerado pelo sistema a partir do saldo inicial e das movimentações. - Os campos SD_FIM_LAL e IND_SD_FIM do último período serão transportados para o E020 da próxima ECF. - Quando a escrituração for trimestral, o saldo final do período será transportado para o saldo inicial do período seguinte. - O valor do SD_INI_LAL do primeiro período será igual ao saldo inicial do registro M010.",
+  "nivel_hierarquico": "3",
+  "ocorrencia": "0:N",
+  "campos_chave": [
+    "COD_CTA_LAL"
+  ],
+  "regras_validacao_registro": [],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 117,
+      "fim": 118
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
       "descricao": "Texto fixo contendo “M500”.",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"M500\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[M500]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "COD_CTA_B",
-      "descricao": "Código unívoco atribuído pelo contribuinte à conta no e-Lalur e no e-Lacs (deve existir no M010.COD_CTA_B)",
+      "pos": 2,
+      "nome": "COD_CTA_LAL",
+      "rotulo": "Código da Conta no e- Lalur ou no e-Lacs",
+      "descricao": "Código unívoco atribuído pelo contribuinte à conta no e-Lalur e no e-Lacs (deve existir no M010.COD_CTA_LAL)",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código da Conta no e-Lalur ou no e-Lacs",
-        "DOCUMENTAÇÃO": "E664SAL.CODCON"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "03",
-      "campo": "COD_TRIBUTO",
-      "descricao": "Código do tributo:\nI – Imposto de Renda\nC – Contribuição Social Sobre o Lucro Líquido",
-      "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código do Tributo",
-        "DOCUMENTAÇÃO": "Se o tipo de imposto do imposto E664SAL.CODIMP for 53, 55, 57 ou 59\n- Deverá receber \"I\"\nSe o tipo de imposto do imposto E664SAL.CODIMP for 54, 56, 58 ou 60\n- Deverá receber \"C\""
-      }
-    },
-    {
-      "numero": "04",
-      "campo": "SD_INI_LAL",
+      "pos": 3,
+      "nome": "SD_INI_LAL",
+      "rotulo": "Saldo inicial",
       "descricao": "Saldo inicial da conta no período de apuração",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Saldo inicial",
-        "DOCUMENTAÇÃO": "E664SAL.SALINI"
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "05",
-      "campo": "IND_ SD_INI_LAL",
-      "descricao": "Indicador de saldo inicial:\nD – para prejuízos ou valores que serão excluídos do lucro real ou da base de cálculo da contribuição social em períodos subsequentes.\nC – para valores que serão adicionados ao lucro real ou à base de cálculo da contribuição social em períodos subsequentes.",
+      "pos": 4,
+      "nome": "IND_SD_INI_LAL",
+      "rotulo": "Indicador do Saldo Inicial",
+      "descricao": "Indicador de saldo inicial: C – para prejuízos ou valores que reduzam o lucro real ou a base de cálculo da contribuição social em períodos subseqüentes. D – para valores que aumentem o lucro real ou a base de cálculo da contribuição social em períodos subseqüentes.",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador do Saldo Inicial",
-        "DOCUMENTAÇÃO": "Se o valor do saldo em E664SAL.SALINI for maior ou igual a 0\n- Deverá receber \"C\"\nSenão\n-Deverá receber \"D\""
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[C; D]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "06",
-      "campo": "VL_LCTO_PARTE_A",
-      "descricao": "Somatório dos lançamentos da parte B com reflexo na parte A no período.",
+      "pos": 5,
+      "nome": "VL_LCTO_PARTE_A",
+      "rotulo": "Lançamentos da parte A",
+      "descricao": "Somatório dos lançamentos da parte A do período.",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Lançamentos da Parte B com Reflexo na Parte A",
-        "DOCUMENTAÇÃO": "E664SAL.TOTPTA"
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "07",
-      "campo": "IND_VL_LCTO_PARTE_A",
-      "descricao": "Indicador do somatório dos lançamentos da parte B com reflexo na parte A no período:\nC – para prejuízos ou valores que serão excluídos do lucro real ou da base de cálculo da contribuição social em períodos subsequentes.\nD – para valores que serão adicionados ao lucro real ou à base de cálculo da contribuição social em períodos subsequentes.",
+      "pos": 6,
+      "nome": "IND_VL_LCTO_PARTE_A",
+      "rotulo": "Indicador do Lançamentos da parte A",
+      "descricao": "Indicador de saldo Inicial: C – para prejuízos ou valores que reduzam o lucro real ou a base de cálculo da contribuição social em períodos subseqüentes. D – para valores que aumentem o lucro real ou ima base de cálculo da contribuição social em períodos subseqüentes.",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador do Lançamento da Parte B com Reflexo na Parte A",
-        "DOCUMENTAÇÃO": "Se o valor do saldo em E664SAL.TOTPTA for maior ou igual a 0\n- Deverá receber \"D\"\nSenão\n-Deverá receber \"C\""
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[C; D]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "08",
-      "campo": "VL_LCTO_PARTE_B",
-      "descricao": "Somatório dos Lançamentos da parte B sem reflexo na parte A no período (entre contas da parte B).",
+      "pos": 7,
+      "nome": "VL_LCTO_PARTE_B",
+      "rotulo": "Lançamentos da parte B",
+      "descricao": "Somatório dos Lançamentos da parte B do período.",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Lançamentos da Parte B sem Reflexo na parte A (entre contas da parte B)",
-        "DOCUMENTAÇÃO": "E664SAL.TOTPTB"
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "09",
-      "campo": "IND_VL_LCTO_PARTE_B",
-      "descricao": "Indicador do lançamento da parte B sem reflexo na parte A no período (entre contas da parte B):\nC – para prejuízos ou valores que serão excluídos do lucro real ou da base de cálculo da contribuição social em períodos subsequentes.\nD – para valores que serão adicionados ao lucro real ou à base de cálculo da contribuição social em períodos subsequentes.",
+      "pos": 8,
+      "nome": "IND_VL_LCTO_PARTE_B",
+      "rotulo": "Indicador do Lançamentos da parte B",
+      "descricao": "Indicador de saldo Inicial: C – para prejuízos ou valores que reduzam o lucro real ou a base de cálculo da contribuição social em períodos subseqüentes. D – para valores que aumentem o lucro real ou a base de cálculo da contribuição social em períodos subseqüentes.",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador do Lançamento da Parte B sem Reflexo na Parte A (entre contas da parte B)",
-        "DOCUMENTAÇÃO": "Se o valor do saldo em E664SAL.TOTPTB for maior ou igual a 0\n- Deverá receber \"D\"\nSenão\n-Deverá receber \"C\""
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[C; D]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "10",
-      "campo": "SD_FIM_LAL",
+      "pos": 9,
+      "nome": "SD_FIM_LAL",
+      "rotulo": "Saldo Final",
       "descricao": "Saldo Final da conta no período de apuração",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Saldo Final",
-        "DOCUMENTAÇÃO": "E664SAL.SALFIN"
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "11",
-      "campo": "IND_ SD_FIM_LAL",
-      "descricao": "Indicador de saldo final:\nD – para prejuízos ou valores que serão excluídos do lucro real ou da base de cálculo da contribuição social em períodos subsequentes.\nC – para valores que serão adicionados ao lucro real ou à base de cálculo da contribuição social em períodos subsequentes.",
+      "pos": 10,
+      "nome": "IND_SD_FIM_LAL",
+      "rotulo": "Indicador de saldo Final",
+      "descricao": "Indicador de saldo Final: C – para prejuízos ou valores que reduzam o lucro real ou a base de cálculo da contribuição social em períodos subseqüentes. D – para valores que aumentem o lucro real ou a base de cálculo da contribuição social em períodos subseqüentes.",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador de saldo Final",
-        "DOCUMENTAÇÃO": "Se o valor do saldo em E664SAL.SALFIN for maior ou igual a 0\n- Deverá receber \"C\"\nSenão\n-Deverá receber \"D\""
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[C; D]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     }
-  ]
+  ],
+  "notas_extracao": []
 }

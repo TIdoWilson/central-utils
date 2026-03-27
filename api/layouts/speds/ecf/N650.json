@@ -1,77 +1,67 @@
 {
-  "registro": {
-    "codigo": "N650",
-    "titulo": "REGISTRO N650: BASE DE CÁLCULO DA CSLL APÓS AS COMPENSAÇÕES DA BASE DE CÁLCULO NEGATIVA",
-    "bloco_origem": "bloco-n.htm",
-    "ancora": "n650",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-n.htm#n650"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 4,
-    "extraido_em_utc": "2026-03-10T19:31:56.860836+00:00"
+  "sped": "ECF",
+  "registro": "N650",
+  "bloco": "N",
+  "status": "ok",
+  "titulo": "Base de Cálculo da CSLL Após as Compensações da Base de Cálculo Negativa",
+  "descricao_registro": "Apresenta a base de cálculo da CSLL, após as compensações da base de cálculo negativa.",
+  "nivel_hierarquico": "3",
+  "ocorrencia": "1:1",
+  "campos_chave": [
+    "REG"
+  ],
+  "regras_validacao_registro": [],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 127,
+      "fim": 127
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
       "descricao": "Texto fixo contendo “N650”.",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"N650\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[N650]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "CODIGO",
-      "descricao": "Código de acordo com tabela publicada no Sped.",
+      "pos": 2,
+      "nome": "VALOR_PL",
+      "rotulo": "Valor da Base de Cálculo da CSLL",
+      "descricao": "Valor da base de cálculo da CSLL (calculado a partir do M350)",
+      "tipo": "N",
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 3,
+      "nome": "IND_VALOR_PL",
+      "rotulo": null,
+      "descricao": "Indicador do sinal do valor da base de cálculo: P – prejuízo/base de cálculo negativa L – lucro/base de cáculo positiva",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código",
-        "DOCUMENTAÇÃO": "E661ALT.CODLIN"
-      }
-    },
-    {
-      "numero": "03",
-      "campo": "DESCRICAO",
-      "descricao": "Descrição de acordo com tabela publicada no Sped.",
-      "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Descrição",
-        "DOCUMENTAÇÃO": "E661ALT.DESLIN"
-      }
-    },
-    {
-      "numero": "04",
-      "campo": "VALOR",
-      "descricao": "Valor",
-      "tipo": "NS",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Valor",
-        "DOCUMENTAÇÃO": "E661ALT.VLRLIN"
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[P; L]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     }
-  ]
+  ],
+  "notas_extracao": []
 }

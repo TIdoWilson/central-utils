@@ -1,3 +1,3 @@
-module ajuste-diario-gfbr-api
+module central-utils-go-api
 
 go 1.25.5

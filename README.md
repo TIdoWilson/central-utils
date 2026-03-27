@@ -25,9 +25,7 @@
 6. **Compressor PDF** - Reduzir tamanho de PDFs
 7. **Extrator ZIP/RAR** - Extrair arquivos compactados
 8. **Importador MADRE** - Integração com sistema MADRE SCP
-9. **Ajuste Diário GFBR** - Lançamentos contábeis automáticos
-10. **E mais...**
-
+9. **E mais...**
 ---
 
 ## 🚀 Quick Start
@@ -345,3 +343,4 @@ Desenvolvido para automação de processos contábeis com ❤️
 ---
 
 **Comece pelo [README da Documentação](./docs/README.md)** 👈
+

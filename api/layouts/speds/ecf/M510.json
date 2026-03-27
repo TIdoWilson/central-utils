@@ -1,15 +1,14 @@
 {
-  "registro": {
-    "codigo": "M510",
-    "titulo": "REGISTRO M510: CONTROLE DE SALDOS DAS CONTAS PADRÃO DA PARTE B DO e-LALUR E DO e-LACS",
-    "bloco_origem": "bloco-m.htm",
-    "ancora": "m510",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m510"
+  "sped": "ECF",
+  "registro": "M510",
+  "bloco": "M",
+  "status": "nao_localizado_no_manual",
+  "motivo": "O registro nao aparece como secao do manual local e nao foi localizado no texto pesquisavel do PDF.",
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": null
   },
-  "layout": {
-    "cabecalho_colunas": [],
-    "total_campos": 0,
-    "extraido_em_utc": "2026-03-10T19:31:56.852837+00:00"
-  },
-  "campos": []
+  "campos": [],
+  "notas_extracao": []
 }

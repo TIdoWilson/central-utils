@@ -63,4 +63,4 @@ Conclusão: a página está publicada, mas a API da ferramenta está pendente de
 
 - Ao alterar nomes de arquivo/rota, manter compatibilidade (alias/redirect) para não quebrar links legados.
 - Se incluir nova API/fluxo, atualizar este documento e `src/core/tool-catalog.json`.
-- Se esta ferramenta passar a usar Go ou C#, documentar no mesmo padrão aplicado em `ajuste-diario-gfbr-c` e `formatador-bernardina`.
+- Se esta ferramenta passar a usar Go ou C#, documentar no mesmo padrão aplicado em `formatador-bernardina` e ferramentas similares com fluxos externos.

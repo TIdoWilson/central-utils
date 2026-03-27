@@ -40,14 +40,16 @@ from api.importador_recebimentos_madre_scp_core import (
     processar_importador_recebimentos_madre_scp,
 )
 
-from api.ajuste_diario_gfbr_core import ajustar_diario_gfbr
 from api.gfbr_gerador_txt_core import processar_gfbr_gerador_txt
 
 from api.conciliador_cartao_wilson_core import conciliar_cartao_wilson, VALOR_TOLERANCIA_PADRAO
 from api.conciliador_cartao_tipo50_core import conciliar_cartao_tipo50
 from api.conciliador_pis_cofins_core import conciliar_pis_cofins
 from api.giast_core import gerar_giast_txt
-from api.conversor_extrato_pdf_ofx_core import converter_pdf_para_ofx_bytes
+try:
+    from api.conversor_extrato_pdf_ofx_core import converter_pdf_para_ofx_bytes
+except ModuleNotFoundError:
+    converter_pdf_para_ofx_bytes = None
 
 
 @app.post("/api/comparador-eventos-holerite/processar")
@@ -143,6 +145,82 @@ async def processar_cartao_horas_iob_endpoint(
     except Exception as exc:
         print("Erro ao processar cartao horas IOB:", exc)
         raise HTTPException(status_code=500, detail="Erro interno ao processar o PDF do cartao.")
+
+
+@app.post("/api/cartao-horas-bandeira-transportes/processar")
+async def processar_cartao_horas_bandeira_transportes_endpoint(
+    arquivo: UploadFile = File(...),
+    ids_json: str = Form("{}"),
+):
+    try:
+        from api.cartao_horas_bandeira_transportes_core import processar_pdf_cartao_bandeira
+
+        pdf_bytes = await arquivo.read()
+        try:
+            ids_por_chave = json.loads(ids_json or "{}")
+        except json.JSONDecodeError as exc:
+            raise HTTPException(status_code=400, detail="Configuracao de IDs invalida.") from exc
+
+        resultado = processar_pdf_cartao_bandeira(
+            pdf_bytes=pdf_bytes,
+            nome_arquivo=arquivo.filename or "arquivo.pdf",
+            ids_por_chave=ids_por_chave,
+        )
+
+        previa = resultado.get("preview", {})
+        return {
+            "ok": True,
+            "nomeArquivo": resultado.get("nome_saida", "arquivo.txt"),
+            "txtBase64": resultado.get("txt_base64", ""),
+            "totalRegistrosTxt": len(resultado.get("linhas", [])),
+            "previewLinhas": (resultado.get("linhas") or [])[:30],
+            "empresa": previa.get("empresa", ""),
+            "periodoInicial": previa.get("periodo_inicial", ""),
+            "periodoFinal": previa.get("periodo_final", ""),
+            "funcionarios": resultado.get("funcionarios", []),
+            "itens": previa.get("itens", []),
+            "somaItens": previa.get("soma_itens", "0,00"),
+            "totalItens": previa.get("total_itens", 0),
+            "listaFuncionariosArquivo": resultado.get("lista_funcionarios_arquivo", ""),
+        }
+    except FileNotFoundError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="Ferramenta indisponivel neste ambiente: script/planilha do Bandeira nao localizados.",
+        ) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except HTTPException:
+        raise
+    except Exception as exc:
+        print("Erro ao processar cartao horas Bandeira Transportes:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao processar o PDF.")
+
+
+class SalvarFuncionarioBandeiraPayload(BaseModel):
+    nome: str
+    cpf: str
+    matricula: str
+
+
+@app.post("/api/cartao-horas-bandeira-transportes/salvar-funcionario")
+def salvar_funcionario_bandeira_endpoint(payload: SalvarFuncionarioBandeiraPayload):
+    try:
+        from api.cartao_horas_bandeira_transportes_core import salvar_funcionario_lista
+
+        resultado = salvar_funcionario_lista(
+            nome=payload.nome,
+            cpf=payload.cpf,
+            matricula=payload.matricula,
+        )
+        return {"ok": True, **resultado}
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=503, detail=str(exc))
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as exc:
+        print("Erro ao salvar funcionario na lista Bandeira:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao salvar funcionario na lista.")
 # =========================
 # MODELO DE ENTRADA (FÉRIAS)
 # =========================
@@ -384,45 +462,31 @@ def processar_importador_recebimentos_madre_scp_endpoint(
         "resultado": resultado,
     }
     
-class ParametrosAjusteDiarioGfbr(BaseModel):
-  input_xlsx_path: str
-  aba_origem: Optional[str] = None
-  criar_backup: bool = True
-
-@app.post("/api/ajuste-diario-gfbr/processar")
-def processar_ajuste_diario_gfbr(params: ParametrosAjusteDiarioGfbr):
-  resumo = ajustar_diario_gfbr(
-      input_xlsx_path=params.input_xlsx_path,
-      aba_origem=params.aba_origem,
-      criar_backup=params.criar_backup,
-  )
-  return {
-      "ok": True,
-      "resumo": resumo,
-  }
-
-
 class ParametrosGfbrGeradorTxt(BaseModel):
-  input_path: Optional[str] = None
-  aba_origem: Optional[str] = None
-  pdf_itau_1_path: Optional[str] = None
-  conta_aplicacao_1: Optional[str] = None
-  pdf_itau_2_path: Optional[str] = None
-  conta_aplicacao_2: Optional[str] = None
-  output_dir: Optional[str] = None
+    input_path: Optional[str] = None
+    aba_origem: Optional[str] = None
+    pdf_itau_1_path: Optional[str] = None
+    conta_aplicacao_1: Optional[str] = None
+    conta_corrente_1: Optional[str] = None
+    pdf_itau_2_path: Optional[str] = None
+    conta_aplicacao_2: Optional[str] = None
+    conta_corrente_2: Optional[str] = None
+    output_dir: Optional[str] = None
 
 
 @app.post("/api/gfbr-gerador-txt/processar")
 def processar_gfbr_gerador_txt_endpoint(params: ParametrosGfbrGeradorTxt):
   resumo = processar_gfbr_gerador_txt(
-      input_path=params.input_path,
-      aba_origem=params.aba_origem,
-      pdf_itau_1_path=params.pdf_itau_1_path,
-      conta_aplicacao_1=params.conta_aplicacao_1,
-      pdf_itau_2_path=params.pdf_itau_2_path,
-      conta_aplicacao_2=params.conta_aplicacao_2,
-      output_dir=params.output_dir,
-  )
+        input_path=params.input_path,
+        aba_origem=params.aba_origem,
+        pdf_itau_1_path=params.pdf_itau_1_path,
+        conta_aplicacao_1=params.conta_aplicacao_1,
+        conta_corrente_1=params.conta_corrente_1,
+        pdf_itau_2_path=params.pdf_itau_2_path,
+        conta_aplicacao_2=params.conta_aplicacao_2,
+        conta_corrente_2=params.conta_corrente_2,
+        output_dir=params.output_dir,
+    )
   return {
       "ok": True,
       "resumo": resumo,
@@ -592,6 +656,11 @@ async def api_conversor_extrato_pdf_ofx(
     bankid: str = Form("0000"),
     acctid: str | None = Form(None),
 ):
+    if converter_pdf_para_ofx_bytes is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Conversor PDF/OFX indisponivel neste ambiente.",
+        )
     try:
         if not arquivos:
             raise HTTPException(status_code=400, detail="Envie pelo menos um PDF.")
@@ -654,7 +723,13 @@ async def api_conversor_extrato_pdf_ofx(
                 )
 
         if not ofx_gerados:
-            raise HTTPException(status_code=400, detail="Nenhum OFX foi gerado. Verifique os arquivos enviados.")
+            return {
+                "ok": False,
+                "totalArquivos": len(arquivos),
+                "totalConvertidos": 0,
+                "resultados": resultados,
+                "error": "Nenhum OFX foi gerado. Verifique os erros individuais abaixo.",
+            }
 
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, mode="w", compression=zipfile.ZIP_DEFLATED) as zf:

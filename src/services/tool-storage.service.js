@@ -59,21 +59,6 @@ function createToolStorage({ dataDir, dimobService }) {
   ensureDir(madreScpUploadsDir);
   const uploadMadreScp = multer({ dest: madreScpUploadsDir });
 
-  // Ajuste Diario GFBR
-  const ajusteDiarioGfbrUploadsDir = path.join(dataDir, 'uploads', 'ajuste-diario-gfbr');
-  ensureDir(ajusteDiarioGfbrUploadsDir);
-  const storageAjusteDiarioGfbr = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, ajusteDiarioGfbrUploadsDir);
-    },
-    filename: function (req, file, cb) {
-      const ext = path.extname(file.originalname) || '.xlsx';
-      const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      cb(null, unique + ext);
-    },
-  });
-  const uploadAjusteDiarioGfbr = multer({ storage: storageAjusteDiarioGfbr });
-
   // GFBR Gerador TXT
   const gfbrGeradorTxtUploadsDir = path.join(dataDir, 'uploads', 'gfbr-gerador-txt');
   ensureDir(gfbrGeradorTxtUploadsDir);
@@ -89,7 +74,7 @@ function createToolStorage({ dataDir, dimobService }) {
   });
   const uploadGfbrGeradorTxt = multer({
     storage: storageGfbrGeradorTxt,
-    limits: { fileSize: 50 * 1024 * 1024, files: 1 },
+    limits: { fileSize: 50 * 1024 * 1024, files: 3 },
   });
 
   // Separador CSV baixa automatica
@@ -160,8 +145,6 @@ function createToolStorage({ dataDir, dimobService }) {
     uploadSeparadorFerias,
     uploadExtratorZipRar,
     uploadMadreScp,
-    ajusteDiarioGfbrUploadsDir,
-    uploadAjusteDiarioGfbr,
     gfbrGeradorTxtUploadsDir,
     uploadGfbrGeradorTxt,
     SEPARADOR_CSV_OUTPUT_DIR,

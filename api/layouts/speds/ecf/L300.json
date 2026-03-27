@@ -1,142 +1,151 @@
 {
-  "registro": {
-    "codigo": "L300",
-    "titulo": "REGISTRO L300: DEMONSTRATIVO DO RESULTADO DO EXERCÍCIO",
-    "bloco_origem": "bloco-l.htm",
-    "ancora": "l300",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-l.htm#l300"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 9,
-    "extraido_em_utc": "2026-03-10T19:31:56.837836+00:00"
+  "sped": "ECF",
+  "registro": "L300",
+  "bloco": "L",
+  "status": "ok",
+  "titulo": "Demonstração do Resultado do Lucro Líquido Fiscal",
+  "descricao_registro": "Apresenta o demonstrativo do resultado do exercício para o período de apuração.",
+  "nivel_hierarquico": "3",
+  "ocorrencia": "0:N",
+  "campos_chave": [
+    "COD_CTA_REF"
+  ],
+  "regras_validacao_registro": [],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 99,
+      "fim": 100
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
       "descricao": "Texto fixo contendo “L300”",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"L300\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[L300]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "CODIGO",
-      "descricao": "Código da Conta Referencial (Analíticas e Sintéticas) de acordo com a tabela do Sped",
+      "pos": 2,
+      "nome": "C_DIGO",
+      "rotulo": "Código da Conta referencial",
+      "descricao": "Código da conta referencial de acordo com o tabela do Sped",
       "tipo": "C",
-      "tamanho": "50",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código da Conta referencial",
-        "DOCUMENTAÇÃO": "E043PCM.CLACTA"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "03",
-      "campo": "DESCRICAO",
-      "descricao": "Descrição da Conta Referencial",
+      "pos": 3,
+      "nome": "DESCRICAO",
+      "rotulo": "Descrição",
+      "descricao": "Descrição da conta referencial",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Descrição",
-        "DOCUMENTAÇÃO": "E043PCM.DESCTA"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "04",
-      "campo": "TIPO",
-      "descricao": "Define o Tipo da Conta:\nS – Sintética\nA – Analítica",
+      "pos": 4,
+      "nome": "TIPO",
+      "rotulo": "Tipo",
+      "descricao": "Define o tipo dos dados da linha: T – Título: Utilizado como um label separador (conta sintética) E – Editavel (conta analítica)",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo da Conta",
-        "DOCUMENTAÇÃO": "E043PCM.ANASIN"
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[T; E]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "05",
-      "campo": "NIVEL",
-      "descricao": "Nível da Conta",
+      "pos": 5,
+      "nome": "NIVEL",
+      "rotulo": "Nível da Conta",
+      "descricao": "Nível da conta",
       "tipo": "N",
-      "tamanho": "3",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Nível da Conta",
-        "DOCUMENTAÇÃO": "E043PCM.NIVCTA"
-      }
+      "tamanho": "003",
+      "tamanho_int": 3,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "06",
-      "campo": "COD_NAT",
-      "descricao": "Código Natureza da Conta:\n04 – Contas de Resultado",
+      "pos": 6,
+      "nome": "COD_NAT",
+      "rotulo": "Natureza da Conta",
+      "descricao": "Código natureza da conta/grupo de contas: 04 – Contas de Resultado",
       "tipo": "C",
-      "tamanho": "2",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Natureza da Conta",
-        "DOCUMENTAÇÃO": "E043PCM.NATCTA"
-      }
+      "tamanho": "002",
+      "tamanho_int": 2,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[04]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "07",
-      "campo": "COD_CTA_SUP",
-      "descricao": "Código da Conta Sintética de nível imediatamente superior.",
+      "pos": 7,
+      "nome": "COD_CTA_SUP",
+      "rotulo": "Código da Conta Superior",
+      "descricao": "Código da conta sintética /grupo de contas de nível imediatamente superior.",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Código da Conta Superior",
-        "DOCUMENTAÇÃO": "E043PCM.CLACTA da conta pai da que está sendo gerada."
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "08",
-      "campo": "VALOR",
-      "descricao": "Valor total transferido para a Conta Referencial",
+      "pos": 8,
+      "nome": "VALOR",
+      "rotulo": "Valor do Saldo Final da Conta Referencial",
+      "descricao": "Valor total transferido para a conta referencial",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Valor do Saldo Final da Conta Referencial",
-        "DOCUMENTAÇÃO": "Saldo final da conta referencial conforme a visão contábil para o período apurado."
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "09",
-      "campo": "IND_VALOR",
-      "descricao": "Indicador do sinal do saldo final da conta:\nC – Credor\nD – Devedor",
+      "pos": 9,
+      "nome": "IND_VAL_CTA_REF_FIN",
+      "rotulo": "Indicador do Saldo Final da Conta Referencial",
+      "descricao": "Indicador do sinal do saldo final da conta: C – Credor D – Devedor",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador do Saldo Final da Conta Referencial",
-        "DOCUMENTAÇÃO": "Será gerado conforme indicação da lista dinâmica relacionada ao aglutinador, informada na página do registro em \"Lista Dinâmica da Natureza dos Aglutinadores\", a natureza do saldo registrado para o aglutinador e o valor referente ao saldo final da conta referencial para o período."
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[D; C]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     }
-  ]
+  ],
+  "notas_extracao": []
 }

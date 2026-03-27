@@ -1,0 +1,432 @@
+{
+  "sped": "ECF",
+  "manual": {
+    "arquivo": "MANUAL ECF.pdf",
+    "nome": "MANUAL ECF.pdf",
+    "atualizacao": "Dezembro de 2013"
+  },
+  "gerado_em": "2026-02-28T10:02:04",
+  "descricao": "Sumário dos layouts em JSON gerados a partir do manual local da ECF.",
+  "registros": [
+    {
+      "registro": "0010",
+      "bloco": "0",
+      "status": "ok",
+      "titulo": "Abertura do Arquivo Digital e Identificação da Entidade",
+      "descricao_resumida": "Apresenta os parâmetros fiscais que identificam quais blocos e registros a serem preenchidos. Caso a FORMA_TRIB (Campo 05) seja igual “3” (Presumido/Real) ou “4” (Presumido/Real/Arbitrado) e houver opção pelo REFIS (Campo 03), o período tributado pelo lucro real deve ter somente a forma de apuração trimestral (caso em que se deve utilizar “R” em FORMA_TRIB_PER – Campo 08) ou somente a forma de apuração correspondente à anual/estimativa (caso em que se deve utilizar “E” em FORMA_TRIB_PER – Campo 08). O plano de contas referencial a ser utilizado segue as seguintes regras: - Utilizar o plano de contas definido no campo COD_QUALIF_PJ (Campo 07) e OPT_RTT (Campo 15). - Se COD_QUALIF_PJ (Campo 07) não estiver preenchido, verificar o campo APUR_CSLL (Campo 14). - Se APUR_CSLL (Campo 14) for igual a “D” (Desobrigada), não tem plano de contas. - Se APUR_CSLL (Campo 14) for igual a “A” (Anual) ou “T” (Trimestral) utilizar o plano de contas imune e isenta (CSLL) nos períodos correspondentes.",
+      "ocorrencia": "1",
+      "campos_chave": [
+        "REG"
+      ],
+      "quantidade_campos": 15,
+      "arquivo": "0010.json",
+      "paginas": {
+        "inicio": 46,
+        "fim": 50
+      },
+      "notas": []
+    },
+    {
+      "registro": "0020",
+      "bloco": "0",
+      "status": "ok",
+      "titulo": "Parâmetros Complementares",
+      "descricao_resumida": "Apresenta os parâmetros que identificam quais blocos e registros a serem preenchidos.",
+      "ocorrencia": "1",
+      "campos_chave": [
+        "REG"
+      ],
+      "quantidade_campos": 31,
+      "arquivo": "0020.json",
+      "paginas": {
+        "inicio": 51,
+        "fim": 56
+      },
+      "notas": []
+    },
+    {
+      "registro": "J050",
+      "bloco": "J",
+      "status": "ok",
+      "titulo": "Plano de Contas do Contribuinte",
+      "descricao_resumida": "Registro onde deve ser informado o plano de contas da empresa.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "DT_ALT",
+        "COD_CTA"
+      ],
+      "quantidade_campos": 8,
+      "arquivo": "J050.json",
+      "paginas": {
+        "inicio": 80,
+        "fim": 81
+      },
+      "notas": []
+    },
+    {
+      "registro": "K155",
+      "bloco": "K",
+      "status": "ok",
+      "titulo": "Detalhes dos Saldos Contábeis (Depois do Encerramento do Resultado do Período)",
+      "descricao_resumida": "Registro onde devem ser informados os saldos iniciais, os saldos finais, os totais de débitos e os totais de créditos de todas as contas patrimoniais da escrituração societária da pessoa jurídica (Ativo, Passivo e Patrimonio Liquido), no período de apuração. Poderá ser preenchido das seguintes formas: - Edição pelo programa da ECF; - Calculado pelo sistema através da funcionalidade de recuperar ECD; e - Importado de arquivo digital. Observações: I – O registro deve ser aparesentado para todas as contas analíticas que tenham saldo ou movimento no período. II – Quando VL_SLD_INI (Campo 04) for igual a zero, preencher IND_VL_SLD_INI (Campo 05) com “D” ou “C” . III – Quando VL_SLD_FIN (Campo 08) for igual a zero, preencher IND_VL_SLD_INI (Campo 09) com “D” ou“C”. IV – Na inexistência de saldo inicial, saldo final ou movimentação no período, preencher VL_SLD_INI (Campo 04), VL_SLD_FIN (Campo 08), VL_DEB (Campo 06) e VL_CRED (Campo 07) com zero. V – Nos campos COD_CTA (Campo 02) e COD_CCUS (Campo 03), informar o código constante nos registros J050 e J051, respectivamente. VI – Em VL_SLD_INI (Campo 04), informar o valor do saldo da conta no início do período de apuração (0000.DT_INI). VII – Em VL_DEB (Campo 06) e VL_CRED (Campo 07), informar os valores de movimentação em todo o período de apuração (entre 0000.DT_INI e 0000.DT_FIN). RFB/Subsecretaria de Fiscalização/Coordenação Geral de Fiscalização/Div. de Escrituração Digital Página 87 de 207 Anexo ao Ato Declaratório Executivo Cofis no /2013 Manual de Orientação do Leiaute da ECF Atualização: Dezembro de 2013 VIII – Em VL_SLD_FIN (Campo 08), informar o valor do saldo da conta no final do período de apuração (0000.DT_FIN). IX – Os valores devem ser apurados e informados considerando todos os lançamentos (inclusive os lançamentos de encerramento).",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "COD_CTA",
+        "COD_CCUS"
+      ],
+      "quantidade_campos": 9,
+      "arquivo": "K155.json",
+      "paginas": {
+        "inicio": 87,
+        "fim": 89
+      },
+      "notas": []
+    },
+    {
+      "registro": "K355",
+      "bloco": "K",
+      "status": "ok",
+      "titulo": "Saldos Finais das Contas Contábeis de Resultado Antes do Encerramento",
+      "descricao_resumida": "Registro onde devem ser informados os saldos finais de todas as contas de resultado da escrituração societária da pessoa jurídica antes do encerramento. Poderá ser preenchido das seguintes formas: - Edição pelo programa da ECF; - Calculado pelo sistema através da funcionalidade de recuperar ECD; e - Importado de arquivo digital.",
+      "ocorrencia": "1:N",
+      "campos_chave": [
+        "COD_CTA",
+        "COD_CCUS"
+      ],
+      "quantidade_campos": 5,
+      "arquivo": "K355.json",
+      "paginas": {
+        "inicio": 91,
+        "fim": 92
+      },
+      "notas": []
+    },
+    {
+      "registro": "L100",
+      "bloco": "L",
+      "status": "ok",
+      "titulo": "Balanço Patrimonial",
+      "descricao_resumida": "Apresenta o balanço patrimonial com base nas contas referenciais para o período de apuração. O saldo inicial pode ser replicado do registro E010/E015 ou preenchido. O saldo final será recuperado do registro K155/K156. Caso o bloco K não possua dados e for SCP (0000.TIP_ECF = 2), o saldo final poderá ser preenchido.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "CODIGO"
+      ],
+      "quantidade_campos": 11,
+      "arquivo": "L100.json",
+      "paginas": {
+        "inicio": 96,
+        "fim": 97
+      },
+      "notas": []
+    },
+    {
+      "registro": "L210",
+      "bloco": "L",
+      "status": "ok",
+      "titulo": "Informativo da Composição de Custos",
+      "descricao_resumida": "Apresenta a composição dos custos dos produtos fabricação própra vendidos e custo dos serviços prestados no período para as empresas que utilizam o inventário permanente.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "CODIGO"
+      ],
+      "quantidade_campos": 4,
+      "arquivo": "L210.json",
+      "paginas": {
+        "inicio": 98,
+        "fim": 98
+      },
+      "notas": [
+        "O sumario do manual apresenta referencia inconsistente para este registro; a secao detalhada esta em 'Registro L210'."
+      ]
+    },
+    {
+      "registro": "L300",
+      "bloco": "L",
+      "status": "ok",
+      "titulo": "Demonstração do Resultado do Lucro Líquido Fiscal",
+      "descricao_resumida": "Apresenta o demonstrativo do resultado do exercício para o período de apuração.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "COD_CTA_REF"
+      ],
+      "quantidade_campos": 9,
+      "arquivo": "L300.json",
+      "paginas": {
+        "inicio": 99,
+        "fim": 100
+      },
+      "notas": []
+    },
+    {
+      "registro": "M010",
+      "bloco": "M",
+      "status": "ok",
+      "titulo": "Identificação da Conta na Parte B do e-Lalur e do e-Lacs",
+      "descricao_resumida": "Cadastra os saldos iniciais no período da escrituração das contas da parte B utilizadas no e-LALUR e no e-LACS. Registro pode ser replicado da EFD-IRPJ anterior, importado e/ou editado.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "COD_CTA_LAL"
+      ],
+      "quantidade_campos": 11,
+      "arquivo": "M010.json",
+      "paginas": {
+        "inicio": 103,
+        "fim": 104
+      },
+      "notas": []
+    },
+    {
+      "registro": "M300",
+      "bloco": "M",
+      "status": "ok",
+      "titulo": "Lançamentos da Parte A do e-Lalur",
+      "descricao_resumida": "Apresenta os lançamentos da parte A do e-LALUR. Este registro demonstrará a apuração da base de cálculo da IRPJ anual, trimestral e nos meses com estimativa apurada com base no balanço/balancete.",
+      "ocorrencia": "1:N",
+      "campos_chave": [
+        "CODIGO"
+      ],
+      "quantidade_campos": 8,
+      "arquivo": "M300.json",
+      "paginas": {
+        "inicio": 105,
+        "fim": 106
+      },
+      "notas": []
+    },
+    {
+      "registro": "M350",
+      "bloco": "M",
+      "status": "ok",
+      "titulo": "Lançamentos da Parte A do e-Lacs",
+      "descricao_resumida": "Apresenta os lançamentos da parte A do e-Lacs. Este registro demonstrará a apuração da base de cálculo da CSLL anual, trimestral e nos meses com estimativa apurada com base no balanço/balancete.",
+      "ocorrencia": "1:N",
+      "campos_chave": [
+        "CODIGO"
+      ],
+      "quantidade_campos": 8,
+      "arquivo": "M350.json",
+      "paginas": {
+        "inicio": 110,
+        "fim": 111
+      },
+      "notas": [
+        "A numeracao dos campos no manual apresenta salto(s): 8."
+      ]
+    },
+    {
+      "registro": "M410",
+      "bloco": "M",
+      "status": "ok",
+      "titulo": "Lançamento na Conta da Parte B do e-Lalur e do e-Lacs sem Reflexo na Parte A",
+      "descricao_resumida": "Apresenta os lançamentos em contas da parte B sem reflexos na parte A.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "COD_CTA_LAL",
+        "ID_LAN_LAL_B",
+        "COD_CTA_LAL_CTP"
+      ],
+      "quantidade_campos": 7,
+      "arquivo": "M410.json",
+      "paginas": {
+        "inicio": 115,
+        "fim": 116
+      },
+      "notas": []
+    },
+    {
+      "registro": "M500",
+      "bloco": "M",
+      "status": "ok",
+      "titulo": "Controle de Saldos das Contas da Parte B do e-Lalur e do e-Lacs",
+      "descricao_resumida": "Apresenta a visão sintética do controle de saldos das contas da parte B do e-LALUR e e-LACS. Registro gerado pelo sistema a partir do saldo inicial e das movimentações. - Os campos SD_FIM_LAL e IND_SD_FIM do último período serão transportados para o E020 da próxima ECF. - Quando a escrituração for trimestral, o saldo final do período será transportado para o saldo inicial do período seguinte. - O valor do SD_INI_LAL do primeiro período será igual ao saldo inicial do registro M010.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "COD_CTA_LAL"
+      ],
+      "quantidade_campos": 10,
+      "arquivo": "M500.json",
+      "paginas": {
+        "inicio": 117,
+        "fim": 118
+      },
+      "notas": []
+    },
+    {
+      "registro": "M510",
+      "bloco": "M",
+      "status": "nao_localizado_no_manual",
+      "titulo": null,
+      "descricao_resumida": null,
+      "ocorrencia": null,
+      "campos_chave": null,
+      "quantidade_campos": 0,
+      "arquivo": "M510.json",
+      "paginas": null,
+      "notas": []
+    },
+    {
+      "registro": "N500",
+      "bloco": "N",
+      "status": "ok",
+      "titulo": "Base de Cálculo do IRPJ Sobre o Lucro Real Após as Compensações de Prejuízos",
+      "descricao_resumida": "Apresenta a base de cálculo do IRPJ após as compensações de prejuízos.",
+      "ocorrencia": "1:1",
+      "campos_chave": [
+        "REG"
+      ],
+      "quantidade_campos": 3,
+      "arquivo": "N500.json",
+      "paginas": {
+        "inicio": 121,
+        "fim": 121
+      },
+      "notas": []
+    },
+    {
+      "registro": "N620",
+      "bloco": "N",
+      "status": "ok",
+      "titulo": "Cálculo do IRPJ Mensal por Estimativa",
+      "descricao_resumida": "Apresenta o cálculo do IRPJ mensal por estimativa.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "CODIGO"
+      ],
+      "quantidade_campos": 4,
+      "arquivo": "N620.json",
+      "paginas": {
+        "inicio": 125,
+        "fim": 125
+      },
+      "notas": []
+    },
+    {
+      "registro": "N630",
+      "bloco": "N",
+      "status": "ok",
+      "titulo": "Cálculo do IRPJ Com Base no Lucro Real",
+      "descricao_resumida": "Apresenta o cálculo do IRPJ com base no lucro real.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "CODIGO"
+      ],
+      "quantidade_campos": 4,
+      "arquivo": "N630.json",
+      "paginas": {
+        "inicio": 126,
+        "fim": 126
+      },
+      "notas": [
+        "O campo REG extraido na secao N630 referencia [N620], o que indica inconsistencia no manual.",
+        "Na tabela extraida, o campo REG aparece com referencia a N620, possivel erro material do manual."
+      ]
+    },
+    {
+      "registro": "N650",
+      "bloco": "N",
+      "status": "ok",
+      "titulo": "Base de Cálculo da CSLL Após as Compensações da Base de Cálculo Negativa",
+      "descricao_resumida": "Apresenta a base de cálculo da CSLL, após as compensações da base de cálculo negativa.",
+      "ocorrencia": "1:1",
+      "campos_chave": [
+        "REG"
+      ],
+      "quantidade_campos": 3,
+      "arquivo": "N650.json",
+      "paginas": {
+        "inicio": 127,
+        "fim": 127
+      },
+      "notas": []
+    },
+    {
+      "registro": "N660",
+      "bloco": "N",
+      "status": "ok",
+      "titulo": "Cálculo da CSLL Mensal por Estimativa",
+      "descricao_resumida": "Apresenta o cálculo da CSLL mensal por estimativa.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "CODIGO"
+      ],
+      "quantidade_campos": 4,
+      "arquivo": "N660.json",
+      "paginas": {
+        "inicio": 128,
+        "fim": 128
+      },
+      "notas": []
+    },
+    {
+      "registro": "N670",
+      "bloco": "N",
+      "status": "ok",
+      "titulo": "Cálculo da CSLL Com Base no Lucro Real",
+      "descricao_resumida": "Apresenta o cálculo da CSLL com base no lucro real.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "CODIGO"
+      ],
+      "quantidade_campos": 4,
+      "arquivo": "N670.json",
+      "paginas": {
+        "inicio": 129,
+        "fim": 129
+      },
+      "notas": []
+    },
+    {
+      "registro": "Y570",
+      "bloco": "Y",
+      "status": "ok",
+      "titulo": "Demonstrativo do Imposto de Renda, CSLL e Contribuiçao Previdenciária Retidos na Fonte",
+      "descricao_resumida": "Apresenta o demonstrativo do imposto de renda, CSLL e contribuição previdenciária retidos na fonte para as empresas do lucro real, lucro presumido e lucro arbitrado.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "CNPJ_FON",
+        "COD_REC"
+      ],
+      "quantidade_campos": 9,
+      "arquivo": "Y570.json",
+      "paginas": {
+        "inicio": 183,
+        "fim": 183
+      },
+      "notas": []
+    },
+    {
+      "registro": "Y600",
+      "bloco": "Y",
+      "status": "ok",
+      "titulo": "Identificação de Sócios ou Titular",
+      "descricao_resumida": "Apresenta a identificação de sócios ou titular.",
+      "ocorrencia": "0:N",
+      "campos_chave": [
+        "DT_ALTER",
+        "PAIS",
+        "IND_PF_PJ",
+        "CPF_CNPJ"
+      ],
+      "quantidade_campos": 11,
+      "arquivo": "Y600.json",
+      "paginas": {
+        "inicio": 186,
+        "fim": 187
+      },
+      "notas": []
+    },
+    {
+      "registro": "Y720",
+      "bloco": "Y",
+      "status": "nao_localizado_no_manual",
+      "titulo": null,
+      "descricao_resumida": null,
+      "ocorrencia": null,
+      "campos_chave": null,
+      "quantidade_campos": 0,
+      "arquivo": "Y720.json",
+      "paginas": null,
+      "notas": []
+    }
+  ]
+}

@@ -130,7 +130,6 @@ A **Central Utils** é uma plataforma multi-camadas que combina Node.js, Python 
 | `comprimir_pdf_core.py` | Reduz tamanho de PDFs |
 | `extrator_zip_rar_core.py` | Extrai arquivos compactados |
 | `importador_recebimentos_madre_scp_core.py` | Integração MADRE |
-| `ajuste_diario_gfbr_core.py` | Ajustes contábeis |
 | `integra_api.py` | API principal que expõe os cores |
 
 ### 4️⃣ Backend Go (Opcional)
@@ -311,3 +310,4 @@ Veja [docs/deployment/01-deploy.md](../deployment/01-deploy.md)
 ---
 
 **Última atualização:** Fevereiro 2026
+

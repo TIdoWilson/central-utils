@@ -1,6 +1,6 @@
 # FAQ Global — Central Utils (Todas as Ferramentas)
 
-> **Versão:** 2026-02 | **Último Update:** Fevereiro 2026 | **Cobertura:** 10 ferramentas | **Total Categorias:** 12
+> **Versão:** 2026-03 | **Último Update:** Março 2026 | **Cobertura:** 10+ ferramentas | **Total Categorias:** 12
 
 ---
 
@@ -385,40 +385,6 @@ ls -la /var/log/central-utils/audit_gfbr.log
 
 ## ✓ Problemas de Validação & Dados
 
-### P: "Débito ≠ Crédito" (Ajuste GFBR)
-
-**Ferramentas afetadas:** Ajuste Diário GFBR
-
-**Causas:**
-- Lançamento desbalanceado
-- Contrapartida faltando
-- Erro nos valores inseridos
-
-**Soluções:**
-```bash
-# 1. Validar Excel
-# Coluna Débito: =SUM(D:D)
-# Coluna Crédito: =SUM(E:E)
-# Devem ser iguais
-
-# 2. Debugar grupo
-python3 << 'EOF'
-from openpyxl import load_workbook
-wb = load_workbook('ajustes.xlsx')
-ws = wb.active
-total_d, total_c = 0, 0
-for row in ws.iter_rows(min_row=3, max_row=50, values_only=True):
-    if row[3]:  # Col D (Débito)
-        total_d += row[3]
-    if row[4]:  # Col E (Crédito)
-        total_c += row[4]
-print(f"D={total_d}, C={total_c}, Balance: {total_d == total_c}")
-EOF
-
-# 3. Adicionar contrapartida se necessário
-# Exemplo: D > C → adicionar Crédito em conta complementar
-```
-
 ### P: "Duplicata detectada" (BDs)
 
 **Ferramentas afetadas:** Importador MADRE, Separador (ZIP)
@@ -631,6 +597,52 @@ export DB_CONNECT_TIMEOUT=30
 ---
 
 ## 🎯 Problemas de Conversão & Output
+
+### P: "OFX não gerado" ou "Banco não identificado"
+
+**Ferramentas afetadas:** Conversor Extrato PDF para OFX (Evolua, Sicredi, Stone)
+
+**Causas:**
+- PDF não corresponde aos padrões suportados
+- Banco não reconhecido (detecção falhou)
+- Nenhuma transação parseada
+
+**Soluções:**
+```bash
+# 1. Verificar padrão do PDF (extrair texto)
+pdftotext extrato.pdf -
+# Procure por:
+# - "EVOLUA" + "EXTRATO ESPECIAL"
+# - "SICREDI" + "EXTRATO DE CONTA CORRENTE"
+# - "STONE" + "EXTRATO DE CONTA"
+
+# 2. Validar Python localmente
+python3 << 'EOF'
+from api.conversor_extrato_pdf_ofx_core import ler_texto_pdf_bytes, detectar_banco
+with open("extrato.pdf", "rb") as f:
+    texto = ler_texto_pdf_bytes(f.read())
+    print("=== Primeiras 500 chars ===")
+    print(texto[:500])
+    print("=== Tentando detectar ===")
+    try:
+        banco = detectar_banco(texto)
+        print(f"Banco detectado: {banco}")
+    except ValueError as e:
+        print(f"Erro detecção: {e}")
+EOF
+
+# 3. Se Stone, verificar data e valores
+# Stone espera: DD/MM/YY e "R$" nos valores
+# Exemplo linha válida:
+# 02/07/25 Saída DESCRICAO -R$ 44,20 R$ 0,00 CONTRAPARTE
+
+# 4. Resubmeter com bankid/acctid manualmente
+curl -X POST http://localhost:3000/api/conversor-extrato-pdf-ofx/processar \
+  -F "files=@extrato.pdf" \
+  -F "bankid=0000" \
+  -F "acctid=53505159" \
+  -H "x-csrf-token: seu_token"
+```
 
 ### P: "Conversão PDF/DOCX falhou"
 

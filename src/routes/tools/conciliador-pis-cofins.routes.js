@@ -7,7 +7,7 @@ module.exports = function createConciliadorPisCofinsRoutes(deps) {
   router.post(
     '/process',
     requireCsrf,
-    upload.array('arquivos', 8),
+    upload.array('arquivos', 20),
     async (req, res) => {
       try {
         const arquivos = Array.isArray(req.files) ? req.files : [];

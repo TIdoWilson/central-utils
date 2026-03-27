@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-13T13:21:42.340Z",
+  "generatedAt": "2026-03-18T17:16:21.244Z",
   "tools": [
     {
       "slug": "acerto-lotes-toscan",
@@ -20,28 +20,6 @@
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/acertos-lotes-internets",
-      "adminOnly": false,
-      "aliases": [],
-      "sharedApisUsed": []
-    },
-    {
-      "slug": "ajuste-diario-gfbr",
-      "title": "Ajuste Diario Gfbr",
-      "group": "Geral",
-      "hasPage": true,
-      "hasApi": true,
-      "apiBase": "/api/ajuste-diario-gfbr",
-      "adminOnly": false,
-      "aliases": [],
-      "sharedApisUsed": []
-    },
-    {
-      "slug": "ajuste-diario-gfbr-c",
-      "title": "Ajuste Diario Gfbr C",
-      "group": "Geral",
-      "hasPage": true,
-      "hasApi": true,
-      "apiBase": "/api/ajuste-diario-gfbr-c",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -91,6 +69,28 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "importador-cartao-horas-bandeira-transportes",
+      "title": "Importador Cartao de Horas Bandeira Transportes",
+      "group": "Pessoal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/cartao-horas-bandeira-transportes",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "cct",
+      "title": "Consulta CCT",
+      "group": "Pessoal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/cct",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "checklist-ti-criacao-usuario",
       "title": "Checklist TI Criacao de Usuario",
       "group": "Admin",
@@ -108,6 +108,17 @@
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/comparador-eventos-holerite",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "parcelamentos",
+      "title": "Parcelamentos de Impostos",
+      "group": "Parcelamentos",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/parcelamentos",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -236,23 +247,23 @@
       "sharedApisUsed": []
     },
     {
-      "slug": "gfbr-gerador-txt",
-      "title": "Gerador TXT GFBR",
-      "group": "Contabil",
-      "hasPage": true,
-      "hasApi": true,
-      "apiBase": "/api/gfbr-gerador-txt",
-      "adminOnly": false,
-      "aliases": [],
-      "sharedApisUsed": []
-    },
-    {
       "slug": "gerador-atas",
       "title": "Gerador Atas",
       "group": "Geral",
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/gerador-atas",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "gfbr-gerador-txt",
+      "title": "Gerador TXT GFBR",
+      "group": "Contabil",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/gfbr-gerador-txt",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -369,7 +380,7 @@
     },
     {
       "slug": "provisao-de-ferias",
-      "title": "Provisao DE Ferias",
+      "title": "Provisão de Férias",
       "group": "Geral",
       "hasPage": true,
       "hasApi": false,
@@ -402,7 +413,7 @@
     },
     {
       "slug": "separador-holerites-por-empresa",
-      "title": "Separador Holerites POR Empresa",
+      "title": "Separador Holerites por Empresa",
       "group": "Geral",
       "hasPage": true,
       "hasApi": true,
@@ -413,7 +424,7 @@
     },
     {
       "slug": "separador-pdf-relatorio-de-ferias",
-      "title": "Separador PDF Relatorio DE Ferias",
+      "title": "Separador PDF Relatorio de Férias",
       "group": "Geral",
       "hasPage": true,
       "hasApi": true,

@@ -42,6 +42,13 @@ PALAVRAS_CANCELAMENTO = (
     "reversed",
 )
 
+PALAVRAS_RENDA = (
+    "renda",
+    "rendas",
+    "rendimento",
+    "rendimentos",
+)
+
 PARTNER_PREFIX_TO_ACCOUNT = {
     "TG": "112020401",
     "CL": "112010101",
@@ -358,6 +365,17 @@ def texto_observacoes_lancamento(lancamento: Dict[str, Any]) -> str:
     return " | ".join(p for p in partes if p)
 
 
+def texto_descritivo_lancamento(lancamento: Dict[str, Any]) -> str:
+    partes = [
+        lancamento.get("observacao_principal", ""),
+        lancamento.get("historico", ""),
+    ]
+    for item in lancamento.get("itens_contabeis", []) or lancamento.get("itens", []):
+        partes.append(item.get("descricao_original", "") or item.get("descricao", ""))
+        partes.append(item.get("observacao", ""))
+    return " | ".join(p for p in partes if p)
+
+
 def contem_termo(texto: str, termos: Iterable[str]) -> bool:
     texto_norm = normalizar_texto(texto)
     return any(normalizar_texto(t) in texto_norm for t in termos)
@@ -373,6 +391,20 @@ def tem_conta_com_prefixo_cl(lancamento: Dict[str, Any]) -> bool:
 
 def eh_lancamento_de_exclusao_direta(lancamento: Dict[str, Any]) -> bool:
     return contem_termo(texto_observacoes_lancamento(lancamento), PALAVRAS_EXCLUSAO_DIRETA)
+
+
+def conta_com_prefixo_11102(lancamento: Dict[str, Any]) -> bool:
+    for item in lancamento.get("itens_contabeis", []) or lancamento.get("itens", []):
+        conta = re.sub(r"\D", "", to_str_limpo(item.get("conta_final", "")))
+        if conta.startswith("11102"):
+            return True
+    return False
+
+
+def eh_lancamento_renda_11102(lancamento: Dict[str, Any]) -> bool:
+    if not conta_com_prefixo_11102(lancamento):
+        return False
+    return contem_termo(texto_descritivo_lancamento(lancamento), PALAVRAS_RENDA)
 
 
 def identificar_lancamentos_cancelatorios(
@@ -402,7 +434,7 @@ def construir_registro_exclusao(
         "numero_transacao": lancamento.get("numero_transacao", ""),
         "numero_doc": lancamento.get("numero_doc", ""),
         "data": data_para_yyyymmdd(lancamento.get("data_lancamento")),
-        "observacao": lancamento.get("observacao_principal", ""),
+        "observacao": lancamento.get("observacao_principal", "") or lancamento.get("historico", ""),
         "motivo_exclusao": motivo,
         "transacao_par_vinculada": transacao_par,
     }
@@ -1051,6 +1083,309 @@ def processar_gfbr_gerador_txt(
         "pendencias": len(pendencias),
         "arquivo_entrada": str(base_path),
         "aba_utilizada": aba_origem or "Múltipla",
+        "arquivo_txt": str(arquivo_txt),
+        "arquivo_pendencias": str(arquivo_pendencias),
+        "advertencias": advertencias,
+    }
+
+
+ITAU_MESES_ANO_REGEX = re.compile(
+    r"\b(?:jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)\s+(\d{4})\b",
+    re.IGNORECASE,
+)
+ITAU_RESUMO_ANO_REGEX = re.compile(r"resumo\s*-\s*m[êe]s\s+\d{2}/(\d{4})", re.IGNORECASE)
+ITAU_MOVIMENTACAO_HEADER_REGEX = re.compile(
+    r"movimenta[cç][aã]o\s*-\s*aplica[cç][oõ]es/resgates antecipados e vencimentos",
+    re.IGNORECASE,
+)
+ITAU_MOVIMENTACAO_ROW_REGEX = re.compile(
+    r"^(?P<data>\d{2}/\d{2})\s+"
+    r"(?P<aplicacao>[\d.]+,\d{2})\s+"
+    r"(?P<resgate_principal>[\d.]+,\d{2})\s+"
+    r"(?P<rend_bruto>[\d.]+,\d{2})\s+"
+    r"(?P<iof>[\d.]+,\d{2})\s+"
+    r"(?P<irrf>[\d.]+,\d{2})\s+"
+    r"(?P<rend_liquido>[\d.]+,\d{2})"
+    r"(?:\s+(?P<saldo_principal>[\d.]+,\d{2}))?$"
+)
+
+
+def extrair_ano_itau(linha: str, ano_atual: str) -> str:
+    m_resumo = ITAU_RESUMO_ANO_REGEX.search(linha)
+    if m_resumo:
+        return m_resumo.group(1)
+    m_mes = ITAU_MESES_ANO_REGEX.search(linha)
+    if m_mes:
+        return m_mes.group(1)
+    return ano_atual
+
+
+def montar_partida_itau(
+    data_lancamento: date,
+    debito_conta: str,
+    credito_conta: str,
+    valor: Decimal,
+    complemento: str,
+    historico_h: str,
+) -> Dict[str, Any]:
+    return {
+        "data_ddmmyyyy": data_para_ddmmyyyy(data_lancamento),
+        "debito_conta": debito_conta,
+        "credito_conta": credito_conta,
+        "valor": valor,
+        "complemento": texto_ascii(complemento, 25),
+        "historico_h": texto_ascii(historico_h, 50),
+    }
+
+
+def processar_pdf_itau_aplicacoes_interno(
+    pdf_path: Path, conta_aplicacao: Optional[str], conta_corrente: Optional[str]
+) -> List[Dict[str, Any]]:
+    if not conta_aplicacao or not conta_corrente:
+        return []
+
+    conta_aplicacao = str(conta_aplicacao).strip()
+    conta_corrente = str(conta_corrente).strip()
+    partidas: List[Dict[str, Any]] = []
+    dentro_quadro = False
+
+    ano_atual = str(datetime.now().year)
+
+    with pdfplumber.open(pdf_path) as pdf:
+        for page in pdf.pages:
+            texto = page.extract_text() or ""
+            linhas = texto.split("\n")
+
+            for linha in linhas:
+                linha = linha.strip()
+                if not linha:
+                    continue
+
+                ano_atual = extrair_ano_itau(linha, ano_atual)
+
+                if ITAU_MOVIMENTACAO_HEADER_REGEX.search(linha):
+                    dentro_quadro = True
+                    continue
+
+                if not dentro_quadro:
+                    continue
+
+                m = ITAU_MOVIMENTACAO_ROW_REGEX.match(linha)
+                if not m:
+                    continue
+
+                data_bruta = m.group("data")
+                data_str = f"{ano_atual}-{data_bruta[3:5]}-{data_bruta[:2]}"
+                dt = parse_data(data_str)
+                if not dt:
+                    continue
+
+                aplicacao = parse_decimal(m.group("aplicacao")) or Decimal("0")
+                resgate_principal = parse_decimal(m.group("resgate_principal")) or Decimal("0")
+                rend_bruto = parse_decimal(m.group("rend_bruto")) or Decimal("0")
+                iof = parse_decimal(m.group("iof")) or Decimal("0")
+                irrf = parse_decimal(m.group("irrf")) or Decimal("0")
+
+                historico_base = f"ITAU APLICACOES {dt.strftime('%d/%m/%Y')}"
+
+                if aplicacao > 0:
+                    partidas.append(
+                        montar_partida_itau(
+                            dt,
+                            conta_aplicacao,
+                            conta_corrente,
+                            aplicacao,
+                            "APLICACAO ITAU",
+                            historico_base,
+                        )
+                    )
+
+                if resgate_principal > 0:
+                    partidas.append(
+                        montar_partida_itau(
+                            dt,
+                            conta_corrente,
+                            conta_aplicacao,
+                            resgate_principal,
+                            "RESGATE ITAU",
+                            historico_base,
+                        )
+                    )
+
+                if rend_bruto > 0:
+                    partidas.append(
+                        montar_partida_itau(
+                            dt,
+                            conta_aplicacao,
+                            "514010201",
+                            rend_bruto,
+                            "REND APLIC",
+                            historico_base,
+                        )
+                    )
+
+                if iof > 0:
+                    partidas.append(
+                        montar_partida_itau(
+                            dt,
+                            "514010103",
+                            conta_aplicacao,
+                            iof,
+                            "IOF RETIDO",
+                            historico_base,
+                        )
+                    )
+
+                if irrf > 0:
+                    partidas.append(
+                        montar_partida_itau(
+                            dt,
+                            "112030107",
+                            conta_aplicacao,
+                            irrf,
+                            "IRRF RETIDO",
+                            historico_base,
+                        )
+                    )
+
+    return partidas
+
+
+def processar_gfbr_gerador_txt(
+    input_path: Optional[str] = None,
+    aba_origem: Optional[str] = None,
+    pdf_itau_1_path: Optional[str] = None,
+    conta_aplicacao_1: Optional[str] = None,
+    conta_corrente_1: Optional[str] = None,
+    pdf_itau_2_path: Optional[str] = None,
+    conta_aplicacao_2: Optional[str] = None,
+    conta_corrente_2: Optional[str] = None,
+    output_dir: Optional[str] = None,
+) -> Dict[str, Any]:
+    base_path = input_path or pdf_itau_1_path or pdf_itau_2_path
+    if not base_path:
+        raise ValueError("Nenhum arquivo de entrada fornecido.")
+
+    caminho_base = Path(base_path)
+    pasta_saida = Path(output_dir) if output_dir else caminho_base.parent
+    pasta_saida.mkdir(parents=True, exist_ok=True)
+
+    todas_partidas: List[Dict[str, Any]] = []
+    pendencias: List[Dict[str, Any]] = []
+    exclusoes: List[Dict[str, Any]] = []
+
+    lancamentos_lidos = 0
+    lancamentos_excluidos = 0
+    lancamentos_exportados = 0
+
+    if input_path and Path(input_path).exists():
+        caminho_entrada = Path(input_path)
+        wb = load_workbook(caminho_entrada, data_only=True, read_only=False)
+        nome_aba = aba_origem.strip() if isinstance(aba_origem, str) else ""
+        if nome_aba:
+            if nome_aba not in wb.sheetnames:
+                raise ValueError(f"Aba '{nome_aba}' nao encontrada. Abas disponiveis: {wb.sheetnames}")
+        else:
+            nome_aba = wb.sheetnames[0]
+        ws = wb[nome_aba]
+
+        linha_cabecalho, colunas = localizar_linha_cabecalho(ws)
+        lancamentos_brutos = agrupar_lancamentos(ws, linha_cabecalho, colunas)
+
+        excluidos_ids, excl = marcar_pares_para_exclusao(lancamentos_brutos)
+        exclusoes.extend(excl)
+
+        validos_brutos = [l for l in lancamentos_brutos if l["_id"] not in excluidos_ids]
+
+        lancamentos_norm: List[Dict[str, Any]] = []
+        for bruto in validos_brutos:
+            normalizado = normalizar_lancamento(bruto, pendencias)
+            if normalizado:
+                lancamentos_norm.append(normalizado)
+
+        lancamentos_norm_filtrados: List[Dict[str, Any]] = []
+        for lancamento_norm in lancamentos_norm:
+            if eh_lancamento_renda_11102(lancamento_norm):
+                lancamentos_excluidos += 1
+                exclusoes.append(
+                    construir_registro_exclusao(
+                        lancamento_norm,
+                        "exclusao_renda_classificacao_11102",
+                    )
+                )
+                continue
+            lancamentos_norm_filtrados.append(lancamento_norm)
+
+        partidas_excel = criar_partidas_iob(lancamentos_norm_filtrados, pendencias)
+        todas_partidas.extend(partidas_excel)
+
+        lancamentos_lidos += len(lancamentos_brutos)
+        lancamentos_excluidos += len(excluidos_ids)
+        lancamentos_exportados += len(lancamentos_norm_filtrados)
+
+    if pdf_itau_1_path and Path(pdf_itau_1_path).exists() and conta_aplicacao_1:
+        if not conta_corrente_1:
+            raise ValueError("Informe a conta contábil da conta corrente do PDF Itaú 1.")
+        partidas_pdf1 = processar_pdf_itau_aplicacoes_interno(
+            Path(pdf_itau_1_path),
+            conta_aplicacao_1,
+            conta_corrente_1,
+        )
+        todas_partidas.extend(partidas_pdf1)
+        lancamentos_lidos += len(partidas_pdf1)
+        lancamentos_exportados += len(partidas_pdf1)
+
+    if pdf_itau_2_path and Path(pdf_itau_2_path).exists() and conta_aplicacao_2:
+        if not conta_corrente_2:
+            raise ValueError("Informe a conta contábil da conta corrente do PDF Itaú 2.")
+        partidas_pdf2 = processar_pdf_itau_aplicacoes_interno(
+            Path(pdf_itau_2_path),
+            conta_aplicacao_2,
+            conta_corrente_2,
+        )
+        todas_partidas.extend(partidas_pdf2)
+        lancamentos_lidos += len(partidas_pdf2)
+        lancamentos_exportados += len(partidas_pdf2)
+
+    advertencias: List[str] = []
+    for idx, p in enumerate(todas_partidas):
+        debito = str(p.get("debito_conta", "")).strip()
+        credito = str(p.get("credito_conta", "")).strip()
+        if debito and credito and debito == credito:
+            data_str = p.get("data_ddmmyyyy", "")
+            hist = p.get("historico_h", "")
+            vl = p.get("valor", Decimal("0"))
+            advertencias.append(
+                f"Lancamento em {data_str[:2]}/{data_str[2:4]}/{data_str[4:]}: Debito e Credito na conta '{debito}'. R$ {vl:.2f} - {hist[:30]}"
+            )
+
+    try:
+        todas_partidas.sort(key=lambda x: datetime.strptime(x["data_ddmmyyyy"], "%d%m%Y"))
+    except Exception:
+        pass
+
+    arquivo_txt = pasta_saida / TXT_SAIDA_NOME
+    arquivo_pendencias = pasta_saida / PENDENCIAS_NOME
+
+    if todas_partidas:
+        estat = gerar_txt_iob(todas_partidas, arquivo_txt)
+    else:
+        with arquivo_txt.open("w", encoding="latin1") as f:
+            f.write(build_c_line(datetime.now().strftime("%d%m%Y"), Decimal("0")) + "\n")
+        estat = {"linhas_l": 0, "linhas_h": 0}
+
+    gerar_relatorio_pendencias(pendencias, arquivo_pendencias)
+
+    return {
+        "lancamentos_lidos": lancamentos_lidos,
+        "lancamentos_excluidos": lancamentos_excluidos,
+        "lancamentos_exportados": lancamentos_exportados,
+        "partidas_geradas": len(todas_partidas),
+        "linhas_l_exportadas": estat["linhas_l"],
+        "linhas_h_exportadas": estat["linhas_h"],
+        "pendencias": len(pendencias),
+        "arquivo_entrada": str(base_path),
+        "aba_utilizada": aba_origem or "Multipla",
         "arquivo_txt": str(arquivo_txt),
         "arquivo_pendencias": str(arquivo_pendencias),
         "advertencias": advertencias,

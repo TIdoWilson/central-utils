@@ -3,7 +3,7 @@ const { server } = require('./server');
 const {
   JOB_STATUS,
   getAllJobs,
-  updateJob
+  updateJob,
 } = require('./queue');
 
 const PORT = process.env.PORT || 3000;
@@ -11,11 +11,11 @@ const PORT = process.env.PORT || 3000;
 function startServer() {
   server.listen(PORT, () => {
     console.log(`Servidor rodando em http://192.0.0.252:${PORT}`);
-    console.log('Worker iniciado. Aguardando extensão Chrome...');
+    console.log('Worker iniciado. Aguardando extensao Chrome...');
   });
 }
 
-// (Opcional) Função para marcar jobs PROCESSING como erro se ficarem parados tempo demais
+// Funcao para marcar jobs PROCESSING como erro se ficarem parados tempo demais
 function cleanupStalledJobs() {
   const jobs = getAllJobs();
 
@@ -28,7 +28,7 @@ function cleanupStalledJobs() {
       if (age > MAX_PROCESSING_TIME) {
         updateJob(job.id, {
           status: JOB_STATUS.ERROR,
-          errorMessage: 'Tempo excedido (sem retorno da extensão)'
+          errorMessage: 'Tempo excedido (sem retorno da extensao)',
         });
       }
     }

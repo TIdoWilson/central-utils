@@ -1,129 +1,125 @@
 {
-  "registro": {
-    "codigo": "M410",
-    "titulo": "REGISTRO M410: LANÇAMENTOS NA CONTA DA PARTE B DO e-LALUR e do e-LACS SEM REFLEXO NA PARTE A",
-    "bloco_origem": "bloco-m.htm",
-    "ancora": "m410",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m410"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 8,
-    "extraido_em_utc": "2026-03-10T19:31:56.850841+00:00"
+  "sped": "ECF",
+  "registro": "M410",
+  "bloco": "M",
+  "status": "ok",
+  "titulo": "Lançamento na Conta da Parte B do e-Lalur e do e-Lacs sem Reflexo na Parte A",
+  "descricao_registro": "Apresenta os lançamentos em contas da parte B sem reflexos na parte A.",
+  "nivel_hierarquico": "3",
+  "ocorrencia": "0:N",
+  "campos_chave": [
+    "COD_CTA_LAL",
+    "ID_LAN_LAL_B",
+    "COD_CTA_LAL_CTP"
+  ],
+  "regras_validacao_registro": [],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 115,
+      "fim": 116
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
       "descricao": "Texto fixo contendo “M410”",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"M410\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[M410]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "COD_CTA_B",
+      "pos": 2,
+      "nome": "COD_CTA_LAL",
+      "rotulo": "Código da Conta do Lançamento",
       "descricao": "Código da conta do lançamento (conta da Parte B)",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Código da Conta do Lançamento",
-        "DOCUMENTAÇÃO": "E664LCT.CODCON"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "03",
-      "campo": "COD_TRIBUTO",
-      "descricao": "Código do tributo:\nI – Imposto de Renda\nC – Contribuição Social sobre o Lucro Líquido",
-      "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código do Tributo",
-        "DOCUMENTAÇÃO": "Se o tipo de imposto do imposto E664LCT.CODIMP for 53, 55, 57 ou 59\n- Deverá receber \"I\"\nSe o tipo de imposto do imposto E664LCT.CODIMP for 54, 56, 58 ou 60\n- Deverá receber \"C\""
-      }
-    },
-    {
-      "numero": "04",
-      "campo": "VAL_LAN_LALB_PB",
+      "pos": 3,
+      "nome": "VAL_LAN_LALB_PB",
+      "rotulo": "Valor do Lançamento",
       "descricao": "Valor do lançamento",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Valor do Lançamento",
-        "DOCUMENTAÇÃO": "E664LCT.VLRLCT"
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "05",
-      "campo": "IND_VAL_LAN_LALB_PB",
-      "descricao": "Indicador do lançamento:\nCR – Crédito\nDB – Débito\nPF - Prejuízo do exercício.\nBC - Base de cálculo negativa da CSLL.\nObs.: O indicador PF refere-se ao prejuízo apurado no exercício em curso.",
+      "pos": 4,
+      "nome": "IND_VAL_LAN_LALB_PB",
+      "rotulo": "Indicador do Lançamento",
+      "descricao": "Indicador do lançamento: CR – Crédito DB – Débito PF - Prejuízo do exercício. BC - Base de cálculo negativa da CSLL. Obs.: O indicador PF refere-se ao prejuízo apurado no exercício em curso.",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador do Lançamento",
-        "DOCUMENTAÇÃO": "E664LCT.INDLCT"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[CR; DB; PF; BC]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "06",
-      "campo": "COD_CTA_B_CTP",
-      "descricao": "Código unívoco da contrapartida (conta da Parte B) \nNão preencher quando:\nIND_VAL_LAN_LALB_PB for igual a “PF” ou “BC”.",
+      "pos": 5,
+      "nome": "COD_CTA_LAL_CTP",
+      "rotulo": "Código da Conta de Contrapartida",
+      "descricao": "Código unívoco da contrapartida (conta da Parte B) Não preencher quando: IND_VAL_LAN_LA_LB_PB for ifual a “PF” ou “BC”.",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Código da Conta de Contrapartida",
-        "DOCUMENTAÇÃO": "E664LCT.CONCTP"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "07",
-      "campo": "HIST_LAN_LALB",
+      "pos": 6,
+      "nome": "HIST_LAN_LALB",
+      "rotulo": "Histórico",
       "descricao": "Histórico do lançamento",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Histórico",
-        "DOCUMENTAÇÃO": "Deverá receber o histórico montado com os campos E664LCT.CODHPD e E664LCT.CPLLCT"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "08",
-      "campo": "IND_LAN_ANT",
-      "descricao": "Lançamento para Realização de Valores Cuja Tributação Tenha Sido Diferida:\nS – Sim\nN – Não\nObservação: Marca-se “Sim” neste campo quando o contribuinte, em período anterior, realizou valores controlados na parte B do e-Lalur/e-Lacs e deve reajustar os saldos das contas em início de período de apuração tributado pelo lucro real.",
+      "pos": 7,
+      "nome": "IND_LAN_ANT",
+      "rotulo": "Realização de Valores cuja Tributação Tenha Sido Diferida",
+      "descricao": "Lançamento para realização de valores cuja tributação tenha dido diferida: S – Sim N – Não",
       "tipo": "C",
       "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Realização de Valores cuja Tributação Tenha Sido Diferida",
-        "DOCUMENTAÇÃO": "E664LCT.TRIDEF"
-      }
+      "tamanho_int": 1,
+      "decimais": "[S; N]",
+      "decimais_int": null,
+      "valores_validos": null,
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     }
-  ]
+  ],
+  "notas_extracao": []
 }

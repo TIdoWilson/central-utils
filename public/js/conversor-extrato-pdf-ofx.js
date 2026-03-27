@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${item.arquivoEntrada || ""}</td>
         <td>${item.arquivoSaida || "-"}</td>
         <td>${item.banco || "-"}</td>
-        <td>${item.totalLancamentos - "-"}</td>
+        <td>${item.totalLancamentos || "-"}</td>
         <td>${item.ok ? "OK" : (item.erro || "Erro")}</td>
       `;
       tr.appendChild(acao);
@@ -144,14 +144,19 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const data = await resp.json();
+      
+      // Mesmo com ok: false, se houver resultados, queremos mostrá-los
+      if (data.resultados) {
+        ultimoResultado = data;
+        renderResumo(data);
+        renderResultados(data.resultados);
+        btnBaixarZip.disabled = !data.zipBase64;
+      }
+
       if (!resp.ok || !data.ok) {
         throw new Error(data.error || data.detail || `Erro HTTP ${resp.status}`);
       }
 
-      ultimoResultado = data;
-      renderResumo(data);
-      renderResultados(data.resultados || []);
-      btnBaixarZip.disabled = !data.zipBase64;
       setStatus("Conversão concluída.");
     } catch (err) {
       setStatus(`Falha na conversão: ${err.message}`, true);

@@ -36,7 +36,6 @@ nav:
   - Exemplos:
       - Uso API: exemplos/01-uso-api.md
   - Runbooks:
-      - Ajuste Diário GFBR: runbooks/runbook-ajuste-diario-gfbr.md
       - Compressor PDF: runbooks/runbook-compressor-pdf.md
       - Excel Abas PDF: runbooks/runbook-excel-abas-pdf.md
       - Extrator ZIP/RAR: runbooks/runbook-extrator-zip-rar.md

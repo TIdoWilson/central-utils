@@ -225,23 +225,6 @@ empresas_holerites/
 
 ---
 
-### 10. Ajuste Diário GFBR
-
-**Objetivo:** Realizar ajustes contábeis automáticos (GFBR - GFP)
-
-**Arquivo HTML:** `public/ajuste-diario-gfbr.html`  
-**Lógica JavaScript:** `public/js/ajuste-diario-gfbr.js`  
-**Core Python:** `api/ajuste_diario_gfbr_core.py`
-
-**Uso:**
-1. Clique em **"Ajuste Diário GFBR"**
-2. Especifique **data de ajuste**
-3. Selecione **contas** (se necessário filtrar)
-4. Clique em **"Gerar Ajuste"**
-5. Sistema cria lançamentos contábeis
-6. Resultado pode ser exportado para contabilidade
-
----
 
 ## 📊 Monitoramento de Processamento
 
@@ -481,3 +464,4 @@ ifconfig | grep inet
 ---
 
 **Última atualização:** Fevereiro 2026
+

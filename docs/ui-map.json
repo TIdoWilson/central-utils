@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-16T12:19:01.541Z",
+  "generatedAt": "2026-03-26T17:56:22.282Z",
   "groups": [
     {
       "group": "Admin",
@@ -93,24 +93,6 @@
           "path": "/acertos-lotes-internets",
           "hasApi": true,
           "apiBase": "/api/acertos-lotes-internets",
-          "adminOnly": false,
-          "aliases": []
-        },
-        {
-          "slug": "ajuste-diario-gfbr",
-          "title": "Ajuste Diario Gfbr",
-          "path": "/ajuste-diario-gfbr",
-          "hasApi": true,
-          "apiBase": "/api/ajuste-diario-gfbr",
-          "adminOnly": false,
-          "aliases": []
-        },
-        {
-          "slug": "ajuste-diario-gfbr-c",
-          "title": "Ajuste Diario Gfbr C",
-          "path": "/ajuste-diario-gfbr-c",
-          "hasApi": true,
-          "apiBase": "/api/ajuste-diario-gfbr-c",
           "adminOnly": false,
           "aliases": []
         },
@@ -316,7 +298,7 @@
         },
         {
           "slug": "provisao-de-ferias",
-          "title": "Provisao DE Ferias",
+          "title": "Provisão de Férias",
           "path": "/provisao-de-ferias",
           "hasApi": false,
           "apiBase": "/api/provisao-de-ferias",
@@ -343,7 +325,7 @@
         },
         {
           "slug": "separador-holerites-por-empresa",
-          "title": "Separador Holerites POR Empresa",
+          "title": "Separador Holerites por Empresa",
           "path": "/separador-holerites-por-empresa",
           "hasApi": true,
           "apiBase": "/api/separador-holerites-por-empresa",
@@ -352,7 +334,7 @@
         },
         {
           "slug": "separador-pdf-relatorio-de-ferias",
-          "title": "Separador PDF Relatorio DE Ferias",
+          "title": "Separador PDF Relatorio de Férias",
           "path": "/separador-pdf-relatorio-de-ferias",
           "hasApi": true,
           "apiBase": "/api/separador-pdf-relatorio-de-ferias",
@@ -380,6 +362,20 @@
       ]
     },
     {
+      "group": "Parcelamentos",
+      "tools": [
+        {
+          "slug": "parcelamentos",
+          "title": "Parcelamentos de Impostos",
+          "path": "/parcelamentos",
+          "hasApi": true,
+          "apiBase": "/api/parcelamentos",
+          "adminOnly": false,
+          "aliases": []
+        }
+      ]
+    },
+    {
       "group": "Pessoal",
       "tools": [
         {
@@ -397,6 +393,24 @@
           "path": "/comparador-eventos-holerite",
           "hasApi": true,
           "apiBase": "/api/comparador-eventos-holerite",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "cct",
+          "title": "Consulta CCT",
+          "path": "/cct",
+          "hasApi": true,
+          "apiBase": "/api/cct",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "importador-cartao-horas-bandeira-transportes",
+          "title": "Importador Cartao de Horas Bandeira Transportes",
+          "path": "/importador-cartao-horas-bandeira-transportes",
+          "hasApi": true,
+          "apiBase": "/api/cartao-horas-bandeira-transportes",
           "adminOnly": false,
           "aliases": []
         }

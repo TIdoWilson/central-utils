@@ -39,6 +39,8 @@ module.exports = function createGfbrGeradorTxtRoutes(deps) {
         const abaOrigem = (req.body.abaOrigem || '').trim();
         const contaAplicacao1 = (req.body.contaAplicacao1 || '').trim();
         const contaAplicacao2 = (req.body.contaAplicacao2 || '').trim();
+        const contaCorrente1 = (req.body.contaCorrente1 || '').trim();
+        const contaCorrente2 = (req.body.contaCorrente2 || '').trim();
         
         const mainFileBase = (fDiario || fItau1 || fItau2).filename;
         const fileBase = path.parse(mainFileBase).name;
@@ -51,8 +53,10 @@ module.exports = function createGfbrGeradorTxtRoutes(deps) {
           aba_origem: abaOrigem || null,
           pdf_itau_1_path: fItau1 ? fItau1.path : null,
           conta_aplicacao_1: contaAplicacao1 || null,
+          conta_corrente_1: contaCorrente1 || null,
           pdf_itau_2_path: fItau2 ? fItau2.path : null,
           conta_aplicacao_2: contaAplicacao2 || null,
+          conta_corrente_2: contaCorrente2 || null,
           output_dir: outputDir,
         });
 

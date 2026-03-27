@@ -1,0 +1,156 @@
+{
+  "sped": "ECF",
+  "registro": "K155",
+  "bloco": "K",
+  "status": "ok",
+  "titulo": "Detalhes dos Saldos Contábeis (Depois do Encerramento do Resultado do Período)",
+  "descricao_registro": "Registro onde devem ser informados os saldos iniciais, os saldos finais, os totais de débitos e os totais de créditos de todas as contas patrimoniais da escrituração societária da pessoa jurídica (Ativo, Passivo e Patrimonio Liquido), no período de apuração. Poderá ser preenchido das seguintes formas: - Edição pelo programa da ECF; - Calculado pelo sistema através da funcionalidade de recuperar ECD; e - Importado de arquivo digital. Observações: I – O registro deve ser aparesentado para todas as contas analíticas que tenham saldo ou movimento no período. II – Quando VL_SLD_INI (Campo 04) for igual a zero, preencher IND_VL_SLD_INI (Campo 05) com “D” ou “C” . III – Quando VL_SLD_FIN (Campo 08) for igual a zero, preencher IND_VL_SLD_INI (Campo 09) com “D” ou“C”. IV – Na inexistência de saldo inicial, saldo final ou movimentação no período, preencher VL_SLD_INI (Campo 04), VL_SLD_FIN (Campo 08), VL_DEB (Campo 06) e VL_CRED (Campo 07) com zero. V – Nos campos COD_CTA (Campo 02) e COD_CCUS (Campo 03), informar o código constante nos registros J050 e J051, respectivamente. VI – Em VL_SLD_INI (Campo 04), informar o valor do saldo da conta no início do período de apuração (0000.DT_INI). VII – Em VL_DEB (Campo 06) e VL_CRED (Campo 07), informar os valores de movimentação em todo o período de apuração (entre 0000.DT_INI e 0000.DT_FIN). RFB/Subsecretaria de Fiscalização/Coordenação Geral de Fiscalização/Div. de Escrituração Digital Página 87 de 207 Anexo ao Ato Declaratório Executivo Cofis no /2013 Manual de Orientação do Leiaute da ECF Atualização: Dezembro de 2013 VIII – Em VL_SLD_FIN (Campo 08), informar o valor do saldo da conta no final do período de apuração (0000.DT_FIN). IX – Os valores devem ser apurados e informados considerando todos os lançamentos (inclusive os lançamentos de encerramento).",
+  "nivel_hierarquico": "3",
+  "ocorrencia": "0:N",
+  "campos_chave": [
+    "COD_CTA",
+    "COD_CCUS"
+  ],
+  "regras_validacao_registro": [
+    "REGRA_DIVERGENCIA_CONTABIL_REPLICADO; REGRA_NATUREZA_PERMITIDA_PATRIMONIAL; REGRA_VALIDACAO_SOMA_SALDO_INICIAL;",
+    "REGRA_VALIDACAO_SOMA_SALDO_FINAL; REGRA_VALIDACAO_DEB_DIF_CRED; REGRA_VALIDACAO_SALDO_FINAL; REGRA_BATIMENTO_K155;",
+    "REGRA_CONTA_ANALITICA; REGRA_COMPATIBILIDADE_K155_E155; REGRA_COMPATIBILIDADE_E155_K155"
+  ],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 87,
+      "fim": 89
+    }
+  },
+  "campos": [
+    {
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
+      "descricao": "Texto fixo contendo “K155”",
+      "tipo": "C",
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[K155]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 2,
+      "nome": "COD_CTA",
+      "rotulo": "Código da Conta",
+      "descricao": "Código da conta analítica",
+      "tipo": "C",
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 3,
+      "nome": "COD_CCUS",
+      "rotulo": "Código Centro Custos",
+      "descricao": "Código do centro de custos",
+      "tipo": "C",
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
+    },
+    {
+      "pos": 4,
+      "nome": "VL_SLD_INI",
+      "rotulo": "Valor do Saldo Inicial",
+      "descricao": "Valor do saldo inicial do período",
+      "tipo": "N",
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 5,
+      "nome": "IND_VL_SLD_INI",
+      "rotulo": "Situação do Saldo Inicial",
+      "descricao": "Indicador da situação do saldo inicial: D - Devedor C – Credor",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[D; C]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
+    },
+    {
+      "pos": 6,
+      "nome": "VL_DEB",
+      "rotulo": "Valor do Total de Débitos",
+      "descricao": "Valor total dos débitos no período",
+      "tipo": "N",
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 7,
+      "nome": "VL_CRED",
+      "rotulo": "Valor do Total de Créditos",
+      "descricao": "Valor total dos créditos no período",
+      "tipo": "N",
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 8,
+      "nome": "VL_SLD_FIN",
+      "rotulo": "Valor do Saldo Final",
+      "descricao": "Valor do saldo final do período",
+      "tipo": "N",
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 9,
+      "nome": "IND_VL_SLD_FIN",
+      "rotulo": "Situação do Saldo Final",
+      "descricao": "Indicador da situação do saldo final: D - Devedor C – Credor",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[D; C]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
+    }
+  ],
+  "notas_extracao": []
+}

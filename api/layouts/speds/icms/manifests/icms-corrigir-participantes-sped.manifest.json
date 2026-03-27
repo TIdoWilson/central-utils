@@ -1,0 +1,49 @@
+{
+  "templateId": "icms-corrigir-participantes-sped",
+  "spedType": "icms",
+  "operation": "update",
+  "inputs": [
+    {
+      "key": "sped_txt",
+      "label": "Arquivo SPED ICMS",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"],
+      "help": "Arquivo de entrada do SPED EFD ICMS/IPI."
+    },
+    {
+      "key": "xml_arquivos",
+      "label": "XMLs NF-e em ZIP/RAR",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".zip", ".rar"],
+      "help": "Envie um arquivo compactado com os XMLs emitidos para o participante."
+    }
+  ],
+  "fields": [],
+  "targets": {
+    "records": ["0000", "0150"],
+    "relationshipsFile": "api/layouts/speds/icms/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": false,
+    "onMissingDependency": "skip",
+    "onOrphanDetected": "cleanup"
+  },
+  "validators": {
+    "globalRelationshipValidation": false,
+    "duplicateKeyCheck": false,
+    "hierarchyCheck": false,
+    "rulesFile": "api/layouts/speds/icms/relationships/reference_domains.validator.json"
+  },
+  "totalizers": [],
+  "output": {
+    "formats": ["txt"],
+    "filenamePattern": "{input}_PARTICIPANTES_ICMS_CORRIGIDOS.txt"
+  },
+  "dryRun": {
+    "enabled": true,
+    "reportChanges": true,
+    "requireConfirmation": false
+  }
+}

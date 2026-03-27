@@ -24,8 +24,6 @@ Este arquivo é gerado automaticamente a partir de `src/core/tool-catalog.json`.
 
 - **Acerto Lotes Toscan** — `/acerto-lotes-toscan`
 - **Acertos Lotes Internets** — `/acertos-lotes-internets` • API: `/api/acertos-lotes-internets`
-- **Ajuste Diario Gfbr** — `/ajuste-diario-gfbr` • API: `/api/ajuste-diario-gfbr`
-- **Ajuste Diario Gfbr C** — `/ajuste-diario-gfbr-c` • API: `/api/ajuste-diario-gfbr-c`
 - **Balancete Transitorio** — `/balancete-transitorio` • API: `/api/balancete-transitorio`
 - **Cadastro de Empresas (BrasilAPI)** — `/cadastro-empresas-brasilapi` • API: `/api/cadastro-empresas-brasilapi`
 - **Calculadora ICMS ST** — `/calculadora-icms-st`
@@ -49,15 +47,21 @@ Este arquivo é gerado automaticamente a partir de `src/core/tool-catalog.json`.
 - **NFE Legacy** — `/nfe-legacy` • API: `/api/nfe-legacy`
 - **PDF A** — `/pdf-a`
 - **Pdfa** — `/pdfa` • API: `/api/pdfa`
-- **Provisao DE Ferias** — `/provisao-de-ferias`
+- **Provisão de Férias** — `/provisao-de-ferias`
 - **Separador CSV Baixa Automatica** — `/separador-csv-baixa-automatica` • API: `/api/separador-csv-baixa-automatica`
 - **Separador Ferias Funcionario** — `/separador-ferias-funcionario` • API: `/api/separador-ferias-funcionario`
-- **Separador Holerites POR Empresa** — `/separador-holerites-por-empresa` • API: `/api/separador-holerites-por-empresa`
-- **Separador PDF Relatorio DE Ferias** — `/separador-pdf-relatorio-de-ferias` • API: `/api/separador-pdf-relatorio-de-ferias`
+- **Separador Holerites por Empresa** — `/separador-holerites-por-empresa` • API: `/api/separador-holerites-por-empresa`
+- **Separador PDF Relatorio de Férias** — `/separador-pdf-relatorio-de-ferias` • API: `/api/separador-pdf-relatorio-de-ferias`
 - **SN** — `/sn` • API: `/api/sn`
 - **Tareffa Empresas Lote** — `/tareffa-empresas-lote` • API: `/api/tareffa-empresas-lote`
+
+## Parcelamentos
+
+- **Parcelamentos de Impostos** — `/parcelamentos` • API: `/api/parcelamentos`
 
 ## Pessoal
 
 - **Cartao Horas IOB** — `/cartao-horas-iob` • API: `/api/cartao-horas-iob`
 - **Comparador Eventos Holerite** — `/comparador-eventos-holerite` • API: `/api/comparador-eventos-holerite`
+- **Consulta CCT** — `/cct` • API: `/api/cct`
+- **Importador Cartao de Horas Bandeira Transportes** — `/importador-cartao-horas-bandeira-transportes` • API: `/api/cartao-horas-bandeira-transportes`

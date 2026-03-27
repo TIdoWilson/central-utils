@@ -1,155 +1,181 @@
 {
-  "registro": {
-    "codigo": "M010",
-    "titulo": "REGISTRO M010: IDENTIFICAÇÃO DA CONTA NA PARTE B DO e-LALUR E DO e-LACS",
-    "bloco_origem": "bloco-m.htm",
-    "ancora": "m010",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-m.htm#m010"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 10,
-    "extraido_em_utc": "2026-03-10T19:31:56.839836+00:00"
+  "sped": "ECF",
+  "registro": "M010",
+  "bloco": "M",
+  "status": "ok",
+  "titulo": "Identificação da Conta na Parte B do e-Lalur e do e-Lacs",
+  "descricao_registro": "Cadastra os saldos iniciais no período da escrituração das contas da parte B utilizadas no e-LALUR e no e-LACS. Registro pode ser replicado da EFD-IRPJ anterior, importado e/ou editado.",
+  "nivel_hierarquico": "2",
+  "ocorrencia": "0:N",
+  "campos_chave": [
+    "COD_CTA_LAL"
+  ],
+  "regras_validacao_registro": [
+    "REGRA_BATIMENTO_E020"
+  ],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 103,
+      "fim": 104
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
       "descricao": "Texto fixo contendo “M010”",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"M010\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[M010]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "COD_CTA_B",
+      "pos": 2,
+      "nome": "COD_CTA_LAL",
+      "rotulo": "Código da conta",
       "descricao": "Código unívoco atribuído pelo contribuinte à conta no e-Lalur e e-Lacs",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código da conta da Parte B",
-        "DOCUMENTAÇÃO": "E055CLL.CODCON"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "03",
-      "campo": "DESC_CTA_LAL",
+      "pos": 3,
+      "nome": "DESC_CTA_LAL",
+      "rotulo": "Descrição",
       "descricao": "Descrição da conta",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Descrição",
-        "DOCUMENTAÇÃO": "E055CLL.DESCON"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "04",
-      "campo": "DT_AP_LAL",
+      "pos": 4,
+      "nome": "DT_AP_LAL",
+      "rotulo": "Data de Criação",
       "descricao": "Data final do período de apuração em que a conta foi criada",
       "tipo": "C",
-      "tamanho": "8",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Data de Criação",
-        "DOCUMENTAÇÃO": "E055CLL.DATCRI"
-      }
+      "tamanho": "008",
+      "tamanho_int": 8,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "05",
-      "campo": "COD_PB_RFB",
-      "descricao": "",
+      "pos": 5,
+      "nome": "TIPO_LAN_LAL",
+      "rotulo": "Tipo de Lançamento",
+      "descricao": "Tipo de Lançamento no e-Lalur e e-Lacs (conforme tabela do Sped) que deu origem à conta",
       "tipo": "C",
-      "tamanho": "6",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código da tabela padrão da Parte B",
-        "DOCUMENTAÇÃO": "E055CLL.CODPAD."
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "06",
-      "campo": "DT_LIM_LAL",
-      "descricao": "Data limite para a exclusão, adição ou compensação do valor controlado, se houver",
-      "tipo": "C",
-      "tamanho": "8",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Data Limite para a Exclusão, Adição ou Compensação do Valor Controlado.",
-        "DOCUMENTAÇÃO": "E055CLL.DATLIM"
-      }
-    },
-    {
-      "numero": "07",
-      "campo": "COD_TRIBUTO",
-      "descricao": "Indicador de tributo da adição/exclusão:\nI – Imposto de Renda Pessoa Jurídica\nC – Contribuição Social sobre o Lucro Líquido;",
-      "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Tributo",
-        "DOCUMENTAÇÃO": "Se o tipo de imposto do imposto E055CLL.CODIMP for 53, 55, 57 ou 59\n- Recebe \"I\"\nSe o tipo de imposto do imposto E055CLL.CODIMP for 54, 56, 58 ou 60\n- Recebe \"C\""
-      }
-    },
-    {
-      "numero": "08",
-      "campo": "VL_SALDO_INI",
-      "descricao": "Saldo inicial no período inicial desta escrituração.\nSe DT_AP_LAL (Campo 04) for no período da escrituração, então o valor deve ser zero",
+      "pos": 6,
+      "nome": "COD_TIP_CTA",
+      "rotulo": "Tipo de Conta",
+      "descricao": "Tipo de conta conforme tabela do Sped",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Saldo Inicial",
-        "DOCUMENTAÇÃO": "E055CLL.SALINI"
-      }
+      "tamanho": "002",
+      "tamanho_int": 2,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "09",
-      "campo": "IND_VL_SALDO_INI",
-      "descricao": "Indicador de saldo inicial:\nD – para prejuízos ou valores que reduzam o lucro real ou a base de cálculo da contribuição social em períodos subsequentes.\nC – para valores que aumentem o lucro real ou a base de cálculo da contribuição social em períodos subsequentes.",
+      "pos": 7,
+      "nome": "DESC_LAN_LAL",
+      "rotulo": "Descrição do Tipo de Lançamento",
+      "descricao": "Descrição do tipo de Lançamento no e-Lalur e e-Lacs (conforme tabela do Sped)",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador do Saldo Inicial",
-        "DOCUMENTAÇÃO": "Se o valor do saldo em E055CLL.SALINI for maior ou igual a 0\n- Recebe \"D\"\nSenão\n- Recebe \"C\""
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "10",
-      "campo": "CNPJ_SIT_ESP",
-      "descricao": "CNPJ da outra pessoa jurídica relacionada com evento originário da conta. \n Exemplos: \n Identificar a investida no caso de valores (ganhos/perdas no novo AVJ) da participação societária anterior, nos caso de aquisições em estágios. \n Identificar a investida no caso de amortização de mais-valia e menos-valia. \n Identificar a investida no caso de impairment de goodwill, mais-valia e menos-valia. \n Identificar a investida no caso de ganho por compra vantajosa. \n Identificar a investida no caso registro do ágio gerado na aquisição de participação societária ocorrida até 31/12/2009. \n Identificar a investida no caso de ágio gerado pela sistemática de transição disciplinada no art. 65, Lei Nº 12.973/14. \n Identificar a pessoa jurídica antecessora no caso de conta incorporada devido a evento societário.",
+      "pos": 8,
+      "nome": "DT_LIM_LAL",
+      "rotulo": "Data Limite para a Exclusão, Adição ou Compensação do Valor Controlado.",
+      "descricao": "Data limite para a exclusão, adição ou compensação do valor controlado, se houver.",
+      "tipo": "C",
+      "tamanho": "008",
+      "tamanho_int": 8,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
+    },
+    {
+      "pos": 9,
+      "nome": "TRIBUTO",
+      "rotulo": "Tipo de Tributo",
+      "descricao": "Indicador de tributo da adição/exclusão: I – Imposto de Renda Pessoa Jurídica C – Contribuição Social sobre o Lucro Líquido;",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[I; C]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 10,
+      "nome": "VL_SALDO_INI",
+      "rotulo": "Saldo Inicial",
+      "descricao": "Saldo inicial no período inicial desta escrituração. Se DT_AP_LAL (Campo 04) for no período da escrituração, então o valor deve ser zero",
       "tipo": "N",
-      "tamanho": "14",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "CNPJ",
-        "DOCUMENTAÇÃO": "E055CLL.NUMCGC"
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 11,
+      "nome": "IND_VL_SALDO_INI",
+      "rotulo": "Indicador do Saldo Inicial",
+      "descricao": "Indicador de saldo inicial: D – para prejuízos ou valores que reduzam o lucro real ou a base de cálculo da contribuição social em períodos subseqüentes. C – para valores que aumentem o lucro real ou a base de cálculo da contribuição social em períodos subseqüentes.",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     }
-  ]
+  ],
+  "notas_extracao": []
 }

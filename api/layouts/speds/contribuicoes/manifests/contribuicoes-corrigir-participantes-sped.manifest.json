@@ -1,0 +1,49 @@
+{
+  "templateId": "contribuicoes-corrigir-participantes-sped",
+  "spedType": "contribuicoes",
+  "operation": "update",
+  "inputs": [
+    {
+      "key": "sped_txt",
+      "label": "Arquivo SPED Contribuicoes",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"],
+      "help": "Arquivo de entrada do SPED EFD-Contribuicoes."
+    },
+    {
+      "key": "xml_notas",
+      "label": "Notas XML/ZIP/RAR",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".xml", ".zip", ".rar"],
+      "help": "Aceita XML unico ou lote compactado em ZIP/RAR."
+    }
+  ],
+  "fields": [],
+  "targets": {
+    "records": ["0000", "0150"],
+    "relationshipsFile": "api/layouts/speds/contribuicoes/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": false,
+    "onMissingDependency": "skip",
+    "onOrphanDetected": "cleanup"
+  },
+  "validators": {
+    "globalRelationshipValidation": false,
+    "duplicateKeyCheck": false,
+    "hierarchyCheck": false,
+    "rulesFile": "api/layouts/speds/contribuicoes/relationships/reference_domains.validator.json"
+  },
+  "totalizers": [],
+  "output": {
+    "formats": ["txt"],
+    "filenamePattern": "{input}_PARTICIPANTES_CONTRIBUICOES_CORRIGIDOS.txt"
+  },
+  "dryRun": {
+    "enabled": true,
+    "reportChanges": true,
+    "requireConfirmation": false
+  }
+}

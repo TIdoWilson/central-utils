@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Central de Utilitários</title>
+    <title>Central de Utilit&#225;rios</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -20,15 +20,15 @@
 
         <div class="topbar-right">
             <button class="home-user-btn" id="homeUserBtn" type="button" aria-haspopup="menu" aria-expanded="false">
-                <span class="home-user-avatar">👤</span>
+                <span class="home-user-avatar">&#128100;</span>
                 <span class="home-user-label">Conta</span>
             </button>
             <div class="home-user-menu" id="homeUserMenu" role="menu" aria-hidden="true">
                 <div class="home-user-menu-header">
-                    <strong id="homeUserName">Usuário</strong>
+                    <strong id="homeUserName">Usu&#225;rio</strong>
                     <span id="homeUserEmail"></span>
                 </div>
-                <a href="/" class="home-user-item" role="menuitem">Início</a>
+                <a href="/" class="home-user-item" role="menuitem">In&#237;cio</a>
                 <button type="button" class="home-user-item home-user-item-danger" id="homeLogoutBtn" role="menuitem">
                     Sair
                 </button>
@@ -43,7 +43,7 @@
             <input id="homeSearchInput" type="search" placeholder="Buscar ferramenta..." autocomplete="off">
             <button id="homeSearchClear" type="button">Limpar</button>
         </div>
-        <h1>Central de Utilitários</h1>
+        <h1>Central de Utilit&#225;rios</h1>
         <p>Selecione uma categoria abaixo para acessar suas ferramentas.</p>
     </section>
 
@@ -53,14 +53,31 @@
             <div class="session-header-text">
                 <span class="session-pill session-pill-pessoal">Pessoal</span>
                 <span class="session-subtitle">
-                    Rotinas e automações para o uso pessoal.
+                    Rotinas e automa&#231;&#245;es para o uso pessoal.
                 </span>
             </div>
-            <span class="session-chevron">⌄</span>
+            <span class="session-chevron">&#8964;</span>
         </button>
 
         <div class="session-body">
             <div class="session-grid">
+                <div class="carousel-card" data-script="cct">
+                    <div class="card-icon">&#128218;</div>
+                    <h3 class="card-title">CCT</h3>
+                    <p class="card-subtitle">
+                        Consulte convencoes coletivas por nome, vigencia, data-base e abrangencia com leitura automatica dos JSONs locais.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Pessoal</span>
+                        <span class="tag">Portal</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Abra a lista de convencoes, filtre pelos campos principais e veja abaixo o sumario de clausulas com o resumo de cada item.
+                        </p>
+                        <a href="/cct" class="btn-card">Acessar</a>
+                    </div>
+                </div>
                 <div class="carousel-card" data-script="comparador-eventos-holerite">
                     <div class="card-icon">&#128176;</div>
                     <h3 class="card-title">Comparador de Eventos de Holerite</h3>
@@ -79,7 +96,7 @@
                         <a href="/comparador-eventos-holerite" class="btn-card">Acessar</a>
                     </div>
                 </div>
-                <!-- Snippet para home.html (sessão Pessoal) -->
+                <!-- Snippet para home.html (sess&#227;o Pessoal) -->
                 <div class="carousel-card" data-script="cartao-horas-iob">
                     <div class="card-icon">&#128339;</div>
                     <h3 class="card-title">Importador Cartao Horas IOB</h3>
@@ -98,11 +115,11 @@
                         <a href="/cartao-horas-iob" class="btn-card">Acessar</a>
                     </div>
                 </div>
-                <div class="carousel-card" data-script="separador-ferias-funcionario">
-                    <div class="card-icon">🏖️</div>
-                    <h3 class="card-title">Separador Férias por Funcionário</h3>
+                <div class="carousel-card" data-script="importador-cartao-horas-bandeira-transportes">
+                    <div class="card-icon">&#128666;</div>
+                    <h3 class="card-title">Importador cartao de horas Bandeira Tranposrtes</h3>
                     <p class="card-subtitle">
-                        Envie um PDF de férias agrupadas e receba um PDF separado para cada funcionário, em um ZIP.
+                        Leitura da ultima pagina do PDF com geracao de TXT no layout antigo e apoio de cadastro automatico de matricula.
                     </p>
                     <div class="card-tags">
                         <span class="tag">Pessoal</span>
@@ -110,19 +127,36 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            Faça o upload de um único PDF de férias da empresa; a ferramenta identifica a empresa e
+                            Envie o PDF, revise os valores e a ficha do funcionario, salve ajustes na lista de funcionarios e baixe o TXT final.
+                        </p>
+                        <a href="/importador-cartao-horas-bandeira-transportes" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+                <div class="carousel-card" data-script="separador-ferias-funcionario">
+                    <div class="card-icon">&#127958;&#65039;</div>
+                    <h3 class="card-title">Separador F&#233;rias por Funcion&#225;rio</h3>
+                    <p class="card-subtitle">
+                        Envie um PDF de f&#233;rias agrupadas e receba um PDF separado para cada funcion&#225;rio, em um ZIP.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Pessoal</span>
+                        <span class="tag">Python</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Fa&#231;a o upload de um &#250;nico PDF de f&#233;rias da empresa; a ferramenta identifica a empresa e
                             divide o arquivo
-                            em blocos de 2 páginas (recibo + aviso) para cada funcionário, gerando um ZIP com todos os
+                            em blocos de 2 p&#225;ginas (recibo + aviso) para cada funcion&#225;rio, gerando um ZIP com todos os
                             PDFs individuais
-                            de férias já nomeados.
+                            de f&#233;rias j&#225; nomeados.
                         </p>
                         <a href="/separador-ferias-funcionario" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
-                <!-- Snippet para home.html (sessão Pessoal) -->
+                <!-- Snippet para home.html (sess&#227;o Pessoal) -->
                 <div class="carousel-card" data-script="separador-holerites-por-empresa">
-                    <div class="card-icon">🧾</div>
+                    <div class="card-icon">&#129534;</div>
                     <h3 class="card-title">Separador Holerites por Empresa</h3>
                     <p class="card-subtitle">
                         Envia um PDF de holerites e gera um PDF por empresa, com um ZIP final para download.
@@ -133,18 +167,18 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            Faça o upload de um único PDF contendo holerites/folhas de várias empresas.
-                            A ferramenta identifica automaticamente o nome da empresa na primeira linha de cada página,
-                            separa as páginas por empresa e devolve um arquivo ZIP com todos os PDFs gerados.
+                            Fa&#231;a o upload de um &#250;nico PDF contendo holerites/folhas de v&#225;rias empresas.
+                            A ferramenta identifica automaticamente o nome da empresa na primeira linha de cada p&#225;gina,
+                            separa as p&#225;ginas por empresa e devolve um arquivo ZIP com todos os PDFs gerados.
                         </p>
                         <a href="/separador-holerites-por-empresa" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="separador-pdf-relatorio-de-ferias">
-                    <div class="card-icon">🙂</div>
-                    <h3 class="card-title">Separador PDF Relatório de Férias</h3>
-                    <p class="card-subtitle">Divide o PDF de relatório de férias por empresa e gera um ZIP com um
+                    <div class="card-icon">&#128578;</div>
+                    <h3 class="card-title">Separador PDF Relat&#243;rio de F&#233;rias</h3>
+                    <p class="card-subtitle">Divide o PDF de relat&#243;rio de f&#233;rias por empresa e gera um ZIP com um
                         PDF por empresa.</p>
                     <div class="card-tags">
                         <span class="tag">Pessoal</span>
@@ -152,9 +186,9 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            Envie um único PDF de “Relatório de Férias” contendo várias empresas, informe a competência
+                            Envie um &#250;nico PDF de "Relat&#243;rio de F&#233;rias" contendo v&#225;rias empresas, informe a compet&#234;ncia
                             desejada
-                            (ex.: 112025) e baixe um arquivo ZIP com um PDF separado para cada empresa, já com o nome
+                            (ex.: 112025) e baixe um arquivo ZIP com um PDF separado para cada empresa, j&#225; com o nome
                             padronizado.
                         </p>
                         <a href="/separador-pdf-relatorio-de-ferias" class="btn-card">Acessar</a>
@@ -166,61 +200,61 @@
         </div>
     </section>
 
-    <!-- ===== CONTÁBIL ===== -->
+    <!-- ===== CONT&#193;BIL ===== -->
     <section class="session session--contabil" id="contabil">
         <button class="session-header" type="button">
             <div class="session-header-text">
-                <span class="session-pill session-pill-contabil">Contábil</span>
+                <span class="session-pill session-pill-contabil">Cont&#225;bil</span>
                 <span class="session-subtitle">
-                    Integrações, lançamentos e conciliações contábeis.
+                    Integra&#231;&#245;es, lan&#231;amentos e concilia&#231;&#245;es cont&#225;beis.
                 </span>
             </div>
-            <span class="session-chevron">⌄</span>
+            <span class="session-chevron">&#8964;</span>
         </button>
 
         <div class="session-body">
             <div class="session-grid">
-                <!-- Contábil -->
-                <!-- Snippet para home.html (sessão Contábil) -->
+                <!-- Cont&#225;bil -->
+                <!-- Snippet para home.html (sess&#227;o Cont&#225;bil) -->
                 <div class="carousel-card" data-script="acertos-lotes-internets">
-                    <div class="card-icon">📊</div>
+                    <div class="card-icon">&#128202;</div>
                     <h3 class="card-title">Acertos Lotes Internets</h3>
                     <p class="card-subtitle">
-                        Limpa o TXT de lançamentos removendo automaticamente os lançamentos de
-                        rendimentos, pagamentos, tarifas etc., gerando também um arquivo com as linhas excluídas.
+                        Limpa o TXT de lan&#231;amentos removendo automaticamente os lan&#231;amentos de
+                        rendimentos, pagamentos, tarifas etc., gerando tamb&#233;m um arquivo com as linhas exclu&#237;das.
                     </p>
                     <div class="card-tags">
-                        <span class="tag">Contábil</span>
+                        <span class="tag">Cont&#225;bil</span>
                         <span class="tag">JavaScript</span>
                     </div>
                     <div class="card-hover">
                         <p>
                             Envie o arquivo TXT de lotes de internet exportado do cliente e receba
-                            um arquivo ajustado, sem os lançamentos indesejados (L + H), além de um
-                            TXT separado com todas as linhas removidas para conferência.
+                            um arquivo ajustado, sem os lan&#231;amentos indesejados (L + H), al&#233;m de um
+                            TXT separado com todas as linhas removidas para confer&#234;ncia.
                         </p>
                         <a href="/acertos-lotes-internets" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
-                <!-- Snippet para home.html (sessão Contábil) -->
+                <!-- Snippet para home.html (sess&#227;o Cont&#225;bil) -->
                 <div class="carousel-card" data-script="acerto-lotes-toscan">
-                    <div class="card-icon">📄</div>
+                    <div class="card-icon">&#128196;</div>
                     <h3 class="card-title">Acerto Lotes Toscan</h3>
                     <p class="card-subtitle">
-                        Remove do TXT do Toscan os lançamentos cuja linha de histórico (H) está em branco,
-                        gerando um arquivo ajustado e um relatório das linhas excluídas.
+                        Remove do TXT do Toscan os lan&#231;amentos cuja linha de hist&#243;rico (H) est&#225; em branco,
+                        gerando um arquivo ajustado e um relat&#243;rio das linhas exclu&#237;das.
                     </p>
                     <div class="card-tags">
-                        <span class="tag">Contábil</span>
+                        <span class="tag">Cont&#225;bil</span>
                         <span class="tag">JavaScript</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Envie o arquivo TXT de lançamentos gerado pelo Toscan. A ferramenta identifica
-                            pares de linhas L/H em que o histórico está em branco, remove esses lançamentos
+                            Envie o arquivo TXT de lan&#231;amentos gerado pelo Toscan. A ferramenta identifica
+                            pares de linhas L/H em que o hist&#243;rico est&#225; em branco, remove esses lan&#231;amentos
                             do arquivo principal e disponibiliza um arquivo separado com todas as linhas
-                            excluídas para conferência.
+                            exclu&#237;das para confer&#234;ncia.
                         </p>
                         <a href="/acerto-lotes-toscan" class="btn-card">Acessar</a>
                     </div>
@@ -246,7 +280,7 @@
                     </div>
                 </div>
 
-                <!-- home.html – dentro da sessão Contábil -->
+                <!-- home.html &#8211; dentro da sess&#227;o Cont&#225;bil -->
                 <div class="carousel-card" data-script="gfbr-gerador-txt">
                     <div class="card-icon">&#128221;</div>
                     <h3 class="card-title">Gerador TXT GFBR</h3>
@@ -266,60 +300,58 @@
                     </div>
                 </div>
 
-                <div class="carousel-card" data-script="ajuste-diario-gfbr-c">
-                    <div class="card-icon">📊</div>
-                    <h3 class="card-title">Ajuste Diário GFBR</h3>
+                <div class="carousel-card" data-script="conversor-extrato-pdf-ofx">
+                    <div class="card-icon">&#127974;</div>
+                    <h3 class="card-title">Conversor Extrato PDF para OFX</h3>
                     <p class="card-subtitle">
-                        Arruma lançamentos do grupo GFBR para importação correta do diário contábil.
+                        Converte um ou varios extratos bancarios em PDF para OFX, com leitura dos layouts Sicredi, Evolua e Stone.
                     </p>
                     <div class="card-tags">
-                        <span class="tag">Contábil</span>
+                        <span class="tag">Contabil</span>
                         <span class="tag">Python</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Envie o diário em Excel exportado do sistema GFBR e deixe o robô remover contas
-                            transitórias, separar estornos em uma aba própria e filtrar recebimentos e
-                            lançamentos indesejados, mantendo a formatação da planilha de origem.
+                            Envie os PDFs, revise o BANKID quando o seu importador exigir e deixe o ACCTID em branco para usar a conta detectada automaticamente.
                         </p>
-                        <a href="/ajuste-diario-gfbr-c" class="btn-card">Acessar</a>
+                        <a href="/conversor-extrato-pdf-ofx" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="conciliador-conta-transitoria-werbran">
-                    <div class="card-icon">📊</div>
+                    <div class="card-icon">&#128202;</div>
                     <h3 class="card-title">Conciliador Conta Transitoria Werbran</h3>
-                    <p class="card-subtitle">Concilia conta transitória da Werbran para localizar notas com diferença.
+                    <p class="card-subtitle">Concilia conta transit&#243;ria da Werbran para localizar notas com diferen&#231;a.
                     </p>
                     <div class="card-tags">
-                        <span>Contábil</span>
+                        <span>Cont&#225;bil</span>
                     </div>
                     <div class="card-hover">
-                        <p>CONCILIA CONTA TRANSITÓRIA DA WERBRAN PARA LOCALIZAÇÃO DAS NOTAS COM DIFERENÇA NOS
-                            LANÇAMENTOS</p>
+                        <p>CONCILIA CONTA TRANSIT&#211;RIA DA WERBRAN PARA LOCALIZA&#199;&#195;O DAS NOTAS COM DIFEREN&#199;A NOS
+                            LAN&#199;AMENTOS</p>
                         <a href="/balancete-transitorio" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="conciliador-razao-iob">
-                    <div class="card-icon">📊</div>
+                    <div class="card-icon">&#128202;</div>
                     <h3 class="card-title">Conciliador Razao Iob</h3>
-                    <p class="card-subtitle">Concilia razão IOB considerando apenas históricos semelhantes.</p>
+                    <p class="card-subtitle">Concilia raz&#227;o IOB considerando apenas hist&#243;ricos semelhantes.</p>
                     <div class="card-tags">
-                        <span>Contábil</span>
+                        <span>Cont&#225;bil</span>
                     </div>
                     <div class="card-hover">
-                        <p>CONCILIA RAZÃO IOB - APENAS COM HISTORICOS SEMELHANTES</p>
+                        <p>CONCILIA RAZ&#195;O IOB - APENAS COM HISTORICOS SEMELHANTES</p>
                         <a href="#" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="conversor-pdf-p-excel">
-                    <div class="card-icon">📊</div>
+                    <div class="card-icon">&#128202;</div>
                     <h3 class="card-title">Conversor Pdf P/ Excel</h3>
                     <p class="card-subtitle">Converte PDF para planilhas Excel.</p>
                     <div class="card-tags">
-                        <span>Contábil</span>
+                        <span>Cont&#225;bil</span>
                     </div>
                     <div class="card-hover">
                         <p>CONVERSOR DE PDF/EXCEL</p>
@@ -327,84 +359,84 @@
                     </div>
                 </div>
 
-                <!-- Snippet para home.html (sessão Contábil) -->
+                <!-- Snippet para home.html (sess&#227;o Cont&#225;bil) -->
                 <div class="carousel-card" data-script="importador-recebimentos-madre-scp">
-                    <div class="card-icon">📊</div>
+                    <div class="card-icon">&#128202;</div>
                     <h3 class="card-title">Importador Recebimentos Madre SCP</h3>
                     <p class="card-subtitle">
-                        Lê o PDF de baixas Sicoob e gera um Excel pronto para integração contábil, com detalhe e
+                        L&#234; o PDF de baixas Sicoob e gera um Excel pronto para integra&#231;&#227;o cont&#225;bil, com detalhe e
                         resumo por cliente.
                     </p>
                     <div class="card-tags">
-                        <span class="tag">Contábil</span>
+                        <span class="tag">Cont&#225;bil</span>
                         <span class="tag">Python</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Envie o PDF de recebimentos/baixas do Sicoob; a ferramenta extrai os lançamentos,
-                            separa os campos de cliente (título, parcela, unidade, port, oper) e gera um Excel
-                            com aba de detalhe e aba de resumo por cliente, pronto para conciliação e importação.
+                            Envie o PDF de recebimentos/baixas do Sicoob; a ferramenta extrai os lan&#231;amentos,
+                            separa os campos de cliente (t&#237;tulo, parcela, unidade, port, oper) e gera um Excel
+                            com aba de detalhe e aba de resumo por cliente, pronto para concilia&#231;&#227;o e importa&#231;&#227;o.
                         </p>
                         <a href="/importador-recebimentos-madre-scp" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
-                <!-- Snippet para home.html (sessão Contábil) -->
+                <!-- Snippet para home.html (sess&#227;o Cont&#225;bil) -->
                 <div class="carousel-card" data-script="separador-csv-baixa-automatica">
-                    <div class="card-icon">📊</div>
-                    <h3 class="card-title">Separador CSV Baixa Automática</h3>
+                    <div class="card-icon">&#128202;</div>
+                    <h3 class="card-title">Separador CSV Baixa Autom&#225;tica</h3>
                     <p class="card-subtitle">
-                        Separa o Excel de baixas da GFBR em vários CSVs por ano, com até 50 linhas cada, prontos
-                        para importação.
+                        Separa o Excel de baixas da GFBR em v&#225;rios CSVs por ano, com at&#233; 50 linhas cada, prontos
+                        para importa&#231;&#227;o.
                     </p>
                     <div class="card-tags">
-                        <span class="tag">Contábil</span>
+                        <span class="tag">Cont&#225;bil</span>
                         <span class="tag">Python</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Envie o Excel da aba “BAIXAS” com as colunas padrão da GFBR. A ferramenta usa a coluna
-                            “DATA EMISSÃO” para separar os registros por ano, formata datas e valores e gera diversos
+                            Envie o Excel da aba "BAIXAS" com as colunas padr&#227;o da GFBR. A ferramenta usa a coluna
+                            "DATA EMISS&#195;O" para separar os registros por ano, formata datas e valores e gera diversos
                             arquivos
-                            CSV limitados a 50 linhas, além de um ZIP único para download.
+                            CSV limitados a 50 linhas, al&#233;m de um ZIP &#250;nico para download.
                         </p>
                         <a href="/separador-csv-baixa-automatica" class="btn-card">Acessar</a>
                     </div>
                 </div>
-                <!-- Snippet para home.html (sessão Contábil) -->
+                <!-- Snippet para home.html (sess&#227;o Cont&#225;bil) -->
                 <div class="carousel-card" data-script="formatador-bernardina">
-                    <div class="card-icon">📑</div>
+                    <div class="card-icon">&#128209;</div>
                     <h3 class="card-title">Formatador DRE Bernadina (XLSM)</h3>
                     <p class="card-subtitle">
-                        Envie os XLSX das filiais e gere o XLSM “AGRUPADA” pronto, com período validado e colunas na
+                        Envie os XLSX das filiais e gere o XLSM "AGRUPADA" pronto, com per&#237;odo validado e colunas na
                         ordem correta.
                     </p>
                     <div class="card-tags">
-                        <span class="tag">Contábil</span>
+                        <span class="tag">Cont&#225;bil</span>
                         <span class="tag">C#</span>
                         <span class="tag">JOB</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Faça upload do lote de .xlsx (IOB limpos). O portal identifica CNPJ/período, verifica
+                            Fa&#231;a upload do lote de .xlsx (IOB limpos). O portal identifica CNPJ/per&#237;odo, verifica
                             filiais faltantes
-                            e gera um .xlsm final usando o template padrão (ou um template enviado).
+                            e gera um .xlsm final usando o template padr&#227;o (ou um template enviado).
                         </p>
                         <a href="/formatador-bernardina" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="conciliador-hausen-ocean">
-                    <div class="card-icon">📊</div>
+                    <div class="card-icon">&#128202;</div>
                     <h3 class="card-title">Conciliador Hausen e Ocean</h3>
                     <p class="card-subtitle">Merge arquivos excel do DRE e Balancetes das duas empresas.</p>
                     <div class="card-tags">
-                        <span class="tag">Contábil</span>
+                        <span class="tag">Cont&#225;bil</span>
                         <span class="tag">C#</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Selecione se é DRE ou Balancete, envie dois arquivos Excel (Hausen e Ocean) e baixe o
+                            Selecione se &#233; DRE ou Balancete, envie dois arquivos Excel (Hausen e Ocean) e baixe o
                             consolidado automaticamente.
                         </p>
                         <a href="/conciliador-hausen-ocean" class="btn-card">Acessar</a>
@@ -415,7 +447,7 @@
                     <div class="card-icon">&#128176;</div>
                     <h3 class="card-title">Conciliador PIS-COFINS</h3>
                     <p class="card-subtitle">
-                        Concilia arquivos fiscais para validação de diferenças de PIS e COFINS.
+                        Concilia arquivos fiscais para valida&#231;&#227;o de diferen&#231;as de PIS e COFINS.
                     </p>
                     <div class="card-tags">
                         <span class="tag">Contabil</span>
@@ -423,29 +455,29 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            Envie os arquivos da apuração para comparar bases e valores de PIS/COFINS,
-                            com saída pronta para conferência das divergências.
+                            Envie os arquivos da apura&#231;&#227;o para comparar bases e valores de PIS/COFINS,
+                            com sa&#237;da pronta para confer&#234;ncia das diverg&#234;ncias.
                         </p>
                         <a href="/conciliador-pis-cofins" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="conciliador-cartao-wilson">
-                    <div class="card-icon">💳</div>
+                    <div class="card-icon">&#128179;</div>
                     <div class="card-content">
-                        <h3 class="card-title">Conciliador Cartão (Razão x Financeiro)</h3>
+                        <h3 class="card-title">Conciliador Cart&#227;o (Raz&#227;o x Financeiro)</h3>
                         <p class="card-subtitle">
-                            Envie os PDFs do Razão e do Financeiro e gere um Excel com casados e diferenças.
+                            Envie os PDFs do Raz&#227;o e do Financeiro e gere um Excel com casados e diferen&#231;as.
                         </p>
                         <div class="card-tags">
-                            <span class="tag">Contábil</span>
+                            <span class="tag">Cont&#225;bil</span>
                             <span class="tag">Python</span>
                             <span class="tag">RUN-FAST</span>
                         </div>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Concilia por valor (com tolerância), janela de dias e similaridade do nome do cliente.
+                            Concilia por valor (com toler&#226;ncia), janela de dias e similaridade do nome do cliente.
                             Baixe o XLSX com abas CASADOS, DIF_SO_RAZAO, DIF_SO_FIN e RESUMO.
                         </p>
                         <a href="/conciliador-cartao-wilson" class="btn-card">Acessar</a>
@@ -462,33 +494,33 @@
             <div class="session-header-text">
                 <span class="session-pill session-pill-fiscal">Fiscal</span>
                 <span class="session-subtitle">
-                    Ferramentas ligadas a NF-e, apurações e obrigações fiscais.
+                    Ferramentas ligadas a NF-e, apura&#231;&#245;es e obriga&#231;&#245;es fiscais.
                 </span>
             </div>
-            <span class="session-chevron">⌄</span>
+            <span class="session-chevron">&#8964;</span>
         </button>
 
         <div class="session-body">
             <div class="session-grid">
                 <div class="carousel-card">
-                    <div class="card-icon">🧾</div>
+                    <div class="card-icon">&#129534;</div>
                     <h3 class="card-title">Consulta de NF-e</h3>
-                    <p class="card-subtitle">Robô que consulta notas no Portal Nacional via extensão.</p>
+                    <p class="card-subtitle">Rob&#244; que consulta notas no Portal Nacional via extens&#227;o.</p>
                     <div class="card-tags">
                         <span>Fiscal</span>
                         <span>NF-e</span>
                     </div>
                     <div class="card-hover">
-                        <p>Utilitário que usa a extensão NFe Helper para buscar as notas automaticamente.</p>
+                        <p>Utilit&#225;rio que usa a extens&#227;o NFe Helper para buscar as notas automaticamente.</p>
                         <a href="/nfe" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="calculadora-icms-st">
-                    <div class="card-icon">🧮</div>
+                    <div class="card-icon">&#129518;</div>
                     <div class="card-content">
                         <h3 class="card-title">Calculadora ICMS ST (XML NF-e)</h3>
-                        <p class="card-subtitle">Anexe o XML e calcule ICMS ST por produto com MVA por NCM + alíquota.
+                        <p class="card-subtitle">Anexe o XML e calcule ICMS ST por produto com MVA por NCM + al&#237;quota.
                         </p>
                         <div class="card-tags">
                             <span class="tag">Fiscal</span>
@@ -497,8 +529,8 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            Extrai UF origem/destino, totais e itens do XML. Você define regimes (SN/Normal),
-                            informa a MVA correta (ou usa MVA fixa de autopeças) e a ferramenta calcula base e ICMS ST
+                            Extrai UF origem/destino, totais e itens do XML. Voc&#234; define regimes (SN/Normal),
+                            informa a MVA correta (ou usa MVA fixa de autope&#231;as) e a ferramenta calcula base e ICMS ST
                             por item.
                         </p>
                         <a href="/calculadora-icms-st" class="btn-card">Acessar</a>
@@ -508,15 +540,15 @@
                 <div class="carousel-card" data-script="speds">
                     <div class="card-icon">&#128218;</div>
                     <h3 class="card-title">SPEDS</h3>
-                    <p class="card-subtitle">Selecione o tipo de SPED e execute templates com entradas dinâmicas de arquivos e campos.</p>
+                    <p class="card-subtitle">Selecione o tipo de SPED e execute templates com entradas din&#226;micas de arquivos e campos.</p>
                     <div class="card-tags">
                         <span>Fiscal</span>
                         <span>SPEDS</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Página única para ICMS, Contribuições, ECD e ECF. Cada função informa quais arquivos são necessários
-                            e permite importação de TXT/CSV/XLSX/SLK/PDF/XML (inclusive XML em ZIP/RAR).
+                            P&#225;gina &#250;nica para ICMS, Contribui&#231;&#245;es, ECD e ECF. Cada fun&#231;&#227;o informa quais arquivos s&#227;o necess&#225;rios
+                            e permite importa&#231;&#227;o de TXT/CSV/XLSX/SLK/PDF/XML (inclusive XML em ZIP/RAR).
                         </p>
                         <a href="/speds" class="btn-card">Acessar</a>
                     </div>
@@ -532,10 +564,10 @@
             <div class="session-header-text">
                 <span class="session-pill session-pill-geral">Geral</span>
                 <span class="session-subtitle">
-                    Utilitários para o dia a dia do escritório.
+                    Utilit&#225;rios para o dia a dia do escrit&#243;rio.
                 </span>
             </div>
-            <span class="session-chevron">⌄</span>
+            <span class="session-chevron">&#8964;</span>
         </button>
 
         <div class="session-body">
@@ -557,30 +589,30 @@
                     </div>
                 </div>
                 <div class="carousel-card" data-script="gerador-atas">
-                    <div class="card-icon">📑</div>
-                    <h3 class="card-title">Gerador de Atas Societárias</h3>
+                    <div class="card-icon">&#128209;</div>
+                    <h3 class="card-title">Gerador de Atas Societ&#225;rias</h3>
                     <p class="card-subtitle">
-                        Preencha os dados da empresa, lucros e sócios e gere atas societárias a partir de modelos Word.
+                        Preencha os dados da empresa, lucros e s&#243;cios e gere atas societ&#225;rias a partir de modelos Word.
                     </p>
                     <div class="card-tags">
-                        <span class="tag">Contábil</span>
+                        <span class="tag">Cont&#225;bil</span>
                         <span class="tag">Python</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Escolha um modelo de ata em Word, informe os dados (NIRE, CNPJ, endereço, lucros por ano),
-                            cadastre as assinaturas dos sócios PF e PJ e baixe a ata pronta em formato .docx.
+                            Escolha um modelo de ata em Word, informe os dados (NIRE, CNPJ, endere&#231;o, lucros por ano),
+                            cadastre as assinaturas dos s&#243;cios PF e PJ e baixe a ata pronta em formato .docx.
                         </p>
                         <a href="/gerador-atas" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
-                <!-- Snippet para home.html (sessão Geral) -->
+                <!-- Snippet para home.html (sess&#227;o Geral) -->
                 <div class="carousel-card" data-script="comprimir-pdf">
-                    <div class="card-icon">🧩</div>
+                    <div class="card-icon">&#129513;</div>
                     <h3 class="card-title">Comprimir PDF</h3>
                     <p class="card-subtitle">
-                        Envie um PDF e receba uma versão otimizada em tons de cinza, com tamanho reduzido.
+                        Envie um PDF e receba uma vers&#227;o otimizada em tons de cinza, com tamanho reduzido.
                     </p>
                     <div class="card-tags">
                         <span class="tag">Geral</span>
@@ -588,7 +620,7 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            A ferramenta converte o PDF para tons de cinza, aplica compressão nas páginas
+                            A ferramenta converte o PDF para tons de cinza, aplica compress&#227;o nas p&#225;ginas
                             e informa o ganho de tamanho obtido, permitindo baixar o arquivo comprimido
                             pronto para envio por e-mail ou upload em portais.
                         </p>
@@ -596,12 +628,12 @@
                     </div>
                 </div>
 
-                <!-- Snippet para home.html (sessão Geral) -->
+                <!-- Snippet para home.html (sess&#227;o Geral) -->
                 <div class="carousel-card" data-script="extrator-zip-rar">
-                    <div class="card-icon">📦</div>
+                    <div class="card-icon">&#128230;</div>
                     <h3 class="card-title">Extrator Recursivo ZIP/RAR</h3>
                     <p class="card-subtitle">
-                        Envie um ou mais arquivos ZIP/RAR e receba um pacote único com todos os arquivos extraídos,
+                        Envie um ou mais arquivos ZIP/RAR e receba um pacote &#250;nico com todos os arquivos extra&#237;dos,
                         inclusive compactados internos.
                     </p>
                     <div class="card-tags">
@@ -610,22 +642,22 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            A ferramenta varre todos os ZIPs e RARs enviados, abre compactados internos até 5 níveis de
+                            A ferramenta varre todos os ZIPs e RARs enviados, abre compactados internos at&#233; 5 n&#237;veis de
                             profundidade
-                            e grava os arquivos finais em uma pasta única, evitando duplicidades por nome e tamanho. No
-                            fim, você
-                            baixa um ZIP consolidado com todos os arquivos extraídos.
+                            e grava os arquivos finais em uma pasta &#250;nica, evitando duplicidades por nome e tamanho. No
+                            fim, voc&#234;
+                            baixa um ZIP consolidado com todos os arquivos extra&#237;dos.
                         </p>
                         <a href="/extrator-zip-rar" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
-                <!-- Snippet para home.html (sessão Contábil) -->
+                <!-- Snippet para home.html (sess&#227;o Cont&#225;bil) -->
                 <div class="carousel-card" data-script="excel-abas-pdf">
-                    <div class="card-icon">📄</div>
-                    <h3 class="card-title">Excel → Abas em PDF</h3>
+                    <div class="card-icon">&#128196;</div>
+                    <h3 class="card-title">Excel &#8594; Abas em PDF</h3>
                     <p class="card-subtitle">
-                        Envie planilhas Excel e receba um PDF por aba, já ajustado para 1 página.
+                        Envie planilhas Excel e receba um PDF por aba, j&#225; ajustado para 1 p&#225;gina.
                     </p>
                     <div class="card-tags">
                         <span class="tag">Geral</span>
@@ -634,16 +666,16 @@
                     <div class="card-hover">
                         <p>
                             Selecione um ou mais arquivos .xlsx/.xlsm e gere automaticamente um PDF
-                            para cada aba (A1:I32, ajustado para uma página) em um único ZIP para download,
-                            mantendo o padrão de nomes "&lt;Arquivo&gt; - &lt;Aba&gt;.pdf".
+                            para cada aba (A1:I32, ajustado para uma p&#225;gina) em um &#250;nico ZIP para download,
+                            mantendo o padr&#227;o de nomes "&lt;Arquivo&gt; - &lt;Aba&gt;.pdf".
                         </p>
                         <a href="/excel-abas-pdf" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="irpf-carne-leao">
-                    <div class="card-icon">🧮</div>
-                    <h3 class="card-title">Simulador Carnê-Leão (IRPF)</h3>
+                    <div class="card-icon">&#129518;</div>
+                    <h3 class="card-title">Simulador Carn&#234;-Le&#227;o (IRPF)</h3>
                     <p class="card-subtitle">
                         Simule IR mensal com regras 2024, 2025 e 2026 (inclui redutor 2026).
                     </p>
@@ -655,7 +687,7 @@
                         <p>
                             Informe rendimentos, despesas, dependentes e ajustes. A ferramenta calcula base, imposto
                             devido
-                            e saldo a pagar/compensar em todos os períodos de tabela dos PDFs.
+                            e saldo a pagar/compensar em todos os per&#237;odos de tabela dos PDFs.
                         </p>
                         <a href="/irpf-carne-leao" class="btn-card">Acessar</a>
                     </div>
@@ -700,10 +732,10 @@
                 </div>
 
                 <div class="carousel-card" data-script="cadastro-empresas-brasilapi">
-                    <div class="card-icon">🏢</div>
+                    <div class="card-icon">&#127970;</div>
                     <h3 class="card-title">Cadastro de Empresas (BrasilAPI)</h3>
                     <p class="card-subtitle">
-                        Importe CNPJs em lote, salve no banco e filtre por sócios, CNAEs e dados cadastrais.
+                        Importe CNPJs em lote, salve no banco e filtre por s&#243;cios, CNAEs e dados cadastrais.
                     </p>
                     <div class="card-tags">
                         <span class="tag">Geral</span>
@@ -711,8 +743,8 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            Ferramenta para cadastro e atualização de empresas por CNPJ com consulta automática,
-                            filtros avançados e exportação da lista filtrada em Excel.
+                            Ferramenta para cadastro e atualiza&#231;&#227;o de empresas por CNPJ com consulta autom&#225;tica,
+                            filtros avan&#231;ados e exporta&#231;&#227;o da lista filtrada em Excel.
                         </p>
                         <a href="/cadastro-empresas-brasilapi" class="btn-card">Acessar</a>
                     </div>
@@ -720,22 +752,22 @@
 
                 <!-- Snippet para home.html -->
                 <div class="carousel-card" data-script="tareffa-empresas-lote">
-                    <div class="card-icon">🏢</div>
-                    <h3 class="card-title">Tareffa — Cadastro de Empresas em Lote</h3>
+                    <div class="card-icon">&#127970;</div>
+                    <h3 class="card-title">Tareffa &#8212; Cadastro de Empresas em Lote</h3>
                     <p class="card-subtitle">
                         Digite CNPJs em formato de planilha, auto-preencha por API e cadastre tudo no Tareffa com
-                        características e serviços.
+                        caracter&#237;sticas e servi&#231;os.
                     </p>
                     <div class="card-tags">
-                        <span class="tag">Contábil</span>
+                        <span class="tag">Cont&#225;bil</span>
                         <span class="tag">JOB</span>
                         <span class="tag">Python</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Tabela estilo planilha: CNPJ + dados. Ao cadastrar, o robô cria as empresas em lote no
+                            Tabela estilo planilha: CNPJ + dados. Ao cadastrar, o rob&#244; cria as empresas em lote no
                             Tareffa, baixa os IDs,
-                            marca Regime/Atividades/Município/Estado e gera serviços automaticamente.
+                            marca Regime/Atividades/Munic&#237;pio/Estado e gera servi&#231;os automaticamente.
                         </p>
                         <a href="/tareffa-empresas-lote" class="btn-card">Acessar</a>
                     </div>
@@ -747,39 +779,39 @@
 
     </section>
 
-    <!-- ===== Declarações ===== -->
+    <!-- ===== Declara&#231;&#245;es ===== -->
     <section class="session session--declaracoes" id="Declaracoes">
         <button class="session-header" type="button">
             <div class="session-header-text">
-                <span class="session-pill session-pill-declaracoes">Declarações</span>
+                <span class="session-pill session-pill-declaracoes">Declara&#231;&#245;es</span>
                 <span class="session-subtitle">
-                    Automações das declarações.
+                    Automa&#231;&#245;es das declara&#231;&#245;es.
                 </span>
             </div>
-            <span class="session-chevron">⌄</span>
+            <span class="session-chevron">&#8964;</span>
         </button>
 
         <div class="session-body">
             <div class="session-grid">
-                <!-- Snippet para home.html (sessão declaracoes) -->
+                <!-- Snippet para home.html (sess&#227;o declaracoes) -->
                 <div class="carousel-card">
-                    <div class="card-icon">🏢</div>
+                    <div class="card-icon">&#127970;</div>
                     <h3 class="card-title">DIMOB</h3>
-                    <p class="card-subtitle">Tabela de faturamento mensal via SPED e preparação para gerar o TXT de
-                        importação.</p>
+                    <p class="card-subtitle">Tabela de faturamento mensal via SPED e prepara&#231;&#227;o para gerar o TXT de
+                        importa&#231;&#227;o.</p>
                     <div class="card-tags">
                         <span>Fiscal</span>
                         <span>DIMOB</span>
                     </div>
                     <div class="card-hover">
-                        <p>Informe CNPJ/ano, anexe SPED(s) e veja o faturamento mensal. (Geração do arquivo DIMOB:
-                            próxima etapa.)</p>
+                        <p>Informe CNPJ/ano, anexe SPED(s) e veja o faturamento mensal. (Gera&#231;&#227;o do arquivo DIMOB:
+                            pr&#243;xima etapa.)</p>
                         <a href="/dimob" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="giast">
-                    <div class="card-icon">📄</div>
+                    <div class="card-icon">&#128196;</div>
                     <h3 class="card-title">GIAST</h3>
                     <p class="card-subtitle">
                         Cadastro de declarante por UF e geracao do TXT da GIA-ST com anexo EC 87/15.
@@ -798,26 +830,26 @@
                 </div>
 
                 <div class="carousel-card">
-                    <div class="card-icon">📄</div>
+                    <div class="card-icon">&#128196;</div>
                     <h3 class="card-title">Simples Nacional sem movimento</h3>
-                    <p class="card-subtitle">Envie a declaração mensal sem movimento pelo Integra Contador.</p>
+                    <p class="card-subtitle">Envie a declara&#231;&#227;o mensal sem movimento pelo Integra Contador.</p>
                     <div class="card-tags">
                         <span>Fiscal</span>
                         <span>Simples Nacional</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Serviço que transmite a declaração mensal do Simples Nacional de forma automatizada.
-                            (Apenas com procuração para o CNPJ).
+                            Servi&#231;o que transmite a declara&#231;&#227;o mensal do Simples Nacional de forma automatizada.
+                            (Apenas com procura&#231;&#227;o para o CNPJ).
                         </p>
                         <a href="/sn" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="mit">
-                    <div class="card-icon">📑</div>
+                    <div class="card-icon">&#128209;</div>
                     <div class="card-content">
-                        <h3 class="card-title">Envio MIT – Apuração DCTFWeb</h3>
+                        <h3 class="card-title">Envio MIT &#8211; Apura&#231;&#227;o DCTFWeb</h3>
                         <p class="card-subtitle">
                             Envie o JSON do MIT direto para o Integra Contador / SERPRO.
                         </p>
@@ -828,18 +860,18 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            Faça upload do arquivo JSON gerado pelo IOB, caso seja sem movimento entregara o MIT e a
+                            Fa&#231;a upload do arquivo JSON gerado pelo IOB, caso seja sem movimento entregara o MIT e a
                             DCTFWeb automaticamente.
-                            (Apenas com procuração para o CNPJ)
+                            (Apenas com procura&#231;&#227;o para o CNPJ)
                         </p>
                         <a href="/mit" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="ecd-status">
-                    <div class="card-icon">📄</div>
+                    <div class="card-icon">&#128196;</div>
                     <h3 class="card-title">Lista de Empresas para ECD</h3>
-                    <p class="card-subtitle">Marque as empresas prontas para gerar ECD para que fiquem na fila do robô.
+                    <p class="card-subtitle">Marque as empresas prontas para gerar ECD para que fiquem na fila do rob&#244;.
                     </p>
                     <div class="card-tags">
                         <span>Fiscal</span>
@@ -847,8 +879,8 @@
                     </div>
                     <div class="card-hover">
                         <p>
-                            Lista de empresas com marcação de Simples/Normal e necessidade de DFC.
-                            Após salvar, o registro fica gerado e bloqueado (somente ADMIN pode alterar).
+                            Lista de empresas com marca&#231;&#227;o de Simples/Normal e necessidade de DFC.
+                            Ap&#243;s salvar, o registro fica gerado e bloqueado (somente ADMIN pode alterar).
                         </p>
                         <a href="/ecd-status" class="btn-card">Acessar</a>
                     </div>
@@ -858,47 +890,82 @@
         </div>
     </section>
 
-    <!-- ===== Administração ===== -->
+    <!-- ===== Parcelamentos ===== -->
+    <section class="session session--parcelamentos" id="parcelamentos">
+        <button class="session-header" type="button">
+            <div class="session-header-text">
+                <span class="session-pill session-pill-geral">Parcelamentos</span>
+                <span class="session-subtitle">
+                    HUB para cadastro e consulta de parcelamentos de impostos.
+                </span>
+            </div>
+            <span class="session-chevron">&#8964;</span>
+        </button>
+
+        <div class="session-body">
+            <div class="session-grid">
+                <div class="carousel-card" data-script="parcelamentos">
+                    <div class="card-icon">&#128179;</div>
+                    <h3 class="card-title">Parcelamentos de Impostos</h3>
+                    <p class="card-subtitle">
+                        Cadastre empresas, vincule parcelamentos e consulte os dados em um hub ?nico de controle.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Geral</span>
+                        <span class="tag">Portal</span>
+                    </div>
+                    <div class="card-hover">
+                        <p>
+                            Abra o HUB para cadastrar novos parcelamentos e acompanhar as informa??es salvas no banco de dados.
+                        </p>
+                        <a href="/parcelamentos" class="btn-card">Acessar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Administra&#231;&#227;o ===== -->
     <section class="session session--admin" id="admin">
         <button class="session-header" type="button">
             <div class="session-header-text">
-                <span class="session-pill session-pill-admin">Administração</span>
+                <span class="session-pill session-pill-admin">Administra&#231;&#227;o</span>
                 <span class="session-subtitle">
-                    Gestão de usuários, permissões e auditoria do portal.
+                    Gest&#227;o de usu&#225;rios, permiss&#245;es e auditoria do portal.
                 </span>
             </div>
-            <span class="session-chevron">⌄</span>
+            <span class="session-chevron">&#8964;</span>
         </button>
 
         <div class="session-body">
             <div class="session-grid">
                 <div class="carousel-card" data-script="admin-usuarios">
-                    <div class="card-icon">🔐</div>
-                    <h3 class="card-title">Administração de Usuários</h3>
-                    <p class="card-subtitle">Cadastre usuários, edite acessos e permissões por ferramenta.</p>
+                    <div class="card-icon">&#128272;</div>
+                    <h3 class="card-title">Administra&#231;&#227;o de Usu&#225;rios</h3>
+                    <p class="card-subtitle">Cadastre usu&#225;rios, edite acessos e permiss&#245;es por ferramenta.</p>
                     <div class="card-tags">
                         <span class="tag">Admin</span>
                         <span class="tag">RBAC</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Tela administrativa para importação e gestão de usuários com permissões por ferramenta.
+                            Tela administrativa para importa&#231;&#227;o e gest&#227;o de usu&#225;rios com permiss&#245;es por ferramenta.
                         </p>
                         <a href="/admin-usuarios" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="logs">
-                    <div class="card-icon">🧾</div>
+                    <div class="card-icon">&#129534;</div>
                     <h3 class="card-title">Logs e Auditoria</h3>
-                    <p class="card-subtitle">Visualize eventos de acesso e ações sensíveis no sistema.</p>
+                    <p class="card-subtitle">Visualize eventos de acesso e a&#231;&#245;es sens&#237;veis no sistema.</p>
                     <div class="card-tags">
                         <span class="tag">Admin</span>
                         <span class="tag">Auditoria</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Consulte o histórico de ações (login, alterações e operações críticas) para rastreabilidade.
+                            Consulte o hist&#243;rico de a&#231;&#245;es (login, altera&#231;&#245;es e opera&#231;&#245;es cr&#237;ticas) para rastreabilidade.
                         </p>
                         <a href="/logs" class="btn-card">Acessar</a>
                     </div>
@@ -921,16 +988,16 @@
                     </div>
                 </div>
                 <div class="carousel-card" data-script="checklist-ti-criacao-usuario">
-                    <div class="card-icon">📝</div>
-                    <h3 class="card-title">Checklist TI - Criação de Usuário</h3>
-                    <p class="card-subtitle">Rascunho, finalização definitiva e PDF para onboarding de acessos.</p>
+                    <div class="card-icon">&#128221;</div>
+                    <h3 class="card-title">Checklist TI - Cria&#231;&#227;o de Usu&#225;rio</h3>
+                    <p class="card-subtitle">Rascunho, finaliza&#231;&#227;o definitiva e PDF para onboarding de acessos.</p>
                     <div class="card-tags">
                         <span class="tag">Admin</span>
                         <span class="tag">Portal</span>
                     </div>
                     <div class="card-hover">
                         <p>
-                            Monte o checklist de criação de usuário com rascunho automático e finalize em PDF com número
+                            Monte o checklist de cria&#231;&#227;o de usu&#225;rio com rascunho autom&#225;tico e finalize em PDF com n&#250;mero
                             de processo sequencial.
                         </p>
                         <a href="/checklist-ti-criacao-usuario" class="btn-card">Acessar</a>
@@ -947,19 +1014,19 @@
             <div class="session-header-text">
                 <span class="session-pill session-pill-ti">Desenvolvendo</span>
                 <span class="session-subtitle">
-                    Scripts técnicos, diagnósticos e automações de infraestrutura.
+                    Scripts t&#233;cnicos, diagn&#243;sticos e automa&#231;&#245;es de infraestrutura.
                 </span>
             </div>
-            <span class="session-chevron">⌄</span>
+            <span class="session-chevron">&#8964;</span>
         </button>
 
         <div class="session-body">
             <div class="session-grid">
                 <!-- Desenvolvendo -->
                 <div class="carousel-card" data-script="atualizador-empresas-monitor">
-                    <div class="card-icon">🧩</div>
+                    <div class="card-icon">&#129513;</div>
                     <h3 class="card-title">Atualizador Empresas Monitor</h3>
-                    <p class="card-subtitle">Atualiza cadastros de usuários no Monitor para liberar todas as empresas.
+                    <p class="card-subtitle">Atualiza cadastros de usu&#225;rios no Monitor para liberar todas as empresas.
                     </p>
                     <div class="card-tags">
                         <span>Desenvolvendo</span>
@@ -971,7 +1038,7 @@
                 </div>
 
                 <div class="carousel-card" data-script="fazedor-de-aef">
-                    <div class="card-icon">📊</div>
+                    <div class="card-icon">&#128202;</div>
                     <h3 class="card-title">Fazedor De Aef</h3>
                     <p class="card-subtitle">Faz AEF.
                     </p>
@@ -985,33 +1052,33 @@
                 </div>
 
                 <div class="carousel-card" data-script="consulta-cclass-econet">
-                    <div class="card-icon">🧾</div>
+                    <div class="card-icon">&#129534;</div>
                     <h3 class="card-title">Consulta Cclass Econet</h3>
-                    <p class="card-subtitle">Consulta tributação na Econet, integrada ao CCLASS.</p>
+                    <p class="card-subtitle">Consulta tributa&#231;&#227;o na Econet, integrada ao CCLASS.</p>
                     <div class="card-tags">
                         <span>Desenvolvendo</span>
                     </div>
                     <div class="card-hover">
-                        <p>CONSULTA TRIBUTAÇÃO DA REFORMA TRIBUTARIA POR NCM NA ECONET</p>
+                        <p>CONSULTA TRIBUTA&#199;&#195;O DA REFORMA TRIBUTARIA POR NCM NA ECONET</p>
                         <a href="#" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="verificador-de-baixas-automaticas-balao-azul">
-                    <div class="card-icon">🧩</div>
-                    <h3 class="card-title">Verificador De Baixas Automaticas Balão Azul</h3>
-                    <p class="card-subtitle">Verificador De Baixas Automaticas Balão Azul.</p>
+                    <div class="card-icon">&#129513;</div>
+                    <h3 class="card-title">Verificador De Baixas Automaticas Bal&#227;o Azul</h3>
+                    <p class="card-subtitle">Verificador De Baixas Automaticas Bal&#227;o Azul.</p>
                     <div class="card-tags">
                         <span>Desenvolvendo</span>
                     </div>
                     <div class="card-hover">
-                        <p>Verificador De Baixas Automaticas Balão Azul</p>
+                        <p>Verificador De Baixas Automaticas Bal&#227;o Azul</p>
                         <a href="#" class="btn-card">Acessar</a>
                     </div>
                 </div>
 
                 <div class="carousel-card" data-script="verificador-de-baixas-de-documentos-do-tareffa">
-                    <div class="card-icon">🧩</div>
+                    <div class="card-icon">&#129513;</div>
                     <h3 class="card-title">Verificador De Baixas De Documentos Do Tareffa</h3>
                     <p class="card-subtitle">Verificador De Baixas De Documentos Do Tareffa.</p>
                     <div class="card-tags">

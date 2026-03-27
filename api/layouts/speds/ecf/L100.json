@@ -1,168 +1,181 @@
 {
-  "registro": {
-    "codigo": "L100",
-    "titulo": "REGISTRO L100: BALANÇO PATRIMONIAL",
-    "bloco_origem": "bloco-l.htm",
-    "ancora": "l100",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-l.htm#l100"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 11,
-    "extraido_em_utc": "2026-03-10T19:31:56.834840+00:00"
+  "sped": "ECF",
+  "registro": "L100",
+  "bloco": "L",
+  "status": "ok",
+  "titulo": "Balanço Patrimonial",
+  "descricao_registro": "Apresenta o balanço patrimonial com base nas contas referenciais para o período de apuração. O saldo inicial pode ser replicado do registro E010/E015 ou preenchido. O saldo final será recuperado do registro K155/K156. Caso o bloco K não possua dados e for SCP (0000.TIP_ECF = 2), o saldo final poderá ser preenchido.",
+  "nivel_hierarquico": "3",
+  "ocorrencia": "0:N",
+  "campos_chave": [
+    "CODIGO"
+  ],
+  "regras_validacao_registro": [
+    "REGRA_COMPATIBILIDADE_L100_E010"
+  ],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 96,
+      "fim": 97
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
-      "descricao": "Texto fixo contendo “L100”.",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
+      "descricao": "Texto fixo contendo “L100”",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"L100\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[L100]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "CODIGO",
-      "descricao": "Código da Conta Referencial (Analíticas e Sintéticas)",
-      "tipo": "C",
-      "tamanho": "50",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código da Conta Referencial",
-        "DOCUMENTAÇÃO": "E043PCM.CLACTA"
-      }
-    },
-    {
-      "numero": "03",
-      "campo": "DESCRICAO",
-      "descricao": "Descrição da Conta Referencial",
+      "pos": 2,
+      "nome": "CODIGO",
+      "rotulo": "Código da Conta Referencial",
+      "descricao": "Código da conta referecial (analíticas e sintéticas)",
       "tipo": "C",
       "tamanho": "-",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Descrição",
-        "DOCUMENTAÇÃO": "E043PCM.DESCTA"
-      }
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "04",
-      "campo": "TIPO",
-      "descricao": "Define o Tipo de Conta:\nS – Sintética\nA – Analítica",
-      "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Conta",
-        "DOCUMENTAÇÃO": "E043PCM.ANASIN"
-      }
-    },
-    {
-      "numero": "05",
-      "campo": "NIVEL",
-      "descricao": "Nível da Conta",
-      "tipo": "N",
-      "tamanho": "3",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Nível da Conta",
-        "DOCUMENTAÇÃO": "E043PCM.NIVCTA"
-      }
-    },
-    {
-      "numero": "06",
-      "campo": "COD_NAT",
-      "descricao": "Natureza da Conta",
-      "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Natureza da Conta",
-        "DOCUMENTAÇÃO": "E043PCM.NATCTA"
-      }
-    },
-    {
-      "numero": "07",
-      "campo": "COD_CTA_SUP",
-      "descricao": "Código da Conta Sintética de nível imediatamente superior.",
+      "pos": 3,
+      "nome": "DESCRICAO",
+      "rotulo": "Descrição",
+      "descricao": "Descrição da conta referencial",
       "tipo": "C",
       "tamanho": "-",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Código conta superior",
-        "DOCUMENTAÇÃO": "E043PCM.CLACTA da conta pai da que está sendo gerada."
-      }
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "08",
-      "campo": "VAL_CTA_REF_INI",
-      "descricao": "Saldo Inicial da Conta Referencial",
-      "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Valor do Saldo Inicial",
-        "DOCUMENTAÇÃO": "Saldo inicial da conta referencial conforme a visão contábil para o período apurado."
-      }
-    },
-    {
-      "numero": "09",
-      "campo": "IND_VAL_CTA_REF_INI",
-      "descricao": "Indicador da situação do saldo inicial:\nD - Devedor\nC – Credor",
+      "pos": 4,
+      "nome": "TIPO",
+      "rotulo": "Tipo de Dados da Linha",
+      "descricao": "Define o tipo dos dados da linha: T – Título: Utilizado como um label separador (Sintética) E – Editavel (Analítica)",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador do Saldo Inicial",
-        "DOCUMENTAÇÃO": "Será gerado conforme indicação da lista dinâmica relacionada ao aglutinador, informada na página do registro em \"Lista Dinâmica da Natureza dos Aglutinadores\" e a natureza do saldo registrado para o aglutinador."
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[T; E]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "10",
-      "campo": "VAL_CTA_REF_FIN",
-      "descricao": "Saldo Final da Conta Referencial\nSomatório da conta no registro K155/K156",
+      "pos": 5,
+      "nome": "NIVEL",
+      "rotulo": "Nível da Conta",
+      "descricao": "Nível da conta.",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Valor do Saldo Final",
-        "DOCUMENTAÇÃO": "Saldo final da conta referencial conforme a visão contábil para o período apurado."
-      }
+      "tamanho": "003",
+      "tamanho_int": 3,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "11",
-      "campo": "IND_ VAL_CTA_REF_FIN",
-      "descricao": "Indicador da situação do saldo final:\nD - Devedor\nC – Credor",
+      "pos": 6,
+      "nome": "COD_NAT",
+      "rotulo": "Natureza da Conta",
+      "descricao": "Natureza da Conta, conforme tabela do Sped",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador do Saldo Final",
-        "DOCUMENTAÇÃO": "Será gerado conforme indicação da lista dinâmica relacionada ao aglutinador, informada na página do registro em \"Lista Dinâmica da Natureza dos Aglutinadores\", a natureza do saldo registrado para o aglutinador e o valor referente ao saldo final da conta referencial para o período."
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
+    },
+    {
+      "pos": 7,
+      "nome": "COD_CTA_SUP",
+      "rotulo": "Código conta superior",
+      "descricao": "Código da conta sintética /grupo de contas de nível imediatamente superior.",
+      "tipo": "C",
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
+    },
+    {
+      "pos": 8,
+      "nome": "VAL_CTA_REF_INI",
+      "rotulo": "Valor do Saldo Inicial",
+      "descricao": "Saldo inicial da conta referencial",
+      "tipo": "NS",
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 9,
+      "nome": "IND_VAL_CTA_REF_INI",
+      "rotulo": "Indicador do Saldo Inicial",
+      "descricao": "Indicador da situação do saldo inicial: D - Devedor C – Credor",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[D; C]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 10,
+      "nome": "VAL_CTA_REF_FIN",
+      "rotulo": "Valor do Saldo Final",
+      "descricao": "Saldo Final da conta referencial Somatório da conta no registro K155/K156",
+      "tipo": "NS",
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": "-",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
+    },
+    {
+      "pos": 11,
+      "nome": "IND_VAL_CTA_REF_FIN",
+      "rotulo": "Indicador do Saldo Final",
+      "descricao": "Indicador da situação do saldo inicial: D - Devedor C – Credor",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[D; C]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     }
-  ]
+  ],
+  "notas_extracao": []
 }

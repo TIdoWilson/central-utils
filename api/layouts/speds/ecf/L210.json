@@ -1,77 +1,83 @@
 {
-  "registro": {
-    "codigo": "L210",
-    "titulo": "REGISTRO L210: INFORMATIVO DE COMPOSIÇÃO DE CUSTOS",
-    "bloco_origem": "bloco-l.htm",
-    "ancora": "l210",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-l.htm#l210"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 4,
-    "extraido_em_utc": "2026-03-10T19:31:56.835836+00:00"
+  "sped": "ECF",
+  "registro": "L210",
+  "bloco": "L",
+  "status": "ok",
+  "titulo": "Informativo da Composição de Custos",
+  "descricao_registro": "Apresenta a composição dos custos dos produtos fabricação própra vendidos e custo dos serviços prestados no período para as empresas que utilizam o inventário permanente.",
+  "nivel_hierarquico": "4",
+  "ocorrencia": "0:N",
+  "campos_chave": [
+    "CODIGO"
+  ],
+  "regras_validacao_registro": [],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 98,
+      "fim": 98
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
-      "descricao": "Texto fixo contendo “L210”.",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
+      "descricao": "Texto fixo contendo “L200”.",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "\"L210\""
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[L210]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "CODIGO",
-      "descricao": "Código da conta de custos (analíticas) conforme tabela dinâmica do Sped.",
+      "pos": 2,
+      "nome": "CODIGO",
+      "rotulo": "Código da Conta de Custos",
+      "descricao": "Código da conta de custos (analíticas) conforme tabela do Sped.",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Código da Conta de Custos",
-        "DOCUMENTAÇÃO": "E669TDL.CODLIN"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": null,
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "03",
-      "campo": "DESCRICAO",
+      "pos": 3,
+      "nome": "DESCRICAO",
+      "rotulo": "Descrição",
       "descricao": "Descrição da conta de custo",
       "tipo": "C",
-      "tamanho": "",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Descrição",
-        "DOCUMENTAÇÃO": "E669TDL.DESLIN"
-      }
+      "tamanho": "-",
+      "tamanho_int": null,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": null,
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "04",
-      "campo": "VALOR",
-      "descricao": "Saldo final da conta antes do encerramento\nO valor deve ser sempre positivo",
+      "pos": 4,
+      "nome": "VALOR",
+      "rotulo": "Valor",
+      "descricao": "Saldo final da conta antes do encerramento O valor deve ser sempre positivo",
       "tipo": "N",
-      "tamanho": "19",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Valor",
-        "DOCUMENTAÇÃO": "E669TDL.VLRLIN"
-      }
+      "tamanho": "019",
+      "tamanho_int": 19,
+      "decimais": "002",
+      "decimais_int": 2,
+      "valores_validos": null,
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     }
+  ],
+  "notas_extracao": [
+    "O sumario do manual apresenta referencia inconsistente para este registro; a secao detalhada esta em 'Registro L210'."
   ]
 }

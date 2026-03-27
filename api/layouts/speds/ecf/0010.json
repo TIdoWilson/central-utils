@@ -1,194 +1,235 @@
 {
-  "registro": {
-    "codigo": "0010",
-    "titulo": "REGISTRO 0010: PARÂMETROS DE TRIBUTAÇÃO",
-    "bloco_origem": "bloco-0.htm",
-    "ancora": "0010",
-    "url_fonte": "https://documentacao.senior.com.br/goup/5.10.3/menu_controladoria/sped/contabil-fiscal-ecf/bloco-0.htm#0010"
-  },
-  "layout": {
-    "cabecalho_colunas": [
-      "Nº",
-      "CAMPO",
-      "RÓTULO",
-      "TIPO",
-      "TAMANHO",
-      "DESCRIÇÃO",
-      "DOCUMENTAÇÃO",
-      "OBRIGATÓRIO"
-    ],
-    "total_campos": 13,
-    "extraido_em_utc": "2026-03-10T19:31:56.786331+00:00"
+  "sped": "ECF",
+  "registro": "0010",
+  "bloco": "0",
+  "status": "ok",
+  "titulo": "Abertura do Arquivo Digital e Identificação da Entidade",
+  "descricao_registro": "Apresenta os parâmetros fiscais que identificam quais blocos e registros a serem preenchidos. Caso a FORMA_TRIB (Campo 05) seja igual “3” (Presumido/Real) ou “4” (Presumido/Real/Arbitrado) e houver opção pelo REFIS (Campo 03), o período tributado pelo lucro real deve ter somente a forma de apuração trimestral (caso em que se deve utilizar “R” em FORMA_TRIB_PER – Campo 08) ou somente a forma de apuração correspondente à anual/estimativa (caso em que se deve utilizar “E” em FORMA_TRIB_PER – Campo 08). O plano de contas referencial a ser utilizado segue as seguintes regras: - Utilizar o plano de contas definido no campo COD_QUALIF_PJ (Campo 07) e OPT_RTT (Campo 15). - Se COD_QUALIF_PJ (Campo 07) não estiver preenchido, verificar o campo APUR_CSLL (Campo 14). - Se APUR_CSLL (Campo 14) for igual a “D” (Desobrigada), não tem plano de contas. - Se APUR_CSLL (Campo 14) for igual a “A” (Anual) ou “T” (Trimestral) utilizar o plano de contas imune e isenta (CSLL) nos períodos correspondentes.",
+  "nivel_hierarquico": "2",
+  "ocorrencia": "1",
+  "campos_chave": [
+    "REG"
+  ],
+  "regras_validacao_registro": [],
+  "fonte": {
+    "arquivo": "MANUAL ECF.pdf",
+    "manual": "MANUAL ECF.pdf",
+    "paginas": {
+      "inicio": 46,
+      "fim": 50
+    }
   },
   "campos": [
     {
-      "numero": "01",
-      "campo": "REG",
-      "descricao": "Texto fixo contendo 0010.",
+      "pos": 1,
+      "nome": "REG",
+      "rotulo": "Tipo de Registro",
+      "descricao": "Texto fixo contendo “0010”.",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Registro",
-        "DOCUMENTAÇÃO": "0010"
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[0010]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "02",
-      "campo": "HASH_ECF_ANTERIOR",
-      "descricao": "Hashcode da ECF do período imediatamente anterior a ser recuperado (Escrituração da qual os saldos da parte B do e-LALUR foram recuperados). Campo preenchido automaticamente pelo sistema.",
+      "pos": 2,
+      "nome": "HASH_EFD_IRPJ_ANTERIOR",
+      "rotulo": "Hashcode da ECF do Período Imediatamente Antrerior",
+      "descricao": "Hashcode da ECF do período imediatamente anterior a ser recuperado. (Escrituração da qual os saldos da parte B do e-LALUR foram recuperados). Campo preenchido automaticamente pelo sistema.",
       "tipo": "C",
-      "tamanho": "40",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Hashcode da ECF do Período Imediatamente\nAnterior",
-        "DOCUMENTAÇÃO": "Campo preenchido pelo PVA."
-      }
+      "tamanho": "040",
+      "tamanho_int": 40,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "-",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "03",
-      "campo": "OPT_REFIS",
-      "descricao": "Indicador de Optante pelo Refis: \nS - Sim;\nN – Não. \nA pessoa jurídica deve assinalar este campo quando for optante pelo Programa de Recuperação Fiscal (Refis).\n Atenção: este campo só deve ser assinalado pela pessoa jurídica optante pelo Programa de Recuperação Fiscal (Refis) instituído pela Lei nº 9.964, de 10 de abril de 2000. A pessoa jurídica que for apenas optante pelo Parcelamento Especial (Paes) de que trata a Lei nº 10.684, de 30 de maio de 2003, não deve assinalar este campo.",
+      "pos": 3,
+      "nome": "OPT_REFIS",
+      "rotulo": "Indicador de Optante pelo Refis",
+      "descricao": "Indicador de Optante pelo Refis S - Sim N – Não",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Indicador de Optante pelo Refis",
-        "DOCUMENTAÇÃO": "Atribuído automaticamente pelo ERP no caso de período do REFIS cadastrado na tabela E070PRF coincidir com o período de geração da ECF."
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[S; N]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "04",
-      "campo": "FORMA_TRIB",
-      "descricao": "Forma de tributação no período: \n1 – Lucro Real;\n2 – Lucro Real/Arbitrado;\n3 – Lucro Presumido / Real;\n4 – Lucro Presumido / Real /Arbitrado;\n5 – Lucro Presumido;\n6 – Lucro Arbitrado;\n7 – Lucro Presumido/Arbitrado;\n8 – Imune de IRPJ;\n9 – Isento do IRPJ.",
+      "pos": 4,
+      "nome": "OPT_PAES",
+      "rotulo": "Indicador de Optante pelo Paes",
+      "descricao": "Indicador de Optante pelo Paes S - Sim N – Não",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Sim",
-      "colunas_extras": {
-        "RÓTULO": "Forma de Tributação do Lucro",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[S; N]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "05",
-      "campo": "FORMA_APUR",
-      "descricao": "Indicador do Período de Apuração do IRPJ e da CSLL: \n T – Trimestral;\nA – Anual.",
+      "pos": 5,
+      "nome": "FORMA_TRIB",
+      "rotulo": "Forma de Tributação do Lucro",
+      "descricao": "Forma de tributação no período 1 – Lucro Real 2 – Lucro Real/Arbitrado 3 – Lucro Presumido / Real 4 – Lucro Presumido / Real /Arbitrado 5 – Lucro Presumido 6 – Lucro Arbitrado 7 – Lucro Presumido/Arbitrado 8 – Imune de IRPJ 9 – Isento do IRPJ",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Período de Apuração do IRPJ e CSLL",
-        "DOCUMENTAÇÃO": "Periodicidade definida para os impostos (E055PAR.CODPRI) apurados. Na tela de entrada está definida na guia Forma de cálculo."
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[1; 2; 3; 4; 5; 6; 7; 8; 9]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "06",
-      "campo": "COD_QUALIF_PJ",
-      "descricao": "Qualificação da Pessoa Jurídica: \n 01 – PJ em Geral;\n02 – PJ Componente do Sistema Financeiro;\n03 – Sociedades Seguradoras, de Capitalização ou Entidade Aberta de Previdência Complementar. \n Atenção: Não preencher no caso de imunes e isentas (preencher o 0010.TIP_ENT).",
+      "pos": 6,
+      "nome": "FORMA_APUR",
+      "rotulo": "Período de Apuração do IRPJ e CSLL",
+      "descricao": "Indicador do período de apuração: T – Trimestral A – Anual",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[T; A]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
+    },
+    {
+      "pos": 7,
+      "nome": "COD_QUALIF_PJ",
+      "rotulo": "Qualificação da Pessoa Jurídica",
+      "descricao": "Qualificação da pessoa jurídica: 01 – PJ em Geral 02 – PJ Componente do Sistema Financeiro 03 – Sociedades Seguradoras, de Capitalização ou Entidade Aberta de Previdência Complementar 04 – Partidos Políticos 05 – Demais Entidades de Previdência",
       "tipo": "N",
-      "tamanho": "2",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Qualificação da Pessoa Jurídica",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "002",
+      "tamanho_int": 2,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[01; 02; 03; 04; 05]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "07",
-      "campo": "FORMA_TRIB_PER",
-      "descricao": "Forma de tributação no período considerando para cada trimestre no formato XXXX onde X é igual a:\n 0 - ZERO (não informado – trimestre não compreendido no período de apuração);\nR (Real);\nP (Presumido);\nA (Arbitrado);\nE (Real Estimativa).",
+      "pos": 8,
+      "nome": "FORMA_TRIB_PER",
+      "rotulo": "Forma de Tributação no Período",
+      "descricao": "Forma de tributação no período considerando para cada trimestre no formato XXXX onde X é igual a: 0 - ZERO (não informado – trimestre não compreendido no período de apuração) R(Real) P (Presumido) A (Arbitrado) E (Real Estimativa)",
       "tipo": "C",
-      "tamanho": "4",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Forma de Tributação no Período",
-        "DOCUMENTAÇÃO": "Campo apresentado na tela de entrada e definido a partir das informações constantes na guia Forma de cálculo."
-      }
+      "tamanho": "004",
+      "tamanho_int": 4,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[R; P; A; E; 0]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "08",
-      "campo": "MES_BAL_RED",
-      "descricao": "Forma de Apuração da Estimativa Mensal: Indicação da forma de apuração da estimativa mensal, quando 0010.FORMA_APUR = A, considerando o formato XXXXXXXXXXXX onde X é referente a um mês e é igual a:\n 0 – Fora do Período: Fora do período de apuração/ Forma de tributação diferente de R ou E;\nE – Receita Bruta: Estimativa com base na receita bruta e acréscimos;\nB – Balanço ou Balancete: Estimativa com base no balanço ou balancete de suspensão/redução.\n Os meses correspondentes a trimestres marcados em 0010.FORMA_TRIB_PER como diferente de R e E devem estar preenchidos com zero 0.\nOs meses correspondentes a trimestres marcados em 0010.FORMA_TRIB_PER iguais a R ou E devem estar preenchidos com E ou B.",
+      "pos": 9,
+      "nome": "MES_BAL_RED",
+      "rotulo": "Indicação da Forma de Apuração da Estimativa",
+      "descricao": "Indicação da forma de apuração da estimativa mensal, quando FORMA_APUR (Campo 06) = “A”, considerando o formato XXXXXXXXXXXX onde X é referente a um mês e é igual a: 0 – Fora do Período: Fora do período de apuração/ Forma de tributação diferente de “R” ou “E” E – Receita Bruta: Estimativa com base na receita bruta e acréscimos B – Balanço ou Balancete: Estimativa com base no balanço ou balancete de suspensão/redução Os meses correspondentes a trimestres marcados no campo FORMA_TRIB_PER (Campo 08) como diferente de “R” e “E” devem estar preenchidos com zero “0”. Os meses correspondentes a trimestres marcados no campo FORMA_TRIB_PER (Campo 08) iguais a “R” ou “E” devem estar preenchidos com “E” ou “B”.",
       "tipo": "C",
-      "tamanho": "12",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Indicação da Forma de Apuração da Estimativa",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada a partir das informações constantes na guia Forma de cálculo."
-      }
+      "tamanho": "012",
+      "tamanho_int": 12,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[0; E; B]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "09",
-      "campo": "TIP_ESC_PRE",
-      "descricao": "Escrituração:\nC – Obrigada a entregar a ECD ou entrega facultativa (haverá recuperação dos dados).\nL – Não obrigada a entregar a ECD/Livro Caixa (Opção do Lucro Presumido - parágrafo único do art. 45 da Lei nº 8.981, de 1995).\nAtenção:\n A hipótese prevista no §1o do art. 129, Instrução Normativa no 1.515/2014 prevê que a pessoa jurídica que mantiver escrituração contábil, na forma da legislação comercial, deverá controlar os recebimentos de suas receitas em conta específica, na qual, em cada lançamento, será indicada a nota fiscal a que corresponder o recebimento.\n A opção C contábil corresponde às pessoas jurídicas tributadas pelo lucro presumido ou imunes ou isentas que estão obrigadas a entregar a ECD (Escrituração Contábil Digital), de acordo com a Instrução Normativa no 1.420/2013.",
+      "pos": 10,
+      "nome": "BALANCO_IGU_AL",
+      "rotulo": "Balanço de Suspensão/Redução do Último Mês do Período Tributado pelo Lucro Real é Igual ao Balanço Anual",
+      "descricao": "Indica se o balanço de suspensão/redução do úlimo mês do período tributado pelo lucro real é igual ao balanço anual. Se os balanços forem iguais, o contribuinte não deverá informar o período PER_APUR (Campo 04) igual a “A00” no bloco “K” e “L”. Preencher somente quando MES_BAL_RED (Campo 09) [último mês diferente de “0”] estiver marcado com “B”",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Escrituração",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[S; N]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     },
     {
-      "numero": "10",
-      "campo": "TIP_ENT",
-      "descricao": "Tipo de Pessoa Jurídica Imune ou Isenta: \n 01 – Assistência Social;\n02 – Educacional;\n03 – Sindicato de Trabalhadores;\n04 – Associação Civil;\n05 – Cultural;\n06 – Entidade Fechada de Previdência Complementar;\n07 – Filantrópica;\n08 – Sindicato;\n09 – Recreativa;\n10 – Científica;\n11 – Associação de Poupança e Empréstimo;\n12 – Entidade Aberta de Previdência Complementar (Sem Fins Lucrativos);\n13 – Fifa e Entidades Relacionadas;\n14 – CIO e Entidades Relacionadas;\n15 – Partidos Políticos;\n99 – Outras. \n Observação: esse campo é obrigatório para 0010.FORMA_TRIB igual a 8 (Imune do IRPJ) ou 9 (Isenta do IRPJ).",
+      "pos": 11,
+      "nome": "TIP_ESC_PRE",
+      "rotulo": "Tipo de Escrituração",
+      "descricao": "Escrituração: L - Livro Caixa C – Contábil Preencher somente se FORMA_TRIB (Campo 05) = “5” ou “7”",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[L; C]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
+    },
+    {
+      "pos": 12,
+      "nome": "TIP_ENT",
+      "rotulo": "Tipo de Entidade da Imune ou Isenta",
+      "descricao": "Tipo de Entidade: 01 – Assistência Social 02 – Educacional 03 – Sindicato de Trabalhadores 04 – Associação Civil 05 – Cultural 06 – Entidade Fechada de Previdência Complementar 07 – Filantrópica 08 – Sindicato 09 – Recreativa 10 – Científica 11 – Associação de Poupança e Empréstimo 12 – Entidade Aberta de Previdência Complementar (Sem Fins Lucrativos) 13 – Fifa e Entidades Relacionadas 14 – CIO e Entidades Relacionadas 99 – Outras. SE FORM_TRIB (Campo 05) = “8” ou “9”, ENTÃO TIP_ENT (Campo 12) é obrigatório. SENÃO, não preencher.",
       "tipo": "N",
-      "tamanho": "2",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Tipo de Pessoa Jurídica Imune ou Isenta",
-        "DOCUMENTAÇÃO": "Recebe o valor do campo Tipo Pessoa Jurídica Imune ou Isenta da tela F070FEF."
-      }
+      "tamanho": "002",
+      "tamanho_int": 2,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[01; 02; 03; 04; 05; 06; 07; 08; 09; 10; 11; 12; 13; 14; 99]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "11",
-      "campo": "FORMA_APUR_I",
-      "descricao": "Apuração do IRPJ para Imunes ou Isentas: Existência ou não de atividade não abrangida pela imunidade ou isenção e tributada pelo IRPJ (para imunes ou isentas): \n A – Anual;\nT – Trimestral;\nD – Desobrigada.",
+      "pos": 13,
+      "nome": "FORMA_APUR_I",
+      "rotulo": "Existência de Atividade Tributada pelo IRPJ e CSLL para Imunes ou Isentas",
+      "descricao": "Existência de atividade não abrangida pela imunidade ou isenção tributada pela IRPJ e CSLL: A - Anual T - Trimestral D – Desobrigada",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Existência de Atividade Tributada pelo IRPJ para Imunes ou Isentas",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[A; T; D]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "12",
-      "campo": "APUR_CSLL",
-      "descricao": "Apuração da CSLL para Imunes ou Isentas:\n A – Anual, se optou pela apuração da CSLL sobre a base de cálculo estimada, facultada a opção pelo levantamento de balanço ou balancete de suspensão ou redução;\nT – Trimestral, no caso de ter adotado a apuração trimestral da CSLL;\nD – Desobrigada, na hipótese de pessoa jurídica imune ou isenta da CSLL.\n Atenção:\n1) As entidades sem fins lucrativos de que trata o inciso I do art. 12 do Decreto nº 3.048, de 6 de maio de 1999, que não se enquadram na imunidade e isenção da Lei nº 9.532, de 10 de dezembro de 1997, estão sujeitas à CSLL, devendo apurar a base de cálculo e a contribuição devida nos termos da legislação comercial.\n2) As associações de poupança e empréstimo devem apurar a contribuição social sobre o lucro líquido.\n3) São isentas da CSLL as entidades fechadas de previdência complementar, relativamente aos fatos geradores ocorridos a partir de 1º de janeiro de 2002.\n4) As entidades sujeitas a planificação contábil própria apuram a CSLL de acordo com essa planificação.\nObservação: Este campo é obrigatório para 0010.FORMA_TRIB igual a 8 (Imune do IRPJ) ou 9 (Isenta do IRPJ).",
+      "pos": 14,
+      "nome": "APUR_CSLL",
+      "rotulo": "Apuração da CSLL para Imunes e Isentas",
+      "descricao": "Apuração da CSLL para imunes ou isentas: A - Anual T – Trimestral D – Desobrigada SE FORM_TRIB (Campo 05) = “8” ou “9”, ENTÃO APUR_CSLL (Campo 14) é obrigatório. SENÃO, não preencher.",
       "tipo": "C",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Apuração da CSLL para Imunes e Isentas",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[A; T; D]",
+      "obrigatorio": false,
+      "obrigatorio_raw": "Não"
     },
     {
-      "numero": "13",
-      "campo": "IND_REC_RECEITA",
-      "descricao": "Critério de reconhecimento de receitas para empresas tributadas\npelo Lucro Presumido:\n1 - Regime de caixa\n2 - Regime de competência",
-      "tipo": "N",
-      "tamanho": "1",
-      "decimais": "",
-      "obrigatorio": "Não",
-      "colunas_extras": {
-        "RÓTULO": "Indicativo de reconhecimento de receita",
-        "DOCUMENTAÇÃO": "Campo definido na tela de entrada."
-      }
+      "pos": 15,
+      "nome": "OPT_RTT",
+      "rotulo": "Optante pelo RTT no Ano- Calendário 2014 SE FORMA_TRIB (Campo 05) = “4” E OPT_REFIS (Campo 03) = \"S\" E FORMA_APUR (Campo 06) = “T”, ENTÃO X = “0”, “A”, “R” ou “P” SE FORMA_TRIB (Campo 05) = “5” , ENTÃO X = “0” ou “P” SE FORMA_TRIB (Campo 05) = “6”, ENTÃO X = “0” ou “A” SE FORMA_TRIB (Campo 05) = “7”, ENTÃO X = “0”, “A” ou “P” SE FORMA_TRIB (Campo 05) = “8”, ENTÃO não preencher SE FORMA_TRIB (Campo 05) = “9”, ENTÃO não preencher REGRA_TRIBUT_PER_R_E: Verifica se os valores “R” e “E” aparecem simultaneamente em FORMA_TRIB_PER (Campo 08). REGRA_PRESUMIDO_PRIMEIRO: Verifica, quando aparecerem “R”, “E” ou “P” em FORMA_TRIB_PER (Campo 08), se o “P” aparece primeiro. REGRA_FORMA_TRIB_EXISTENTE: Verifica as regras abaixo: FORMA_TRIB (Campo 05) = “2” E FORMA_TRIB_PER (Campo 08) não possui “R” OU não possui “A” OU FORMA_TRIB (Campo 05) = “3” E FORMA_TRIB_PER (Campo 08) não possui “P” OU não possui “R” OU FORMA_TRIB (Campo 05) = “4” E FORMA_TRIB_PER (Campo 08) não possui “P” OU não possui “R” ou não possui “A” OU FORMA_TRIB (Campo 05) = “7” e FORMA_TRIB_PER (Campo 08) não possui “P” OU não possui “A” REGRA_FORM_TRIB_FORA_PERIODO: Verifica se os trimestres fora do período de escrituração são do tipo “0”.",
+      "descricao": "Optante pelo RTT no ano-calendário de 2014 Erro Erro Erro Erro",
+      "tipo": "C",
+      "tamanho": "001",
+      "tamanho_int": 1,
+      "decimais": "-",
+      "decimais_int": null,
+      "valores_validos": "[S; N]",
+      "obrigatorio": true,
+      "obrigatorio_raw": "Sim"
     }
-  ]
+  ],
+  "notas_extracao": []
 }
