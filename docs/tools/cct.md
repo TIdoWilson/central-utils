@@ -34,6 +34,15 @@ Consulta convencoes coletivas por nome, vigencia, data-base, abrangencia e abran
 - **Script MTE:** `data/cct/MTE.py`
 - **Script LEITOR:** `data/cct/LEITOR_CCT.py`
 
+## Variaveis de Ambiente
+
+- `CCT_SMTP_HOST`, `CCT_SMTP_PORT`, `CCT_SMTP_USER` e `CCT_SMTP_PASS` controlam o SMTP do alerta automatico.
+- `CCT_EMAIL_FROM` define o remetente exibido no envio.
+- `CCT_SITE_URL` define o link incluido nos e-mails gerados.
+- `CCT_EMAIL_TO` e `CCT_EMAIL_CC` sao usados no script de teste de envio.
+- `CCT_ERROR_RECIPIENT` recebe os erros do processo.
+- Se `CCT_SMTP_PASS` nao estiver definido, o backend tenta reaproveitar `EMAIL_PASS` para nao quebrar o fluxo atual.
+
 ## Comportamento de Atualizacao
 
 - A listagem principal usa paginacao de 50 itens.
@@ -74,4 +83,4 @@ Consulta convencoes coletivas por nome, vigencia, data-base, abrangencia e abran
 - **Muitos cards com status indisponivel:** sintoma: etiquetas de vigencia exibiam `Status indisponivel` mesmo com periodo preenchido. Causa provavel: parser de vigencia nao cobria formatos como `01º de ...` e `dd/mm/aaaa`. Solucao: ampliar parser para datas com ordinal e barras, recalcular status por periodo em tempo real e filtrar por base no dia atual.
 - **Historico completo vazio:** verificar se houve execucao do MTE e se `data/cct/historico_cct.log` foi atualizado.
 - **Download indisponivel:** confirmar se o DOC existe em `data/cct/docs` com o mesmo nome-base do JSON.
-- **E-mail nao envia:** confirmar `CCT_SMTP_HOST`, `CCT_SMTP_PORT`, `CCT_SMTP_USER`, `CCT_SMTP_PASS` e se `data/cct/email.txt` tem destinatarios.
+- **E-mail nao envia:** confirmar `CCT_SMTP_HOST`, `CCT_SMTP_PORT`, `CCT_SMTP_USER`, `CCT_SMTP_PASS` ou `EMAIL_PASS`, `CCT_SITE_URL` e se `data/cct/email.txt` tem destinatarios.

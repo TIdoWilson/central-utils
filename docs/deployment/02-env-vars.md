@@ -161,6 +161,24 @@ EMAIL_ON_ERROR=true
 EMAIL_ADMIN=admin@empresa.com
 ```
 
+### CCT e Parcelamentos
+
+```env
+# CCT SMTP e notificacoes
+CCT_SMTP_HOST=smtp.example.invalid
+CCT_SMTP_PORT=465
+CCT_SMTP_USER=smtp-user@example.invalid
+CCT_SMTP_PASS=sua_senha_smtp_ou_reaproveite_EMAIL_PASS
+CCT_EMAIL_FROM=smtp-user@example.invalid
+CCT_SITE_URL=https://seu-dominio/cct
+CCT_EMAIL_TO=recipient@example.invalid
+CCT_EMAIL_CC=cc@example.invalid
+CCT_ERROR_RECIPIENT=recipient@example.invalid
+
+# Importador de planilha de parcelamentos
+PARCELAMENTOS_WORKBOOK_PATH=./data/parcelamentos/LISTA PARCELAMENTOS.xlsx
+```
+
 ### Sentry (Error Tracking - Opcional)
 
 ```env
@@ -254,6 +272,20 @@ EMAIL_USER=seu-email@gmail.com
 EMAIL_PASS=sua-senha-app
 EMAIL_ON_COMPLETE=true
 EMAIL_ADMIN=admin@empresa.com
+
+# =========================
+# CCT / PARCELAMENTOS
+# =========================
+CCT_SMTP_HOST=smtp.example.invalid
+CCT_SMTP_PORT=465
+CCT_SMTP_USER=smtp-user@example.invalid
+CCT_SMTP_PASS=sua_senha_smtp_ou_reaproveite_EMAIL_PASS
+CCT_EMAIL_FROM=smtp-user@example.invalid
+CCT_SITE_URL=https://seu-dominio/cct
+CCT_EMAIL_TO=recipient@example.invalid
+CCT_EMAIL_CC=cc@example.invalid
+CCT_ERROR_RECIPIENT=recipient@example.invalid
+PARCELAMENTOS_WORKBOOK_PATH=./data/parcelamentos/LISTA PARCELAMENTOS.xlsx
 ```
 
 ---

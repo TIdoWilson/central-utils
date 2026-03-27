@@ -89,16 +89,46 @@ function createCctEmailService(deps = {}) {
       || process.env.CCT_EMAIL_LIST_PATH
       || path.join(projectRoot, 'data', 'cct', 'email.txt'),
   );
-  const host = safeString(deps.host || process.env.CCT_SMTP_HOST || 'smtp.example.invalid');
-  const port = Number(deps.port || process.env.CCT_SMTP_PORT || 465);
+  const host = safeString(
+    deps.host
+      || process.env.CCT_SMTP_HOST
+      || process.env.EMAIL_HOST
+      || '',
+  );
+  const port = Number(
+    deps.port
+      || process.env.CCT_SMTP_PORT
+      || process.env.EMAIL_PORT
+      || 0,
+  );
   const secure = deps.secure === undefined
     ? Number(port) === 465
     : !!deps.secure;
-  const user = safeString(deps.user || process.env.CCT_SMTP_USER || '');
-  const pass = safeString(deps.pass || process.env.CCT_SMTP_PASS || '');
-  const from = safeString(deps.from || process.env.CCT_EMAIL_FROM || user);
+  const user = safeString(
+    deps.user
+      || process.env.CCT_SMTP_USER
+      || process.env.EMAIL_USER
+      || '',
+  );
+  const pass = safeString(
+    deps.pass
+      || process.env.CCT_SMTP_PASS
+      || process.env.EMAIL_PASS
+      || '',
+  );
+  const from = safeString(
+    deps.from
+      || process.env.CCT_EMAIL_FROM
+      || process.env.EMAIL_FROM
+      || user,
+  );
   const siteUrl = safeString(deps.siteUrl || process.env.CCT_SITE_URL || '');
-  const errorRecipient = safeString(deps.errorRecipient || process.env.CCT_ERROR_RECIPIENT || '');
+  const errorRecipient = safeString(
+    deps.errorRecipient
+      || process.env.CCT_ERROR_RECIPIENT
+      || process.env.EMAIL_ADMIN
+      || '',
+  );
   const enabled = !!(host && port && user && pass);
 
   const transporter = enabled

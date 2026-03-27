@@ -40,7 +40,6 @@ async function main() {
   const emailService = createCctEmailService({
     projectRoot: APP_ROOT,
     emailListPath: path.join(APP_ROOT, 'data', 'cct', 'email.txt'),
-    siteUrl: process.env.CCT_SITE_URL || '',
   });
 
   const intakeService = createCctIntakeService({

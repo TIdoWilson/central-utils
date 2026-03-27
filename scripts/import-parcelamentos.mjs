@@ -12,6 +12,7 @@ const { Pool } = pg;
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
 const PROJECT_ROOT = path.resolve(path.dirname(SCRIPT_PATH), '..');
 const DEFAULT_WORKBOOK = String(process.env.PARCELAMENTOS_WORKBOOK_PATH || '').trim()
+***REMOVED***
 const OUTPUT_DIR = path.join(PROJECT_ROOT, 'data', 'parcelamentos');
 const OUTPUT_JSON = path.join(OUTPUT_DIR, 'parcelamentos.import.json');
 const OUTPUT_SQL = path.join(OUTPUT_DIR, 'parcelamentos.import.sql');
@@ -248,7 +249,7 @@ async function writePreviewFiles(payload) {
   fs.writeFileSync(OUTPUT_JSON, JSON.stringify(payload, null, 2), 'utf8');
 
   const sql = [];
-  sql.push('-- Preview gerado a partir de LISTA PARCELAMENTOS.xlsx');
+  sql.push('-- Preview gerado a partir da planilha de parcelamentos');
   sql.push('-- Este arquivo pode ser aplicado manualmente quando o Postgres local estiver disponível.');
   sql.push('BEGIN;');
   sql.push('TRUNCATE TABLE parcelamentos_impostos RESTART IDENTITY;');

@@ -23,15 +23,13 @@ async function main() {
   const to = readArg('to', process.env.CCT_EMAIL_TO || '');
   const cc = readArg('cc', process.env.CCT_EMAIL_CC || '');
 
-  const emailService = createCctEmailService({
-    siteUrl: process.env.CCT_SITE_URL || '',
-    to,
-    cc,
-  });
+  const emailService = createCctEmailService({});
 
   await emailService.verify();
   const result = await emailService.sendTestEmail({
     subject: 'CCT - Teste de SMTP',
+    to,
+    cc,
     text: [
       'Teste de conexao SMTP concluido com sucesso.',
       '',

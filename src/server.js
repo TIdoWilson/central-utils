@@ -202,7 +202,6 @@ const parcelamentosService = createParcelamentosService({ pool });
 const cctEmailService = createCctEmailService({
   projectRoot: path.join(__dirname, '..'),
   emailListPath: path.join(__dirname, '..', 'data', 'cct', 'email.txt'),
-  siteUrl: process.env.CCT_SITE_URL || '',
 });
 const cctIntakeService = createCctIntakeService({
   projectRoot: path.join(__dirname, '..'),

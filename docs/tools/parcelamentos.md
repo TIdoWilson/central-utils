@@ -46,6 +46,8 @@ indicação de débito em conta e observações.
 - O botão `Importar planilha` substitui toda a base atual pelos dados do arquivo Excel enviado.
 - O botão `Editar` abre o mesmo popup em modo de alteração, mantendo o débito em conta travado.
 - A importação aceita arquivos `.xlsx` e `.xls`.
+- O script local `scripts/import-parcelamentos.mjs` lê o caminho padrão de `PARCELAMENTOS_WORKBOOK_PATH`.
+- Se a variável não estiver definida, o importador procura `data/parcelamentos/LISTA PARCELAMENTOS.xlsx`.
 
 ## Troubleshooting rápido
 - **401/403:** conferir sessão do usuário e permissão RBAC.
