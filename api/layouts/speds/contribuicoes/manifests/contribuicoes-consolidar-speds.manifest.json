@@ -1,0 +1,50 @@
+{
+  "templateId": "contribuicoes-consolidar-speds",
+  "spedType": "contribuicoes",
+  "operation": "update",
+  "classification": "local-only",
+  "inputs": [
+    {
+      "key": "sped_matriz",
+      "label": "SPED da matriz",
+      "required": true,
+      "multiple": false,
+      "acceptedExtensions": [".txt"],
+      "help": "Arquivo SPED EFD-Contribuicoes da matriz."
+    },
+    {
+      "key": "speds_filiais",
+      "label": "SPEDs das filiais",
+      "required": true,
+      "multiple": true,
+      "acceptedExtensions": [".txt"],
+      "help": "Um ou mais arquivos TXT das filiais."
+    }
+  ],
+  "fields": [],
+  "targets": {
+    "records": ["0000", "0990", "9999"],
+    "relationshipsFile": "api/layouts/speds/contribuicoes/relationships/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": false,
+    "onMissingDependency": "skip",
+    "onOrphanDetected": "cleanup"
+  },
+  "validators": {
+    "globalRelationshipValidation": false,
+    "duplicateKeyCheck": false,
+    "hierarchyCheck": false,
+    "rulesFile": "api/layouts/speds/contribuicoes/relationships/reference_domains.validator.json"
+  },
+  "totalizers": [],
+  "output": {
+    "formats": ["txt"],
+    "filenamePattern": "{matriz}_CONSOLIDADO.txt"
+  },
+  "dryRun": {
+    "enabled": false,
+    "reportChanges": true,
+    "requireConfirmation": false
+  }
+}

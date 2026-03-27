@@ -1,6 +1,6 @@
 ﻿{
   "version": "1.0",
-  "updatedAt": "2026-03-25",
+  "updatedAt": "2026-03-27",
   "templates": [
     {
       "id": "contribuicoes-conferidor-xml-nfe",
@@ -68,6 +68,40 @@
         }
       ],
       "outputFormats": ["txt", "xlsx"]
+    },
+    {
+      "id": "contribuicoes-consolidar-speds",
+      "spedType": "contribuicoes",
+      "title": "Contribuicoes - Consolidar SPEDs",
+      "description": "Combina o SPED da matriz com um ou mais SPEDs de filiais, preservando blocos e recalculando totalizadores. Execucao local-only.",
+      "script": {
+        "entry": "W:/DOCUMENTOS ESCRITORIO/INSTALACAO SISTEMA/python/Combinar SPEDs Matriz + Filiais/Combinador_SPEDs.py",
+        "source": "W:/DOCUMENTOS ESCRITORIO/INSTALACAO SISTEMA/python/Combinar SPEDs Matriz + Filiais/Combinador_SPEDs.py"
+      },
+      "manifest": {
+        "path": "api/layouts/speds/contribuicoes/manifests/contribuicoes-consolidar-speds.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
+      },
+      "inputs": [
+        {
+          "key": "sped_matriz",
+          "label": "SPED da matriz",
+          "required": true,
+          "multiple": false,
+          "acceptedExtensions": [".txt"],
+          "help": "Arquivo base da matriz que recebera a consolidacao."
+        },
+        {
+          "key": "speds_filiais",
+          "label": "SPEDs das filiais",
+          "required": true,
+          "multiple": true,
+          "acceptedExtensions": [".txt"],
+          "help": "Envie um ou mais arquivos TXT das filiais."
+        }
+      ],
+      "fields": [],
+      "outputFormats": ["txt"]
     },
     {
       "id": "contribuicoes-corrigir-participantes-sped",

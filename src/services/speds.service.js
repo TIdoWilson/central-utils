@@ -705,6 +705,15 @@ module.exports = function createSpedsService(deps = {}) {
     };
   }
 
+  async function copyUploadedFileToPath(fileMeta, destinationPath) {
+    if (!fileMeta?.path) {
+      throw createValidationError('Arquivo temporario nao encontrado para preparar a execucao do template.');
+    }
+    ensureDir(path.dirname(destinationPath));
+    await fs.promises.copyFile(fileMeta.path, destinationPath);
+    return destinationPath;
+  }
+
   function extractRegCode(line) {
     const text = String(line || '').trim();
     if (!text.startsWith('|')) return '';
@@ -1289,6 +1298,45 @@ module.exports = function createSpedsService(deps = {}) {
     });
   }
 
+  async function runContribuicoesConsolidarSpedsTemplate({ template, filesByInput, outputDir }) {
+    const matrizFile = getSingleInputFile(filesByInput, 'sped_matriz');
+    const filialFiles = getInputFiles(filesByInput, 'speds_filiais');
+
+    if (!matrizFile?.path) {
+      throw createValidationError('Arquivo da matriz nao encontrado para consolidacao dos SPEDs.');
+    }
+    if (filialFiles.length === 0) {
+      throw createValidationError('Envie ao menos um SPED de filial para consolidacao.');
+    }
+
+    const stagingDir = path.join(outputDir, 'inputs');
+    const matrizOriginalName = path.basename(matrizFile.originalName || '') || 'sped_matriz.txt';
+    const matrizLocalPath = path.join(stagingDir, 'matriz', matrizOriginalName);
+    await copyUploadedFileToPath(matrizFile, matrizLocalPath);
+
+    const filialLocalPaths = [];
+    for (const [index, filialFile] of filialFiles.entries()) {
+      const filialOriginalName = path.basename(filialFile.originalName || '') || `filial_${String(index + 1).padStart(2, '0')}.txt`;
+      const filialLocalPath = path.join(
+        stagingDir,
+        'filiais',
+        `${String(index + 1).padStart(2, '0')}_${filialOriginalName}`
+      );
+      await copyUploadedFileToPath(filialFile, filialLocalPath);
+      filialLocalPaths.push(filialLocalPath);
+    }
+
+    const outputPath = path.join(outputDir, path.basename(matrizLocalPath));
+    const pyArgs = [matrizLocalPath, ...filialLocalPaths, '--out', outputDir, '--overwrite'];
+
+    return executeTemplateScript({
+      template,
+      scriptArgs: pyArgs,
+      outputPath,
+      failureLabel: 'Falha ao processar a consolidacao de SPEDs de Contribuicoes.',
+    });
+  }
+
   async function runIcmsAjustarCfopTemplate({ template, filesByInput, fields, outputDir }) {
     const spedFile = getSingleInputFile(filesByInput, 'sped_txt');
     if (!spedFile?.path) {
@@ -1532,6 +1580,7 @@ module.exports = function createSpedsService(deps = {}) {
 
   const TEMPLATE_RUNNERS = {
     'contribuicoes-conferidor-xml-nfe': runContribuicoesConferidorXmlTemplate,
+    'contribuicoes-consolidar-speds': runContribuicoesConsolidarSpedsTemplate,
     'contribuicoes-validador-sped': runContribuicoesValidadorSpedTemplate,
     'icms-ajustar-cfop-1152': runIcmsAjustarCfopTemplate,
     'icms-comparador-sped-relatorio': runIcmsComparadorTemplate,
