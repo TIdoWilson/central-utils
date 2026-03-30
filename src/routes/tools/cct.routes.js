@@ -54,6 +54,23 @@ module.exports = function createCctRoutes(deps = {}) {
     }
   });
 
+  router.get('/status', async (req, res) => {
+    try {
+      const status = typeof intakeService?.getStatus === 'function'
+        ? intakeService.getStatus()
+        : {};
+      await auditLog?.(req, 'tool_cct_status', 'ok', {
+        running: !!status?.running,
+        scheduled: !!status?.scheduled,
+        currentCnpj: String(status?.currentCnpj || ''),
+      });
+      return res.json({ ok: true, status });
+    } catch (error) {
+      await auditLog?.(req, 'tool_cct_status', 'error', { error: String(error?.message || error) });
+      return res.status(500).json({ ok: false, error: 'Erro ao consultar o status do processamento.' });
+    }
+  });
+
   router.get('/', async (req, res) => {
     try {
       const result = await service.listConventions(req.query || {});

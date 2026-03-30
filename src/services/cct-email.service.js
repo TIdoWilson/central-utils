@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const nodemailer = require('nodemailer');
 
+const DEFAULT_ALERT_RECIPIENT = 'contabil20@wilsonlopes.com.br';
+
 function safeString(value) {
   return String(value || '').trim();
 }
@@ -21,14 +23,17 @@ function formatDateBR(value) {
   return date.toLocaleDateString('pt-BR');
 }
 
-function formatConventionBlock(item) {
-  const prefixo = safeString(item?.prefixo) || 'Convencao sem prefixo';
-  const numeroRegistro = safeString(item?.numeroRegistro) || safeString(item?.numero_registro) || '-';
-  const sindicatos = Array.isArray(item?.sindicatosCelebrantes)
+function getConventionSindicatos(item) {
+  return Array.isArray(item?.sindicatosCelebrantes)
     ? item.sindicatosCelebrantes
     : Array.isArray(item?.sindicatos_celebrantes)
       ? item.sindicatos_celebrantes
       : [];
+}
+
+function formatConventionBlock(item) {
+  const numeroRegistro = safeString(item?.numeroRegistro) || safeString(item?.numero_registro) || '-';
+  const sindicatos = getConventionSindicatos(item);
   const sindicatoLines = sindicatos.length
     ? sindicatos.map((entry) => {
       const nome = safeString(entry?.nome);
@@ -45,38 +50,55 @@ function formatConventionBlock(item) {
     || '-';
 
   return [
-    `${prefixo} (${numeroRegistro})`,
-    'sindicatos inclusos:',
+    `Numero de registro: ${numeroRegistro}`,
+    'Sindicatos:',
     sindicatoLines,
-    `data base: ${dataBase}`,
-    `prazo de oposição: ${prazoOposicao}`,
+    `Data base: ${dataBase}    Data de oposicao: ${prazoOposicao}`,
   ].join('\n');
 }
 
 function buildEmailBody({ siteUrl, conventions = [] }) {
   const blocks = conventions.map(formatConventionBlock).join('\n\n');
   return [
-    `Link para o site: ${siteUrl}`,
-    '',
+    siteUrl ? `Link para o site: ${siteUrl}` : '',
     blocks || 'Nenhuma convencao localizada nesta execucao.',
-  ].join('\n');
+  ].filter(Boolean).join('\n\n');
 }
 
 function buildEmailHtml({ siteUrl, conventions = [] }) {
   const blocks = conventions.length
     ? conventions.map((item) => {
-      const block = formatConventionBlock(item)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
-      return `<div style="margin:0 0 20px;padding:12px 14px;border:1px solid #d8d8d8;border-radius:10px;background:#fff"><div style="font-weight:700;margin-bottom:8px">${block}</div></div>`;
+      const numeroRegistro = safeString(item?.numeroRegistro) || safeString(item?.numero_registro) || '-';
+      const sindicatos = getConventionSindicatos(item);
+      const dataBase = safeString(item?.dataBase) || safeString(item?.data_base) || '-';
+      const prazoOposicao = safeString(item?.prazoOposicao?.data)
+        || safeString(item?.prazo_oposicao?.data)
+        || '-';
+      const sindicatoHtml = sindicatos.length
+        ? `<ul style="margin:8px 0 0 18px;padding:0">${sindicatos.map((entry) => {
+          const nome = safeString(entry?.nome);
+          const cnpj = safeString(entry?.cnpj);
+          const text = nome && cnpj
+            ? `${nome} (${cnpj})`
+            : nome || cnpj || 'Sem sindicato informado';
+          return `<li>${text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</li>`;
+        }).join('')}</ul>`
+        : '<div style="margin-top:8px">Sem sindicato informado</div>';
+
+      return `
+        <div style="margin:0 0 20px;padding:14px 16px;border:1px solid #d8d8d8;border-radius:10px;background:#fff">
+          <div><strong>Numero de registro:</strong> ${numeroRegistro.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+          <div style="margin-top:8px"><strong>Sindicatos:</strong>${sindicatoHtml}</div>
+          <div style="margin-top:8px"><strong>Data base:</strong> ${dataBase.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+          <div style="margin-top:4px"><strong>Data de oposicao:</strong> ${prazoOposicao.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+        </div>
+      `;
     }).join('')
     : '<p>Nenhuma convencao localizada nesta execucao.</p>';
 
   return `
     <div style="font-family:Arial,Helvetica,sans-serif;line-height:1.5;color:#111">
-      <p>Link para o site: <a href="${siteUrl}">${siteUrl}</a></p>
+      ${siteUrl ? `<p>Link para o site: <a href="${siteUrl}">${siteUrl}</a></p>` : ''}
       ${blocks}
     </div>
   `;
@@ -126,8 +148,9 @@ function createCctEmailService(deps = {}) {
   const errorRecipient = safeString(
     deps.errorRecipient
       || process.env.CCT_ERROR_RECIPIENT
+      || process.env.CCT_ALERT_RECIPIENT
       || process.env.EMAIL_ADMIN
-      || '',
+      || DEFAULT_ALERT_RECIPIENT,
   );
   const enabled = !!(host && port && user && pass);
 
@@ -196,6 +219,33 @@ function createCctEmailService(deps = {}) {
     return sendMail({ subject, text, html });
   }
 
+  async function sendNoNewConventionEmail({ startedAt = new Date(), details = '', context = '' } = {}) {
+    const subjectDate = formatDateBR(startedAt) || formatDateBR(new Date());
+    const subject = `CCT - Nenhuma nova convencao em ${subjectDate}`;
+    const text = [
+      'A rotina agendada da CCT foi executada.',
+      'Nenhuma nova convencao foi localizada nesta rodada.',
+      context ? `Contexto: ${safeString(context)}` : '',
+      details ? `Detalhes: ${safeString(details)}` : '',
+    ].filter(Boolean).join('\n');
+
+    const html = `
+      <div style="font-family:Arial,Helvetica,sans-serif;line-height:1.5;color:#111">
+        <h2 style="margin:0 0 12px">Nenhuma nova convencao localizada</h2>
+        <p><strong>Data:</strong> ${subjectDate}</p>
+        ${context ? `<p><strong>Contexto:</strong> ${safeString(context)}</p>` : ''}
+        ${details ? `<p><strong>Detalhes:</strong> ${safeString(details)}</p>` : ''}
+      </div>
+    `;
+
+    return sendMail({
+      subject,
+      text,
+      html,
+      to: [errorRecipient],
+    });
+  }
+
   async function sendTestEmail({ subject, text, html, to: mailTo, cc: mailCc } = {}) {
     const mailSubject = subject || 'CCT - Teste de SMTP';
     const mailText = text || buildEmailBody({ siteUrl, conventions: [] });
@@ -245,6 +295,7 @@ function createCctEmailService(deps = {}) {
     verify,
     sendMail,
     sendScheduledConventionEmail,
+    sendNoNewConventionEmail,
     sendTestEmail,
     sendErrorEmail,
     readRecipientsFromFile,
@@ -260,5 +311,6 @@ module.exports = {
     buildEmailBody,
     buildEmailHtml,
     parseList,
+    DEFAULT_ALERT_RECIPIENT,
   },
 };

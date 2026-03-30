@@ -121,6 +121,23 @@
     return errors;
   }
 
+  function validateTemplateSpecificRules(template) {
+    const errors = [];
+    if (!template) return errors;
+
+    if (String(template.id || '') === 'ecd-comparar-j150-dre-mensal') {
+      const dreInput = findInputElementByKey('dre_mensal');
+      const balancoInput = findInputElementByKey('balanco_patrimonial');
+      const dreCount = dreInput?.files ? dreInput.files.length : 0;
+      const balancoCount = balancoInput?.files ? balancoInput.files.length : 0;
+      if (dreCount === 0 && balancoCount === 0) {
+        errors.push('Envie ao menos um arquivo: DRE mensal e/ou balanco patrimonial.');
+      }
+    }
+
+    return errors;
+  }
+
   function bindInputValidation(template) {
     document.querySelectorAll('[data-input-key]').forEach((el) => {
       el.addEventListener('change', () => {
@@ -458,7 +475,8 @@
     const template = state.currentTemplate;
     const fileErrors = validateFilesByTemplate(template);
     const fieldErrors = validateRequiredFields(template);
-    const validationErrors = [...fileErrors, ...fieldErrors];
+    const templateRuleErrors = validateTemplateSpecificRules(template);
+    const validationErrors = [...fileErrors, ...fieldErrors, ...templateRuleErrors];
     if (validationErrors.length > 0) {
       setErrors(validationErrors);
       setStatus('Revise os anexos e campos obrigatórios antes de executar.', true);
@@ -492,7 +510,10 @@
       const data = await safeJson(resp);
       if (!resp.ok || !data?.ok) {
         const error = data?.error || 'Falha ao executar template.';
-        const details = Array.isArray(data?.details) ? data.details : [];
+        const details = Array.isArray(data?.details) ? data.details.slice() : [];
+        if (data?.traceId) {
+          details.unshift(`Trace ID: ${data.traceId}`);
+        }
         throw { message: error, details };
       }
 

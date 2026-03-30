@@ -75,8 +75,8 @@
       "title": "Contribuicoes - Consolidar SPEDs",
       "description": "Combina o SPED da matriz com um ou mais SPEDs de filiais, preservando blocos e recalculando totalizadores. Execucao local-only.",
       "script": {
-        "entry": "W:/DOCUMENTOS ESCRITORIO/INSTALACAO SISTEMA/python/Combinar SPEDs Matriz + Filiais/Combinador_SPEDs.py",
-        "source": "W:/DOCUMENTOS ESCRITORIO/INSTALACAO SISTEMA/python/Combinar SPEDs Matriz + Filiais/Combinador_SPEDs.py"
+        "entry": "api/speds_scripts/contribuicoes/combinador_speds.py",
+        "source": "W:/DOCUMENTOS ESCRITORIO/INSTALACAO SISTEMA/central-utils/api/speds_scripts/contribuicoes/combinador_speds.py"
       },
       "manifest": {
         "path": "api/layouts/speds/contribuicoes/manifests/contribuicoes-consolidar-speds.manifest.json",
@@ -536,13 +536,13 @@
       "outputFormats": ["txt", "xlsx"]
     },
     {
-      "id": "ecd-template-pendente",
+      "id": "ecd-comparar-j150-dre-mensal",
       "spedType": "ecd",
-      "title": "ECD - Template pendente",
-      "description": "Sem script Python no projeto sped para ECD neste momento. Template reservado para proximas rotinas.",
+      "title": "ECD - Comparar J150 x DRE mensal",
+      "description": "Compara os saldos do J150 da ECD com a DRE mensal em Excel e, opcionalmente, cruza o J100 com o balanco patrimonial. Execucao local-only.",
       "script": {
-        "entry": "",
-        "source": ""
+        "entry": "api/speds_scripts/ecd/comparar_j150_ecd_dre_mensal.py",
+        "source": "W:/DOCUMENTOS ESCRITORIO/INSTALACAO SISTEMA/central-utils/api/speds_scripts/ecd/comparar_j150_ecd_dre_mensal.py"
       },
       "inputs": [
         {
@@ -550,18 +550,28 @@
           "label": "Arquivo SPED ECD",
           "required": true,
           "multiple": false,
-          "acceptedExtensions": [".txt"]
-        }
-      ],
-      "fields": [
+          "acceptedExtensions": [".txt"],
+          "help": "Arquivo TXT da ECD com os registros J150 e, se houver, J100."
+        },
         {
-          "key": "observacao",
-          "label": "Observacao",
-          "type": "text",
-          "required": false
+          "key": "dre_mensal",
+          "label": "Excel da DRE mensal",
+          "required": false,
+          "multiple": false,
+          "acceptedExtensions": [".xlsx"],
+          "help": "Opcional. Envie a DRE mensal para comparar os 12 blocos do J150. E necessario enviar DRE, balanco ou ambos."
+        },
+        {
+          "key": "balanco_patrimonial",
+          "label": "Excel do balanco patrimonial (opcional)",
+          "required": false,
+          "multiple": false,
+          "acceptedExtensions": [".xlsx"],
+          "help": "Opcional. Se enviado, a rotina compara o J100 da ECD com o balanco. E necessario enviar DRE, balanco ou ambos."
         }
       ],
-      "outputFormats": ["txt", "xlsx"]
+      "fields": [],
+      "outputFormats": ["xlsx"]
     }
   ]
 }

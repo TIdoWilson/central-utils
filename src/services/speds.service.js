@@ -1578,10 +1578,51 @@ module.exports = function createSpedsService(deps = {}) {
     };
   }
 
+  async function runEcdCompararJ150DreMensalTemplate({ template, filesByInput, outputDir }) {
+    const spedFile = getSingleInputFile(filesByInput, 'sped_ecd');
+    const dreFile = getSingleInputFile(filesByInput, 'dre_mensal');
+    const balancoFile = getSingleInputFile(filesByInput, 'balanco_patrimonial');
+
+    if (!spedFile?.path) {
+      throw createValidationError('Arquivo SPED ECD obrigatorio nao encontrado para a comparacao do J150.');
+    }
+    if (!dreFile?.path && !balancoFile?.path) {
+      throw createValidationError('Envie ao menos um arquivo para comparacao: DRE mensal e/ou balanco patrimonial.');
+    }
+
+    const baseFile = dreFile || balancoFile || spedFile;
+    const baseStem = sanitizeBaseName(
+      path.parse(baseFile.originalName || path.basename(baseFile.path)).name,
+      'comparacao_j150_ecd_dre'
+    );
+    const outputPath = path.join(outputDir, `${baseStem}_comparacao_j150_ecd_dre.xlsx`);
+    const pyArgs = [
+      '--ecd',
+      spedFile.path,
+      '--output',
+      outputPath,
+      '--no-gui',
+    ];
+    if (dreFile?.path) {
+      pyArgs.push('--excel', dreFile.path);
+    }
+    if (balancoFile?.path) {
+      pyArgs.push('--balanco', balancoFile.path);
+    }
+
+    return executeTemplateScript({
+      template,
+      scriptArgs: pyArgs,
+      outputPath,
+      failureLabel: 'Falha ao processar o comparador J150 da ECD com a DRE mensal.',
+    });
+  }
+
   const TEMPLATE_RUNNERS = {
     'contribuicoes-conferidor-xml-nfe': runContribuicoesConferidorXmlTemplate,
     'contribuicoes-consolidar-speds': runContribuicoesConsolidarSpedsTemplate,
     'contribuicoes-validador-sped': runContribuicoesValidadorSpedTemplate,
+    'ecd-comparar-j150-dre-mensal': runEcdCompararJ150DreMensalTemplate,
     'icms-ajustar-cfop-1152': runIcmsAjustarCfopTemplate,
     'icms-comparador-sped-relatorio': runIcmsComparadorTemplate,
     'icms-corretor-total-inventario': runIcmsCorretorTotalInventarioTemplate,

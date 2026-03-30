@@ -58,10 +58,16 @@ Consulta convencoes coletivas por nome, vigencia, data-base, abrangencia e abran
 - A listagem e carregada diretamente dos JSONs da pasta `data/cct/json`.
 - O cache de listagem e mantido em memoria e e revalidado por manifest de arquivos.
 - A checagem de mudanca usa `CCT_MANIFEST_CHECK_MS` (padrao: `5000` ms).
+- O Node agenda uma rodada completa da CCT toda segunda-feira e quarta-feira as `06:00`.
+- A rodada completa usa a lista integral de `data/cct/CNPJ.txt`.
+- O `MTE.py` baixa apenas DOCs de convencoes novas, fecha o Chrome headless ao terminar as buscas e aguarda o `LEITOR_CCT.py` concluir a geracao dos JSONs.
+- Quando a rodada localiza uma ou mais novas convencoes, o e-mail vai para a lista cadastrada em `data/cct/email.txt`.
+- Quando a rodada nao localiza novas convencoes ou encontra erro, o alerta vai sempre para `contabil20@wilsonlopes.com.br`.
 
 ## Endpoints
 
 - `GET /api/cct/health`
+- `GET /api/cct/status`
 - `GET /api/cct`
 - `POST /api/cct/requisicoes`
 - `GET /api/cct/historico`
@@ -83,4 +89,6 @@ Consulta convencoes coletivas por nome, vigencia, data-base, abrangencia e abran
 - **Muitos cards com status indisponivel:** sintoma: etiquetas de vigencia exibiam `Status indisponivel` mesmo com periodo preenchido. Causa provavel: parser de vigencia nao cobria formatos como `01º de ...` e `dd/mm/aaaa`. Solucao: ampliar parser para datas com ordinal e barras, recalcular status por periodo em tempo real e filtrar por base no dia atual.
 - **Historico completo vazio:** verificar se houve execucao do MTE e se `data/cct/historico_cct.log` foi atualizado.
 - **Download indisponivel:** confirmar se o DOC existe em `data/cct/docs` com o mesmo nome-base do JSON.
+- **CNPJ entra na fila, mas o JSON demora para aparecer:** sintoma: o CNPJ foi aceito pelo site e o download ocorreu, mas os JSONs ainda nao foram integrados na tela. Causa provavel: o `MTE.py` finalizava antes do `LEITOR_CCT.py` concluir quando o leitor era disparado em segundo plano. Solucao: executar o `LEITOR_CCT.py` de forma sincronizada no fluxo headless, consultando `GET /api/cct/status` para acompanhar o processamento ate o fim.
+- **Rotina semanal nao disparou no horario esperado:** sintoma: segunda ou quarta-feira as `06:00` a fila completa nao iniciou. Causa provavel: servico Node reiniciado sem remontar o timer semanal ou `CCT_AUTO_FULL_QUEUE_ENABLED=0`. Solucao: consultar `GET /api/cct/status` para validar `nextFullQueueRunAt` e revisar a variavel de ambiente do servico.
 - **E-mail nao envia:** confirmar `CCT_SMTP_HOST`, `CCT_SMTP_PORT`, `CCT_SMTP_USER`, `CCT_SMTP_PASS` ou `EMAIL_PASS`, `CCT_SITE_URL` e se `data/cct/email.txt` tem destinatarios.

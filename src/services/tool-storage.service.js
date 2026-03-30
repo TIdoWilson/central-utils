@@ -105,7 +105,7 @@ function createToolStorage({ dataDir, dimobService }) {
         cb(null, safe);
       },
     }),
-    limits: { files: 120, fileSize: 100 * 1024 * 1024 },
+    limits: { files: 120, fileSize: 250 * 1024 * 1024 },
   });
 
   // DIMOB

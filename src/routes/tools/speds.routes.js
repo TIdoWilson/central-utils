@@ -27,6 +27,32 @@ module.exports = function createSpedsRoutes(deps = {}) {
     throw new Error('createSpedsRoutes: uploadSpeds nao informado.');
   }
 
+  const uploadSpedsAny = uploadSpeds.any();
+
+  function handleUploadSpeds(req, res, next) {
+    uploadSpedsAny(req, res, (error) => {
+      if (!error) return next();
+
+      const code = String(error?.code || '');
+      const isFileSizeLimit = code === 'LIMIT_FILE_SIZE';
+      const isFileCountLimit = code === 'LIMIT_FILE_COUNT';
+      const details = [];
+
+      if (isFileSizeLimit) details.push('O limite atual por arquivo no SPEDS e 250 MB.');
+      if (isFileCountLimit) details.push('Quantidade maxima de arquivos excedida para esta execucao.');
+      if (error?.field) details.push(`Campo afetado: ${error.field}`);
+      if (!isFileSizeLimit && !isFileCountLimit && error?.message) details.push(String(error.message));
+
+      return res.status(isFileSizeLimit || isFileCountLimit ? 413 : 400).json({
+        ok: false,
+        error: isFileSizeLimit
+          ? 'Upload rejeitado: um dos arquivos excede o limite permitido.'
+          : 'Falha ao receber os arquivos enviados para o SPEDS.',
+        details,
+      });
+    });
+  }
+
   router.get('/health', async (req, res) => {
     try {
       return res.json({ ok: true, tool: 'speds', time: new Date().toISOString() });
@@ -77,7 +103,7 @@ module.exports = function createSpedsRoutes(deps = {}) {
     }
   });
 
-  router.post('/run', requireCsrf, uploadSpeds.any(), async (req, res) => {
+  router.post('/run', requireCsrf, handleUploadSpeds, async (req, res) => {
     const traceId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
     try {
