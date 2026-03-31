@@ -103,6 +103,100 @@ module.exports = function createSpedsRoutes(deps = {}) {
     }
   });
 
+  router.post('/y570/preview', requireCsrf, handleUploadSpeds, async (req, res) => {
+    const traceId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+    try {
+      const filesByInput = spedsService.buildFilesByInput(req.files || []);
+      const result = await spedsService.buildEcfY570Preview({ filesByInput });
+
+      await auditLog?.(req, 'tool_speds_y570_preview', 'ok', {
+        traceId,
+        uploadedFiles: Array.isArray(req.files) ? req.files.length : 0,
+      });
+
+      return res.json({
+        ok: true,
+        traceId,
+        jobId: result.jobId,
+        summary: result.summary,
+        preview: result.preview,
+      });
+    } catch (error) {
+      const status = Number(error?.status) || 500;
+      const errorMessage = error?.message || 'Falha ao montar o preview do Y570.';
+      const details = Array.isArray(error?.details) ? error.details : null;
+
+      await auditLog?.(req, 'tool_speds_y570_preview', 'error', {
+        traceId,
+        status,
+        error: String(errorMessage),
+        details,
+      });
+
+      return res.status(status).json({
+        ok: false,
+        traceId,
+        error: errorMessage,
+        details,
+      });
+    }
+  });
+
+  router.post('/y570/export', requireCsrf, async (req, res) => {
+    const traceId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+    try {
+      const preview = parseJsonSafely(req.body?.preview, null);
+      const jobId = String(req.body?.jobId || preview?.jobId || '').trim();
+      if (!preview || typeof preview !== 'object') {
+        return res.status(400).json({ ok: false, error: 'Preview do Y570 nao informado.' });
+      }
+
+      const result = await spedsService.exportEcfY570Txt({
+        preview,
+        jobId,
+      });
+
+      await auditLog?.(req, 'tool_speds_y570_export', 'ok', {
+        traceId,
+        jobId: result.jobId,
+        sources: Array.isArray(preview?.sources) ? preview.sources.length : 0,
+      });
+
+      const downloadPath = `/api/speds/download/${encodeURIComponent(result.jobId)}/${encodeURIComponent(result.artifact.fileName)}`;
+
+      return res.json({
+        ok: true,
+        traceId,
+        jobId: result.jobId,
+        artifact: {
+          fileName: result.artifact.fileName,
+          mimeType: result.artifact.mimeType,
+          downloadPath,
+        },
+      });
+    } catch (error) {
+      const status = Number(error?.status) || 500;
+      const errorMessage = error?.message || 'Falha ao exportar o TXT do Y570.';
+      const details = Array.isArray(error?.details) ? error.details : null;
+
+      await auditLog?.(req, 'tool_speds_y570_export', 'error', {
+        traceId,
+        status,
+        error: String(errorMessage),
+        details,
+      });
+
+      return res.status(status).json({
+        ok: false,
+        traceId,
+        error: errorMessage,
+        details,
+      });
+    }
+  });
+
   router.post('/run', requireCsrf, handleUploadSpeds, async (req, res) => {
     const traceId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 

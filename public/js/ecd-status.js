@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const tipoSel = document.getElementById('ecdTipo');
   const dfcSel = document.getElementById('ecdDfc');
   const saveBtn = document.getElementById('ecdSaveBtn');
+  const retryBtn = document.getElementById('ecdRetryBtn');
   const statusMsg = document.getElementById('ecdStatusMsg');
   const filesMsg = document.getElementById('ecdFilesMsg');
   const forceWrap = document.getElementById('ecdAdminForceWrap');
@@ -75,12 +76,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (qStatus) {
         const st = c.status || null;
         const erro = String(st?.erro || '').toUpperCase() === 'Y';
+        const retryRequested = String(st?.retryRequested || '').toUpperCase() === 'Y';
         const arquivosFlag = String(st?.arquivosNaPasta || '').toUpperCase();
         const arquivosNaPasta = arquivosFlag === 'Y' || arquivosFlag === 'S';
         const completa = Boolean(st?.completed);
 
         let statusLabel = 'Pendente';
         if (erro) statusLabel = 'ERRO';
+        else if (retryRequested && completa && !arquivosNaPasta) statusLabel = 'Na Fila';
         else if (completa && arquivosNaPasta) statusLabel = 'Completo';
         else if (completa && !arquivosNaPasta) statusLabel = 'Na Fila';
 
@@ -99,6 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const tr = document.createElement('tr');
       const st = c.status || null;
       const erro = String(st?.erro || '').toUpperCase() === 'Y';
+      const retryRequested = String(st?.retryRequested || '').toUpperCase() === 'Y';
       const arquivosFlag = String(st?.arquivosNaPasta || '').toUpperCase();
       const arquivosNaPasta = arquivosFlag === 'Y' || arquivosFlag === 'S';
       const completa = Boolean(st?.completed);
@@ -106,6 +110,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       let statusLabel = 'Pendente';
       if (erro) {
         statusLabel = 'ERRO';
+      } else if (retryRequested && completa && !arquivosNaPasta) {
+        statusLabel = 'Na Fila';
       } else if (completa && arquivosNaPasta) {
         statusLabel = 'Completo';
       } else if (completa && !arquivosNaPasta) {
@@ -158,6 +164,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const arquivosFlag = String(st?.arquivosNaPasta || 'N').toUpperCase();
     const arquivosNaPasta = arquivosFlag === 'Y' || arquivosFlag === 'S';
     const erro = String(st?.erro || '').toUpperCase() === 'Y';
+    const retryRequested = String(st?.retryRequested || '').toUpperCase() === 'Y';
 
     tipoSel.value = st?.simples || selected.defaultTipo || '';
     dfcSel.value = (typeof st?.dfc === 'boolean') ? String(st.dfc) : '';
@@ -166,9 +173,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     dfcSel.disabled = locked && !isAdmin;
 
     if (saveBtn) saveBtn.disabled = locked && !isAdmin;
+    if (retryBtn) retryBtn.disabled = !locked;
 
-    if (erro) {
+    if (erro && retryRequested) {
+      setStatus('ERRO registrado e nova tentativa solicitada.', true);
+    } else if (erro) {
       setStatus('ERRO registrado. Somente ADMIN pode alterar.', true);
+    } else if (retryRequested && locked && !arquivosNaPasta) {
+      setStatus('Nova tentativa solicitada. Empresa voltou para fila.', false);
     } else if (locked) {
       setStatus('Registro gerado e bloqueado. Somente ADMIN pode alterar.', true);
     } else {
@@ -237,6 +249,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     selectCompany(selected.code);
   }
 
+  async function requestRetry() {
+    if (!selected) return;
+
+    const st = selected.status || null;
+    const completed = Boolean(st?.completed);
+    if (!completed) {
+      setStatus('Essa empresa ainda nao foi rodada. Use Salvar e gerar normalmente.', true);
+      return;
+    }
+
+    const msg1 = 'Confirma que voce ja resolveu todos os erros indicados na foto dessa empresa?';
+    const msg2 = 'Confirmacao final: se a empresa nunca rodou, nao use este botao. Deseja solicitar nova tentativa agora?';
+    if (!window.confirm(msg1)) return;
+    if (!window.confirm(msg2)) return;
+
+    const resp = await AuthClient.authFetch('/api/ecd/request-retry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        code: selected.code,
+        confirmResolved: true,
+      }),
+    });
+
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok) {
+      setStatus(data.error || 'Erro ao solicitar nova tentativa.', true);
+      return;
+    }
+
+    setStatus('Solicitacao registrada. Empresa marcada para tentar gerar novamente.', false);
+    await loadCompanies();
+    selectCompany(selected.code);
+  }
+
   if (searchCodeInput) searchCodeInput.addEventListener('input', applyFilter);
   if (searchNameInput) searchNameInput.addEventListener('input', applyFilter);
   if (searchCnpjInput) searchCnpjInput.addEventListener('input', applyFilter);
@@ -244,6 +291,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (saveBtn) {
     saveBtn.addEventListener('click', saveStatus);
+  }
+  if (retryBtn) {
+    retryBtn.addEventListener('click', requestRetry);
   }
 
   try {

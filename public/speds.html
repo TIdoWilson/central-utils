@@ -60,7 +60,7 @@
 
       <section class="nfe-card nfe-card-upload">
         <h2>Arquivos e informações necessárias</h2>
-        <p class="nfe-card-subtitle">Anexe os arquivos conforme as regras do template selecionado e preencha os campos adicionais.</p>
+        <p class="nfe-card-subtitle">Preencha os campos conforme as regras do template selecionado.</p>
 
         <form id="spedsForm">
           <div id="dynamicInputs" class="speds-grid"></div>
@@ -77,11 +77,17 @@
 
       <section class="nfe-card">
         <h2>Resultado</h2>
-        <p class="nfe-card-subtitle">Resumo da execução e download do arquivo gerado.</p>
+        <p class="nfe-card-subtitle">Resumo da execução e download do TXT gerado.</p>
         <div id="runStatus" class="nfe-upload-message"></div>
         <div id="runSummary" class="speds-kpis"></div>
         <div id="validationInsights" class="speds-validation-panel" style="display:none;"></div>
         <div id="downloadList" class="speds-downloads"></div>
+      </section>
+
+      <section id="y570Panel" class="nfe-card" style="display:none;">
+        <h2>Quadros do Y570</h2>
+        <p class="nfe-card-subtitle">Revise os quadros antes de gerar o TXT final da ECF.</p>
+        <div id="y570Preview" class="speds-y570-preview"></div>
       </section>
     </main>
   </div>

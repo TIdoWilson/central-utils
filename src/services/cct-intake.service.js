@@ -332,10 +332,57 @@ function createCctIntakeService(deps = {}) {
     }
   }
 
+  async function notifyMailFailure({ label, reason, startedAt, context }) {
+    const failureReason = sanitizeHistoryField(reason) || 'motivo nao informado';
+    console.warn(`[CCT] E-mail ${label} nao enviado: ${failureReason}`);
+
+    if (!emailService || label === 'erro da rotina') return;
+
+    try {
+      const alertResult = await emailService.sendErrorEmail({
+        title: 'Falha ao enviar e-mail da rotina agendada CCT',
+        error: `Tipo: ${label}. Motivo: ${failureReason}`,
+        context,
+        startedAt,
+      });
+      if (alertResult?.sent === false) {
+        console.warn(`[CCT] E-mail de alerta sobre falha de entrega nao foi enviado: ${alertResult.reason || 'motivo nao informado'}`);
+      }
+    } catch (error) {
+      console.error('[CCT] Falha ao enviar e-mail de alerta sobre entrega da CCT:', error?.message || error);
+    }
+  }
+
+  async function sendOutcomeMail(label, sendAction, { startedAt, context }) {
+    try {
+      const result = await sendAction();
+      if (result?.sent === false) {
+        await notifyMailFailure({
+          label,
+          reason: result.reason,
+          startedAt,
+          context,
+        });
+      }
+      return result;
+    } catch (error) {
+      const reason = error?.message || error;
+      console.error(`[CCT] Falha ao enviar e-mail ${label}:`, reason);
+      await notifyMailFailure({
+        label,
+        reason,
+        startedAt,
+        context,
+      });
+      return null;
+    }
+  }
+
   async function notifyRunOutcome(runContext, code) {
     if (!runContext?.notifyByEmail || !emailService) return;
 
     const startedAt = runContext.startedAt || new Date();
+    const context = runContext.source || 'scheduled-full-queue';
     const conventions = await loadConventionsFromJsonNames(runContext.jsonBefore || new Set());
     const errorText = [
       code !== 0 ? `MTE.py finalizou com codigo ${code}` : '',
@@ -343,40 +390,37 @@ function createCctIntakeService(deps = {}) {
     ].filter(Boolean).join(' | ');
 
     if (conventions.length) {
-      try {
-        await emailService.sendScheduledConventionEmail({
-          conventions,
-          startedAt,
-        });
-      } catch (error) {
-        console.error('[CCT] Falha ao enviar e-mail de convencoes localizadas:', error?.message || error);
-      }
+      await sendOutcomeMail('convencoes localizadas', () => emailService.sendScheduledConventionEmail({
+        conventions,
+        startedAt,
+      }), {
+        startedAt,
+        context,
+      });
     }
 
     if (code !== 0 || runContext.hadError) {
-      try {
-        await emailService.sendErrorEmail({
-          title: 'Erro na rotina agendada CCT',
-          error: errorText || 'Falha nao detalhada.',
-          context: runContext.source || 'scheduled-full-queue',
-          startedAt,
-        });
-      } catch (error) {
-        console.error('[CCT] Falha ao enviar e-mail de erro da CCT:', error?.message || error);
-      }
+      await sendOutcomeMail('erro da rotina', () => emailService.sendErrorEmail({
+        title: 'Erro na rotina agendada CCT',
+        error: errorText || 'Falha nao detalhada.',
+        context,
+        startedAt,
+      }), {
+        startedAt,
+        context,
+      });
       return;
     }
 
     if (!conventions.length) {
-      try {
-        await emailService.sendNoNewConventionEmail({
-          startedAt,
-          context: runContext.source || 'scheduled-full-queue',
-          details: 'Nenhum novo JSON foi gerado na rodada completa.',
-        });
-      } catch (error) {
-        console.error('[CCT] Falha ao enviar e-mail de nenhuma nova convencao:', error?.message || error);
-      }
+      await sendOutcomeMail('nenhuma nova convencao', () => emailService.sendNoNewConventionEmail({
+        startedAt,
+        context,
+        details: 'Nenhum novo JSON foi gerado na rodada completa.',
+      }), {
+        startedAt,
+        context,
+      });
     }
   }
 

@@ -18,6 +18,29 @@ function normalizeKey(value) {
   return String(value || '').trim().toLowerCase();
 }
 
+function normalizeCode(value) {
+  const digits = String(value || '').replace(/\D/g, '');
+  if (!digits) return '';
+  return digits.padStart(4, '0').slice(-4);
+}
+
+function cleanText(value) {
+  return String(value ?? '')
+    .replace(/\r/g, ' ')
+    .replace(/\n/g, ' ')
+    .replace(/\t/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function normalizeFlag(value) {
+  const text = cleanText(value).toLowerCase();
+  if (text === 'sim' || text === 's' || text === 'yes' || text === 'true' || text === '1') return 'Sim';
+  if (text.includes('sim ou nao')) return 'Sim ou Nao';
+  if (text === 'nao' || text === 'n' || text === 'no' || text === 'false' || text === '0') return 'Nao';
+  return cleanText(value);
+}
+
 function ensureDir(dirPath) {
   if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath, { recursive: true });
 }
@@ -91,8 +114,10 @@ module.exports = function createSpedsService(deps = {}) {
   const OUTPUT_ROOT = path.join(DATA_DIR, 'speds', 'outputs');
   const LAYOUTS_ROOT = path.resolve(__dirname, '..', '..', 'api', 'layouts', 'speds');
   const PROJECT_ROOT = path.resolve(__dirname, '..', '..');
+  const Y570_CODES_PATH = path.join(PROJECT_ROOT, 'api', 'speds_scripts', 'ecf', 'assets', 'codigos_aceitos.xlsx');
   const templateDefinitions = loadTemplateDefinitions();
   const manifestCache = new Map();
+  let y570AcceptedCodesCache = null;
 
   ensureDir(OUTPUT_ROOT);
 
@@ -1473,34 +1498,39 @@ module.exports = function createSpedsService(deps = {}) {
   }
 
   async function runEcfGeradorBlocoCustoTemplate({ template, filesByInput, fields, outputDir }) {
-    const stockFile = getSingleInputFile(filesByInput, 'razao_estoque');
-    const costFile = getSingleInputFile(filesByInput, 'razao_custo');
-    if (!stockFile?.path || !costFile?.path) {
-      throw createValidationError('Arquivos obrigatorios nao encontrados para o Gerador bloco custo L210.');
-    }
-
     const apuracao = normalizeKey(fields?.apuracao) === 'trimestral' ? 'trimestral' : 'mensal';
-    const temFabricacao = normalizeBoolField(fields?.tem_fabricacao, false);
-    const temRevenda = normalizeBoolField(fields?.tem_revenda, true);
     const outputPath = path.join(outputDir, `L210_${apuracao}_${Date.now()}.txt`);
     const outputCsvPath = path.join(outputDir, `L210_${apuracao}_conferencia_${Date.now()}.csv`);
+    const manualRowsPayload = parseJsonOrDefault(fields?.manual_rows_json, null);
+    const hasManualRows = Array.isArray(manualRowsPayload)
+      || (manualRowsPayload && Array.isArray(manualRowsPayload.rows));
 
-    const pyArgs = [
-      '--apuracao',
-      apuracao,
-      '--tem-fabricacao',
-      temFabricacao ? 'sim' : 'nao',
-      '--tem-revenda',
-      temRevenda ? 'sim' : 'nao',
-      '--output-txt',
-      outputPath,
-      '--output-csv',
-      outputCsvPath,
-      '--razao-estoque',
-      stockFile.path,
-      '--razao-custo',
-      costFile.path,
-    ];
+    const pyArgs = ['--apuracao', apuracao, '--output-txt', outputPath, '--output-csv', outputCsvPath];
+
+    if (hasManualRows) {
+      const manualRowsPath = path.join(outputDir, `L210_manual_rows_${Date.now()}.json`);
+      await fs.promises.writeFile(manualRowsPath, JSON.stringify(manualRowsPayload, null, 2), 'utf8');
+      pyArgs.push('--manual-rows-file', manualRowsPath);
+    } else {
+      const stockFile = getSingleInputFile(filesByInput, 'razao_estoque');
+      const costFile = getSingleInputFile(filesByInput, 'razao_custo');
+      if (!stockFile?.path || !costFile?.path) {
+        throw createValidationError('Preencha o quadro manual do L210 ou envie os arquivos de razao para o modo legado.');
+      }
+
+      const temFabricacao = normalizeBoolField(fields?.tem_fabricacao, false);
+      const temRevenda = normalizeBoolField(fields?.tem_revenda, true);
+      pyArgs.push(
+        '--tem-fabricacao',
+        temFabricacao ? 'sim' : 'nao',
+        '--tem-revenda',
+        temRevenda ? 'sim' : 'nao',
+        '--razao-estoque',
+        stockFile.path,
+        '--razao-custo',
+        costFile.path,
+      );
+    }
 
     return executeTemplateScript({
       template,
@@ -1618,6 +1648,21 @@ module.exports = function createSpedsService(deps = {}) {
     });
   }
 
+  async function runEcfY570FontesPagadorasTemplate({ template, filesByInput, outputDir }) {
+    const { preview } = await buildEcfY570Preview({
+      filesByInput,
+      outputDir,
+      jobId: path.basename(outputDir),
+    });
+    const exported = await exportEcfY570Txt({ preview, outputDir, jobId: preview.jobId });
+    return {
+      artifact: exported.artifact,
+      summaryPatch: {
+        y570: preview,
+      },
+    };
+  }
+
   const TEMPLATE_RUNNERS = {
     'contribuicoes-conferidor-xml-nfe': runContribuicoesConferidorXmlTemplate,
     'contribuicoes-consolidar-speds': runContribuicoesConsolidarSpedsTemplate,
@@ -1630,6 +1675,7 @@ module.exports = function createSpedsService(deps = {}) {
     'icms-integrar-inventario-sped': runIcmsIntegrarInventarioTemplate,
     'icms-copiar-bloco-k-sped': runIcmsCopiarBlocoKTemplate,
     'ecf-gerador-bloco-custo-l210': runEcfGeradorBlocoCustoTemplate,
+    'ecf-y570-fontes-pagadoras': runEcfY570FontesPagadorasTemplate,
     'ecf-gerar-layouts-json': runEcfGerarLayoutsJsonTemplate,
   };
 
@@ -1724,6 +1770,356 @@ module.exports = function createSpedsService(deps = {}) {
     );
 
     XLSX.writeFile(wb, outputPath);
+  }
+
+  function formatPtBrMoney(value) {
+    const num = Number(value);
+    if (!Number.isFinite(num)) return '0,00';
+    return num.toFixed(2).replace('.', ',');
+  }
+
+  function parsePtBrMoney(value) {
+    const text = String(value ?? '').trim();
+    if (!text) return 0;
+    const normalized = text
+      .replace(/\s+/g, '')
+      .replace(/\./g, '')
+      .replace(',', '.')
+      .replace(/[^\d.-]/g, '');
+    if (!normalized || normalized === '-' || normalized === '.' || normalized === '-.') return 0;
+    const num = Number(normalized);
+    return Number.isFinite(num) ? num : 0;
+  }
+
+  function parseFixedMoneyField(raw) {
+    const digits = String(raw ?? '').replace(/\D/g, '');
+    if (!digits) return 0;
+    return Number(digits) / 100;
+  }
+
+  function sanitizeY570Text(value) {
+    return cleanText(String(value ?? '')).replace(/\|/g, ' ');
+  }
+
+  function normalizeY570OrgaoPublico(value) {
+    const text = normalizeKey(value);
+    if (text === 's' || text === 'sim' || text.startsWith('sim')) return 'S';
+    return 'N';
+  }
+
+  function isY570YesFlag(value) {
+    const text = normalizeKey(value);
+    return text === 'sim' || text === 's' || text === 'yes' || text === 'true' || text === '1';
+  }
+
+  function isY570EditableOrgao(value) {
+    const text = normalizeKey(value);
+    return text.includes('sim ou nao');
+  }
+
+  function getY570AcceptedCodes() {
+    if (y570AcceptedCodesCache) return y570AcceptedCodesCache;
+    if (!fs.existsSync(Y570_CODES_PATH)) {
+      throw createValidationError('Planilha fixa de codigos aceitos nao encontrada para o Y570.', [
+        `Esperado em: ${Y570_CODES_PATH}`,
+      ]);
+    }
+
+    const wb = XLSX.readFile(Y570_CODES_PATH);
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: '' });
+    const accepted = new Map();
+
+    for (const row of rows.slice(1)) {
+      const code = normalizeCode(row[0]);
+      if (!code) continue;
+      accepted.set(code, {
+        code,
+        description: cleanText(row[1] ?? ''),
+        orgaoPublico: normalizeFlag(row[2] ?? ''),
+        irrf: normalizeFlag(row[3] ?? ''),
+        csll: normalizeFlag(row[4] ?? ''),
+        aliquotaIrrf: '0,00',
+        aliquotaCsll: '0,00',
+      });
+    }
+
+    y570AcceptedCodesCache = accepted;
+    return accepted;
+  }
+
+  function parseY570TxtRows(txtPath) {
+    const rawBuffer = fs.readFileSync(txtPath);
+    const text = rawBuffer.toString('latin1');
+    const rows = [];
+
+    for (const rawLine of String(text || '').split(/\r?\n/)) {
+      const line = rawLine.replace(/\r$/, '');
+      if (line.length < 213) continue;
+      if (!/^\d{14}$/.test(line.slice(0, 14))) continue;
+
+      const code = normalizeCode(line.slice(177, 181));
+      if (!code) continue;
+
+      rows.push({
+        cnpj: line.slice(0, 14),
+        nome: sanitizeY570Text(line.slice(17, 168)),
+        code,
+        rendimentoOriginal: parseFixedMoneyField(line.slice(182, 197)),
+        tributoRetidoOriginal: parseFixedMoneyField(line.slice(198, 213)),
+        sourceFile: path.basename(txtPath),
+      });
+    }
+
+    return rows;
+  }
+
+  function chooseMostCommonName(counter) {
+    let bestName = '';
+    let bestCount = -1;
+    for (const [name, count] of counter.entries()) {
+      if (count > bestCount) {
+        bestName = name;
+        bestCount = count;
+      }
+    }
+    return bestName;
+  }
+
+  function aggregateY570Rows(txtPaths, acceptedCodes) {
+    const groupedAccepted = new Map();
+    const namesByGroup = new Map();
+    const codeOccurrences = new Map();
+    const missingOccurrences = new Map();
+    const fileNames = [];
+
+    for (const txtPath of txtPaths) {
+      const fileName = path.basename(txtPath);
+      fileNames.push(fileName);
+      for (const item of parseY570TxtRows(txtPath)) {
+        if (acceptedCodes.has(item.code)) {
+          const key = `${item.cnpj}|${item.code}`;
+          const bucket = groupedAccepted.get(key) || {
+            cnpj: item.cnpj,
+            code: item.code,
+            rendimentoOriginal: 0,
+            tributoRetidoOriginal: 0,
+            sourceCount: 0,
+          };
+          bucket.rendimentoOriginal += item.rendimentoOriginal;
+          bucket.tributoRetidoOriginal += item.tributoRetidoOriginal;
+          bucket.sourceCount += 1;
+          groupedAccepted.set(key, bucket);
+
+          if (!namesByGroup.has(key)) namesByGroup.set(key, new Map());
+          const nameCounter = namesByGroup.get(key);
+          nameCounter.set(item.nome, (nameCounter.get(item.nome) || 0) + 1);
+
+          const current = codeOccurrences.get(item.code) || 0;
+          codeOccurrences.set(item.code, current + 1);
+        } else {
+          const current = missingOccurrences.get(item.code) || 0;
+          missingOccurrences.set(item.code, current + 1);
+        }
+      }
+    }
+
+    const sources = Array.from(groupedAccepted.entries())
+      .sort((a, b) => (a[1].cnpj === b[1].cnpj ? a[1].code.localeCompare(b[1].code) : a[1].cnpj.localeCompare(b[1].cnpj)))
+      .map(([key, bucket]) => {
+        const accepted = acceptedCodes.get(bucket.code) || null;
+        const nameCounter = namesByGroup.get(key) || new Map();
+        const nome = chooseMostCommonName(nameCounter) || '';
+        const orgaoPublicoRule = accepted ? accepted.orgaoPublico : 'Nao';
+        const orgaoPublicoEditable = accepted ? isY570EditableOrgao(accepted.orgaoPublico) : false;
+        const orgaoPublico = accepted && accepted.orgaoPublico === 'Sim' ? 'S' : 'N';
+        const rendimentoOriginal = formatPtBrMoney(bucket.rendimentoOriginal);
+        const tributoRetidoOriginal = formatPtBrMoney(bucket.tributoRetidoOriginal);
+        const specialCode3426 = bucket.code === '3426';
+        const irrfDefault = specialCode3426 ? tributoRetidoOriginal : '0,00';
+
+        return {
+          key,
+          cnpj: bucket.cnpj,
+          nome,
+          code: bucket.code,
+          orgaoPublico,
+          orgaoPublicoEditable,
+          orgaoPublicoRule,
+          rendimentoOriginal,
+          tributoRetidoOriginal,
+          rendimentoEcf: rendimentoOriginal,
+          rendimentoEcfNumber: bucket.rendimentoOriginal,
+          irrf: irrfDefault,
+          irrfAuto: irrfDefault,
+          csll: '0,00',
+          csllAuto: '0,00',
+          irrfTributable: accepted ? isY570YesFlag(accepted.irrf) : false,
+          csllTributable: accepted ? isY570YesFlag(accepted.csll) : false,
+        };
+      });
+
+    const codes = Array.from(acceptedCodes.entries())
+      .filter(([code]) => codeOccurrences.has(code))
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([code, accepted]) => ({
+        code,
+        description: accepted.description,
+        orgaoPublico: accepted.orgaoPublico,
+        irrf: accepted.irrf,
+        csll: accepted.csll,
+        aliquotaIrrf: accepted.aliquotaIrrf || '0,00',
+        aliquotaCsll: accepted.csll === 'Sim' ? '1,00' : '0,00',
+        occurrences: codeOccurrences.get(code) || 0,
+      }));
+
+    const missing = Array.from(missingOccurrences.entries())
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([code, occurrences]) => ({ code, occurrences }));
+
+    const totals = sources.reduce(
+      (acc, row) => {
+        acc.rendimento += parsePtBrMoney(row.rendimentoOriginal);
+        acc.tributo += parsePtBrMoney(row.tributoRetidoOriginal);
+        acc.rendimentoEcf += parsePtBrMoney(row.rendimentoEcf);
+        acc.irrf += parsePtBrMoney(row.irrf);
+        acc.csll += parsePtBrMoney(row.csll);
+        return acc;
+      },
+      { rendimento: 0, tributo: 0, rendimentoEcf: 0, irrf: 0, csll: 0 }
+    );
+
+    return {
+      files: fileNames,
+      sources,
+      codes,
+      missing,
+      stats: {
+        fontesAgrupadas: sources.length,
+        codigosLocalizados: codes.length,
+        codigosNaoLocalizados: missing.length,
+        rendimentoTotal: formatPtBrMoney(totals.rendimento),
+        tributoTotal: formatPtBrMoney(totals.tributo),
+        rendimentoEcfTotal: formatPtBrMoney(totals.rendimentoEcf),
+        irrfTotal: formatPtBrMoney(totals.irrf),
+        csllTotal: formatPtBrMoney(totals.csll),
+      },
+    };
+  }
+
+  function buildY570TxtFromPreview(preview) {
+    const codeMap = new Map((Array.isArray(preview?.codes) ? preview.codes : []).map((row) => [normalizeCode(row.code), row]));
+    const sources = Array.isArray(preview?.sources) ? preview.sources : [];
+    const lines = [];
+
+    for (const row of sources) {
+      const code = normalizeCode(row.code);
+      const codeInfo = codeMap.get(code) || null;
+      if (!codeInfo) continue;
+      const rendimentoEcf = parsePtBrMoney(row.rendimentoEcf ?? row.rendimentoEcfNumber ?? row.rendimentoOriginal);
+      const irrfText = String(row.irrf ?? row.irrfAuto ?? '').trim();
+      const csllText = String(row.csll ?? row.csllAuto ?? '').trim();
+      const irrf = code === '3426'
+        ? parsePtBrMoney(row.tributoRetidoOriginal)
+        : (irrfText !== ''
+          ? parsePtBrMoney(irrfText)
+          : (codeInfo?.irrf === 'Sim' ? (rendimentoEcf * parsePtBrMoney(codeInfo?.aliquotaIrrf)) / 100 : 0));
+      const csll = csllText !== ''
+        ? parsePtBrMoney(csllText)
+        : (codeInfo?.csll === 'Sim' ? (rendimentoEcf * parsePtBrMoney(codeInfo?.aliquotaCsll)) / 100 : 0);
+      const orgaoPublico = normalizeY570OrgaoPublico(row.orgaoPublico);
+      const nome = sanitizeY570Text(row.nome);
+
+      lines.push(
+        `|Y570|${row.cnpj}|${nome}|${orgaoPublico}|${code}|${formatPtBrMoney(rendimentoEcf)}|${formatPtBrMoney(irrf)}|${formatPtBrMoney(csll)}|`
+      );
+    }
+
+    return `${lines.join('\r\n')}\r\n`;
+  }
+
+  async function buildEcfY570Preview({ filesByInput, outputDir, jobId } = {}) {
+    const txtFiles = Array.isArray(filesByInput?.fontes_pagadoras_txt) ? filesByInput.fontes_pagadoras_txt : [];
+    if (txtFiles.length === 0) {
+      throw createValidationError('Nenhum TXT das fontes pagadoras foi enviado para o Y570.');
+    }
+
+    const acceptedCodes = getY570AcceptedCodes();
+    const analyzedFiles = [];
+    for (const file of txtFiles) {
+      if (!file?.path) continue;
+      const analysis = await inspectFile(file);
+      analyzedFiles.push({
+        inputKey: 'fontes_pagadoras_txt',
+        inputLabel: 'TXT das fontes pagadoras',
+        ...analysis,
+      });
+    }
+    const aggregated = aggregateY570Rows(
+      txtFiles
+        .map((file) => file?.path)
+        .filter(Boolean),
+      acceptedCodes
+    );
+
+    const previewJobId = String(jobId || createJobId()).trim();
+    const preview = {
+      jobId: previewJobId,
+      templateId: 'ecf-y570-fontes-pagadoras',
+      generatedAt: new Date().toISOString(),
+      ...aggregated,
+    };
+    const summary = {
+      jobId: previewJobId,
+      spedType: 'ecf',
+      spedLabel: 'SPED ECF',
+      templateId: 'ecf-y570-fontes-pagadoras',
+      templateTitle: 'ECF - Y570 Fontes pagadoras',
+      scriptEntry: 'api/speds_scripts/ecf/gerador_y570_fontes_pagadoras.py',
+      manifestPath: 'api/layouts/speds/ecf/manifests/ecf-y570-fontes-pagadoras.manifest.json',
+      executedAt: preview.generatedAt,
+      fields: [],
+      files: analyzedFiles,
+      y570: preview,
+    };
+
+    if (outputDir) {
+      ensureDir(outputDir);
+      await fs.promises.writeFile(
+        path.join(outputDir, 'preview.json'),
+        JSON.stringify(preview, null, 2),
+        'utf8'
+      );
+    }
+
+    return {
+      jobId: previewJobId,
+      preview,
+      summary,
+    };
+  }
+
+  async function exportEcfY570Txt({ preview, outputDir, jobId } = {}) {
+    if (!preview || typeof preview !== 'object') {
+      throw createValidationError('Preview do Y570 nao informado para exportacao.');
+    }
+    const targetJobId = String(jobId || preview.jobId || createJobId()).trim();
+    const finalOutputDir = outputDir || path.join(OUTPUT_ROOT, targetJobId);
+    ensureDir(finalOutputDir);
+
+    const outputPath = path.join(finalOutputDir, `Y570_fontes_pagadoras_${targetJobId}.txt`);
+    const txt = buildY570TxtFromPreview(preview);
+    await fs.promises.writeFile(outputPath, txt, 'latin1');
+
+    return {
+      artifact: {
+        fileName: path.basename(outputPath),
+        filePath: outputPath,
+        mimeType: 'text/plain; charset=latin1',
+      },
+      preview,
+      jobId: targetJobId,
+    };
   }
 
   async function runTemplate(payload = {}) {
@@ -1871,6 +2267,8 @@ module.exports = function createSpedsService(deps = {}) {
     listTemplates,
     getTemplateDetails,
     buildFilesByInput,
+    buildEcfY570Preview,
+    exportEcfY570Txt,
     runTemplate,
     resolveArtifact,
   };

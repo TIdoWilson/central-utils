@@ -49,6 +49,16 @@ class LedgerData:
 
 
 @dataclass(frozen=True)
+class ManualL210Entry:
+    label: str
+    period_label: str
+    opening_balance: float
+    final_balance: float
+    cost_value: float
+    purchases_value: float
+
+
+@dataclass(frozen=True)
 class L210Row:
     period_key: str
     period_label: str
@@ -275,6 +285,108 @@ def read_ledger(path: Path) -> LedgerData:
     )
 
 
+def load_manual_entries(path: Path) -> list[ManualL210Entry]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        raise RuntimeError(f"Falha ao ler as linhas manuais de L210 em '{path.name}'.") from exc
+
+    if isinstance(payload, dict):
+        apuracao = "trimestral" if clean_text(payload.get("apuracao")).lower() == "trimestral" else "mensal"
+        ano_declaracao = clean_text(payload.get("ano_declaracao")) or str(date.today().year - 1)
+        opening_from_header = to_float(payload.get("saldo_inicial_estoque"))
+        rows = payload.get("rows")
+
+        if not isinstance(rows, list):
+            raise RuntimeError("O quadro manual do L210 deve conter a lista 'rows'.")
+
+        expected_rows = 4 if apuracao == "trimestral" else 12
+        if len(rows) != expected_rows:
+            raise RuntimeError(
+                f"O quadro manual do L210 precisa ter {expected_rows} linhas para a apuracao informada."
+            )
+
+        entries: list[ManualL210Entry] = []
+        cumulative_cost = 0.0
+        previous_final_balance = opening_from_header
+        for index, item in enumerate(rows, start=1):
+            if not isinstance(item, dict):
+                raise RuntimeError(f"Linha manual invalida no quadro L210: item #{index}.")
+
+            period_label = clean_text(item.get("periodo") or manual_period_label(apuracao, ano_declaracao, index))
+            opening_balance = to_float(item.get("estoque_inicial"))
+            if opening_balance is None:
+                opening_balance = opening_from_header if apuracao == "mensal" or index == 1 else previous_final_balance
+            final_balance = to_float(item.get("estoque_final"))
+            cost_period = to_float(item.get("custo"))
+
+            if opening_balance is None or final_balance is None or cost_period is None:
+                raise RuntimeError(
+                    f"Linha manual #{index} do L210 precisa de saldo inicial, saldo final e custo."
+                )
+
+            if apuracao == "mensal":
+                cumulative_cost += cost_period
+                cost_value = cumulative_cost
+            else:
+                cost_value = cost_period
+
+            purchases_value = final_balance + cost_value - opening_balance
+            previous_final_balance = final_balance
+            entries.append(
+                ManualL210Entry(
+                    label=period_label,
+                    period_label=period_label,
+                    opening_balance=opening_balance,
+                    final_balance=final_balance,
+                    cost_value=cost_value,
+                    purchases_value=purchases_value,
+                )
+            )
+
+        if not entries:
+            raise RuntimeError("Nenhuma linha manual foi informada para o L210.")
+
+        return entries
+
+    if not isinstance(payload, list):
+        raise RuntimeError("O quadro manual do L210 deve ser uma lista de linhas.")
+
+    entries: list[ManualL210Entry] = []
+    for index, item in enumerate(payload, start=1):
+        if not isinstance(item, dict):
+            raise RuntimeError(f"Linha manual invalida no quadro L210: item #{index}.")
+
+        label = clean_text(item.get("identificacao") or item.get("label") or item.get("periodo") or f"Linha {index}")
+        period_label = clean_text(item.get("periodo") or label or f"Linha {index}")
+        opening_balance = to_float(item.get("estoque_inicial"))
+        final_balance = to_float(item.get("estoque_final"))
+        cost_value = to_float(item.get("custo"))
+        purchases_raw = to_float(item.get("compras"))
+
+        if opening_balance is None or final_balance is None or cost_value is None:
+            raise RuntimeError(
+                f"Linha manual #{index} do L210 precisa de estoque inicial, estoque final e custo."
+            )
+
+        purchases_value = purchases_raw if purchases_raw is not None else (final_balance + cost_value - opening_balance)
+        entries.append(
+            ManualL210Entry(
+                label=label,
+                period_label=period_label,
+                opening_balance=opening_balance,
+                final_balance=final_balance,
+                cost_value=cost_value,
+                purchases_value=purchases_value,
+            )
+        )
+
+    if not entries:
+        raise RuntimeError("Nenhuma linha manual foi informada para o L210.")
+
+    return entries
+
+
 def month_key(value: date) -> str:
     return f"{value.year:04d}-{value.month:02d}"
 
@@ -295,6 +407,13 @@ def quarter_key(value: date) -> str:
 def quarter_label(key: str) -> str:
     year, quarter = key.split("-T")
     return f"{quarter}T/{year}"
+
+
+def manual_period_label(apuracao: str, ano_declaracao: str, index: int) -> str:
+    year = clean_text(ano_declaracao)[:4] or str(date.today().year - 1)
+    if apuracao == "trimestral":
+        return f"{index}T/{year}"
+    return f"{index:02d}/{year}"
 
 
 def period_key_for_date(value: date, apuracao: str) -> str:
@@ -414,13 +533,41 @@ def build_revenda_rows(stock_ledger: LedgerData, cost_ledger: LedgerData, apurac
     return rows
 
 
+def build_manual_rows(manual_entries: list[ManualL210Entry]) -> list[L210Row]:
+    rows: list[L210Row] = []
+
+    for index, entry in enumerate(manual_entries, start=1):
+        period_key = f"manual-{index:03d}"
+        period_label = entry.label or entry.period_label or f"Linha {index}"
+        for codigo, valor in (
+            ("33", entry.opening_balance),
+            ("34", entry.purchases_value),
+            ("36", entry.final_balance),
+            ("37", entry.cost_value),
+        ):
+            rows.append(
+                L210Row(
+                    period_key=period_key,
+                    period_label=period_label,
+                    registro="L210",
+                    codigo=codigo,
+                    descricao=CODIGOS_REVENDA[codigo],
+                    valor=valor,
+                    origem="manual",
+                )
+            )
+
+    return rows
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Gera bloco L210 a partir de razao de estoque/custo."
+        description="Gera bloco L210 a partir de razao de estoque/custo ou quadro manual."
     )
     parser.add_argument("--tem-fabricacao", default="", help="sim/nao")
     parser.add_argument("--tem-revenda", default="", help="sim/nao")
     parser.add_argument("--apuracao", choices=["mensal", "trimestral"], default="")
+    parser.add_argument("--manual-rows-file", default="", help="Arquivo JSON com o quadro manual do L210")
     parser.add_argument("--razao-estoque", default="", help="Arquivo Excel do razao de estoque")
     parser.add_argument("--razao-custo", default="", help="Arquivo Excel do razao de custo")
     parser.add_argument("--output-txt", default="", help="Arquivo TXT de saida")
@@ -566,6 +713,7 @@ def save_outputs(
     apuracao: str,
     stock_ledger: LedgerData | None,
     cost_ledger: LedgerData | None,
+    source_mode: str = "razao",
     output_txt: Path | None = None,
     output_csv: Path | None = None,
 ) -> tuple[Path, Path]:
@@ -581,6 +729,10 @@ def save_outputs(
     df = dataframe_from_rows(rows)
     metadata = pd.DataFrame(
         [
+            {
+                "campo": "modo_geracao",
+                "valor": source_mode,
+            },
             {
                 "campo": "apuracao",
                 "valor": apuracao,
@@ -612,11 +764,18 @@ def save_outputs(
     return txt_path, csv_path
 
 
-def print_summary(rows: list[L210Row], apuracao: str, txt_path: Path, csv_path: Path) -> None:
+def print_summary(
+    rows: list[L210Row],
+    apuracao: str,
+    txt_path: Path,
+    csv_path: Path,
+    source_mode: str = "razao",
+) -> None:
     df = dataframe_from_rows(rows)
     periodos = df["periodo"].nunique() if not df.empty else 0
 
     print("Resumo:")
+    print(f"- Modo: {source_mode}")
     print(f"- Apuracao: {apuracao}")
     print(f"- Periodos gerados: {periodos}")
     print(f"- Linhas L210 geradas: {len(rows)}")
@@ -646,49 +805,58 @@ def main() -> None:
     args = parse_args()
     load_l210_layout()
 
-    tem_fabricacao = (
-        parse_bool_choice(args.tem_fabricacao, "--tem-fabricacao")
-        if args.tem_fabricacao
-        else ask_yes_no(
-            "Contas de custo",
-            "A empresa possui conta de custo/estoque de fabricacao propria?",
-        )
-    )
-    tem_revenda = (
-        parse_bool_choice(args.tem_revenda, "--tem-revenda")
-        if args.tem_revenda
-        else ask_yes_no(
-            "Contas de custo",
-            "A empresa possui conta de custo/estoque de revenda?",
-        )
-    )
-    if not tem_fabricacao and not tem_revenda:
-        raise SystemExit("Nenhuma opcao selecionada.")
-
     apuracao = args.apuracao if args.apuracao else ask_apuracao()
-
-    if tem_fabricacao and not tem_revenda:
-        raise SystemExit("A montagem de fabricacao propria ainda nao foi implementada neste script.")
 
     stock_ledger: LedgerData | None = None
     cost_ledger: LedgerData | None = None
     rows: list[L210Row] = []
+    source_mode = "razao"
 
-    if tem_revenda:
-        stock_path = Path(args.razao_estoque) if args.razao_estoque else select_file("Selecione o arquivo do razao de estoque")
-        cost_path = Path(args.razao_custo) if args.razao_custo else select_file("Selecione o arquivo do razao de custo")
+    manual_rows_path = Path(args.manual_rows_file) if args.manual_rows_file else None
+    if manual_rows_path:
+        if not manual_rows_path.exists():
+            raise SystemExit(f"Arquivo nao encontrado: {manual_rows_path}")
+        manual_entries = load_manual_entries(manual_rows_path)
+        rows.extend(build_manual_rows(manual_entries))
+        source_mode = "manual"
+    else:
+        tem_fabricacao = (
+            parse_bool_choice(args.tem_fabricacao, "--tem-fabricacao")
+            if args.tem_fabricacao
+            else ask_yes_no(
+                "Contas de custo",
+                "A empresa possui conta de custo/estoque de fabricacao propria?",
+            )
+        )
+        tem_revenda = (
+            parse_bool_choice(args.tem_revenda, "--tem-revenda")
+            if args.tem_revenda
+            else ask_yes_no(
+                "Contas de custo",
+                "A empresa possui conta de custo/estoque de revenda?",
+            )
+        )
+        if not tem_fabricacao and not tem_revenda:
+            raise SystemExit("Nenhuma opcao selecionada.")
 
-        if not stock_path.exists():
-            raise SystemExit(f"Arquivo nao encontrado: {stock_path}")
-        if not cost_path.exists():
-            raise SystemExit(f"Arquivo nao encontrado: {cost_path}")
+        if tem_fabricacao and not tem_revenda:
+            raise SystemExit("A montagem de fabricacao propria ainda nao foi implementada neste script.")
 
-        stock_ledger = read_ledger(stock_path)
-        cost_ledger = read_ledger(cost_path)
-        rows.extend(build_revenda_rows(stock_ledger, cost_ledger, apuracao))
+        if tem_revenda:
+            stock_path = Path(args.razao_estoque) if args.razao_estoque else select_file("Selecione o arquivo do razao de estoque")
+            cost_path = Path(args.razao_custo) if args.razao_custo else select_file("Selecione o arquivo do razao de custo")
 
-    if tem_fabricacao:
-        print("Aviso: fabricacao propria foi selecionada, mas ainda nao ha regra de calculo implementada para ela.")
+            if not stock_path.exists():
+                raise SystemExit(f"Arquivo nao encontrado: {stock_path}")
+            if not cost_path.exists():
+                raise SystemExit(f"Arquivo nao encontrado: {cost_path}")
+
+            stock_ledger = read_ledger(stock_path)
+            cost_ledger = read_ledger(cost_path)
+            rows.extend(build_revenda_rows(stock_ledger, cost_ledger, apuracao))
+
+        if tem_fabricacao:
+            print("Aviso: fabricacao propria foi selecionada, mas ainda nao ha regra de calculo implementada para ela.")
 
     if not rows:
         raise SystemExit("Nenhuma linha L210 foi gerada.")
@@ -700,10 +868,11 @@ def main() -> None:
         apuracao,
         stock_ledger,
         cost_ledger,
+        source_mode=source_mode,
         output_txt=output_txt,
         output_csv=output_csv,
     )
-    print_summary(rows, apuracao, txt_path, csv_path)
+    print_summary(rows, apuracao, txt_path, csv_path, source_mode=source_mode)
 
 
 if __name__ == "__main__":

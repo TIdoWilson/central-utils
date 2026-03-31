@@ -132,20 +132,6 @@
       "valores_validos": "-",
       "obrigatorio": true,
       "obrigatorio_raw": "Sim"
-    },
-    {
-      "pos": 9,
-      "nome": "PREV_RET",
-      "rotulo": "Contribuição Previdenciária Retida na Fonte",
-      "descricao": "Contribuição previdenciária retida na fonte",
-      "tipo": "N",
-      "tamanho": "019",
-      "tamanho_int": 19,
-      "decimais": "002",
-      "decimais_int": 2,
-      "valores_validos": "-",
-      "obrigatorio": true,
-      "obrigatorio_raw": "Sim"
     }
   ],
   "notas_extracao": []

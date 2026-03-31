@@ -443,27 +443,12 @@
       "id": "ecf-gerador-bloco-custo-l210",
       "spedType": "ecf",
       "title": "ECF - Gerador bloco custo L210",
-      "description": "Gera L210 de custo (revenda) a partir do razao de estoque e razao de custo.",
+      "description": "Gera o L210 de custo a partir de um quadro manual, sem depender de razao de estoque e razao de custo.",
       "script": {
         "entry": "api/speds_scripts/ecf/gerador_bloco_custo.py",
         "source": "C:/Users/Usuario/Desktop/projeto sped/ECF/GERADOR_BLOCO_CUSTO.PY"
       },
-      "inputs": [
-        {
-          "key": "razao_estoque",
-          "label": "Razao de estoque",
-          "required": true,
-          "multiple": false,
-          "acceptedExtensions": [".xlsx", ".xls"]
-        },
-        {
-          "key": "razao_custo",
-          "label": "Razao de custo",
-          "required": true,
-          "multiple": false,
-          "acceptedExtensions": [".xlsx", ".xls"]
-        }
-      ],
+      "inputs": [],
       "fields": [
         {
           "key": "apuracao",
@@ -477,28 +462,48 @@
           ]
         },
         {
-          "key": "tem_fabricacao",
-          "label": "Possui fabricacao propria",
-          "type": "select",
-          "required": false,
-          "defaultValue": "nao",
-          "options": [
-            { "value": "nao", "label": "Nao" },
-            { "value": "sim", "label": "Sim" }
-          ]
+          "key": "ano_declaracao",
+          "label": "Ano da declaracao",
+          "type": "number",
+          "required": true,
+          "defaultValue": "",
+          "placeholder": "2025"
         },
         {
-          "key": "tem_revenda",
-          "label": "Possui revenda",
-          "type": "select",
-          "required": false,
-          "defaultValue": "sim",
-          "options": [
-            { "value": "sim", "label": "Sim" },
-            { "value": "nao", "label": "Nao" }
-          ]
+          "key": "saldo_inicial_estoque",
+          "label": "Saldo inicial do estoque",
+          "type": "text",
+          "required": true,
+          "defaultValue": "0,00",
+          "placeholder": "0,00"
         }
       ],
+      "outputFormats": ["txt"]
+    },
+    {
+      "id": "ecf-y570-fontes-pagadoras",
+      "spedType": "ecf",
+      "title": "ECF - Y570 Fontes pagadoras",
+      "description": "Monta os quadros do Y570 a partir dos TXT das fontes pagadoras, destaca os codigos utilizaveis na ECF e exporta o TXT final da ECF.",
+      "script": {
+        "entry": "api/speds_scripts/ecf/gerador_y570_fontes_pagadoras.py",
+        "source": "W:/DOCUMENTOS ESCRITORIO/INSTALACAO SISTEMA/central-utils/api/speds_scripts/ecf/gerador_y570_fontes_pagadoras.py"
+      },
+      "manifest": {
+        "path": "api/layouts/speds/ecf/manifests/ecf-y570-fontes-pagadoras.manifest.json",
+        "schema": "api/layouts/speds/template.manifest.schema.json"
+      },
+      "inputs": [
+        {
+          "key": "fontes_pagadoras_txt",
+          "label": "TXT das fontes pagadoras",
+          "required": true,
+          "multiple": true,
+          "acceptedExtensions": [".txt"],
+          "help": "Selecione um ou mais arquivos TXT do RendC411."
+        }
+      ],
+      "fields": [],
       "outputFormats": ["txt"]
     },
     {

@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const { createEcdStatusService } = require('../../services/ecd-status.service');
 
 module.exports = function createEcdStatusRoutes(deps) {
@@ -21,7 +21,8 @@ module.exports = function createEcdStatusRoutes(deps) {
       const out = list.map((c) => {
         const st = status.companies[c.code] || {};
         const hasErrorPng = ecdHasErrorPng(c.name);
-        if (hasErrorPng) {
+        const retryRequested = String(st.retryRequested || '').toUpperCase() === 'Y';
+        if (hasErrorPng && !retryRequested) {
           st.erro = 'Y';
           st.erroMsg = st.erroMsg || 'Arquivo de erro encontrado na pasta.';
         }
@@ -97,6 +98,7 @@ module.exports = function createEcdStatusRoutes(deps) {
       }
 
       status.companies[code] = next;
+      if (!Array.isArray(status.order)) status.order = [];
       if (!status.order.includes(code)) status.order.push(code);
       saveEcdStatus(status);
 
@@ -108,5 +110,59 @@ module.exports = function createEcdStatusRoutes(deps) {
     }
   });
 
+  router.post('/request-retry', requireCsrf, async (req, res) => {
+    try {
+      const code = String(req.body?.code || '').trim();
+      const confirmResolved = req.body?.confirmResolved === true;
+
+      if (!code) return res.status(400).json({ error: 'Codigo obrigatorio.' });
+      if (!confirmResolved) {
+        return res.status(400).json({ error: 'Confirmacao obrigatoria para solicitar nova tentativa.' });
+      }
+
+      const status = loadEcdStatus();
+      const cur = status.companies[code] || null;
+      if (!cur) {
+        return res.status(404).json({ error: 'Empresa nao encontrada no status atual.' });
+      }
+      if (!cur.completed) {
+        return res.status(409).json({
+          error: 'Essa empresa ainda nao foi rodada. Use Salvar e gerar normalmente.',
+        });
+      }
+
+      const nowIso = new Date().toISOString();
+      const next = {
+        ...cur,
+        code: String(cur.code || code),
+        retryRequested: 'Y',
+        retryRequestedAt: nowIso,
+        retryRequestedBy: {
+          id: req.user?.id || null,
+          email: req.user?.email || null,
+          name: req.user?.name || null,
+        },
+        arquivosNaPasta: 'N',
+      };
+
+      delete next.erro;
+      delete next.erroGrave;
+      delete next.erroMsg;
+      delete next.erroAt;
+
+      status.companies[code] = next;
+      if (!Array.isArray(status.order)) status.order = [];
+      if (!status.order.includes(code)) status.order.push(code);
+      saveEcdStatus(status);
+
+      await auditLog(req, 'ecd_status_request_retry', 'ok', { code });
+      res.json({ ok: true, status: next });
+    } catch (e) {
+      console.error('[ECD] Erro ao solicitar nova tentativa:', e.message || e);
+      res.status(500).json({ error: 'Erro ao solicitar nova tentativa.' });
+    }
+  });
+
   return router;
 };
+

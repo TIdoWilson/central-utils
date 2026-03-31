@@ -29,6 +29,17 @@ function createEcdStatusService(options) {
     try { fs.mkdirSync(ECD_CSV_DIR, { recursive: true }); } catch {}
   }
 
+  function emptyStatus() {
+    return { companies: {}, order: [] };
+  }
+
+  function normalizeStatusShape(parsed) {
+    if (!parsed || typeof parsed !== 'object') return emptyStatus();
+    if (!parsed.companies || typeof parsed.companies !== 'object') parsed.companies = {};
+    if (!Array.isArray(parsed.order)) parsed.order = [];
+    return parsed;
+  }
+
   function ensureEcdCsvCopies() {
     try {
       if (ECD_SRC_ALL_CSV && ECD_ALL_CSV && fs.existsSync(ECD_SRC_ALL_CSV)) {
@@ -60,26 +71,23 @@ function createEcdStatusService(options) {
   }
 
   function loadEcdStatus() {
-    if (!ECD_STATUS_FILE || !fs.existsSync(ECD_STATUS_FILE)) return { companies: {} };
+    if (!ECD_STATUS_FILE || !fs.existsSync(ECD_STATUS_FILE)) return emptyStatus();
     try {
       const raw = fs.readFileSync(ECD_STATUS_FILE, 'utf-8');
-      const parsed = JSON.parse(raw);
-      if (!parsed || typeof parsed !== 'object') return { companies: {} };
-      if (!parsed.companies || typeof parsed.companies !== 'object') parsed.companies = {};
-      if (!Array.isArray(parsed.order)) parsed.order = [];
-      return parsed;
+      return normalizeStatusShape(JSON.parse(raw));
     } catch (e) {
-      console.error('[ECD] Erro ao ler ecd_status.json:', e.message || e);
-      return { companies: {} };
+      console.error('[ECD] Erro ao ler ecd_status.json:', ECD_STATUS_FILE, e.message || e);
+      return emptyStatus();
     }
   }
 
   function saveEcdStatus(data) {
     if (!ECD_STATUS_FILE) return;
     try {
-      fs.writeFileSync(ECD_STATUS_FILE, JSON.stringify(data, null, 2), 'utf-8');
+      const normalized = normalizeStatusShape(data);
+      fs.writeFileSync(ECD_STATUS_FILE, JSON.stringify(normalized, null, 2), 'utf-8');
     } catch (e) {
-      console.error('[ECD] Erro ao salvar ecd_status.json:', e.message || e);
+      console.error('[ECD] Erro ao salvar ecd_status.json:', ECD_STATUS_FILE, e.message || e);
     }
   }
 

@@ -74,7 +74,7 @@
         "COD_CTA",
         "COD_CCUS"
       ],
-      "quantidade_campos": 9,
+        "quantidade_campos": 8,
       "arquivo": "K155.json",
       "paginas": {
         "inicio": 87,
@@ -386,7 +386,7 @@
         "CNPJ_FON",
         "COD_REC"
       ],
-      "quantidade_campos": 9,
+      "quantidade_campos": 8,
       "arquivo": "Y570.json",
       "paginas": {
         "inicio": 183,

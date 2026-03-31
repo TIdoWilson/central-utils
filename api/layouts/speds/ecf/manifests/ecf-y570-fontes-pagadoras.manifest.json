@@ -1,0 +1,42 @@
+{
+  "templateId": "ecf-y570-fontes-pagadoras",
+  "spedType": "ecf",
+  "operation": "analyze",
+  "inputs": [
+    {
+      "key": "fontes_pagadoras_txt",
+      "label": "TXT das fontes pagadoras",
+      "required": true,
+      "multiple": true,
+      "acceptedExtensions": [".txt"],
+      "help": "Selecione um ou mais arquivos TXT do RendC411."
+    }
+  ],
+  "fields": [],
+  "targets": {
+    "records": ["Y570"],
+    "relationshipsFile": "api/layouts/speds/ecf/index.json"
+  },
+  "cascadePolicy": {
+    "enabled": false,
+    "onMissingDependency": "skip",
+    "onOrphanDetected": "cleanup"
+  },
+  "validators": {
+    "globalRelationshipValidation": false,
+    "duplicateKeyCheck": false,
+    "hierarchyCheck": false,
+    "rulesFile": "api/layouts/speds/ecf/Y570.json",
+    "maxIssues": 50
+  },
+  "totalizers": [],
+  "output": {
+    "formats": ["txt"],
+    "filenamePattern": "Y570_fontes_pagadoras_{timestamp}.txt"
+  },
+  "dryRun": {
+    "enabled": false,
+    "reportChanges": true,
+    "requireConfirmation": false
+  }
+}
