@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  const isAdmin = (ctx?.user?.role || '').toUpperCase() === 'ADMIN';
-
   const tableBody = document.querySelector('#ecdTable tbody');
   const searchCodeInput = document.getElementById('ecdSearchCode');
   const searchNameInput = document.getElementById('ecdSearchName');
@@ -169,20 +167,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     tipoSel.value = st?.simples || selected.defaultTipo || '';
     dfcSel.value = (typeof st?.dfc === 'boolean') ? String(st.dfc) : '';
 
-    tipoSel.disabled = locked && !isAdmin;
-    dfcSel.disabled = locked && !isAdmin;
+    tipoSel.disabled = false;
+    dfcSel.disabled = false;
 
-    if (saveBtn) saveBtn.disabled = locked && !isAdmin;
+    if (saveBtn) saveBtn.disabled = false;
     if (retryBtn) retryBtn.disabled = !locked;
 
     if (erro && retryRequested) {
       setStatus('ERRO registrado e nova tentativa solicitada.', true);
     } else if (erro) {
-      setStatus('ERRO registrado. Somente ADMIN pode alterar.', true);
+      setStatus('ERRO registrado.', true);
     } else if (retryRequested && locked && !arquivosNaPasta) {
       setStatus('Nova tentativa solicitada. Empresa voltou para fila.', false);
     } else if (locked) {
-      setStatus('Registro gerado e bloqueado. Somente ADMIN pode alterar.', true);
+      setStatus('Registro gerado. Edicao liberada para todos os usuarios.', false);
     } else {
       setStatus('', false);
     }

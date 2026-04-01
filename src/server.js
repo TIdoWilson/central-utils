@@ -148,7 +148,9 @@ const {
   loadEcdStatus,
   saveEcdStatus,
   ecdHasErrorPng,
+  ECD_STATUS_FILE,
 } = ecdService;
+console.log('[ECD] Arquivo de status em uso:', ECD_STATUS_FILE);
 
 const {
   JOB_STATUS,

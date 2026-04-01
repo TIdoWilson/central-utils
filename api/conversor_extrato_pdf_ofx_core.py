@@ -46,9 +46,13 @@ def parse_valor_br(texto: str) -> float:
     texto = texto.strip()
     texto = texto.replace("\xa0", " ").replace("'", ",")
     texto = re.sub(r"\s+", "", texto)
-    negativo = texto.endswith("-")
-    if negativo:
+    negativo = texto.startswith("-") or texto.endswith("-") or (texto.startswith("(") and texto.endswith(")"))
+    if texto.startswith("-"):
+        texto = texto[1:]
+    if texto.endswith("-"):
         texto = texto[:-1]
+    if texto.startswith("(") and texto.endswith(")"):
+        texto = texto[1:-1]
     texto = texto.replace(".", "").replace(",", ".")
     valor = float(texto)
     return -valor if negativo else valor
@@ -456,9 +460,160 @@ def parse_evolua_ocr(pdf_bytes: bytes) -> tuple[list[Lancamento], float | None]:
     return lancamentos, saldo_final
 
 
+def parse_sicredi_ccpi_iguacu(texto_pdf: str) -> tuple[list[Lancamento], float | None]:
+    regex_data = re.compile(r"(\d{2}/\d{2}/\d{4})")
+    regex_valor = re.compile(r"-?\d{1,3}(?:\.\d{3})*,\d{2}")
+
+    def limpar_segmento(segmento: str) -> str:
+        segmento = segmento.split("Continua na pagina")[0]
+        segmento = segmento.split("SALDO ATUAL......:")[0]
+        segmento = segmento.split("SALDO ATUAL")[0]
+        segmento = segmento.split("====================================================================")[0]
+        return segmento.strip()
+
+    def token_parece_documento(token: str) -> bool:
+        token = token.strip()
+        if not token:
+            return False
+        token_maiusculo = token.upper()
+        if token_maiusculo in {
+            "RECEBIMENTO",
+            "PAGAMENTO",
+            "RENOVACAO",
+            "LIQUIDACAO",
+            "SEGURO",
+            "JUROS",
+            "IOF",
+            "DEBITO",
+            "CREDITO",
+            "SALDO",
+            "DEP",
+            "SAQUE",
+            "ENC",
+            "SICREDI",
+            "TARIFA",
+        }:
+            return False
+        return bool(re.search(r"\d", token) or any(ch in token for ch in "._-/|"))
+
+    def classificar_sinal(texto: str) -> int:
+        texto = texto.upper()
+        positivos = (
+            "RECEBIMENTO PIX",
+            "SICREDI CREDITO MASTER",
+            "SICREDI DEBITO MASTER",
+            "SICREDI CREDITO VISA",
+            "SICREDI DEBITO VISA",
+            "TED ",
+            "TED",
+            "DEP DINHEIRO",
+            "CREDITO PIX",
+            "CREDITO VISA",
+            "CREDITO MASTER",
+        )
+        negativos = (
+            "PAGAMENTO PIX",
+            "PIX_DEB",
+            "DEBITO PIX",
+            "DEBITO ARRECADACAO",
+            "LIQUIDACAO BOLETO",
+            "LIQUIDACAO DE PARCELA",
+            "IOF ",
+            "IOF",
+            "JUROS",
+            "RENOVACAO",
+            "SEGURO",
+            "SAQUE",
+            "ENC",
+            "TARIFA",
+            "CH. ESP",
+            "CH ESP",
+        )
+        if any(marcador in texto for marcador in positivos):
+            return 1
+        if any(marcador in texto for marcador in negativos):
+            return -1
+        return 0
+
+    saldo_anterior: float | None = None
+    m_saldo_inicial = re.search(
+        r"S\s*A\s*L\s*D\s*O\s+A\s*N\s*T\s*E\s*R\s*I\s*O\s*R\s+(-?\d[\d\.]*,\d{2})",
+        texto_pdf,
+        flags=re.IGNORECASE,
+    )
+    if m_saldo_inicial:
+        try:
+            saldo_anterior = parse_valor_br(m_saldo_inicial.group(1))
+        except ValueError:
+            saldo_anterior = None
+
+    lancamentos: list[Lancamento] = []
+    saldo_final: float | None = saldo_anterior
+    matches = list(regex_data.finditer(texto_pdf))
+
+    for idx in range(1, len(matches)):
+        inicio = matches[idx].start()
+        fim = matches[idx + 1].start() if idx + 1 < len(matches) else len(texto_pdf)
+        segmento = limpar_segmento(texto_pdf[inicio:fim])
+        if not segmento:
+            continue
+
+        segmento_maiusculo = segmento.upper()
+        if "PERIODO:" in segmento_maiusculo or "EXTRATO DE CONTA CORRENTE" in segmento_maiusculo:
+            continue
+        if not regex_data.match(segmento):
+            continue
+
+        m_data = regex_data.match(segmento)
+        if not m_data:
+            continue
+
+        resto = segmento[m_data.end():].strip()
+        valores = list(regex_valor.finditer(resto))
+        if not valores:
+            continue
+
+        data_txt = m_data.group(1)
+        trecho_historico = resto[: valores[0].start()].strip()
+        documento_txt = ""
+        if trecho_historico:
+            partes = trecho_historico.split(maxsplit=1)
+            if partes and token_parece_documento(partes[0]):
+                documento_txt = partes[0]
+                trecho_historico = partes[1] if len(partes) > 1 else ""
+
+        if len(valores) >= 2 and saldo_anterior is not None:
+            saldo_lido = parse_valor_br(valores[-1].group(0))
+            valor = saldo_lido - saldo_anterior
+            saldo_anterior = saldo_lido
+            saldo_final = saldo_lido
+        else:
+            valor_base = parse_valor_br(valores[0].group(0))
+            sentido = classificar_sinal(f"{documento_txt} {trecho_historico}")
+            if sentido == 0:
+                sentido = 1
+            valor = valor_base * sentido
+            if saldo_anterior is not None:
+                saldo_anterior += valor
+
+        lancamentos.append(
+            Lancamento(
+                data=datetime.strptime(data_txt, "%d/%m/%Y"),
+                valor=valor,
+                memo=trecho_historico[:80],
+                documento=documento_txt[:30],
+            )
+        )
+
+    return lancamentos, saldo_final
+
+
 def parse_sicredi(texto_pdf: str) -> tuple[list[Lancamento], float | None]:
+    if "CCPI IGUACU" in texto_pdf.upper():
+        return parse_sicredi_ccpi_iguacu(texto_pdf)
+
     regex_base = re.compile(r"^\s*(\d{2}/\d{2}/\d{4})\s+(\S+)\s+(.+)$")
-    regex_valor = re.compile(r"\d{1,3}(?:\.\d{3})*,\d{2}-?")
+    regex_valor = re.compile(r"-?\d{1,3}(?:\.\d{3})*,\d{2}-?")
 
     lancamentos: list[Lancamento] = []
     saldo_final: float | None = None

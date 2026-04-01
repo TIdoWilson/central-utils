@@ -82,12 +82,16 @@ function createEcdStatusService(options) {
   }
 
   function saveEcdStatus(data) {
-    if (!ECD_STATUS_FILE) return;
+    if (!ECD_STATUS_FILE) {
+      throw new Error('ECD_STATUS_FILE nao configurado.');
+    }
     try {
       const normalized = normalizeStatusShape(data);
       fs.writeFileSync(ECD_STATUS_FILE, JSON.stringify(normalized, null, 2), 'utf-8');
+      return ECD_STATUS_FILE;
     } catch (e) {
       console.error('[ECD] Erro ao salvar ecd_status.json:', ECD_STATUS_FILE, e.message || e);
+      throw e;
     }
   }
 
@@ -113,6 +117,7 @@ function createEcdStatusService(options) {
     saveEcdStatus,
     loadEcdCompanies,
     ecdHasErrorPng,
+    ECD_STATUS_FILE,
   };
 }
 

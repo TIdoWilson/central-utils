@@ -74,3 +74,8 @@ Aceita envio de um ou varios PDFs e disponibiliza o resultado por arquivo (OFX) 
 - Sintoma: o OFX do layout mensal do Evolua ainda saia com ruido de historico, principalmente em espacamento ao redor de `-`, `CR.INTERNET`, `PG.P/INTERNET` e alguns titulos curtos como `PREST.EMPREST` e `TAXA C/C NEG.`.
 - Causa provavel: o OCR entregava a mesma informacao com variacoes de pontuacao e espacamento entre paginas, gerando divergencia visual desnecessaria no campo `MEMO`.
 - Solucao: normalizacao adicional do `MEMO` apenas para o parser OCR do Evolua mensal, preservando data e valor e reduzindo o ruido de comparacao com o PDF.
+
+## Correcao registrada em 2026-03-31 (layout Sicredi CCPI Iguacu)
+- Sintoma: o PDF `EXTRATO.pdf` da Sicredi/Iguacu era reconhecido como Sicredi, mas o conversor gerava `Nenhum lancamento foi identificado para gerar OFX`.
+- Causa provavel: esse layout vem com o texto praticamente colado em uma unica linha por pagina, usa saldos negativos com sinal na frente (`-41,84`) e nao encaixa no parser Sicredi antigo baseado em `splitlines()`.
+- Solucao: adicionado parser segmentado para o layout `CCPI IGUACU`, com leitura por data no texto bruto, reconhecimento de saldos com sinal frontal e preservacao do parser Sicredi classico como fallback.

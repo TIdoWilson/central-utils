@@ -67,11 +67,6 @@ module.exports = function createEcdStatusRoutes(deps) {
       }
       if (!name && cur?.name) name = cur.name;
 
-      const isAdmin = (req.user?.role || '').toUpperCase() === 'ADMIN';
-      if (cur?.completed && !isAdmin) {
-        return res.status(409).json({ error: 'Empresa já está gerada e bloqueada para edição.' });
-      }
-
       const nowIso = new Date().toISOString();
       const next = {
         code,
@@ -88,7 +83,7 @@ module.exports = function createEcdStatusRoutes(deps) {
         },
       };
 
-      if (cur?.completed && isAdmin) {
+      if (cur?.completed) {
         next.overrideAt = nowIso;
         next.overrideBy = {
           id: req.user?.id || null,
