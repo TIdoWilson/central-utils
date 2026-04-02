@@ -32,7 +32,6 @@ module.exports = function createCartaoHorasIobRoutes(deps) {
           headers: form.getHeaders(),
           maxBodyLength: Infinity,
           maxContentLength: Infinity,
-          timeout: 180000,
         });
 
         return res.json(pyResp.data);

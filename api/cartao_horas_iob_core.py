@@ -12,11 +12,30 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 
 def localizar_script_conversor() -> Path:
     pasta_python = BASE_DIR / "python"
+    pasta_robos = BASE_DIR / "Robôs Leonardo"
+
     candidatos = sorted(
         pasta_python.glob("Conversor de PDF Cart* de Horas para TXT + Conversor para IOB/extrair_cartoes_para_excel.py")
     )
     if candidatos:
         return candidatos[0]
+
+    candidatos = sorted(
+        pasta_robos.glob("Conversor de PDF Cart* de Horas para TXT + Conversor para IOB/extrair_cartoes_para_excel.py")
+    )
+    if candidatos:
+        return candidatos[0]
+
+    candidatos = sorted(pasta_python.rglob("extrair_cartoes_para_excel.py"))
+    for item in candidatos:
+        if "CONVERSOR" in str(item.parent).upper() and "IOB" in str(item.parent).upper():
+            return item
+
+    candidatos = sorted(pasta_robos.rglob("extrair_cartoes_para_excel.py"))
+    for item in candidatos:
+        if "CONVERSOR" in str(item.parent).upper() and "IOB" in str(item.parent).upper():
+            return item
+
     raise FileNotFoundError("Nao foi possivel localizar o script de conversao do cartao de horas para IOB.")
 
 
