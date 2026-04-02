@@ -13,11 +13,11 @@
 
       .lotes-renasul-stage-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1.18fr) minmax(340px, 0.82fr);
+        grid-template-columns: minmax(0, 1fr);
         gap: 20px;
         align-items: start;
         margin-top: 18px;
-        max-width: 1740px;
+        max-width: 1800px;
         margin-inline: auto;
       }
 
@@ -33,7 +33,7 @@
 
       .lotes-renasul-card h2,
       .lotes-renasul-card h3 {
-        margin: 0;
+        margin: -1;
         color: #12324a;
       }
 
@@ -86,7 +86,7 @@
       }
 
       .lotes-renasul-preview-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .lotes-renasul-preview-card {
@@ -116,8 +116,23 @@
         min-width: 520px;
       }
 
+      .lotes-renasul-pending-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1120px;
+      }
+
       .lotes-renasul-preview-table th,
       .lotes-renasul-preview-table td {
+        border-bottom: 1px solid #e2e8f0;
+        padding: 8px 10px;
+        font-size: 13px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .lotes-renasul-pending-table th,
+      .lotes-renasul-pending-table td {
         border-bottom: 1px solid #e2e8f0;
         padding: 8px 10px;
         font-size: 13px;
@@ -132,9 +147,37 @@
         background: #f8fafc;
       }
 
+      .lotes-renasul-pending-table th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: #f8fafc;
+      }
+
       .lotes-renasul-preview-empty {
         padding: 14px;
         color: #64748b;
+      }
+
+      .lotes-renasul-pending-table input {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-size: 13px;
+        background: #fff;
+      }
+
+      .lotes-renasul-pending-table input:focus {
+        outline: 2px solid rgba(15, 23, 42, 0.18);
+        border-color: #0f172a;
+      }
+
+      .lotes-renasul-pending-note {
+        margin-top: 6px;
+        color: #64748b;
+        font-size: 13px;
       }
 
       .lotes-renasul-delete-btn {
@@ -315,7 +358,7 @@
           <div class="nfe-breadcrumb">Portal / Contabil / Lotes Renasul</div>
           <h1>Lotes Renasul</h1>
           <p>
-            Ajuste o de/para e os centros de custo na lateral e processe o resumo mensal da folha
+            Ajuste o de/para e os centros de custo no quadro principal e processe o resumo mensal da folha
             para gerar o TXT no layout IOB.
           </p>
           <div class="lotes-renasul-actions">
@@ -373,54 +416,9 @@
 
             <div class="nfe-card-header" style="margin-top: 18px;">
               <div>
-                <h2>Pré-visualização</h2>
-                <p class="nfe-card-subtitle">
-                  Veja o que o arquivo trouxe antes de baixar o TXT. Se houver rubricas sem
-                  de/para, elas aparecem separadas logo abaixo.
-                </p>
-              </div>
-            </div>
-
-            <div class="lotes-renasul-preview-grid">
-              <section class="lotes-renasul-preview-card">
-                <h3>Eventos localizados</h3>
-                <div id="previewEventosBox" class="lotes-renasul-preview-box">
-                  <div class="lotes-renasul-preview-empty">Nenhum arquivo processado ainda.</div>
-                </div>
-              </section>
-
-              <section class="lotes-renasul-preview-card">
-                <h3>Pendências de de/para</h3>
-                <div id="pendenciasBox" class="lotes-renasul-preview-box">
-                  <div class="lotes-renasul-preview-empty">Nenhuma pendência carregada.</div>
-                </div>
-              </section>
-
-              <section class="lotes-renasul-preview-card" style="grid-column: 1 / -1;">
-                <h3>TXT gerado</h3>
-                <div id="previewBox" class="lotes-renasul-preview-box">
-                  <div class="lotes-renasul-preview-empty">Nenhum TXT foi gerado ainda.</div>
-                </div>
-              </section>
-
-              <section class="lotes-renasul-preview-card" style="grid-column: 1 / -1;">
-                <h3>Log de processamento</h3>
-                <div class="lotes-renasul-actions" style="margin-bottom: 10px;">
-                  <button id="btnClearLog" type="button" class="btn btn-secondary">Limpar log</button>
-                </div>
-                <div id="logBox" class="lotes-renasul-preview-box">
-                  <div class="lotes-renasul-preview-empty">Nenhum log registrado ainda.</div>
-                </div>
-              </section>
-            </div>
-          </article>
-
-          <aside class="nfe-card lotes-renasul-card">
-            <div class="nfe-card-header nfe-card-header-with-actions">
-              <div>
                 <h2>Cadastros</h2>
                 <p class="nfe-card-subtitle">
-                  O quadro aparece somente quando você clica no botão correspondente. Clique de
+                  O quadro aparece somente quando voce clica no botao correspondente. Clique de
                   novo para ocultar.
                 </p>
               </div>
@@ -437,7 +435,7 @@
                   <div>
                     <h2>De/para</h2>
                     <p class="nfe-card-subtitle">
-                      Cadastre uma rubrica por linha com as contas de produção e administrativa.
+                      Cadastre uma rubrica por linha com as contas de producao e administrativa.
                     </p>
                   </div>
                   <div class="lotes-renasul-panel-actions">
@@ -495,7 +493,60 @@
                 </div>
               </section>
             </div>
-          </aside>
+
+            <div class="nfe-card-header" style="margin-top: 18px;">
+              <div>
+                <h2>Pré-visualização</h2>
+                <p class="nfe-card-subtitle">
+                  Veja o que o arquivo trouxe antes de baixar o TXT. Se houver rubricas sem
+                  de/para, elas aparecem separadas logo abaixo.
+                </p>
+              </div>
+            </div>
+
+            <div class="lotes-renasul-preview-grid">
+              <section class="lotes-renasul-preview-card">
+                <h3>Eventos localizados</h3>
+                <div id="previewEventosBox" class="lotes-renasul-preview-box">
+                  <div class="lotes-renasul-preview-empty">Nenhum arquivo processado ainda.</div>
+                </div>
+              </section>
+
+              <section class="lotes-renasul-preview-card">
+                <div class="nfe-card-header nfe-card-header-with-actions" style="padding: 0; margin-bottom: 10px;">
+                  <div>
+                    <h3 style="margin: 0;">Pendências de de/para</h3>
+                    <p class="lotes-renasul-pending-note">
+                      Preencha as contas direto na tabela abaixo e salve os cadastros sem sair da tela.
+                    </p>
+                  </div>
+                  <div class="lotes-renasul-panel-actions">
+                    <button id="btnSaveCadastros" type="button" class="btn btn-primary">Salvar cadastros</button>
+                  </div>
+                </div>
+                <div id="pendenciasBox" class="lotes-renasul-preview-box">
+                  <div class="lotes-renasul-preview-empty">Nenhuma pendência carregada.</div>
+                </div>
+              </section>
+
+              <section class="lotes-renasul-preview-card" style="grid-column: 1 / -1;">
+                <h3>TXT gerado</h3>
+                <div id="previewBox" class="lotes-renasul-preview-box">
+                  <div class="lotes-renasul-preview-empty">Nenhum TXT foi gerado ainda.</div>
+                </div>
+              </section>
+
+              <section class="lotes-renasul-preview-card" style="grid-column: 1 / -1;">
+                <h3>Log de processamento</h3>
+                <div class="lotes-renasul-actions" style="margin-bottom: 10px;">
+                  <button id="btnClearLog" type="button" class="btn btn-secondary">Limpar log</button>
+                </div>
+                <div id="logBox" class="lotes-renasul-preview-box">
+                  <div class="lotes-renasul-preview-empty">Nenhum log registrado ainda.</div>
+                </div>
+              </section>
+            </div>
+          </article>
         </section>
       </main>
     </div>

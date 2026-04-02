@@ -12,6 +12,7 @@ Data de referencia: 2026-04-02
 7. GFBR alinhado novamente apos a perda de atualizacao, com upload de arquivos e contrato da API Python ajustado.
 8. `lotes-renasul` restaurado com tela interna, validacao antes da geracao, preview de eventos e pendencias, e integracao com o resumo da folha Renasul.
 9. Leitura do `.xls` da `lotes-renasul` reforcada com `python-calamine` para evitar falhas de `xlrd` em arquivos OLE2 validos.
+10. `lotes-renasul` ganhou pendencias editaveis com botao `Salvar cadastros` e o quadro de cadastros voltou para dentro da area principal.
 
 ## Estado tecnico atual
 - Arquitetura multicamadas consolidada (Node.js, Python/FastAPI, PostgreSQL e filesystem).

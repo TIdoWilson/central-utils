@@ -252,7 +252,7 @@ def _config_depara_rows(config: Dict[str, Any]) -> List[Dict[str, Any]]:
     return [row for row in rows if isinstance(row, dict)]
 
 
-def lookup_mapping(config: Dict[str, Any], rubrica: Any, center_type: str) -> Optional[Dict[str, str]]:
+def _find_depara_row(config: Dict[str, Any], rubrica: Any) -> Optional[Dict[str, Any]]:
     rubrica_key = normalize_digits(rubrica)
     if not rubrica_key:
         return None
@@ -261,35 +261,44 @@ def lookup_mapping(config: Dict[str, Any], rubrica: Any, center_type: str) -> Op
         row_key = normalize_digits(row.get("rubrica") or row.get("codigo") or "")
         if row_key != rubrica_key:
             continue
-
-        debito_prod = normalize_text(row.get("contaDebitoProducao") or row.get("debitoProducao") or row.get("debito_producao") or "")
-        credito_prod = normalize_text(row.get("contaCreditoProducao") or row.get("creditoProducao") or row.get("credito_producao") or "")
-        debito_adm = normalize_text(row.get("contaDebitoAdm") or row.get("debitoAdm") or row.get("debito_adm") or "")
-        credito_adm = normalize_text(row.get("contaCreditoAdm") or row.get("creditoAdm") or row.get("credito_adm") or "")
-
-        if center_type == "adm":
-            debito = debito_adm
-            credito = credito_adm
-        else:
-            debito = debito_prod
-            credito = credito_prod
-
-        if not debito or not credito:
-            return {
-                "rubrica": rubrica_key,
-                "nome": normalize_text(row.get("nome") or row.get("name") or ""),
-                "debito": debito,
-                "credito": credito,
-            }
-
-        return {
-            "rubrica": rubrica_key,
-            "nome": normalize_text(row.get("nome") or row.get("name") or ""),
-            "debito": debito,
-            "credito": credito,
-        }
+        return row
 
     return None
+
+
+def _mapping_accounts(row: Optional[Dict[str, Any]]) -> Dict[str, str]:
+    row = row or {}
+    return {
+        "debito_prod": normalize_text(row.get("contaDebitoProducao") or row.get("debitoProducao") or row.get("debito_producao") or ""),
+        "credito_prod": normalize_text(row.get("contaCreditoProducao") or row.get("creditoProducao") or row.get("credito_producao") or ""),
+        "debito_adm": normalize_text(row.get("contaDebitoAdm") or row.get("debitoAdm") or row.get("debito_adm") or ""),
+        "credito_adm": normalize_text(row.get("contaCreditoAdm") or row.get("creditoAdm") or row.get("credito_adm") or ""),
+    }
+
+
+def lookup_mapping(config: Dict[str, Any], rubrica: Any, center_type: str) -> Optional[Dict[str, str]]:
+    rubrica_key = normalize_digits(rubrica)
+    if not rubrica_key:
+        return None
+
+    row = _find_depara_row(config, rubrica_key)
+    if not row:
+        return None
+
+    accounts = _mapping_accounts(row)
+    if center_type == "adm":
+        debito = accounts["debito_adm"]
+        credito = accounts["credito_adm"]
+    else:
+        debito = accounts["debito_prod"]
+        credito = accounts["credito_prod"]
+
+    return {
+        "rubrica": rubrica_key,
+        "nome": normalize_text(row.get("nome") or row.get("name") or ""),
+        "debito": debito,
+        "credito": credito,
+    }
 
 
 def detect_competence(rows: List[List[Any]]) -> date:
@@ -341,6 +350,7 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
     preview_pendencias: List[Dict[str, Any]] = []
     entries: List[Dict[str, Any]] = []
     centers_seen: set[str] = set()
+    pending_index: Dict[str, Dict[str, Any]] = {}
     current_center_number = ""
     current_center_name = ""
     current_section = ""
@@ -355,6 +365,36 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
         "informativa",
         "informativo",
     )
+
+    def register_pending(rubrica: str, nome: str, center_label: str, motivo: str, value: Decimal) -> None:
+        rubrica_key = normalize_digits(rubrica)
+        if not rubrica_key:
+            return
+
+        current = pending_index.get(rubrica_key)
+        if current is None:
+            current = {
+                "rubrica": rubrica_key,
+                "nome": normalize_text(nome),
+                "centro": normalize_text(center_label),
+                "motivo": normalize_text(motivo),
+                "valor_total": Decimal("0"),
+                "centros": [],
+                "centros_seen": set(),
+            }
+            pending_index[rubrica_key] = current
+
+        if normalize_text(nome) and not current["nome"]:
+            current["nome"] = normalize_text(nome)
+        if normalize_text(motivo) and not current["motivo"]:
+            current["motivo"] = normalize_text(motivo)
+
+        center_text = normalize_text(center_label)
+        if center_text and center_text not in current["centros_seen"]:
+            current["centros_seen"].add(center_text)
+            current["centros"].append(center_text)
+
+        current["valor_total"] += Decimal(value)
 
     for row in rows:
         row_text = _row_text(row)
@@ -408,10 +448,28 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
             "valor": format_money(value),
         }
 
+        depara_row = _find_depara_row(config, rubrica)
+        accounts = _mapping_accounts(depara_row)
+        has_complete_depara = bool(accounts["debito_prod"] and accounts["credito_prod"] and accounts["debito_adm"] and accounts["credito_adm"])
+
+        if not has_complete_depara:
+            register_pending(
+                rubrica,
+                nome,
+                f"{current_center_number} - {current_center_name}".strip(" -"),
+                "rubrica_sem_conta_cadastrada",
+                value,
+            )
         if not center_type:
             preview_item["status"] = "pendencia"
             preview_item["motivo"] = "centro_nao_classificado"
-            preview_pendencias.append(preview_item)
+            register_pending(
+                rubrica,
+                nome,
+                f"{current_center_number} - {current_center_name}".strip(" -"),
+                "centro_nao_classificado",
+                value,
+            )
             preview_eventos.append(preview_item)
             continue
 
@@ -419,7 +477,13 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
         if not mapping or not mapping.get("debito") or not mapping.get("credito"):
             preview_item["status"] = "pendencia"
             preview_item["motivo"] = "rubrica_sem_conta_cadastrada"
-            preview_pendencias.append(preview_item)
+            register_pending(
+                rubrica,
+                nome,
+                f"{current_center_number} - {current_center_name}".strip(" -"),
+                "rubrica_sem_conta_cadastrada",
+                value,
+            )
             preview_eventos.append(preview_item)
             continue
 
@@ -445,6 +509,19 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
         preview_eventos.append(preview_item)
 
     total_valor = sum(Decimal(str(row.get("value", 0) or 0)) for row in entries)
+    preview_pendencias = []
+    for pending in pending_index.values():
+        centros = pending.get("centros") or []
+        centro_text = " | ".join(centros)
+        preview_pendencias.append({
+          "rubrica": pending.get("rubrica", ""),
+          "nome": pending.get("nome", ""),
+          "centro": centro_text,
+          "motivo": pending.get("motivo", ""),
+          "valor": format_money(pending.get("valor_total", Decimal("0"))),
+      })
+
+    preview_pendencias.sort(key=lambda row: (normalize_digits(row.get("rubrica")), normalize_text(row.get("nome"))))
     pode_gerar_txt = len(preview_pendencias) == 0 and len(entries) > 0
 
     resumo = {

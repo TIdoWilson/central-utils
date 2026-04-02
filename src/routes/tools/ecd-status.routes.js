@@ -16,21 +16,33 @@ module.exports = function createEcdStatusRoutes(deps) {
 
   router.get('/companies', async (req, res) => {
     try {
-      const list = loadEcdCompanies();
       const status = loadEcdStatus();
-      const out = list.map((c) => {
-        const st = status.companies[c.code] || {};
-        const hasErrorPng = ecdHasErrorPng(c.name);
+      const list = loadEcdCompanies();
+      const baseByCode = new Map(
+        (Array.isArray(list) ? list : []).map((c) => [String(c.code), c])
+      );
+      const companiesStatus = status?.companies && typeof status.companies === 'object'
+        ? status.companies
+        : {};
+
+      const out = Object.entries(companiesStatus).map(([codeKey, stRaw]) => {
+        const st = stRaw && typeof stRaw === 'object' ? { ...stRaw } : {};
+        const code = String(st.code || codeKey || '').trim();
+        const base = baseByCode.get(code) || null;
+        const name = String(st.name || base?.name || '').trim();
+        const cnpj = String(base?.cnpj || '').trim();
+        const defaultTipo = String(st.simples || base?.defaultTipo || 'Normal').trim();
+        const hasErrorPng = ecdHasErrorPng(name);
         const retryRequested = String(st.retryRequested || '').toUpperCase() === 'Y';
         if (hasErrorPng && !retryRequested) {
           st.erro = 'Y';
           st.erroMsg = st.erroMsg || 'Arquivo de erro encontrado na pasta.';
         }
         return {
-          code: c.code,
-          name: c.name,
-          cnpj: c.cnpj,
-          defaultTipo: c.defaultTipo,
+          code,
+          name,
+          cnpj,
+          defaultTipo,
           status: st,
         };
       });

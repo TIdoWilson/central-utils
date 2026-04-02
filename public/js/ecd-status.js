@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let companies = [];
   let filtered = [];
   let selected = null;
+  const ECD_JA_ESTAVA_DESC = 'ECD j\u00E1 estava na pasta';
 
   function setStatus(msg, isError) {
     if (!statusMsg) return;
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function setFilesMsg(msg, isInfo) {
     if (!filesMsg) return;
     filesMsg.textContent = msg || '';
-    filesMsg.style.color = isInfo ? '#0ea5e9' : '';
+    filesMsg.style.color = isInfo ? '#a16207' : '';
   }
 
   function normalize(s) {
@@ -103,6 +104,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       const retryRequested = String(st?.retryRequested || '').toUpperCase() === 'Y';
       const arquivosFlag = String(st?.arquivosNaPasta || '').toUpperCase();
       const arquivosNaPasta = arquivosFlag === 'Y' || arquivosFlag === 'S';
+      const arquivosDescricao = String(st?.arquivosNaPastaDescricao || '').trim();
+      const ecdJaEstavaNaPasta = arquivosDescricao === ECD_JA_ESTAVA_DESC;
       const completa = Boolean(st?.completed);
 
       let statusLabel = 'Pendente';
@@ -116,12 +119,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         statusLabel = 'Na Fila';
       }
 
+      const statusTexto = ecdJaEstavaNaPasta && statusLabel === 'Completo'
+        ? `Completo (${ECD_JA_ESTAVA_DESC})`
+        : statusLabel;
+
       tr.innerHTML = `
         <td>${c.code}</td>
         <td>${c.name}</td>
         <td>${c.cnpj}</td>
         <td>${c.defaultTipo}</td>
-        <td>${statusLabel}</td>
+        <td>${statusTexto}</td>
         <td><button class="btn btn-secondary" data-code="${c.code}">Selecionar</button></td>
       `;
 
@@ -130,6 +137,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (erro) {
         if (nameCell) nameCell.style.color = 'red';
         if (statusCell) statusCell.style.color = 'red';
+      } else if (ecdJaEstavaNaPasta) {
+        if (statusCell) statusCell.style.color = '#a16207';
       } else if (statusLabel === 'Na Fila') {
         if (statusCell) statusCell.style.color = '#eab308';
       } else if (statusLabel === 'Completo') {
@@ -161,6 +170,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const locked = Boolean(st?.completed);
     const arquivosFlag = String(st?.arquivosNaPasta || 'N').toUpperCase();
     const arquivosNaPasta = arquivosFlag === 'Y' || arquivosFlag === 'S';
+    const arquivosDescricao = String(st?.arquivosNaPastaDescricao || '').trim();
+    const ecdJaEstavaNaPasta = arquivosDescricao === ECD_JA_ESTAVA_DESC;
     const erro = String(st?.erro || '').toUpperCase() === 'Y';
     const retryRequested = String(st?.retryRequested || '').toUpperCase() === 'Y';
 
@@ -186,7 +197,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (arquivosNaPasta) {
-      setFilesMsg('Arquivos na Pasta', true);
+      if (ecdJaEstavaNaPasta) {
+        setFilesMsg(`${ECD_JA_ESTAVA_DESC} (n\u00E3o foi gerado pelo rob\u00F4).`, true);
+      } else {
+        setFilesMsg('Arquivos na Pasta', true);
+      }
     } else {
       setFilesMsg('', false);
     }
@@ -199,7 +214,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   async function loadCompanies() {
-    const resp = await AuthClient.authFetch('/api/ecd/companies');
+    const resp = await AuthClient.authFetch(`/api/ecd/companies?t=${Date.now()}`);
     if (!resp.ok) throw new Error('Erro ao carregar empresas');
     const data = await resp.json();
     companies = (data.companies || []).sort((a, b) => {

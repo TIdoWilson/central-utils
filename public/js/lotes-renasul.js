@@ -24,7 +24,10 @@
     validatedSignature: '',
     currentSignature: '',
     logs: [],
+    pendingDraftRows: [],
+    pendingDirty: false,
     panelInputsBound: false,
+    pendingInputsBound: false,
     globalActionsBound: false,
   };
 
@@ -45,6 +48,12 @@
 
   function normalizeDigits(value) {
     return String(value ?? '').replace(/\D+/g, '');
+  }
+
+  function findDeParaMapping(rubrica) {
+    const key = normalizeDigits(rubrica);
+    if (!key) return null;
+    return getDeParaRows().find((row) => normalizeDigits(row.rubrica || row.classificacao || '') === key) || null;
   }
 
   function cloneConfig(config) {
@@ -269,18 +278,76 @@
   }
 
   function renderPendenciasPreview(rows) {
-    renderPreviewTable(
-      'pendenciasBox',
-      rows,
-      [
-        { key: 'rubrica', label: 'Rubrica' },
-        { key: 'nome', label: 'Nome' },
-        { key: 'centro', label: 'Centro' },
-        { key: 'motivo', label: 'Motivo' },
-        { key: 'valor', label: 'Valor' },
-      ],
-      'Nenhuma pendência carregada.'
-    );
+    const host = $('pendenciasBox');
+    if (!host) return;
+
+    state.pendingDraftRows = Array.isArray(rows)
+      ? rows.map((row) => {
+          const mapping = findDeParaMapping(row?.rubrica);
+          return {
+            rubrica: normalizeText(row?.rubrica || ''),
+            nome: normalizeText(row?.nome || ''),
+            centro: normalizeText(row?.centro || ''),
+            centroNumero: normalizeText(row?.centroNumero || ''),
+            centroNome: normalizeText(row?.centroNome || ''),
+            motivo: normalizeText(row?.motivo || ''),
+            valor: normalizeText(row?.valor || ''),
+            contaDebitoProducao: normalizeText(mapping?.contaDebitoProducao || ''),
+            contaCreditoProducao: normalizeText(mapping?.contaCreditoProducao || ''),
+            contaDebitoAdm: normalizeText(mapping?.contaDebitoAdm || ''),
+            contaCreditoAdm: normalizeText(mapping?.contaCreditoAdm || ''),
+          };
+        })
+      : [];
+    state.pendingDirty = false;
+
+    if (!state.pendingDraftRows.length) {
+      host.innerHTML = '<div class="lotes-renasul-preview-empty">Nenhuma pendência carregada.</div>';
+      return;
+    }
+
+    host.innerHTML = `
+      <table class="lotes-renasul-pending-table">
+        <thead>
+          <tr>
+            <th>Rubrica</th>
+            <th>Nome</th>
+            <th>Centro</th>
+            <th>Motivo</th>
+            <th>Valor</th>
+            <th>Débito prod.</th>
+            <th>Crédito prod.</th>
+            <th>Débito adm.</th>
+            <th>Crédito adm.</th>
+          </tr>
+        </thead>
+        <tbody id="pendenciasBody">
+          ${state.pendingDraftRows.map((row, index) => `
+            <tr data-row="${index}" data-table="pendencias">
+              <td>${escapeHtml(row.rubrica || '')}</td>
+              <td>${escapeHtml(row.nome || '')}</td>
+              <td>${escapeHtml(row.centro || '')}</td>
+              <td>${escapeHtml(row.motivo || '')}</td>
+              <td>${escapeHtml(row.valor || '')}</td>
+              <td>
+                <input data-table="pendencias" data-row="${index}" data-field="contaDebitoProducao" data-nav-row="${index}" data-nav-col="0" type="text" value="${escapeHtml(row.contaDebitoProducao || '')}" placeholder="Conta débito prod." />
+              </td>
+              <td>
+                <input data-table="pendencias" data-row="${index}" data-field="contaCreditoProducao" data-nav-row="${index}" data-nav-col="1" type="text" value="${escapeHtml(row.contaCreditoProducao || '')}" placeholder="Conta crédito prod." />
+              </td>
+              <td>
+                <input data-table="pendencias" data-row="${index}" data-field="contaDebitoAdm" data-nav-row="${index}" data-nav-col="2" type="text" value="${escapeHtml(row.contaDebitoAdm || '')}" placeholder="Conta débito adm." />
+              </td>
+              <td>
+                <input data-table="pendencias" data-row="${index}" data-field="contaCreditoAdm" data-nav-row="${index}" data-nav-col="3" type="text" value="${escapeHtml(row.contaCreditoAdm || '')}" placeholder="Conta crédito adm." />
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+
+    bindPendingInputs();
   }
 
   function updateMetricsFromResult(result) {
@@ -400,7 +467,7 @@
   }
 
   function focusInputByCoords(tableId, row, col, fallbackDirection = 1) {
-    const root = $(tableId);
+    const root = $(tableId) || target.closest('tbody') || target.closest('table');
     if (!root) return false;
 
     const exact = root.querySelector(`input[data-nav-row="${row}"][data-nav-col="${col}"]`);
@@ -521,6 +588,125 @@
     });
   }
 
+  function bindPendingInputs() {
+    if (state.pendingInputsBound) return;
+    state.pendingInputsBound = true;
+
+    bindArrowNavigation($('pendenciasBox'));
+
+    $('pendenciasBox')?.addEventListener('input', (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLInputElement)) return;
+      const rowIndex = Number(target.getAttribute('data-row'));
+      const field = target.getAttribute('data-field');
+      const row = state.pendingDraftRows[rowIndex];
+      if (!row || !field) return;
+      row[field] = String(target.value || '');
+      state.pendingDirty = true;
+      invalidateValidation('Preencha os cadastros pendentes e clique em Salvar cadastros.');
+      appendLog('info', 'Pendencia editada', `linha=${rowIndex}; campo=${field}`);
+    });
+  }
+
+  function collectPendingMappings() {
+    const map = new Map();
+
+    for (const row of state.pendingDraftRows) {
+      const rubrica = normalizeText(row?.rubrica || '');
+      const key = normalizeDigits(rubrica);
+      if (!key) continue;
+
+      const current = map.get(key) || {
+        rubrica,
+        nome: normalizeText(row?.nome || ''),
+        contaDebitoProducao: '',
+        contaCreditoProducao: '',
+        contaDebitoAdm: '',
+        contaCreditoAdm: '',
+      };
+
+      if (!current.nome) current.nome = normalizeText(row?.nome || '');
+
+      for (const field of ['contaDebitoProducao', 'contaCreditoProducao', 'contaDebitoAdm', 'contaCreditoAdm']) {
+        const value = normalizeText(row?.[field] || '');
+        if (value) current[field] = value;
+      }
+
+      map.set(key, current);
+    }
+
+    return Array.from(map.values()).filter((row) =>
+      Boolean(row.contaDebitoProducao || row.contaCreditoProducao || row.contaDebitoAdm || row.contaCreditoAdm)
+    );
+  }
+
+  function upsertDeParaMappings(rows) {
+    if (!Array.isArray(rows) || !rows.length) return 0;
+    if (!Array.isArray(state.config.dePara)) state.config.dePara = [];
+
+    const indexByKey = new Map();
+    state.config.dePara.forEach((row, index) => {
+      const key = normalizeDigits(row?.rubrica || row?.classificacao || '');
+      if (!key || indexByKey.has(key)) return;
+      indexByKey.set(key, index);
+    });
+
+    let inserted = 0;
+    for (const row of rows) {
+      const key = normalizeDigits(row?.rubrica || '');
+      if (!key) continue;
+
+      const existingIndex = indexByKey.get(key);
+      if (typeof existingIndex === 'number') {
+        const target = state.config.dePara[existingIndex];
+        if (!target) continue;
+        target.rubrica = normalizeText(row.rubrica || target.rubrica || '');
+        target.nome = normalizeText(row.nome || target.nome || '');
+        for (const field of ['contaDebitoProducao', 'contaCreditoProducao', 'contaDebitoAdm', 'contaCreditoAdm']) {
+          const value = normalizeText(row[field] || '');
+          if (value) target[field] = value;
+        }
+        continue;
+      }
+
+      state.config.dePara.push({
+        rubrica: normalizeText(row.rubrica || ''),
+        nome: normalizeText(row.nome || ''),
+        contaDebitoProducao: normalizeText(row.contaDebitoProducao || ''),
+        contaCreditoProducao: normalizeText(row.contaCreditoProducao || ''),
+        contaDebitoAdm: normalizeText(row.contaDebitoAdm || ''),
+        contaCreditoAdm: normalizeText(row.contaCreditoAdm || ''),
+      });
+      indexByKey.set(key, state.config.dePara.length - 1);
+      inserted += 1;
+    }
+
+    state.config.dePara.sort((a, b) => {
+      const keyA = normalizeDigits(a?.rubrica || a?.classificacao || '');
+      const keyB = normalizeDigits(b?.rubrica || b?.classificacao || '');
+      if (keyA !== keyB) return keyA.localeCompare(keyB, 'pt-BR', { numeric: true });
+      return normalizeText(a?.nome || '').localeCompare(normalizeText(b?.nome || ''), 'pt-BR');
+    });
+
+    return inserted;
+  }
+
+  async function savePendingCadastros() {
+    const mappings = collectPendingMappings();
+    if (!mappings.length) {
+      setStatus('Preencha pelo menos uma conta nas pendências antes de salvar.', true);
+      appendLog('warn', 'Salvar cadastros bloqueado', 'Nenhuma conta informada nas pendencias.');
+      return;
+    }
+
+    ensureCurrentConfigFromDom();
+    const inserted = upsertDeParaMappings(mappings);
+    state.pendingDirty = false;
+    await saveConfigNow();
+    invalidateValidation('Cadastros salvos. Valide novamente antes de gerar o TXT.');
+    appendLog('info', 'Cadastros salvos', `rubricas=${mappings.length}; novas=${inserted}`);
+  }
+
   function addDeParaRow() {
     state.config.dePara.push({
       rubrica: '',
@@ -562,6 +748,7 @@
       state.config = cloneConfig(data.config || state.config);
       renderAll();
       bindPanelInputs();
+      bindPendingInputs();
       setStatus('Cadastros salvos no servidor local.', false);
       invalidateValidation();
       appendLog('info', 'Configuração salva', 'Cadastros persistidos no servidor local.');
@@ -585,6 +772,7 @@
     state.config = cloneConfig(data.config || DEFAULT_CONFIG);
     renderAll();
     bindPanelInputs();
+    bindPendingInputs();
     invalidateValidation();
     appendLog('info', 'Configuração carregada', 'Dados locais do lotes-renasul foram carregados.');
   }
@@ -700,6 +888,16 @@
     });
 
     $('btnAddRubrica')?.addEventListener('click', addDeParaRow);
+
+    $('btnSaveCadastros')?.addEventListener('click', async () => {
+      try {
+        await savePendingCadastros();
+      } catch (error) {
+        console.error(error);
+        setStatus(error.message || 'Erro inesperado ao salvar cadastros.', true);
+        appendLog('error', 'Erro ao salvar cadastros', formatErrorDetail(error));
+      }
+    });
 
     $('btnDownload')?.addEventListener('click', () => {
       if (!state.downloadUrl) return;
