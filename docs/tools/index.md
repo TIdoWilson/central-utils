@@ -9,6 +9,7 @@ Esta lista é gerada automaticamente a partir de `src/core/tool-catalog.json`.
 
 - [Conversor Extrato PDF para OFX](./conversor-extrato-pdf-ofx.md) — `/conversor-extrato-pdf-ofx` • API: `/api/conversor-extrato-pdf-ofx`
 - [Gerador TXT GFBR](./gfbr-gerador-txt.md) — `/gfbr-gerador-txt` • API: `/api/gfbr-gerador-txt`
+- [Lotes Renasul](./lotes-renasul.md) — `/lotes-renasul` • API: `/api/lotes-renasul`
 - [Lotes TXT](./lotes-txt.md) — `/lotes-txt`
 ## Declaracoes
 

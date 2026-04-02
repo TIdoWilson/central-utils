@@ -36,6 +36,7 @@ const createExcelAbasPdfRoutes = require('./routes/tools/excel-abas-pdf.routes')
 const createImportadorRecebimentosMadreScpRoutes = require('./routes/tools/importador-recebimentos-madre-scp.routes');
 const createMitRoutes = require('./routes/tools/mit.routes');
 const createGfbrGeradorTxtRoutes = require('./routes/tools/gfbr-gerador-txt.routes');
+const createLotesRenasulRoutes = require('./routes/tools/lotes-renasul.routes');
 const createSeparadorCsvBaixaAutomaticaRoutes = require('./routes/tools/separador-csv-baixa-automatica.routes');
 const createDimobRoutes = require('./routes/tools/dimob.routes');
 const createTareffaEmpresasLoteRoutes = require('./routes/tools/tareffa-empresas-lote.routes');
@@ -58,6 +59,7 @@ const createParcelamentosRoutes = require('./routes/tools/parcelamentos.routes')
 const createSpedsRoutes = require('./routes/tools/speds.routes');
 const { createDimobService } = require('./services/dimob.service');
 const { createCctService } = require('./services/cct.service');
+const createLotesRenasulService = require('./services/lotes-renasul.service');
 const { createParcelamentosService } = require('./services/parcelamentos.service');
 const { createCctIntakeService } = require('./services/cct-intake.service');
 const { createEcdStatusService } = require('./services/ecd-status.service');
@@ -200,6 +202,7 @@ void cctService.listConventions({ page: 1, limit: 1 })
   .catch((error) => {
     console.warn('[CCT] Falha ao aquecer catalogo inicial:', error?.message || error);
   });
+const lotesRenasulService = createLotesRenasulService({ DATA_DIR });
 const parcelamentosService = createParcelamentosService({ pool });
 const cctEmailService = createCctEmailService({
   projectRoot: path.join(__dirname, '..'),
@@ -656,12 +659,38 @@ app.use(express.static(path.join(__dirname, '..', 'public'), {
     if (typeof current === 'string' && !/charset=/i.test(current)) {
       res.setHeader('Content-Type', `${current}; charset=utf-8`);
     }
+
+    // Evita cache da pagina/JS do Bandeira para nao servir versao antiga.
+    const normalized = String(filePath || '').replace(/\\/g, '/').toLowerCase();
+    if (
+      normalized.endsWith('/public/importador-cartao-horas-bandeira-transportes.html')
+      || normalized.endsWith('/public/js/importador-cartao-horas-bandeira-transportes.js')
+    ) {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      res.setHeader('Surrogate-Control', 'no-store');
+    }
   },
 }));
 
 app.get('/', requireAuthPage, logPageView('page_view_home'), (req, res) => {
   res.sendFile(path.join(publicDir, 'home.html'));
 });
+
+app.get(
+  '/importador-cartao-horas-bandeira-transportes',
+  requireAuthPage,
+  requireToolPage('importador-cartao-horas-bandeira-transportes'),
+  logPageView('page_view_importador_cartao_horas_bandeira_transportes'),
+  (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Surrogate-Control', 'no-store');
+    return res.sendFile(path.join(publicDir, 'importador-cartao-horas-bandeira-transportes.html'));
+  },
+);
 
 
 
@@ -1299,6 +1328,16 @@ app.use(
     auditLog,
     uploadSpeds,
     DATA_DIR,
+  })
+);
+app.use(
+  '/api/lotes-renasul',
+  requireAuth,
+  requireToolApi('lotes-renasul'),
+  createLotesRenasulRoutes({
+    requireCsrf,
+    auditLog,
+    service: lotesRenasulService,
   })
 );
 app.use(

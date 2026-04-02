@@ -1,6 +1,31 @@
 ﻿let ultimoResultado = null;
 let ultimoPdfUrl = null;
 let idsInformados = {};
+let confirmadosSet = new Set();
+let removidosSet = new Set();
+let overridesPorRegistro = {};
+
+const CAMPOS_EDITAVEIS_ORDEM = [
+  'comissao_motorista',
+  'dsr',
+  'horas_extras',
+  'diarias_refeicoes',
+  'salario',
+  'estadia_tempo_espera',
+  'premio_disco_tacografo',
+  'total_remuneracao_mensal',
+];
+
+const ROTULOS_CAMPOS = {
+  comissao_motorista: 'Comissao',
+  dsr: 'DSR',
+  horas_extras: 'Horas extras',
+  diarias_refeicoes: 'Diarias refeicoes',
+  salario: 'Salario',
+  estadia_tempo_espera: 'Estadia/Tempo espera',
+  premio_disco_tacografo: 'Premio disco tacografo',
+  total_remuneracao_mensal: 'Total remuneracao',
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   inicializarSidebar('importador-cartao-horas-bandeira-transportes');
@@ -13,8 +38,7 @@ function inicializarPagina() {
   const btnBaixar = document.getElementById('btnBaixarBandeira');
 
   inputArquivo?.addEventListener('change', async () => {
-    ultimoResultado = null;
-    idsInformados = {};
+    resetarEstadoTela();
     if (btnBaixar) btnBaixar.disabled = true;
     atualizarPreviewPdf();
     atualizarInfoArquivo();
@@ -31,26 +55,41 @@ function inicializarPagina() {
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     try {
-      setStatus('Gerando TXT...', false);
+      setStatus('Atualizando dados para gerar ZIP...', false);
       await processarBandeira();
-      setStatus('TXT gerado com sucesso.', false);
+      setStatus('Processamento concluido.', false);
     } catch (error) {
-      setStatus(error.message || 'Falha ao gerar TXT.', true);
+      setStatus(error.message || 'Falha ao processar o PDF.', true);
     }
   });
 
   btnBaixar?.addEventListener('click', () => {
-    if (!ultimoResultado?.txtBase64) return;
-    const blob = base64ToBlob(ultimoResultado.txtBase64, 'text/plain;charset=utf-8');
+    if (!ultimoResultado?.zipBase64) return;
+    const blob = base64ToBlob(ultimoResultado.zipBase64, 'application/zip');
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = ultimoResultado.nomeArquivo || 'arquivo.txt';
+    a.download = ultimoResultado.nomeArquivo || 'arquivo.zip';
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
   });
+}
+
+function resetarEstadoTela() {
+  ultimoResultado = null;
+  idsInformados = {};
+  confirmadosSet = new Set();
+  removidosSet = new Set();
+  overridesPorRegistro = {};
+}
+
+function invalidarGeracaoAteReprocessar() {
+  ultimoResultado = null;
+  const btnBaixar = document.getElementById('btnBaixarBandeira');
+  if (btnBaixar) btnBaixar.disabled = true;
+  setStatus('Alteracoes pendentes. Clique em "Reprocessar PDF" para atualizar o ZIP.', false);
 }
 
 async function processarBandeira() {
@@ -62,6 +101,9 @@ async function processarBandeira() {
   const formData = new FormData();
   formData.append('arquivo', arquivo);
   formData.append('ids_json', JSON.stringify(idsInformados));
+  formData.append('confirmados_json', JSON.stringify(Array.from(confirmadosSet)));
+  formData.append('removidos_json', JSON.stringify(Array.from(removidosSet)));
+  formData.append('overrides_json', JSON.stringify(overridesPorRegistro));
 
   const resp = await AuthClient.authFetch('/api/cartao-horas-bandeira-transportes/processar', {
     method: 'POST',
@@ -73,17 +115,15 @@ async function processarBandeira() {
   }
 
   ultimoResultado = data;
-  if (btnBaixar) btnBaixar.disabled = !data.txtBase64;
+  if (btnBaixar) btnBaixar.disabled = !data.zipBase64 || !data.podeGerarTxt;
   renderizarResultado(data);
   return data;
 }
 
 async function salvarFuncionario(funcionario) {
-  const input = document.querySelector(`input[data-chave="${cssEscape(funcionario.chave)}"]`);
+  const input = document.querySelector(`input[data-matricula-key="${cssEscape(funcionario.registroId || '')}"]`);
   const matricula = String(input?.value || '').replace(/\D/g, '');
-  if (!matricula) {
-    throw new Error('Informe a matricula antes de salvar.');
-  }
+  if (!matricula) throw new Error('Informe a matricula antes de salvar.');
 
   const resp = await AuthClient.authFetch('/api/cartao-horas-bandeira-transportes/salvar-funcionario', {
     method: 'POST',
@@ -101,13 +141,14 @@ async function salvarFuncionario(funcionario) {
   }
 
   idsInformados[funcionario.chave] = matricula;
+  if (funcionario.registroId) confirmadosSet.add(funcionario.registroId);
   await processarBandeira();
-  setStatus(`Registro ${data.acao || 'salvo'} na lista (${data.aba || '-'} linha ${data.linha || '-' }).`, false);
+  setStatus(`Registro ${data.acao || 'salvo'} na lista (${data.aba || '-'} linha ${data.linha || '-'}).`, false);
 }
 
 function renderizarResultado(data) {
   renderizarResumo(data);
-  renderizarValores(data.itens || []);
+  renderizarValores(data.funcionarios || []);
   renderizarFichas(data.funcionarios || [], data.listaFuncionariosArquivo || '');
   renderizarPreview(data.previewLinhas || []);
 }
@@ -115,36 +156,41 @@ function renderizarResultado(data) {
 function renderizarResumo(data) {
   const box = document.getElementById('resumoBandeira');
   if (!box) return;
-  const funcionario = Array.isArray(data.funcionarios) && data.funcionarios.length ? data.funcionarios[0] : null;
   box.innerHTML = `
-    <div><strong>Empresa:</strong> ${escapeHtml(data.empresa || '-')}</div>
-    <div><strong>Periodo:</strong> ${escapeHtml(data.periodoInicial || '-')} a ${escapeHtml(data.periodoFinal || '-')}</div>
-    <div><strong>Funcionario:</strong> ${escapeHtml(funcionario?.nome || '-')}</div>
-    <div><strong>CPF:</strong> ${escapeHtml(funcionario?.cpf || '-')}</div>
-    <div><strong>Matricula usada:</strong> ${escapeHtml(funcionario?.matricula || '00000')}</div>
-    <div><strong>Origem:</strong> ${escapeHtml(funcionario?.origemMatricula || '-')}</div>
-    <div><strong>Total de itens:</strong> ${Number(data.totalItens || 0)}</div>
-    <div><strong>Soma dos itens:</strong> ${escapeHtml(data.somaItens || '0,00')}</div>
-    <div><strong>Linhas no TXT:</strong> ${Number(data.totalRegistrosTxt || 0)}</div>
+    <div><strong>Paginas no PDF:</strong> ${Number(data.totalPaginas || 0)}</div>
+    <div><strong>Funcionarios lidos:</strong> ${Number(data.totalFuncionarios || 0)}</div>
+    <div><strong>Pendencias:</strong> ${Number(data.totalPendencias || 0)}</div>
+    <div><strong>Duplicados ignorados:</strong> ${Number(data.totalDuplicadosIgnorados || 0)}</div>
+    <div><strong>Arquivos TXT prontos:</strong> ${Number(data.totalArquivosTxt || 0)}</div>
+    <div><strong>Linhas no preview:</strong> ${Number(data.totalRegistrosTxt || 0)}</div>
     <div><strong>Arquivo final:</strong> ${escapeHtml(data.nomeArquivo || '-')}</div>
-    ${funcionario?.mensagem ? `<div style="margin-top:8px;color:#9a3412;"><strong>Observacao:</strong> ${escapeHtml(funcionario.mensagem)}</div>` : ''}
+    <div><strong>Status:</strong> ${data.podeGerarTxt ? 'Pronto para baixar' : escapeHtml(data.mensagemBloqueio || 'Com pendencias')}</div>
   `;
 }
 
-function renderizarValores(itens) {
+function renderizarValores(funcionarios) {
   const box = document.getElementById('valoresBandeira');
   if (!box) return;
 
-  if (!Array.isArray(itens) || !itens.length) {
+  if (!Array.isArray(funcionarios) || !funcionarios.length) {
     box.innerHTML = '<p class="nfe-card-subtitle">Nenhum valor identificado.</p>';
     return;
   }
 
-  const cards = itens.map((item) => `
+  const totalPorCampo = {};
+  CAMPOS_EDITAVEIS_ORDEM.forEach((campo) => { totalPorCampo[campo] = 0; });
+
+  funcionarios.forEach((f) => {
+    const valores = f?.valoresEditaveis || {};
+    CAMPOS_EDITAVEIS_ORDEM.forEach((campo) => {
+      totalPorCampo[campo] += parseValorBrToFloat(valores[campo] || '0,00');
+    });
+  });
+
+  const cards = CAMPOS_EDITAVEIS_ORDEM.map((campo) => `
       <div style="border: 1px solid #dbe4ee; border-radius: 12px; padding: 12px; background: #f8fafc;">
-        <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">${escapeHtml(item.rotulo || item.campo || '-')}</div>
-        <div style="font-size: 22px; font-weight: 700; color: #111827;">${escapeHtml(item.valor || '0,00')}</div>
-        <div style="font-size: 12px; color: #4b5563; margin-top: 6px;">Evento: ${escapeHtml(String(item.evento || 0))}</div>
+        <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">${escapeHtml(ROTULOS_CAMPOS[campo] || campo)}</div>
+        <div style="font-size: 22px; font-weight: 700; color: #111827;">${escapeHtml(formatarNumeroBr(totalPorCampo[campo]))}</div>
       </div>
     `).join('');
 
@@ -156,11 +202,7 @@ function renderizarFichas(funcionarios, caminhoLista) {
   const listaInfo = document.getElementById('listaArquivoBandeira');
   if (!box || !listaInfo) return;
 
-  if (caminhoLista) {
-    listaInfo.innerHTML = `<strong>Lista usada:</strong> ${escapeHtml(caminhoLista)}`;
-  } else {
-    listaInfo.innerHTML = '<strong>Lista usada:</strong> -';
-  }
+  listaInfo.innerHTML = `<strong>Lista usada:</strong> ${escapeHtml(caminhoLista || '-')}`;
 
   if (!Array.isArray(funcionarios) || !funcionarios.length) {
     box.innerHTML = '<p class="nfe-card-subtitle">Nenhum funcionario identificado.</p>';
@@ -168,24 +210,54 @@ function renderizarFichas(funcionarios, caminhoLista) {
   }
 
   const rows = funcionarios.map((f, i) => {
-    const matriculaAtual = idsInformados[f.chave] || f.matricula || '';
-    if (matriculaAtual) idsInformados[f.chave] = String(matriculaAtual).replace(/\D/g, '');
-    const candidatos = Array.isArray(f.matriculaCandidatas) && f.matriculaCandidatas.length
-      ? `<div style="font-size:12px;color:#6b7280;">Candidatas: ${escapeHtml(f.matriculaCandidatas.join(', '))}</div>`
-      : '';
+    const registroId = String(f.registroId || `${i}:${f.chave || ''}`);
+    const chave = String(f.chave || '');
+    const matriculaAtual = String(idsInformados[chave] || f.matricula || '').replace(/\D/g, '');
+    if (chave && matriculaAtual) idsInformados[chave] = matriculaAtual;
+
+    const statusCor = obterCorStatus(f.statusRegistro);
+    const statusTexto = obterTextoStatus(f.statusRegistro);
+    const valoresBloco = CAMPOS_EDITAVEIS_ORDEM.map((campo) => {
+      const valorAtual = obterValorCampoRegistro(registroId, f, campo);
+      return `
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+          <span style="display:inline-block; width:110px; font-size:11px; color:#374151;">${escapeHtml(ROTULOS_CAMPOS[campo] || campo)}</span>
+          <input
+            type="text"
+            inputmode="decimal"
+            value="${escapeHtml(valorAtual)}"
+            data-valor-registro="${escapeHtml(registroId)}"
+            data-valor-campo="${escapeHtml(campo)}"
+            style="width:78px;"
+          />
+        </div>
+      `;
+    }).join('');
 
     return `
       <tr>
         <td>${i + 1}</td>
+        <td>${Number(f.pagina || 0)}</td>
         <td>${escapeHtml(f.nome || '')}</td>
         <td>${escapeHtml(f.cpf || '')}</td>
         <td>
-          <input type="text" inputmode="numeric" data-chave="${escapeHtml(f.chave)}" value="${escapeHtml(matriculaAtual)}" style="width: 110px;" />
-          ${candidatos}
+          <input
+            type="text"
+            inputmode="numeric"
+            data-matricula-key="${escapeHtml(registroId)}"
+            value="${escapeHtml(matriculaAtual)}"
+            style="width: 88px;"
+          />
         </td>
         <td>${escapeHtml(f.origemMatricula || '-')}</td>
-        <td>
-          <button type="button" class="btn btn-secondary" data-acao="salvar" data-idx="${i}">Salvar</button>
+        <td>${escapeHtml(f.somaRemuneracao || '0,00')}</td>
+        <td>${escapeHtml(f.totalRemuneracao || '0,00')}</td>
+        <td>${valoresBloco}</td>
+        <td><span style="font-weight:600;color:${statusCor};">${escapeHtml(statusTexto)}</span></td>
+        <td style="white-space:nowrap;">
+          <button type="button" class="btn btn-secondary" data-acao="salvar" data-idx="${i}">Salvar matricula</button>
+          <button type="button" class="btn btn-secondary" data-acao="confirmar" data-idx="${i}" style="margin-left:6px;">Confirmar corrigido</button>
+          <button type="button" class="btn btn-secondary" data-acao="remover" data-idx="${i}" style="margin-left:6px;">${removidosSet.has(registroId) || removidosSet.has(chave) ? 'Reativar' : 'Remover da geracao'}</button>
         </td>
       </tr>
     `;
@@ -196,45 +268,126 @@ function renderizarFichas(funcionarios, caminhoLista) {
       <thead>
         <tr>
           <th>#</th>
+          <th>Pagina</th>
           <th>Nome</th>
           <th>CPF</th>
           <th>Matricula</th>
           <th>Origem</th>
-          <th>Acao</th>
+          <th>Soma remuneracao</th>
+          <th>Total remuneracao</th>
+          <th>Valores editaveis</th>
+          <th>Status</th>
+          <th>Acoes</th>
         </tr>
       </thead>
       <tbody>${rows}</tbody>
     </table>
   `;
 
-  box.querySelectorAll('input[data-chave]').forEach((input) => {
+  box.querySelectorAll('input[data-matricula-key]').forEach((input) => {
     input.addEventListener('input', () => {
-      const chave = input.getAttribute('data-chave') || '';
-      idsInformados[chave] = String(input.value || '').replace(/\D/g, '');
-      ultimoResultado = null;
-      const btnBaixar = document.getElementById('btnBaixarBandeira');
-      if (btnBaixar) btnBaixar.disabled = true;
+      const registroId = input.getAttribute('data-matricula-key') || '';
+      const funcionario = funcionarios.find((item) => String(item.registroId || '') === registroId);
+      if (!funcionario?.chave) return;
+      idsInformados[funcionario.chave] = String(input.value || '').replace(/\D/g, '');
+      invalidarGeracaoAteReprocessar();
     });
   });
 
-  box.querySelectorAll('button[data-acao="salvar"]').forEach((btn) => {
+  box.querySelectorAll('input[data-valor-registro]').forEach((input) => {
+    input.addEventListener('input', () => {
+      const registroId = input.getAttribute('data-valor-registro') || '';
+      const campo = input.getAttribute('data-valor-campo') || '';
+      if (!registroId || !campo) return;
+      if (!overridesPorRegistro[registroId]) overridesPorRegistro[registroId] = {};
+      overridesPorRegistro[registroId][campo] = normalizarValorBrInput(input.value || '0,00');
+      invalidarGeracaoAteReprocessar();
+    });
+  });
+
+  box.querySelectorAll('button[data-acao]').forEach((btn) => {
     btn.addEventListener('click', async () => {
       const idx = Number(btn.getAttribute('data-idx') || -1);
+      const acao = btn.getAttribute('data-acao') || '';
       const funcionario = funcionarios[idx];
       if (!funcionario) return;
 
       try {
         btn.disabled = true;
-        btn.textContent = 'Salvando...';
-        await salvarFuncionario(funcionario);
+        if (acao === 'salvar') {
+          btn.textContent = 'Salvando...';
+          await salvarFuncionario(funcionario);
+        } else if (acao === 'confirmar') {
+          marcarConfirmado(funcionario);
+          btn.textContent = 'Atualizando...';
+          await processarBandeira();
+          setStatus('Correcoes confirmadas e reprocessadas.', false);
+        } else if (acao === 'remover') {
+          alternarRemocao(funcionario);
+          btn.textContent = 'Atualizando...';
+          await processarBandeira();
+          setStatus('Lista de geracao atualizada.', false);
+        }
       } catch (error) {
-        setStatus(error.message || 'Falha ao salvar funcionario.', true);
+        setStatus(error.message || 'Falha ao atualizar registro.', true);
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Salvar';
+        btn.textContent =
+          acao === 'salvar' ? 'Salvar matricula'
+            : acao === 'confirmar' ? 'Confirmar corrigido'
+              : (removidosSet.has(funcionario.registroId) || removidosSet.has(funcionario.chave))
+                ? 'Reativar'
+                : 'Remover da geracao';
       }
     });
   });
+}
+
+function marcarConfirmado(funcionario) {
+  const registroId = String(funcionario.registroId || '');
+  const chave = String(funcionario.chave || '');
+  if (registroId) confirmadosSet.add(registroId);
+  if (chave) confirmadosSet.add(chave);
+  if (registroId) removidosSet.delete(registroId);
+  if (chave) removidosSet.delete(chave);
+}
+
+function alternarRemocao(funcionario) {
+  const registroId = String(funcionario.registroId || '');
+  const chave = String(funcionario.chave || '');
+  const removido = removidosSet.has(registroId) || removidosSet.has(chave);
+
+  if (removido) {
+    if (registroId) removidosSet.delete(registroId);
+    if (chave) removidosSet.delete(chave);
+  } else {
+    if (registroId) removidosSet.add(registroId);
+    if (chave) removidosSet.add(chave);
+    if (registroId) confirmadosSet.delete(registroId);
+    if (chave) confirmadosSet.delete(chave);
+  }
+}
+
+function obterValorCampoRegistro(registroId, funcionario, campo) {
+  const valorOverride = overridesPorRegistro?.[registroId]?.[campo];
+  if (valorOverride != null) return valorOverride;
+  return String(funcionario?.valoresEditaveis?.[campo] || '0,00');
+}
+
+function obterTextoStatus(statusRegistro) {
+  if (statusRegistro === 'ok') return 'OK';
+  if (statusRegistro === 'pendente') return 'Pendente';
+  if (statusRegistro === 'removido') return 'Removido';
+  if (statusRegistro === 'confirmado_usuario') return 'Confirmado';
+  if (statusRegistro === 'duplicado_ignorado') return 'Duplicado';
+  return statusRegistro || '-';
+}
+
+function obterCorStatus(statusRegistro) {
+  if (statusRegistro === 'ok' || statusRegistro === 'confirmado_usuario') return '#166534';
+  if (statusRegistro === 'pendente') return '#b45309';
+  if (statusRegistro === 'removido' || statusRegistro === 'duplicado_ignorado') return '#6b7280';
+  return '#111827';
 }
 
 function renderizarPreview(linhas) {
@@ -308,6 +461,26 @@ function setStatus(texto, erro = false) {
   el.style.color = erro ? '#b91c1c' : '#111827';
 }
 
+function normalizarValorBrInput(valor) {
+  const texto = String(valor || '').trim().replace(/\s+/g, '');
+  if (!texto) return '0,00';
+  const limpo = texto.replace(/[^\d,.-]/g, '');
+  const numero = parseValorBrToFloat(limpo);
+  return formatarNumeroBr(numero);
+}
+
+function parseValorBrToFloat(valor) {
+  const texto = String(valor || '').trim().replace(/\./g, '').replace(',', '.');
+  const n = Number(texto);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function formatarNumeroBr(valor) {
+  const n = Number(valor);
+  if (!Number.isFinite(n)) return '0,00';
+  return n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
 function formatarTamanhoArquivo(bytes) {
   if (!Number.isFinite(bytes)) return '-';
   if (bytes < 1024) return `${bytes} B`;
@@ -337,3 +510,5 @@ function escapeHtml(value) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+

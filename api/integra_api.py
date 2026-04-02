@@ -34,7 +34,7 @@ from api.excel_abas_pdf_core import exportar_abas_para_pdf
 from api.separador_csv_baixa_automatica_core import processar_baixa_automatica_arquivo
 from api.comparador_eventos_holerite_core import processar_comparador_eventos_holerite
 
-app = FastAPI(title="Integração Python API")
+app = FastAPI(title="Integracao Python API")
 
 from api.importador_recebimentos_madre_scp_core import (
     processar_importador_recebimentos_madre_scp,
@@ -50,6 +50,11 @@ try:
     from api.conversor_extrato_pdf_ofx_core import converter_pdf_para_ofx_bytes
 except ModuleNotFoundError:
     converter_pdf_para_ofx_bytes = None
+
+try:
+    from api.lotes_renasul_core import processar_lotes_renasul
+except Exception:
+    processar_lotes_renasul = None
 
 
 @app.post("/api/comparador-eventos-holerite/processar")
@@ -151,6 +156,9 @@ async def processar_cartao_horas_iob_endpoint(
 async def processar_cartao_horas_bandeira_transportes_endpoint(
     arquivo: UploadFile = File(...),
     ids_json: str = Form("{}"),
+    confirmados_json: str = Form("[]"),
+    removidos_json: str = Form("[]"),
+    overrides_json: str = Form("{}"),
 ):
     try:
         from api.cartao_horas_bandeira_transportes_core import processar_pdf_cartao_bandeira
@@ -161,26 +169,46 @@ async def processar_cartao_horas_bandeira_transportes_endpoint(
         except json.JSONDecodeError as exc:
             raise HTTPException(status_code=400, detail="Configuracao de IDs invalida.") from exc
 
+        try:
+            confirmados = json.loads(confirmados_json or "[]")
+        except json.JSONDecodeError as exc:
+            raise HTTPException(status_code=400, detail="Configuracao de confirmacoes invalida.") from exc
+
+        try:
+            removidos = json.loads(removidos_json or "[]")
+        except json.JSONDecodeError as exc:
+            raise HTTPException(status_code=400, detail="Configuracao de remocoes invalida.") from exc
+
+        try:
+            overrides = json.loads(overrides_json or "{}")
+        except json.JSONDecodeError as exc:
+            raise HTTPException(status_code=400, detail="Configuracao de ajustes de valores invalida.") from exc
+
         resultado = processar_pdf_cartao_bandeira(
             pdf_bytes=pdf_bytes,
             nome_arquivo=arquivo.filename or "arquivo.pdf",
             ids_por_chave=ids_por_chave,
+            confirmados=confirmados if isinstance(confirmados, list) else [],
+            removidos=removidos if isinstance(removidos, list) else [],
+            overrides_por_registro=overrides if isinstance(overrides, dict) else {},
         )
 
-        previa = resultado.get("preview", {})
         return {
             "ok": True,
-            "nomeArquivo": resultado.get("nome_saida", "arquivo.txt"),
-            "txtBase64": resultado.get("txt_base64", ""),
+            "nomeArquivo": resultado.get("nome_saida", "arquivo.zip"),
+            "zipBase64": resultado.get("zip_base64", ""),
             "totalRegistrosTxt": len(resultado.get("linhas", [])),
             "previewLinhas": (resultado.get("linhas") or [])[:30],
-            "empresa": previa.get("empresa", ""),
-            "periodoInicial": previa.get("periodo_inicial", ""),
-            "periodoFinal": previa.get("periodo_final", ""),
             "funcionarios": resultado.get("funcionarios", []),
-            "itens": previa.get("itens", []),
-            "somaItens": previa.get("soma_itens", "0,00"),
-            "totalItens": previa.get("total_itens", 0),
+            "pendencias": resultado.get("pendencias", []),
+            "podeGerarTxt": bool(resultado.get("pode_gerar_txt", False)),
+            "bloqueadoGeracao": bool(resultado.get("bloqueado_geracao", True)),
+            "mensagemBloqueio": resultado.get("mensagem_bloqueio", ""),
+            "totalPaginas": int(resultado.get("total_paginas", 0) or 0),
+            "totalFuncionarios": int(resultado.get("total_funcionarios", 0) or 0),
+            "totalPendencias": int(resultado.get("total_pendencias", 0) or 0),
+            "totalDuplicadosIgnorados": int(resultado.get("total_duplicados_ignorados", 0) or 0),
+            "totalArquivosTxt": int(resultado.get("total_arquivos_txt", 0) or 0),
             "listaFuncionariosArquivo": resultado.get("lista_funcionarios_arquivo", ""),
         }
     except FileNotFoundError as exc:
@@ -221,6 +249,27 @@ def salvar_funcionario_bandeira_endpoint(payload: SalvarFuncionarioBandeiraPaylo
     except Exception as exc:
         print("Erro ao salvar funcionario na lista Bandeira:", exc)
         raise HTTPException(status_code=500, detail="Erro interno ao salvar funcionario na lista.")
+
+
+@app.post("/api/lotes-renasul/processar")
+def processar_lotes_renasul_endpoint(payload: dict[str, Any]):
+    try:
+        if processar_lotes_renasul is None:
+            raise HTTPException(
+                status_code=503,
+                detail="Ferramenta indisponivel neste ambiente: parser do lotes Renasul nao localizado.",
+            )
+        resultado = processar_lotes_renasul(payload or {})
+        return resultado
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=503, detail=str(exc))
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except HTTPException:
+        raise
+    except Exception as exc:
+        print("Erro ao processar lotes Renasul:", exc)
+        raise HTTPException(status_code=500, detail=f"Erro ao processar lotes Renasul: {exc}")
 # =========================
 # MODELO DE ENTRADA (FÉRIAS)
 # =========================
@@ -239,11 +288,11 @@ def processar_separador(params: SeparadorParams):
 
     input_pdf = Path(params.input_pdf_path)
     if not input_pdf.is_file():
-        raise HTTPException(status_code=400, detail="Arquivo PDF de entrada não encontrado.")
+        raise HTTPException(status_code=400, detail="Arquivo PDF de entrada nao encontrado.")
 
     competencia = params.competencia.strip()
     if not competencia:
-        raise HTTPException(status_code=400, detail="Competência não informada.")
+        raise HTTPException(status_code=400, detail="Competencia nao informada.")
 
     out_dir = Path(params.output_dir) if params.output_dir else input_pdf.parent / "output"
 
@@ -496,7 +545,7 @@ class ParametrosSeparadorCSVBaixaAutomatica(BaseModel):
   input_path: str
   output_dir: str
   sheet_name: str = "BAIXAS"
-  year_source_column: str = "DATA EMISSÃO"
+  year_source_column: str = "DATA EMISSAO"
   max_linhas_por_arquivo: int = 50
   csv_sep: str = ";"
 

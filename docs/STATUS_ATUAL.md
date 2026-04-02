@@ -1,25 +1,24 @@
 # STATUS_ATUAL.md
 
-Data de referencia: 2026-03-12
+Data de referencia: 2026-04-02
 
 ## Concluido recentemente
 1. Projeto `Central utilitarios` estruturado no Linear com resumo, descricao, lead, prioridade, datas e milestones.
-2. Backlog inicial criado no Linear com historico de entregas concluidas e erros mitigados:
-   - `WIL-39` a `WIL-50` em `Done`.
-3. Fase ativa registrada no Linear:
-   - issue-mae `WIL-51` em `In Progress`.
-   - subtarefas `WIL-52`, `WIL-53`, `WIL-55` e `WIL-54` em `Todo`.
+2. Backlog inicial criado no Linear com historico de entregas concluidas e erros mitigados.
+3. Fase ativa registrada no Linear com issue-mae em `In Progress` e subtarefas em `Todo`.
 4. Documento de governanca do Linear criado em `docs/LINEAR_PLAYBOOK.md`.
 5. Regras de sincronizacao docs + Linear adicionadas ao fluxo do projeto.
-6. `parcelamentos` restaurado para a versão com modal de cadastro, tabelas agrupadas, importação por planilha e edição manual sem alterar débito em conta.
-7. GFBR alinhado novamente após a perda de atualização: upload com até 3 arquivos e contrato da API Python aceitando `conta_corrente_1`/`conta_corrente_2` para PDFs Itaú.
+6. `parcelamentos` restaurado para a versao com modal de cadastro, tabelas agrupadas, importacao por planilha e edicao manual sem alterar debito em conta.
+7. GFBR alinhado novamente apos a perda de atualizacao, com upload de arquivos e contrato da API Python ajustado.
+8. `lotes-renasul` restaurado com tela interna, validacao antes da geracao, preview de eventos e pendencias, e integracao com o resumo da folha Renasul.
+9. Leitura do `.xls` da `lotes-renasul` reforcada com `python-calamine` para evitar falhas de `xlrd` em arquivos OLE2 validos.
 
 ## Estado tecnico atual
 - Arquitetura multicamadas consolidada (Node.js, Python/FastAPI, PostgreSQL e filesystem).
 - Catalogo operacional de ferramentas ativo e documentado (`docs/UI_MAP.md`, `docs/tools/index.md`).
 - Runbooks de diagnostico e operacao disponiveis para ferramentas criticas.
 - Fluxo de deploy VPS documentado com checks de release e migrations.
-- Correcoes relevantes registradas nos docs de ferramentas (SN, MIT, GIAST, SPEDS).
+- Correcoes relevantes registradas nos docs de ferramentas, incluindo `SPEDS` e `Lotes Renasul`.
 
 ## Pendencias ativas (Linear)
 1. `WIL-52` - implementar endpoint real da API do Conciliador Hausen Ocean.

@@ -324,6 +324,17 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "lotes-renasul",
+      "title": "Lotes Renasul",
+      "group": "Contabil",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/lotes-renasul",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "mit",
       "title": "MIT",
       "group": "Geral",

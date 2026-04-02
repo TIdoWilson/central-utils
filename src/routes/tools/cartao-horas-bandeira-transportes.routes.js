@@ -18,6 +18,9 @@ module.exports = function createCartaoHorasBandeiraTransportesRoutes(deps) {
         }
 
         const idsJson = req.body?.ids_json || '{}';
+        const confirmadosJson = req.body?.confirmados_json || '[]';
+        const removidosJson = req.body?.removidos_json || '[]';
+        const overridesJson = req.body?.overrides_json || '{}';
 
         const form = new FormData();
         form.append('arquivo', arquivo.buffer, {
@@ -25,12 +28,14 @@ module.exports = function createCartaoHorasBandeiraTransportesRoutes(deps) {
           contentType: arquivo.mimetype || 'application/pdf',
         });
         form.append('ids_json', idsJson);
+        form.append('confirmados_json', confirmadosJson);
+        form.append('removidos_json', removidosJson);
+        form.append('overrides_json', overridesJson);
 
         const pyResp = await axios.post(`${PY_API_URL}/api/cartao-horas-bandeira-transportes/processar`, form, {
           headers: form.getHeaders(),
           maxBodyLength: Infinity,
           maxContentLength: Infinity,
-          timeout: 180000,
         });
 
         return res.json(pyResp.data);
@@ -55,8 +60,7 @@ module.exports = function createCartaoHorasBandeiraTransportesRoutes(deps) {
 
       const pyResp = await axios.post(
         `${PY_API_URL}/api/cartao-horas-bandeira-transportes/salvar-funcionario`,
-        payload,
-        { timeout: 120000 }
+        payload
       );
 
       return res.json(pyResp.data);

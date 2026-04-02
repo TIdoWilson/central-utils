@@ -7,10 +7,11 @@ const {
 } = require('./queue');
 
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '127.0.0.1';
 
 function startServer() {
-  server.listen(PORT, () => {
-    console.log(`Servidor rodando em http://192.0.0.252:${PORT}`);
+  server.listen(PORT, HOST, () => {
+    console.log(`Servidor rodando em http://${HOST}:${PORT}`);
     console.log('Worker iniciado. Aguardando extensao Chrome...');
   });
 }

@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Portal - Importador Cartao Horas Bandeira Transportes</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
@@ -24,14 +27,14 @@
       <main class="nfe-main">
         <header class="nfe-header">
           <div class="nfe-breadcrumb">Portal / Pessoal / Importador Cartao Horas Bandeira Transportes</div>
-          <h1>Importador cartao de horas Bandeira Tranposrtes</h1>
-          <p>Leitura exclusiva da ultima pagina do PDF, com preview, edicao de ficha do funcionario e geracao do TXT no layout antigo.</p>
+          <h1>Importador Cartao de Horas Bandeira Transportes [v20260402-5]</h1>
+          <p>Processamento por pagina com OCR (Tesseract em caminho fixo), fallback textual e geracao de TXT por funcionario no layout antigo.</p>
         </header>
 
         <section class="nfe-row" style="grid-template-columns: minmax(340px, 420px) 1fr; gap: 16px;">
           <div class="nfe-card nfe-card-upload">
             <h2>Arquivo</h2>
-            <p class="nfe-card-subtitle">O processamento usa sempre a ultima pagina do PDF.</p>
+            <p class="nfe-card-subtitle">Envie o PDF para processar todas as paginas e liberar o ZIP quando nao houver pendencias.</p>
 
             <form id="formBandeira" class="nfe-upload-form">
               <label class="nfe-input-file-label">
@@ -40,8 +43,8 @@
               </label>
 
               <div class="nfe-table-actions" style="margin-top: 14px;">
-                <button type="submit" class="btn btn-primary" id="btnGerarBandeira">Gerar TXT</button>
-                <button type="button" class="btn btn-secondary" id="btnBaixarBandeira" disabled>Baixar TXT</button>
+                <button type="submit" class="btn btn-primary" id="btnGerarBandeira">Reprocessar PDF</button>
+                <button type="button" class="btn btn-secondary" id="btnBaixarBandeira" disabled>Baixar ZIP</button>
               </div>
             </form>
 
@@ -65,7 +68,7 @@
 
         <section class="nfe-card">
           <h2>Ficha de funcionarios</h2>
-          <p class="nfe-card-subtitle">Edite a matricula quando necessario. Ao salvar, a lista original e atualizada para os proximos processamentos.</p>
+          <p class="nfe-card-subtitle">Permite matricula manual, confirmar corrigido, remover/reativar e ajustes de valores por registro.</p>
           <div id="listaArquivoBandeira" class="nfe-card-subtitle"></div>
           <div id="fichasBandeira" class="nfe-table-wrapper" style="margin-top: 10px;"></div>
         </section>
@@ -108,6 +111,8 @@
 
     <script src="/js/sidebar.js"></script>
     <script src="/js/auth-client.js"></script>
-    <script src="/js/importador-cartao-horas-bandeira-transportes.js"></script>
+    <script src="/js/importador-cartao-horas-bandeira-transportes.js?v=20260402-5"></script>
   </body>
 </html>
+
+

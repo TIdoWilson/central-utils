@@ -23,6 +23,7 @@ const MENU_CONFIG = [
       { id: 'acertos-lotes-internets', label: 'Acertos Lotes Internets', href: '/acertos-lotes-internets', icon: '&#128202;' },
       { id: 'acerto-lotes-toscan', label: 'Acerto Lotes Toscan', href: '/acerto-lotes-toscan', icon: '&#128196;' },
       { id: 'lotes-txt', label: 'Lotes TXT', href: '/lotes-txt', icon: '&#128209;' },
+      { id: 'lotes-renasul', label: 'Lotes Renasul', href: '/lotes-renasul', icon: '&#128209;' },
       { id: 'gfbr-gerador-txt', label: 'Gerador TXT GFBR', href: '/gfbr-gerador-txt', icon: '&#128221;' },
       { id: 'conversor-extrato-pdf-ofx', label: 'Conversor Extrato PDF para OFX', href: '/conversor-extrato-pdf-ofx', icon: '&#127974;' },
       { id: 'balancete-transitorio', label: 'Conciliador Conta Transit&oacute;ria', href: '/balancete-transitorio', icon: '&#128196;' },
