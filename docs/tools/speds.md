@@ -47,6 +47,9 @@ Na area de ECD, inclui a rotina `ECD - Comparar J150 x DRE mensal`, que recebe o
 - A rotina nao bloqueia mais a entrega por validacao global de relacionamentos no arquivo final. Se houver auditoria complementar de dominios como `H010.COD_CTA` ou `0200.UNID_INV`, ela deve ser feita por um validador separado.
 
 ## Troubleshooting
+- Sintoma: no template `ICMS - Corrigir participantes`, o download retornava um arquivo de log/resumo em TXT em vez do novo SPED corrigido.
+- Causa provavel: o template estava sem runner dedicado no backend (`/api/speds/run`), entao o fluxo podia cair na saida de resumo quando o script nao era executado como artefato principal.
+- Solucao: adicionar runner especifico para `icms-corrigir-participantes-sped` (e o equivalente de Contribuicoes), fixar o output pelo `filenamePattern` do manifesto e mapear os scripts internos versionados em `api/speds_scripts/...` para garantir o download do SPED corrigido.
 - Sintoma: o TXT consolidado abre com BOM UTF-8 no validador, ou o PVA acusa hierarquia invalida no bloco M (`M210`/`M105` em posicao errada, `M990` divergente ou `9999` incorreto).
 - Causa provavel: versao antiga do consolidado gravando com `utf-8-sig` e usando heuristica incompleta para o bloco M, sem respeitar integralmente os JSONs de hierarquia/layout de Contribuicoes.
 - Solucao: usar a versao interna `api/speds_scripts/contribuicoes/combinador_speds.py`, que grava em UTF-8 sem BOM, inclui o bloco `P` na ordem canonica e monta o bloco M com base nos JSONs de `relationships` e `layout`.

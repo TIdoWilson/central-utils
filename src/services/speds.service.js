@@ -422,6 +422,21 @@ module.exports = function createSpedsService(deps = {}) {
     return clean || fallback;
   }
 
+  function buildTemplateOutputName(template, inputName, fallbackFileName) {
+    const manifest = ensureTemplateManifestPolicy(template);
+    const pattern = String(manifest?.output?.filenamePattern || '').trim();
+    if (!pattern) return fallbackFileName;
+
+    const inputStem = sanitizeBaseName(path.parse(String(inputName || '')).name, 'input');
+    const replaced = pattern.replace(/\{input\}/gi, inputStem);
+    const safeName = path.basename(String(replaced || '').trim());
+    if (!safeName) return fallbackFileName;
+    if (!path.extname(safeName) && path.extname(fallbackFileName)) {
+      return `${safeName}${path.extname(fallbackFileName)}`;
+    }
+    return safeName;
+  }
+
   function getInputFiles(filesByInput, inputKey) {
     return Array.isArray(filesByInput?.[inputKey]) ? filesByInput[inputKey] : [];
   }
@@ -1257,6 +1272,64 @@ module.exports = function createSpedsService(deps = {}) {
     };
   }
 
+  async function runContribuicoesCorrigirParticipantesTemplate({ template, filesByInput, outputDir }) {
+    const spedFile = getSingleInputFile(filesByInput, 'sped_txt');
+    const notesFile = getSingleInputFile(filesByInput, 'xml_notas');
+    if (!spedFile?.path || !notesFile?.path) {
+      throw createValidationError('Arquivos obrigatorios nao encontrados para Corrigir participantes (Contribuicoes).');
+    }
+
+    const inputName = spedFile.originalName || path.basename(spedFile.path);
+    const inputStem = sanitizeBaseName(path.parse(inputName).name, 'sped_contribuicoes');
+    const fallbackOutputName = `${inputStem}_PARTICIPANTES_CONTRIBUICOES_CORRIGIDOS.txt`;
+    const outputName = buildTemplateOutputName(template, inputName, fallbackOutputName);
+    const outputPath = path.join(outputDir, outputName);
+    const pyArgs = [
+      '--sped',
+      spedFile.path,
+      '--notas',
+      notesFile.path,
+      '--output',
+      outputPath,
+    ];
+
+    return executeTemplateScript({
+      template,
+      scriptArgs: pyArgs,
+      outputPath,
+      failureLabel: 'Falha ao processar a correcao de participantes de Contribuicoes.',
+    });
+  }
+
+  async function runIcmsCorrigirParticipantesTemplate({ template, filesByInput, outputDir }) {
+    const spedFile = getSingleInputFile(filesByInput, 'sped_txt');
+    const xmlArchive = getSingleInputFile(filesByInput, 'xml_arquivos');
+    if (!spedFile?.path || !xmlArchive?.path) {
+      throw createValidationError('Arquivos obrigatorios nao encontrados para Corrigir participantes (ICMS).');
+    }
+
+    const inputName = spedFile.originalName || path.basename(spedFile.path);
+    const inputStem = sanitizeBaseName(path.parse(inputName).name, 'sped_icms');
+    const fallbackOutputName = `${inputStem}_PARTICIPANTES_ICMS_CORRIGIDOS.txt`;
+    const outputName = buildTemplateOutputName(template, inputName, fallbackOutputName);
+    const outputPath = path.join(outputDir, outputName);
+    const pyArgs = [
+      '--sped',
+      spedFile.path,
+      '--xml-archive',
+      xmlArchive.path,
+      '--output',
+      outputPath,
+    ];
+
+    return executeTemplateScript({
+      template,
+      scriptArgs: pyArgs,
+      outputPath,
+      failureLabel: 'Falha ao processar a correcao de participantes de ICMS.',
+    });
+  }
+
   async function runIcmsCorretorTotalInventarioTemplate({ template, filesByInput, fields, outputDir }) {
     const inputFile = getSingleInputFile(filesByInput, 'sped_txt');
     if (!inputFile?.path) {
@@ -1665,10 +1738,12 @@ module.exports = function createSpedsService(deps = {}) {
 
   const TEMPLATE_RUNNERS = {
     'contribuicoes-conferidor-xml-nfe': runContribuicoesConferidorXmlTemplate,
+    'contribuicoes-corrigir-participantes-sped': runContribuicoesCorrigirParticipantesTemplate,
     'contribuicoes-consolidar-speds': runContribuicoesConsolidarSpedsTemplate,
     'contribuicoes-validador-sped': runContribuicoesValidadorSpedTemplate,
     'ecd-comparar-j150-dre-mensal': runEcdCompararJ150DreMensalTemplate,
     'icms-ajustar-cfop-1152': runIcmsAjustarCfopTemplate,
+    'icms-corrigir-participantes-sped': runIcmsCorrigirParticipantesTemplate,
     'icms-comparador-sped-relatorio': runIcmsComparadorTemplate,
     'icms-corretor-total-inventario': runIcmsCorretorTotalInventarioTemplate,
     'icms-gerador-inventario': runIcmsGeradorInventarioTemplate,
