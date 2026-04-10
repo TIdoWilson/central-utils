@@ -90,6 +90,13 @@
     });
   }
 
+  function moneyInputValue(value) {
+    if (value === null || value === undefined || value === '') return '';
+    const parsed = parseMoney(value);
+    if (parsed === null) return '';
+    return String(parsed).replace('.', ',');
+  }
+
   function normalizePeriodRef(value) {
     const digits = onlyDigits(value || '');
     if (digits.length !== 6) return null;
@@ -242,8 +249,10 @@
 
     const generateSection = $('giastGenerateSection');
     const periodRefInput = $('giastPeriodRef');
+    const spedFileInput = $('giastSpedFile');
     const rowsTbody = $('giastRowsTbody');
     const btnAddRow = $('btnGiastAddRow');
+    const btnImportSped = $('btnGiastImportSped');
     const btnGenerateTxt = $('btnGiastGenerateTxt');
     const declarantStatusEl = $('giastDeclarantStatus');
     const statusEl = $('giastStatus');
@@ -251,6 +260,7 @@
 
     let declarants = [];
     let currentDeclarantId = null;
+    let currentDeclarantData = null;
     let lastSelectedDeclarantId = null;
     let editorMode = 'hidden';
     let declarantMenuEl = null;
@@ -450,10 +460,10 @@
 
     function createRowItem(row = {}) {
       const dueDate = row.dueDate || getDefaultDueDate();
-      const valueIcms = row.valueIcms - '';
-      const valueFcp = row.valueFcp - '';
-      const valueDevolutions = row.valueDevolutions - '';
-      const valuePrepayments = row.valuePrepayments - '';
+      const valueIcms = moneyInputValue(row.valueIcms);
+      const valueFcp = moneyInputValue(row.valueFcp);
+      const valueDevolutions = moneyInputValue(row.valueDevolutions);
+      const valuePrepayments = moneyInputValue(row.valuePrepayments);
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -574,6 +584,7 @@
       const declarantId = Number(id);
       if (!Number.isInteger(declarantId) || declarantId <= 0) {
         currentDeclarantId = null;
+        currentDeclarantData = null;
         setGenerateVisible(false);
         return;
       }
@@ -586,12 +597,13 @@
       }
 
       currentDeclarantId = declarantId;
+      currentDeclarantData = data.declarant || null;
       lastSelectedDeclarantId = declarantId;
 
-      fillDeclarantForm(data.declarant);
+      fillDeclarantForm(currentDeclarantData);
       setEditorMode('hidden');
       setGenerateVisible(true);
-      populateRowsFromDeclarant(data.declarant);
+      populateRowsFromDeclarant(currentDeclarantData);
 
       if (declarantSelect) declarantSelect.value = String(declarantId);
       syncDeclarantTriggerLabel();
@@ -600,6 +612,7 @@
 
     function enterCreateMode() {
       currentDeclarantId = null;
+      currentDeclarantData = null;
       setEditorMode('new');
       setGenerateVisible(false);
       clearDeclarantForm();
@@ -717,6 +730,7 @@
 
       const removedId = currentDeclarantId;
       currentDeclarantId = null;
+      currentDeclarantData = null;
       if (lastSelectedDeclarantId === removedId) lastSelectedDeclarantId = null;
       setEditorMode('hidden');
 
@@ -730,7 +744,90 @@
         await loadDeclarantDetail(nextId);
       } else {
         if (declarantSelect) declarantSelect.value = '';
+        currentDeclarantData = null;
         setGenerateVisible(false);
+      }
+    }
+
+    async function importSpedAndPrefill() {
+      clearStatus();
+
+      if (!currentDeclarantId) {
+        setStatus('Selecione um declarante antes de importar o SPED.', true);
+        return;
+      }
+
+      const spedFile = spedFileInput?.files?.[0] || null;
+      if (!spedFile) {
+        setStatus('Selecione um arquivo SPED (TXT) para importar.', true);
+        return;
+      }
+
+      if (btnImportSped) btnImportSped.disabled = true;
+      setStatus('Importando SPED e preenchendo dados...');
+
+      try {
+        const formData = new FormData();
+        formData.append('declarantId', String(currentDeclarantId));
+        formData.append('spedFile', spedFile, spedFile.name);
+
+        const resp = await AuthClient.authFetch('/api/giast/import-sped', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await resp.json().catch(() => ({}));
+        if (!resp.ok || !data?.ok) {
+          setStatus(data?.error || 'Erro ao importar SPED.', true);
+          return;
+        }
+
+        const periodRef = normalizePeriodRef(data?.periodRef || '');
+        if (periodRef && periodRefInput) {
+          periodRefInput.value = periodRef;
+        }
+
+        if (data?.stateRegistrations && typeof data.stateRegistrations === 'object') {
+          const nextDeclarant = { ...(currentDeclarantData || {}) };
+          nextDeclarant.stateRegistrations = data.stateRegistrations;
+          currentDeclarantData = nextDeclarant;
+          buildIeTable(data.stateRegistrations);
+        }
+
+        const rows = Array.isArray(data?.rows) ? data.rows : [];
+        rowsTbody.innerHTML = '';
+
+        if (!rows.length) {
+          rowsTbody.appendChild(createRowItem());
+        } else {
+          rows.forEach((row) => rowsTbody.appendChild(createRowItem({
+            uf: row.uf,
+            dueDate: row.dueDate || getDefaultDueDate(),
+            valueIcms: row.valueIcms ?? 0,
+            valueFcp: row.valueFcp ?? 0,
+            valueDevolutions: row.valueDevolutions ?? 0,
+            valuePrepayments: row.valuePrepayments ?? 0,
+          })));
+        }
+
+        const stats = data?.stats || {};
+        const rowsImported = Number(stats.rowsImported || rows.length);
+        const iesImported = Number(stats.importedIeFrom0015 || 0);
+
+        setStatus(
+          `Importacao concluida. ${rowsImported} UF(s) preenchida(s) e ${iesImported} inscricao(oes) atualizada(s) pelo 0015.`
+        );
+
+        log(`SPED importado: ${spedFile.name}`);
+        log(`UFs preenchidas: ${rowsImported}. Inscricoes atualizadas pelo 0015: ${iesImported}.`);
+
+        const warnings = Array.isArray(data?.warnings) ? data.warnings : [];
+        warnings.forEach((warning) => log(`Aviso importacao SPED: ${warning}`));
+      } catch (error) {
+        setStatus(error?.message || 'Erro inesperado ao importar SPED.', true);
+      } finally {
+        if (btnImportSped) btnImportSped.disabled = false;
+        if (spedFileInput) spedFileInput.value = '';
       }
     }
 
@@ -935,6 +1032,7 @@
 
       if (!selected) {
         currentDeclarantId = null;
+        currentDeclarantData = null;
         lastSelectedDeclarantId = null;
         setEditorMode('hidden');
         setGenerateVisible(false);
@@ -991,6 +1089,10 @@
 
     btnAddRow?.addEventListener('click', () => {
       rowsTbody.appendChild(createRowItem());
+    });
+
+    btnImportSped?.addEventListener('click', async () => {
+      await importSpedAndPrefill();
     });
 
     btnGenerateTxt?.addEventListener('click', generateTxt);

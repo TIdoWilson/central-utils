@@ -52,6 +52,7 @@ const createConversorExtratoPdfOfxRoutes = require('./routes/tools/conversor-ext
 const createNfeLegacyRoutes = require('./routes/tools/nfe-legacy.routes');
 const createPedidosAlteracaoEmpresaRoutes = require('./routes/tools/pedidos-alteracao-empresa.routes');
 const createComparadorEventosHoleriteRoutes = require('./routes/tools/comparador-eventos-holerite.routes');
+const createComparadorEntradasBandeiraRoutes = require('./routes/tools/comparador-entradas-bandeira.routes');
 const createCartaoHorasIobRoutes = require('./routes/tools/cartao-horas-iob.routes');
 const createCartaoHorasBandeiraTransportesRoutes = require('./routes/tools/cartao-horas-bandeira-transportes.routes');
 const createCctRoutes = require('./routes/tools/cct.routes');
@@ -1291,6 +1292,7 @@ app.use(
     auditLog,
     axios,
     PY_API_URL,
+    upload,
   })
 );
 app.use(
@@ -1338,6 +1340,8 @@ app.use(
     requireCsrf,
     auditLog,
     service: lotesRenasulService,
+    axios,
+    PY_API_URL,
   })
 );
 app.use(
@@ -1378,6 +1382,17 @@ app.use(
   requireAuth,
   requireToolApi('comparador-eventos-holerite'),
   createComparadorEventosHoleriteRoutes({
+    requireCsrf,
+    upload,
+    axios,
+    PY_API_URL,
+  })
+);
+app.use(
+  '/api/comparador-entradas-bandeira',
+  requireAuth,
+  requireToolApi('comparador-entradas-bandeira'),
+  createComparadorEntradasBandeiraRoutes({
     requireCsrf,
     upload,
     axios,

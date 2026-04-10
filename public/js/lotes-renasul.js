@@ -8,6 +8,7 @@
     updatedAt: '',
     planoContas: [],
     dePara: [],
+    historicoRegras: [],
     centrosCusto: {
       adm: '2,4',
       producao: '1,5,6,7',
@@ -26,6 +27,8 @@
     logs: [],
     pendingDraftRows: [],
     pendingDirty: false,
+    saveContext: null,
+    lastSaveOk: true,
     panelInputsBound: false,
     pendingInputsBound: false,
     globalActionsBound: false,
@@ -50,6 +53,18 @@
     return String(value ?? '').replace(/\D+/g, '');
   }
 
+  function repairDisplayText(value) {
+    let text = String(value ?? '');
+    if (!text) return '';
+
+    text = text
+      .replace(/\uFFFD/g, 'Ç')
+      .replace(/PRODU(?:ÇÃO|CAO|ÇAO|Ã‡ÃƒO|Ã‡AO|�AO|AO)/gi, 'PRODUÇÃO')
+      .replace(/DIFEREN(?:ÇA|CA|Ã‡ÃƒA|Ã‡A|�A|A)/gi, 'DIFERENÇA');
+
+    return text;
+  }
+
   function findDeParaMapping(rubrica) {
     const key = normalizeDigits(rubrica);
     if (!key) return null;
@@ -64,12 +79,48 @@
     base.updatedAt = normalizeText(src.updatedAt || '');
     base.planoContas = Array.isArray(src.planoContas) ? src.planoContas.slice() : [];
     base.dePara = Array.isArray(src.dePara) ? src.dePara.slice() : [];
+    base.historicoRegras = Array.isArray(src.historicoRegras) ? src.historicoRegras.slice() : [];
     base.centrosCusto = {
       adm: normalizeText(src.centrosCusto?.adm || DEFAULT_CONFIG.centrosCusto.adm),
       producao: normalizeText(src.centrosCusto?.producao || DEFAULT_CONFIG.centrosCusto.producao),
     };
 
     return base;
+  }
+
+  function buildPersistableConfig(config) {
+    const source = cloneConfig(config || state.config || DEFAULT_CONFIG);
+    const dePara = Array.isArray(source.dePara)
+      ? source.dePara.map((row) => ({
+          rubrica: normalizeText(row?.rubrica || ''),
+          nome: normalizeText(row?.nome || ''),
+          contaDebitoProducao: normalizeText(row?.contaDebitoProducao || ''),
+          contaCreditoProducao: normalizeText(row?.contaCreditoProducao || ''),
+          contaDebitoAdm: normalizeText(row?.contaDebitoAdm || ''),
+          contaCreditoAdm: normalizeText(row?.contaCreditoAdm || ''),
+        }))
+      : [];
+
+    return {
+      version: source.version,
+      updatedAt: source.updatedAt,
+      sourceWorkbook: source.sourceWorkbook || '',
+      centrosCusto: {
+        adm: source.centrosCusto?.adm || DEFAULT_CONFIG.centrosCusto.adm,
+        producao: source.centrosCusto?.producao || DEFAULT_CONFIG.centrosCusto.producao,
+      },
+      historicoRegras: Array.isArray(source.historicoRegras)
+        ? source.historicoRegras.map((row) => ({
+            historicoProcurado: normalizeText(row?.historicoProcurado || ''),
+            contaDebitoProducao: normalizeText(row?.contaDebitoProducao || ''),
+            contaCreditoProducao: normalizeText(row?.contaCreditoProducao || ''),
+            contaDebitoAdm: normalizeText(row?.contaDebitoAdm || ''),
+            contaCreditoAdm: normalizeText(row?.contaCreditoAdm || ''),
+          }))
+        : [],
+      dePara,
+      deParaRows: dePara,
+    };
   }
 
   function safeJson(response) {
@@ -93,6 +144,20 @@
     state.downloadUrl = String(url || '');
     const btn = $('btnDownload');
     if (btn) btn.disabled = !state.downloadUrl;
+  }
+
+  function triggerDownload(url) {
+    const href = String(url || '').trim();
+    if (!href) return false;
+    const anchor = document.createElement('a');
+    anchor.href = href;
+    anchor.target = '_blank';
+    anchor.rel = 'noopener noreferrer';
+    anchor.style.display = 'none';
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    return true;
   }
 
   function timestampLabel() {
@@ -207,7 +272,7 @@
             const value = typeof column.getter === 'function'
               ? column.getter(row)
               : row[column.key];
-            return `<td>${escapeHtml(value ?? '')}</td>`;
+            return `<td>${escapeHtml(repairDisplayText(value ?? ''))}</td>`;
           })
           .join('');
         return `<tr>${cells}</tr>`;
@@ -229,11 +294,12 @@
       setPreviewEmpty('previewBox', 'Nenhum TXT foi gerado ainda.');
       return;
     }
-    el.innerHTML = `<pre class="lotes-renasul-preview-empty" style="white-space: pre-wrap; margin: 0;">${escapeHtml(lines.join('\n'))}</pre>`;
+    el.innerHTML = `<pre class="lotes-renasul-preview-empty" style="white-space: pre-wrap; margin: 0;">${escapeHtml(repairDisplayText(lines.join('\n')))}</pre>`;
   }
 
   function updateValidationSummary(resumo) {
     const totalPendencias = Number(resumo?.total_pendencias || 0);
+    const totalBloqueios = Number(resumo?.total_bloqueios || 0);
     const validado = !!resumo?.validado && totalPendencias === 0;
     state.validatedOk = validado;
     state.validatedSignature = state.currentSignature;
@@ -245,7 +311,12 @@
     }
 
     if (totalPendencias > 0) {
-      setStatus(`Validacao encontrou ${totalPendencias} pendencia(s). Corrija os cadastros antes de gerar o TXT.`, true);
+      setStatus(`Validacao encontrou ${totalPendencias} pendencia(s) de de/para. Corrija os cadastros antes de gerar o TXT.`, true);
+      return;
+    }
+
+    if (totalBloqueios > 0) {
+      setStatus(`Validacao encontrou ${totalBloqueios} centro(s) sem classificacao. Ajuste os centros de custo antes de gerar o TXT.`, true);
       return;
     }
 
@@ -254,11 +325,12 @@
 
   function recordValidationState(resumo) {
     const totalPendencias = Number(resumo?.total_pendencias || 0);
+    const totalBloqueios = Number(resumo?.total_bloqueios || 0);
     if (resumo?.validado && totalPendencias === 0) {
       appendLog('info', 'Validação concluída', 'Nenhuma conta em falta para este arquivo.');
       return;
     }
-    appendLog('warn', 'Validação com pendências', `pendencias=${totalPendencias}`);
+    appendLog('warn', 'Validação com pendências', `pendencias=${totalPendencias}; bloqueios=${totalBloqueios}`);
   }
 
   function renderEventosPreview(rows) {
@@ -285,17 +357,17 @@
       ? rows.map((row) => {
           const mapping = findDeParaMapping(row?.rubrica);
           return {
-            rubrica: normalizeText(row?.rubrica || ''),
-            nome: normalizeText(row?.nome || ''),
-            centro: normalizeText(row?.centro || ''),
-            centroNumero: normalizeText(row?.centroNumero || ''),
-            centroNome: normalizeText(row?.centroNome || ''),
-            motivo: normalizeText(row?.motivo || ''),
-            valor: normalizeText(row?.valor || ''),
-            contaDebitoProducao: normalizeText(mapping?.contaDebitoProducao || ''),
-            contaCreditoProducao: normalizeText(mapping?.contaCreditoProducao || ''),
-            contaDebitoAdm: normalizeText(mapping?.contaDebitoAdm || ''),
-            contaCreditoAdm: normalizeText(mapping?.contaCreditoAdm || ''),
+            rubrica: repairDisplayText(row?.rubrica || ''),
+            nome: repairDisplayText(row?.nome || ''),
+            centro: repairDisplayText(row?.centro || ''),
+            centroNumero: repairDisplayText(row?.centroNumero || ''),
+            centroNome: repairDisplayText(row?.centroNome || ''),
+            motivo: repairDisplayText(row?.motivo || ''),
+            valor: repairDisplayText(row?.valor || ''),
+            contaDebitoProducao: repairDisplayText(mapping?.contaDebitoProducao || ''),
+            contaCreditoProducao: repairDisplayText(mapping?.contaCreditoProducao || ''),
+            contaDebitoAdm: repairDisplayText(mapping?.contaDebitoAdm || ''),
+            contaCreditoAdm: repairDisplayText(mapping?.contaCreditoAdm || ''),
           };
         })
       : [];
@@ -324,11 +396,11 @@
         <tbody id="pendenciasBody">
           ${state.pendingDraftRows.map((row, index) => `
             <tr data-row="${index}" data-table="pendencias">
-              <td>${escapeHtml(row.rubrica || '')}</td>
-              <td>${escapeHtml(row.nome || '')}</td>
-              <td>${escapeHtml(row.centro || '')}</td>
-              <td>${escapeHtml(row.motivo || '')}</td>
-              <td>${escapeHtml(row.valor || '')}</td>
+              <td>${escapeHtml(repairDisplayText(row.rubrica || ''))}</td>
+              <td>${escapeHtml(repairDisplayText(row.nome || ''))}</td>
+              <td>${escapeHtml(repairDisplayText(row.centro || ''))}</td>
+              <td>${escapeHtml(repairDisplayText(row.motivo || ''))}</td>
+              <td>${escapeHtml(repairDisplayText(row.valor || ''))}</td>
               <td>
                 <input data-table="pendencias" data-row="${index}" data-field="contaDebitoProducao" data-nav-row="${index}" data-nav-col="0" type="text" value="${escapeHtml(row.contaDebitoProducao || '')}" placeholder="Conta débito prod." />
               </td>
@@ -400,22 +472,22 @@
       .map((row, index) => `
         <tr data-row="${index}" data-table="depara">
           <td>
-            <input data-table="depara" data-row="${index}" data-field="rubrica" data-nav-row="${index}" data-nav-col="0" type="text" value="${escapeHtml(row.rubrica || '')}" placeholder="1" />
+            <input data-table="depara" data-row="${index}" data-field="rubrica" data-nav-row="${index}" data-nav-col="0" type="text" value="${escapeHtml(repairDisplayText(row.rubrica || ''))}" placeholder="1" />
           </td>
           <td>
-            <input data-table="depara" data-row="${index}" data-field="nome" data-nav-row="${index}" data-nav-col="1" type="text" value="${escapeHtml(row.nome || '')}" placeholder="Nome da rubrica" />
+            <input data-table="depara" data-row="${index}" data-field="nome" data-nav-row="${index}" data-nav-col="1" type="text" value="${escapeHtml(repairDisplayText(row.nome || ''))}" placeholder="Nome da rubrica" />
           </td>
           <td>
-            <input data-table="depara" data-row="${index}" data-field="contaDebitoProducao" data-nav-row="${index}" data-nav-col="2" type="text" value="${escapeHtml(row.contaDebitoProducao || '')}" placeholder="Débito prod." />
+            <input data-table="depara" data-row="${index}" data-field="contaDebitoProducao" data-nav-row="${index}" data-nav-col="2" type="text" value="${escapeHtml(repairDisplayText(row.contaDebitoProducao || ''))}" placeholder="Débito prod." />
           </td>
           <td>
-            <input data-table="depara" data-row="${index}" data-field="contaCreditoProducao" data-nav-row="${index}" data-nav-col="3" type="text" value="${escapeHtml(row.contaCreditoProducao || '')}" placeholder="Crédito prod." />
+            <input data-table="depara" data-row="${index}" data-field="contaCreditoProducao" data-nav-row="${index}" data-nav-col="3" type="text" value="${escapeHtml(repairDisplayText(row.contaCreditoProducao || ''))}" placeholder="Crédito prod." />
           </td>
           <td>
-            <input data-table="depara" data-row="${index}" data-field="contaDebitoAdm" data-nav-row="${index}" data-nav-col="4" type="text" value="${escapeHtml(row.contaDebitoAdm || '')}" placeholder="Débito adm." />
+            <input data-table="depara" data-row="${index}" data-field="contaDebitoAdm" data-nav-row="${index}" data-nav-col="4" type="text" value="${escapeHtml(repairDisplayText(row.contaDebitoAdm || ''))}" placeholder="Débito adm." />
           </td>
           <td>
-            <input data-table="depara" data-row="${index}" data-field="contaCreditoAdm" data-nav-row="${index}" data-nav-col="5" type="text" value="${escapeHtml(row.contaCreditoAdm || '')}" placeholder="Crédito adm." />
+            <input data-table="depara" data-row="${index}" data-field="contaCreditoAdm" data-nav-row="${index}" data-nav-col="5" type="text" value="${escapeHtml(repairDisplayText(row.contaCreditoAdm || ''))}" placeholder="Crédito adm." />
           </td>
           <td>
             <button type="button" class="lotes-renasul-delete-btn" data-action="remove-depara" data-row="${index}" title="Excluir linha">Excluir</button>
@@ -446,6 +518,13 @@
     }, 500);
   }
 
+  async function waitForSaveIdle() {
+    while (state.saving) {
+      // Aguarda qualquer auto-save em andamento antes de gravar o estado final.
+      await new Promise((resolve) => window.setTimeout(resolve, 50));
+    }
+  }
+
   function updateDeParaRowFromInput(target) {
     const rowIndex = Number(target.getAttribute('data-row'));
     const field = target.getAttribute('data-field');
@@ -467,7 +546,7 @@
   }
 
   function focusInputByCoords(tableId, row, col, fallbackDirection = 1) {
-    const root = $(tableId) || target.closest('tbody') || target.closest('table');
+    const root = $(tableId) || document.querySelector(`#${CSS.escape(tableId)}`);
     if (!root) return false;
 
     const exact = root.querySelector(`input[data-nav-row="${row}"][data-nav-col="${col}"]`);
@@ -560,7 +639,6 @@
       updateDeParaRowFromInput(target);
       scheduleSave();
       invalidateValidation('Cadastro alterado. Valide novamente antes de gerar o TXT.');
-      appendLog('info', 'Cadastro alterado', 'Linha de de/para editada.');
     });
 
     $('deParaBody')?.addEventListener('click', (event) => {
@@ -577,14 +655,12 @@
       updateCentersFromInputs();
       scheduleSave();
       invalidateValidation('Cadastro alterado. Valide novamente antes de gerar o TXT.');
-      appendLog('info', 'Cadastro alterado', 'Centros de custo ADM atualizados.');
     });
 
     $('centroProducao')?.addEventListener('input', () => {
       updateCentersFromInputs();
       scheduleSave();
       invalidateValidation('Cadastro alterado. Valide novamente antes de gerar o TXT.');
-      appendLog('info', 'Cadastro alterado', 'Centros de custo Produção atualizados.');
     });
   }
 
@@ -604,7 +680,6 @@
       row[field] = String(target.value || '');
       state.pendingDirty = true;
       invalidateValidation('Preencha os cadastros pendentes e clique em Salvar cadastros.');
-      appendLog('info', 'Pendencia editada', `linha=${rowIndex}; campo=${field}`);
     });
   }
 
@@ -618,17 +693,17 @@
 
       const current = map.get(key) || {
         rubrica,
-        nome: normalizeText(row?.nome || ''),
+        nome: repairDisplayText(row?.nome || ''),
         contaDebitoProducao: '',
         contaCreditoProducao: '',
         contaDebitoAdm: '',
         contaCreditoAdm: '',
       };
 
-      if (!current.nome) current.nome = normalizeText(row?.nome || '');
+      if (!current.nome) current.nome = repairDisplayText(row?.nome || '');
 
       for (const field of ['contaDebitoProducao', 'contaCreditoProducao', 'contaDebitoAdm', 'contaCreditoAdm']) {
-        const value = normalizeText(row?.[field] || '');
+        const value = String(row?.[field] || '').trim();
         if (value) current[field] = value;
       }
 
@@ -661,9 +736,9 @@
         const target = state.config.dePara[existingIndex];
         if (!target) continue;
         target.rubrica = normalizeText(row.rubrica || target.rubrica || '');
-        target.nome = normalizeText(row.nome || target.nome || '');
+        target.nome = repairDisplayText(row.nome || target.nome || '');
         for (const field of ['contaDebitoProducao', 'contaCreditoProducao', 'contaDebitoAdm', 'contaCreditoAdm']) {
-          const value = normalizeText(row[field] || '');
+          const value = String(row[field] || '').trim();
           if (value) target[field] = value;
         }
         continue;
@@ -671,11 +746,11 @@
 
       state.config.dePara.push({
         rubrica: normalizeText(row.rubrica || ''),
-        nome: normalizeText(row.nome || ''),
-        contaDebitoProducao: normalizeText(row.contaDebitoProducao || ''),
-        contaCreditoProducao: normalizeText(row.contaCreditoProducao || ''),
-        contaDebitoAdm: normalizeText(row.contaDebitoAdm || ''),
-        contaCreditoAdm: normalizeText(row.contaCreditoAdm || ''),
+        nome: repairDisplayText(row.nome || ''),
+        contaDebitoProducao: String(row.contaDebitoProducao || '').trim(),
+        contaCreditoProducao: String(row.contaCreditoProducao || '').trim(),
+        contaDebitoAdm: String(row.contaDebitoAdm || '').trim(),
+        contaCreditoAdm: String(row.contaCreditoAdm || '').trim(),
       });
       indexByKey.set(key, state.config.dePara.length - 1);
       inserted += 1;
@@ -699,12 +774,49 @@
       return;
     }
 
+    window.clearTimeout(state.saveTimer);
+    state.saveTimer = null;
     ensureCurrentConfigFromDom();
     const inserted = upsertDeParaMappings(mappings);
+    const configSnapshot = cloneConfig(state.config);
     state.pendingDirty = false;
-    await saveConfigNow();
-    invalidateValidation('Cadastros salvos. Valide novamente antes de gerar o TXT.');
+    state.saveContext = 'pending-cadastros';
     appendLog('info', 'Cadastros salvos', `rubricas=${mappings.length}; novas=${inserted}`);
+
+    const file = $('excelFile')?.files?.[0] || null;
+    await waitForSaveIdle();
+    const savePromise = saveConfigNow({ quiet: true }).finally(() => {
+      state.saveContext = null;
+    });
+
+    if (file) {
+      setStatus('Cadastros aplicados na tela. Revalidando arquivo com os dados editados...', false);
+      try {
+        await validateFile(file, configSnapshot);
+        await savePromise;
+        if (state.lastSaveOk === false) {
+          setStatus('Cadastros aplicados na tela. O servidor nao confirmou a persistencia, mas a validacao foi refeita com os dados editados.', true);
+        }
+        appendLog('info', 'Arquivo revalidado', 'A lista de pendências foi atualizada depois do salvamento.');
+        return;
+      } catch (error) {
+        console.error(error);
+        await savePromise.catch(() => null);
+        if (state.lastSaveOk === false) {
+          setStatus('Cadastros aplicados na tela. A persistencia no servidor falhou, mas a validacao continua com os dados editados.', true);
+        } else {
+          setStatus('Cadastros aplicados, mas a revalidacao falhou. Valide novamente antes de gerar o TXT.', true);
+        }
+        appendLog('warn', 'Revalidacao apos salvar falhou', formatErrorDetail(error));
+        return;
+      }
+    }
+
+    await savePromise;
+    if (state.lastSaveOk === false) {
+      setStatus('Cadastros aplicados na tela. O servidor nao confirmou a persistencia, mas os dados editados seguem validados na tela.', true);
+    }
+    invalidateValidation('Cadastros salvos. Valide novamente antes de gerar o TXT.');
   }
 
   function addDeParaRow() {
@@ -730,7 +842,8 @@
     updateCentersFromInputs();
   }
 
-  async function saveConfigNow() {
+  async function saveConfigNow(options = {}) {
+    const { quiet = false } = options;
     if (state.saving) return state.config;
     ensureCurrentConfigFromDom();
     state.saving = true;
@@ -738,11 +851,14 @@
       const response = await AuthClient.authFetch(`${API_BASE}/config`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(state.config),
+        body: JSON.stringify(buildPersistableConfig(state.config)),
       });
+      const responseClone = response.clone();
       const data = await safeJson(response);
+      const responseText = await responseClone.text().catch(() => '');
       if (!response.ok || !data?.ok) {
-        throw new Error(data?.error || 'Falha ao salvar configuracao.');
+        const detail = data?.error || responseText.trim() || `HTTP ${response.status}`;
+        throw new Error(detail || 'Falha ao salvar configuracao.');
       }
 
       state.config = cloneConfig(data.config || state.config);
@@ -751,12 +867,20 @@
       bindPendingInputs();
       setStatus('Cadastros salvos no servidor local.', false);
       invalidateValidation();
-      appendLog('info', 'Configuração salva', 'Cadastros persistidos no servidor local.');
+      if (!quiet) {
+        appendLog('info', 'Configuração salva', 'Cadastros persistidos no servidor local.');
+      }
+      state.lastSaveOk = true;
       return state.config;
     } catch (error) {
       console.error(error);
-      setStatus(error.message || 'Erro ao salvar configuracao.', true);
-      appendLog('error', 'Falha ao salvar configuração', formatErrorDetail(error));
+      if (quiet || state.saveContext === 'pending-cadastros') {
+        setStatus('Dados aplicados na tela. A persistencia no servidor nao confirmou, mas a validacao segue com os dados editados.', false);
+      } else {
+        setStatus(error.message || 'Erro ao salvar configuracao.', true);
+        appendLog('error', 'Falha ao salvar configuração', formatErrorDetail(error));
+      }
+      state.lastSaveOk = false;
       return state.config;
     } finally {
       state.saving = false;
@@ -777,7 +901,7 @@
     appendLog('info', 'Configuração carregada', 'Dados locais do lotes-renasul foram carregados.');
   }
 
-  async function validateFile(file) {
+  async function validateFile(file, configOverride = null) {
     if (!file) {
       setStatus('Selecione um arquivo Excel valido para validar.', true);
       appendLog('warn', 'Validação bloqueada', 'Nenhum arquivo selecionado.');
@@ -789,6 +913,7 @@
 
     const formData = new FormData();
     formData.append('file', file, file.name || 'lotes-renasul.xls');
+    formData.append('config_json', JSON.stringify(buildPersistableConfig(configOverride || state.config || DEFAULT_CONFIG)));
 
     setStatus('Validando arquivo e conferindo de/para...', false);
     appendLog('info', 'Iniciando validação', `arquivo=${file.name || 'lotes-renasul.xls'}`);
@@ -816,7 +941,7 @@
     return resumo;
   }
 
-  async function processFile(file) {
+  async function processFile(file, configOverride = null) {
     if (!file) {
       setStatus('Selecione um arquivo Excel valido.', true);
       appendLog('warn', 'Processamento bloqueado', 'Nenhum arquivo selecionado.');
@@ -834,6 +959,7 @@
 
     const formData = new FormData();
     formData.append('file', file, file.name || 'lotes-renasul.xls');
+    formData.append('config_json', JSON.stringify(buildPersistableConfig(configOverride || state.config || DEFAULT_CONFIG)));
 
     setStatus('Processando folha e gerando TXT...', false);
     appendLog('info', 'Iniciando processamento', `arquivo=${file.name || 'lotes-renasul.xls'}`);
@@ -862,7 +988,14 @@
     renderEventosPreview(resumo.preview_eventos || []);
     renderPendenciasPreview(resumo.preview_pendencias || resumo.pendencias || []);
     renderTxtPreview(resumo.preview_linhas || []);
-    setDownloadUrl(data.downloadUrl || '');
+    const downloadUrl = String(data.downloadUrl || resumo.downloadUrl || '').trim();
+    if (!downloadUrl) {
+      appendLog('error', 'Geracao sem link de download', 'O backend nao retornou downloadUrl para o TXT.');
+      throw new Error('O processamento terminou, mas o link do TXT nao foi retornado. Tente novamente.');
+    }
+    setDownloadUrl(downloadUrl);
+    const downloadStarted = triggerDownload(downloadUrl);
+    appendLog('info', 'TXT pronto', downloadStarted ? 'Download iniciado automaticamente.' : `Baixe pelo botao: ${downloadUrl}`);
     setStatus(resumo.message || data.message || (resumo.gerou_txt ? 'TXT gerado com sucesso.' : 'Processado sem gerar TXT.'), false);
     invalidateValidation('Arquivo gerado. Se fizer qualquer ajuste nos cadastros, valide novamente.');
     appendLog('info', 'Processamento concluído', `registros=${resumo.total_registros || 0}; pendencias=${resumo.total_pendencias || 0}`);

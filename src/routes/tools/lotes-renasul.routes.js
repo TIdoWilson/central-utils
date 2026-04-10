@@ -15,10 +15,86 @@ function normalizeErrorMessage(value, fallback = 'Erro interno.') {
   return text || fallback;
 }
 
+function parseConfigOverride(rawValue) {
+  if (!rawValue) return null;
+  if (typeof rawValue !== 'string') return null;
+  const text = rawValue.trim();
+  if (!text) return null;
+  try {
+    const parsed = JSON.parse(text);
+    return parsed && typeof parsed === 'object' ? parsed : null;
+  } catch (error) {
+    const detail = String(error?.message || error || 'config_json invalido.');
+    const err = new Error(`config_json invalido: ${detail}`);
+    err.statusCode = 400;
+    throw err;
+  }
+}
+
+function mergeConfigPatch(current, patch) {
+  const base = current && typeof current === 'object' ? current : {};
+  const incoming = patch && typeof patch === 'object' ? patch : {};
+  const baseDePara = Array.isArray(base.dePara) ? base.dePara : [];
+  const incomingDePara = Array.isArray(incoming.dePara) && incoming.dePara.length ? incoming.dePara : null;
+  const mergedDePara = incomingDePara || baseDePara;
+
+  return {
+    ...base,
+    ...incoming,
+    centrosCusto: {
+      ...(base.centrosCusto || {}),
+      ...(incoming.centrosCusto || {}),
+    },
+    planoContas: Array.isArray(incoming.planoContas) && incoming.planoContas.length
+      ? incoming.planoContas
+      : (Array.isArray(base.planoContas) ? base.planoContas : []),
+    dePara: mergedDePara,
+    deParaRows: Array.isArray(incoming.deParaRows) && incoming.deParaRows.length
+      ? incoming.deParaRows
+      : mergedDePara,
+  };
+}
+
 module.exports = function createLotesRenasulRoutes(deps = {}) {
-  const { requireCsrf, auditLog, service } = deps;
+  const { requireCsrf, auditLog, service, axios, PY_API_URL } = deps;
   const router = express.Router();
   const upload = multer({ storage: multer.memoryStorage() });
+
+  async function runParserPreferPyApi({ filePaths, config, jobId }) {
+    const hasPyApi = axios && typeof axios.post === 'function' && String(PY_API_URL || '').trim();
+    if (hasPyApi) {
+      const pyBase = String(PY_API_URL).trim().replace(/\/+$/, '');
+      const payload = {
+        jobId,
+        config,
+        files: (Array.isArray(filePaths) ? filePaths : []).map((item) => ({
+          path: String(item?.path || ''),
+          name: String(item?.name || path.basename(String(item?.path || 'arquivo.xls'))),
+        })),
+      };
+
+      try {
+        const pyResp = await axios.post(`${pyBase}/api/lotes-renasul/processar`, payload, {
+          timeout: 240000,
+        });
+        return pyResp?.data || {};
+      } catch (error) {
+        const hasResponse = !!error?.response;
+        if (hasResponse) {
+          const detail = normalizeErrorMessage(
+            error?.response?.data?.detail || error?.response?.data?.error,
+            'Erro ao processar lotes Renasul no Python API.'
+          );
+          const wrapped = new Error(detail);
+          wrapped.statusCode = Number(error?.response?.status) || 500;
+          throw wrapped;
+        }
+        console.warn('[lotes-renasul] Python API indisponivel; usando fallback local do parser.', String(error?.message || error));
+      }
+    }
+
+    return service.runParser({ filePaths, config, jobId });
+  }
 
   async function runJob(file, config, mode) {
     if (!service?.getJobDirs || !service?.runParser || !service?.buildTxtFromPreview) {
@@ -31,7 +107,7 @@ module.exports = function createLotesRenasulRoutes(deps = {}) {
     const inputPath = path.join(job.uploadDir, inputName);
     fs.writeFileSync(inputPath, file.buffer);
 
-    const parsed = await service.runParser({
+    const parsed = await runParserPreferPyApi({
       filePaths: [{ path: inputPath, name: inputName }],
       config,
       jobId,
@@ -44,6 +120,15 @@ module.exports = function createLotesRenasulRoutes(deps = {}) {
     }
 
     const resumo = parsed.resumo || {};
+    const totalRegistros = Number(resumo?.total_registros || 0);
+    const totalCentros = Number(resumo?.total_centros || 0);
+    if (totalRegistros === 0 && totalCentros === 0) {
+      const error = new Error('Nenhum lancamento foi localizado no arquivo. Verifique se o layout da folha esta correto.');
+      error.statusCode = 400;
+      error.resumo = resumo;
+      throw error;
+    }
+
     const txt = service.buildTxtFromPreview(resumo);
     const txtLines = String(txt || '')
       .split(/\r?\n/)
@@ -108,7 +193,8 @@ module.exports = function createLotesRenasulRoutes(deps = {}) {
 
   router.put('/config', requireCsrf, async (req, res) => {
     try {
-      const config = service.saveConfig(req.body || {});
+      const currentConfig = service.loadConfig();
+      const config = service.saveConfig(mergeConfigPatch(currentConfig, req.body || {}));
       await auditLog?.(req, 'tool_lotes_renasul_config_save', 'ok', {
         dePara: Array.isArray(config?.dePara) ? config.dePara.length : 0,
       });
@@ -126,7 +212,8 @@ module.exports = function createLotesRenasulRoutes(deps = {}) {
     }
 
     try {
-      const config = service.loadConfig();
+      const overrideConfig = parseConfigOverride(req.body?.config_json);
+      const config = overrideConfig || service.loadConfig();
       const result = await runJob(file, config, 'validate');
       await auditLog?.(req, 'tool_lotes_renasul_validate', 'ok', {
         fileName: file.originalname,
@@ -161,7 +248,8 @@ module.exports = function createLotesRenasulRoutes(deps = {}) {
     }
 
     try {
-      const config = service.loadConfig();
+      const overrideConfig = parseConfigOverride(req.body?.config_json);
+      const config = overrideConfig || service.loadConfig();
       const result = await runJob(file, config, 'process');
       await auditLog?.(req, 'tool_lotes_renasul_process', 'ok', {
         fileName: file.originalname,

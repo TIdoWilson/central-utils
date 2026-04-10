@@ -7,6 +7,7 @@ import json
 import os
 import re
 import sys
+import unicodedata
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -47,6 +48,12 @@ def normalize_text_key(value: Any) -> str:
 
 def normalize_digits(value: Any) -> str:
     return re.sub(r"\D+", "", normalize_text(value))
+
+
+def normalize_search_text(value: Any) -> str:
+    text = normalize_text(value).lower()
+    normalized = unicodedata.normalize("NFD", text)
+    return "".join(ch for ch in normalized if unicodedata.category(ch) != "Mn")
 
 
 def parse_decimal(value: Any) -> Optional[Decimal]:
@@ -234,7 +241,37 @@ def parse_centers_list(raw: Any) -> set[str]:
     }
 
 
-def center_type_for(center_number: str, config: Dict[str, Any]) -> str:
+def infer_center_type_by_name(center_name: Any) -> str:
+    name_key = normalize_search_text(center_name)
+    if not name_key:
+        return ""
+
+    adm_keywords = (
+        "adm",
+        "administr",
+        "escritorio",
+        "rh",
+        "finance",
+        "marketing",
+        "comercial interno",
+    )
+    prod_keywords = (
+        "produc",
+        "vendas",
+        "industrial",
+        "fabrica",
+        "operac",
+        "chao de fabrica",
+    )
+
+    if any(keyword in name_key for keyword in adm_keywords):
+        return "adm"
+    if any(keyword in name_key for keyword in prod_keywords):
+        return "producao"
+    return ""
+
+
+def center_type_for(center_number: str, config: Dict[str, Any], center_name: Any = "") -> str:
     adm = parse_centers_list((config.get("centrosCusto") or {}).get("adm", "2,4"))
     prod = parse_centers_list((config.get("centrosCusto") or {}).get("producao", "1,5,6,7"))
     number = normalize_digits(center_number)
@@ -242,7 +279,7 @@ def center_type_for(center_number: str, config: Dict[str, Any]) -> str:
         return "adm"
     if number in prod:
         return "producao"
-    return ""
+    return infer_center_type_by_name(center_name)
 
 
 def _config_depara_rows(config: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -250,6 +287,19 @@ def _config_depara_rows(config: Dict[str, Any]) -> List[Dict[str, Any]]:
     if not isinstance(rows, list) or not rows:
         rows = config.get("deParaRows")
     return [row for row in rows if isinstance(row, dict)]
+
+
+def _config_historico_rows(config: Dict[str, Any]) -> List[Dict[str, Any]]:
+    rows = config.get("historicoRegras")
+    if not isinstance(rows, list):
+      rows = []
+
+    extra_rows = [
+        row
+        for row in _config_depara_rows(config)
+        if isinstance(row, dict) and normalize_text(row.get("historicoProcurado") or "")
+    ]
+    return [row for row in rows if isinstance(row, dict)] + extra_rows
 
 
 def _find_depara_row(config: Dict[str, Any], rubrica: Any) -> Optional[Dict[str, Any]]:
@@ -276,29 +326,83 @@ def _mapping_accounts(row: Optional[Dict[str, Any]]) -> Dict[str, str]:
     }
 
 
-def lookup_mapping(config: Dict[str, Any], rubrica: Any, center_type: str) -> Optional[Dict[str, str]]:
+def _accounts_complete(accounts: Dict[str, str]) -> bool:
+    return bool(
+        accounts.get("debito_prod")
+        and accounts.get("credito_prod")
+        and accounts.get("debito_adm")
+        and accounts.get("credito_adm")
+    )
+
+
+def _has_complete_mapping(config: Dict[str, Any], rubrica: Any, history: Any = "") -> bool:
+    rubrica_row = _find_depara_row(config, rubrica)
+    if _accounts_complete(_mapping_accounts(rubrica_row)):
+        return True
+
+    hist_row = _find_historico_rule(config, history)
+    if _accounts_complete(_mapping_accounts(hist_row)):
+        return True
+
+    return False
+
+
+def _find_historico_rule(config: Dict[str, Any], history: Any) -> Optional[Dict[str, Any]]:
+    history_key = normalize_search_text(history)
+    if not history_key:
+        return None
+
+    best_row = None
+    best_score = -1
+    for row in _config_historico_rows(config):
+        keyword = normalize_search_text(row.get("historicoProcurado") or row.get("historico") or row.get("nome") or "")
+        if not keyword:
+            continue
+        keywords = [part.strip() for part in re.split(r"[|,;]", keyword) if part.strip()]
+        if not keywords:
+            keywords = [keyword]
+        for part in keywords:
+            if part and part in history_key and len(part) > best_score:
+                best_row = row
+                best_score = len(part)
+    return best_row
+
+
+def lookup_mapping(config: Dict[str, Any], rubrica: Any, center_type: str, history: Any = "") -> Optional[Dict[str, str]]:
     rubrica_key = normalize_digits(rubrica)
     if not rubrica_key:
-        return None
+        rubrica_key = ""
 
-    row = _find_depara_row(config, rubrica_key)
-    if not row:
-        return None
+    def pick_accounts(accounts: Dict[str, str]) -> tuple[str, str]:
+        if center_type == "adm":
+            return accounts["debito_adm"], accounts["credito_adm"]
+        return accounts["debito_prod"], accounts["credito_prod"]
 
-    accounts = _mapping_accounts(row)
-    if center_type == "adm":
-        debito = accounts["debito_adm"]
-        credito = accounts["credito_adm"]
-    else:
-        debito = accounts["debito_prod"]
-        credito = accounts["credito_prod"]
+    row = _find_depara_row(config, rubrica_key) if rubrica_key else None
+    if row:
+        accounts = _mapping_accounts(row)
+        debito, credito = pick_accounts(accounts)
+        if debito and credito:
+            return {
+                "rubrica": rubrica_key,
+                "nome": normalize_text(row.get("nome") or row.get("name") or ""),
+                "debito": debito,
+                "credito": credito,
+            }
 
-    return {
-        "rubrica": rubrica_key,
-        "nome": normalize_text(row.get("nome") or row.get("name") or ""),
-        "debito": debito,
-        "credito": credito,
-    }
+    hist_row = _find_historico_rule(config, history)
+    if hist_row:
+        accounts = _mapping_accounts(hist_row)
+        debito, credito = pick_accounts(accounts)
+        if debito and credito:
+            return {
+                "rubrica": rubrica_key,
+                "nome": normalize_text(hist_row.get("nome") or hist_row.get("name") or ""),
+                "debito": debito,
+                "credito": credito,
+            }
+
+    return None
 
 
 def detect_competence(rows: List[List[Any]]) -> date:
@@ -351,6 +455,7 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
     entries: List[Dict[str, Any]] = []
     centers_seen: set[str] = set()
     pending_index: Dict[str, Dict[str, Any]] = {}
+    blocked_event_count = 0
     current_center_number = ""
     current_center_name = ""
     current_section = ""
@@ -438,7 +543,7 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
         if value <= 0:
             continue
 
-        center_type = center_type_for(current_center_number, config)
+        center_type = center_type_for(current_center_number, config, current_center_name)
         preview_item = {
             "rubrica": rubrica,
             "nome": nome,
@@ -448,9 +553,7 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
             "valor": format_money(value),
         }
 
-        depara_row = _find_depara_row(config, rubrica)
-        accounts = _mapping_accounts(depara_row)
-        has_complete_depara = bool(accounts["debito_prod"] and accounts["credito_prod"] and accounts["debito_adm"] and accounts["credito_adm"])
+        has_complete_depara = _has_complete_mapping(config, rubrica, nome)
 
         if not has_complete_depara:
             register_pending(
@@ -463,17 +566,11 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
         if not center_type:
             preview_item["status"] = "pendencia"
             preview_item["motivo"] = "centro_nao_classificado"
-            register_pending(
-                rubrica,
-                nome,
-                f"{current_center_number} - {current_center_name}".strip(" -"),
-                "centro_nao_classificado",
-                value,
-            )
+            blocked_event_count += 1
             preview_eventos.append(preview_item)
             continue
 
-        mapping = lookup_mapping(config, rubrica, center_type)
+        mapping = lookup_mapping(config, rubrica, center_type, nome)
         if not mapping or not mapping.get("debito") or not mapping.get("credito"):
             preview_item["status"] = "pendencia"
             preview_item["motivo"] = "rubrica_sem_conta_cadastrada"
@@ -522,7 +619,7 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
       })
 
     preview_pendencias.sort(key=lambda row: (normalize_digits(row.get("rubrica")), normalize_text(row.get("nome"))))
-    pode_gerar_txt = len(preview_pendencias) == 0 and len(entries) > 0
+    pode_gerar_txt = len(preview_pendencias) == 0 and blocked_event_count == 0 and len(entries) > 0
 
     resumo = {
         "source": source_name,
@@ -530,15 +627,20 @@ def parse_summary_rows(rows: List[List[Any]], config: Dict[str, Any], source_nam
         "competenceDateText": competence_text,
         "total_registros": len(preview_eventos),
         "total_pendencias": len(preview_pendencias),
+        "total_bloqueios": blocked_event_count,
         "total_centros": len(centers_seen),
         "total_valor": float(total_valor),
-        "validado": len(preview_pendencias) == 0,
+        "validado": len(preview_pendencias) == 0 and blocked_event_count == 0,
         "pode_gerar_txt": pode_gerar_txt,
         "gerou_txt": False,
         "message": (
             "Nenhuma conta em falta para este arquivo."
             if pode_gerar_txt
-            else f"Validacao encontrou {len(preview_pendencias)} pendencia(s)."
+            else (
+                f"Validacao encontrou {len(preview_pendencias)} pendencia(s) de de/para."
+                if len(preview_pendencias) > 0
+                else f"Validacao encontrou {blocked_event_count} centro(s) sem classificacao."
+            )
         ),
         "rows": entries,
         "preview_eventos": preview_eventos,

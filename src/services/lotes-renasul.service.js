@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { spawn } = require('child_process');
+const { spawn, spawnSync } = require('child_process');
 const XLSX = require('xlsx');
 
 const DEFAULT_SOURCE_WORKBOOK = 'W:\\PASTA CLIENTES\\RENASUL INDUSTRIA DE EQUIPAMENTOS PARA CLIMATIZAÇÃO LTDA\\CONCILIACAO\\2025\\LOTES FOLHA\\FOLHA RENASUL.xlsm';
@@ -134,6 +134,73 @@ function mergeConfigRows(baseRows, extraRows, keys) {
   });
 }
 
+function deParaRowScore(row) {
+  let score = 0;
+  if (normalizeCode(row?.rubrica || row?.classificacao || row?.codigo || '')) score += 2;
+  if (normalizeText(row?.nome || row?.name || '')) score += 1;
+  for (const field of ['contaDebitoProducao', 'contaCreditoProducao', 'contaDebitoAdm', 'contaCreditoAdm']) {
+    if (normalizeText(row?.[field] || '')) score += 1;
+  }
+  return score;
+}
+
+function normalizeDeParaRows(rows) {
+  const list = Array.isArray(rows) ? rows : [];
+  const byKey = new Map();
+
+  const buildKey = (row) => {
+    const code = normalizeCode(row?.rubrica || row?.classificacao || row?.codigo || '');
+    if (code) return `rubrica:${code}`;
+    const name = normalizeText(row?.nome || row?.name || '');
+    if (name) return `nome:${name}`;
+    return '';
+  };
+
+  const normalizeRow = (row) => ({
+    rubrica: normalizeText(row?.rubrica || row?.classificacao || row?.codigo || ''),
+    nome: normalizeText(row?.nome || row?.name || ''),
+    contaDebitoProducao: normalizeText(row?.contaDebitoProducao || ''),
+    contaCreditoProducao: normalizeText(row?.contaCreditoProducao || ''),
+    contaDebitoAdm: normalizeText(row?.contaDebitoAdm || ''),
+    contaCreditoAdm: normalizeText(row?.contaCreditoAdm || ''),
+  });
+
+  for (const rawRow of list) {
+    const key = buildKey(rawRow);
+    if (!key) continue;
+
+    const candidate = normalizeRow(rawRow);
+    const existing = byKey.get(key);
+    if (!existing) {
+      byKey.set(key, candidate);
+      continue;
+    }
+
+    let target = existing;
+    let source = candidate;
+    if (deParaRowScore(candidate) > deParaRowScore(existing)) {
+      target = candidate;
+      source = existing;
+      byKey.set(key, target);
+    }
+
+    if (!target.rubrica && source.rubrica) target.rubrica = source.rubrica;
+    if (!target.nome && source.nome) target.nome = source.nome;
+    for (const field of ['contaDebitoProducao', 'contaCreditoProducao', 'contaDebitoAdm', 'contaCreditoAdm']) {
+      if (!target[field] && source[field]) target[field] = source[field];
+    }
+  }
+
+  return Array.from(byKey.values()).sort((a, b) => {
+    const codeA = normalizeCode(a.rubrica || '');
+    const codeB = normalizeCode(b.rubrica || '');
+    if (codeA && codeB && codeA !== codeB) return codeA.localeCompare(codeB, 'pt-BR', { numeric: true });
+    if (codeA && !codeB) return -1;
+    if (!codeA && codeB) return 1;
+    return normalizeText(a.nome || '').localeCompare(normalizeText(b.nome || ''), 'pt-BR');
+  });
+}
+
 function extractDefaultConfigFromWorkbook() {
   if (!fs.existsSync(DEFAULT_SOURCE_WORKBOOK)) {
     return {
@@ -141,6 +208,7 @@ function extractDefaultConfigFromWorkbook() {
       sourceWorkbook: DEFAULT_SOURCE_WORKBOOK,
       centrosCusto: { adm: '2,4', producao: '1,5,6,7' },
       planoContas: [],
+      historicoRegras: [],
       dePara: [],
       deParaRows: [],
     };
@@ -200,6 +268,7 @@ function extractDefaultConfigFromWorkbook() {
     sourceWorkbook: DEFAULT_SOURCE_WORKBOOK,
     centrosCusto: { adm: '2,4', producao: '1,5,6,7' },
     planoContas: planoRows,
+    historicoRegras: [],
     dePara,
     deParaRows: dePara,
   };
@@ -212,13 +281,16 @@ function sanitizeConfig(input, defaults) {
   const planoContas = Array.isArray(config.planoContas) && config.planoContas.length
     ? config.planoContas
     : fallback.planoContas;
+  const historicoRegras = Array.isArray(config.historicoRegras) && config.historicoRegras.length
+    ? config.historicoRegras
+    : fallback.historicoRegras;
 
   const deParaSource = Array.isArray(config.dePara) && config.dePara.length
     ? config.dePara
     : Array.isArray(config.deParaRows) && config.deParaRows.length
       ? config.deParaRows
       : fallback.dePara || fallback.deParaRows;
-  const dePara = Array.isArray(deParaSource) ? deParaSource : [];
+  const dePara = normalizeDeParaRows(deParaSource);
 
   const centrosCusto = {
     adm: String(config.centrosCusto?.adm || fallback.centrosCusto?.adm || '2,4').trim(),
@@ -230,9 +302,59 @@ function sanitizeConfig(input, defaults) {
     sourceWorkbook: fallback.sourceWorkbook || DEFAULT_SOURCE_WORKBOOK,
     centrosCusto,
     planoContas: Array.isArray(planoContas) ? planoContas : [],
+    historicoRegras: Array.isArray(historicoRegras) ? historicoRegras : [],
     dePara,
     deParaRows: dePara,
   };
+}
+
+function convertLegacyXlsToXlsxViaExcel(filePath) {
+  const sourcePath = String(filePath || '').trim();
+  if (!sourcePath) return sourcePath;
+  if (path.extname(sourcePath).toLowerCase() !== '.xls') return sourcePath;
+  if (!fs.existsSync(sourcePath)) return sourcePath;
+  if (process.platform !== 'win32') {
+    throw new Error('Conversao por Excel/COM disponivel apenas em Windows.');
+  }
+
+  const convertedPath = sourcePath.replace(/\.xls$/i, '.converted.xlsx');
+  const psScript = `
+$ErrorActionPreference = 'Stop'
+$src = '${sourcePath.replace(/'/g, "''")}'
+$dst = '${convertedPath.replace(/'/g, "''")}'
+$excel = $null
+$wb = $null
+try {
+  $excel = New-Object -ComObject Excel.Application
+  $excel.Visible = $false
+  $excel.DisplayAlerts = $false
+  $wb = $excel.Workbooks.Open($src, $false, $true)
+  $wb.SaveAs($dst, 51)
+}
+finally {
+  if ($wb -ne $null) { $wb.Close($false) }
+  if ($excel -ne $null) { $excel.Quit() }
+}
+`;
+
+  const result = spawnSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', psScript], {
+    windowsHide: true,
+    encoding: 'utf8',
+    timeout: 120000,
+  });
+
+  if (result.error) {
+    throw new Error(`Falha ao converter .xls via Excel/COM: ${result.error.message}`);
+  }
+  if ((result.status || 0) !== 0) {
+    const stderr = String(result.stderr || '').trim();
+    const stdout = String(result.stdout || '').trim();
+    throw new Error(`Falha ao converter .xls via Excel/COM. ${stderr || stdout || `codigo ${result.status}`}`);
+  }
+  if (!fs.existsSync(convertedPath)) {
+    throw new Error('Conversao .xls via Excel/COM nao gerou arquivo de saida.');
+  }
+  return convertedPath;
 }
 
 function buildTxtFromPreview(preview) {
@@ -308,6 +430,7 @@ function createLotesRenasulService({ DATA_DIR } = {}) {
 
   let defaultsCache = null;
   let configCache = null;
+  let configMtimeMs = 0;
 
   function getDefaults() {
     if (!defaultsCache) defaultsCache = extractDefaultConfigFromWorkbook();
@@ -315,19 +438,33 @@ function createLotesRenasulService({ DATA_DIR } = {}) {
   }
 
   function loadConfig() {
-    if (configCache) return JSON.parse(JSON.stringify(configCache));
+    let currentMtimeMs = 0;
+    if (fs.existsSync(configPath)) {
+      try {
+        currentMtimeMs = fs.statSync(configPath).mtimeMs;
+      } catch (_) {
+        currentMtimeMs = 0;
+      }
+    }
+
+    if (configCache && currentMtimeMs && configMtimeMs === currentMtimeMs) {
+      return JSON.parse(JSON.stringify(configCache));
+    }
 
     const defaults = getDefaults();
     if (!fs.existsSync(configPath)) {
       configCache = sanitizeConfig(defaults, defaults);
+      configMtimeMs = 0;
       return JSON.parse(JSON.stringify(configCache));
     }
 
     try {
       const raw = JSON.parse(fs.readFileSync(configPath, 'utf8'));
       configCache = sanitizeConfig(raw, defaults);
+      configMtimeMs = currentMtimeMs || 0;
     } catch (_) {
       configCache = sanitizeConfig(defaults, defaults);
+      configMtimeMs = currentMtimeMs || 0;
     }
 
     return JSON.parse(JSON.stringify(configCache));
@@ -338,6 +475,11 @@ function createLotesRenasulService({ DATA_DIR } = {}) {
     const config = sanitizeConfig(input, defaults);
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
     configCache = config;
+    try {
+      configMtimeMs = fs.statSync(configPath).mtimeMs;
+    } catch (_) {
+      configMtimeMs = Date.now();
+    }
     return JSON.parse(JSON.stringify(config));
   }
 
@@ -357,16 +499,21 @@ function createLotesRenasulService({ DATA_DIR } = {}) {
   }
 
   async function runParser({ filePaths, config, jobId }) {
-    const payload = {
-      jobId: jobId || createJobId(),
-      config,
-      files: (Array.isArray(filePaths) ? filePaths : []).map((item) => ({
-        path: String(item.path || ''),
-        name: String(item.name || path.basename(item.path || 'arquivo.xls')),
-      })),
-    };
+    const sourceFiles = (Array.isArray(filePaths) ? filePaths : []).map((item) => {
+      const sourcePath = String(item?.path || '').trim();
+      const sourceName = String(item?.name || path.basename(sourcePath || 'arquivo.xls'));
+      return { path: sourcePath, name: sourceName };
+    });
 
-    return new Promise((resolve, reject) => {
+    const runPython = (filesToParse) => new Promise((resolve, reject) => {
+      const payload = {
+        jobId: jobId || createJobId(),
+        config,
+        files: filesToParse.map((item) => ({
+          path: String(item.path || ''),
+          name: String(item.name || path.basename(item.path || 'arquivo.xls')),
+        })),
+      };
       const pythonBin = String(process.env.PYTHON_BIN || 'python').trim() || 'python';
       const child = spawn(pythonBin, [parserScriptPath], {
         cwd: path.resolve(__dirname, '..', '..'),
@@ -414,6 +561,40 @@ function createLotesRenasulService({ DATA_DIR } = {}) {
 
       child.stdin.end(JSON.stringify(payload));
     });
+
+    const parsed = await runPython(sourceFiles);
+    const hasLegacyXls = sourceFiles.some((item) => path.extname(String(item.path || '')).toLowerCase() === '.xls');
+    const parseErrorText = normalizeText(parsed?.error || '');
+    const hitBofError =
+      parseErrorText.includes('expected bof record') ||
+      parseErrorText.includes('unsupported format');
+    const totalRegistros = Number(parsed?.resumo?.total_registros || 0);
+    const totalCentros = Number(parsed?.resumo?.total_centros || 0);
+    const suspiciousZeroParse = parsed?.ok !== false && totalRegistros === 0 && totalCentros === 0;
+    const shouldTryExcelConversion = hasLegacyXls && (hitBofError || suspiciousZeroParse);
+
+    if (!shouldTryExcelConversion) {
+      return parsed;
+    }
+
+    const convertedFiles = sourceFiles.map((item) => {
+      const ext = path.extname(String(item.path || '')).toLowerCase();
+      if (ext !== '.xls') return item;
+      try {
+        return {
+          ...item,
+          path: convertLegacyXlsToXlsxViaExcel(item.path),
+        };
+      } catch (error) {
+        console.warn('[lotes-renasul] falha ao converter .xls via Excel/COM; mantendo original:', String(error?.message || error));
+        return item;
+      }
+    });
+    const convertedChanged = convertedFiles.some((item, idx) => item.path !== sourceFiles[idx].path);
+    if (!convertedChanged) return parsed;
+
+    console.warn('[lotes-renasul] retry de parse apos conversao .xls via Excel/COM.');
+    return runPython(convertedFiles);
   }
 
   return {

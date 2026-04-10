@@ -33,6 +33,7 @@ from api.excel_abas_pdf_core import exportar_abas_para_pdf
 
 from api.separador_csv_baixa_automatica_core import processar_baixa_automatica_arquivo
 from api.comparador_eventos_holerite_core import processar_comparador_eventos_holerite
+from api.comparador_entradas_bandeira_core import processar_comparador_entradas_bandeira
 
 app = FastAPI(title="Integracao Python API")
 
@@ -96,6 +97,46 @@ async def processar_comparador_eventos_holerite_endpoint(
     except Exception as exc:
         print("Erro ao processar comparador de eventos de holerite:", exc)
         raise HTTPException(status_code=500, detail="Erro interno ao processar o arquivo SLK.")
+
+
+@app.post("/api/comparador-entradas-bandeira/processar")
+async def processar_comparador_entradas_bandeira_endpoint(
+    arquivo_fsist: UploadFile = File(...),
+    arquivo_entradas: UploadFile = File(...),
+):
+    try:
+        fsist_bytes = await arquivo_fsist.read()
+        entradas_bytes = await arquivo_entradas.read()
+        resultado = processar_comparador_entradas_bandeira(
+            arquivo_fsist_bytes=fsist_bytes,
+            arquivo_fsist_nome=arquivo_fsist.filename or "fsist.xlsx",
+            arquivo_entradas_bytes=entradas_bytes,
+            arquivo_entradas_nome=arquivo_entradas.filename or "entradas.xlsx",
+        )
+        return {
+            "ok": True,
+            "arquivoSaida": resultado["arquivo_saida"],
+            "xlsxBase64": base64.b64encode(resultado["xlsx_bytes"]).decode("ascii"),
+            "preview": resultado["preview"],
+            "totalLinhas": resultado["total_linhas"],
+            "totalDivergenteEntreArquivos": resultado[
+                "total_divergente_entre_arquivos"
+            ],
+            "totalSoNoFsist": resultado["total_so_no_fsist"],
+            "statusValidos": resultado["status_validos"],
+        }
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as exc:
+        print("Erro ao processar comparador de entradas Bandeira:", exc)
+        raise HTTPException(
+            status_code=500,
+            detail=(
+                "Erro interno ao processar os arquivos. "
+                "Verifique se os arquivos estao inteiros e tente novamente."
+            ),
+        )
+
 
 @app.post("/api/cartao-horas-iob/processar")
 async def processar_cartao_horas_iob_endpoint(

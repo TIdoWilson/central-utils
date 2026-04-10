@@ -11,6 +11,7 @@ Ferramenta para gerar o TXT da declaracao GIA-ST no layout informado (`api/layou
 Fluxo principal:
 - cadastro e manutencao de declarantes;
 - cadastro de inscricoes estaduais por UF;
+- importacao de SPED ICMS/IPI para autopreenchimento de inscricoes (0015), periodo (0000) e valores por UF (E300/E310);
 - preenchimento de UF + vencimento + valor DIFAL + valor FCP + devolucoes/anulacoes + pagamentos antecipados;
 - geracao do TXT apenas com registros A0 e A4 (EC 87/15), sem gerar A1/A2/A3.
 
@@ -25,6 +26,7 @@ Fluxo principal:
 - `POST /api/giast/declarantes` (CSRF)
 - `PUT /api/giast/declarantes/:id` (CSRF)
 - `DELETE /api/giast/declarantes/:id` (CSRF)
+- `POST /api/giast/import-sped` (CSRF + upload de arquivo SPED)
 - `POST /api/giast/generate-txt` (CSRF)
 
 ## Endpoint Python
@@ -118,3 +120,25 @@ Tabelas criadas automaticamente ao usar a ferramenta:
 - **Sintoma:** necessidade operacional de enviar arquivo contendo apenas registro principal e anexo EC 87/15.
 - **Causa provavel:** fluxo anterior ainda montava A1, A2 e A3 zerados.
 - **Solucao aplicada:** ajuste no `api/giast_core.py` para gerar somente A0 e A4, com contadores de anexos I/II/III no A0 preenchidos com zero.
+
+### Importacao de SPED para autopreenchimento da grade
+- **Sintoma:** preenchimento manual recorrente de inscricoes estaduais, periodo de referencia e valores por UF no GIAST.
+- **Causa provavel:** ausencia de leitura direta do SPED ICMS/IPI para aproveitar os registros ja apurados.
+- **Solucao aplicada:** adicionado endpoint `POST /api/giast/import-sped` e fluxo no front (`public/giast.html` + `public/js/giast.js`) para:
+  - ler `0015` (inscricoes por UF),
+  - ler `0000` (mes/ano da apuracao),
+  - ler `E300`/`E310` (valores de DIFAL/FCP/deducoes/deb_esp),
+  - atualizar automaticamente inscricoes faltantes do declarante apenas quando existirem no `0015`,
+  - manter as UFs importadas na grade e sinalizar quando estiverem sem inscricao pre-cadastrada e sem `0015` (sem criar inscricoes novas).
+
+### Importacao exibindo UFs nao cadastradas e omitindo UFs cadastradas sem movimento
+- **Sintoma:** apos importar SPED, a grade trazia UFs sem inscricao cadastrada e nao listava UFs cadastradas que estavam sem movimento.
+- **Causa provavel:** a importacao retornava diretamente os resultados do `E300/E310` sem filtrar por inscricoes validas e sem completar a grade com UFs cadastradas zeradas.
+- **Solucao aplicada:** ajuste no backend (`src/services/giast.service.js` + `src/routes/tools/giast.routes.js`) para:
+  - ignorar UFs do SPED que nao possuem inscricao cadastrada e tambem nao existem no `0015`,
+  - incluir automaticamente na grade todas as UFs cadastradas que nao vieram com movimento, com valores zerados, para permitir geracao completa do TXT.
+
+### Data de assinatura permanecendo fixa em data antiga
+- **Sintoma:** a data de assinatura da GIA permanecia em valor antigo (ex.: `09/03/2026`) em vez de atualizar diariamente.
+- **Causa provavel:** a geracao do TXT priorizava a data persistida no cadastro do declarante (`signing_date`) quando existente.
+- **Solucao aplicada:** ajuste no backend (`src/routes/tools/giast.routes.js`) para enviar sempre a data atual na assinatura (`signatureDate`), independente da data previamente salva no declarante.

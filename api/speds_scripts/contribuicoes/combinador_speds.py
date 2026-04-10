@@ -70,6 +70,7 @@ CLOSE_REG_BY_BLOCK = {
     "I": "I990",
     "M": "M990",
     "1": "1990",
+    "P": "P990",
     "9": "9990",  # (9999 é fechamento do arquivo)
 }
 
@@ -81,6 +82,7 @@ OPEN_REG_BY_BLOCK = {
     "I": "I001",
     "M": "M001",
     "1": "1001",
+    "P": "P001",
     "9": "9001",
     "0": "0001",  # especial
 }
@@ -105,6 +107,16 @@ BLOCK0_SKIP_FROM_FILIAL = {
 FALLBACK_BLOCK0_CHILDREN = {
     "0150": {"0175"},
     "0200": {"0205", "0206", "0208", "0220"},
+}
+
+# Registros que, nos blocos simples, devem ser únicos por chave de negócio
+# (índice do campo na lista `fields`, após o REG).
+SIMPLE_BLOCK_UNIQUE_KEY_SPECS: Dict[str, int] = {
+    "A010": 0,  # CNPJ
+    "C010": 0,  # CNPJ
+    "D010": 0,  # CNPJ
+    "F010": 0,  # CNPJ
+    "I010": 0,  # CNPJ
 }
 
 REG_RE = re.compile(r"^\|+([A-Z0-9]{4})\|")
@@ -663,6 +675,7 @@ def merge_simple_block(
     - Mantém abertura da Matriz (ou da primeira filial se Matriz não tiver).
     - Ignora aberturas das filiais.
     - Remove duplicatas por linha exata.
+    - Para registros configurados em SIMPLE_BLOCK_UNIQUE_KEY_SPECS, evita duplicidade por chave.
     - Recalcula X990.
     - Ajusta IND_MOV para 0 se houver conteúdo além da abertura.
     """
@@ -690,6 +703,19 @@ def merge_simple_block(
             content.append(ln)
 
     existing = set(([open_line] if open_line else []) + content)
+    seen_unique_keys: Dict[str, set] = {reg: set() for reg in SIMPLE_BLOCK_UNIQUE_KEY_SPECS}
+
+    for ln in content:
+        reg = get_reg(ln)
+        key_idx = SIMPLE_BLOCK_UNIQUE_KEY_SPECS.get(reg)
+        if key_idx is None:
+            continue
+        _, fields = split_fields(ln)
+        if key_idx < len(fields):
+            key_val = (fields[key_idx] or "").strip()
+            if key_val:
+                seen_unique_keys[reg].add(key_val)
+
     additions: List[str] = []
 
     for fb in filial_blocks:
@@ -700,10 +726,21 @@ def merge_simple_block(
             r = get_reg(ln)
             if r in (open_reg, close_reg):
                 continue
+
+            key_idx = SIMPLE_BLOCK_UNIQUE_KEY_SPECS.get(r)
+            if key_idx is not None:
+                _, fields = split_fields(ln)
+                key_val = (fields[key_idx] or "").strip() if key_idx < len(fields) else ""
+                if key_val and key_val in seen_unique_keys[r]:
+                    log.append(f"[Bloco {block_char}] Ignorado {r} com chave duplicada: {key_val}.")
+                    continue
+
             if ln in existing:
                 continue
             existing.add(ln)
             additions.append(ln)
+            if key_idx is not None and key_val:
+                seen_unique_keys[r].add(key_val)
 
     merged_wo_close: List[str] = []
 
@@ -720,7 +757,84 @@ def merge_simple_block(
     if additions:
         log.append(f"[Bloco {block_char}] Adicionadas {len(additions)} linha(s).")
 
+    if block_char == "C":
+        merged_wo_close = reorder_block_c_top_level_sections(merged_wo_close, log)
+
     return count_block_lines_with_close(merged_wo_close, close_reg)
+
+
+def reorder_block_c_top_level_sections(lines_with_open: List[str], log: List[str]) -> List[str]:
+    """
+    Reordena grupos de nível superior do bloco C para seguir a ordem oficial:
+    C010 -> C100 -> C180 -> C380 -> C395 -> C400 -> C500 -> C600 -> C800 -> C860
+
+    Cada grupo começa em um registro de topo e leva seus filhos contíguos.
+    Isso evita cascata de erro hierárquico quando documentos C100/C180 entram
+    no final do bloco (após C500) durante a mescla.
+    """
+    if not lines_with_open:
+        return lines_with_open
+
+    open_line = lines_with_open[0]
+    body = lines_with_open[1:]
+    if not body:
+        return lines_with_open
+
+    ordered_starts = ["C010", "C100", "C180", "C380", "C395", "C400", "C500", "C600", "C800", "C860"]
+    top_set = set(ordered_starts)
+    order_pos = {reg: idx for idx, reg in enumerate(ordered_starts)}
+
+    groups: List[Tuple[str, List[str]]] = []
+    cur_start = ""
+    cur_lines: List[str] = []
+
+    for ln in body:
+        reg = get_reg(ln)
+        if reg in top_set:
+            if cur_lines:
+                groups.append((cur_start, cur_lines))
+            cur_start = reg
+            cur_lines = [ln]
+        else:
+            if not cur_lines:
+                cur_start = ""
+                cur_lines = [ln]
+            else:
+                cur_lines.append(ln)
+    if cur_lines:
+        groups.append((cur_start, cur_lines))
+
+    known_groups = [(s, ls) for s, ls in groups if s in top_set]
+    if not known_groups:
+        return lines_with_open
+
+    # Se já está em ordem não-decrecente de seções de topo, evita mexer.
+    sequence = [s for s, _ in known_groups]
+    is_sorted = all(order_pos[sequence[i]] <= order_pos[sequence[i + 1]] for i in range(len(sequence) - 1))
+    if is_sorted:
+        return lines_with_open
+
+    unknown_groups = [(s, ls) for s, ls in groups if s not in top_set]
+    buckets: Dict[str, List[List[str]]] = {reg: [] for reg in ordered_starts}
+    for start, glines in known_groups:
+        buckets[start].append(glines)
+
+    rebuilt_body: List[str] = []
+    for _, glines in unknown_groups:
+        rebuilt_body.extend(glines)
+    moved_groups = 0
+    moved_lines = 0
+    for reg in ordered_starts:
+        reg_groups = buckets[reg]
+        moved_groups += len(reg_groups)
+        moved_lines += sum(len(g) for g in reg_groups)
+        for glines in reg_groups:
+            rebuilt_body.extend(glines)
+
+    log.append(
+        f"[Bloco C] Reordenado por seção de topo: {moved_groups} grupo(s), {moved_lines} linha(s)."
+    )
+    return [open_line] + rebuilt_body
 
 
 # -----------------------------

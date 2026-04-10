@@ -159,6 +159,17 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "comparador-entradas-bandeira",
+      "title": "Comparador Entradas FSIST x IOB",
+      "group": "Contabil",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/comparador-entradas-bandeira",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "conciliador-hausen-ocean",
       "title": "Conciliador Hausen Ocean",
       "group": "Geral",

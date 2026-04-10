@@ -4404,7 +4404,8 @@ textarea#dimobLog {
 .page-giast .sn-select,
 .page-giast .nfe-input-file-label input[type="text"],
 .page-giast .nfe-input-file-label input[type="email"],
-.page-giast .nfe-input-file-label input[type="date"] {
+.page-giast .nfe-input-file-label input[type="date"],
+.page-giast .nfe-input-file-label input[type="file"] {
   width: 100%;
 }
 

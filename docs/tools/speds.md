@@ -59,6 +59,18 @@ Na area de ECD, inclui a rotina `ECD - Comparar J150 x DRE mensal`, que recebe o
 - Sintoma: ao clicar em `Gerar TXT` no template `ECF - Gerador bloco custo L210`, o quadro manual volta vazio e o TXT sai com compras/custos zerados.
   - Causa provavel: o reset da tela limpava `state.l210Rows` antes da coleta dos dados, entao o backend recebia um payload reconstruido com linhas vazias.
   - Solucao: o reset agora preserva o estado do L210 durante o envio e a coleta volta a usar os valores digitados no quadro manual.
+- Sintoma: ao consolidar `Contribuicoes - Consolidar SPEDs`, a execucao falha com `KeyError: 'P'` quando o arquivo possui bloco `P`.
+  - Causa provavel: o bloco `P` existia na ordem canonica de montagem, mas faltava o mapeamento do fechamento `P990` em `CLOSE_REG_BY_BLOCK`.
+  - Solucao: incluir o mapeamento `"P": "P990"` no combinador (`api/speds_scripts/contribuicoes/combinador_speds.py`) para permitir a mescla/recalculo completo do bloco `P`.
+- Sintoma: no uso local do mesclador (antigo + novo), o PVA acusa muitos erros no `0450` mesmo com codigos/referencias aparentando corretos.
+  - Causa provavel: diferenca de codificacao entre o arquivo original (ex.: `cp1252`) e o arquivo gerado em `utf-8`, afetando validacao textual do `0450` em alguns ambientes.
+  - Solucao: o utilitario local `api/speds_scripts/contribuicoes/mesclar_sped_antigo_novo.py` agora preserva a codificacao detectada do SPED antigo ao salvar a saida.
+- Sintoma: no consolidado de Contribuicoes, aparece `Duplicidade de ocorrencia da chave CNPJ` no `C010` e erros de estrutura/hierarquia no fim do arquivo (`||0|`, `P001`/`P990` antes de `9001`).
+  - Causa provavel: o merge simples aceitava `C010` repetido com mesmo CNPJ (quando linha da filial divergia em campos auxiliares) e o bloco `P` nao tinha mapeamento de abertura (`P001`), gerando linha invalida na abertura automatica.
+  - Solucao: deduplicar `A010/C010/D010/F010/I010` por chave CNPJ no merge dos blocos simples e mapear abertura `"P": "P001"` no combinador.
+- Sintoma: ao consolidar arquivos com muitos registros no bloco C, o PVA retorna cascata de erros hierarquicos (ex.: `esperado C509 e encontrado C100`) e divergencia de `C990`.
+  - Causa provavel: grupos de topo do bloco C adicionados pela filial (principalmente `C100`/`C180`) eram anexados fora da ordem oficial da estrutura do bloco.
+  - Solucao: reordenar os grupos de topo do bloco C apos a mescla para a sequencia oficial (`C010`, `C100`, `C180`, `C380`, `C395`, `C400`, `C500`, `C600`, `C800`, `C860`) antes de recalcular `C990`.
 - Sintoma: `ICMS - Integrar inventario no SPED` falhava com erros do tipo `validacao global de relacionamentos detectou novas inconsistencias no arquivo final`.
   - Causa provavel: a rotina antiga comparava o arquivo original com o arquivo final e interrompia a entrega se surgissem novos apontamentos globais de relacionamento.
   - Solucao: a rotina foi ajustada para nao aplicar esse bloqueio durante a integracao. O fluxo agora conclui a geracao e deixa a validacao global para um passo separado, quando necessario.
@@ -69,6 +81,13 @@ Na area de ECD, inclui a rotina `ECD - Comparar J150 x DRE mensal`, que recebe o
   - O portal `/speds` usa o mesmo layout de dados do Y570 e a mesma base fixa de codigos aceitos para montar o preview e exportar o TXT final.
   - Saida local: arquivo gerado a partir dos TXT das fontes pagadoras.
   - Observacao: no portal, os TXT podem ser anexados em lote diretamente no template; nao e necessario zipar.
+
+## Utilitario local Contribuicoes (2 arquivos)
+- Script local-only: `api/speds_scripts/contribuicoes/mesclar_sped_antigo_novo.py`
+  - Fluxo: abre popups para selecionar `SPED antigo`, `SPED novo` e `arquivo de saida`.
+  - Reuso de motor: chama `api/speds_scripts/contribuicoes/combinador_speds.py` para aplicar a mesma logica oficial do template de consolidacao.
+  - Base tecnica: usa os JSONs de `api/layouts/speds/contribuicoes` (hierarquia, layouts e totalizadores) via script principal.
+  - Codificacao: preserva automaticamente a codificacao detectada no arquivo antigo ao gravar a saida final.
 
 ## Observacoes de seguranca
 - Mutacoes exigem `x-csrf-token`

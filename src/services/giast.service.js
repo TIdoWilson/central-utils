@@ -98,6 +98,55 @@ function parseMoney(value) {
   return Number(num.toFixed(2));
 }
 
+function decodeSpedContent(input) {
+  if (Buffer.isBuffer(input)) {
+    const utf8 = input.toString('utf8').replace(/^\uFEFF/, '');
+    if (!utf8.includes('\uFFFD')) return utf8;
+    return input.toString('latin1').replace(/^\uFEFF/, '');
+  }
+  return String(input || '').replace(/^\uFEFF/, '');
+}
+
+function splitSpedLine(line) {
+  const raw = String(line || '').trim();
+  if (!raw || !raw.startsWith('|')) return null;
+
+  const parts = raw.split('|');
+  if (parts[0] === '') parts.shift();
+  if (parts.length && parts[parts.length - 1] === '') parts.pop();
+  if (!parts.length) return null;
+
+  return parts;
+}
+
+function parseSpedDate(value) {
+  const digits = onlyDigits(value);
+  if (digits.length !== 8) return null;
+
+  const day = digits.slice(0, 2);
+  const month = digits.slice(2, 4);
+  const year = digits.slice(4, 8);
+  const iso = `${year}-${month}-${day}`;
+  const dt = new Date(`${iso}T00:00:00Z`);
+
+  if (Number.isNaN(dt.getTime())) return null;
+  if (dt.toISOString().slice(0, 10) !== iso) return null;
+  return iso;
+}
+
+function periodRefFromIsoDate(isoDate) {
+  const iso = String(isoDate || '').trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return null;
+  return `${iso.slice(5, 7)}${iso.slice(0, 4)}`;
+}
+
+function parseSpedMoney(value) {
+  const raw = String(value ?? '').trim();
+  if (!raw) return 0;
+  const parsed = parseMoney(raw);
+  return parsed === null ? 0 : parsed;
+}
+
 function normalizeStateRegistration(value) {
   const cleaned = String(value || '')
     .trim()
@@ -120,6 +169,110 @@ function normalizeStateRegistrations(input) {
   }
 
   return result;
+}
+
+function mergeStateRegistrations(existingInput, fromSpedInput) {
+  const existing = normalizeStateRegistrations(existingInput || {});
+  const fromSped = normalizeStateRegistrations(fromSpedInput || {});
+  const merged = { ...existing };
+
+  for (const uf of UFS) {
+    if (merged[uf]) continue;
+    if (fromSped[uf]) merged[uf] = fromSped[uf];
+  }
+
+  return merged;
+}
+
+function parseSpedImport(input) {
+  const text = decodeSpedContent(input);
+  if (!String(text || '').trim()) {
+    throw new Error('Arquivo SPED vazio ou invalido.');
+  }
+
+  const stateRegistrationsFrom0015 = {};
+  const rowsByUf = new Map();
+  const warnings = [];
+  const lines = text.split(/\r?\n/);
+
+  let periodRef = null;
+  let defaultDueDate = null;
+  let pendingE300 = null;
+
+  for (let idx = 0; idx < lines.length; idx += 1) {
+    const parts = splitSpedLine(lines[idx]);
+    if (!parts) continue;
+
+    const reg = String(parts[0] || '').toUpperCase();
+
+    if (reg === '0000') {
+      const dtIni = parseSpedDate(parts[3]);
+      const dtFin = parseSpedDate(parts[4]);
+      periodRef = periodRef || periodRefFromIsoDate(dtIni) || periodRefFromIsoDate(dtFin);
+      defaultDueDate = defaultDueDate || dtFin || dtIni || null;
+      continue;
+    }
+
+    if (reg === '0015') {
+      const uf = normalizeUf(parts[1]);
+      const ie = normalizeStateRegistration(parts[2]);
+      if (uf && ie) stateRegistrationsFrom0015[uf] = ie;
+      continue;
+    }
+
+    if (reg === 'E300') {
+      pendingE300 = {
+        uf: normalizeUf(parts[1]),
+        dtIni: parseSpedDate(parts[2]),
+        dtFin: parseSpedDate(parts[3]),
+      };
+      defaultDueDate = defaultDueDate || pendingE300.dtFin || pendingE300.dtIni || null;
+      continue;
+    }
+
+    if (reg === 'E310') {
+      if (!pendingE300?.uf) {
+        warnings.push(`Linha ${idx + 1}: E310 sem E300 valido anterior. Registro ignorado.`);
+        continue;
+      }
+
+      const valueIcms = parseSpedMoney(parts[9]); // VL_RECOL_DIFAL
+      const valueFcp = parseSpedMoney(parts[19]); // VL_RECOL_FCP
+      const valueDevolutions = parseSpedMoney(parts[8]); // VL_DEDUCOES_DIFAL
+      const valuePrepayments = parseSpedMoney(parts[11]); // DEB_ESP_DIFAL
+      const uf = pendingE300.uf;
+      const prev = rowsByUf.get(uf) || {
+        uf,
+        dueDate: pendingE300.dtFin || pendingE300.dtIni || defaultDueDate || todayYmd(),
+        valueIcms: 0,
+        valueFcp: 0,
+        valueDevolutions: 0,
+        valuePrepayments: 0,
+      };
+
+      prev.dueDate = pendingE300.dtFin || pendingE300.dtIni || prev.dueDate;
+      prev.valueIcms = Number((prev.valueIcms + valueIcms).toFixed(2));
+      prev.valueFcp = Number((prev.valueFcp + valueFcp).toFixed(2));
+      prev.valueDevolutions = Number((prev.valueDevolutions + valueDevolutions).toFixed(2));
+      prev.valuePrepayments = Number((prev.valuePrepayments + valuePrepayments).toFixed(2));
+
+      rowsByUf.set(uf, prev);
+      pendingE300 = null;
+    }
+  }
+
+  const rows = Array.from(rowsByUf.values()).sort((a, b) => a.uf.localeCompare(b.uf));
+  if (!periodRef) {
+    warnings.push('Nao foi possivel identificar o periodo no registro 0000.');
+  }
+
+  return {
+    periodRef: periodRef || null,
+    defaultDueDate: defaultDueDate || null,
+    stateRegistrationsFrom0015,
+    rows,
+    warnings,
+  };
 }
 
 function mapDeclarantDbRow(row) {
@@ -265,8 +418,10 @@ module.exports = function createGiastService() {
     normalizePeriodRef,
     parseMoney,
     normalizeStateRegistrations,
+    mergeStateRegistrations,
     normalizeDeclarantPayload,
     normalizeDeclarationRows,
+    parseSpedImport,
     mapDeclarantDbRow,
     todayYmd,
   };

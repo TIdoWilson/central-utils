@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const multer = require('multer');
 const createGiastService = require('../../services/giast.service');
 
 const giastService = createGiastService();
@@ -10,6 +12,7 @@ module.exports = function createGiastRoutes(deps = {}) {
     pool,
     axios,
     PY_API_URL,
+    upload,
   } = deps;
 
   if (!pool) {
@@ -20,8 +23,26 @@ module.exports = function createGiastRoutes(deps = {}) {
   }
 
   const router = express.Router();
+  const uploadSped = upload?.single
+    ? upload.single('spedFile')
+    : multer({
+      storage: multer.memoryStorage(),
+      limits: { fileSize: 80 * 1024 * 1024 },
+    }).single('spedFile');
   const pyBase = PY_API_URL || 'http://127.0.0.1:8001';
   let schemaPromise = null;
+
+  function runSpedUpload(req, res) {
+    return new Promise((resolve, reject) => {
+      uploadSped(req, res, (error) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve();
+      });
+    });
+  }
 
   function ensureSchema() {
     if (!schemaPromise) {
@@ -400,6 +421,158 @@ module.exports = function createGiastRoutes(deps = {}) {
     }
   });
 
+  router.post('/import-sped', requireCsrf, async (req, res) => {
+    const traceId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+    try {
+      await ensureSchema();
+      await runSpedUpload(req, res);
+
+      const declarantId = Number(req.body?.declarantId);
+      if (!Number.isInteger(declarantId) || declarantId <= 0) {
+        return res.status(400).json({ ok: false, error: 'Selecione um declarante valido.' });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ ok: false, error: 'Envie o arquivo SPED para importar.' });
+      }
+
+      let fileContent = null;
+      if (Buffer.isBuffer(req.file.buffer)) {
+        fileContent = req.file.buffer;
+      } else if (req.file.path && fs.existsSync(req.file.path)) {
+        fileContent = fs.readFileSync(req.file.path);
+      }
+
+      if (!fileContent) {
+        return res.status(400).json({ ok: false, error: 'Nao foi possivel ler o arquivo enviado.' });
+      }
+
+      const declarant = await getDeclarantById(declarantId);
+      if (!declarant) {
+        return res.status(404).json({ ok: false, error: 'Declarante nao encontrado.' });
+      }
+
+      const parsed = giastService.parseSpedImport(fileContent);
+      const mergedStateRegistrations = giastService.mergeStateRegistrations(
+        declarant.stateRegistrations || {},
+        parsed.stateRegistrationsFrom0015 || {}
+      );
+
+      const importedIeFrom0015 = Object.keys(mergedStateRegistrations).filter((uf) => {
+        const before = String(declarant.stateRegistrations?.[uf] || '').trim();
+        const current = String(mergedStateRegistrations?.[uf] || '').trim();
+        if (!current || before) return false;
+        return current === String(parsed.stateRegistrationsFrom0015?.[uf] || '').trim();
+      }).length;
+
+      const client = await pool.connect();
+      try {
+        await client.query('BEGIN');
+        await replaceStateRegistrations(client, declarantId, mergedStateRegistrations);
+        await client.query('COMMIT');
+      } catch (error) {
+        await client.query('ROLLBACK').catch(() => {});
+        throw error;
+      } finally {
+        client.release();
+      }
+
+      const rowsFromSped = Array.isArray(parsed.rows) ? parsed.rows : [];
+      const ufsWithoutIe = rowsFromSped
+        .filter((row) => !mergedStateRegistrations?.[row.uf])
+        .map((row) => row.uf);
+
+      const rowsByUf = new Map();
+      for (const row of rowsFromSped) {
+        if (!mergedStateRegistrations?.[row.uf]) continue;
+        rowsByUf.set(row.uf, row);
+      }
+
+      const defaultDueDate = parsed.defaultDueDate || giastService.todayYmd();
+      let zeroRowsAdded = 0;
+
+      for (const [uf, ie] of Object.entries(mergedStateRegistrations || {})) {
+        if (!String(ie || '').trim()) continue;
+        if (rowsByUf.has(uf)) continue;
+
+        rowsByUf.set(uf, {
+          uf,
+          dueDate: defaultDueDate,
+          valueIcms: 0,
+          valueFcp: 0,
+          valueDevolutions: 0,
+          valuePrepayments: 0,
+        });
+        zeroRowsAdded += 1;
+      }
+
+      const rows = Array.from(rowsByUf.values()).sort((a, b) => String(a.uf || '').localeCompare(String(b.uf || '')));
+
+      const warnings = [];
+      if (Array.isArray(parsed.warnings)) warnings.push(...parsed.warnings);
+      if (ufsWithoutIe.length) {
+        warnings.push(
+          `UF(s) do SPED ignoradas por falta de inscricao estadual no cadastro e no 0015: ${ufsWithoutIe.join(', ')}. Nao foram criadas inscricoes novas.`
+        );
+      }
+      if (zeroRowsAdded > 0) {
+        warnings.push(
+          `${zeroRowsAdded} UF(s) cadastrada(s) sem movimento no SPED foram adicionadas zeradas para inclusao no TXT.`
+        );
+      }
+
+      await auditLog?.(req, 'giast_import_sped', 'ok', {
+        traceId,
+        declarantId,
+        fileName: req.file?.originalname || null,
+        periodRef: parsed.periodRef || null,
+        rowsFromSped: rowsFromSped.length,
+        rowsImported: rows.length,
+        zeroRowsAdded,
+        importedIeFrom0015,
+        ufsWithoutIe,
+      });
+
+      return res.json({
+        ok: true,
+        periodRef: parsed.periodRef || null,
+        stateRegistrations: mergedStateRegistrations,
+        rows,
+        warnings,
+        stats: {
+          rowsFromSped: rowsFromSped.length,
+          rowsImported: rows.length,
+          zeroRowsAdded,
+          importedIeFrom0015,
+          rowsWithoutIe: ufsWithoutIe.length,
+        },
+      });
+    } catch (error) {
+      const code = String(error?.code || '');
+      if (code === 'LIMIT_FILE_SIZE') {
+        return res.status(413).json({
+          ok: false,
+          error: 'Arquivo SPED excede o limite permitido para importacao.',
+        });
+      }
+
+      const statusRaw = Number(error?.status);
+      const status = Number.isInteger(statusRaw) && statusRaw >= 400 && statusRaw <= 599
+        ? statusRaw
+        : 500;
+      const message = error?.message || 'Falha ao importar SPED.';
+
+      console.error('giast import sped error:', message);
+      await auditLog?.(req, 'giast_import_sped', 'error', {
+        traceId,
+        error: String(message),
+      });
+
+      return res.status(status).json({ ok: false, traceId, error: message });
+    }
+  });
+
   router.post('/generate-txt', requireCsrf, async (req, res) => {
     const traceId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
@@ -447,7 +620,7 @@ module.exports = function createGiastRoutes(deps = {}) {
           faxNumber: declarant.faxNumber || '',
           email: declarant.email || '',
           location: declarant.signingCity || '',
-          signatureDate: declarant.signingDate || giastService.todayYmd(),
+          signatureDate: giastService.todayYmd(),
           stateRegistrations: declarant.stateRegistrations || {},
         },
         entries: rows.map((row) => ({

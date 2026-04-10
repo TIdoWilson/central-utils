@@ -30,6 +30,7 @@ const TOOL_ICON_MAP = {
   'conciliador-pis-cofins': buildMonoIcon('mdi:calculator-variant-outline'),
   'conciliador-cartao-wilson': buildMonoIcon('mdi:credit-card-check-outline'),
   'conciliador-cartao-tipo50': buildMonoIcon('mdi:credit-card-sync-outline'),
+  'comparador-entradas-bandeira': buildMonoIcon('mdi:file-compare-outline'),
   nfe: buildMonoIcon('mdi:receipt-text-check-outline'),
   'calculadora-icms-st': buildMonoIcon('mdi:calculator-variant'),
   speds: buildMonoIcon('mdi:file-cog-outline'),

@@ -1,6 +1,6 @@
 # STATUS_ATUAL.md
 
-Data de referencia: 2026-04-02
+Data de referencia: 2026-04-06
 
 ## Concluido recentemente
 1. Projeto `Central utilitarios` estruturado no Linear com resumo, descricao, lead, prioridade, datas e milestones.
@@ -13,6 +13,24 @@ Data de referencia: 2026-04-02
 8. `lotes-renasul` restaurado com tela interna, validacao antes da geracao, preview de eventos e pendencias, e integracao com o resumo da folha Renasul.
 9. Leitura do `.xls` da `lotes-renasul` reforcada com `python-calamine` para evitar falhas de `xlrd` em arquivos OLE2 validos.
 10. `lotes-renasul` ganhou pendencias editaveis com botao `Salvar cadastros` e o quadro de cadastros voltou para dentro da area principal.
+11. A lista de pendencias da `lotes-renasul` passou a consolidar por rubrica, sem repetir a mesma conta por centro de custo.
+12. O preview da `lotes-renasul` passou a reparar caracteres corrompidos como `PRODU�AO`, e o salvamento de cadastros agora revalida o arquivo atual para refletir as linhas novas sem recarregar a pagina.
+13. O quadro principal da `lotes-renasul` foi travado para respeitar a largura da tela, com limite reduzido para `1700px` e deslocamento de 180px para a esquerda para reduzir a margem visual sem causar overflow horizontal.
+14. A navegacao por setas da `lotes-renasul` foi corrigida para nao referenciar DOM inexistente, e o salvamento passou a validar o retorno da API antes de anunciar sucesso.
+15. O salvamento de pendencias da `lotes-renasul` passou a aplicar edicoes parciais na tela, revalidar com snapshot local e evitar logs de alteracao por celula, reduzindo ruido no painel.
+16. O preview da `lotes-renasul` passou a separar pendencias de de/para de centros de custo sem classificacao, para que rubricas ja completadas deixem de aparecer na tabela principal de pendencias.
+17. O salvamento manual da `lotes-renasul` passou a esperar qualquer auto-save anterior terminar antes de gravar o snapshot final, corrigindo a perda aparente de cadastros apos recarregar a pagina.
+18. O salvamento/validacao da `lotes-renasul` passou a enviar apenas o payload editavel e o backend agora mescla esse patch com o config atual, evitando estourar o limite de body do Express com a configuracao completa.
+19. A `lotes-renasul` ganhou regras de `historicoRegras` para mapear eventos por texto do nome, reduzindo pendencias de rubricas conhecidas como `ferias`, `13`, `inss` e `faltas`.
+20. O service da `lotes-renasul` passou a recarregar o `config.json` quando o arquivo muda no disco, evitando dependencia de restart para ver regras novas.
+21. O backend da `lotes-renasul` passou a converter automaticamente uploads `.xls` para `.xlsx` antes do parser Python, mitigando erros recorrentes de `Expected BOF record` em arquivos legados.
+22. A `lotes-renasul` ganhou validacao da conversao `.xls -> .xlsx`, retry automatico com arquivo original quando a conversao vier vazia e bloqueio de sucesso falso para parse com `0 registros`/`0 centros`.
+23. O fallback de `.xls` da `lotes-renasul` foi ajustado para conversao via Excel/COM (PowerShell) somente quando houver BOF/parse vazio, removendo dependencia de conversao Node que podia gerar `.xlsx` sem dados.
+24. A rota da `lotes-renasul` passou a priorizar o processamento pela API Python (`PY_API_URL`) e usar parser local apenas como fallback de indisponibilidade, reduzindo divergencia entre ambientes de runtime.
+25. O cadastro `de/para` da `lotes-renasul` agora e saneado no backend para remover rubricas duplicadas/triplicadas no `config.json`, consolidando `dePara` e `deParaRows` em uma linha por rubrica.
+26. O parser da `lotes-renasul` passou a aplicar corretamente `historicoRegras` na validacao e no mapeamento por centro, reduzindo pendencias de eventos como `13` e `ferias`.
+27. A `lotes-renasul` ganhou fallback de classificacao por nome do centro (`VENDAS`, `ADMINISTRATIVO`, `PRODUCAO`, etc.), eliminando bloqueios de `centro_nao_classificado` quando o numero nao esta na lista configurada.
+28. O front da `lotes-renasul` passou a exigir `downloadUrl` no retorno de `Gerar TXT` e iniciar download automatico, evitando falso sucesso sem arquivo baixado.
 
 ## Estado tecnico atual
 - Arquitetura multicamadas consolidada (Node.js, Python/FastAPI, PostgreSQL e filesystem).
