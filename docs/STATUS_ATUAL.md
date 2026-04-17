@@ -3,6 +3,7 @@
 Data de referencia: 2026-04-06
 
 ## Concluido recentemente
+1. A fila exclusiva da CCT passou a acumular CNPJs enviados em intervalo curto antes de restaurar a fila automatica, evitando que o pedido anterior fique de fora da rodada imediata.
 1. Projeto `Central utilitarios` estruturado no Linear com resumo, descricao, lead, prioridade, datas e milestones.
 2. Backlog inicial criado no Linear com historico de entregas concluidas e erros mitigados.
 3. Fase ativa registrada no Linear com issue-mae em `In Progress` e subtarefas em `Todo`.

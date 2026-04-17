@@ -8,6 +8,31 @@ function normalizeText(value) {
     .trim();
 }
 
+function normalizeDigits(value) {
+  return String(value ?? '').replace(/\D+/g, '');
+}
+
+function extractCnpjFromRequest(req) {
+  const body = req?.body;
+  const query = req?.query;
+  const candidates = [];
+
+  if (typeof body === 'string') candidates.push(body);
+  if (body && typeof body === 'object') {
+    candidates.push(body.cnpj, body.CNPJ, body.documento, body.cnpjSindicato, body.value);
+  }
+  if (query && typeof query === 'object') {
+    candidates.push(query.cnpj);
+  }
+
+  for (const candidate of candidates) {
+    const digits = normalizeDigits(candidate);
+    if (digits) return digits;
+  }
+
+  return '';
+}
+
 function getRequesterLabel(req) {
   const authUser = req?.user || req?.auth?.user || {};
   const name = String(authUser.name || '').trim();
@@ -21,6 +46,7 @@ function getRequesterLabel(req) {
 function formatHistoryLabel(status) {
   const key = normalizeText(status);
   const labels = {
+    'pedido recebido': 'Pedido recebido',
     'download realizado': 'Download realizado',
     'nao retornou nenhuma convencao': 'Nao retornou nenhuma convencao',
     'erro na busca': 'Erro na busca',
@@ -43,6 +69,94 @@ function formatHistoryResponse(items) {
 module.exports = function createCctRoutes(deps = {}) {
   const { auditLog, service, intakeService, requireCsrf } = deps;
   const router = express.Router();
+
+  async function handleCnpjRequest(req, res) {
+    try {
+      const cnpj = extractCnpjFromRequest(req);
+      const requester = getRequesterLabel(req);
+      const result = await intakeService.enqueueCnpj(cnpj, requester, { exclusive: true });
+      let catalog = null;
+      let responseMessage = String(result?.message || '').trim();
+
+      if (typeof service?.describeCnpj === 'function' && result?.cnpj) {
+        catalog = await service.describeCnpj(result.cnpj);
+      }
+
+      if (result?.duplicate) {
+        if (catalog?.matchCount) {
+          const sampleRegistrations = Array.isArray(catalog.registrations) && catalog.registrations.length
+            ? ` Registros locais: ${catalog.registrations.join(', ')}.`
+            : '';
+          responseMessage = `CNPJ ja cadastrado na base da CCT (${catalog.matchCount} convencao(oes) local(is)).${sampleRegistrations}`;
+        } else {
+          responseMessage = responseMessage || 'CNPJ ja existe na fila de monitoramento.';
+        }
+      }
+
+      const auditStatus = result.requestAdded ? 'ok' : 'duplicate';
+
+      await auditLog?.(req, 'tool_cct_request_cnpj', auditStatus, {
+        cnpj: result.cnpj,
+        queueSize: result.queueSize,
+        duplicate: !!result.duplicate,
+        requestAdded: !!result.requestAdded,
+        automaticAdded: !!result.automaticAdded,
+        catalogMatchCount: Number(catalog?.matchCount || 0),
+        requester,
+      });
+
+      return res.json({
+        ok: true,
+        ...result,
+        message: responseMessage || result?.message || '',
+        catalog: catalog || undefined,
+      });
+    } catch (error) {
+      const status = Number(error?.statusCode) || 500;
+      await auditLog?.(req, 'tool_cct_request_cnpj', 'error', {
+        cnpj: extractCnpjFromRequest(req),
+        requester: getRequesterLabel(req),
+        error: String(error?.message || error),
+      });
+      return res.status(status).json({
+        ok: false,
+        error: status === 400
+          ? String(error?.message || 'CNPJ invalido.')
+          : 'Erro ao incluir o CNPJ na fila.',
+      });
+    }
+  }
+
+  async function handleHistory(req, res) {
+    try {
+      const scope = String(req.query?.scope || 'recent').trim().toLowerCase() === 'full'
+        ? 'full'
+        : 'recent';
+      const page = Number(req.query?.page || 1);
+      const limit = scope === 'full'
+        ? Math.min(10, Number(req.query?.limit || 10))
+        : Math.min(50, Number(req.query?.limit || 30));
+      const result = await intakeService.readHistory({ scope, page, limit });
+      const items = Array.isArray(result?.items) ? result.items : [];
+      const meta = result?.meta || {};
+
+      await auditLog?.(req, 'tool_cct_history', 'ok', {
+        scope,
+        page: Number(meta.page || 1),
+        limit: Number(meta.perPage || limit),
+        total: Number(meta.totalItems || items.length),
+      });
+
+      return res.json({
+        ok: true,
+        items: formatHistoryResponse(items),
+        meta,
+      });
+    } catch (error) {
+      await auditLog?.(req, 'tool_cct_history', 'error', { error: String(error?.message || error) });
+      return res.status(500).json({ ok: false, error: 'Erro ao carregar o historico.' });
+    }
+  }
 
   router.get('/health', async (req, res) => {
     try {
@@ -90,69 +204,11 @@ module.exports = function createCctRoutes(deps = {}) {
     }
   });
 
-  router.post('/requisicoes', requireCsrf, async (req, res) => {
-    try {
-      const cnpj = String(req.body?.cnpj || '').trim();
-      const requester = getRequesterLabel(req);
-      const result = await intakeService.enqueueCnpj(cnpj, requester);
-      const auditStatus = result.requestAdded ? 'ok' : 'duplicate';
+  router.post('/requisicoes', requireCsrf, handleCnpjRequest);
+  router.post('/request', requireCsrf, handleCnpjRequest);
 
-      await auditLog?.(req, 'tool_cct_request_cnpj', auditStatus, {
-        cnpj: result.cnpj,
-        queueSize: result.queueSize,
-        duplicate: !!result.duplicate,
-        requestAdded: !!result.requestAdded,
-        automaticAdded: !!result.automaticAdded,
-        requester,
-      });
-
-      return res.json({ ok: true, ...result });
-    } catch (error) {
-      const status = Number(error?.statusCode) || 500;
-      await auditLog?.(req, 'tool_cct_request_cnpj', 'error', {
-        cnpj: String(req.body?.cnpj || '').trim(),
-        requester: getRequesterLabel(req),
-        error: String(error?.message || error),
-      });
-      return res.status(status).json({
-        ok: false,
-        error: status === 400
-          ? String(error?.message || 'CNPJ invalido.')
-          : 'Erro ao incluir o CNPJ na fila.',
-      });
-    }
-  });
-
-  router.get('/historico', async (req, res) => {
-    try {
-      const scope = String(req.query?.scope || 'recent').trim().toLowerCase() === 'full'
-        ? 'full'
-        : 'recent';
-      const page = Number(req.query?.page || 1);
-      const limit = scope === 'full'
-        ? Math.min(10, Number(req.query?.limit || 10))
-        : Math.min(50, Number(req.query?.limit || 30));
-      const result = await intakeService.readHistory({ scope, page, limit });
-      const items = Array.isArray(result?.items) ? result.items : [];
-      const meta = result?.meta || {};
-
-      await auditLog?.(req, 'tool_cct_history', 'ok', {
-        scope,
-        page: Number(meta.page || 1),
-        limit: Number(meta.perPage || limit),
-        total: Number(meta.totalItems || items.length),
-      });
-
-      return res.json({
-        ok: true,
-        items: formatHistoryResponse(items),
-        meta,
-      });
-    } catch (error) {
-      await auditLog?.(req, 'tool_cct_history', 'error', { error: String(error?.message || error) });
-      return res.status(500).json({ ok: false, error: 'Erro ao carregar o historico.' });
-    }
-  });
+  router.get('/historico', handleHistory);
+  router.get('/history', handleHistory);
 
   router.get('/:id/download', async (req, res) => {
     try {

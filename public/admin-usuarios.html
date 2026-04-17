@@ -36,28 +36,25 @@
           <div class="nfe-card-header">
             <h2>Importar usuários</h2>
             <p class="nfe-card-subtitle">
-              CSV no formato: <strong>nome;email;senha;tipo_acesso</strong>
-              (tipo_acesso: ADMIN/USER)
             </p>
           </div>
 
           <form id="importForm">
-            <label for="fileInput" class="nfe-input-file-label">
-              <span>Selecionar CSV</span>
-              <input type="file" id="fileInput" name="file" accept=".csv,.txt" />
-            </label>
+            <div class="import-row">
+              <label for="fileInput" class="nfe-input-file-label">
+                <span>Selecionar CSV</span>
+                <input type="file" id="fileInput" name="file" accept=".csv,.txt" />
+              </label>
 
-            <label class="auth-label" style="display: block; margin-top: 10px">
-              Linhas (opcional)
-              <textarea
-                id="usersText"
-                class="auth-textarea"
-                rows="8"
-                placeholder="Maria Silva;maria@empresa.com.br;Senha@123;USER&#10;João Pereira;joao@empresa.com.br;Senha@456;ADMIN"
-              ></textarea>
-            </label>
+              <label class="auth-label">
+                <textarea id="usersText" class="auth-textarea" rows="2"
+                  placeholder="Maria Silva;maria@empresa.com.br;Senha@123;USER&#10;João Pereira;joao@empresa.com.br;Senha@456;ADMIN"></textarea>
+              </label>
+            </div>
+          </form>
+        </section>
 
-            <div class="nfe-table-actions" style="margin-top: 10px">
+            <div class="nfe-table-actions" style="margin-top: 0px">
               <button type="submit" class="btn btn-primary" id="btnImport">Importar</button>
             </div>
 

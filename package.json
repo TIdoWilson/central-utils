@@ -26,6 +26,7 @@
     "gen:docs": "node scripts/gen-docs.mjs",
     "gen:ui": "node scripts/gen-ui.mjs",
     "tool:new": "node scripts/tool-new.mjs",
+    "cct:recover:pending": "node scripts/cct-recover-pending-requests.mjs",
     "deploy:vps": "bash scripts/deploy-vps.sh",
     "release:vps": "node scripts/release-vps.mjs"
   },

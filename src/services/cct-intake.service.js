@@ -108,6 +108,12 @@ function createCctIntakeService(deps = {}) {
   const autoBootstrapFullQueueSchedule = deps.autoBootstrapFullQueueSchedule === undefined
     ? envFlagEnabled('CCT_AUTO_FULL_QUEUE_ENABLED', true)
     : !!deps.autoBootstrapFullQueueSchedule;
+  const autoBootstrapPendingQueue = deps.autoBootstrapPendingQueue === undefined
+    ? envFlagEnabled('CCT_AUTO_PENDING_QUEUE_ENABLED', true)
+    : !!deps.autoBootstrapPendingQueue;
+  const mteHeadless = deps.mteHeadless === undefined
+    ? envFlagEnabled('CCT_MTE_HEADLESS', true)
+    : !!deps.mteHeadless;
 
   let activeProcess = null;
   let scheduledTimer = null;
@@ -125,6 +131,7 @@ function createCctIntakeService(deps = {}) {
   let currentRunErrors = [];
   let stopRequested = false;
   let exclusiveRestoreEntries = null;
+  let exclusivePendingEntries = null;
   let exclusiveRunPending = false;
   let exclusiveRunActive = false;
   const loggedStatusesThisRun = new Set();
@@ -187,9 +194,10 @@ function createCctIntakeService(deps = {}) {
 
   async function appendRequesterEntry(cnpj, user) {
     await ensureStorage();
+    const timestamp = formatTimestamp(new Date());
     const line = user
-      ? `${normalizeDigits(cnpj)}\t${sanitizeHistoryField(user)}`
-      : normalizeDigits(cnpj);
+      ? `${normalizeDigits(cnpj)}\t${sanitizeHistoryField(user)}\t${timestamp}`
+      : `${normalizeDigits(cnpj)}\t\t${timestamp}`;
     await fs.promises.appendFile(requestersFilePath, `${line}\n`, 'utf8');
   }
 
@@ -515,8 +523,16 @@ function createCctIntakeService(deps = {}) {
         .filter((digits) => digits.length === 14);
     }
 
+    if (!Array.isArray(exclusivePendingEntries)) {
+      exclusivePendingEntries = [];
+    }
+
     if (cnpj && !exclusiveRestoreEntries.includes(cnpj)) {
       exclusiveRestoreEntries.push(cnpj);
+    }
+
+    if (cnpj && !exclusivePendingEntries.includes(cnpj)) {
+      exclusivePendingEntries.push(cnpj);
     }
   }
 
@@ -528,6 +544,7 @@ function createCctIntakeService(deps = {}) {
     const restoreEntries = exclusiveRestoreEntries;
     await writeAutomaticQueue(restoreEntries);
     exclusiveRestoreEntries = null;
+    exclusivePendingEntries = null;
     exclusiveRunActive = false;
     exclusiveRunPending = false;
     return true;
@@ -657,7 +674,7 @@ function createCctIntakeService(deps = {}) {
     currentRunErrors = [];
     loggedStatusesThisRun.clear();
 
-    const args = [mteScriptPath, '--headless'];
+    const args = [mteScriptPath, mteHeadless ? '--headless' : '--headed'];
     const child = spawn(pythonBin, args, {
       cwd: projectRoot,
       env: process.env,
@@ -778,7 +795,8 @@ function createCctIntakeService(deps = {}) {
       exclusiveRunPending = true;
       exclusiveRunActive = false;
       await appendRequesterEntry(cnpj, user);
-      await writeAutomaticQueue([cnpj]);
+      await writeAutomaticQueue(exclusivePendingEntries);
+      await appendHistoryEntry(cnpj, 'pedido recebido', 'Inclusao via /cct para processamento exclusivo.', user);
       if (activeProcess) {
         await stopActiveRun();
       } else {
@@ -800,6 +818,7 @@ function createCctIntakeService(deps = {}) {
     const payload = current.concat({ cnpj, user });
     await writeAutomaticQueue(payload);
     await appendRequesterEntry(cnpj, user);
+    await appendHistoryEntry(cnpj, 'pedido recebido', 'Inclusao via /cct para fila automatica.', user);
     scheduleRun();
 
     return {
@@ -835,11 +854,32 @@ function createCctIntakeService(deps = {}) {
       requestersFilePath,
       historyFilePath,
       jsonDirPath,
+      autoBootstrapPendingQueue,
+      mteHeadless,
     };
+  }
+
+  async function bootstrapPendingQueue() {
+    if (!autoBootstrapPendingQueue) return;
+    if (activeProcess || scheduledTimer) return;
+
+    try {
+      const pendingEntries = await readCurrentQueueEntries();
+      if (!pendingEntries.length) return;
+      console.log(`[CCT] Bootstrap da fila pendente: ${pendingEntries.length} CNPJs aguardando processamento.`);
+      scheduleRun();
+    } catch (error) {
+      console.error('[CCT] Falha no bootstrap da fila pendente:', error?.message || error);
+    }
   }
 
   if (autoBootstrapFullQueueSchedule) {
     scheduleWeeklyFullQueueRun();
+  }
+  if (autoBootstrapPendingQueue) {
+    setTimeout(() => {
+      void bootstrapPendingQueue();
+    }, 1500);
   }
 
   return {
@@ -850,6 +890,7 @@ function createCctIntakeService(deps = {}) {
     startRun,
     startFullQueueRun,
     appendHistoryEntry,
+    bootstrapPendingQueue,
   };
 }
 

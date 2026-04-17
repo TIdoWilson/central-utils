@@ -3630,6 +3630,21 @@ textarea#dimobLog {
 }
 
 /* ===== Admin - Permissões ===== */
+.import-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.auth-label {
+  margin: 0;
+}
+
+.auth-textarea {
+  width: 400px;
+  box-sizing: border-box;
+}
+
 .perm-list {
   margin-top: 12px;
   border: 1px solid #e5e7eb;

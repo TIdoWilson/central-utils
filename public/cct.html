@@ -709,7 +709,7 @@
             <h2>Requisitar novo sindicato</h2>
             <p>Digite um CNPJ para inclui-lo na fila imediata e na lista automatica.</p>
 
-            <form id="cctRequestForm" class="cct-request-form">
+            <form id="cctRequestForm" class="cct-request-form" onsubmit="if (window.__cctSubmitRequest) { return window.__cctSubmitRequest(arguments[0], this); } return false;">
               <div class="cct-request-row">
                 <input
                   id="cctRequestCnpj"
@@ -774,6 +774,6 @@
 
     <script src="/js/sidebar.js"></script>
     <script src="/js/auth-client.js"></script>
-    <script src="/js/cct.js?v=20260327-3"></script>
+    <script src="/js/cct.js?v=20260417-8"></script>
   </body>
 </html>

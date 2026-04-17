@@ -167,6 +167,13 @@ function buildDbPayloadFromRecord(raw, fileName, sourceMtimeMs = 0, sortDate = n
   const numeroSolicitacao = safeString(normalizedRaw.numero_solicitacao || normalizedRaw.numeroSolicitacao);
   const prefixo = safeString(normalizedRaw.prefixo);
   const nome = buildCardTitle(normalizedRaw);
+  const cnpjTokens = sindicatos
+    .map((s) => {
+      const cnpj = safeString(s.cnpj);
+      const digits = normalizeDigits(cnpj);
+      return [safeString(s.nome), cnpj, digits].filter(Boolean).join(' ');
+    })
+    .filter(Boolean);
   const searchDigits = normalizeDigits([
     numeroRegistro,
     numeroSolicitacao,
@@ -175,6 +182,7 @@ function buildDbPayloadFromRecord(raw, fileName, sourceMtimeMs = 0, sortDate = n
     vigencia,
     abrangencia,
     abrangenciaTerritorial,
+    ...cnpjTokens,
   ].join(' '));
   const searchCnpjDigits = sindicatos
     .map((s) => normalizeDigits(s.cnpj))
@@ -189,7 +197,7 @@ function buildDbPayloadFromRecord(raw, fileName, sourceMtimeMs = 0, sortDate = n
     vigencia,
     abrangencia,
     abrangenciaTerritorial,
-    sindicatos.map((s) => `${s.nome} ${s.cnpj}`).join(' '),
+    cnpjTokens.join(' '),
   ].join(' '));
 
   return {
@@ -226,6 +234,13 @@ function buildDbPayloadFromRecord(raw, fileName, sourceMtimeMs = 0, sortDate = n
 }
 
 function buildSearchBlob(item) {
+  const cnpjTokens = (item.sindicatosCelebrantes || [])
+    .map((s) => {
+      const cnpj = safeString(s.cnpj);
+      const digits = normalizeDigits(cnpj);
+      return [safeString(s.nome), cnpj, digits].filter(Boolean).join(' ');
+    })
+    .filter(Boolean);
   return normalizeText([
     item.prefixo,
     item.title,
@@ -235,7 +250,7 @@ function buildSearchBlob(item) {
     item.vigencia,
     item.abrangencia,
     item.abrangenciaTerritorial,
-    ...(item.sindicatosCelebrantes || []).map((s) => `${s.nome} ${s.cnpj}`),
+    ...cnpjTokens,
   ].join(' '));
 }
 
@@ -507,7 +522,7 @@ function createCctService(deps = {}) {
       }
 
       if (cnpj) {
-        const matchCnpj = item.sindicatosCelebrantes.some((s) => normalizeDigits(s.cnpj) === cnpj);
+        const matchCnpj = item.sindicatosCelebrantes.some((s) => normalizeDigits(s.cnpj).includes(cnpj));
         const matchSolicitacao = normalizeDigits(item.numeroSolicitacao).includes(cnpj);
         if (!matchCnpj && !matchSolicitacao) {
           return false;
@@ -608,6 +623,44 @@ function createCctService(deps = {}) {
     };
   }
 
+  async function describeCnpj(rawCnpj) {
+    const cnpj = normalizeDigits(rawCnpj || '');
+    if (cnpj.length !== 14) {
+      return {
+        cnpj,
+        matchCount: 0,
+        registrations: [],
+        sindicatos: [],
+      };
+    }
+
+    const cacheData = await ensureCache();
+    const matches = cacheData.records.filter((item) =>
+      Array.isArray(item.sindicatosCelebrantes)
+      && item.sindicatosCelebrantes.some((entry) => normalizeDigits(entry?.cnpj || '') === cnpj),
+    );
+
+    const registrations = Array.from(new Set(
+      matches
+        .map((item) => safeString(item.numeroRegistro))
+        .filter(Boolean),
+    )).slice(0, 5);
+
+    const sindicatos = Array.from(new Set(
+      matches.flatMap((item) => (Array.isArray(item.sindicatosCelebrantes) ? item.sindicatosCelebrantes : []))
+        .filter((entry) => normalizeDigits(entry?.cnpj || '') === cnpj)
+        .map((entry) => safeString(entry?.nome))
+        .filter(Boolean),
+    )).slice(0, 5);
+
+    return {
+      cnpj,
+      matchCount: matches.length,
+      registrations,
+      sindicatos,
+    };
+  }
+
   async function getConventionById(id) {
     const record = await findRecordById(id);
     if (!record) {
@@ -669,6 +722,7 @@ function createCctService(deps = {}) {
 
   return {
     listConventions,
+    describeCnpj,
     getConventionById,
     getConventionDocument,
   };

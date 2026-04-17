@@ -4,7 +4,7 @@
   const API_BASE = '/api/cct';
   const RESULTS_PER_PAGE = 50;
   const HISTORY_FULL_LIMIT = 10;
-  const CCT_BUILD = '20260327-1';
+  const CCT_BUILD = '20260417-8';
 
   const state = {
     items: [],
@@ -37,11 +37,29 @@
     debug: {
       lines: [],
     },
+    requestInFlight: false,
   };
   let hasBooted = false;
+  const handledSubmitEvents = new WeakSet();
 
   function $(id) {
     return document.getElementById(id);
+  }
+
+  function resolveRequestForm(explicitForm, event) {
+    if (explicitForm && explicitForm.tagName === 'FORM') return explicitForm;
+
+    const eventTarget = event?.currentTarget || event?.target || null;
+    if (eventTarget?.tagName === 'FORM') return eventTarget;
+    if (eventTarget?.form?.tagName === 'FORM') return eventTarget.form;
+
+    return $('cctRequestForm');
+  }
+
+  function resolveRequestInput(form) {
+    const formInput = form?.elements?.namedItem?.('cnpj');
+    if (formInput && typeof formInput.value === 'string') return formInput;
+    return $('cctRequestCnpj');
   }
 
   function escapeHtml(value) {
@@ -144,6 +162,7 @@
 
   function formatHistoryLabel(status) {
     const map = {
+      'pedido recebido': 'Pedido recebido',
       'download realizado': 'Download realizado',
       'nao retornou nenhuma convencao': 'Nao retornou nenhuma convencao',
       'erro na busca': 'Erro na busca',
@@ -771,8 +790,13 @@
 
     try {
       const safePage = Math.max(1, Number(page || 1));
-      const response = await AuthClient.authFetch(`${API_BASE}/historico?scope=full&page=${safePage}&limit=${HISTORY_FULL_LIMIT}`, { method: 'GET' });
-      const data = await safeJson(response);
+      const query = `scope=full&page=${safePage}&limit=${HISTORY_FULL_LIMIT}`;
+      let response = await AuthClient.authFetch(`${API_BASE}/historico?${query}`, { method: 'GET' });
+      let data = await safeJson(response);
+      if (!response.ok || !data?.ok) {
+        response = await AuthClient.authFetch(`${API_BASE}/history?${query}`, { method: 'GET' });
+        data = await safeJson(response);
+      }
       if (!response.ok || !data?.ok) {
         throw new Error(data?.error || 'Falha ao carregar o historico completo.');
       }
@@ -811,10 +835,18 @@
     setHistoryModalOpen(false);
   }
 
-  async function submitCnpjRequest(event) {
-    if (event) event.preventDefault();
+  async function submitCnpjRequest(event, explicitForm) {
+    if (event && handledSubmitEvents.has(event)) return;
+    if (event) handledSubmitEvents.add(event);
+    if (event) {
+      event.preventDefault();
+      if (typeof event.stopPropagation === 'function') event.stopPropagation();
+      if (typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
+    }
+    if (state.requestInFlight) return;
 
-    const input = $('#cctRequestCnpj');
+    const form = resolveRequestForm(explicitForm, event);
+    const input = resolveRequestInput(form);
     const rawValue = String(input?.value || '').trim();
     const cnpj = normalizeCnpjDigits(rawValue);
 
@@ -825,16 +857,29 @@
     }
 
     setRequestFeedback('Incluindo CNPJ na fila...');
+    state.requestInFlight = true;
+    const includeButton = $('#btnCctIncluir');
+    if (includeButton) includeButton.disabled = true;
 
     try {
-      const response = await AuthClient.authFetch(`${API_BASE}/requisicoes`, {
+      let response = await AuthClient.authFetch(`${API_BASE}/requisicoes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ cnpj }),
       });
-      const data = await safeJson(response);
+      let data = await safeJson(response);
+      if (!response.ok || !data?.ok) {
+        response = await AuthClient.authFetch(`${API_BASE}/request`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ cnpj }),
+        });
+        data = await safeJson(response);
+      }
       if (!response.ok || !data?.ok) {
         throw new Error(data?.error || 'Falha ao incluir CNPJ.');
       }
@@ -852,6 +897,9 @@
     } catch (error) {
       console.error(error);
       setRequestFeedback(error.message || 'Erro ao incluir CNPJ.');
+    } finally {
+      state.requestInFlight = false;
+      if (includeButton) includeButton.disabled = false;
     }
   }
 
@@ -965,6 +1013,11 @@
   window.__cctState = state;
   window.__cctClearFilters = () => resetFilters();
   window.__cctForceSearch = () => loadResults(1);
+  window.__cctSubmitRequest = (event, form) => {
+    void submitCnpjRequest(event, form);
+    return false;
+  };
+  window.__cctOpenHistory = () => openFullHistoryModal();
   window.__cctGoPrevPage = () => goToPreviousPage();
   window.__cctGoNextPage = () => goToNextPage();
   window.__cctScrollTop = () => scrollToTop();
@@ -986,11 +1039,13 @@
         loadResults(1);
       });
 
+      $('#cctRequestForm')?.addEventListener('submit', (event) => {
+        void submitCnpjRequest(event, event.currentTarget);
+      });
+
       $('#btnLimparFiltrosCct')?.addEventListener('click', (event) => {
         resetFilters(event);
       });
-
-      $('#cctRequestForm')?.addEventListener('submit', submitCnpjRequest);
 
       $('#btnCctHistorico')?.addEventListener('click', () => {
         openFullHistoryModal();
