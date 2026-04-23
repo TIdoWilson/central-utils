@@ -55,6 +55,9 @@ Remove do TXT do Toscan os lançamentos cuja linha de histórico (H) está em br
 - **404 em endpoint:** validar rota no `router` e base URL consumida no JS.
 - **422/400:** revisar campos obrigatórios e estrutura do arquivo enviado.
 - **500:** inspecionar logs do Node e, quando existir, logs do processamento Python.
+- **Sintoma:** a tela mostra `Erro ao processar o arquivo. Verifique se o TXT esta no formato esperado.` ou os acentos do TXT saem quebrados no arquivo ajustado.
+  - **Causa provável:** a leitura do arquivo dependia de uma codificação fixa, o que corrompia acentos quando o TXT original nao era UTF-8.
+  - **Solução:** a ferramenta agora tenta UTF-8, Windows-1252 e Latin1 antes de processar as linhas, preservando os acentos e mantendo a saida em UTF-8.
 
 ## 9. Observações de Manutenção
 

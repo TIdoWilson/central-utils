@@ -184,3 +184,14 @@ No arquivo, as contas ja estao preenchidas (diferentes de vazio/`000000`) ou o l
 
 ### Solucao
 Validar o TXT na origem e conferir se os registros de lancamento iniciam com `L` e obedecem as posicoes do layout IOB.
+
+---
+
+### Sintoma
+Os acentos do TXT de origem ou do arquivo ajustado saem quebrados.
+
+### Causa provavel
+O arquivo foi lido com uma codificacao fixa diferente da codificacao real do TXT, o que corrompia os caracteres acentuados antes da geracao.
+
+### Solucao
+A ferramenta passou a detectar UTF-8, Windows-1252 e Latin1 antes de processar o arquivo, e a saida continua sendo gerada em UTF-8.

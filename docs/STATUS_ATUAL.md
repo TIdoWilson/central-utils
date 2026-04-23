@@ -32,6 +32,10 @@ Data de referencia: 2026-04-06
 26. O parser da `lotes-renasul` passou a aplicar corretamente `historicoRegras` na validacao e no mapeamento por centro, reduzindo pendencias de eventos como `13` e `ferias`.
 27. A `lotes-renasul` ganhou fallback de classificacao por nome do centro (`VENDAS`, `ADMINISTRATIVO`, `PRODUCAO`, etc.), eliminando bloqueios de `centro_nao_classificado` quando o numero nao esta na lista configurada.
 28. O front da `lotes-renasul` passou a exigir `downloadUrl` no retorno de `Gerar TXT` e iniciar download automatico, evitando falso sucesso sem arquivo baixado.
+29. O parser do `acerto-lotes-toscan` foi corrigido para tratar cada linha como string antes da comparacao, removendo o erro de processamento que bloqueava TXT válidos.
+
+30. A `calculadora-icms-st` passou a usar o bundle local de XLSX em `/vendor/xlsx.full.min.js`, removendo a dependencia de CDN externo na exportacao.
+31. `lotes-txt` e `acerto-lotes-toscan` passaram a ler TXT com fallback de UTF-8, Windows-1252 e Latin1 para evitar acentos quebrados na entrada e na saida.
 
 ## Estado tecnico atual
 - Arquitetura multicamadas consolidada (Node.js, Python/FastAPI, PostgreSQL e filesystem).

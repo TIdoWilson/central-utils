@@ -254,6 +254,7 @@ app.use(
 );
 
 const publicDir = path.join(__dirname, '..', 'public');
+const xlsxVendorFile = path.join(__dirname, '..', 'node_modules', 'xlsx', 'dist', 'xlsx.full.min.js');
 
 async function auditLog(arg1, action, status = 'ok', meta = null, user = null) {
   try {
@@ -674,6 +675,10 @@ app.use(express.static(path.join(__dirname, '..', 'public'), {
     }
   },
 }));
+
+app.get('/vendor/xlsx.full.min.js', (req, res) => {
+  return res.sendFile(xlsxVendorFile);
+});
 
 app.get('/', requireAuthPage, logPageView('page_view_home'), (req, res) => {
   res.sendFile(path.join(publicDir, 'home.html'));

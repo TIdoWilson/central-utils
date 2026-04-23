@@ -571,7 +571,7 @@ function exportarTabelaParaXlsx() {
     }
 
     if (typeof XLSX === 'undefined') {
-        log('Biblioteca XLSX não carregada. Verifique o <script src="...xlsx.full.min.js">.');
+        log('Biblioteca XLSX nao carregada. Verifique o carregamento de /vendor/xlsx.full.min.js.');
         return;
     }
 

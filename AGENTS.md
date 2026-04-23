@@ -44,6 +44,7 @@ Este repositório segue o padrão **Integra Python v3.1**. Antes de alterar cód
 - Não criar botão local de logout por página (usar apenas logout global da sidebar/topbar).
 - Front da página deve chamar `inicializarSidebar('<slug-ou-id>')` no `DOMContentLoaded`.
 - Em páginas com API interna, usar `AuthClient.authFetch` (CSRF automático em mutações).
+- Em qualquer nova página/janela que exporte arquivos, garantir saída sempre em `UTF-8` e validar que acentuação e caracteres especiais não quebram na leitura nem no download.
 
 ## Comandos padrão
 - Criar ferramenta + atualizar docs/UI + verificar: `npm run tool:new -- --slug <slug> --title \"...\" --group \"...\" --api`

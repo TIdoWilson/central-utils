@@ -531,9 +531,9 @@
 
     status('Lendo arquivo...', false);
     try {
-      const txt = await new Promise((res, rej) => {
-        const rd = new FileReader(); rd.onload = () => res(String(rd.result || '')); rd.onerror = () => rej(rd.error || new Error('Falha leitura')); rd.readAsText(f, 'latin1');
-      });
+      const txt = window.WLTextFileReader?.readText
+        ? await window.WLTextFileReader.readText(f)
+        : await f.text();
 
       const r = parseTxt(txt);
       st.eol = r.eol; st.trail = r.trail; st.lines = r.lines; st.pend = r.pend; st.baseD = r.baseD; st.baseC = r.baseC;

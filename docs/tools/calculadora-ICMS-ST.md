@@ -37,6 +37,16 @@ Ferramenta Calculadora ICMS ST no portal, com fluxo autenticado e controle de ac
 
 ### Solucao
 - Padronizar slug, rota e nomes de arquivos da ferramenta em minúsculo (`calculadora-icms-st`) e manter compatibilidade da rota dinâmica para acessos antigos.
+- A exportacao XLSX tambem passou a usar bundle local em `/vendor/xlsx.full.min.js`, eliminando a dependencia de CDN externo.
+
+### Sintoma
+- A exportacao XLSX pode parar com a mensagem `Biblioteca XLSX nao carregada`.
+
+### Causa provavel
+- O front dependia de um bundle carregado via CDN externo, que nao estava disponivel de forma confiavel no portal.
+
+### Solucao
+- Servir o bundle do `xlsx` a partir do proprio portal em `/vendor/xlsx.full.min.js` e apontar a pagina para esse arquivo local.
 - **Base de API esperada:** _sem API dedicada no catálogo_;
 - **Endpoints no router:** _não foi possível extrair endpoints específicos (arquivo ausente ou dinâmica indireta)._
 

@@ -156,7 +156,7 @@ def localizar_script_bandeira() -> Path:
         if 'BANDEIRA' in _normalizar_nome(str(item.parent)):
             return item
 
-    raise FileNotFoundError('Nao foi possivel localizar o script do Cartao Horas Bandeira Transportes.')
+    raise FileNotFoundError('Não foi possível localizar o script do Cartão Horas Bandeira Transportes.')
 
 
 def localizar_lista_funcionarios() -> Path:
@@ -185,7 +185,7 @@ def localizar_lista_funcionarios() -> Path:
         if 'BANDEIRA' in _normalizar_nome(str(item.parent)):
             return item
 
-    raise FileNotFoundError('Nao foi possivel localizar a planilha Lista funcionarios.xlsx do Bandeira.')
+    raise FileNotFoundError('Não foi possível localizar a planilha Lista funcionários.xlsx do Bandeira.')
 
 
 SCRIPT_BANDEIRA = localizar_script_bandeira()
@@ -195,7 +195,7 @@ LISTA_FUNCIONARIOS = localizar_lista_funcionarios()
 def carregar_modulo_bandeira():
     spec = importlib.util.spec_from_file_location('cartao_horas_bandeira_script', SCRIPT_BANDEIRA)
     if spec is None or spec.loader is None:
-        raise RuntimeError(f'Nao foi possivel carregar o script: {SCRIPT_BANDEIRA}')
+        raise RuntimeError(f'Não foi possível carregar o script: {SCRIPT_BANDEIRA}')
     modulo = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = modulo
     spec.loader.exec_module(modulo)
@@ -210,20 +210,20 @@ def _configurar_tesseract_cmd() -> None:
     if cmd_atual and Path(cmd_atual).exists():
         return
 
-    # Regra operacional: nao depender de PATH do Windows.
+    # Regra operacional: não depender de PATH do Windows.
     for candidato in TESSERACT_CANDIDATOS:
         if candidato.exists():
             pytesseract.pytesseract.tesseract_cmd = str(candidato)
             return
 
     raise RuntimeError(
-        'OCR indisponivel: executavel do Tesseract nao localizado nos caminhos fixos esperados.'
+        'OCR indisponível: executável do Tesseract não localizado nos caminhos fixos esperados.'
     )
 
 
 def _extrair_ocr_linhas_pdf(caminho_pdf: Path) -> list[str]:
     if fitz is None or Image is None or pytesseract is None:
-        raise RuntimeError('OCR indisponivel neste ambiente (fitz/pillow/pytesseract).')
+        raise RuntimeError('OCR indisponível neste ambiente (fitz/pillow/pytesseract).')
 
     _configurar_tesseract_cmd()
 
@@ -275,7 +275,7 @@ def _resultado_extracao_obj(modulo: Any, payload: dict[str, Any]) -> Any:
 def _extrair_resultado_por_ocr(caminho_pdf: Path, modulo: Any) -> Any:
     linhas = _extrair_ocr_linhas_pdf(caminho_pdf)
     if not linhas:
-        raise ValueError('OCR sem conteudo legivel na pagina.')
+        raise ValueError('OCR sem conteúdo legível na página.')
 
     texto_compacto = '\n'.join(linhas)
     texto_norm = _normalizar_linha_ocr(texto_compacto)
@@ -318,7 +318,7 @@ def _extrair_resultado_por_ocr(caminho_pdf: Path, modulo: Any) -> Any:
         'salario': _buscar_valor_por_palavras(linhas, ['Salario']) or '0,00',
         'estadia_tempo_espera': _buscar_valor_por_palavras(linhas, ['Estadia']) or '0,00',
         'premio_disco_tacografo': _buscar_valor_por_palavras(linhas, ['Premio', 'Tac']) or '0,00',
-        'total_remuneracao_mensal': _buscar_valor_por_palavras(linhas, ['Total', 'Remuneracao', 'Motorista']) or '0,00',
+        'total_remuneracao_mensal': _buscar_valor_por_palavras(linhas, ['Total', 'Remuneração', 'Motorista']) or '0,00',
     }
 
     payload = {
@@ -464,6 +464,9 @@ def processar_pdf_cartao_bandeira(
     assinaturas_paginas_vistas: set[str] = set()
     total_duplicados_ignorados = 0
     total_paginas_com_extracao = 0
+    arquivo_base64 = ''
+    arquivo_mime_type = ''
+    tipo_saida = 'zip'
 
     with tempfile.TemporaryDirectory(prefix='cartao_bandeira_') as tmp_dir:
         caminho_pdf = Path(tmp_dir) / f'entrada{sufixo}'
@@ -472,7 +475,7 @@ def processar_pdf_cartao_bandeira(
         reader = PdfReader(str(caminho_pdf))
         total_paginas = len(reader.pages)
         if total_paginas == 0:
-            raise ValueError('PDF sem paginas.')
+            raise ValueError('PDF sem páginas.')
 
         for idx_pagina, pagina in enumerate(reader.pages, start=1):
             writer = PdfWriter()
@@ -512,8 +515,8 @@ def processar_pdf_cartao_bandeira(
                     'somaRemuneracao': '0,00',
                     'totalRemuneracao': '0,00',
                     'inconsistencias': [
-                        f'Falha OCR da pagina {idx_pagina}: {erro_ocr or "-"}',
-                        f'Falha extracao textual da pagina {idx_pagina}: {erro_texto or "-"}',
+                        f'Falha OCR da página {idx_pagina}: {erro_ocr or "-"}',
+                        f'Falha de extração textual da página {idx_pagina}: {erro_texto or "-"}',
                     ],
                     'bloqueiaGeracao': True,
                     'linhasGeradas': 0,
@@ -552,7 +555,7 @@ def processar_pdf_cartao_bandeira(
                     'consistenciaOk': True,
                     'somaRemuneracao': '0,00',
                     'totalRemuneracao': '0,00',
-                    'inconsistencias': ['Pagina ignorada por copia duplicada de funcionario ja processado.'],
+                    'inconsistencias': ['Página ignorada por cópia duplicada de funcionário já processado.'],
                     'bloqueiaGeracao': False,
                     'linhasGeradas': 0,
                     'camposRemuneracao': [],
@@ -590,7 +593,7 @@ def processar_pdf_cartao_bandeira(
             pendencia_consistencia = not consistencia_ok
             inconsistencias: list[str] = []
             if pendencia_matricula:
-                inconsistencias.append('Matricula nao identificada. Informe a matricula para liberar a geracao.')
+                inconsistencias.append('Matrícula não identificada. Informe a matrícula para liberar a geração.')
             if pendencia_consistencia:
                 inconsistencias.append(
                     f'Soma da remuneracao difere do total. Soma: {_decimal_para_br(soma_remuneracao)} | Total: {_decimal_para_br(total_remuneracao)}.'
@@ -600,9 +603,15 @@ def processar_pdf_cartao_bandeira(
                 pendencia_matricula = False
                 pendencia_consistencia = False
                 inconsistencias = []
+            elif confirmado_usuario and not pendencia_matricula:
+                # Confirmado pelo usuário: a divergência de valores deixa de bloquear a geração.
+                pendencia_consistencia = False
+                inconsistencias = []
 
-            # Regra operacional: divergencia entre soma dos fatores e total sempre bloqueia.
+            # Regra operacional: divergência entre soma dos fatores e total sempre bloqueia.
             bloqueia_geracao = (pendencia_matricula or pendencia_consistencia) and not removido_usuario
+            if confirmado_usuario and not pendencia_matricula:
+                bloqueia_geracao = False
 
             linhas_funcionario: list[str] = []
             if not bloqueia_geracao and not removido_usuario:
@@ -624,6 +633,8 @@ def processar_pdf_cartao_bandeira(
                 status_registro = 'removido'
             elif bloqueia_geracao:
                 status_registro = 'pendente'
+            elif confirmado_usuario:
+                status_registro = 'confirmado_usuario'
 
             item = {
                 'pagina': idx_pagina,
@@ -653,29 +664,39 @@ def processar_pdf_cartao_bandeira(
 
     if total_paginas_com_extracao == 0:
         raise RuntimeError(
-            'Falha completa: nenhuma pagina teve extracao valida (OCR/texto).'
+            'Falha completa: nenhuma página teve extração válida (OCR/texto).'
         )
 
     pode_gerar_txt = len(arquivos_txt_gerados) > 0 and len(pendencias) == 0
-    zip_base64 = ''
-    nome_zip = f"{Path(nome_arquivo or 'arquivo.pdf').stem}.zip"
+    nome_base = Path(nome_arquivo or 'arquivo.pdf').stem
+    nome_saida = f'{nome_base}.zip'
     if pode_gerar_txt:
-        buffer = io.BytesIO()
-        with zipfile.ZipFile(buffer, mode='w', compression=zipfile.ZIP_DEFLATED) as zf:
-            for nome_txt, conteudo_txt in arquivos_txt_gerados:
-                zf.writestr(nome_txt, conteudo_txt.encode('utf-8'))
-        zip_base64 = base64.b64encode(buffer.getvalue()).decode('ascii')
+        if len(arquivos_txt_gerados) == 1:
+            tipo_saida = 'txt'
+            nome_saida = f'{nome_base}.txt'
+            arquivo_mime_type = 'text/plain;charset=utf-8'
+            arquivo_base64 = base64.b64encode(arquivos_txt_gerados[0][1].encode('utf-8')).decode('ascii')
+        else:
+            tipo_saida = 'zip'
+            arquivo_mime_type = 'application/zip'
+            buffer = io.BytesIO()
+            with zipfile.ZipFile(buffer, mode='w', compression=zipfile.ZIP_DEFLATED) as zf:
+                for nome_txt, conteudo_txt in arquivos_txt_gerados:
+                    zf.writestr(nome_txt, conteudo_txt.encode('utf-8'))
+            arquivo_base64 = base64.b64encode(buffer.getvalue()).decode('ascii')
 
     return {
-        'nome_saida': nome_zip,
-        'zip_base64': zip_base64,
+        'nome_saida': nome_saida,
+        'arquivo_base64': arquivo_base64,
+        'arquivo_mime_type': arquivo_mime_type,
+        'tipo_saida': tipo_saida,
         'linhas': linhas_preview,
         'funcionarios': funcionarios,
         'pendencias': pendencias,
         'pode_gerar_txt': pode_gerar_txt,
         'bloqueado_geracao': not pode_gerar_txt,
         'mensagem_bloqueio': (
-            'Geracao travada: corrija matricula faltante e/ou ajuste os fatores para que a soma da remuneracao seja igual ao total de remuneracao.'
+            'Geração travada: corrija matrícula faltante e/ou ajuste os fatores para que a soma da remuneração seja igual ao total de remuneração.'
             if not pode_gerar_txt
             else ''
         ),
@@ -690,18 +711,18 @@ def processar_pdf_cartao_bandeira(
 
 def salvar_funcionario_lista(nome: str, cpf: str, matricula: str) -> dict[str, Any]:
     if not LISTA_FUNCIONARIOS.exists():
-        raise FileNotFoundError('Planilha de funcionarios nao encontrada.')
+        raise FileNotFoundError('Planilha de funcionários não encontrada.')
 
     nome_limpo = str(nome or '').strip()
     cpf_limpo = _normalizar_cpf(cpf)
     codigo = _formatar_codigo(matricula)
 
     if not nome_limpo:
-        raise ValueError('Nome do funcionario e obrigatorio.')
+        raise ValueError('Nome do funcionário é obrigatório.')
     if len(cpf_limpo) != 11:
-        raise ValueError('CPF invalido. Informe 11 digitos.')
+        raise ValueError('CPF inválido. Informe 11 dígitos.')
     if codigo == '00000':
-        raise ValueError('Matricula invalida. Informe um codigo numerico valido.')
+        raise ValueError('Matrícula inválida. Informe um código numérico válido.')
 
     workbook = load_workbook(LISTA_FUNCIONARIOS)
 

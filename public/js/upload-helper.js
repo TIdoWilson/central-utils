@@ -198,5 +198,26 @@
     }
   }
 
+  async function readTextFileWithFallback(file, encodings = ['utf-8', 'windows-1252', 'latin1']) {
+    if (!file) throw new Error('Arquivo nao informado.');
+    const buffer = await file.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+
+    for (const encoding of encodings) {
+      try {
+        const decoder = new TextDecoder(encoding, encoding === 'utf-8' ? { fatal: true } : undefined);
+        return decoder.decode(bytes).replace(/^\uFEFF/, '');
+      } catch (err) {
+        // Tenta a proxima codificacao.
+      }
+    }
+
+    return new TextDecoder('utf-8').decode(bytes).replace(/^\uFEFF/, '');
+  }
+
+  window.WLTextFileReader = {
+    readText: readTextFileWithFallback,
+  };
+
   document.addEventListener('DOMContentLoaded', initAllFileUploads);
 })();

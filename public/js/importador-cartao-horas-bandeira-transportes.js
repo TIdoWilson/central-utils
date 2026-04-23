@@ -4,6 +4,9 @@ let idsInformados = {};
 let confirmadosSet = new Set();
 let removidosSet = new Set();
 let overridesPorRegistro = {};
+let processandoBandeira = false;
+let arquivoSujo = false;
+let ultimoResultadoServidor = null;
 
 const CAMPOS_EDITAVEIS_ORDEM = [
   'comissao_motorista',
@@ -17,14 +20,14 @@ const CAMPOS_EDITAVEIS_ORDEM = [
 ];
 
 const ROTULOS_CAMPOS = {
-  comissao_motorista: 'Comissao',
+  comissao_motorista: 'Comissão',
   dsr: 'DSR',
   horas_extras: 'Horas extras',
-  diarias_refeicoes: 'Diarias refeicoes',
-  salario: 'Salario',
+  diarias_refeicoes: 'Diárias refeições',
+  salario: 'Salário',
   estadia_tempo_espera: 'Estadia/Tempo espera',
-  premio_disco_tacografo: 'Premio disco tacografo',
-  total_remuneracao_mensal: 'Total remuneracao',
+  premio_disco_tacografo: 'Prêmio disco tacógrafo',
+  total_remuneracao_mensal: 'Total remuneração',
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,6 +42,7 @@ function inicializarPagina() {
 
   inputArquivo?.addEventListener('change', async () => {
     resetarEstadoTela();
+    atualizarRotuloLiberacao();
     if (btnBaixar) btnBaixar.disabled = true;
     atualizarPreviewPdf();
     atualizarInfoArquivo();
@@ -46,7 +50,7 @@ function inicializarPagina() {
 
     try {
       await processarBandeira();
-      setStatus('Previa atualizada.', false);
+      setStatus('Prévia atualizada.', false);
     } catch (error) {
       setStatus(error.message || 'Falha ao processar o PDF.', true);
     }
@@ -55,45 +59,54 @@ function inicializarPagina() {
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     try {
-      setStatus('Atualizando dados para gerar ZIP...', false);
-      await processarBandeira();
-      setStatus('Processamento concluido.', false);
+      const haviaAlteracoes = arquivoSujo;
+      if (haviaAlteracoes) {
+        setStatus('Liberando a geração do arquivo final...', false);
+        await processarBandeira({ modo: 'final' });
+      } else {
+        setStatus('Atualizando dados para gerar arquivo...', false);
+        await processarBandeira();
+      }
+      if (!haviaAlteracoes) {
+        setStatus('Processamento concluído.', false);
+      }
     } catch (error) {
       setStatus(error.message || 'Falha ao processar o PDF.', true);
     }
   });
 
   btnBaixar?.addEventListener('click', () => {
-    if (!ultimoResultado?.zipBase64) return;
-    const blob = base64ToBlob(ultimoResultado.zipBase64, 'application/zip');
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = ultimoResultado.nomeArquivo || 'arquivo.zip';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
+    baixarArquivoAtual();
   });
 }
 
 function resetarEstadoTela() {
   ultimoResultado = null;
+  ultimoResultadoServidor = null;
   idsInformados = {};
   confirmadosSet = new Set();
   removidosSet = new Set();
   overridesPorRegistro = {};
+  arquivoSujo = false;
+  atualizarRotuloLiberacao();
+  atualizarRotuloDownload(null);
 }
 
 function invalidarGeracaoAteReprocessar() {
-  ultimoResultado = null;
-  const btnBaixar = document.getElementById('btnBaixarBandeira');
-  if (btnBaixar) btnBaixar.disabled = true;
-  setStatus('Alteracoes pendentes. Clique em "Reprocessar PDF" para atualizar o ZIP.', false);
+  arquivoSujo = true;
+  if (ultimoResultadoServidor) {
+    ultimoResultado = aplicarEstadoLocalAoResultado(ultimoResultadoServidor);
+    renderizarResultado(ultimoResultado);
+  }
+  atualizarRotuloLiberacao();
+  atualizarRotuloDownload(ultimoResultadoServidor);
+  setStatus('Alterações pendentes. Clique em Liberar geração para habilitar o download.', false);
 }
 
-async function processarBandeira() {
+async function processarBandeira({ modo = 'previa' } = {}) {
+  if (processandoBandeira) return ultimoResultado;
   const inputArquivo = document.getElementById('arquivoBandeira');
+  const btnGerar = document.getElementById('btnGerarBandeira');
   const btnBaixar = document.getElementById('btnBaixarBandeira');
   const arquivo = inputArquivo?.files?.[0];
   if (!arquivo) throw new Error('Selecione um PDF.');
@@ -105,25 +118,47 @@ async function processarBandeira() {
   formData.append('removidos_json', JSON.stringify(Array.from(removidosSet)));
   formData.append('overrides_json', JSON.stringify(overridesPorRegistro));
 
-  const resp = await AuthClient.authFetch('/api/cartao-horas-bandeira-transportes/processar', {
-    method: 'POST',
-    body: formData,
-  });
-  const data = await resp.json().catch(() => ({}));
-  if (!resp.ok || !data.ok) {
-    throw new Error(data.error || data.detail || `Erro HTTP ${resp.status}`);
+  processandoBandeira = true;
+  if (btnGerar) {
+    btnGerar.disabled = true;
+    btnGerar.textContent = modo === 'final' ? 'Liberando...' : 'Processando...';
   }
+  if (btnBaixar) btnBaixar.disabled = true;
+  setStatus('Processando arquivo...', false);
 
-  ultimoResultado = data;
-  if (btnBaixar) btnBaixar.disabled = !data.zipBase64 || !data.podeGerarTxt;
-  renderizarResultado(data);
-  return data;
+  try {
+    const resp = await AuthClient.authFetch('/api/cartao-horas-bandeira-transportes/processar', {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok || !data.ok) {
+      throw new Error(data.error || data.detail || `Erro HTTP ${resp.status}`);
+    }
+
+    ultimoResultadoServidor = data;
+    arquivoSujo = false;
+    ultimoResultado = aplicarEstadoLocalAoResultado(data);
+    atualizarRotuloLiberacao();
+    atualizarRotuloDownload(ultimoResultado);
+    renderizarResultado(ultimoResultado);
+    if (modo === 'final') {
+      setStatus('Arquivo final gerado. O botão de baixar foi liberado.', false);
+    }
+    return data;
+  } finally {
+    processandoBandeira = false;
+    if (btnGerar) {
+      btnGerar.disabled = false;
+      btnGerar.textContent = 'Reprocessar PDF';
+    }
+  }
 }
 
 async function salvarFuncionario(funcionario) {
   const input = document.querySelector(`input[data-matricula-key="${cssEscape(funcionario.registroId || '')}"]`);
   const matricula = String(input?.value || '').replace(/\D/g, '');
-  if (!matricula) throw new Error('Informe a matricula antes de salvar.');
+  if (!matricula) throw new Error('Informe a matrícula antes de salvar.');
 
   const resp = await AuthClient.authFetch('/api/cartao-horas-bandeira-transportes/salvar-funcionario', {
     method: 'POST',
@@ -142,7 +177,7 @@ async function salvarFuncionario(funcionario) {
 
   idsInformados[funcionario.chave] = matricula;
   if (funcionario.registroId) confirmadosSet.add(funcionario.registroId);
-  await processarBandeira();
+  invalidarGeracaoAteReprocessar();
   setStatus(`Registro ${data.acao || 'salvo'} na lista (${data.aba || '-'} linha ${data.linha || '-'}).`, false);
 }
 
@@ -157,14 +192,14 @@ function renderizarResumo(data) {
   const box = document.getElementById('resumoBandeira');
   if (!box) return;
   box.innerHTML = `
-    <div><strong>Paginas no PDF:</strong> ${Number(data.totalPaginas || 0)}</div>
-    <div><strong>Funcionarios lidos:</strong> ${Number(data.totalFuncionarios || 0)}</div>
-    <div><strong>Pendencias:</strong> ${Number(data.totalPendencias || 0)}</div>
+    <div><strong>Páginas no PDF:</strong> ${Number(data.totalPaginas || 0)}</div>
+    <div><strong>Funcionários lidos:</strong> ${Number(data.totalFuncionarios || 0)}</div>
+    <div><strong>Pendências:</strong> ${Number(data.totalPendencias || 0)}</div>
     <div><strong>Duplicados ignorados:</strong> ${Number(data.totalDuplicadosIgnorados || 0)}</div>
     <div><strong>Arquivos TXT prontos:</strong> ${Number(data.totalArquivosTxt || 0)}</div>
     <div><strong>Linhas no preview:</strong> ${Number(data.totalRegistrosTxt || 0)}</div>
     <div><strong>Arquivo final:</strong> ${escapeHtml(data.nomeArquivo || '-')}</div>
-    <div><strong>Status:</strong> ${data.podeGerarTxt ? 'Pronto para baixar' : escapeHtml(data.mensagemBloqueio || 'Com pendencias')}</div>
+    <div><strong>Status:</strong> ${data.podeGerarTxt ? 'Pronto para baixar' : escapeHtml(data.mensagemBloqueio || 'Com pendências')}</div>
   `;
 }
 
@@ -205,7 +240,7 @@ function renderizarFichas(funcionarios, caminhoLista) {
   listaInfo.innerHTML = `<strong>Lista usada:</strong> ${escapeHtml(caminhoLista || '-')}`;
 
   if (!Array.isArray(funcionarios) || !funcionarios.length) {
-    box.innerHTML = '<p class="nfe-card-subtitle">Nenhum funcionario identificado.</p>';
+    box.innerHTML = '<p class="nfe-card-subtitle">Nenhum funcionário identificado.</p>';
     return;
   }
 
@@ -255,9 +290,9 @@ function renderizarFichas(funcionarios, caminhoLista) {
         <td>${valoresBloco}</td>
         <td><span style="font-weight:600;color:${statusCor};">${escapeHtml(statusTexto)}</span></td>
         <td style="white-space:nowrap;">
-          <button type="button" class="btn btn-secondary" data-acao="salvar" data-idx="${i}">Salvar matricula</button>
+          <button type="button" class="btn btn-secondary" data-acao="salvar" data-idx="${i}">Salvar matrícula</button>
           <button type="button" class="btn btn-secondary" data-acao="confirmar" data-idx="${i}" style="margin-left:6px;">Confirmar corrigido</button>
-          <button type="button" class="btn btn-secondary" data-acao="remover" data-idx="${i}" style="margin-left:6px;">${removidosSet.has(registroId) || removidosSet.has(chave) ? 'Reativar' : 'Remover da geracao'}</button>
+          <button type="button" class="btn btn-secondary" data-acao="remover" data-idx="${i}" style="margin-left:6px;">${removidosSet.has(registroId) || removidosSet.has(chave) ? 'Reativar' : 'Remover da geração'}</button>
         </td>
       </tr>
     `;
@@ -268,16 +303,16 @@ function renderizarFichas(funcionarios, caminhoLista) {
       <thead>
         <tr>
           <th>#</th>
-          <th>Pagina</th>
+          <th>Página</th>
           <th>Nome</th>
           <th>CPF</th>
-          <th>Matricula</th>
+          <th>Matrícula</th>
           <th>Origem</th>
-          <th>Soma remuneracao</th>
-          <th>Total remuneracao</th>
-          <th>Valores editaveis</th>
+          <th>Soma remuneração</th>
+          <th>Total remuneração</th>
+          <th>Valores editáveis</th>
           <th>Status</th>
-          <th>Acoes</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>${rows}</tbody>
@@ -320,24 +355,24 @@ function renderizarFichas(funcionarios, caminhoLista) {
         } else if (acao === 'confirmar') {
           marcarConfirmado(funcionario);
           btn.textContent = 'Atualizando...';
-          await processarBandeira();
-          setStatus('Correcoes confirmadas e reprocessadas.', false);
+          invalidarGeracaoAteReprocessar();
+          setStatus('Correções confirmadas.', false);
         } else if (acao === 'remover') {
           alternarRemocao(funcionario);
           btn.textContent = 'Atualizando...';
-          await processarBandeira();
-          setStatus('Lista de geracao atualizada.', false);
+          invalidarGeracaoAteReprocessar();
+          setStatus('Lista de geração atualizada.', false);
         }
       } catch (error) {
         setStatus(error.message || 'Falha ao atualizar registro.', true);
       } finally {
         btn.disabled = false;
         btn.textContent =
-          acao === 'salvar' ? 'Salvar matricula'
+          acao === 'salvar' ? 'Salvar matrícula'
             : acao === 'confirmar' ? 'Confirmar corrigido'
               : (removidosSet.has(funcionario.registroId) || removidosSet.has(funcionario.chave))
                 ? 'Reativar'
-                : 'Remover da geracao';
+                : 'Remover da geração';
       }
     });
   });
@@ -439,7 +474,7 @@ function atualizarInfoArquivo() {
   box.innerHTML = `
     <div><strong>Arquivo:</strong> ${escapeHtml(arquivo.name)}</div>
     <div><strong>Tamanho:</strong> ${escapeHtml(formatarTamanhoArquivo(arquivo.size))}</div>
-    <div><strong>Ultima alteracao:</strong> ${escapeHtml(new Date(arquivo.lastModified).toLocaleString('pt-BR'))}</div>
+    <div><strong>Última alteração:</strong> ${escapeHtml(new Date(arquivo.lastModified).toLocaleString('pt-BR'))}</div>
   `;
 }
 
@@ -450,7 +485,7 @@ function limparSaida(mensagem) {
   const preview = document.getElementById('previewTxtBandeira');
   if (resumo) resumo.innerHTML = `<p>${escapeHtml(mensagem || 'Sem dados.')}</p>`;
   if (valores) valores.innerHTML = '<p class="nfe-card-subtitle">Nenhum valor identificado.</p>';
-  if (fichas) fichas.innerHTML = '<p class="nfe-card-subtitle">Nenhum funcionario identificado.</p>';
+  if (fichas) fichas.innerHTML = '<p class="nfe-card-subtitle">Nenhum funcionário identificado.</p>';
   if (preview) preview.innerHTML = '<tr><td colspan="2">Nenhuma linha gerada.</td></tr>';
 }
 
@@ -459,6 +494,136 @@ function setStatus(texto, erro = false) {
   if (!el) return;
   el.textContent = texto || '';
   el.style.color = erro ? '#b91c1c' : '#111827';
+}
+
+function atualizarRotuloDownload(data) {
+  const btnBaixar = document.getElementById('btnBaixarBandeira');
+  if (!btnBaixar) return;
+
+  if (!data) {
+    btnBaixar.style.display = 'none';
+    btnBaixar.disabled = true;
+    btnBaixar.textContent = 'Baixar arquivo';
+    return;
+  }
+
+  if (arquivoSujo) {
+    btnBaixar.style.display = 'none';
+    btnBaixar.disabled = false;
+    btnBaixar.textContent = 'Baixar arquivo';
+    return;
+  }
+
+  if (!data.arquivoBase64) {
+    btnBaixar.style.display = 'none';
+    btnBaixar.disabled = true;
+    btnBaixar.textContent = 'Baixar arquivo';
+    return;
+  }
+
+  const tipoArquivo = String(data.tipoArquivo || '').toLowerCase();
+  const totalArquivos = Number(data.totalArquivosTxt || 0);
+  btnBaixar.style.display = '';
+  btnBaixar.disabled = false;
+  btnBaixar.textContent = tipoArquivo === 'txt' || totalArquivos === 1 ? 'Baixar TXT' : 'Baixar ZIP';
+}
+
+function atualizarRotuloLiberacao() {
+  const btnGerar = document.getElementById('btnGerarBandeira');
+  if (!btnGerar) return;
+  btnGerar.disabled = false;
+  btnGerar.textContent = arquivoSujo ? 'Liberar geração' : 'Reprocessar PDF';
+}
+
+function baixarArquivoAtual() {
+  const base64 = ultimoResultado?.arquivoBase64 || '';
+  if (!base64) return;
+  const mimeType = ultimoResultado?.mimeType || 'application/octet-stream';
+  const blob = base64ToBlob(base64, mimeType);
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = ultimoResultado.nomeArquivo || 'arquivo.zip';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function aplicarEstadoLocalAoResultado(dataBase) {
+  if (!dataBase) return null;
+  const data = JSON.parse(JSON.stringify(dataBase));
+  const pendencias = [];
+  let totalArquivosTxt = 0;
+
+  (data.funcionarios || []).forEach((funcionario) => {
+    const registroId = String(funcionario.registroId || '');
+    const chave = String(funcionario.chave || '');
+    const matriculaAtual = String(idsInformados[chave] || funcionario.matricula || '').replace(/\D/g, '');
+    if (chave && matriculaAtual) idsInformados[chave] = matriculaAtual;
+
+    funcionario.matricula = matriculaAtual || funcionario.matricula || '00000';
+
+    const valoresBase = funcionario.valoresEditaveis || {};
+    const valores = { ...valoresBase };
+    if (overridesPorRegistro[registroId]) {
+      Object.keys(overridesPorRegistro[registroId]).forEach((campo) => {
+        valores[campo] = overridesPorRegistro[registroId][campo];
+      });
+    }
+    funcionario.valoresEditaveis = valores;
+
+    const soma = CAMPOS_EDITAVEIS_ORDEM.slice(0, -1).reduce((acc, campo) => acc + parseValorBrToFloat(valores[campo] || '0,00'), 0);
+    const total = parseValorBrToFloat(valores.total_remuneracao_mensal || '0,00');
+    const consistenciaOk = Math.abs(soma - total) <= 0.01;
+    const removidoUsuario = removidosSet.has(registroId) || removidosSet.has(chave);
+    const confirmadoUsuario = confirmadosSet.has(registroId) || confirmadosSet.has(chave);
+    const duplicadoIgnorado = Boolean(funcionario.duplicadoIgnorado);
+    const pendenciaMatricula = funcionario.matricula === '00000';
+    const pendenciaConsistencia = !consistenciaOk;
+
+    let bloqueiaGeracao = (pendenciaMatricula || pendenciaConsistencia) && !removidoUsuario;
+    const inconsistencias = Array.isArray(funcionario.inconsistencias) ? [...funcionario.inconsistencias] : [];
+
+    if (duplicadoIgnorado) {
+      funcionario.statusRegistro = 'duplicado_ignorado';
+      funcionario.inconsistencias = inconsistencias;
+    } else if (removidoUsuario) {
+      bloqueiaGeracao = false;
+      funcionario.statusRegistro = 'removido';
+      funcionario.inconsistencias = [];
+    } else if (confirmadoUsuario && !pendenciaMatricula) {
+      bloqueiaGeracao = false;
+      funcionario.statusRegistro = 'confirmado_usuario';
+      funcionario.inconsistencias = [];
+    } else if (bloqueiaGeracao) {
+      funcionario.statusRegistro = 'pendente';
+      funcionario.inconsistencias = inconsistencias;
+      pendencias.push(funcionario);
+    } else {
+      funcionario.statusRegistro = 'ok';
+      funcionario.inconsistencias = inconsistencias;
+      totalArquivosTxt += 1;
+    }
+
+    funcionario.consistenciaOk = consistenciaOk;
+    funcionario.bloqueiaGeracao = bloqueiaGeracao;
+    funcionario.confirmadoUsuario = confirmadoUsuario;
+    funcionario.removidoUsuario = removidoUsuario;
+    funcionario.somaRemuneracao = formatarNumeroBr(soma);
+    funcionario.totalRemuneracao = formatarNumeroBr(total);
+    funcionario.duplicadoIgnorado = duplicadoIgnorado;
+  });
+
+  data.pendencias = pendencias;
+  data.totalPendencias = pendencias.length;
+  data.totalArquivosTxt = totalArquivosTxt;
+  data.podeGerarTxt = totalArquivosTxt > 0 && pendencias.length === 0;
+  data.bloqueadoGeracao = !data.podeGerarTxt;
+  data.mensagemBloqueio = data.podeGerarTxt
+    ? ''
+    : 'Geração travada: corrija matrícula faltante e/ou ajuste os fatores para que a soma da remuneração seja igual ao total de remuneração.';
+  return data;
 }
 
 function normalizarValorBrInput(valor) {

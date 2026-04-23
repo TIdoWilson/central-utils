@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>Portal - Importador Cartao Horas Bandeira Transportes</title>
+    <title>Portal - Importador Cartão Horas Bandeira Transportes</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body class="app-body nfe-body">
@@ -26,15 +26,15 @@
 
       <main class="nfe-main">
         <header class="nfe-header">
-          <div class="nfe-breadcrumb">Portal / Pessoal / Importador Cartao Horas Bandeira Transportes</div>
-          <h1>Importador Cartao de Horas Bandeira Transportes [v20260402-5]</h1>
-          <p>Processamento por pagina com OCR (Tesseract em caminho fixo), fallback textual e geracao de TXT por funcionario no layout antigo.</p>
+          <div class="nfe-breadcrumb">Portal / Pessoal / Importador Cartão Horas Bandeira Transportes</div>
+          <h1>Importador Cartão de Horas Bandeira Transportes [v20260422-1]</h1>
+          <p>Processamento por página com OCR (Tesseract em caminho fixo), fallback textual e geração de TXT por funcionário no layout antigo.</p>
         </header>
 
         <section class="nfe-row" style="grid-template-columns: minmax(340px, 420px) 1fr; gap: 16px;">
           <div class="nfe-card nfe-card-upload">
             <h2>Arquivo</h2>
-            <p class="nfe-card-subtitle">Envie o PDF para processar todas as paginas e liberar o ZIP quando nao houver pendencias.</p>
+            <p class="nfe-card-subtitle">Envie o PDF para processar todas as páginas. Depois das correções, clique em Liberar geração e o botão de baixar aparece.</p>
 
             <form id="formBandeira" class="nfe-upload-form">
               <label class="nfe-input-file-label">
@@ -44,7 +44,7 @@
 
               <div class="nfe-table-actions" style="margin-top: 14px;">
                 <button type="submit" class="btn btn-primary" id="btnGerarBandeira">Reprocessar PDF</button>
-                <button type="button" class="btn btn-secondary" id="btnBaixarBandeira" disabled>Baixar ZIP</button>
+                <button type="button" class="btn btn-secondary" id="btnBaixarBandeira" style="display: none;">Baixar arquivo</button>
               </div>
             </form>
 
@@ -52,14 +52,14 @@
           </div>
 
           <div class="nfe-card">
-            <h2>Preview do PDF</h2>
-            <p class="nfe-card-subtitle">A visualizacao do PDF aparece assim que o arquivo for selecionado.</p>
+            <h2>Prévia do PDF</h2>
+            <p class="nfe-card-subtitle">A visualização do PDF aparece assim que o arquivo for selecionado.</p>
             <div id="infoArquivoBandeira" class="nfe-card-subtitle" style="margin-bottom: 10px;">
               <p>Nenhum PDF selecionado.</p>
             </div>
             <iframe
               id="previewPdfBandeira"
-              title="Preview do PDF Bandeira"
+              title="Prévia do PDF Bandeira"
               src="about:blank"
               style="width: 100%; min-height: 620px; border: 1px solid #dbe4ee; border-radius: 12px; background: #fff;"
             ></iframe>
@@ -67,8 +67,8 @@
         </section>
 
         <section class="nfe-card">
-          <h2>Ficha de funcionarios</h2>
-          <p class="nfe-card-subtitle">Permite matricula manual, confirmar corrigido, remover/reativar e ajustes de valores por registro.</p>
+          <h2>Ficha de funcionários</h2>
+          <p class="nfe-card-subtitle">Permite matrícula manual, confirmar corrigido, remover/reativar e ajustes de valores por registro.</p>
           <div id="listaArquivoBandeira" class="nfe-card-subtitle"></div>
           <div id="fichasBandeira" class="nfe-table-wrapper" style="margin-top: 10px;"></div>
         </section>
@@ -90,7 +90,7 @@
         <section class="nfe-card nfe-card-table">
           <div class="nfe-card-header nfe-card-header-with-actions">
             <div>
-              <h2>Preview do TXT</h2>
+              <h2>Prévia do TXT</h2>
               <p class="nfe-card-subtitle">Confira as primeiras linhas antes de baixar.</p>
             </div>
           </div>
@@ -99,7 +99,7 @@
               <thead>
                 <tr>
                   <th>Linha</th>
-                  <th>Conteudo</th>
+                  <th>Conteúdo</th>
                 </tr>
               </thead>
               <tbody id="previewTxtBandeira"></tbody>
@@ -111,7 +111,7 @@
 
     <script src="/js/sidebar.js"></script>
     <script src="/js/auth-client.js"></script>
-    <script src="/js/importador-cartao-horas-bandeira-transportes.js?v=20260402-5"></script>
+    <script src="/js/importador-cartao-horas-bandeira-transportes.js?v=20260422-1"></script>
   </body>
 </html>
 

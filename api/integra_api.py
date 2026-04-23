@@ -72,7 +72,7 @@ async def processar_comparador_eventos_holerite_endpoint(
             try:
                 eventos_ocultos = json.loads(ocultar_eventos_json)
             except json.JSONDecodeError as exc:
-                raise HTTPException(status_code=400, detail="Lista de filtros invalida.") from exc
+                raise HTTPException(status_code=400, detail="Lista de filtros inválida.") from exc
         resultado = processar_comparador_eventos_holerite(
             arquivo_bytes=conteudo,
             nome_arquivo=arquivo.filename or "arquivo.slk",
@@ -151,11 +151,11 @@ async def processar_cartao_horas_iob_endpoint(
         try:
             eventos_config = json.loads(eventos_json or "{}")
         except json.JSONDecodeError as exc:
-            raise HTTPException(status_code=400, detail="Configuracao de eventos invalida.") from exc
+            raise HTTPException(status_code=400, detail="Configuração de eventos inválida.") from exc
         try:
             ids_por_chave = json.loads(ids_json or "{}")
         except json.JSONDecodeError as exc:
-            raise HTTPException(status_code=400, detail="Configuracao de IDs invalida.") from exc
+            raise HTTPException(status_code=400, detail="Configuração de IDs inválida.") from exc
 
         resultado = processar_pdf_cartao_iob(
             pdf_bytes=pdf_bytes,
@@ -184,13 +184,13 @@ async def processar_cartao_horas_iob_endpoint(
     except FileNotFoundError as exc:
         raise HTTPException(
             status_code=503,
-            detail="Ferramenta indisponivel neste ambiente: script de conversao do cartao de horas nao localizado.",
+            detail="Ferramenta indisponível neste ambiente: script de conversão do cartão de horas não localizado.",
         ) from exc
     except HTTPException:
         raise
     except Exception as exc:
-        print("Erro ao processar cartao horas IOB:", exc)
-        raise HTTPException(status_code=500, detail="Erro interno ao processar o PDF do cartao.")
+        print("Erro ao processar cartão horas IOB:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao processar o PDF do cartão.")
 
 
 @app.post("/api/cartao-horas-bandeira-transportes/processar")
@@ -208,22 +208,22 @@ async def processar_cartao_horas_bandeira_transportes_endpoint(
         try:
             ids_por_chave = json.loads(ids_json or "{}")
         except json.JSONDecodeError as exc:
-            raise HTTPException(status_code=400, detail="Configuracao de IDs invalida.") from exc
+            raise HTTPException(status_code=400, detail="Configuração de IDs inválida.") from exc
 
         try:
             confirmados = json.loads(confirmados_json or "[]")
         except json.JSONDecodeError as exc:
-            raise HTTPException(status_code=400, detail="Configuracao de confirmacoes invalida.") from exc
+            raise HTTPException(status_code=400, detail="Configuração de confirmações inválida.") from exc
 
         try:
             removidos = json.loads(removidos_json or "[]")
         except json.JSONDecodeError as exc:
-            raise HTTPException(status_code=400, detail="Configuracao de remocoes invalida.") from exc
+            raise HTTPException(status_code=400, detail="Configuração de remoções inválida.") from exc
 
         try:
             overrides = json.loads(overrides_json or "{}")
         except json.JSONDecodeError as exc:
-            raise HTTPException(status_code=400, detail="Configuracao de ajustes de valores invalida.") from exc
+            raise HTTPException(status_code=400, detail="Configuração de ajustes de valores inválida.") from exc
 
         resultado = processar_pdf_cartao_bandeira(
             pdf_bytes=pdf_bytes,
@@ -237,7 +237,9 @@ async def processar_cartao_horas_bandeira_transportes_endpoint(
         return {
             "ok": True,
             "nomeArquivo": resultado.get("nome_saida", "arquivo.zip"),
-            "zipBase64": resultado.get("zip_base64", ""),
+            "arquivoBase64": resultado.get("arquivo_base64", ""),
+            "mimeType": resultado.get("arquivo_mime_type", "application/octet-stream"),
+            "tipoArquivo": resultado.get("tipo_saida", "zip"),
             "totalRegistrosTxt": len(resultado.get("linhas", [])),
             "previewLinhas": (resultado.get("linhas") or [])[:30],
             "funcionarios": resultado.get("funcionarios", []),
@@ -255,14 +257,14 @@ async def processar_cartao_horas_bandeira_transportes_endpoint(
     except FileNotFoundError as exc:
         raise HTTPException(
             status_code=503,
-            detail="Ferramenta indisponivel neste ambiente: script/planilha do Bandeira nao localizados.",
+            detail="Ferramenta indisponível neste ambiente: script/planilha do Bandeira não localizados.",
         ) from exc
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
     except HTTPException:
         raise
     except Exception as exc:
-        print("Erro ao processar cartao horas Bandeira Transportes:", exc)
+        print("Erro ao processar cartão horas Bandeira Transportes:", exc)
         raise HTTPException(status_code=500, detail="Erro interno ao processar o PDF.")
 
 
@@ -288,8 +290,8 @@ def salvar_funcionario_bandeira_endpoint(payload: SalvarFuncionarioBandeiraPaylo
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
     except Exception as exc:
-        print("Erro ao salvar funcionario na lista Bandeira:", exc)
-        raise HTTPException(status_code=500, detail="Erro interno ao salvar funcionario na lista.")
+        print("Erro ao salvar funcionário na lista Bandeira:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao salvar funcionário na lista.")
 
 
 @app.post("/api/lotes-renasul/processar")
@@ -298,7 +300,7 @@ def processar_lotes_renasul_endpoint(payload: dict[str, Any]):
         if processar_lotes_renasul is None:
             raise HTTPException(
                 status_code=503,
-                detail="Ferramenta indisponivel neste ambiente: parser do lotes Renasul nao localizado.",
+            detail="Ferramenta indisponível neste ambiente: parser do lotes Renasul não localizado.",
             )
         resultado = processar_lotes_renasul(payload or {})
         return resultado
@@ -749,7 +751,7 @@ async def api_conversor_extrato_pdf_ofx(
     if converter_pdf_para_ofx_bytes is None:
         raise HTTPException(
             status_code=503,
-            detail="Conversor PDF/OFX indisponivel neste ambiente.",
+            detail="Conversor PDF/OFX indisponível neste ambiente.",
         )
     try:
         if not arquivos:
