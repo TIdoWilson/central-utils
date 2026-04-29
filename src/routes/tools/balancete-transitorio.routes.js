@@ -6,6 +6,61 @@ function safeName(name) {
   return String(name || 'arquivo.xlsx').replace(/[^\w.\- ]+/g, '_');
 }
 
+function resolveBalanceteExePath(fs, path) {
+  const configuredPath = resolveConfiguredPath(
+    process.env.BALANCETE_TRANSITORIO_EXE_PATH || process.env.BALANCETE_EXE_PATH
+  );
+  if (configuredPath && fs.existsSync(configuredPath)) {
+    return configuredPath;
+  }
+
+  const csharpRoot = path.join(__dirname, '..', '..', '..', '..', 'C#');
+  const projectHints = [
+    'Preparação para automação de balancete',
+    'PreparaÃ§Ã£o para automaÃ§Ã£o de balancete',
+  ];
+  const exeHints = [
+    'Preparação para automação de balancete.exe',
+    'PreparaÃ§Ã£o para automaÃ§Ã£o de balancete.exe',
+  ];
+
+  for (const projectName of projectHints) {
+    for (const exeName of exeHints) {
+      const candidate = path.join(csharpRoot, projectName, 'publish', exeName);
+      if (fs.existsSync(candidate)) {
+        return candidate;
+      }
+    }
+  }
+
+  if (!fs.existsSync(csharpRoot)) {
+    return null;
+  }
+
+  const projectDir = fs
+    .readdirSync(csharpRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .find((name) => /prepara/i.test(name) && /balancete/i.test(name));
+
+  if (!projectDir) {
+    return null;
+  }
+
+  const publishDir = path.join(csharpRoot, projectDir, 'publish');
+  if (!fs.existsSync(publishDir)) {
+    return null;
+  }
+
+  const exeFile = fs
+    .readdirSync(publishDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile())
+    .map((entry) => entry.name)
+    .find((name) => /\.exe$/i.test(name) && /balancete/i.test(name));
+
+  return exeFile ? path.join(publishDir, exeFile) : null;
+}
+
 function pushLog(state, msg) {
   state.logs = state.logs || [];
   state.logs.push({ ts: new Date().toISOString(), msg: String(msg || '').slice(0, 5000) });
@@ -70,10 +125,8 @@ module.exports = function createBalanceteTransitorioRoutes(deps) {
       });
     }
 
-    const exePath =
-      resolveConfiguredPath(process.env.BALANCETE_TRANSITORIO_EXE_PATH || process.env.BALANCETE_EXE_PATH) ||
-      defaultExePath;
-    if (!fs.existsSync(exePath)) {
+    const exePath = resolveBalanceteExePath(fs, path);
+    if (!exePath || !fs.existsSync(exePath)) {
       return res.status(500).json({
         message:
           'Executavel do balancete nao encontrado. Configure BALANCETE_TRANSITORIO_EXE_PATH ou BALANCETE_EXE_PATH no .env.',
@@ -159,6 +212,19 @@ module.exports = function createBalanceteTransitorioRoutes(deps) {
         for (const line of splitLines(chunk.toString('utf8'))) {
           appendStateLog(`[stderr] ${line}`);
         }
+      });
+
+      child.on('error', async (err) => {
+        appendStateLog('Erro ao iniciar executavel: ' + (err?.message || String(err)));
+        saveState({
+          status: 'error',
+          progress: 100,
+          message: 'Falha ao iniciar o executavel do balancete transitorio.',
+        });
+        await auditLog(req, 'job_error_balancete_transitorio', 'error', {
+          jobId,
+          message: err?.message || String(err),
+        });
       });
 
       child.on('close', async (code) => {

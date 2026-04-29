@@ -74,7 +74,7 @@ module.exports = function createCctRoutes(deps = {}) {
     try {
       const cnpj = extractCnpjFromRequest(req);
       const requester = getRequesterLabel(req);
-      const result = await intakeService.enqueueCnpj(cnpj, requester, { exclusive: true });
+      const result = await intakeService.enqueueCnpj(cnpj, requester);
       let catalog = null;
       let responseMessage = String(result?.message || '').trim();
 

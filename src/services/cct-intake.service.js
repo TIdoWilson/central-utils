@@ -1,10 +1,12 @@
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { spawn } = require('child_process');
 
 const DEFAULT_PROJECT_ROOT = path.join(__dirname, '..', '..');
 const DEFAULT_CCT_DIR = path.join(DEFAULT_PROJECT_ROOT, 'data', 'cct');
 const DEFAULT_CNPJ_FILE = path.join(DEFAULT_CCT_DIR, 'CNPJ.txt');
+const DEFAULT_PENDING_REQUESTS_FILE = path.join(DEFAULT_CCT_DIR, 'CNPJ_pendentes.txt');
 const DEFAULT_REQUESTERS_FILE = path.join(DEFAULT_CCT_DIR, 'CNPJ_requisitantes.txt');
 const DEFAULT_HISTORY_FILE = path.join(DEFAULT_CCT_DIR, 'historico_cct.log');
 const DEFAULT_JSON_DIR = path.join(DEFAULT_CCT_DIR, 'json');
@@ -94,6 +96,7 @@ function createCctIntakeService(deps = {}) {
   const projectRoot = path.resolve(deps.projectRoot || DEFAULT_PROJECT_ROOT);
   const cctDir = path.resolve(deps.cctDir || path.join(projectRoot, 'data', 'cct'));
   const cnpjFilePath = path.resolve(deps.cnpjFilePath || DEFAULT_CNPJ_FILE);
+  const pendingRequestsFilePath = path.resolve(deps.pendingRequestsFilePath || DEFAULT_PENDING_REQUESTS_FILE);
   const requestersFilePath = path.resolve(deps.requestersFilePath || DEFAULT_REQUESTERS_FILE);
   const historyFilePath = path.resolve(deps.historyFilePath || DEFAULT_HISTORY_FILE);
   const jsonDirPath = path.resolve(deps.jsonDirPath || path.join(cctDir, 'json'));
@@ -126,19 +129,19 @@ function createCctIntakeService(deps = {}) {
   let currentRunQueue = new Map();
   let currentRunSource = 'manual';
   let currentRunNotifyByEmail = false;
+  let currentRunQueueMode = 'pending';
+  let currentRunEntries = [];
+  let currentRunQueueFilePath = null;
+  let currentRunTempDir = null;
   let currentRunJsonBefore = new Set();
   let currentRunHadError = false;
   let currentRunErrors = [];
-  let stopRequested = false;
-  let exclusiveRestoreEntries = null;
-  let exclusivePendingEntries = null;
-  let exclusiveRunPending = false;
-  let exclusiveRunActive = false;
   const loggedStatusesThisRun = new Set();
   let enqueueChain = Promise.resolve();
 
   async function ensureStorage() {
     await fs.promises.mkdir(path.dirname(cnpjFilePath), { recursive: true });
+    await fs.promises.mkdir(path.dirname(pendingRequestsFilePath), { recursive: true });
     await fs.promises.mkdir(path.dirname(requestersFilePath), { recursive: true });
     await fs.promises.mkdir(path.dirname(historyFilePath), { recursive: true });
     await fs.promises.mkdir(jsonDirPath, { recursive: true });
@@ -190,6 +193,78 @@ function createCctIntakeService(deps = {}) {
   async function readCurrentCnpjs() {
     const entries = await readCurrentQueueEntries();
     return entries.map((entry) => entry.cnpj);
+  }
+
+  async function readPendingRequestCnpjs() {
+    try {
+      const content = await fs.promises.readFile(pendingRequestsFilePath, 'utf8');
+      const seen = new Set();
+      const items = [];
+      content.split(/\r?\n/).forEach((line) => {
+        const digits = normalizeDigits(line);
+        if (digits.length !== 14 || seen.has(digits)) return;
+        seen.add(digits);
+        items.push(digits);
+      });
+      return items;
+    } catch (error) {
+      if (error && error.code === 'ENOENT') {
+        return [];
+      }
+      throw error;
+    }
+  }
+
+  async function readPendingRequestEntries() {
+    const requesterMap = await readRequesterMap();
+    const cnpjs = await readPendingRequestCnpjs();
+    return cnpjs.map((cnpj) => ({
+      cnpj,
+      user: requesterMap.get(cnpj) || '',
+    }));
+  }
+
+  async function writePendingRequestQueue(cnpjs) {
+    await ensureStorage();
+    const serialized = serializeCnpjEntries(cnpjs);
+    await fs.promises.writeFile(pendingRequestsFilePath, serialized ? `${serialized}\n` : '', 'utf8');
+  }
+
+  async function syncPendingRequestsFromMainQueue(force = false) {
+    const pending = await readPendingRequestCnpjs();
+    if (!force && pending.length) {
+      return {
+        synced: false,
+        queueSize: pending.length,
+      };
+    }
+
+    const current = await readCurrentCnpjs();
+    await writePendingRequestQueue(current);
+    return {
+      synced: true,
+      queueSize: current.length,
+    };
+  }
+
+  async function enqueuePendingRequest(cnpj) {
+    const current = await readPendingRequestCnpjs();
+    if (current.includes(cnpj)) {
+      return current.length;
+    }
+    current.push(cnpj);
+    await writePendingRequestQueue(current);
+    return current.length;
+  }
+
+  async function removePendingRequest(cnpj) {
+    const current = await readPendingRequestCnpjs();
+    const next = current.filter((entry) => entry !== cnpj);
+    if (next.length === current.length) {
+      return current.length;
+    }
+    await writePendingRequestQueue(next);
+    return next.length;
   }
 
   async function appendRequesterEntry(cnpj, user) {
@@ -483,71 +558,10 @@ function createCctIntakeService(deps = {}) {
 
     scheduledTimer = setTimeout(() => {
       scheduledTimer = null;
-      startRun({ source: 'manual-queue', notifyByEmail: false }).catch((error) => {
+      startRun({ source: 'manual-queue', notifyByEmail: false, queueMode: 'pending' }).catch((error) => {
         console.error('[CCT] Falha ao disparar MTE.py:', error?.message || error);
-        if ((exclusiveRunPending || exclusiveRunActive) && Array.isArray(exclusiveRestoreEntries)) {
-          void restoreAutomaticQueueIfNeeded().catch((restoreError) => {
-            console.error('[CCT] Falha ao restaurar a fila apos erro de disparo:', restoreError?.message || restoreError);
-          });
-        }
       });
     }, 500);
-  }
-
-  async function stopActiveRun() {
-    if (scheduledTimer) {
-      clearTimeout(scheduledTimer);
-      scheduledTimer = null;
-    }
-
-    rerunRequested = false;
-    stopRequested = true;
-
-    if (activeProcess && typeof activeProcess.kill === 'function') {
-      try {
-        activeProcess.kill();
-      } catch (error) {
-        console.warn('[CCT] Nao foi possivel encerrar o processo ativo:', error?.message || error);
-      }
-    }
-
-    return {
-      stopped: !!activeProcess,
-    };
-  }
-
-  function ensureExclusiveRestoreQueue(currentEntries, cnpj) {
-    if (!exclusiveRestoreEntries) {
-      exclusiveRestoreEntries = (Array.isArray(currentEntries) ? currentEntries : [])
-        .map((entry) => normalizeDigits(entry?.cnpj || entry))
-        .filter((digits) => digits.length === 14);
-    }
-
-    if (!Array.isArray(exclusivePendingEntries)) {
-      exclusivePendingEntries = [];
-    }
-
-    if (cnpj && !exclusiveRestoreEntries.includes(cnpj)) {
-      exclusiveRestoreEntries.push(cnpj);
-    }
-
-    if (cnpj && !exclusivePendingEntries.includes(cnpj)) {
-      exclusivePendingEntries.push(cnpj);
-    }
-  }
-
-  async function restoreAutomaticQueueIfNeeded() {
-    if (!Array.isArray(exclusiveRestoreEntries)) {
-      return false;
-    }
-
-    const restoreEntries = exclusiveRestoreEntries;
-    await writeAutomaticQueue(restoreEntries);
-    exclusiveRestoreEntries = null;
-    exclusivePendingEntries = null;
-    exclusiveRunActive = false;
-    exclusiveRunPending = false;
-    return true;
   }
 
   function registerStatus(cnpj, status, details) {
@@ -607,36 +621,35 @@ function createCctIntakeService(deps = {}) {
     }
   }
 
-  async function finalizeRun({ code, hadRerun, wasStopRequested, shouldStartExclusiveRun, shouldRestoreAutomaticQueue, shouldStartFullQueueRun, runContext }) {
+  async function finalizeRun({ code, hadRerun, wasStopRequested, shouldStartFullQueueRun, runContext }) {
     await notifyRunOutcome(runContext, code);
 
-    if (shouldStartExclusiveRun) {
-      exclusiveRunPending = false;
-      exclusiveRunActive = true;
-      rerunRequested = false;
-      scheduleRun();
-      return;
+    if (runContext.queueMode === 'pending' && runContext.entries.length === 1) {
+      await removePendingRequest(runContext.entries[0].cnpj);
     }
 
-    if (shouldRestoreAutomaticQueue) {
-      await restoreAutomaticQueueIfNeeded();
-      return;
+    if (runContext.tempDir) {
+      await fs.promises.rm(runContext.tempDir, { recursive: true, force: true }).catch(() => {});
     }
 
     if (shouldStartFullQueueRun) {
       fullQueueRunPending = false;
       rerunRequested = false;
-      await startRun({ source: 'scheduled-full-queue', notifyByEmail: true });
+      await startRun({ source: 'scheduled-full-queue', notifyByEmail: true, queueMode: 'full' });
       return;
     }
 
-    if (hadRerun && !wasStopRequested) {
+    const hasPendingRequests = (await readPendingRequestCnpjs()).length > 0;
+
+    if ((hasPendingRequests || hadRerun) && !wasStopRequested) {
       rerunRequested = false;
       scheduleRun();
     }
   }
 
   async function startRun(options = {}) {
+    const queueMode = options.queueMode === 'full' ? 'full' : 'pending';
+
     if (activeProcess) {
       if (options.notifyByEmail) {
         fullQueueRunPending = true;
@@ -646,9 +659,12 @@ function createCctIntakeService(deps = {}) {
       return { started: false, reason: 'process already running' };
     }
 
-    const pendingEntries = await readCurrentQueueEntries();
-    const pendingCnpjs = pendingEntries.map((entry) => entry.cnpj);
-    if (!pendingCnpjs.length) {
+    const sourceEntries = queueMode === 'full'
+      ? await readCurrentQueueEntries()
+      : await readPendingRequestEntries();
+    const pendingEntries = queueMode === 'full' ? sourceEntries : sourceEntries.slice(0, 1);
+
+    if (!pendingEntries.length) {
       if (options.notifyByEmail && emailService) {
         await emailService.sendNoNewConventionEmail({
           startedAt: new Date(),
@@ -664,17 +680,30 @@ function createCctIntakeService(deps = {}) {
     }
 
     await ensureStorage();
+    let runQueueFilePath = cnpjFilePath;
+    let runTempDir = null;
+
+    if (queueMode === 'pending') {
+      runTempDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'cct-mte-pending-'));
+      runQueueFilePath = path.join(runTempDir, 'CNPJ.txt');
+      await fs.promises.writeFile(runQueueFilePath, `${pendingEntries[0].cnpj}\n`, 'utf8');
+    }
+
     currentRunStartedAt = new Date();
     currentRunCnpj = null;
     currentRunQueue = new Map(pendingEntries.map((entry) => [entry.cnpj, entry.user]));
     currentRunSource = options.source || 'manual';
     currentRunNotifyByEmail = !!options.notifyByEmail;
+    currentRunQueueMode = queueMode;
+    currentRunEntries = pendingEntries.map((entry) => ({ ...entry }));
+    currentRunQueueFilePath = runQueueFilePath;
+    currentRunTempDir = runTempDir;
     currentRunJsonBefore = await snapshotJsonNames();
     currentRunHadError = false;
     currentRunErrors = [];
     loggedStatusesThisRun.clear();
 
-    const args = [mteScriptPath, mteHeadless ? '--headless' : '--headed'];
+    const args = [mteScriptPath, mteHeadless ? '--headless' : '--headed', '--cnpj-file', runQueueFilePath];
     const child = spawn(pythonBin, args, {
       cwd: projectRoot,
       env: process.env,
@@ -718,14 +747,16 @@ function createCctIntakeService(deps = {}) {
         startedAt: currentRunStartedAt ? new Date(currentRunStartedAt) : new Date(),
         source: currentRunSource,
         notifyByEmail: currentRunNotifyByEmail,
+        queueMode: currentRunQueueMode,
+        entries: currentRunEntries.slice(),
+        queueFilePath: currentRunQueueFilePath,
+        tempDir: currentRunTempDir,
         jsonBefore: new Set(currentRunJsonBefore),
         hadError: currentRunHadError || Number(code || 0) !== 0,
         errors: currentRunErrors.slice(),
       };
       const hadRerun = rerunRequested;
-      const wasStopRequested = stopRequested;
-      const shouldStartExclusiveRun = exclusiveRunPending;
-      const shouldRestoreAutomaticQueue = exclusiveRunActive;
+      const wasStopRequested = false;
       const shouldStartFullQueueRun = fullQueueRunPending;
 
       activeProcess = null;
@@ -734,11 +765,14 @@ function createCctIntakeService(deps = {}) {
       currentRunQueue = new Map();
       currentRunSource = 'manual';
       currentRunNotifyByEmail = false;
+      currentRunQueueMode = 'pending';
+      currentRunEntries = [];
+      currentRunQueueFilePath = null;
+      currentRunTempDir = null;
       currentRunJsonBefore = new Set();
       currentRunHadError = false;
       currentRunErrors = [];
       loggedStatusesThisRun.clear();
-      stopRequested = false;
 
       if (code !== 0) {
         console.warn(`[CCT] MTE.py finalizou com codigo ${code}`);
@@ -748,8 +782,6 @@ function createCctIntakeService(deps = {}) {
         code,
         hadRerun,
         wasStopRequested,
-        shouldStartExclusiveRun,
-        shouldRestoreAutomaticQueue,
         shouldStartFullQueueRun,
         runContext,
       }).catch((error) => {
@@ -757,11 +789,11 @@ function createCctIntakeService(deps = {}) {
       });
     });
 
-    return { started: true, queueSize: pendingEntries.length };
+    return { started: true, queueSize: pendingEntries.length, queueMode };
   }
 
   async function startFullQueueRun() {
-    return startRun({ source: 'scheduled-full-queue', notifyByEmail: true });
+    return startRun({ source: 'scheduled-full-queue', notifyByEmail: true, queueMode: 'full' });
   }
 
   async function doEnqueueCnpj(rawCnpj, rawUser = '', options = {}) {
@@ -773,10 +805,9 @@ function createCctIntakeService(deps = {}) {
       throw error;
     }
 
-    const exclusive = !!options.exclusive;
     const user = sanitizeHistoryField(rawUser);
     const current = await readCurrentQueueEntries();
-    const knownEntries = exclusiveRestoreEntries || current;
+    const knownEntries = current;
 
     if (knownEntries.some((entry) => normalizeDigits(entry?.cnpj || entry) === cnpj)) {
       return {
@@ -790,35 +821,11 @@ function createCctIntakeService(deps = {}) {
       };
     }
 
-    if (exclusive) {
-      ensureExclusiveRestoreQueue(current, cnpj);
-      exclusiveRunPending = true;
-      exclusiveRunActive = false;
-      await appendRequesterEntry(cnpj, user);
-      await writeAutomaticQueue(exclusivePendingEntries);
-      await appendHistoryEntry(cnpj, 'pedido recebido', 'Inclusao via /cct para processamento exclusivo.', user);
-      if (activeProcess) {
-        await stopActiveRun();
-      } else {
-        exclusiveRunPending = false;
-        exclusiveRunActive = true;
-        scheduleRun();
-      }
-      return {
-        ok: true,
-        duplicate: false,
-        cnpj,
-        requestAdded: true,
-        automaticAdded: true,
-        message: 'CNPJ incluido para processamento exclusivo.',
-        queueSize: 1,
-      };
-    }
-
     const payload = current.concat({ cnpj, user });
     await writeAutomaticQueue(payload);
     await appendRequesterEntry(cnpj, user);
-    await appendHistoryEntry(cnpj, 'pedido recebido', 'Inclusao via /cct para fila automatica.', user);
+    const pendingQueueSize = await enqueuePendingRequest(cnpj);
+    await appendHistoryEntry(cnpj, 'pedido recebido', 'Inclusao via /cct para fila sequencial do MTE.', user);
     scheduleRun();
 
     return {
@@ -827,8 +834,10 @@ function createCctIntakeService(deps = {}) {
       cnpj,
       requestAdded: true,
       automaticAdded: true,
-      message: 'CNPJ incluido na fila do MTE.',
-      queueSize: payload.length,
+      message: activeProcess
+        ? 'CNPJ incluido na fila do MTE. A consulta iniciara apos a execucao atual.'
+        : 'CNPJ incluido na fila do MTE.',
+      queueSize: pendingQueueSize,
     };
   }
 
@@ -849,8 +858,10 @@ function createCctIntakeService(deps = {}) {
       currentCnpj: currentRunCnpj,
       currentSource: currentRunSource,
       notifyByEmail: currentRunNotifyByEmail,
+      queueMode: currentRunQueueMode,
       scriptPath: mteScriptPath,
       cnpjFilePath,
+      pendingRequestsFilePath,
       requestersFilePath,
       historyFilePath,
       jsonDirPath,
@@ -864,9 +875,13 @@ function createCctIntakeService(deps = {}) {
     if (activeProcess || scheduledTimer) return;
 
     try {
-      const pendingEntries = await readCurrentQueueEntries();
+      const syncResult = await syncPendingRequestsFromMainQueue(false);
+      const pendingEntries = await readPendingRequestEntries();
       if (!pendingEntries.length) return;
-      console.log(`[CCT] Bootstrap da fila pendente: ${pendingEntries.length} CNPJs aguardando processamento.`);
+      if (syncResult.synced) {
+        console.log(`[CCT] Fila pendente rearmada a partir do CNPJ.txt com ${syncResult.queueSize} CNPJs.`);
+      }
+      console.log(`[CCT] Bootstrap da fila pendente: ${pendingEntries.length} CNPJs aguardando processamento sequencial.`);
       scheduleRun();
     } catch (error) {
       console.error('[CCT] Falha no bootstrap da fila pendente:', error?.message || error);
@@ -890,6 +905,7 @@ function createCctIntakeService(deps = {}) {
     startRun,
     startFullQueueRun,
     appendHistoryEntry,
+    syncPendingRequestsFromMainQueue,
     bootstrapPendingQueue,
   };
 }

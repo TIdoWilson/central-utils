@@ -61,3 +61,6 @@ Envie os PDFs do Razão e do Financeiro e gere um Excel com casados e diferença
 
 - Ao alterar nomes de arquivo/rota, manter compatibilidade (alias/redirect) para não quebrar links legados.
 - Se incluir nova API/fluxo, atualizar este documento e `src/core/tool-catalog.json`.
+- Correcao de 2026-04-24: a concilicao passou a casar por valor absoluto, evitando falso `so_razao` e `so_fin` quando o sinal difere entre os PDFs.
+- Correcao de 2026-04-24: a extracao de nome no Razao passou a preservar o cliente completo antes do casamento com o Financeiro.
+- **Mesmo nome e mesmo valor apareciam como divergencia:** a conciliacao comparava o valor com sinal. A regra agora compara o valor absoluto nas linhas e nos grupos, que e o formato real usado nesses PDFs.

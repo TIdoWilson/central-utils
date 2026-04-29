@@ -37,11 +37,13 @@ def to_date(s: str) -> datetime:
 def norm_txt(s: str) -> str:
     if s is None:
         return ""
-    s = s.strip().upper()
+    s = str(s).strip().upper()
     s = "".join(
         c for c in unicodedata.normalize("NFKD", s)
         if not unicodedata.combining(c)
     )
+    s = re.sub(r"\[[^\]]+\]", " ", s)
+    s = re.sub(r"[^A-Z0-9]+", " ", s)
     s = re.sub(r"\s+", " ", s)
     return s
 
@@ -51,7 +53,13 @@ def name_score(a: str, b: str) -> float:
     b = norm_txt(b)
     if not a or not b:
         return 0.0
-    return SequenceMatcher(None, a, b).ratio()
+    ratio = SequenceMatcher(None, a, b).ratio()
+    ta = set(a.split())
+    tb = set(b.split())
+    token_score = 0.0
+    if ta and tb:
+        token_score = len(ta & tb) / float(max(len(ta), len(tb)))
+    return max(ratio, token_score)
 
 
 def parse_brl_num(s: str) -> Optional[float]:
@@ -123,17 +131,42 @@ def parse_razao_bytes(pdf_bytes: bytes) -> pd.DataFrame:
     money_re = re.compile(r"(\d{1,3}(?:\.\d{3})*,\d{2})")
 
     def clean_cliente(cliente_raw: str) -> str:
-        s = cliente_raw
+        s = str(cliente_raw or "")
         s = re.sub(r"\bDT\s*NFISCAL:.*$", "", s, flags=re.IGNORECASE).strip()
         s = re.sub(r"\bNFISCAL:\s*\d{2}/\d{2}/\d{4}.*$", "", s, flags=re.IGNORECASE).strip()
         s = re.sub(r"\b\d{1,2}/\d{2}/\d{4}\b.*$", "", s).strip()
         s = re.sub(r"\bREVENDA\s*:\s*.*$", "", s, flags=re.IGNORECASE).strip()
-        s = money_re.sub(" ", s)
-        s = re.sub(r"\b\d{6,}\b.*$", "", s).strip()
-        s = re.sub(r"\b[DC]\b", " ", s)
-        s = re.sub(r"\bDT\b", " ", s, flags=re.IGNORECASE)
-        s = re.sub(r"\s+", " ", s).strip()
-        return s
+        s = re.sub(r"^\s*[\[\(]?\s*\d+\s*[\]\)]?\s*", "", s)
+
+        money_hits = list(money_re.finditer(s))
+        prefix = s
+        suffix = ""
+        if money_hits:
+            prefix = s[:money_hits[0].start()]
+            suffix = s[money_hits[-1].end():]
+
+        prefix = re.sub(r"\bDT\b", " ", prefix, flags=re.IGNORECASE)
+        prefix = re.sub(r"\s+", " ", prefix).strip(" -[]()")
+
+        suffix = re.sub(r"^\s*[DC]\s*", "", suffix, flags=re.IGNORECASE)
+        suffix_tokens = []
+        for tok in suffix.split():
+            up = tok.upper().strip("[]()")
+            if not up:
+                continue
+            if up in {"BCO", "CARTAO", "REVENDA", "CONTRA", "PARTIDA"}:
+                break
+            if any(ch.isdigit() for ch in up):
+                break
+            suffix_tokens.append(tok)
+
+        suffix_name = " ".join(suffix_tokens).strip(" -[]()")
+        if suffix_name:
+            prefix = f"{prefix} {suffix_name}".strip()
+
+        prefix = re.sub(r"\b[DC]\b", " ", prefix)
+        prefix = re.sub(r"\s+", " ", prefix).strip(" -[]()")
+        return prefix
 
     rows: List[TxRazao] = []
     buffer = ""
@@ -194,9 +227,11 @@ def parse_razao_bytes(pdf_bytes: bytes) -> pd.DataFrame:
             if buffer:
                 flush_buffer(buffer)
             buffer = ln
-        else:
-            # ignora cabeçalhos típicos
-            if any(k in ln.upper() for k in ["RELATÓRIO:", "EMPRESA:", "PÁGINA:", "USUÁRIO:", "DT. LCTO.", "CONTA CONTÁBIL"]):
+        else:            # ignora cabeçalhos tipicos
+            up = ln.upper()
+            if any(k in up for k in ["RELATÓRIO:", "EMPRESA:", "PÁGINA:", "USUÁRIO:", "DT. LCTO.", "CONTA CONTÁBIL"]):
+                continue
+            if up.startswith("SALDO MÊS") or up.startswith("SALDO ATUAL"):
                 continue
             if buffer:
                 buffer = buffer + " " + ln
@@ -516,13 +551,13 @@ def conciliar(
         candidates = idx_fin_by_data_tbase.get((r["data"], str(lanc)), [])
         if not candidates:
             return None
-        rv = round(float(r["valor"]), 2)
+        rv = abs(round(float(r["valor"]), 2))
         best = None
         for f_i in candidates:
             if f_i in fin_line_used:
                 continue
             f = fin_linhas.loc[f_i]
-            diff_val = abs(float(f["valor"]) - rv)
+            diff_val = abs(abs(float(f["valor"])) - rv)
             if diff_val > valor_tol:
                 continue
             diff_dias = abs((r["data_dt"] - f["data_dt"]).days)
@@ -542,8 +577,8 @@ def conciliar(
     # 2) Match 1x1 (antigo): por grupos e por linhas
     # ----------------------------
     def match_em_linhas(r):
-        rv = round(float(r["valor"]), 2)
-        candidates = fin_linhas[(fin_linhas["valor"] - rv).abs() <= valor_tol]
+        rv = abs(round(float(r["valor"]), 2))
+        candidates = fin_linhas[(fin_linhas["valor"].abs() - rv).abs() <= valor_tol]
         if candidates.empty:
             return None
 
@@ -558,7 +593,7 @@ def conciliar(
             sc = name_score(r.get("cliente", ""), f.get("cliente", ""))
             if sc < (limiar_nome - 0.05) and sc != 0.0:
                 continue
-            diff_val = abs(float(f["valor"]) - rv)
+            diff_val = abs(abs(float(f["valor"])) - rv)
             key = (diff_val, diff_dias, -sc)
             if best_key is None or key < best_key:
                 best_key = key
@@ -566,8 +601,8 @@ def conciliar(
         return best
 
     def match_em_grupos(r):
-        rv = round(float(r["valor"]), 2)
-        candidates = fin_grupos[(fin_grupos["valor"] - rv).abs() <= valor_tol]
+        rv = abs(round(float(r["valor"]), 2))
+        candidates = fin_grupos[(fin_grupos["valor"].abs() - rv).abs() <= valor_tol]
         if candidates.empty:
             return None
 
@@ -582,7 +617,7 @@ def conciliar(
             sc = name_score(r.get("cliente", ""), g.get("cliente", ""))
             if sc < limiar_nome and sc != 0.0:
                 continue
-            diff_val = abs(float(g["valor"]) - rv)
+            diff_val = abs(abs(float(g["valor"])) - rv)
             key = (diff_val, diff_dias, -sc)
             if best_key is None or key < best_key:
                 best_key = key
@@ -607,7 +642,7 @@ def conciliar(
         if not _is_lote_titulos_extrato(desc):
             return None
 
-        alvo = round(float(f["valor"]), 2)
+        alvo = abs(round(float(f["valor"]), 2))
         if abs(alvo) < 0.01:
             return None
 
@@ -616,19 +651,15 @@ def conciliar(
         if mesma_data.empty:
             return None
 
-        # mesmo sinal
-        mesma_data = mesma_data[(mesma_data["valor"] > 0) == (alvo > 0)]
-        if mesma_data.empty:
-            return None
-
         # prioriza pagamentos/recebimentos
         mesma_data["prio"] = mesma_data["historico"].map(lambda h: 0 if ("PAGAMENTO TITULO" in (h or "").upper() or "RECEBIMENTO TITULO" in (h or "").upper()) else 1)
-        mesma_data = mesma_data.sort_values(["prio", "valor"], ascending=[True, False])
+        mesma_data["valor_abs"] = mesma_data["valor"].abs()
+        mesma_data = mesma_data.sort_values(["prio", "valor_abs"], ascending=[True, False])
 
         soma = 0.0
         escolhidos = []
         for idx, rr in mesma_data.iterrows():
-            v = float(rr["valor"])
+            v = abs(float(rr["valor"]))
             # evita ultrapassar muito
             if abs(soma + v) - abs(alvo) > max(valor_tol * 3, 1.0) and abs(alvo) > 50:
                 continue
