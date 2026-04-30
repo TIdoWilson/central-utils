@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-03-18T17:16:21.244Z",
+  "generatedAt": "2026-04-30T17:26:19.612Z",
   "tools": [
     {
       "slug": "acerto-lotes-toscan",
@@ -69,17 +69,6 @@
       "sharedApisUsed": []
     },
     {
-      "slug": "importador-cartao-horas-bandeira-transportes",
-      "title": "Importador Cartao de Horas Bandeira Transportes",
-      "group": "Pessoal",
-      "hasPage": true,
-      "hasApi": true,
-      "apiBase": "/api/cartao-horas-bandeira-transportes",
-      "adminOnly": false,
-      "aliases": [],
-      "sharedApisUsed": []
-    },
-    {
       "slug": "cct",
       "title": "Consulta CCT",
       "group": "Pessoal",
@@ -102,23 +91,23 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "comparador-entradas-bandeira",
+      "title": "Comparador Entradas FSIST x IOB",
+      "group": "Contabil",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/comparador-entradas-bandeira",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "comparador-eventos-holerite",
       "title": "Comparador Eventos Holerite",
       "group": "Pessoal",
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/comparador-eventos-holerite",
-      "adminOnly": false,
-      "aliases": [],
-      "sharedApisUsed": []
-    },
-    {
-      "slug": "parcelamentos",
-      "title": "Parcelamentos de Impostos",
-      "group": "Parcelamentos",
-      "hasPage": true,
-      "hasApi": true,
-      "apiBase": "/api/parcelamentos",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -154,17 +143,6 @@
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/conciliador-cartao-wilson",
-      "adminOnly": false,
-      "aliases": [],
-      "sharedApisUsed": []
-    },
-    {
-      "slug": "comparador-entradas-bandeira",
-      "title": "Comparador Entradas FSIST x IOB",
-      "group": "Contabil",
-      "hasPage": true,
-      "hasApi": true,
-      "apiBase": "/api/comparador-entradas-bandeira",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -291,6 +269,17 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "importador-cartao-horas-bandeira-transportes",
+      "title": "Importador Cartao de Horas Bandeira Transportes",
+      "group": "Pessoal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/cartao-horas-bandeira-transportes",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "importador-recebimentos-madre-scp",
       "title": "Importador Recebimentos Madre SCP",
       "group": "Geral",
@@ -324,23 +313,23 @@
       "sharedApisUsed": []
     },
     {
-      "slug": "lotes-txt",
-      "title": "Lotes TXT",
-      "group": "Contabil",
-      "hasPage": true,
-      "hasApi": false,
-      "apiBase": null,
-      "adminOnly": false,
-      "aliases": [],
-      "sharedApisUsed": []
-    },
-    {
       "slug": "lotes-renasul",
       "title": "Lotes Renasul",
       "group": "Contabil",
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/lotes-renasul",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "lotes-txt",
+      "title": "Lotes TXT",
+      "group": "Contabil",
+      "hasPage": true,
+      "hasApi": false,
+      "apiBase": null,
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []
@@ -379,6 +368,17 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "parcelamentos",
+      "title": "Parcelamentos de Impostos",
+      "group": "Parcelamentos",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/parcelamentos",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "pdf-a",
       "title": "PDF A",
       "group": "Geral",
@@ -396,6 +396,17 @@
       "hasPage": false,
       "hasApi": true,
       "apiBase": "/api/pdfa",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "planilha-nrc",
+      "title": "Planilha NRC",
+      "group": "Contabil",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/planilha-nrc",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []

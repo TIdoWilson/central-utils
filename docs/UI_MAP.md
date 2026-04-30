@@ -8,9 +8,12 @@ Este arquivo é gerado automaticamente a partir de `src/core/tool-catalog.json`.
 
 ## Contabil
 
+- **Comparador Entradas FSIST x IOB** — `/comparador-entradas-bandeira` • API: `/api/comparador-entradas-bandeira`
 - **Conversor Extrato PDF para OFX** — `/conversor-extrato-pdf-ofx` • API: `/api/conversor-extrato-pdf-ofx`
 - **Gerador TXT GFBR** — `/gfbr-gerador-txt` • API: `/api/gfbr-gerador-txt`
+- **Lotes Renasul** — `/lotes-renasul` • API: `/api/lotes-renasul`
 - **Lotes TXT** — `/lotes-txt`
+- **Planilha NRC** — `/planilha-nrc` • API: `/api/planilha-nrc`
 
 ## Declaracoes
 

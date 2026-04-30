@@ -35,6 +35,7 @@ const MENU_CONFIG = [
       { id: 'conciliador-cartao-wilson', label: 'Conciliador Cart&atilde;o (Raz&atilde;o x Financeiro)', href: '/conciliador-cartao-wilson', icon: '&#128202;' },
       { id: 'conciliador-cartao-tipo50', label: 'Conciliador Cart&atilde;o Tipo 50', href: '/conciliador-cartao-tipo50', icon: '&#128202;' },
       { id: 'comparador-entradas-bandeira', label: 'Comparador Entradas FSIST x IOB', href: '/comparador-entradas-bandeira', icon: '&#128202;' },
+      { id: 'planilha-nrc', label: 'Planilha NRC', href: '/planilha-nrc', icon: '&#128196;' },
     ],
   },
   {

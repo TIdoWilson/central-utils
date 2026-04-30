@@ -1,0 +1,104 @@
+﻿<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Planilha NRC</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .planilha-nrc-grid { display: grid; gap: 16px; }
+      .planilha-nrc-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+      .planilha-nrc-table-wrap { overflow: auto; border: 1px solid #e2e8f0; border-radius: 12px; background: #fff; }
+      .planilha-nrc-table { width: 100%; min-width: 760px; border-collapse: collapse; }
+      .planilha-nrc-table th, .planilha-nrc-table td { border-bottom: 1px solid #e2e8f0; padding: 8px; text-align: left; }
+      .planilha-nrc-table th { background: #f8fafc; position: sticky; top: 0; z-index: 1; }
+      .planilha-nrc-table input { width: 100%; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 8px; padding: 7px 10px; }
+      .planilha-nrc-danger { border: 0; background: #fff1f2; color: #9f1239; border-radius: 999px; padding: 6px 10px; font-weight: 700; cursor: pointer; }
+      .planilha-nrc-status { border: 1px solid #dbe4ee; border-radius: 10px; padding: 10px 12px; background: #f8fafc; white-space: pre-wrap; }
+      .planilha-nrc-status.is-error { border-color: #f87171; background: #fff1f2; color: #7f1d1d; }
+      .planilha-nrc-conflicts { margin-top: 10px; max-height: 260px; overflow: auto; border: 1px solid #e2e8f0; border-radius: 10px; }
+      .planilha-nrc-conflicts table { width: 100%; border-collapse: collapse; min-width: 740px; }
+      .planilha-nrc-conflicts th, .planilha-nrc-conflicts td { border-bottom: 1px solid #e2e8f0; padding: 8px; text-align: left; font-size: 13px; }
+      .planilha-nrc-summary dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+      .planilha-nrc-summary dt { font-weight: 700; color: #12324a; }
+      .planilha-nrc-summary dd { margin: 0; color: #334155; }
+    </style>
+  </head>
+
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Abrir menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Contabil / Planilha NRC</div>
+          <h1>Planilha NRC</h1>
+          <p>Upload da planilha, filtro por periodo e ajuste de agrupamento por de/para de historico.</p>
+        </header>
+
+        <section class="nfe-card planilha-nrc-grid">
+          <h2>Carregar Planilha</h2>
+          <div class="nfe-table-actions">
+            <label class="nfe-input-file-label" style="min-width:320px;">
+              <span>Planilha de extratos (.xlsx/.xls)</span>
+              <input type="file" id="arquivoPlanilha" accept=".xlsx,.xls" />
+            </label>
+            <label class="nfe-input-file-label" style="max-width:200px;">
+              <span>Periodo inicial (MM/AAAA)</span>
+              <input type="text" id="periodoInicial" placeholder="01/2026" />
+            </label>
+            <label class="nfe-input-file-label" style="max-width:200px;">
+              <span>Periodo final (MM/AAAA)</span>
+              <input type="text" id="periodoFinal" placeholder="03/2026" />
+            </label>
+          </div>
+          <div class="planilha-nrc-actions">
+            <button id="btnCarregar" type="button" class="btn btn-primary">Carregar</button>
+            <button id="btnExportar" type="button" class="btn btn-secondary" disabled>Exportar Excel</button>
+          </div>
+          <div id="statusBox" class="planilha-nrc-status" aria-live="polite">Nenhum processamento executado.</div>
+        </section>
+
+        <section class="nfe-card planilha-nrc-grid">
+          <h2>De / Para de Historico</h2>
+          <p class="nfe-card-subtitle">Quando o historico contiver o texto informado, o agrupamento sera substituido pelo valor configurado.</p>
+          <div class="planilha-nrc-actions">
+            <button id="btnAddLinha" type="button" class="btn btn-secondary">Adicionar linha</button>
+            <button id="btnSalvarConfig" type="button" class="btn btn-primary">Salvar de/para</button>
+          </div>
+          <div class="planilha-nrc-table-wrap">
+            <table class="planilha-nrc-table">
+              <thead>
+                <tr>
+                  <th style="width:45%;">Historico (contains)</th>
+                  <th style="width:45%;">Agrupamento destino</th>
+                  <th style="width:10%;">Acao</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyMappings"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="nfe-card planilha-nrc-grid">
+          <h2>Resumo do Processamento</h2>
+          <div id="summaryBox" class="planilha-nrc-summary">
+            <p>Nenhum resumo disponivel.</p>
+          </div>
+          <div id="conflictsBox"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/planilha-nrc.js"></script>
+  </body>
+</html>

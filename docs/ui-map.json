@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-26T17:56:22.282Z",
+  "generatedAt": "2026-04-30T17:32:49.218Z",
   "groups": [
     {
       "group": "Admin",
@@ -19,6 +19,15 @@
       "group": "Contabil",
       "tools": [
         {
+          "slug": "comparador-entradas-bandeira",
+          "title": "Comparador Entradas FSIST x IOB",
+          "path": "/comparador-entradas-bandeira",
+          "hasApi": true,
+          "apiBase": "/api/comparador-entradas-bandeira",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
           "slug": "conversor-extrato-pdf-ofx",
           "title": "Conversor Extrato PDF para OFX",
           "path": "/conversor-extrato-pdf-ofx",
@@ -37,11 +46,29 @@
           "aliases": []
         },
         {
+          "slug": "lotes-renasul",
+          "title": "Lotes Renasul",
+          "path": "/lotes-renasul",
+          "hasApi": true,
+          "apiBase": "/api/lotes-renasul",
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
           "slug": "lotes-txt",
           "title": "Lotes TXT",
           "path": "/lotes-txt",
           "hasApi": false,
           "apiBase": null,
+          "adminOnly": false,
+          "aliases": []
+        },
+        {
+          "slug": "planilha-nrc",
+          "title": "Planilha NRC",
+          "path": "/planilha-nrc",
+          "hasApi": true,
+          "apiBase": "/api/planilha-nrc",
           "adminOnly": false,
           "aliases": []
         }

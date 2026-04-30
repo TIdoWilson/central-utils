@@ -58,9 +58,11 @@ const createCartaoHorasBandeiraTransportesRoutes = require('./routes/tools/carta
 const createCctRoutes = require('./routes/tools/cct.routes');
 const createParcelamentosRoutes = require('./routes/tools/parcelamentos.routes');
 const createSpedsRoutes = require('./routes/tools/speds.routes');
+const createPlanilhaNrcRoutes = require('./routes/tools/planilha-nrc.routes');
 const { createDimobService } = require('./services/dimob.service');
 const { createCctService } = require('./services/cct.service');
 const createLotesRenasulService = require('./services/lotes-renasul.service');
+const createPlanilhaNrcService = require('./services/planilha-nrc.service');
 const { createParcelamentosService } = require('./services/parcelamentos.service');
 const { createCctIntakeService } = require('./services/cct-intake.service');
 const { createEcdStatusService } = require('./services/ecd-status.service');
@@ -204,6 +206,7 @@ void cctService.listConventions({ page: 1, limit: 1 })
     console.warn('[CCT] Falha ao aquecer catalogo inicial:', error?.message || error);
   });
 const lotesRenasulService = createLotesRenasulService({ DATA_DIR });
+const planilhaNrcService = createPlanilhaNrcService({ DATA_DIR });
 const parcelamentosService = createParcelamentosService({ pool });
 const cctEmailService = createCctEmailService({
   projectRoot: path.join(__dirname, '..'),
@@ -1345,6 +1348,18 @@ app.use(
     requireCsrf,
     auditLog,
     service: lotesRenasulService,
+    axios,
+    PY_API_URL,
+  })
+);
+app.use(
+  '/api/planilha-nrc',
+  requireAuth,
+  requireToolApi('planilha-nrc'),
+  createPlanilhaNrcRoutes({
+    requireCsrf,
+    auditLog,
+    service: planilhaNrcService,
     axios,
     PY_API_URL,
   })

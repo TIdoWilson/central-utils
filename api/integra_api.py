@@ -34,6 +34,7 @@ from api.excel_abas_pdf_core import exportar_abas_para_pdf
 from api.separador_csv_baixa_automatica_core import processar_baixa_automatica_arquivo
 from api.comparador_eventos_holerite_core import processar_comparador_eventos_holerite
 from api.comparador_entradas_bandeira_core import processar_comparador_entradas_bandeira
+from api.planilha_nrc_core import processar_planilha_nrc
 
 app = FastAPI(title="Integracao Python API")
 
@@ -136,6 +137,43 @@ async def processar_comparador_entradas_bandeira_endpoint(
                 "Verifique se os arquivos estao inteiros e tente novamente."
             ),
         )
+
+
+@app.post("/api/planilha-nrc/processar")
+async def processar_planilha_nrc_endpoint(
+    arquivo: UploadFile = File(...),
+    periodo_inicial: str = Form(...),
+    periodo_final: str = Form(...),
+    mappings_json: str = Form("[]"),
+):
+    try:
+        arquivo_bytes = await arquivo.read()
+        try:
+            mappings = json.loads(mappings_json or "[]")
+        except json.JSONDecodeError as exc:
+            raise HTTPException(status_code=400, detail="Lista de de/para invalida.") from exc
+
+        if not isinstance(mappings, list):
+            raise HTTPException(status_code=400, detail="Lista de de/para invalida.")
+
+        resultado = processar_planilha_nrc(
+            arquivo_bytes=arquivo_bytes,
+            periodo_inicial=periodo_inicial,
+            periodo_final=periodo_final,
+            mappings=mappings,
+        )
+        return {
+            "ok": True,
+            "resumo": resultado["resumo"],
+            "xlsxBase64": base64.b64encode(resultado["xlsx_bytes"]).decode("ascii"),
+        }
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except HTTPException:
+        raise
+    except Exception as exc:
+        print("Erro ao processar planilha NRC:", exc)
+        raise HTTPException(status_code=500, detail="Erro interno ao processar a planilha NRC.")
 
 
 @app.post("/api/cartao-horas-iob/processar")
