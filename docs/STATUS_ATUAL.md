@@ -39,6 +39,8 @@ Data de referencia: 2026-04-06
 32. O `conciliador-cartao-wilson` passou a reconstruir corretamente o nome do cliente no Razao, removendo o codigo numerico sem perder o resto do nome e melhorando o score de casamento.
 33. O `conciliador-cartao-wilson` passou a comparar valor absoluto na conciliacao, corrigindo divergencias falsas quando o mesmo lancamento vinha com sinal oposto entre Razao e Financeiro.`r`n34. O `conciliador-cartao-wilson` passou a ignorar saldos de fechamento colados apos o lancamento no Razao, evitando capturar `Saldo Mês`/`Saldo Atual` como se fossem o valor do titulo.
 
+35. A documentação pública do portal passou a ter pipeline dedicada no GitHub Actions para buildar o MkDocs e publicar automaticamente no Cloudflare Pages a cada push em `main`.
+
 ## Estado tecnico atual
 - Arquitetura multicamadas consolidada (Node.js, Python/FastAPI, PostgreSQL e filesystem).
 - Catalogo operacional de ferramentas ativo e documentado (`docs/UI_MAP.md`, `docs/tools/index.md`).

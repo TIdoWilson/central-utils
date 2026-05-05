@@ -44,6 +44,39 @@ npm run release:vps -- main
   - reinicia automaticamente `central-node`, `central-python`, `central-go` e `nginx` (ou `caddy`, se existir);
   - se `HAPI_API_TOKEN` estiver configurado, roda uma checagem pós-deploy de saúde da VPS.
 
+### 2.1 Documentação pública no Cloudflare Pages
+
+- A documentação pública em `https://central-utils.pages.dev/` deve publicar automaticamente a cada push em `main`.
+- O workflow versionado em `.github/workflows/deploy-docs-pages.yml` executa este fluxo:
+  - instala as dependências pinadas de documentação a partir de `requirements.txt`;
+  - regenera `docs/UI_MAP.md`, `docs/ui-map.json` e `docs/tools/index.md`;
+  - executa `mkdocs build --strict`;
+  - publica a pasta `site/` no projeto Cloudflare Pages `central-utils`.
+- Secrets obrigatórias no GitHub:
+  - `CLOUDFLARE_API_TOKEN`
+  - `CLOUDFLARE_ACCOUNT_ID`
+- Sem essas secrets, o workflow falha explicitamente e a documentação não sobe.
+- Esse caminho usa deploy direto no Cloudflare Pages via GitHub Actions, então não depende do build manual configurado no painel.
+- Se o nome do projeto no Cloudflare mudar, atualize também `--project-name=central-utils` no workflow.
+
+### 2.2 Primeiro setup do Cloudflare Pages
+
+1. Gerar um API Token no Cloudflare com permissão `Account / Cloudflare Pages / Edit`.
+2. Copiar o `Account ID` da conta que hospeda o projeto `central-utils`.
+3. No GitHub do repositório, cadastrar as secrets:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+4. Fazer um novo push em `main` ou disparar manualmente o workflow `Deploy Docs to Cloudflare Pages`.
+5. Validar a publicação em `https://central-utils.pages.dev/`.
+
+### 2.3 Diagnóstico rápido da documentação
+
+- Se o push chegar ao GitHub e a página não atualizar:
+  - abrir `Actions` e verificar o workflow `Deploy Docs to Cloudflare Pages`;
+  - confirmar que as secrets do Cloudflare continuam válidas;
+  - revisar falhas de build do MkDocs (`mkdocs build --strict`);
+  - conferir se o projeto Cloudflare Pages ainda se chama `central-utils`.
+
 ### 3. Deploy dentro da VPS
 
 - Se precisar executar direto no servidor, continue usando:
