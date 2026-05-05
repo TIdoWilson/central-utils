@@ -11,7 +11,7 @@
     "dev:node": "node src/worker.js",
     "dev:py": ".venv\\Scripts\\python.exe -m uvicorn api.integra_api:app --host 127.0.0.1 --port 8001",
     "dev": "concurrently --kill-others-on-fail \"npm run dev:node\" \"npm run dev:py\" \"npm run dev:go\"",
-    "dev:go": "cd go-api && go run .",
+    "dev:go": "node scripts/dev-go.mjs",
     "verify": "node scripts/verify.mjs",
     "migrate": "node scripts/migrate.mjs",
     "compare:env:vps": "node scripts/compare-env-vps.mjs",

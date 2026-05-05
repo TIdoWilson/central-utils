@@ -422,6 +422,9 @@ npm run dev:go
 cd go-api && go run .
 ```
 
+Se a porta 8002 ja estiver ocupada por outra instancia da API Go, `npm run dev:go` registra o aviso e mantem o restante do `npm run dev` em execucao.
+Se o comando `go` nao estiver instalado ou nao estiver no PATH, o wrapper apenas avisa e segue com os demais servicos.
+
 ---
 
 ## 🔗 Verificar Conectividade
@@ -449,6 +452,17 @@ taskkill /PID <PID> /F
 # Linux/macOS
 lsof -i :3000
 kill -9 <PID>
+```
+
+### "Port 8002 already in use"
+
+```bash
+# Verificar a instancia Go ativa
+npm run dev:go
+
+# Se quiser liberar a porta manualmente
+netstat -ano | findstr :8002
+taskkill /PID <PID> /F
 ```
 
 ### "ModuleNotFoundError: No module named 'fastapi'"

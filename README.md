@@ -182,7 +182,7 @@ central-utils/
 npm run dev              # Node + Python + Go em paralelo
 npm run dev:node        # Apenas Node.js
 npm run dev:py         # Apenas Python API
-npm run dev:go         # Apenas Go API
+npm run dev:go         # Apenas Go API (ignora 8002 se ja houver uma instancia ativa e pula se go nao estiver no PATH)
 
 # Produção
 npm start              # Iniciar em produção
@@ -270,6 +270,7 @@ window.location.href = `/download/${resultPath}`;
 | Problema | Solução |
 |----------|---------|
 | Port 3000 in use | `lsof -i :3000` / `kill -9 PID` |
+| Port 8002 in use | `npm run dev:go` avisa e continua se a API Go ja estiver rodando |
 | Module not found | `npm install` / `pip install -r api/requirements.txt` |
 | DB connection error | Verificar PostgreSQL, confirmar .env |
 | SERPRO auth fails | Confirmar certificados em `src/certs/` |

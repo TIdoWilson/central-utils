@@ -259,7 +259,7 @@ $ npm run dev
 # Inicia em paralelo:
 1. npm run dev:node  → Node.js server (porta 3000)
 2. npm run dev:py    → FastAPI (porta 8001)
-3. npm run dev:go    → Go API (porta 8002)
+3. npm run dev:go    → Go API (porta 8002, opcional; se ja estiver em uso, o dev continua)
 ```
 
 **Ordem recomendada de inicialização:**
@@ -270,7 +270,7 @@ $ npm run dev
 
 ### Produção
 
-Veja [docs/deployment/01-deploy.md](../deployment/01-deploy.md)
+Veja [docs/deployment/01-deploy.md](./deployment/01-deploy.md)
 
 ## 📊 Padrões de Comunicação
 
