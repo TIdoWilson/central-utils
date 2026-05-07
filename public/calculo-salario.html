@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Cálculo de Salário / Pró-labore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* ---- Abas ---- */
+        .sal-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .sal-tab {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border, #d1d5db);
+            background: #fff;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            transition: background 0.15s, color 0.15s;
+        }
+        .sal-tab:hover { background: #f3f4f6; }
+        .sal-tab.active { background: var(--primary, #2563eb); color: #fff; border-color: var(--primary, #2563eb); }
+        .sal-tab-new { border-style: dashed; color: #6b7280; }
+        .sal-tab-new:hover { color: #374151; }
+        .sal-section { display: none; }
+        .sal-section.active { display: block; }
+
+        /* ---- Títulos internos ---- */
+        .sal-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            margin: 18px 0 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+        }
+
+        /* ---- Campos HH:MM / erro ---- */
+        .sal-input-time { font-family: ui-monospace, 'Cascadia Code', monospace; letter-spacing: 0.04em; }
+        .sal-input-error { border-color: #ef4444 !important; box-shadow: 0 0 0 2px rgba(239,68,68,0.2) !important; }
+
+        /* ---- Botão ícone ---- */
+        .btn-icon { padding: 6px 10px; font-size: 15px; line-height: 1; }
+
+        /* ---- Cores ---- */
+        .destaque    { color: #16a34a; }
+        .desconto    { color: #dc2626; }
+        .neutro      { color: #2563eb; }
+        .informativo { color: #0891b2; }
+
+        /* ---- Banner nova aba ---- */
+        .sal-newtab-warning {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 13px;
+            color: #78350f;
+        }
+        .sal-newtab-warning strong { color: #92400e; }
+        .sal-newtab-warning .btn { flex-shrink: 0; font-size: 12px; padding: 4px 14px; }
+
+        /* ---- KPI bar ---- */
+        .sal-kpi-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin: 18px 0 0;
+        }
+        .sal-kpi { display: flex; flex-direction: column; gap: 2px; min-width: 140px; flex: 1; }
+        .sal-kpi-label { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; }
+        .sal-kpi-value { font-size: 17px; font-weight: 800; color: #1e293b; }
+        .sal-kpi-value.destaque    { color: #16a34a; font-size: 22px; }
+        .sal-kpi-value.desconto    { color: #dc2626; }
+        .sal-kpi-value.informativo { color: #0891b2; }
+        .sal-kpi-sub { font-size: 11px; color: #94a3b8; margin-top: 1px; }
+        .sal-kpi-sep { width: 1px; background: #e2e8f0; align-self: stretch; margin: 0 4px; }
+
+        /* ---- Resultados detalhados ---- */
+        .sal-results { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin-top: 16px; }
+        .sal-result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+        .sal-result-item { display: flex; flex-direction: column; gap: 2px; }
+        .sal-result-label { font-size: 10px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+        .sal-result-value { font-size: 17px; font-weight: 700; color: #1e293b; }
+        .sal-result-value.destaque    { color: #16a34a; font-size: 22px; }
+        .sal-result-value.desconto    { color: #dc2626; }
+        .sal-result-value.neutro      { color: #2563eb; }
+        .sal-result-value.informativo { color: #0891b2; }
+        .sal-divider { border: none; border-top: 1px solid #e2e8f0; margin: 14px 0; }
+        .sal-inss-detail, .sal-irrf-detail { font-size: 11px; color: #94a3b8; margin-top: 3px; line-height: 1.4; }
+
+        /* ---- Modais ---- */
+        dialog.sal-modal {
+            border: none;
+            border-radius: 12px;
+            padding: 0;
+            max-width: 700px;
+            width: calc(100% - 32px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        dialog.sal-modal::backdrop { background: rgba(0,0,0,0.4); }
+        .sal-modal-header { padding: 18px 24px 14px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .sal-modal-header h2 { margin: 0; font-size: 16px; color: #1e293b; }
+        .sal-modal-close { background: none; border: none; cursor: pointer; font-size: 18px; color: #94a3b8; padding: 2px 6px; border-radius: 4px; }
+        .sal-modal-close:hover { background: #f1f5f9; color: #475569; }
+        .sal-modal-body { padding: 20px 24px; max-height: 68vh; overflow-y: auto; }
+        .sal-modal-footer { padding: 12px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 8px; }
+
+        /* ---- Tabelas de faixas ---- */
+        .sal-band-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px; }
+        .sal-band-table th { text-align: left; color: #64748b; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 6px; border-bottom: 2px solid #e2e8f0; }
+        .sal-band-table td { padding: 3px 4px; }
+        .sal-band-idx { width: 28px; text-align: center; color: #94a3b8; font-size: 11px; }
+        .sal-band-table input { width: 100%; border: 1px solid #d1d5db; border-radius: 4px; padding: 4px 6px; font-size: 12px; font-family: ui-monospace, monospace; background: #fff; }
+        .sal-band-table input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,0.2); }
+        .sal-band-table input:disabled { background: #f1f5f9; color: #94a3b8; }
+
+        /* ---- Params avançados ---- */
+        .sal-advanced-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-top: 12px; }
+        .sal-param-modified { background: #fffbeb !important; }
+        .sal-param-badge { display: inline-block; background: #fef3c7; color: #92400e; border-radius: 4px; font-size: 10px; font-weight: 700; padding: 1px 5px; margin-left: 4px; vertical-align: middle; }
+
+        /* ---- Gerenciar abas ---- */
+        .sal-tabmgr-list { display: flex; flex-direction: column; gap: 8px; }
+        .sal-tabmgr-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; gap: 12px; }
+        .sal-tabmgr-name { font-size: 14px; font-weight: 500; color: #374151; }
+        .sal-tabmgr-dimmed { color: #94a3b8; }
+        .sal-tabmgr-note { font-size: 12px; color: #94a3b8; margin: 14px 0 0; }
+        .sal-btn-danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+        .sal-btn-danger:hover { background: #fecaca; }
+
+        /* ---- Eventos adicionais ---- */
+        .sal-extra-item { display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+        .sal-extra-item .auth-input { margin: 0; }
+        .sal-extra-item .sal-extra-label { flex: 1.5; min-width: 0; }
+        .sal-extra-item .sal-extra-value { flex: 1; min-width: 100px; max-width: 160px; }
+        .sal-extra-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+        .sal-extra-badge.earning  { background: #dcfce7; color: #16a34a; }
+        .sal-extra-badge.deduction{ background: #fee2e2; color: #dc2626; }
+        .sal-extra-remove { background: none; border: 1px solid #d1d5db; border-radius: 4px; color: #94a3b8; cursor: pointer; padding: 3px 7px; font-size: 13px; flex-shrink: 0; }
+        .sal-extra-remove:hover { background: #fee2e2; border-color: #fca5a5; color: #b91c1c; }
+
+        /* ---- Positivo (proventos adicionais) ---- */
+        .positivo { color: #16a34a; }
+        .sal-result-value.positivo { color: #16a34a; }
+
+        /* ---- Layout unificado: Dados + HE + Período + Calendário ---- */
+        .sal-main-row { display: flex; flex-wrap: wrap; justify-content: space-between; row-gap: 16px; align-items: flex-start; margin-top: 4px; }
+        .sal-col-dados { flex: 1 1 160px; min-width: 160px; max-width: 280px; display: flex; flex-direction: column; gap: 8px; }
+        .sal-col-dados .auth-input { width: 100%; }
+        .sal-col-divider { width: 1px; background: #e2e8f0; align-self: stretch; flex-shrink: 0; }
+        .sal-col-he { flex: 0 0 auto; display: flex; flex-direction: column; gap: 6px; }
+        .sal-col-he .auth-input { width: 86px; }
+        .sal-col-periodo { flex: 0 0 auto; display: flex; flex-direction: column; gap: 6px; }
+        .sal-cal-cal { flex: 0 0 auto; position: relative; }
+        .sal-periodo-inputs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .sal-city-wrap { position: relative; }
+        /* Calendário — tamanho fixo, células proporcionais */
+        #calendarioInline { width: 310px; }
+        #calendarioInline .sal-cal-day { min-height: 34px; padding: 3px 2px; cursor: pointer; }
+        #calendarioInline .sal-cal-day:not(.empty):hover { filter: brightness(0.92); }
+        #calendarioInline .sal-cal-day-num { font-size: 12px; }
+        #calendarioInline .sal-cal-day-name { font-size: 8px; }
+        #calendarioInline .sal-cal-legend { margin-top: 6px; padding-top: 6px; gap: 5px; }
+        #calendarioInline .sal-cal-legend-item { font-size: 10px; }
+        /* ---- Popover de dia ---- */
+        .sal-cal-popover {
+            position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+            background: #fff; border: 1px solid #d1d5db; border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15); padding: 12px 14px; z-index: 400;
+            min-width: 260px;
+        }
+        .sal-cal-pop-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .sal-cal-pop-date { font-weight: 700; font-size: 13px; color: #1e293b; }
+        .sal-cal-pop-close { background: none; border: none; cursor: pointer; font-size: 18px; color: #94a3b8; line-height: 1; padding: 0 2px; }
+        .sal-cal-pop-close:hover { color: #374151; }
+        .sal-cal-pop-event { display: flex; align-items: center; gap: 6px; padding: 4px 0; border-bottom: 1px solid #f1f5f9; font-size: 12px; }
+        .sal-cal-pop-event:last-child { border-bottom: none; }
+        .sal-cal-pop-event-name { flex: 1; color: #374151; }
+        .sal-cal-pop-del { background: none; border: none; cursor: pointer; color: #dc2626; font-size: 14px; padding: 0 4px; }
+        .sal-cal-pop-del:hover { color: #991b1b; }
+        .sal-cal-pop-add { border-top: 1px solid #e2e8f0; padding-top: 10px; margin-top: 4px; }
+        .sal-cal-pop-add-title { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em; }
+        .sal-cal-pop-form { display: flex; flex-direction: column; gap: 6px; }
+        .sal-cal-pop-form .auth-input { width: 100%; font-size: 12px; padding: 6px 10px; }
+        .sal-cal-pop-actions { display: flex; gap: 6px; margin-top: 4px; }
+        .sal-city-dropdown {
+            position: absolute; top: 100%; left: 0; right: 0; z-index: 200;
+            background: #fff; border: 1px solid #d1d5db; border-top: none;
+            border-radius: 0 0 6px 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            max-height: 200px; overflow-y: auto;
+        }
+        .sal-city-option { padding: 8px 12px; cursor: pointer; font-size: 13px; color: #374151; border-bottom: 1px solid #f1f5f9; }
+        .sal-city-option:last-child { border-bottom: none; }
+        .sal-city-option:hover { background: #eff6ff; color: #1d4ed8; }
+        .sal-city-state { color: #94a3b8; font-size: 11px; }
+        .sal-feriados-card {
+            flex: 0 0 260px; background: #f8fafc; border: 1px solid #e2e8f0;
+            border-radius: 10px; padding: 14px 16px; font-size: 13px;
+            max-height: 340px; overflow-y: auto;
+        }
+        .sal-feriados-card-title { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+        .sal-feriados-group { margin-bottom: 8px; border-radius: 7px; overflow: hidden; }
+        .sal-feriados-group-title {
+            font-size: 11px; font-weight: 700; padding: 5px 8px;
+            display: flex; align-items: center; gap: 6px;
+            text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .sal-feriados-group.nacional .sal-feriados-group-title  { background: #fee2e2; color: #991b1b; }
+        .sal-feriados-group.estadual .sal-feriados-group-title  { background: #fef3c7; color: #92400e; }
+        .sal-feriados-group.municipal .sal-feriados-group-title { background: #d1fae5; color: #065f46; }
+        .sal-feriados-group.fac .sal-feriados-group-title       { background: #f3e8ff; color: #6b21a8; }
+        .sal-feriados-group-count { border-radius: 10px; font-size: 10px; font-weight: 700; padding: 1px 6px; }
+        .sal-feriados-group.nacional  .sal-feriados-group-count { background: #fca5a5; color: #7f1d1d; }
+        .sal-feriados-group.estadual  .sal-feriados-group-count { background: #fcd34d; color: #78350f; }
+        .sal-feriados-group.municipal .sal-feriados-group-count { background: #6ee7b7; color: #064e3b; }
+        .sal-feriados-group.fac       .sal-feriados-group-count { background: #d8b4fe; color: #4c1d95; }
+        .sal-feriados-group-items { padding: 4px 8px 6px; }
+        .sal-feriados-group.nacional  .sal-feriados-group-items { background: #fff5f5; }
+        .sal-feriados-group.estadual  .sal-feriados-group-items { background: #fffbeb; }
+        .sal-feriados-group.municipal .sal-feriados-group-items { background: #f0fdf4; }
+        .sal-feriados-group.fac       .sal-feriados-group-items { background: #faf5ff; }
+        .sal-feriados-item { font-size: 12px; color: #374151; padding: 2px 0; display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; }
+        .sal-feriados-date { color: #94a3b8; font-size: 11px; flex-shrink: 0; font-family: ui-monospace, monospace; }
+        .sal-fac-badge { background: #fef3c7; color: #92400e; border-radius: 3px; font-size: 10px; font-weight: 700; padding: 1px 4px; flex-shrink: 0; }
+        /* ---- Datas comemorativas ---- */
+        .sal-feriados-group.comemorativa .sal-feriados-group-title  { background: #e0f2fe; color: #0369a1; }
+        .sal-feriados-group.comemorativa .sal-feriados-group-count  { background: #bae6fd; color: #075985; }
+        .sal-feriados-group.comemorativa .sal-feriados-group-items  { background: #f0f9ff; }
+
+        /* ---- Calendário modal ---- */
+        .sal-cal-header { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; margin-bottom: 4px; }
+        .sal-cal-dayname { text-align: center; font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; padding: 4px 2px; }
+        .sal-cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+        .sal-cal-day { padding: 5px 3px; text-align: center; border-radius: 6px; min-height: 48px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .sal-cal-day.empty { background: transparent; }
+        .sal-cal-day.weekend { background: #f1f5f9; color: #94a3b8; }
+        .sal-cal-day.today { outline: 2px solid #2563eb; outline-offset: -2px; }
+        .sal-cal-day.feriado-nacional  { background: #fee2e2; color: #991b1b; }
+        .sal-cal-day.feriado-estadual  { background: #fef3c7; color: #92400e; }
+        .sal-cal-day.feriado-municipal { background: #d1fae5; color: #065f46; }
+        .sal-cal-day.fac { background: #f3e8ff; color: #6b21a8; }
+        .sal-cal-day.comemorativa { background: #e0f2fe; color: #0369a1; }
+        .sal-cal-day-num { font-size: 14px; font-weight: 600; }
+        .sal-cal-day-name { font-size: 9px; line-height: 1.2; text-align: center; word-break: break-word; }
+        .sal-cal-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding-top: 10px; border-top: 1px solid #e2e8f0; }
+        .sal-cal-legend-item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #64748b; }
+        .sal-cal-legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+        /* ---- Flags de incidência em extras ---- */
+        .sal-flag-chips { display: flex; gap: 3px; }
+        .sal-flag-chip {
+            font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 4px; cursor: pointer;
+            border: 1px solid #cbd5e1; color: #94a3b8; background: #f8fafc;
+            text-transform: uppercase; letter-spacing: 0.03em; user-select: none;
+            transition: background .15s, color .15s;
+        }
+        .sal-flag-chip.active { background: #dbeafe; border-color: #93c5fd; color: #1d4ed8; }
+        .sal-flag-chip:hover { border-color: #93c5fd; color: #1d4ed8; }
+    </style>
+</head>
+
+<body class="app-body nfe-body">
+    <div class="nfe-layout calculo-salario-page">
+        <aside class="nfe-sidebar">
+            <div class="nfe-sidebar-top">
+                <div class="nfe-sidebar-logo">
+                    <span class="logo-circle">WL</span>
+                    <span class="logo-text">Portal</span>
+                </div>
+                <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+            <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+        </aside>
+
+        <main class="nfe-main">
+            <header class="nfe-header">
+                <div class="nfe-breadcrumb">Portal / Pessoal / Cálculo de Salário</div>
+                <h1>Cálculo de Salário / Pró-labore</h1>
+                <p>Selecione a aba/ano para calcular folha CLT, pró-labore ou multa rescisória. Todos os cálculos seguem as tabelas da planilha <strong>SALARIO 4.xlsx</strong>.</p>
+            </header>
+
+            <!-- ===== SEÇÃO CLT / PROLABORE ===== -->
+            <section class="nfe-card sal-section active" id="sec-clt">
+                <div class="nfe-card-header">
+                    <div>
+                        <h2 id="cltTitle">Folha de Pagamento — 2026</h2>
+                        <p class="nfe-card-subtitle" id="cltSubtitle">Tabela INSS 2026 progressiva · Tabela IRRF 2026</p>
+                    </div>
+                    <div class="nfe-table-actions">
+                        <button class="btn btn-secondary btn-icon" type="button" id="btnParams" title="Parâmetros avançados (tabelas INSS/IRRF e percentuais)">⚙</button>
+                        <button class="btn btn-secondary" type="button" id="btnLimpar">Limpar</button>
+                        <button class="btn btn-primary"   type="button" id="btnExemplo">Preencher Exemplo</button>
+                    </div>
+                </div>
+
+                <!-- Banner — nova aba precisa de revisão -->
+                <div id="newTabWarning" class="sal-newtab-warning" style="display:none">
+                    <span>Esta aba foi criada com base em <strong id="newTabWarningSource"></strong>. Confira e ajuste os <strong>parâmetros avançados (⚙)</strong> antes de usar — as tabelas INSS e IRRF e os percentuais precisam ser atualizados para o novo ano.</span>
+                    <button class="btn btn-secondary" type="button" id="btnDismissWarning">Entendido ✓</button>
+                </div>
+
+                <!-- Linha principal: Dados+HE | Proventos/Descontos | Cidade | Período | Calendário | Card -->
+                <div class="sal-section-title">Dados Principais</div>
+                <div class="sal-main-row">
+
+                    <!-- Col 1: Salário Base + Dependentes + HE -->
+                    <div class="sal-col-dados">
+                        <label class="auth-label" style="margin:0">
+                            Salário Base (R$)
+                            <input id="salBase" class="auth-input" type="number" step="0.01" min="0" placeholder="ex.: 3395,00" />
+                        </label>
+                        <label class="auth-label" style="margin:0">
+                            Dependentes (qtde)
+                            <input id="numDep" class="auth-input" type="number" step="1" min="0" value="0" />
+                        </label>
+                        <label class="auth-label" style="margin:0">
+                            HE 50% (HH:MM)
+                            <input id="he50" class="auth-input sal-input-time" type="text" placeholder="0:00" autocomplete="off" />
+                        </label>
+                        <label class="auth-label" style="margin:0">
+                            HE 100% (HH:MM)
+                            <input id="he100" class="auth-input sal-input-time" type="text" placeholder="0:00" autocomplete="off" />
+                        </label>
+                        <label class="auth-label" style="margin:0">
+                            Ad. Noturno 20%
+                            <input id="adcNot" class="auth-input sal-input-time" type="text" placeholder="0:00" autocomplete="off" />
+                        </label>
+                        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:2px">
+                            <label class="auth-label" style="margin:0">
+                                Dias Trab.
+                                <input id="diasTrab" class="auth-input" type="number" step="1" min="0" max="31" value="30" style="width:60px" />
+                            </label>
+                            <label class="auth-label" style="margin:0">
+                                Dias do Mês
+                                <input id="diasMes" class="auth-input" type="number" step="1" min="1" max="31" value="30" style="width:66px" />
+                            </label>
+                            <label class="auth-label" style="margin:0">
+                                Faltas
+                                <input id="faltas" class="auth-input" type="number" step="1" min="0" max="31" value="0" style="width:50px" title="Faltas injustificadas (desc. dia + reflexo DSR)" />
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="sal-col-divider"></div>
+
+                    <!-- Col 2: Proventos / Descontos (inline) -->
+                    <div class="sal-col-he">
+                        <div id="salExtraTitle" class="sal-section-title" style="margin-top:18px;display:none">Proventos / Descontos Adicionais</div>
+                        <div style="display:flex;gap:8px;margin-bottom:6px">
+                            <button class="btn btn-secondary" style="font-size:12px;padding:5px 12px" type="button" id="btnAddEarning">+ Provento</button>
+                            <button class="btn btn-secondary" style="font-size:12px;padding:5px 12px" type="button" id="btnAddDeduction">− Desconto</button>
+                        </div>
+                        <div id="salExtraList"></div>
+                    </div>
+
+                    <div class="sal-col-divider"></div>
+
+                    <!-- Col 3: Município + Dias Úteis + Domingos/Feriados -->
+                    <div class="sal-col-periodo">
+                        <div class="sal-city-wrap">
+                            <label class="auth-label" style="margin:0">
+                                Município <span style="font-weight:400;color:#94a3b8;font-size:10px">(opcional)</span>
+                                <input id="cidadeInput" class="auth-input" type="text" placeholder="Digite para filtrar..." disabled autocomplete="off" style="width:212px" />
+                            </label>
+                            <div id="cidadeDropdown" class="sal-city-dropdown" style="display:none"></div>
+                        </div>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <label class="auth-label" style="margin:0">
+                                Dias Úteis
+                                <input id="diasUteis" class="auth-input" type="number" step="1" min="1" max="31" title="Seg–Sáb sem feriado (divisor DSR)" style="width:68px" />
+                            </label>
+                            <label class="auth-label" style="margin:0">
+                                Domingos/Feriados
+                                <input id="domingosFer" class="auth-input" type="number" step="1" min="0" max="31" title="Dom + feriados Seg–Sáb (multiplicador DSR)" style="width:80px" />
+                            </label>
+                        </div>
+                        <label class="auth-label" style="margin:0;display:flex;align-items:center;gap:6px;cursor:pointer;flex-direction:row;margin-top:4px">
+                            <input id="pontosFacCheckbox" type="checkbox" style="margin:0;width:auto;cursor:pointer" />
+                            <span style="font-weight:500;font-size:12px;color:#475569">Pontos fac. como feriado</span>
+                        </label>
+                    </div>
+
+                    <!-- Calendário inline + Mês/Ano + popover -->
+                    <div class="sal-cal-cal">
+                        <div class="sal-periodo-inputs">
+                            <label class="auth-label" style="margin:0">
+                                Mês
+                                <select id="periodoMes" class="auth-input" style="width:225px">
+                                    <option value="">— Selecione —</option>
+                                    <option value="1">Janeiro</option>
+                                    <option value="2">Fevereiro</option>
+                                    <option value="3">Março</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Maio</option>
+                                    <option value="6">Junho</option>
+                                    <option value="7">Julho</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Setembro</option>
+                                    <option value="10">Outubro</option>
+                                    <option value="11">Novembro</option>
+                                    <option value="12">Dezembro</option>
+                                </select>
+                            </label>
+                            <label class="auth-label" style="margin:0">
+                                Ano
+                                <input id="periodoAno" class="auth-input" type="number" step="1" min="2020" max="2040" placeholder="2026" style="width:74px" />
+                            </label>
+                        </div>
+                        <div id="calendarioInline" style="display:none"></div>
+                        <div id="calDayPopover" class="sal-cal-popover" style="display:none"></div>
+                    </div>
+
+                    <!-- Col 6: Card de feriados -->
+                    <div id="feriadosCard" class="sal-feriados-card" style="display:none"></div>
+
+                </div>
+
+                <!-- KPI bar — destaques -->
+                <div class="sal-kpi-bar">
+                    <div class="sal-kpi">
+                        <span class="sal-kpi-label">(+) Salário Bruto</span>
+                        <span class="sal-kpi-value" id="kpiBruto">R$ —</span>
+                    </div>
+                    <div class="sal-kpi-sep"></div>
+                    <div class="sal-kpi">
+                        <span class="sal-kpi-label">(−) Total Descontos</span>
+                        <span class="sal-kpi-value desconto" id="kpiDescontos">R$ —</span>
+                        <span class="sal-kpi-sub" id="kpiPctDesc">—</span>
+                    </div>
+                </div>
+
+                <!-- Resultados detalhados -->
+                <div class="sal-results">
+                    <div class="sal-section-title" style="margin-top:0">Detalhamento</div>
+
+                    <!-- Linha 1: informativos -->
+                    <div class="sal-result-grid">
+                        <div class="sal-result-item">
+                            <span class="sal-result-label">(i) Valor da Hora</span>
+                            <span class="sal-result-value neutro" id="rValorHora">R$ —</span>
+                        </div>
+                        <div class="sal-result-item">
+                            <span class="sal-result-label">(i) Salário Proporcional</span>
+                            <span class="sal-result-value neutro" id="rSalProp">R$ —</span>
+                        </div>
+                        <div class="sal-result-item">
+                            <span class="sal-result-label">(i) HE + Adc Not + DSR</span>
+                            <span class="sal-result-value neutro" id="rHorasTotal">R$ —</span>
+                        </div>
+                        <div class="sal-result-item">
+                            <span class="sal-result-label">(i) Base INSS/IRRF/FGTS</span>
+                            <span class="sal-result-value informativo" id="rBaseINSS">R$ —</span>
+                        </div>
+                        <div class="sal-result-item" id="rFaltasRow" style="display:none">
+                            <span class="sal-result-label">(−) Desconto Faltas</span>
+                            <span class="sal-result-value desconto" id="rFaltasValor">R$ —</span>
+                            <span class="sal-inss-detail" id="rFaltasDetalhe"></span>
+                        </div>
+                    </div>
+
+                    <hr class="sal-divider" />
+
+                    <!-- Linha 2: descontos + FGTS -->
+                    <div class="sal-result-grid">
+                        <div class="sal-result-item">
+                            <span class="sal-result-label">(−) INSS</span>
+                            <span class="sal-result-value desconto" id="rINSS">R$ —</span>
+                            <span class="sal-inss-detail" id="rINSSDetalhe"></span>
+                        </div>
+                        <div class="sal-result-item">
+                            <span class="sal-result-label">(−) IRRF</span>
+                            <span class="sal-result-value desconto" id="rIRRF">R$ —</span>
+                            <span class="sal-irrf-detail" id="rIRRFDetalhe"></span>
+                        </div>
+                        <div class="sal-result-item">
+                            <span class="sal-result-label">(−) Dependentes</span>
+                            <span class="sal-result-value desconto" id="rDeducaoDep">R$ —</span>
+                        </div>
+                        <div class="sal-result-item">
+                            <span class="sal-result-label">(i) FGTS</span>
+                            <span class="sal-result-value informativo" id="rFGTS">R$ —</span>
+                        </div>
+                    </div>
+
+                    <!-- Extra earnings/deductions detail -->
+                    <div id="rExtraContainer" style="display:none"></div>
+
+                    <hr class="sal-divider" />
+
+                    <!-- Linha 3: líquido -->
+                    <div class="sal-result-grid">
+                        <div class="sal-result-item">
+                            <span class="sal-result-label">(=) Salário Líquido</span>
+                            <span class="sal-result-value destaque" id="rLiquido">R$ —</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SEÇÃO FOLHA 2026 open ===== -->
+            <section class="nfe-card sal-section" id="sec-open">
+                <div class="nfe-card-header">
+                    <div>
+                        <h2>FOLHA 2026 open — Dois Salários</h2>
+                        <p class="nfe-card-subtitle">Tabela INSS 2026 · Tabela IRRF 2026. Calcula dois funcionários/cenários simultaneamente.</p>
+                    </div>
+                    <div class="nfe-table-actions">
+                        <button class="btn btn-secondary" type="button" id="btnLimparOpen">Limpar</button>
+                        <button class="btn btn-primary"   type="button" id="btnExemploOpen">Preencher Exemplo</button>
+                    </div>
+                </div>
+
+                <div class="sal-section-title">Funcionário 1 (Salário Principal)</div>
+                <div class="nfe-row" style="grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));">
+                    <label class="auth-label">Salário Base (R$)<input id="o_salBase1" class="auth-input" type="number" step="0.01" min="0" placeholder="ex.: 8475,55" /></label>
+                    <label class="auth-label">Dias Trabalhados<input id="o_diasTrab1" class="auth-input" type="number" step="1" min="0" max="31" value="30" /></label>
+                    <label class="auth-label">Dias do Mês<input id="o_diasMes1" class="auth-input" type="number" step="1" min="1" max="31" value="30" /></label>
+                    <label class="auth-label">Dependentes (qtde)<input id="o_numDep1" class="auth-input" type="number" step="1" min="0" value="1" /></label>
+                    <label class="auth-label">Dias Úteis<input id="o_diasUteis1" class="auth-input" type="number" step="1" min="1" max="31" value="23" /></label>
+                    <label class="auth-label">Domingos/Feriados<input id="o_domingosFer1" class="auth-input" type="number" step="1" min="0" max="15" value="7" /></label>
+                </div>
+
+                <div class="sal-section-title" style="margin-top:20px">Funcionário 2 (Salário Open)</div>
+                <div class="nfe-row" style="grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));">
+                    <label class="auth-label">Salário Base Open (R$)<input id="o_salBase2" class="auth-input" type="number" step="0.01" min="0" placeholder="ex.: 10518,89" /></label>
+                    <label class="auth-label">Dias Trabalhados<input id="o_diasTrab2" class="auth-input" type="number" step="1" min="0" max="31" value="30" /></label>
+                    <label class="auth-label">Dias do Mês<input id="o_diasMes2" class="auth-input" type="number" step="1" min="1" max="31" value="30" /></label>
+                    <label class="auth-label">Dependentes (qtde)<input id="o_numDep2" class="auth-input" type="number" step="1" min="0" value="1" /></label>
+                </div>
+
+                <hr class="sal-divider" />
+                <div class="sal-results">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                        <div>
+                            <div class="sal-section-title" style="margin-top:0">Funcionário 1</div>
+                            <div class="sal-result-item"><span class="sal-result-label">(i) Base INSS</span><span class="sal-result-value informativo" id="o_rBase1">R$ —</span></div>
+                            <div class="sal-result-item" style="margin-top:8px"><span class="sal-result-label">(−) INSS</span><span class="sal-result-value desconto" id="o_rINSS1">R$ —</span></div>
+                            <div class="sal-result-item" style="margin-top:8px"><span class="sal-result-label">(−) IRRF</span><span class="sal-result-value desconto" id="o_rIRRF1">R$ —</span></div>
+                            <div class="sal-result-item" style="margin-top:8px"><span class="sal-result-label">(i) FGTS</span><span class="sal-result-value informativo" id="o_rFGTS1">R$ —</span></div>
+                            <div class="sal-result-item" style="margin-top:10px"><span class="sal-result-label">(=) Líquido</span><span class="sal-result-value destaque" id="o_rLiq1">R$ —</span></div>
+                        </div>
+                        <div>
+                            <div class="sal-section-title" style="margin-top:0">Funcionário 2 (Open)</div>
+                            <div class="sal-result-item"><span class="sal-result-label">(i) Base INSS</span><span class="sal-result-value informativo" id="o_rBase2">R$ —</span></div>
+                            <div class="sal-result-item" style="margin-top:8px"><span class="sal-result-label">(−) INSS</span><span class="sal-result-value desconto" id="o_rINSS2">R$ —</span></div>
+                            <div class="sal-result-item" style="margin-top:8px"><span class="sal-result-label">(−) IRRF</span><span class="sal-result-value desconto" id="o_rIRRF2">R$ —</span></div>
+                            <div class="sal-result-item" style="margin-top:8px"><span class="sal-result-label">(i) FGTS</span><span class="sal-result-value informativo" id="o_rFGTS2">R$ —</span></div>
+                            <div class="sal-result-item" style="margin-top:10px"><span class="sal-result-label">(=) Líquido</span><span class="sal-result-value destaque" id="o_rLiq2">R$ —</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SEÇÃO MULTA FGTS ===== -->
+            <section class="nfe-card sal-section" id="sec-multa">
+                <div class="nfe-card-header">
+                    <div>
+                        <h2>Multa FGTS — Rescisão</h2>
+                        <p class="nfe-card-subtitle">Cálculo da multa de 40% sobre o saldo do FGTS.</p>
+                    </div>
+                    <div class="nfe-table-actions">
+                        <button class="btn btn-secondary" type="button" id="btnLimparMulta">Limpar</button>
+                        <button class="btn btn-primary"   type="button" id="btnExemploMulta">Preencher Exemplo</button>
+                    </div>
+                </div>
+                <div class="nfe-row" style="grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));">
+                    <label class="auth-label">Saldo FGTS Acumulado (R$)<input id="mSaldoFGTS" class="auth-input" type="number" step="0.01" min="0" placeholder="ex.: 29862,45" /></label>
+                    <label class="auth-label">Base do Último Mês (R$)<input id="mBaseUltimoMes" class="auth-input" type="number" step="0.01" min="0" placeholder="ex.: 10905,26" /></label>
+                    <label class="auth-label">Taxa de Multa (%)<input id="mTaxaMulta" class="auth-input" type="number" step="1" min="0" max="100" value="40" /></label>
+                </div>
+                <hr class="sal-divider" />
+                <div class="sal-results">
+                    <div class="sal-result-grid">
+                        <div class="sal-result-item"><span class="sal-result-label">(i) FGTS do Mês (base × 8%)</span><span class="sal-result-value informativo" id="mFGTSMes">R$ —</span></div>
+                        <div class="sal-result-item"><span class="sal-result-label">(i) Total FGTS (saldo + mês)</span><span class="sal-result-value informativo" id="mTotalFGTS">R$ —</span></div>
+                        <div class="sal-result-item"><span class="sal-result-label">(−) Multa (total × taxa)</span><span class="sal-result-value desconto" id="mMulta">R$ —</span></div>
+                        <div class="sal-result-item"><span class="sal-result-label">(=) GRRF (multa + FGTS mês)</span><span class="sal-result-value destaque" id="mGRRF">R$ —</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seletor de aba -->
+            <section class="nfe-card">
+                <div class="nfe-card-header">
+                    <div><h2>Aba / Ano</h2></div>
+                    <div class="nfe-table-actions">
+                        <button class="btn btn-secondary" type="button" id="btnManageTabs" style="font-size:12px">Gerenciar abas</button>
+                    </div>
+                </div>
+                <div class="sal-tabs" id="salTabs">
+                    <button class="sal-tab active" data-tab="FOLHA 2026">FOLHA 2026</button>
+                    <button class="sal-tab" data-tab="FOLHA 2025 (2)">FOLHA 2025 (2)</button>
+                    <button class="sal-tab" data-tab="FOLHA 2025">FOLHA 2025</button>
+                    <button class="sal-tab" data-tab="FOLHA 2024">FOLHA 2024</button>
+                    <button class="sal-tab" data-tab="FOLHA 2026 open">FOLHA 2026 open</button>
+                    <button class="sal-tab" data-tab="PROLABORE 26">PROLABORE 26</button>
+                    <button class="sal-tab" data-tab="PROLABORE 25">PROLABORE 25</button>
+                    <button class="sal-tab" data-tab="PROLABORE">PROLABORE</button>
+                    <button class="sal-tab" data-tab="MULTA FGTS">MULTA FGTS</button>
+                    <button class="sal-tab sal-tab-new" id="btnNovaAba" type="button">+ Nova aba</button>
+                </div>
+            </section>
+
+            <!-- ===== MODAL — Parâmetros avançados ===== -->
+            <dialog id="paramsModal" class="sal-modal">
+                <div class="sal-modal-header">
+                    <h2 id="paramsModalTitle">Parâmetros avançados</h2>
+                    <button class="sal-modal-close" id="btnCloseParamsModal" type="button" aria-label="Fechar">✕</button>
+                </div>
+                <div class="sal-modal-body" id="paramsModalBody"></div>
+                <div class="sal-modal-footer">
+                    <span id="paramsSaveStatus" style="font-size:13px;color:#16a34a;font-weight:600;margin-right:auto"></span>
+                    <button class="btn btn-secondary" type="button" id="btnCloseParamsModalFooter">Fechar</button>
+                    <button class="btn btn-primary"   type="button" id="btnSaveParamsModal" disabled>Salvar</button>
+                </div>
+            </dialog>
+
+            <!-- ===== MODAL — Nova aba ===== -->
+            <dialog id="newTabModal" class="sal-modal">
+                <div class="sal-modal-header">
+                    <h2>Nova aba</h2>
+                    <button class="sal-modal-close" id="btnCancelNewTabX" type="button" aria-label="Fechar">✕</button>
+                </div>
+                <div class="sal-modal-body">
+                    <p style="color:#64748b;font-size:13px;margin:0 0 16px">
+                        Cria uma cópia de uma aba existente com os parâmetros atuais (incluindo edições nas tabelas INSS/IRRF).
+                        Após criar, um aviso lembrará de revisar os valores para o novo ano.
+                    </p>
+                    <label class="auth-label">Nome da nova aba<input id="newTabName" class="auth-input" type="text" placeholder="ex.: FOLHA 2027" maxlength="40" /></label>
+                    <label class="auth-label" style="margin-top:12px">Baseado em<select id="newTabSource" class="auth-input"></select></label>
+                </div>
+                <div class="sal-modal-footer">
+                    <button class="btn btn-secondary" type="button" id="btnCancelNewTab">Cancelar</button>
+                    <button class="btn btn-primary"   type="button" id="btnConfirmNewTab">Criar aba</button>
+                </div>
+            </dialog>
+
+            <!-- ===== MODAL — Gerenciar abas ===== -->
+            <dialog id="manageTabsModal" class="sal-modal">
+                <div class="sal-modal-header">
+                    <h2>Gerenciar abas</h2>
+                    <button class="sal-modal-close" id="btnCloseManageTabs" type="button" aria-label="Fechar">✕</button>
+                </div>
+                <div class="sal-modal-body" id="manageTabsBody"></div>
+                <div class="sal-modal-footer">
+                    <button class="btn btn-primary" type="button" id="btnCloseManageTabsFooter">Fechar</button>
+                </div>
+            </dialog>
+
+        </main>
+    </div>
+
+    <script src="js/sidebar.js"></script>
+    <script src="js/auth-client.js"></script>
+    <script src="js/calculo-salario.js"></script>
+</body>
+</html>

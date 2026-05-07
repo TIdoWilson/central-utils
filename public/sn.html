@@ -142,6 +142,10 @@
               <button type="button" id="btnConsultarRecibos" class="btn btn-secondary">
                 Consultar últimos recibos
               </button>
+
+              <button type="button" id="btnOpenReceiptHistory" class="btn btn-secondary">
+                Histórico de recibos (90 dias)
+              </button>
             </div>
 
             <div id="snStatus" class="nfe-upload-message"></div>
@@ -211,10 +215,53 @@
       </form>
       <div id="snCompanyMessage" class="nfe-upload-message"></div>
     </div>
-  </div>    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/sidebar.js"></script>
-    <script src="/js/auth-client.js"></script>
-    <script src="/js/sn.js"></script>
-  </body>
+  </div>
+
+  <div id="receiptHistoryModal" class="modal hidden">
+    <div class="modal-overlay" id="receiptHistoryModalOverlay"></div>
+    <div class="modal-content sn-history-modal">
+      <div class="sn-section-title-row">
+        <h3>Histórico de recibos</h3>
+        <span class="sn-chip">Últimos 90 dias</span>
+      </div>
+      <p class="sn-modal-hint">
+        Consulte os recibos gerados pela API no período selecionado e abra cada PDF diretamente.
+      </p>
+
+      <div class="sn-history-actions">
+        <button type="button" id="btnRefreshReceiptHistory" class="btn btn-secondary">
+          Atualizar histórico
+        </button>
+        <button type="button" id="closeReceiptHistoryModal" class="btn btn-secondary">
+          Fechar
+        </button>
+      </div>
+
+      <div id="snHistoryMessage" class="nfe-upload-message"></div>
+
+      <div class="nfe-table-wrapper sn-history-table-wrapper">
+        <table id="snHistoryTable" class="nfe-table">
+          <thead>
+            <tr>
+              <th>CNPJ</th>
+              <th>Razão Social</th>
+              <th>PA</th>
+              <th>Criado em</th>
+              <th>Recibo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- preenchido via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/auth-client.js"></script>
+  <script src="/js/sn.js"></script>
+</body>
 
 </html>

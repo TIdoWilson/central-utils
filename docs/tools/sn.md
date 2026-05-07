@@ -31,8 +31,10 @@ Envie a declaração mensal sem movimento pelo Integra Contador.
   - `GET /companies`
   - `POST /companies`
   - `PUT /companies/:id`
+  - `DELETE /companies/:id`
   - `GET /summary`
   - `GET /receipt/:id`
+  - `GET /receipts/history`
   - `POST /receipts/batch-download`
   - `POST /declaration`
   - `POST /consult-last`
@@ -62,9 +64,13 @@ Envie a declaração mensal sem movimento pelo Integra Contador.
 - O modal de cadastro consulta `GET /api/cnpj/:cnpj` (BrasilAPI já centralizada no portal) ao informar 14 dígitos de CNPJ.
 - Se a BrasilAPI retornar `razao_social`, o campo é preenchido automaticamente, mas continua editável.
 - Empresas já cadastradas podem ser ajustadas pelo botão `Editar`, via `PUT /api/sn/companies/:id`.
+- Empresas cadastradas podem ser removidas pelo botão `Excluir empresa`, via `DELETE /api/sn/companies/:id`.
 - A lista principal mantém a seleção atual ao recarregar e exibe uma área visível maior para facilitar marcação em lote.
+- A lista de empresas passa a aparecer em duas colunas no desktop para facilitar buscas visuais, mantendo uma coluna no mobile.
 - Ao abrir a página, o período de apuração é pré-preenchido com o mês anterior e o respectivo ano, permanecendo editável pelo operador.
 - A área de empresas informa explicitamente quantas estão selecionadas no total, inclusive durante filtros, para evitar leitura equivocada do checkbox `Selecionar todas as exibidas`.
+- O resumo acima da lista deixa de ficar fixo e passa a refletir, em tempo real, quantas empresas existem e quantas estão realmente selecionadas.
+- A área de ações ganhou um botão de histórico que abre os recibos gerados pela API nos últimos 90 dias, com link direto para cada PDF.
 
 ## 8. Troubleshooting Rápido
 

@@ -26,6 +26,26 @@ function createSnService(options) {
     };
   }
 
+  async function dbDeleteSnCompany(id) {
+    const result = await pool.query(
+      `
+        DELETE FROM sn_companies
+        WHERE id = $1
+        RETURNING id, cnpj, razao_social
+      `,
+      [id]
+    );
+
+    const r = result.rows[0];
+    if (!r) return null;
+
+    return {
+      id: r.id,
+      cnpj: r.cnpj,
+      razaoSocial: r.razao_social,
+    };
+  }
+
   async function dbGetReceiptByCompanyAndPa(companyId, pa) {
     const result = await pool.query(
       'SELECT id FROM sn_receipts WHERE company_id = $1 AND pa = $2',
@@ -68,6 +88,37 @@ function createSnService(options) {
       [ids]
     );
     return result.rows;
+  }
+
+  async function dbGetReceiptsHistory(days = 90) {
+    const safeDays = Number.isFinite(Number(days)) ? Math.max(1, Math.min(365, Number(days))) : 90;
+    const result = await pool.query(
+      `
+        SELECT
+          r.id,
+          r.company_id,
+          r.pa,
+          r.created_at,
+          c.cnpj,
+          c.razao_social
+        FROM sn_receipts r
+        JOIN sn_companies c ON c.id = r.company_id
+        WHERE r.created_at >= (NOW() - ($1::int * INTERVAL '1 day'))
+        ORDER BY r.created_at DESC, r.id DESC
+      `,
+      [safeDays]
+    );
+    return {
+      days: safeDays,
+      items: result.rows.map((r) => ({
+        id: r.id,
+        companyId: r.company_id,
+        cnpj: r.cnpj,
+        razaoSocial: r.razao_social,
+        pa: r.pa,
+        createdAt: r.created_at,
+      })),
+    };
   }
 
   function loadSnSummary() {
@@ -147,10 +198,12 @@ function createSnService(options) {
   return {
     dbGetSnCompanies,
     dbCreateSnCompany,
+    dbDeleteSnCompany,
     dbGetReceiptByCompanyAndPa,
     dbSaveReceipt,
     dbGetReceiptById,
     dbGetReceiptsByIds,
+    dbGetReceiptsHistory,
     buildResumoResponse,
     registrarSnResultado,
   };

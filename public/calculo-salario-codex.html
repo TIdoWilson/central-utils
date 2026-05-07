@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Cálculo de Salário Codex</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+        .salary-codex-page .nfe-main {
+            gap: 18px;
+        }
+
+        .salary-codex-toolbar {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+            align-items: end;
+        }
+
+        .salary-codex-toolbar .auth-label {
+            margin: 0;
+        }
+
+        .salary-codex-summary {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .salary-codex-summary-card {
+            border: 1px solid #dbe4f0;
+            border-radius: 14px;
+            padding: 14px 16px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        }
+
+        .salary-codex-summary-card strong {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .salary-codex-summary-card span {
+            display: block;
+            color: #0f172a;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .salary-codex-summary-card small {
+            display: block;
+            margin-top: 8px;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .salary-codex-sections {
+            display: grid;
+            gap: 18px;
+        }
+
+        .salary-codex-section {
+            border: 1px solid #dbe4f0;
+            border-radius: 16px;
+            padding: 18px;
+            background: #ffffff;
+        }
+
+        .salary-codex-section-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 8px 12px;
+            margin-bottom: 14px;
+        }
+
+        .salary-codex-section-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #0f172a;
+        }
+
+        .salary-codex-section-header p {
+            width: 100%;
+            margin: 4px 0 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .salary-codex-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #1d4ed8;
+            background: #dbeafe;
+        }
+
+        .salary-codex-badge--readonly {
+            color: #475569;
+            background: #e2e8f0;
+        }
+
+        .salary-codex-field-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .salary-codex-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .salary-codex-field label,
+        .salary-codex-field .salary-codex-field-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .salary-codex-field small {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .salary-codex-input,
+        .salary-codex-static {
+            width: 100%;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font: inherit;
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
+            background: #ffffff;
+        }
+
+        .salary-codex-input:focus {
+            outline: 2px solid rgba(37, 99, 235, 0.24);
+            border-color: #2563eb;
+        }
+
+        .salary-codex-static {
+            background: #f8fafc;
+            color: #334155;
+        }
+
+        .salary-codex-pair {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .salary-codex-pair-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .salary-codex-pair-item span {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .salary-codex-results {
+            display: grid;
+            gap: 18px;
+        }
+
+        .salary-codex-result-group {
+            border: 1px solid #dbe4f0;
+            border-radius: 16px;
+            padding: 18px;
+            background: #ffffff;
+        }
+
+        .salary-codex-result-group h3 {
+            margin: 0 0 14px;
+            font-size: 18px;
+            color: #0f172a;
+        }
+
+        .salary-codex-result-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        }
+
+        .salary-codex-result-card {
+            border-radius: 14px;
+            padding: 14px 16px;
+            border: 1px solid #dbe4f0;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        }
+
+        .salary-codex-result-card strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .salary-codex-result-card span {
+            display: block;
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .salary-codex-result-card small {
+            display: block;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.45;
+        }
+
+        .salary-codex-result-card--primary {
+            border-color: #bfdbfe;
+            background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .salary-codex-result-card--danger span {
+            color: #b91c1c;
+        }
+
+        .salary-codex-result-card--success span {
+            color: #047857;
+        }
+
+        .salary-codex-warning {
+            display: none;
+            border: 1px solid #f5c36a;
+            background: #fff7d6;
+            border-radius: 12px;
+            padding: 12px 14px;
+            color: #8a5b12;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 900px) {
+            .salary-codex-toolbar {
+                grid-template-columns: 1fr;
+            }
+
+            .salary-codex-pair {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="app-body nfe-body">
+    <div class="nfe-layout salary-codex-page">
+        <aside class="nfe-sidebar">
+            <div class="nfe-sidebar-top">
+                <div class="nfe-sidebar-logo">
+                    <span class="logo-circle">WL</span>
+                    <span class="logo-text">Portal</span>
+                </div>
+                <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+            <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+        </aside>
+
+        <main class="nfe-main">
+            <header class="nfe-header">
+                <div class="nfe-breadcrumb">Portal / Pessoal / Cálculo de Salário Codex</div>
+                <h1>Cálculo de Salário Codex</h1>
+                <p>Calculadora visual baseada na planilha <strong>SALARIO 4.xlsx</strong>, com cada aba convertida em campos humanos, blocos organizados e resultados destacados.</p>
+            </header>
+
+            <section class="nfe-card">
+                <div class="salary-codex-toolbar">
+                    <label class="auth-label">
+                        Aba / Ano
+                        <select id="salaryCodexSheet" class="auth-input"></select>
+                    </label>
+                    <div class="nfe-table-actions">
+                        <button class="btn btn-secondary" id="salaryCodexReset" type="button">Restaurar valores desta aba</button>
+                    </div>
+                </div>
+                <div class="salary-codex-summary" id="salaryCodexSummary"></div>
+                <div class="salary-codex-warning" id="salaryCodexWarning"></div>
+            </section>
+
+            <div class="salary-codex-sections" id="salaryCodexSections"></div>
+            <div class="salary-codex-results" id="salaryCodexResults"></div>
+        </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/calculo-salario-codex-data.js"></script>
+    <script src="/js/calculo-salario-codex-core.js"></script>
+    <script src="/js/calculo-salario-codex.js"></script>
+</body>
+
+</html>

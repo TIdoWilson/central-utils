@@ -1,10 +1,10 @@
 {
   "totalRequisicoes": 3,
-  "totalSucesso": 73,
-  "totalErro": 47,
-  "ultimaAtualizacao": "2026-04-08T11:04:05.328Z",
-  "totalOperacoes": 116,
-  "totalConsultas": 62,
-  "valorTotal": 45.75999999999991,
-  "totalDeclaracoes": 53
+  "totalSucesso": 100,
+  "totalErro": 53,
+  "ultimaAtualizacao": "2026-05-07T16:50:18.158Z",
+  "totalOperacoes": 149,
+  "totalConsultas": 85,
+  "valorTotal": 57.639999999999894,
+  "totalDeclaracoes": 63
 }

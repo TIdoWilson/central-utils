@@ -13,6 +13,8 @@ const MENU_CONFIG = [
       { id: 'ferias-funcionario', label: 'F&eacute;rias por Funcion&aacute;rio', href: '/separador-ferias-funcionario', icon: '&#127958;&#65039;' },
       { id: 'holerites-empresa', label: 'Holerites por Empresa', href: '/separador-holerites-por-empresa', icon: '&#128196;' },
       { id: 'relatorio-ferias', label: 'Relat&oacute;rio de F&eacute;rias por Empresa', href: '/separador-pdf-relatorio-de-ferias', icon: '&#128209;' },
+      { id: 'calculo-salario', label: 'C&aacute;lculo de Sal&aacute;rio / Pr&oacute;-labore', href: '/calculo-salario', icon: '&#128178;' },
+      { id: 'calculo-salario-codex', label: 'C&aacute;lculo de Sal&aacute;rio Codex', href: '/calculo-salario-codex', icon: '&#129504;' },
     ],
   },
   {

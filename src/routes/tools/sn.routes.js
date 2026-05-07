@@ -11,8 +11,10 @@ module.exports = function createSnRoutes(deps) {
     axios,
     dbGetSnCompanies = snService?.dbGetSnCompanies,
     dbCreateSnCompany = snService?.dbCreateSnCompany,
+    dbDeleteSnCompany = snService?.dbDeleteSnCompany,
     dbGetReceiptById = snService?.dbGetReceiptById,
     dbGetReceiptsByIds = snService?.dbGetReceiptsByIds,
+    dbGetReceiptsHistory = snService?.dbGetReceiptsHistory,
     dbGetReceiptByCompanyAndPa = snService?.dbGetReceiptByCompanyAndPa,
     dbSaveReceipt = snService?.dbSaveReceipt,
     buildResumoResponse = snService?.buildResumoResponse,
@@ -133,6 +135,36 @@ module.exports = function createSnRoutes(deps) {
     }
   });
 
+  router.delete('/companies/:id', requireCsrf, async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).json({ error: 'ID da empresa inválido.' });
+      }
+
+      const deleted = dbDeleteSnCompany
+        ? await dbDeleteSnCompany(id)
+        : null;
+
+      if (!deleted) {
+        return res.status(404).json({ error: 'Empresa não encontrada.' });
+      }
+
+      await auditLog?.(
+        req,
+        'sn_company_delete',
+        'ok',
+        { companyId: deleted.id, cnpj: deleted.cnpj },
+        req.user || req.auth?.user || null
+      );
+
+      return res.json({ ok: true, deleted });
+    } catch (err) {
+      console.error('Erro ao excluir empresa SN:', err);
+      return res.status(500).json({ error: 'Erro ao excluir empresa.' });
+    }
+  });
+
   router.get('/summary', async (req, res) => {
     try {
       res.json(buildResumoResponse());
@@ -155,6 +187,21 @@ module.exports = function createSnRoutes(deps) {
     } catch (err) {
       console.error('Erro ao buscar recibo:', err);
       return res.status(500).send('Erro ao buscar recibo');
+    }
+  });
+
+  router.get('/receipts/history', async (req, res) => {
+    try {
+      const daysParam = req.query?.days;
+      const parsedDays = Number.parseInt(String(daysParam || '90'), 10);
+      const history = dbGetReceiptsHistory
+        ? await dbGetReceiptsHistory(Number.isFinite(parsedDays) ? parsedDays : 90)
+        : { days: 90, items: [] };
+
+      return res.json(history);
+    } catch (err) {
+      console.error('Erro ao listar historico de recibos SN:', err);
+      return res.status(500).json({ error: 'Erro ao listar historico de recibos.' });
     }
   });
 

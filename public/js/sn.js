@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('btnEnviarDeclaracao') || document.getElementById('btnEnviarDecl');
   const btnConsultar = document.getElementById('btnConsultarRecibos');
   const btnDownloadTodos = document.getElementById('btnDownloadTodosRecibos');
+  const btnOpenReceiptHistory = document.getElementById('btnOpenReceiptHistory');
 
   const snStatus = document.getElementById('snStatus');
   const consumoInfo = document.getElementById('consumoInfo');
@@ -41,6 +42,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const companyIdInput = document.getElementById('cadCompanyId');
   const cnpjInput = document.getElementById('cadCnpj');
   const razaoInput = document.getElementById('cadRazao');
+  const receiptHistoryModal = document.getElementById('receiptHistoryModal');
+  const receiptHistoryModalOverlay = document.getElementById('receiptHistoryModalOverlay');
+  const btnCloseReceiptHistoryModal = document.getElementById('closeReceiptHistoryModal');
+  const btnRefreshReceiptHistory = document.getElementById('btnRefreshReceiptHistory');
+  const snHistoryMessage = document.getElementById('snHistoryMessage');
+  const snHistoryTable = document.getElementById('snHistoryTable');
+  const snHistoryTbody = snHistoryTable?.querySelector('tbody');
 
   const companiesDropdown = document.getElementById('companiesDropdown');
   if (companiesDropdown && companiesOptions) {
@@ -58,6 +66,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   let selectedCompanyIds = new Set();
   let lastCnpjLookup = '';
   let lastAutoFilledRazao = '';
+  let receiptHistoryCache = [];
+  let receiptHistoryLoading = false;
+  let receiptHistoryPromise = null;
 
   function extractReceiptIds(data) {
     const fromTop = Array.isArray(data?.receiptIds) ? data.receiptIds : [];
@@ -109,6 +120,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  function setHistoryMessage(message, color = '') {
+    if (!snHistoryMessage) return;
+    snHistoryMessage.textContent = message || '';
+    snHistoryMessage.style.color = color;
+    if (message) {
+      snHistoryMessage.dataset.state = color === 'red' ? 'error' : 'info';
+    } else {
+      delete snHistoryMessage.dataset.state;
+    }
+  }
+
+  function setMainStatus(message, color = '') {
+    if (!snStatus) return;
+    snStatus.textContent = message || '';
+    snStatus.style.color = color;
+    if (message) {
+      snStatus.dataset.state = color === 'red' ? 'error' : 'info';
+    } else {
+      delete snStatus.dataset.state;
+    }
+  }
+
   function setCompanySaving(isSaving) {
     if (btnSaveCompany) {
       btnSaveCompany.disabled = isSaving;
@@ -142,6 +175,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const checked = companyCheckboxes.filter((checkbox) => checkbox.checked).length;
     chkAll.checked = total > 0 && checked === total;
     chkAll.indeterminate = checked > 0 && checked < total;
+  }
+
+  function refreshCompaniesMeta() {
+    updateCompaniesMeta(getFilteredCompanies());
   }
 
   function resetCompanyForm() {
@@ -187,6 +224,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   function closeCompanyModal() {
     if (!companyModal) return;
     companyModal.classList.add('hidden');
+  }
+
+  function openReceiptHistoryModal() {
+    if (!receiptHistoryModal) return;
+    receiptHistoryModal.classList.remove('hidden');
+  }
+
+  function closeReceiptHistoryModal() {
+    if (!receiptHistoryModal) return;
+    receiptHistoryModal.classList.add('hidden');
   }
 
   async function buscarRazaoSocialPorCnpj(force = false) {
@@ -246,6 +293,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   btnOpenCompanyModal?.addEventListener('click', openCreateCompanyModal);
   btnCloseCompanyModal?.addEventListener('click', closeCompanyModal);
   companyModalOverlay?.addEventListener('click', closeCompanyModal);
+  btnOpenReceiptHistory?.addEventListener('click', async () => {
+    openReceiptHistoryModal();
+    await carregarHistoricoRecibos(true);
+  });
+  btnCloseReceiptHistoryModal?.addEventListener('click', closeReceiptHistoryModal);
+  receiptHistoryModalOverlay?.addEventListener('click', closeReceiptHistoryModal);
+  btnRefreshReceiptHistory?.addEventListener('click', async () => {
+    await carregarHistoricoRecibos(true);
+  });
 
   cnpjInput?.addEventListener('input', () => {
     const digits = onlyDigits(cnpjInput.value).slice(0, 14);
@@ -410,6 +466,133 @@ document.addEventListener('DOMContentLoaded', async () => {
     snCompaniesMeta.textContent = `${totalText} ${selectionText}`;
   }
 
+  async function deleteCompany(company) {
+    if (!company?.id) return;
+
+    const label = `${formatCnpj(company.cnpj)} - ${company.razaoSocial || ''}`.trim();
+    const confirmed = window.confirm(
+      `Excluir a empresa ${label}? Os recibos vinculados também serão removidos.`
+    );
+    if (!confirmed) return;
+
+    try {
+      setMainStatus('Excluindo empresa...');
+      const resp = await AuthClient.authFetch(`/api/sn/companies/${company.id}`, {
+        method: 'DELETE',
+      });
+      const data = await readResponsePayload(resp);
+
+      if (!resp.ok) {
+        setMainStatus(data.error || 'Erro ao excluir empresa.', 'red');
+        return;
+      }
+
+      currentCompanies = currentCompanies.filter((item) => Number(item.id) !== Number(company.id));
+      selectedCompanyIds.delete(Number(company.id));
+      renderCompaniesList();
+      setMainStatus('Empresa excluída com sucesso.', '#166534');
+    } catch (err) {
+      console.error('Erro ao excluir empresa SN:', err);
+      setMainStatus(err?.message || 'Erro ao excluir empresa.', 'red');
+    }
+  }
+
+  function renderReceiptHistory(items) {
+    if (!snHistoryTbody) return;
+
+    snHistoryTbody.innerHTML = '';
+
+    if (!Array.isArray(items) || items.length === 0) {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 5;
+      td.textContent = 'Nenhum recibo encontrado nos últimos 90 dias.';
+      tr.appendChild(td);
+      snHistoryTbody.appendChild(tr);
+      return;
+    }
+
+    items.forEach((item) => {
+      const tr = document.createElement('tr');
+
+      const tdCnpj = document.createElement('td');
+      tdCnpj.textContent = item.cnpj ? formatCnpj(item.cnpj) : '-';
+
+      const tdRazao = document.createElement('td');
+      tdRazao.textContent = item.razaoSocial || '-';
+
+      const tdPa = document.createElement('td');
+      tdPa.textContent = item.pa ? String(item.pa) : '-';
+
+      const tdCreated = document.createElement('td');
+      if (item.createdAt) {
+        const date = new Date(item.createdAt);
+        tdCreated.textContent = Number.isFinite(date.getTime())
+          ? date.toLocaleString('pt-BR')
+          : String(item.createdAt);
+      } else {
+        tdCreated.textContent = '-';
+      }
+
+      const tdReceipt = document.createElement('td');
+      const link = document.createElement('a');
+      link.href = `/api/sn/receipt/${item.id}`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = 'Abrir recibo';
+      tdReceipt.appendChild(link);
+
+      tr.appendChild(tdCnpj);
+      tr.appendChild(tdRazao);
+      tr.appendChild(tdPa);
+      tr.appendChild(tdCreated);
+      tr.appendChild(tdReceipt);
+      snHistoryTbody.appendChild(tr);
+    });
+  }
+
+  async function carregarHistoricoRecibos(force = false) {
+    if (receiptHistoryLoading) return receiptHistoryPromise;
+    if (!force && receiptHistoryCache.length) {
+      renderReceiptHistory(receiptHistoryCache);
+      return receiptHistoryCache;
+    }
+
+    receiptHistoryLoading = true;
+    setHistoryMessage('Carregando histórico de recibos...');
+
+    receiptHistoryPromise = (async () => {
+      try {
+        const resp = await AuthClient.authFetch('/api/sn/receipts/history?days=90');
+        const data = await resp.json().catch(() => ({}));
+
+        if (!resp.ok) {
+          throw new Error(data.error || 'Erro ao carregar histórico de recibos.');
+        }
+
+        receiptHistoryCache = Array.isArray(data.items) ? data.items : [];
+        renderReceiptHistory(receiptHistoryCache);
+        setHistoryMessage(
+          receiptHistoryCache.length
+            ? `Mostrando ${receiptHistoryCache.length} recibo(s) dos últimos ${data.days || 90} dias.`
+            : 'Nenhum recibo encontrado nos últimos 90 dias.',
+          receiptHistoryCache.length ? '#166534' : ''
+        );
+        return receiptHistoryCache;
+      } catch (err) {
+        console.error('Erro ao carregar histórico de recibos SN:', err);
+        setHistoryMessage(err?.message || 'Erro ao carregar histórico de recibos.', 'red');
+        renderReceiptHistory([]);
+        return [];
+      } finally {
+        receiptHistoryLoading = false;
+        receiptHistoryPromise = null;
+      }
+    })();
+
+    return receiptHistoryPromise;
+  }
+
   function areAllFilteredCompaniesSelected(filteredCompanies) {
     if (!Array.isArray(filteredCompanies) || filteredCompanies.length === 0) {
       return false;
@@ -448,6 +631,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     selectAllCheckbox.checked = allFilteredSelected;
     selectAllCheckbox.indeterminate =
       filteredSelectedCount > 0 && filteredSelectedCount < filteredCompanies.length;
+    selectAllRow.classList.add('sn-company-row-all');
 
     const selectAllText = document.createElement('span');
     selectAllText.textContent = filteredCompanies.length > 0
@@ -489,12 +673,26 @@ document.addEventListener('DOMContentLoaded', async () => {
           selectedCompanyIds.delete(id);
         }
         syncSelectAllState();
+        refreshCompaniesMeta();
       });
 
       label.appendChild(checkbox);
       label.appendChild(text);
       row.appendChild(label);
-      row.appendChild(editButton);
+
+      const actions = document.createElement('div');
+      actions.className = 'sn-company-actions';
+
+      const deleteButton = document.createElement('button');
+      deleteButton.type = 'button';
+      deleteButton.className = 'btn btn-ghost-danger sn-company-delete';
+      deleteButton.textContent = 'Excluir empresa';
+      deleteButton.addEventListener('click', () => deleteCompany(company));
+
+      actions.appendChild(editButton);
+      actions.appendChild(deleteButton);
+
+      row.appendChild(actions);
       companiesOptions.appendChild(row);
     });
 
@@ -512,10 +710,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
       syncSelectAllState();
+      refreshCompaniesMeta();
     });
 
     syncSelectAllState();
-    updateCompaniesMeta(filteredCompanies);
+    refreshCompaniesMeta();
   }
 
   async function carregarEmpresas() {
@@ -592,7 +791,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ano = String(paAno.value || '').trim();
 
     if (!mes || !ano) {
-      snStatus.textContent = 'Selecione mês e ano do período de apuração.';
+      setMainStatus('Selecione mês e ano do período de apuração.');
       return null;
     }
 
@@ -601,7 +800,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const all = currentCompanies.length > 0 && ids.length === currentCompanies.length;
 
     if (!all && ids.length === 0) {
-      snStatus.textContent = 'Selecione pelo menos uma empresa (ou marque "Selecionar todas").';
+      setMainStatus('Selecione pelo menos uma empresa (ou marque "Selecionar todas").');
       return null;
     }
 
@@ -670,7 +869,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   btnEnviar?.addEventListener('click', async () => {
     if (!snStatus) return;
 
-    snStatus.textContent = '';
+    setMainStatus('');
     lastSnResults = null;
     if (btnDownloadTodos) btnDownloadTodos.disabled = true;
 
@@ -678,7 +877,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!params) return;
 
     setSending(true);
-    snStatus.textContent = 'Enviando declarações...';
+    setMainStatus('Enviando declarações...');
 
     try {
       const resp = await AuthClient.authFetch('/api/sn/declaration', {
@@ -696,7 +895,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!resp.ok) {
         let msgErro = data.error || 'Erro ao enviar declarações.';
         if (data.status) msgErro += ' (HTTP ' + data.status + ')';
-        snStatus.textContent = msgErro;
+        setMainStatus(msgErro, 'red');
         return;
       }
 
@@ -706,12 +905,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (btnDownloadTodos) btnDownloadTodos.disabled = receiptIds.length === 0;
 
       renderResultados(data.resultados);
-      snStatus.textContent = 'Declarações enviadas.';
+      setMainStatus('Declarações enviadas.', '#166534');
 
       if (data.resumoConsumo) atualizarResumoConsumo(data.resumoConsumo);
     } catch (err) {
       console.error(err);
-      snStatus.textContent = err?.message || 'Erro inesperado.';
+      setMainStatus(err?.message || 'Erro inesperado.', 'red');
     } finally {
       setSending(false);
     }
@@ -720,7 +919,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   btnConsultar?.addEventListener('click', async () => {
     if (!snStatus) return;
 
-    snStatus.textContent = '';
+    setMainStatus('');
     lastSnResults = null;
     if (btnDownloadTodos) btnDownloadTodos.disabled = true;
 
@@ -728,7 +927,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!params) return;
 
     setSending(true);
-    snStatus.textContent = 'Consultando recibos...';
+    setMainStatus('Consultando recibos...');
 
     try {
       const resp = await AuthClient.authFetch('/api/sn/consult-last', {
@@ -742,7 +941,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!resp.ok) {
         let msgErro = data.error || 'Erro ao consultar recibos.';
         if (data.status) msgErro += ' (HTTP ' + data.status + ')';
-        snStatus.textContent = msgErro;
+        setMainStatus(msgErro, 'red');
         return;
       }
 
@@ -752,12 +951,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (btnDownloadTodos) btnDownloadTodos.disabled = receiptIds.length === 0;
 
       renderResultados(data.resultados);
-      snStatus.textContent = 'Consultas de recibo concluídas.';
+      setMainStatus('Consultas de recibo concluídas.', '#166534');
 
       if (data.resumoConsumo) atualizarResumoConsumo(data.resumoConsumo);
     } catch (err) {
       console.error(err);
-      snStatus.textContent = err?.message || 'Erro inesperado.';
+      setMainStatus(err?.message || 'Erro inesperado.', 'red');
     } finally {
       setSending(false);
     }

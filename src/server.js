@@ -59,6 +59,7 @@ const createCctRoutes = require('./routes/tools/cct.routes');
 const createParcelamentosRoutes = require('./routes/tools/parcelamentos.routes');
 const createSpedsRoutes = require('./routes/tools/speds.routes');
 const createPlanilhaNrcRoutes = require('./routes/tools/planilha-nrc.routes');
+const createCalculoSalarioRoutes = require('./routes/tools/calculo-salario.routes');
 const { createDimobService } = require('./services/dimob.service');
 const { createCctService } = require('./services/cct.service');
 const createLotesRenasulService = require('./services/lotes-renasul.service');
@@ -225,8 +226,10 @@ async function bootstrapCctDatabase() {
 const {
   dbGetSnCompanies,
   dbCreateSnCompany,
+  dbDeleteSnCompany,
   dbGetReceiptById,
   dbGetReceiptsByIds,
+  dbGetReceiptsHistory,
   dbGetReceiptByCompanyAndPa,
   dbSaveReceipt,
   buildResumoResponse,
@@ -1031,8 +1034,10 @@ app.use(
     axios,
     dbGetSnCompanies,
     dbCreateSnCompany,
+    dbDeleteSnCompany,
     dbGetReceiptById,
     dbGetReceiptsByIds,
+    dbGetReceiptsHistory,
     dbGetReceiptByCompanyAndPa,
     dbSaveReceipt,
     buildResumoResponse,
@@ -1522,6 +1527,13 @@ app.use(
   })
 );
 
+
+app.use(
+  '/api/calculo-salario',
+  requireAuth,
+  requireToolApi('calculo-salario'),
+  createCalculoSalarioRoutes({ requireCsrf, fs, dataDir: DATA_DIR })
+);
 
 // Página interna (protegida)
 

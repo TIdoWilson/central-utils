@@ -61,3 +61,5 @@ Esta lista é gerada automaticamente a partir de `src/core/tool-catalog.json`.
 - [Consulta CCT](./cct.md) — `/cct` • API: `/api/cct`
 - [Comparador Eventos Holerite](./comparador-eventos-holerite.md) — `/comparador-eventos-holerite` • API: `/api/comparador-eventos-holerite`
 - [Importador Cartao de Horas Bandeira Transportes](./importador-cartao-horas-bandeira-transportes.md) — `/importador-cartao-horas-bandeira-transportes` • API: `/api/cartao-horas-bandeira-transportes`
+- [Calculo de Salario / Pro-labore](./calculo-salario.md) — `/calculo-salario`
+- [Calculo de Salario Codex](./calculo-salario-codex.md) — `/calculo-salario-codex`

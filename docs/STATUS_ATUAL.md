@@ -1,6 +1,6 @@
 # STATUS_ATUAL.md
 
-Data de referencia: 2026-04-06
+Data de referencia: 2026-05-07
 
 ## Concluido recentemente
 1. A fila exclusiva da CCT passou a acumular CNPJs enviados em intervalo curto antes de restaurar a fila automatica, evitando que o pedido anterior fique de fora da rodada imediata.
@@ -49,12 +49,13 @@ Data de referencia: 2026-04-06
 - Correcoes relevantes registradas nos docs de ferramentas, incluindo `SPEDS` e `Lotes Renasul`.
 
 ## Pendencias ativas (Linear)
-1. `WIL-52` - implementar endpoint real da API do Conciliador Hausen Ocean.
-2. `WIL-53` - estruturar suite minima de testes automatizados.
-3. `WIL-55` - implantar pipeline CI/CD com gates de seguranca.
-4. `WIL-54` - revisar templates SPEDS com fallback e planejar cobertura completa.
+1. `WIL-170` - SN: resumo dinâmico, exclusão de empresa e histórico de recibos.
+2. `WIL-52` - implementar endpoint real da API do Conciliador Hausen Ocean.
+3. `WIL-53` - estruturar suite minima de testes automatizados.
+4. `WIL-55` - implantar pipeline CI/CD com gates de seguranca.
+5. `WIL-54` - revisar templates SPEDS com fallback e planejar cobertura completa.
 
 ## Proximo passo recomendado
-1. Executar `WIL-52` para eliminar o 404 operacional do `conciliador-hausen-ocean`.
-2. Definir baseline de testes para `WIL-53` e amarrar esse baseline no pipeline de `WIL-55`.
-3. Fechar inventario de templates SPEDS com fallback para `WIL-54` e priorizar execucao real por risco operacional.
+1. Fechar `WIL-170` na SN com validação visual da nova lista, exclusão e histórico de recibos.
+2. Executar `WIL-52` para eliminar o 404 operacional do `conciliador-hausen-ocean`.
+3. Definir baseline de testes para `WIL-53` e amarrar esse baseline no pipeline de `WIL-55`.

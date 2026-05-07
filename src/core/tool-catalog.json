@@ -58,6 +58,28 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "calculo-salario",
+      "title": "Calculo de Salario / Pro-labore",
+      "group": "Pessoal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/calculo-salario",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "calculo-salario-codex",
+      "title": "Calculo de Salario Codex",
+      "group": "Pessoal",
+      "hasPage": true,
+      "hasApi": false,
+      "apiBase": null,
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "cartao-horas-iob",
       "title": "Cartao Horas IOB",
       "group": "Pessoal",
