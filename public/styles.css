@@ -16,7 +16,7 @@ body.app-body {
 /* Topbar mantém a cor atual */
 .topbar {
     background: linear-gradient(90deg, #221f20, #221f20); /* ou sua cor atual */
-    height: 70px;
+    height: 52px;
     padding: 0 30px;
 
     display: grid;
@@ -35,7 +35,7 @@ body.app-body {
 }
 
 .topbar-logo {
-    height: 70px;      /* AJUSTE IDEAL — cabe sem cortar */
+    height: 44px;
     width: auto;
     object-fit: contain;
 }
@@ -592,9 +592,9 @@ body.nfe-body {
 
 .nfe-layout {
   display: block;
-  min-height: calc(100vh - 70px);
-  margin-top: 70px;
-  --header-height: 70px;
+  min-height: calc(100vh - 52px);
+  margin-top: 52px;
+  --header-height: 52px;
   --sidebar-width: 220px;
 }
 
@@ -636,11 +636,11 @@ body.nfe-body {
 .nfe-sidebar-top {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0;
   min-height: var(--header-height);
   margin-bottom: 6px;
-  padding: 0;
+  padding: 0 0 0 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -653,7 +653,7 @@ body.nfe-body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin: 0 auto;
+  margin: 0;
 }
 
 .nfe-sidebar-toggle span {
@@ -708,8 +708,13 @@ body.nfe-body {
   display: none;
 }
 
+.nfe-layout.collapsed .nfe-sidebar-top {
+  justify-content: center;
+  padding-left: 0;
+}
+
 .nfe-layout.collapsed .nfe-sidebar-toggle {
-  align-self: auto;
+  margin: 0;
 }
 
 /* SUBSTITUA o bloco atual .nfe-sidebar-logo .logo-circle por este */
@@ -799,7 +804,7 @@ body.nfe-body {
 }
 
 .app-topbar {
-  height: 70px;
+  height: 52px;
   margin: 0;
   padding: 0 12px;
   position: fixed;
@@ -2089,6 +2094,10 @@ body.nfe-body {
   flex-direction: column;
 }
 
+.page-sn .sn-history-summary-card {
+  margin: 0 0 12px;
+}
+
 .page-sn .nfe-card-subtitle,
 .page-sn .nfe-breadcrumb,
 .page-sn .sn-company-meta,
@@ -2175,11 +2184,65 @@ body.nfe-body {
   gap: 12px;
 }
 
+.page-sn .sn-company-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.page-sn .sn-company-period-box,
+.page-sn .sn-company-search-box {
+  margin: 0;
+  align-self: stretch;
+}
+
+.page-sn .sn-company-period-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-sn .sn-company-search-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.page-sn .sn-company-filter-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  flex: 1 1 auto;
+  align-content: start;
+}
+
+.page-sn .sn-company-search-label {
+  margin: 0;
+}
+
+.page-sn .sn-company-search-label input {
+  min-height: 42px;
+}
+
+.page-sn .sn-company-period-box .sn-section-title-row,
+.page-sn .sn-company-search-box .sn-section-title-row {
+  margin-bottom: 10px;
+}
+
 .page-sn .sn-period-grid,
 .page-sn .sn-actions-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+}
+
+.page-sn .sn-period-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.page-sn .sn-actions-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .sn-companies-toolbar,
@@ -2194,6 +2257,7 @@ body.nfe-body {
 .sn-companies-list,
 .page-sn .sn-companies-list {
   width: 100%;
+  margin-top: 6px;
 }
 
 .sn-companies-options,
@@ -2226,9 +2290,12 @@ body.nfe-body {
 .sn-company-option,
 .page-sn .sn-company-option {
   display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
   align-items: center;
   gap: 10px;
   margin: 0;
+  width: 100%;
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid transparent;
@@ -2264,11 +2331,13 @@ body.nfe-body {
 .sn-company-option span,
 .page-sn .sn-company-option span {
   display: block;
+  flex: 1 1 auto;
   min-width: 0;
   font-size: 0.9rem;
   color: var(--sn-ink);
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sn-company-edit,
@@ -2285,6 +2354,7 @@ body.nfe-body {
   align-items: center;
   gap: 8px;
   flex: 0 0 auto;
+  margin-left: auto;
 }
 
 .sn-company-delete,
@@ -2419,7 +2489,10 @@ body.nfe-body {
 }
 
 .page-sn .sn-history-modal {
-  width: min(980px, calc(100vw - 32px));
+  width: fit-content;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  overflow: auto;
 }
 
 .page-sn .sn-history-actions {
@@ -2512,6 +2585,10 @@ body.nfe-body {
 
   .page-sn .sn-period-grid,
   .page-sn .sn-actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-sn .sn-company-filters {
     grid-template-columns: 1fr;
   }
 
@@ -3046,6 +3123,107 @@ body.wl-page-dragover::after {
 .tool-calculadora-icms-st-mva-ref tr.is-active td {
   background: rgba(255, 255, 255, 0.08);
   font-weight: 600;
+}
+
+.page-xml-faenello .xml-faenello-header {
+  background: linear-gradient(135deg, rgba(67, 115, 255, 0.12), rgba(12, 16, 28, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px 20px;
+}
+
+.page-xml-faenello .xml-faenello-upload-card,
+.page-xml-faenello .xml-faenello-dashboard-card,
+.page-xml-faenello .xml-faenello-empty {
+  margin-top: 18px;
+}
+
+.page-xml-faenello .xml-faenello-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.page-xml-faenello .xml-faenello-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.page-xml-faenello .xml-faenello-status {
+  min-height: 24px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  line-height: 1.4;
+}
+
+.page-xml-faenello .xml-faenello-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.page-xml-faenello .xml-faenello-stat-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.page-xml-faenello .xml-faenello-stat-title {
+  font-size: 0.85rem;
+  opacity: 0.78;
+  margin-bottom: 8px;
+}
+
+.page-xml-faenello .xml-faenello-stat-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.page-xml-faenello .xml-faenello-stat-desc {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.page-xml-faenello .xml-faenello-municipios {
+  margin-top: 16px;
+}
+
+.page-xml-faenello .xml-faenello-table th,
+.page-xml-faenello .xml-faenello-table td {
+  vertical-align: top;
+}
+
+.page-xml-faenello .xml-faenello-col-num,
+.page-xml-faenello .xml-faenello-col-center {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.page-xml-faenello .xml-faenello-col-doc,
+.page-xml-faenello .xml-faenello-col-money {
+  white-space: nowrap;
+}
+
+.page-xml-faenello .xml-faenello-col-money {
+  text-align: right;
+}
+
+.page-xml-faenello .xml-faenello-empty-table {
+  text-align: center;
+  opacity: 0.8;
+}
+
+.page-xml-faenello .xml-faenello-empty {
+  text-align: center;
+  opacity: 0.85;
 }
 
 /* Trechos novos para colar em styles.css */

@@ -53,17 +53,20 @@ const createNfeLegacyRoutes = require('./routes/tools/nfe-legacy.routes');
 const createPedidosAlteracaoEmpresaRoutes = require('./routes/tools/pedidos-alteracao-empresa.routes');
 const createComparadorEventosHoleriteRoutes = require('./routes/tools/comparador-eventos-holerite.routes');
 const createComparadorEntradasBandeiraRoutes = require('./routes/tools/comparador-entradas-bandeira.routes');
+const createComparadorFsistSpedRoutes = require('./routes/tools/comparador-fsist-sped.routes');
 const createCartaoHorasIobRoutes = require('./routes/tools/cartao-horas-iob.routes');
 const createCartaoHorasBandeiraTransportesRoutes = require('./routes/tools/cartao-horas-bandeira-transportes.routes');
 const createCctRoutes = require('./routes/tools/cct.routes');
 const createParcelamentosRoutes = require('./routes/tools/parcelamentos.routes');
 const createSpedsRoutes = require('./routes/tools/speds.routes');
 const createPlanilhaNrcRoutes = require('./routes/tools/planilha-nrc.routes');
+const createExtratorFiscalSpedRoutes = require('./routes/tools/extrator-fiscal-sped.routes');
 const createCalculoSalarioRoutes = require('./routes/tools/calculo-salario.routes');
 const { createDimobService } = require('./services/dimob.service');
 const { createCctService } = require('./services/cct.service');
 const createLotesRenasulService = require('./services/lotes-renasul.service');
 const createPlanilhaNrcService = require('./services/planilha-nrc.service');
+const createExtratorFiscalSpedService = require('./services/extrator-fiscal-sped.service');
 const { createParcelamentosService } = require('./services/parcelamentos.service');
 const { createCctIntakeService } = require('./services/cct-intake.service');
 const { createEcdStatusService } = require('./services/ecd-status.service');
@@ -208,6 +211,7 @@ void cctService.listConventions({ page: 1, limit: 1 })
   });
 const lotesRenasulService = createLotesRenasulService({ DATA_DIR });
 const planilhaNrcService = createPlanilhaNrcService({ DATA_DIR });
+const extratorFiscalSpedService = createExtratorFiscalSpedService({ DATA_DIR, projectRoot: path.join(__dirname, '..') });
 const parcelamentosService = createParcelamentosService({ pool });
 const cctEmailService = createCctEmailService({
   projectRoot: path.join(__dirname, '..'),
@@ -836,6 +840,46 @@ async function initSecuritySchemaAndBootstrap() {
   `);
 
   await pool.query(`
+    CREATE TABLE IF NOT EXISTS sn_companies (
+      id BIGSERIAL PRIMARY KEY,
+      cnpj TEXT NOT NULL,
+      razao_social TEXT NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  await pool.query(`
+    CREATE UNIQUE INDEX IF NOT EXISTS uq_sn_companies_cnpj
+    ON sn_companies (cnpj)
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS sn_receipts (
+      id BIGSERIAL PRIMARY KEY,
+      company_id BIGINT NOT NULL REFERENCES sn_companies(id) ON DELETE CASCADE,
+      pa INTEGER NOT NULL,
+      pdf BYTEA NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  await pool.query(`
+    ALTER TABLE sn_receipts
+    ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  `);
+
+  await pool.query(`
+    CREATE UNIQUE INDEX IF NOT EXISTS uq_sn_receipts_company_pa
+    ON sn_receipts (company_id, pa)
+  `);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_sn_receipts_pa
+    ON sn_receipts (pa)
+  `);
+
+  await pool.query(`
     CREATE TABLE IF NOT EXISTS company_change_requests (
       id BIGSERIAL PRIMARY KEY,
       company_name TEXT NOT NULL,
@@ -1370,6 +1414,16 @@ app.use(
   })
 );
 app.use(
+  '/api/extrator-fiscal-sped',
+  requireAuth,
+  requireToolApi('extrator-fiscal-sped'),
+  createExtratorFiscalSpedRoutes({
+    requireCsrf,
+    auditLog,
+    service: extratorFiscalSpedService,
+  })
+);
+app.use(
   '/api/conciliador-cartao-wilson',
   requireAuth,
   requireToolApi('conciliador-cartao-wilson'),
@@ -1422,6 +1476,16 @@ app.use(
     upload,
     axios,
     PY_API_URL,
+  })
+);
+app.use(
+  '/api/comparador-fsist-sped',
+  requireAuth,
+  requireToolApi('comparador-fsist-sped'),
+  createComparadorFsistSpedRoutes({
+    requireCsrf,
+    upload,
+    auditLog,
   })
 );
 app.use(

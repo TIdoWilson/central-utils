@@ -152,17 +152,20 @@ const SK_HIDDEN    = 'cs-hidden-tabs-v1';
 const SK_ACKED     = 'cs-ack-warnings-v1';
 const SK_ADMINS    = 'cs-param-admins-v1';
 const SK_DELETED   = 'cs-deleted-tabs-v1';
+const SK_PRESETS   = 'cs-presets-v1';
 
 let userOverrides        = {};
 let hiddenTabs           = new Set();
-let deletedTabs          = new Set(); // abas (estáticas ou dinâmicas) excluídas por admins
+let deletedTabs          = new Set();
 let acknowledgedWarnings = new Set();
 let paramAdmins          = [];
 let currentUser          = null;
 let csrfToken            = null;
+// Presets customizados/sobrescritos pelo admin (global, não por aba)
+let customPresets        = { earning: [], deduction: [] };
 
 // Estado do modal de parâmetros — pending state (não salva até clicar Salvar)
-const _pm = { dirty: false, pending: {}, tab: null };
+const _pm = { dirty: false, pending: {}, pendingPresets: null, tab: null };
 
 function toJson(v)  { return JSON.stringify(v, (k, x) => (x === Infinity ? '__INF__' : x)); }
 function fromJson(s){ return JSON.parse(s,    (k, x) => (x === '__INF__' ? Infinity  : x)); }
@@ -171,11 +174,21 @@ function deepCloneOv(ov) { return fromJson(toJson(ov)); }
 // ---------------------------------------------------------------------------
 // Persistência — localStorage (cache local) + servidor (estado compartilhado)
 // ---------------------------------------------------------------------------
-function saveOverrides()    { try { localStorage.setItem(SK_OVERRIDES, toJson(userOverrides)); } catch(e){} }
+// Retorna cópia de userOverrides sem extraEarnings/extraDeductions (ephemeral por sessão)
+function _ovForSave() {
+  const clean = {};
+  for (const [tab, ov] of Object.entries(userOverrides)) {
+    const { extraEarnings, extraDeductions, ...rest } = ov;
+    clean[tab] = rest;
+  }
+  return clean;
+}
+function saveOverrides()    { try { localStorage.setItem(SK_OVERRIDES, toJson(_ovForSave())); } catch(e){} }
 function saveHiddenTabs()   { try { localStorage.setItem(SK_HIDDEN,    JSON.stringify([...hiddenTabs])); } catch(e){} }
 function saveDeletedTabs()  { try { localStorage.setItem(SK_DELETED,   JSON.stringify([...deletedTabs])); } catch(e){} }
 function saveAckedWarnings(){ try { localStorage.setItem(SK_ACKED,     JSON.stringify([...acknowledgedWarnings])); } catch(e){} }
 function saveParamAdmins()  { try { localStorage.setItem(SK_ADMINS,    JSON.stringify(paramAdmins)); } catch(e){} }
+function saveCustomPresets(){ try { localStorage.setItem(SK_PRESETS,   toJson(customPresets)); } catch(e){} }
 function saveDynamicTabs() {
   const dyn = Object.entries(SHEET_CONFIG).filter(([,c]) => c.isDynamic).map(([name,cfg]) => ({name,cfg}));
   try { localStorage.setItem(SK_DYNAMIC, toJson(dyn)); } catch(e){}
@@ -208,11 +221,12 @@ async function postSharedStateToServer() {
   if (!csrfToken) return;
   try {
     const state = {
-      overrides: userOverrides,
+      overrides: _ovForSave(),
       hiddenTabs: [...hiddenTabs],
       deletedTabs: [...deletedTabs],
       dynamicTabs: Object.entries(SHEET_CONFIG).filter(([,c])=>c.isDynamic).map(([name,cfg])=>({name,cfg})),
       paramAdmins,
+      customPresets,
     };
     await fetch('/api/calculo-salario/state', {
       method: 'POST',
@@ -230,10 +244,11 @@ async function loadSharedStateFromServer() {
     const text = await resp.text();
     if (!text || text.trim() === '{}' || text.trim() === '') return;
     const state = fromJson(text);
-    if (state.overrides)   { userOverrides = state.overrides;                                              saveOverrides(); }
-    if (state.hiddenTabs)  { hiddenTabs = new Set(state.hiddenTabs);                                      saveHiddenTabs(); }
-    if (state.deletedTabs) { deletedTabs = new Set([...deletedTabs, ...state.deletedTabs]);               saveDeletedTabs(); }
-    if (state.paramAdmins) { paramAdmins = state.paramAdmins;                                             saveParamAdmins(); }
+    if (state.overrides)      { userOverrides = state.overrides;                                           saveOverrides(); }
+    if (state.hiddenTabs)     { hiddenTabs = new Set(state.hiddenTabs);                                   saveHiddenTabs(); }
+    if (state.deletedTabs)    { deletedTabs = new Set([...deletedTabs, ...state.deletedTabs]);            saveDeletedTabs(); }
+    if (state.paramAdmins)    { paramAdmins = state.paramAdmins;                                          saveParamAdmins(); }
+    if (state.customPresets)  { customPresets = state.customPresets;                                      saveCustomPresets(); }
     if (state.dynamicTabs) {
       // Adiciona abas que não existem localmente
       for (const {name,cfg} of state.dynamicTabs) {
@@ -254,7 +269,7 @@ async function loadSharedStateFromServer() {
 
 // Salva estado compartilhado: localStorage imediato + servidor assíncrono
 function saveSharedState() {
-  saveOverrides(); saveHiddenTabs(); saveDeletedTabs(); saveDynamicTabs(); saveParamAdmins();
+  saveOverrides(); saveHiddenTabs(); saveDeletedTabs(); saveDynamicTabs(); saveParamAdmins(); saveCustomPresets();
   scheduleServerSave();
 }
 
@@ -264,6 +279,7 @@ function loadFromStorage() {
   try { const r=localStorage.getItem(SK_DELETED);   if(r) deletedTabs=new Set(JSON.parse(r)); } catch(e){}
   try { const r=localStorage.getItem(SK_ACKED);     if(r) acknowledgedWarnings=new Set(JSON.parse(r)); } catch(e){}
   try { const r=localStorage.getItem(SK_ADMINS);    if(r) paramAdmins=JSON.parse(r); } catch(e){}
+  try { const r=localStorage.getItem(SK_PRESETS);   if(r) customPresets=fromJson(r); } catch(e){}
 }
 
 function loadDynamicTabs() {
@@ -278,9 +294,15 @@ function loadDynamicTabs() {
 // ---------------------------------------------------------------------------
 // Controle de acesso — parâmetros avançados
 // ---------------------------------------------------------------------------
+function normalizeEmail(value) {
+  return String(value || '').trim().toLowerCase();
+}
+
 function isParamAdmin() {
-  if (paramAdmins.length === 0) return true;
-  return !!(currentUser?.email && paramAdmins.includes(currentUser.email));
+  if (String(currentUser?.role || '').toUpperCase() === 'ADMIN') return true;
+  const currentEmail = normalizeEmail(currentUser?.email);
+  if (!currentEmail) return false;
+  return paramAdmins.map(normalizeEmail).includes(currentEmail);
 }
 
 async function initUser() {
@@ -295,11 +317,15 @@ async function initUser() {
 }
 
 function updateAdminUI() {
-  const admin = isParamAdmin();
   const cfg   = SHEET_CONFIG[currentTab];
   const isCLT = cfg?.type === 'clt' || cfg?.type === 'prolabore';
   const btnP  = document.getElementById('btnParams');
-  if (btnP) btnP.style.display = (admin && isCLT) ? '' : 'none';
+  if (btnP) {
+    btnP.style.display = isCLT ? '' : 'none';
+    btnP.title = isParamAdmin()
+      ? 'Parâmetros avançados (edição liberada)'
+      : 'Parâmetros avançados (somente visualização)';
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -321,7 +347,8 @@ function getEffectiveCfg(tab) {
   const ov   = userOverrides[tab] || {};
   if (ov.params    && cfg.params) Object.assign(cfg.params, ov.params);
   if (ov.inssBands && cfg.inss)   cfg.inss.bands = ov.inssBands.map(b=>({...b}));
-  if (ov.inssMax !== undefined && cfg.inss) cfg.inss.max = ov.inssMax;
+  if (ov.inssMax   !== undefined && cfg.inss) cfg.inss.max          = ov.inssMax;
+  if (ov.inssFlat  !== undefined && cfg.inss) cfg.inss.aliquotaFlat = ov.inssFlat;
   if (ov.irrfBands && cfg.irrf)   cfg.irrf.bands = ov.irrfBands.map(b=>({...b}));
   if (ov.dsr && cfg.dsr) Object.assign(cfg.dsr, ov.dsr);
   return cfg;
@@ -384,31 +411,40 @@ function calcIRRFBracket(base, bands) {
 // Cálculo principal
 // ---------------------------------------------------------------------------
 function calcFolha(cfg, inputs) {
-  const {salBase,diasTrab,diasMes,he50h,he50m,he100h,he100m,adcNoth,adcNotm,numDep,diasUteis,domingosFer,extraEarnings=[],extraDeductions=[],faltas=0}=inputs;
+  const {salBase,diasTrab,diasMes,he50h,he50m,he100h,he100m,adcNoth,adcNotm,numDep,diasUteis,domingosFer,extraEarnings=[],extraDeductions=[],faltas=0,faltasDSR=true,adcNotDSR=false}=inputs;
   const valorDep=cfg.params?.valorPorDep??189.59, deducaoSimp=cfg.params?.deducaoSimplificada??564.8;
   const I3=salBase,I8=I3/220;
   const Q29=I8*1.5,Q30=I8*2.0,Q32=I8*0.2;
   const P29=Q29*(he50h+he50m/60),P30=Q30*(he100h+he100m/60),P32=Q32*(adcNoth+adcNotm/60);
   const H14=diasUteis!==undefined?diasUteis:cfg.dsr.diasUteis;
   const H15=domingosFer!==undefined?domingosFer:cfg.dsr.domingosFer;
-  // DSR inclui Adc Not (Súmula 60 TST)
-  const P31=H14>0?((P29+P30+P32)/H14)*H15:0;
+  // adcNotDSR=false (padrão planilha): DSR apenas sobre HE; true: inclui Adic. Noturno (Súm. 60 TST)
+  const P31=H14>0?((P29+P30+(adcNotDSR?P32:0))/H14)*H15:0;
   const I4=P29+P30+P31+P32;
   const I5=I3+I4;
-  // Faltas injustificadas: modelo proporcional (Lei 605/49 art. 6°)
   const E3=diasMes||30;
-  const D3raw=diasTrab!==undefined?diasTrab:E3;
-  const faltasEfetivas=H14>0?faltas*(1+H15/H14):faltas;
-  const D3=Math.max(0,Math.min(D3raw-faltasEfetivas,E3));
-  const F3=E3>0?(I5/E3)*D3:I5;
-  // Proventos adicionais que incidem na base (INSS/IRRF/FGTS)
-  const extrasBase=extraEarnings.filter(e=>e.flags?.affectsBase).reduce((s,e)=>s+(+e.value||0),0);
-  // DSR sobre proventos variáveis (Súmula 27/172 TST)
-  const dsrExtras=H14>0?extraEarnings.filter(e=>e.flags?.affectsDSR&&!e.flags?.affectsBase).reduce((s,e)=>s+(+e.value||0),0)*(H15/H14):0;
+  // diasTrab = dias do período (proporcionalidade por contratação mid-month)
+  // faltas = faltas injustificadas (reduzem a base antes de INSS/IRRF/FGTS)
+  const diasTrabBase=diasTrab!==undefined?Math.min(Math.max(0,diasTrab),E3):E3;
+  const faltasReflexo=faltasDSR&&H14>0?faltas*(1+H15/H14):faltas;
+  const D3prop=Math.max(0,diasTrabBase-faltasReflexo);
+  const F3=E3>0?(I5/E3)*D3prop:I5;
+  // Desconto de faltas para exibição (já embutido em F3)
+  const descontoFaltaDia=E3>0?(I5/E3)*faltas:0;
+  const descontoFaltaDSR=faltasDSR&&H14>0?(I5/E3)*faltas*(H15/H14):0;
+  // Proventos extras: separa os que entram nas bases dos que só somam ao líquido
+  // affectsBase=true → entra em INSS/FGTS/IRRF; affectsDSR=true → gera DSR (ex: comissão)
+  let extrasBase=0, dsrExtras=0, extrasNoBase=0;
+  const extrasDetail=extraEarnings.map(e=>{
+    const val=+e.value||0;
+    const dsr=(e.flags?.affectsDSR&&H14>0)?val*(H15/H14):0;
+    if(e.flags?.affectsBase){ extrasBase+=val; dsrExtras+=dsr; }
+    else { extrasNoBase+=val; }
+    return {...e, dsr};
+  });
   const baseCalc=F3+extrasBase+dsrExtras;
   const P23=calcINSS(baseCalc,cfg),F5=P23;
   const P24=numDep*valorDep;
-  // Deduções que reduzem base IRRF (pensão, plano saúde – Lei 9.250/95)
   const deducoesIRRF=extraDeductions.filter(d=>d.flags?.deductsIRRFBase).reduce((s,d)=>s+(+d.value||0),0);
   const Q22=baseCalc-P23-P24-deducoesIRRF;
   const O34=baseCalc-deducaoSimp;
@@ -421,13 +457,11 @@ function calcFolha(cfg, inputs) {
   } else if (cfg.irrf.specialRule==='folha2025_2') {
     F6=F6<10?0:r2(F6);
   }
-  const F8=F3-F5-F6,I10=baseCalc*(cfg.params?.fgtsRate??0.08);
-  const totalExtraE=extraEarnings.reduce((s,e)=>s+(+e.value||0),0);
-  const totalExtraD=extraDeductions.reduce((s,e)=>s+(+e.value||0),0);
-  // Desconto faltas para exibição no detalhamento
-  const descontoFaltaDia=E3>0?(I5/E3)*faltas:0;
-  const descontoFaltaDSR=H14>0?descontoFaltaDia*(H15/H14):0;
-  return {I8,F3,I4,I5,P23,F5,F6:r2(F6),P24,F8,I10,P29,P30,P31,P32,Q34:r2(Q34),Q35:r2(Q35),O34,Q22,totalExtraE,totalExtraD,extraEarnings,extraDeductions,baseCalc,faltas,descontoFaltaDia,descontoFaltaDSR};
+  const F8=F3-F5-F6;
+  const I10=baseCalc*(cfg.params?.fgtsRate??0.08);
+  const totalExtraE=extrasBase+dsrExtras+extrasNoBase;
+  const totalExtraD=extraDeductions.reduce((s,d)=>s+(+d.value||0),0);
+  return {I8,F3,I4,I5,P23,F5,F6:r2(F6),P24,F8,I10,P29,P30,P31,P32,Q34:r2(Q34),Q35:r2(Q35),O34,Q22,totalExtraE,totalExtraD,extrasDetail,extraDeductions,baseCalc,faltas,descontoFaltaDia,descontoFaltaDSR,adcNotDSR};
 }
 
 // ---------------------------------------------------------------------------
@@ -440,180 +474,217 @@ function renderCLT(res) {
   setText('rHorasTotal', fmtBRL(res.I4));  setText('rBaseINSS',   fmtBRL(res.baseCalc||res.F3));
   setText('rINSS',       fmtBRL(res.F5));  setText('rIRRF',       fmtBRL(res.F6));
   setText('rDeducaoDep', fmtBRL(res.P24)); setText('rFGTS',       fmtBRL(res.I10));
-  setText('rLiquido',    fmtBRL(r2(res.F8 + res.totalExtraE - res.totalExtraD)));
-  setText('rINSSDetalhe', res.I4>0?`HE50%: ${fmtBRL(res.P29)} · HE100%: ${fmtBRL(res.P30)} · Not%: ${fmtBRL(res.P32)} · DSR(HE+Not): ${fmtBRL(res.P31)}`:'');
-  setText('rIRRFDetalhe', `Q34: base ${fmtBRL(res.O34)} → ${fmtBRL(res.Q34)} · Q35: base ${fmtBRL(res.Q22)} → ${fmtBRL(res.Q35)}`);
-  // Faltas
+
+  // Faixa de valores por hora
+  setText('rHoraCard', fmtBRL(res.I8));
+  function showHoraCard(cardId, valId, rateId, total, rate) {
+    const el = document.getElementById(cardId);
+    if (!el) return;
+    if (total > 0) {
+      el.style.display = '';
+      setText(valId, fmtBRL(r2(total)));
+      if (rateId) setText(rateId, fmtBRL(r2(rate)) + '/h');
+    } else { el.style.display = 'none'; }
+  }
+  showHoraCard('rHE50Card',  'rHE50CardVal',  'rHE50CardRate',  res.P29, res.I8*1.5);
+  showHoraCard('rHE100Card', 'rHE100CardVal', 'rHE100CardRate', res.P30, res.I8*2.0);
+  showHoraCard('rNotCard',   'rNotCardVal',   'rNotCardRate',   res.P32, res.I8*0.2);
+  showHoraCard('rDSRCard',   'rDSRCardVal',   null,             res.P31, 0);
+  // Faltas (informativo — já embutido no Sal. Proporcional via D3prop)
   const fRow=document.getElementById('rFaltasRow');
   if(fRow){
     if(res.faltas>0){
       fRow.style.display='';
       setText('rFaltasValor',fmtBRL(r2(res.descontoFaltaDia+res.descontoFaltaDSR)));
-      setText('rFaltasDetalhe',`${res.faltas} dia(s) — dia: ${fmtBRL(r2(res.descontoFaltaDia))} + DSR: ${fmtBRL(r2(res.descontoFaltaDSR))}`);
+      const dsrLabel=res.descontoFaltaDSR>0?` + DSR: ${fmtBRL(r2(res.descontoFaltaDSR))}`:'';
+      setText('rFaltasDetalhe',`${res.faltas} dia(s) — dia: ${fmtBRL(r2(res.descontoFaltaDia))}${dsrLabel} (incluso no Sal. Prop.)`);
     } else { fRow.style.display='none'; }
   }
+  // Líquido = F8 (faltas já em F3) + proventos extras − descontos
+  const liquido=r2(res.F8+res.totalExtraE-res.totalExtraD);
+  setText('rLiquido',fmtBRL(liquido));
+  const dsrHELabel=res.adcNotDSR?'DSR(HE+Not)':'DSR(HE)';
+  setText('rINSSDetalhe', res.I4>0?`HE50%: ${fmtBRL(res.P29)} · HE100%: ${fmtBRL(res.P30)} · Not%: ${fmtBRL(res.P32)} · ${dsrHELabel}: ${fmtBRL(res.P31)}`:'');
+  setText('rIRRFDetalhe', `Q34: base ${fmtBRL(res.O34)} → ${fmtBRL(res.Q34)} · Q35: base ${fmtBRL(res.Q22)} → ${fmtBRL(res.Q35)}`);
   // KPI bar
-  const bruto    = r2(res.F3 + res.totalExtraE);
-  const totalDesc= r2(res.F5 + res.F6 + res.totalExtraD);
-  const pct      = bruto>0?(totalDesc/bruto)*100:0;
+  const bruto=r2(res.F3+res.totalExtraE);
+  const totalDesc=r2(res.F5+res.F6+res.totalExtraD);
+  const pct=bruto>0?(totalDesc/bruto)*100:0;
   setText('kpiBruto',    fmtBRL(bruto));
   setText('kpiDescontos', fmtBRL(totalDesc));
   setText('kpiPctDesc',   bruto>0?fmtPct(pct)+' do bruto':'—');
-  renderExtraInDetail(res.extraEarnings, res.extraDeductions);
+  setText('kpiLiquido',   fmtBRL(liquido));
+  renderExtraInDetail(res.extrasDetail||[], res.extraDeductions);
 }
 
 function renderExtraInDetail(earnings, deductions) {
-  const c=document.getElementById('rExtraContainer'); if(!c) return;
-  const items=[...earnings.filter(e=>+e.value>0),...deductions.filter(d=>+d.value>0)];
-  if(!items.length){c.style.display='none';c.innerHTML='';return;}
-  c.style.display='';
-  let html='<hr class="sal-divider" /><div class="sal-result-grid">';
-  for(const e of earnings.filter(x=>+x.value>0)){
-    html+=`<div class="sal-result-item"><span class="sal-result-label">(+) ${escHtml(e.label||'Provento')}</span><span class="sal-result-value positivo">${fmtBRL(+e.value)}</span></div>`;
+  const grid=document.getElementById('detalhamentoGrid'); if(!grid) return;
+  // Remove previously injected extra items
+  grid.querySelectorAll('[data-extra]').forEach(el=>el.remove());
+  const eItems=earnings.filter(e=>+e.value>0);
+  const dItems=deductions.filter(d=>+d.value>0);
+  if(!eItems.length&&!dItems.length) return;
+  function makeItem(label, value, cls) {
+    const d=document.createElement('div');
+    d.className='sal-result-item'; d.dataset.extra='1';
+    d.innerHTML=`<span class="sal-result-label">${escHtml(label)}</span><span class="sal-result-value ${cls}">${fmtBRL(value)}</span>`;
+    return d;
   }
-  for(const d of deductions.filter(x=>+x.value>0)){
-    html+=`<div class="sal-result-item"><span class="sal-result-label">(−) ${escHtml(d.label||'Desconto')}</span><span class="sal-result-value desconto">${fmtBRL(+d.value)}</span></div>`;
+  for(const e of eItems){
+    grid.appendChild(makeItem(`(+) ${e.label||'Provento'}`, +e.value, 'positivo'));
+    if(e.dsr>0) grid.appendChild(makeItem(`(+) DSR ${e.label||'Provento'}`, r2(e.dsr), 'positivo'));
   }
-  html+='</div>';
-  c.innerHTML=html;
+  for(const d of dItems){
+    grid.appendChild(makeItem(`(−) ${d.label||'Desconto'}`, +d.value, 'desconto'));
+  }
 }
 
 // ---------------------------------------------------------------------------
 // Eventos adicionais (proventos / descontos)
 // ---------------------------------------------------------------------------
-const EXTRA_PRESETS_EARNING = [
-  {key:'custom',   label:'Personalizado',    flags:{affectsBase:false,affectsDSR:false}},
-  {key:'comissao', label:'Comissão',          flags:{affectsBase:true, affectsDSR:true}},
-  {key:'insalub',  label:'Insalubridade',     flags:{affectsBase:true, affectsDSR:true}},
-  {key:'pericul',  label:'Periculosidade',    flags:{affectsBase:true, affectsDSR:true}},
-  {key:'gratif',   label:'Gratificação',      flags:{affectsBase:true, affectsDSR:true}},
-  {key:'premio',   label:'Prêmio/Produção',   flags:{affectsBase:false,affectsDSR:false}},
-  {key:'ajuda',    label:'Ajuda de Custo',    flags:{affectsBase:false,affectsDSR:false}},
+
+// Presets padrão (builtins) — não são deletáveis, apenas editáveis/sobrescrevíveis pelo admin
+const PRESET_DEFAULTS_EARNING = [
+  {key:'comissao',  label:'Comissão',               flags:{affectsBase:true,  affectsDSR:true}},
+  {key:'insalub',   label:'Insalubridade',           flags:{affectsBase:true,  affectsDSR:false}},
+  {key:'pericul',   label:'Periculosidade',          flags:{affectsBase:true,  affectsDSR:false}},
+  {key:'gratif',    label:'Gratificação',             flags:{affectsBase:true,  affectsDSR:false}},
+  {key:'adicional', label:'Adicional (sem imposto)', flags:{affectsBase:false, affectsDSR:false}},
+  {key:'ajuda',     label:'Ajuda de Custo',          flags:{affectsBase:false, affectsDSR:false}},
 ];
-const EXTRA_PRESETS_DEDUCTION = [
-  {key:'custom',   label:'Personalizado',         flags:{affectsBase:false,deductsIRRFBase:false}},
-  {key:'vt',       label:'Vale Transporte',        flags:{affectsBase:false,deductsIRRFBase:false}},
-  {key:'va',       label:'Vale Alimentação',       flags:{affectsBase:false,deductsIRRFBase:false}},
-  {key:'planosaude',label:'Plano de Saúde',        flags:{affectsBase:false,deductsIRRFBase:true}},
-  {key:'pensao',   label:'Pensão Alimentícia',     flags:{affectsBase:false,deductsIRRFBase:true}},
-  {key:'adiant',   label:'Adiantamento',           flags:{affectsBase:false,deductsIRRFBase:false}},
-  {key:'emprest',  label:'Empréstimo/Consignado',  flags:{affectsBase:false,deductsIRRFBase:false}},
-  {key:'sindical', label:'Contrib. Sindical',      flags:{affectsBase:false,deductsIRRFBase:false}},
+const PRESET_DEFAULTS_DEDUCTION = [
+  {key:'pensao',     label:'Pensão Alimentícia',  flags:{deductsIRRFBase:true}},
+  {key:'planosaude', label:'Plano de Saúde',       flags:{deductsIRRFBase:true}},
+  {key:'vt',         label:'Vale Transporte',      flags:{deductsIRRFBase:false}},
+  {key:'va',         label:'Vale Alimentação',     flags:{deductsIRRFBase:false}},
+  {key:'farmacia',   label:'Farmácia',             flags:{deductsIRRFBase:false}},
+  {key:'adiant',     label:'Adiantamento',         flags:{deductsIRRFBase:false}},
+  {key:'emprest',    label:'Empréstimo',           flags:{deductsIRRFBase:false}},
+  {key:'sindical',   label:'Sind./Assistencial',   flags:{deductsIRRFBase:false}},
+  {key:'desconto',   label:'Desconto',             flags:{deductsIRRFBase:false}},
 ];
 
-let _extraDropdownOpen = null;
+function presetTag(type, flags) {
+  if (type === 'earning') {
+    if (flags?.affectsBase && flags?.affectsDSR) return 'INSS/FGTS+DSR';
+    if (flags?.affectsBase) return 'INSS/FGTS';
+    return 'só líquido';
+  }
+  return flags?.deductsIRRFBase ? 'deduz IRRF' : '';
+}
+
+function mergePresets(type, custom) {
+  const defaults = type === 'earning' ? PRESET_DEFAULTS_EARNING : PRESET_DEFAULTS_DEDUCTION;
+  const customList = (custom && custom[type]) || [];
+  const merged = defaults.map(d => {
+    const ov = customList.find(c => c.key === d.key);
+    return ov ? { ...d, ...ov, _builtin: true } : { ...d, _builtin: true };
+  });
+  const defaultKeys = new Set(defaults.map(d => d.key));
+  for (const cp of customList) {
+    if (!defaultKeys.has(cp.key)) merged.push({ ...cp, _builtin: false });
+  }
+  return merged;
+}
+
+function getEffectivePresets(type) { return mergePresets(type, customPresets); }
+
+let _extraDropdown = null;
 
 function getExtraArray(tab, type) {
   if(!userOverrides[tab]) userOverrides[tab]={};
-  const key=type==='earning'?'extraEarnings':'extraDeductions';
+  const key = type==='earning' ? 'extraEarnings' : 'extraDeductions';
   if(!userOverrides[tab][key]) userOverrides[tab][key]=[];
   return userOverrides[tab][key];
 }
 
-function addExtraEvent(tab, type, presetKey) {
-  const presets = type==='earning'?EXTRA_PRESETS_EARNING:EXTRA_PRESETS_DEDUCTION;
-  const preset = presets.find(p=>p.key===presetKey) || presets[0];
-  getExtraArray(tab,type).push({label:preset.key==='custom'?'':preset.label, value:0, flags:{...preset.flags}});
+function addExtraItem(tab, type, presetKey) {
+  const presets = getEffectivePresets(type);
+  const preset  = presets.find(p=>p.key===presetKey) || presets[0];
+  getExtraArray(tab,type).push({label:preset.label, value:0, preset:presetKey, flags:{...(preset.flags||{})}});
   saveSharedState(); renderExtraEvents(tab); recalcCLT();
 }
 
 function openExtraDropdown(tab, type, anchorEl) {
   closeExtraDropdown();
-  const presets = type==='earning'?EXTRA_PRESETS_EARNING:EXTRA_PRESETS_DEDUCTION;
+  const presets = getEffectivePresets(type);
   const drop = document.createElement('div');
   drop.className = 'sal-extra-dropdown';
-  drop.style.cssText='position:absolute;z-index:9999;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);padding:6px 0;min-width:180px';
-  presets.forEach(p=>{
-    const item=document.createElement('div');
-    item.className='sal-extra-dropdown-item';
-    item.style.cssText='padding:7px 14px;cursor:pointer;font-size:12px;color:#334155';
-    item.textContent=p.label;
-    item.onmouseenter=()=>item.style.background='#f1f5f9';
-    item.onmouseleave=()=>item.style.background='';
-    item.onmousedown=e=>{e.preventDefault();closeExtraDropdown();addExtraEvent(tab,type,p.key);};
+  drop.style.cssText = 'position:fixed;z-index:9999;background:#fff;border:1px solid #e2e8f0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);padding:6px 0;min-width:190px';
+  presets.forEach(p => {
+    const item = document.createElement('div');
+    item.style.cssText = 'padding:7px 14px;cursor:pointer;font-size:12px;color:#334155;display:flex;justify-content:space-between;align-items:center;gap:8px';
+    const tag = presetTag(type, p.flags);
+    item.innerHTML = `<span>${p.label}</span>${tag?`<span style="font-size:10px;color:#94a3b8">${tag}</span>`:''}`;
+    item.onmouseenter = () => item.style.background = '#f1f5f9';
+    item.onmouseleave = () => item.style.background = '';
+    item.onmousedown  = e => { e.preventDefault(); closeExtraDropdown(); addExtraItem(tab, type, p.key); };
     drop.appendChild(item);
   });
-  const rect=anchorEl.getBoundingClientRect();
-  drop.style.top=(rect.bottom+window.scrollY)+'px';
-  drop.style.left=(rect.left+window.scrollX)+'px';
+  const rect = anchorEl.getBoundingClientRect();
+  drop.style.top  = (rect.bottom + 4) + 'px';
+  drop.style.left = rect.left + 'px';
   document.body.appendChild(drop);
-  _extraDropdownOpen = drop;
+  _extraDropdown = drop;
 }
 
 function closeExtraDropdown() {
-  if(_extraDropdownOpen){_extraDropdownOpen.remove();_extraDropdownOpen=null;}
+  if (_extraDropdown) { _extraDropdown.remove(); _extraDropdown = null; }
 }
 
 function renderExtraEvents(tab) {
-  const list=document.getElementById('salExtraList'); if(!list) return;
-  const earns =(userOverrides[tab]?.extraEarnings ??[]);
-  const deds  =(userOverrides[tab]?.extraDeductions??[]);
+  const list = document.getElementById('salExtraList'); if (!list) return;
+  const earns = (userOverrides[tab]?.extraEarnings  ?? []);
+  const deds  = (userOverrides[tab]?.extraDeductions ?? []);
+  let html = '';
 
-  function flagChips(item, type) {
-    const f=item.flags||{};
-    let chips='';
-    if(type==='earning'){
-      chips+=`<span class="sal-flag-chip${f.affectsBase?' active':''}" data-flag="affectsBase" title="Incide em INSS/IRRF/FGTS">base</span>`;
-      chips+=`<span class="sal-flag-chip${f.affectsDSR?' active':''}" data-flag="affectsDSR" title="Gera reflexo DSR">dsr</span>`;
-    } else {
-      chips+=`<span class="sal-flag-chip${f.deductsIRRFBase?' active':''}" data-flag="deductsIRRFBase" title="Reduz base IRRF (pensão/plano saúde)">ded.IR</span>`;
-    }
-    return chips;
-  }
+  const effEarning = getEffectivePresets('earning');
+  const effDeduction = getEffectivePresets('deduction');
 
-  let html='';
-  earns.forEach((e,i)=>{
-    html+=`<div class="sal-extra-item">
+  earns.forEach((e, i) => {
+    const effFlags = e.preset ? (effEarning.find(p=>p.key===e.preset)?.flags ?? e.flags) : e.flags;
+    const tag = presetTag('earning', effFlags);
+    html += `<div class="sal-extra-item">
       <span class="sal-extra-badge earning">+</span>
-      <input type="text" class="auth-input sal-extra-label" data-et="earning" data-ei="${i}" placeholder="Descrição" value="${escHtml(e.label||'')}" />
-      <input type="number" step="0.01" min="0" class="auth-input sal-extra-value" data-et="earning" data-ei="${i}" placeholder="0,00" value="${e.value||''}" />
-      <span class="sal-flag-chips" data-et="earning" data-ei="${i}">${flagChips(e,'earning')}</span>
+      <input type="text" class="auth-input sal-extra-label" data-et="earning" data-ei="${i}" placeholder="Descrição" value="${escHtml(e.label||'')}" style="min-width:0" />
+      <input type="number" step="0.01" min="0" class="auth-input sal-extra-value" data-et="earning" data-ei="${i}" placeholder="0,00" value="${e.value||''}" style="width:74px" />
+      <span style="font-size:10px;color:#94a3b8;white-space:nowrap">${tag}</span>
       <button type="button" class="sal-extra-remove" data-et="earning" data-ei="${i}" title="Remover">✕</button>
     </div>`;
   });
-  deds.forEach((d,i)=>{
-    html+=`<div class="sal-extra-item">
+
+  deds.forEach((d, i) => {
+    const effFlags = d.preset ? (effDeduction.find(p=>p.key===d.preset)?.flags ?? d.flags) : d.flags;
+    const tag = presetTag('deduction', effFlags);
+    html += `<div class="sal-extra-item">
       <span class="sal-extra-badge deduction">−</span>
-      <input type="text" class="auth-input sal-extra-label" data-et="deduction" data-ei="${i}" placeholder="Descrição" value="${escHtml(d.label||'')}" />
-      <input type="number" step="0.01" min="0" class="auth-input sal-extra-value" data-et="deduction" data-ei="${i}" placeholder="0,00" value="${d.value||''}" />
-      <span class="sal-flag-chips" data-et="deduction" data-ei="${i}">${flagChips(d,'deduction')}</span>
+      <input type="text" class="auth-input sal-extra-label" data-et="deduction" data-ei="${i}" placeholder="Descrição" value="${escHtml(d.label||'')}" style="min-width:0" />
+      <input type="number" step="0.01" min="0" class="auth-input sal-extra-value" data-et="deduction" data-ei="${i}" placeholder="0,00" value="${d.value||''}" style="width:74px" />
+      ${tag?`<span style="font-size:10px;color:#94a3b8;white-space:nowrap">${tag}</span>`:''}
       <button type="button" class="sal-extra-remove" data-et="deduction" data-ei="${i}" title="Remover">✕</button>
     </div>`;
   });
-  list.innerHTML=html;
 
-  list.querySelectorAll('.sal-extra-label').forEach(el=>{
-    el.addEventListener('input',()=>{
-      const arr=getExtraArray(tab,el.dataset.et);
-      if(arr[+el.dataset.ei]) arr[+el.dataset.ei].label=el.value;
+  list.innerHTML = html;
+
+  list.querySelectorAll('.sal-extra-label').forEach(el => {
+    el.addEventListener('input', () => {
+      const arr = getExtraArray(tab, el.dataset.et);
+      if (arr[+el.dataset.ei]) arr[+el.dataset.ei].label = el.value;
       saveSharedState(); recalcCLT();
     });
   });
-  list.querySelectorAll('.sal-extra-value').forEach(el=>{
-    el.addEventListener('input',()=>{
-      const arr=getExtraArray(tab,el.dataset.et);
-      if(arr[+el.dataset.ei]) arr[+el.dataset.ei].value=parseFloat(el.value)||0;
+  list.querySelectorAll('.sal-extra-value').forEach(el => {
+    el.addEventListener('input', () => {
+      const arr = getExtraArray(tab, el.dataset.et);
+      if (arr[+el.dataset.ei]) arr[+el.dataset.ei].value = parseFloat(el.value) || 0;
       saveSharedState(); recalcCLT();
     });
   });
-  list.querySelectorAll('.sal-extra-remove').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const arr=getExtraArray(tab,btn.dataset.et);
-      arr.splice(+btn.dataset.ei,1);
+  list.querySelectorAll('.sal-extra-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      getExtraArray(tab, btn.dataset.et).splice(+btn.dataset.ei, 1);
       saveSharedState(); renderExtraEvents(tab); recalcCLT();
-    });
-  });
-  // Chips de flags — toggle ao clicar
-  list.querySelectorAll('.sal-flag-chip').forEach(chip=>{
-    chip.addEventListener('click',()=>{
-      const chips=chip.closest('.sal-flag-chips');
-      const arr=getExtraArray(tab,chips.dataset.et);
-      const item=arr[+chips.dataset.ei]; if(!item) return;
-      if(!item.flags) item.flags={};
-      const flag=chip.dataset.flag;
-      item.flags[flag]=!item.flags[flag];
-      chip.classList.toggle('active',!!item.flags[flag]);
-      saveSharedState(); recalcCLT();
     });
   });
 }
@@ -631,22 +702,42 @@ const PARAM_META = {
 };
 
 function openParamsModal(tab) {
-  if (!isParamAdmin()) return;
   const cfg=getEffectiveCfg(tab); if(!cfg?.params) return;
+  const canEdit = isParamAdmin();
   _pm.tab   = tab;
   _pm.dirty = false;
   _pm.pending = deepCloneOv(userOverrides[tab] || {});
-  document.getElementById('paramsModalTitle').textContent=`Parâmetros avançados — ${tab}`;
-  document.getElementById('btnSaveParamsModal').disabled=true;
-  setText('paramsSaveStatus','');
-  buildParamsModalContent(tab, cfg);
+  _pm.pendingPresets = deepCloneOv(customPresets);
+  document.getElementById('paramsModalTitle').textContent = canEdit
+    ? `Parâmetros avançados — ${tab}`
+    : `Parâmetros avançados — ${tab} (somente visualização)`;
+  const saveBtn = document.getElementById('btnSaveParamsModal');
+  if (saveBtn) {
+    saveBtn.disabled = true;
+    saveBtn.style.display = canEdit ? '' : 'none';
+  }
+  setText('paramsSaveStatus', canEdit ? '' : 'Visualização somente leitura.');
+  buildParamsModalContent(tab, cfg, canEdit);
   document.getElementById('paramsModal').showModal();
 }
 
-function buildParamsModalContent(tab, cfg) {
+function getProlaboreInssRate(cfg, pending) {
+  if (pending.inssFlat !== undefined) return pending.inssFlat;
+  if (cfg.inss?.flat) return cfg.inss.aliquotaFlat ?? 0.11;
+  const bands = pending.inssBands || cfg.inss?.bands || [];
+  if (!bands.length) return 0.11;
+  return bands[0]?.aliquota ?? 0.11;
+}
+
+function buildParamsModalContent(tab, cfg, canEdit = isParamAdmin()) {
   const body=document.getElementById('paramsModalBody'); if(!body) return;
   const pov=_pm.pending;
   let html='';
+  const isProlabore = cfg.type === 'prolabore';
+
+  if (!canEdit) {
+    html += '<div class="sal-tabmgr-note" style="margin-bottom:14px;color:#475569;background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px 12px">Seu usuário pode visualizar os parâmetros avançados, mas não pode alterá-los.</div>';
+  }
 
   // Dias trabalhados / Dias do mês
   const diasTrab = pov.diasTrab ?? 30;
@@ -684,8 +775,8 @@ function buildParamsModalContent(tab, cfg) {
   }
   html+='</div>';
 
-  // Tabela INSS
-  if (cfg.inss?.bands?.length>0) {
+  // Tabela INSS (faixas progressivas — CLT)
+  if (cfg.inss?.bands?.length>0 && !isProlabore) {
     const modINSS=(pov.inssBands!==undefined);
     html+=`<div class="sal-section-title">Tabela INSS${modINSS?' <span class="sal-param-badge">editada</span>':''}</div>`;
     html+='<table class="sal-band-table"><thead><tr><th>#</th><th>Limite (até R$)</th><th>Alíquota (%)</th></tr></thead><tbody>';
@@ -696,12 +787,42 @@ function buildParamsModalContent(tab, cfg) {
         <td><input type="number" step="0.0001" min="0" max="100" data-inss-aliq="${i}" value="${(band.aliquota*100).toFixed(4)}" /></td></tr>`;
     });
     html+='</tbody></table>';
+  }
+  // Pró-labore: exibe sempre a alíquota única e o teto do INSS.
+  if (isProlabore && cfg.inss) {
+    const modRate=(pov.inssFlat!==undefined || pov.inssBands!==undefined);
+    const rateVal=getProlaboreInssRate(cfg, pov);
+    html+=`<div class="sal-section-title">INSS do Pró-labore${modRate?' <span class="sal-param-badge">editado</span>':''}</div>`;
+    html+=`<div class="sal-advanced-grid">
+      <label class="auth-label${modRate?' sal-param-modified':''}">
+        Percentual INSS (ex: 0.11 = 11%)${modRate?' <span class="sal-param-badge">editado</span>':''}
+        <input class="auth-input" type="number" step="0.0001" min="0" max="1" id="inssRateInput" value="${rateVal}" /></label>`;
     if (cfg.inss.max!==null&&cfg.inss.max!==undefined) {
       const modMax=(pov.inssMax!==undefined);
-      html+=`<label class="auth-label${modMax?' sal-param-modified':''}" style="margin-top:8px;max-width:240px">
+      html+=`<label class="auth-label${modMax?' sal-param-modified':''}">
         Teto INSS (R$)${modMax?' <span class="sal-param-badge">editado</span>':''}
         <input class="auth-input" type="number" step="0.01" min="0" id="inssMaxInput" value="${pov.inssMax ?? cfg.inss.max}" /></label>`;
     }
+    html+='</div>';
+  } else if (cfg.inss?.flat) {
+    const modFlat=(pov.inssFlat!==undefined);
+    const flatVal=(pov.inssFlat ?? cfg.inss.aliquotaFlat ?? 0.11);
+    html+=`<div class="sal-advanced-grid" style="margin-top:8px">
+      <label class="auth-label${modFlat?' sal-param-modified':''}">
+        Alíquota INSS (ex: 0.11 = 11%)${modFlat?' <span class="sal-param-badge">editado</span>':''}
+        <input class="auth-input" type="number" step="0.0001" min="0" max="1" id="inssRateInput" value="${flatVal}" /></label>`;
+    if (cfg.inss.max!==null&&cfg.inss.max!==undefined) {
+      const modMax=(pov.inssMax!==undefined);
+      html+=`<label class="auth-label${modMax?' sal-param-modified':''}">
+        Teto INSS (R$)${modMax?' <span class="sal-param-badge">editado</span>':''}
+        <input class="auth-input" type="number" step="0.01" min="0" id="inssMaxInput" value="${pov.inssMax ?? cfg.inss.max}" /></label>`;
+    }
+    html+='</div>';
+  } else if (cfg.inss?.max!==null&&cfg.inss?.max!==undefined) {
+    const modMax=(pov.inssMax!==undefined);
+    html+=`<label class="auth-label${modMax?' sal-param-modified':''}" style="margin-top:8px;max-width:240px">
+      Teto INSS (R$)${modMax?' <span class="sal-param-badge">editado</span>':''}
+      <input class="auth-input" type="number" step="0.01" min="0" id="inssMaxInput" value="${pov.inssMax ?? cfg.inss.max}" /></label>`;
   }
 
   // Tabela IRRF
@@ -720,7 +841,36 @@ function buildParamsModalContent(tab, cfg) {
   }
 
   html+=`<div style="margin-top:18px"><button class="btn btn-secondary" type="button" id="btnRestaurarParamsModal">Restaurar padrões da planilha</button></div>`;
+
+  if (canEdit) {
+    html+=`
+    <hr style="margin:20px 0 14px;border:none;border-top:1px solid #e2e8f0">
+    <div class="sal-section-title" style="margin-top:0">Presets de Proventos / Descontos</div>
+    <div style="font-size:11px;color:#64748b;margin-bottom:10px">Estes presets aparecem no dropdown &quot;+ Provento&quot; / &quot;+ Desconto&quot; e definem quais bases (INSS, FGTS, IRRF) cada item afeta.</div>
+
+    <div style="margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Proventos</div>
+      <div id="pmPresetsEarning"></div>
+      <button class="btn btn-secondary" style="font-size:11px;padding:4px 12px;margin-top:6px" type="button" id="pmAddEarningPreset">+ Novo provento</button>
+    </div>
+
+    <div style="margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Descontos</div>
+      <div id="pmPresetsDeduction"></div>
+      <button class="btn btn-secondary" style="font-size:11px;padding:4px 12px;margin-top:6px" type="button" id="pmAddDeductionPreset">+ Novo desconto</button>
+    </div>
+
+    <div><button class="btn btn-secondary" style="font-size:11px;padding:4px 12px" type="button" id="pmRestorePresets">↩ Restaurar presets padrão</button></div>`;
+  }
+
   body.innerHTML=html;
+
+  if (!canEdit) {
+    body.querySelectorAll('input, button').forEach(el => {
+      el.disabled = true;
+    });
+    return;
+  }
 
   function setDirty() {
     _pm.dirty=true;
@@ -770,6 +920,16 @@ function buildParamsModalContent(tab, cfg) {
   body.querySelectorAll('[data-inss-ate],[data-inss-aliq]').forEach(el=>{
     el.addEventListener('input',()=>{ _pm.pending.inssBands=colINSS(); setDirty(); });
   });
+  body.querySelector('#inssRateInput')?.addEventListener('input',e=>{
+    const v=parseFloat(e.target.value); if(!isFinite(v)) return;
+    if (cfg.inss?.flat) {
+      _pm.pending.inssFlat=v;
+    } else if (cfg.inss?.bands?.length) {
+      const sourceBands=_pm.pending.inssBands || cfg.inss.bands;
+      _pm.pending.inssBands=sourceBands.map(b=>({ ...b, aliquota: v }));
+    }
+    setDirty();
+  });
   body.querySelector('#inssMaxInput')?.addEventListener('input',e=>{
     const v=parseFloat(e.target.value); if(!isFinite(v)) return;
     _pm.pending.inssMax=v; setDirty();
@@ -784,10 +944,123 @@ function buildParamsModalContent(tab, cfg) {
     el.addEventListener('input',()=>{ _pm.pending.irrfBands=colIRRF(); setDirty(); });
   });
 
-  // Restaurar padrões
+  // Restaurar padrões (parâmetros de aba)
   body.querySelector('#btnRestaurarParamsModal')?.addEventListener('click',()=>{
-    _pm.pending={}; setDirty();
-    buildParamsModalContent(tab, SHEET_CONFIG[tab]||cfg);
+    const baseCfg = SHEET_CONFIG[tab] || cfg;
+    _pm.pending = {};
+    if (baseCfg?.dsr) _pm.pending.dsr = { diasUteis: baseCfg.dsr.diasUteis, domingosFer: baseCfg.dsr.domingosFer };
+    setDirty();
+    buildParamsModalContent(tab, baseCfg, true);
+  });
+
+  // ── Gerenciador de Presets ─────────────────────────────────────────────────
+  function renderPresetRows(type) {
+    const container = body.querySelector(type==='earning' ? '#pmPresetsEarning' : '#pmPresetsDeduction');
+    if (!container) return;
+    const presets = mergePresets(type, _pm.pendingPresets);
+    const flagKeys = type==='earning' ? ['affectsBase','affectsDSR'] : ['deductsIRRFBase'];
+    const flagLabels = { affectsBase:'INSS/FGTS', affectsDSR:'DSR', deductsIRRFBase:'Deduz IRRF' };
+
+    container.innerHTML = presets.map((p, idx) => {
+      const isBuiltin = p._builtin;
+      const defaultP = (type==='earning' ? PRESET_DEFAULTS_EARNING : PRESET_DEFAULTS_DEDUCTION).find(d=>d.key===p.key);
+      const isModified = isBuiltin && defaultP && (p.label !== defaultP.label || JSON.stringify(p.flags) !== JSON.stringify(defaultP.flags));
+      const flagsHtml = flagKeys.map(f =>
+        `<label style="font-size:11px;color:#475569;white-space:nowrap;display:flex;align-items:center;gap:3px;cursor:pointer">
+          <input type="checkbox" data-pflag="${f}" data-pidx="${idx}" data-ptype="${type}" ${p.flags?.[f]?'checked':''}>
+          ${flagLabels[f]}
+        </label>`
+      ).join('');
+      const resetBtn = isModified
+        ? `<button type="button" data-preset-reset="${idx}" data-ptype="${type}" title="Restaurar padrão" style="border:none;background:none;cursor:pointer;color:#f59e0b;font-size:14px;padding:2px 3px;line-height:1" tabindex="-1">↩</button>`
+        : '';
+      const delBtn = !isBuiltin
+        ? `<button type="button" data-preset-del="${idx}" data-ptype="${type}" title="Excluir" style="border:none;background:none;cursor:pointer;color:#dc2626;font-size:13px;padding:2px 4px;line-height:1" tabindex="-1">✕</button>`
+        : '';
+      const builtinDot = isBuiltin
+        ? `<span title="Preset padrão" style="font-size:9px;color:#94a3b8;margin-left:2px">●</span>`
+        : '';
+      return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid #f1f5f9">
+        <input type="text" class="auth-input" value="${escHtml(p.label)}" data-plabel="${idx}" data-ptype="${type}" style="flex:1;min-width:80px;font-size:12px;padding:3px 7px">
+        ${flagsHtml}
+        ${builtinDot}
+        ${resetBtn}${delBtn}
+      </div>`;
+    }).join('');
+
+    // Event listeners
+    container.querySelectorAll('[data-plabel]').forEach(el => {
+      el.addEventListener('input', () => {
+        const idx = +el.dataset.plabel, t = el.dataset.ptype;
+        _updatePendingPreset(t, idx, { label: el.value });
+        // não re-renderiza durante digitação (perderia o cursor); só marca dirty
+      });
+      el.addEventListener('blur', () => {
+        renderPresetRows(el.dataset.ptype); // re-render quando sair do campo
+      });
+    });
+    container.querySelectorAll('[data-pflag]').forEach(el => {
+      el.addEventListener('change', () => {
+        const idx = +el.dataset.pidx, t = el.dataset.ptype, f = el.dataset.pflag;
+        const current = mergePresets(t, _pm.pendingPresets)[idx];
+        const newFlags = { ...(current.flags||{}), [f]: el.checked };
+        _updatePendingPreset(t, idx, { flags: newFlags });
+        renderPresetRows(t);
+      });
+    });
+    container.querySelectorAll('[data-preset-reset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = +btn.dataset.presetReset, t = btn.dataset.ptype;
+        const preset = mergePresets(t, _pm.pendingPresets)[idx];
+        if (!preset._builtin) return;
+        // Remove override from pendingPresets (restores to default)
+        if (_pm.pendingPresets[t]) {
+          _pm.pendingPresets[t] = _pm.pendingPresets[t].filter(c => c.key !== preset.key);
+        }
+        setDirty(); renderPresetRows(t);
+      });
+    });
+    container.querySelectorAll('[data-preset-del]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = +btn.dataset.presetDel, t = btn.dataset.ptype;
+        const preset = mergePresets(t, _pm.pendingPresets)[idx];
+        if (preset._builtin) return;
+        if (_pm.pendingPresets[t]) {
+          _pm.pendingPresets[t] = _pm.pendingPresets[t].filter(c => c.key !== preset.key);
+        }
+        setDirty(); renderPresetRows(t);
+      });
+    });
+  }
+
+  function _updatePendingPreset(type, idx, changes) {
+    if (!_pm.pendingPresets[type]) _pm.pendingPresets[type] = [];
+    const preset = mergePresets(type, _pm.pendingPresets)[idx];
+    const existing = _pm.pendingPresets[type].findIndex(c => c.key === preset.key);
+    const updated = { ...preset, ...changes, key: preset.key };
+    delete updated._builtin;
+    if (existing >= 0) _pm.pendingPresets[type][existing] = updated;
+    else _pm.pendingPresets[type].push(updated);
+    setDirty();
+  }
+
+  renderPresetRows('earning');
+  renderPresetRows('deduction');
+
+  body.querySelector('#pmAddEarningPreset')?.addEventListener('click', () => {
+    if (!_pm.pendingPresets.earning) _pm.pendingPresets.earning = [];
+    _pm.pendingPresets.earning.push({ key: 'custom_' + Date.now(), label: 'Novo Provento', flags: { affectsBase: false, affectsDSR: false } });
+    setDirty(); renderPresetRows('earning');
+  });
+  body.querySelector('#pmAddDeductionPreset')?.addEventListener('click', () => {
+    if (!_pm.pendingPresets.deduction) _pm.pendingPresets.deduction = [];
+    _pm.pendingPresets.deduction.push({ key: 'custom_' + Date.now(), label: 'Novo Desconto', flags: { deductsIRRFBase: false } });
+    setDirty(); renderPresetRows('deduction');
+  });
+  body.querySelector('#pmRestorePresets')?.addEventListener('click', () => {
+    if (!confirm('Restaurar todos os presets para os valores padrão?')) return;
+    _pm.pendingPresets = { earning: [], deduction: [] };
+    setDirty(); renderPresetRows('earning'); renderPresetRows('deduction');
   });
 }
 
@@ -799,18 +1072,96 @@ function tryCloseParamsModal() {
   document.getElementById('paramsModal').close();
 }
 
+// Mapeamento de abas que compartilham parâmetros por ano (Folha ↔ Pró-labore)
+const YEAR_LINKED_TABS = {
+  'FOLHA 2026':    ['PROLABORE 26'],
+  'FOLHA 2025 (2)':['PROLABORE 25'],
+  'FOLHA 2025':    ['PROLABORE'],
+  'FOLHA 2024':    ['PROLABORE'],
+  'PROLABORE 26':  ['FOLHA 2026'],
+  'PROLABORE 25':  ['FOLHA 2025 (2)'],
+  'PROLABORE':     ['FOLHA 2024', 'FOLHA 2025'],
+};
+
+function ensureTabOverride(tab) {
+  if (!userOverrides[tab]) userOverrides[tab] = {};
+  return userOverrides[tab];
+}
+
+function syncOverrideValue(target, key, value, clone = (v) => v) {
+  if (value === undefined) {
+    delete target[key];
+    return;
+  }
+  target[key] = clone(value);
+}
+
+function syncNestedOverrideValue(target, key, nestedKeys, sourceValue) {
+  if (!sourceValue || typeof sourceValue !== 'object') {
+    delete target[key];
+    return;
+  }
+  const next = {};
+  for (const nestedKey of nestedKeys) {
+    if (sourceValue[nestedKey] !== undefined) next[nestedKey] = sourceValue[nestedKey];
+  }
+  if (Object.keys(next).length === 0) delete target[key];
+  else target[key] = next;
+}
+
+function syncLinkedYearFields(sourceTab) {
+  const linkedTabs = YEAR_LINKED_TABS[sourceTab] || [];
+  if (!linkedTabs.length) return;
+  const source = userOverrides[sourceTab] || {};
+
+  for (const linkedTab of linkedTabs) {
+    if (!SHEET_CONFIG[linkedTab] || linkedTab === sourceTab) continue;
+    const target = ensureTabOverride(linkedTab);
+
+    syncOverrideValue(target, 'diasTrab', source.diasTrab);
+    syncOverrideValue(target, 'diasMes', source.diasMes);
+    syncOverrideValue(target, 'faltas', source.faltas);
+    syncOverrideValue(target, 'faltasDSR', source.faltasDSR);
+    syncOverrideValue(target, 'adcNotDSR', source.adcNotDSR);
+    syncNestedOverrideValue(target, 'dsr', ['diasUteis', 'domingosFer'], source.dsr);
+
+    const sourceParams = source.params && typeof source.params === 'object' ? source.params : null;
+    const nextParams = {};
+    for (const paramKey of ['fgtsRate', 'valorPorDep', 'deducaoSimplificada']) {
+      if (sourceParams?.[paramKey] !== undefined) nextParams[paramKey] = sourceParams[paramKey];
+    }
+    if (Object.keys(nextParams).length === 0) delete target.params;
+    else target.params = { ...(target.params || {}), ...nextParams };
+
+    if (target.params) {
+      for (const paramKey of ['fgtsRate', 'valorPorDep', 'deducaoSimplificada']) {
+        if (sourceParams?.[paramKey] === undefined) delete target.params[paramKey];
+      }
+      if (Object.keys(target.params).length === 0) delete target.params;
+    }
+
+    syncOverrideValue(target, 'inssMax', source.inssMax);
+    syncOverrideValue(target, 'irrfBands', source.irrfBands, (bands) => bands.map((band) => ({ ...band })));
+
+    if (Object.keys(target).length === 0) delete userOverrides[linkedTab];
+  }
+}
+
 function saveParamsModal() {
   if (!_pm.dirty) return;
   userOverrides[_pm.tab]=_pm.pending;
+  if (_pm.pendingPresets) { customPresets = _pm.pendingPresets; }
+  syncLinkedYearFields(_pm.tab);
   saveSharedState();
-  // Atualiza DSR visível na aba se for a aba atual
+  // Atualiza DSR visível na aba apenas se o usuário alterou explicitamente no modal
+  // (não sobrescreve valores vindos de applyPeriodo ou _linkDiasUteis)
   if (_pm.tab===currentTab) {
     const dsrOv=(_pm.pending.dsr||{});
-    const cfg=getEffectiveCfg(currentTab);
     const dU=document.getElementById('diasUteis'),dF=document.getElementById('domingosFer');
-    if(dU) dU.value=dsrOv.diasUteis!==undefined?dsrOv.diasUteis:(cfg?.dsr?.diasUteis??24);
-    if(dF) dF.value=dsrOv.domingosFer!==undefined?dsrOv.domingosFer:(cfg?.dsr?.domingosFer??6);
+    if(dU && dsrOv.diasUteis   !== undefined) dU.value = dsrOv.diasUteis;
+    if(dF && dsrOv.domingosFer !== undefined) dF.value = dsrOv.domingosFer;
   }
+  renderExtraEvents(currentTab);
   recalcCLT();
   _pm.dirty=false;
   document.getElementById('btnSaveParamsModal').disabled=true;
@@ -835,7 +1186,7 @@ function addTabButton(name, isDynamic) {
 function createNewTab(name, sourceTab) {
   if(SHEET_CONFIG[name]){alert(`Aba "${name}" já existe.`);return false;}
   const src=getEffectiveCfg(sourceTab); if(!src) return false;
-  const cfg=deepCloneCfg(src); cfg.isDynamic=true; cfg.label=name; cfg.subtitle=`Baseado em: ${sourceTab}`;
+  const cfg=deepCloneCfg(src); cfg.isDynamic=true; cfg.label=name; cfg.subtitle=sourceTab;
   SHEET_CONFIG[name]=cfg; addTabButton(name,true); saveSharedState();
   acknowledgedWarnings.delete(name); switchTab(name);
   return true;
@@ -902,10 +1253,10 @@ function buildManageTabsList() {
 
   if (admin) {
     const emptyMsg = paramAdmins.length===0
-      ? '<p class="sal-tabmgr-note" style="color:#b45309;background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:8px 12px;margin-bottom:10px">⚠ Sem restrição — qualquer usuário pode editar parâmetros. Adicione um usuário abaixo para ativar o controle de acesso.</p>'
+      ? '<p class="sal-tabmgr-note" style="color:#b45309;background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:8px 12px;margin-bottom:10px">⚠ Nenhum e-mail liberado no momento. Apenas usuários com papel ADMIN conseguem editar os parâmetros avançados até que a lista seja preenchida.</p>'
       : '';
     html+=`<div class="sal-section-title" style="margin-top:20px">Controle de Acesso — Parâmetros Avançados</div>
-    <p class="sal-tabmgr-note">Somente os usuários listados poderão editar parâmetros avançados e excluir abas. Use o e-mail de login.</p>
+    <p class="sal-tabmgr-note">Somente usuários ADMIN ou os e-mails listados poderão editar parâmetros avançados e excluir abas. Use o e-mail de login.</p>
     ${emptyMsg}
     <div class="sal-tabmgr-list" id="adminList">`;
     for(const email of paramAdmins){
@@ -941,9 +1292,9 @@ function buildManageTabsList() {
       });
     });
     body.querySelector('#btnAddAdmin')?.addEventListener('click',()=>{
-      const inp=body.querySelector('#newAdminEmail'), em=(inp?.value??'').trim().toLowerCase();
+      const inp=body.querySelector('#newAdminEmail'), em=normalizeEmail(inp?.value);
       if(!em||!em.includes('@')){flashError(inp);return;}
-      if(!paramAdmins.includes(em)) paramAdmins.push(em);
+      if(!paramAdmins.map(normalizeEmail).includes(em)) paramAdmins.push(em);
       saveSharedState(); buildManageTabsList(); updateAdminUI();
       if(inp) inp.value='';
     });
@@ -957,7 +1308,7 @@ function updateNewTabWarning(tabName) {
   const el=document.getElementById('newTabWarning'); if(!el) return;
   const cfg=SHEET_CONFIG[tabName];
   if(cfg?.isDynamic&&!acknowledgedWarnings.has(tabName)){
-    setText('newTabWarningSource', cfg.subtitle?.replace('Baseado em: ','')||'');
+    setText('newTabWarningSource', cfg.subtitle||'');
     el.style.display='';
   } else { el.style.display='none'; }
 }
@@ -972,8 +1323,9 @@ function recalcCLT() {
   if(!cfg||(cfg.type!=='clt'&&cfg.type!=='prolabore')) return;
   const he50=getHHMM('he50'),he100=getHHMM('he100'),adcNot=getHHMM('adcNot');
   const ov=userOverrides[currentTab]||{};
-  // Lê diasTrab e diasMes dos inputs visíveis (fallback para overrides/defaults)
   const diasTrabUI=getNum('diasTrab'); const diasMesUI=getNum('diasMes');
+  const faltasDSREl=document.getElementById('faltasDSRCheckbox');
+  const adcNotDSREl=document.getElementById('adcNotDSRCheckbox');
   const inputs={
     salBase:getNum('salBase'),
     diasTrab:diasTrabUI>0?diasTrabUI:(ov.diasTrab??30),
@@ -984,11 +1336,20 @@ function recalcCLT() {
     numDep:getNum('numDep'),
     diasUteis:getNum('diasUteis'),
     domingosFer:getNum('domingosFer'),
-    extraEarnings:ov.extraEarnings??[],
-    extraDeductions:ov.extraDeductions??[],
+    // Flags sempre resolvidas do preset corrente — mudanças de preset afetam imediatamente itens existentes
+    extraEarnings:(ov.extraEarnings??[]).map(e=>{
+      const pFlags=e.preset?getEffectivePresets('earning').find(p=>p.key===e.preset)?.flags:null;
+      return pFlags?{...e,flags:{...pFlags}}:e;
+    }),
+    extraDeductions:(ov.extraDeductions??[]).map(d=>{
+      const pFlags=d.preset?getEffectivePresets('deduction').find(p=>p.key===d.preset)?.flags:null;
+      return pFlags?{...d,flags:{...pFlags}}:d;
+    }),
     faltas:getNum('faltas'),
+    faltasDSR:faltasDSREl?faltasDSREl.checked:true,
+    adcNotDSR:adcNotDSREl?adcNotDSREl.checked:false,
   };
-  const zero={I8:0,F3:0,I4:0,I5:0,F5:0,F6:0,P24:0,F8:0,I10:0,P29:0,P30:0,P31:0,P32:0,Q34:0,Q35:0,O34:0,Q22:0,totalExtraE:0,totalExtraD:0,extraEarnings:[],extraDeductions:[],baseCalc:0,faltas:0,descontoFaltaDia:0,descontoFaltaDSR:0};
+  const zero={I8:0,F3:0,I4:0,I5:0,F5:0,F6:0,P24:0,F8:0,I10:0,P29:0,P30:0,P31:0,P32:0,Q34:0,Q35:0,O34:0,Q22:0,totalExtraE:0,totalExtraD:0,extrasDetail:[],extraDeductions:[],baseCalc:0,faltas:0,descontoFaltaDia:0,descontoFaltaDSR:0,adcNotDSR:false};
   if(inputs.salBase<=0){renderCLT(zero);return;}
   renderCLT(calcFolha(cfg,inputs));
 }
@@ -1023,20 +1384,27 @@ function switchTab(tabName) {
 
   if(cfg.type==='clt'||cfg.type==='prolabore'){
     document.getElementById('sec-clt').classList.add('active');
-    setText('cltTitle',   cfg.label);
-    setText('cltSubtitle',cfg.subtitle||'');
+    setText('cltTitle', cfg.label);
+    // subtitle removed from UI
+    const isProlabore = cfg.type === 'prolabore';
+    document.querySelectorAll('.sal-he-row').forEach(el => { el.style.display = isProlabore ? 'none' : ''; });
+    const horaStrip = document.getElementById('horaStrip');
+    if (horaStrip) horaStrip.style.display = isProlabore ? 'none' : '';
     const ov2=userOverrides[tabName]||{};
     const dsrOv=ov2.dsr||{};
     const dU=document.getElementById('diasUteis'),dF=document.getElementById('domingosFer');
     if(dU) dU.value=dsrOv.diasUteis!==undefined?dsrOv.diasUteis:(cfg.dsr?.diasUteis??24);
     if(dF) dF.value=dsrOv.domingosFer!==undefined?dsrOv.domingosFer:(cfg.dsr?.domingosFer??6);
-    // Popula novos campos visíveis
+    // Popula campos visíveis
     const dtEl=document.getElementById('diasTrab'),dmEl=document.getElementById('diasMes');
     const ftEl=document.getElementById('faltas'),pfEl=document.getElementById('pontosFacCheckbox');
+    const fDSREl=document.getElementById('faltasDSRCheckbox'),aDSREl=document.getElementById('adcNotDSRCheckbox');
     if(dtEl) dtEl.value=ov2.diasTrab??30;
     if(dmEl) dmEl.value=ov2.diasMes??30;
     if(ftEl) ftEl.value=ov2.faltas??0;
     if(pfEl) pfEl.checked=!!(ov2.pontosFac);
+    if(fDSREl) fDSREl.checked=ov2.faltasDSR!==false;
+    if(aDSREl) aDSREl.checked=ov2.adcNotDSR===true;
     // Se período ativo, sobrescreve DSR com valores calculados do calendário
     if (_periodo.mes && _periodo.ano) {
       const pf = _feriadosCache[_periodo.ano];
@@ -1048,6 +1416,8 @@ function switchTab(tabName) {
         if(dU) dU.value = pu; if(dF) dF.value = pd;
         const daysInMonth=new Date(_periodo.ano,_periodo.mes,0).getDate();
         if(dmEl) dmEl.value=daysInMonth;
+        if(!userOverrides[tabName]) userOverrides[tabName]={};
+        if(dtEl){dtEl.value=daysInMonth; userOverrides[tabName].diasTrab=daysInMonth;}
       }
     }
     updateAdminUI();
@@ -1085,6 +1455,8 @@ function limparCLT() {
   ['salBase','he50','he100','adcNot'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('numDep').value=0;
   const ftEl=document.getElementById('faltas'); if(ftEl) ftEl.value=0;
+  const dtEl=document.getElementById('diasTrab'); const dmEl=document.getElementById('diasMes');
+  if(dtEl&&dmEl) dtEl.value=dmEl.value||30;
   const cfg=getEffectiveCfg(currentTab);
   const dsrOv=(userOverrides[currentTab]||{}).dsr||{};
   const dU=document.getElementById('diasUteis'),dF=document.getElementById('domingosFer');
@@ -1214,10 +1586,12 @@ function applyPeriodo(ano, mes, feriados) {
   const dU = document.getElementById('diasUteis'), dF = document.getElementById('domingosFer');
   if (dU) dU.value = diasUteis;
   if (dF) dF.value = domingosFer;
-  // Sincroniza diasMes com o total real do mês
   const daysInMonth = new Date(ano, mes, 0).getDate();
   const dmEl = document.getElementById('diasMes');
-  if (dmEl) { dmEl.value = daysInMonth; if(!userOverrides[currentTab]) userOverrides[currentTab]={}; userOverrides[currentTab].diasMes = daysInMonth; }
+  if(!userOverrides[currentTab]) userOverrides[currentTab]={};
+  if (dmEl) { dmEl.value = daysInMonth; userOverrides[currentTab].diasMes = daysInMonth; }
+  const dtEl = document.getElementById('diasTrab');
+  if (dtEl) { dtEl.value=daysInMonth; userOverrides[currentTab].diasTrab=daysInMonth; }
   recalcCLT();
 }
 
@@ -1652,26 +2026,36 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('domingosFer')?.addEventListener('input',_linkDomingosFer);
   document.getElementById('domingosFer')?.addEventListener('blur',()=>{clampInput('domingosFer');_linkDomingosFer();});
 
-  // Novos campos visíveis: diasTrab, diasMes, faltas
-  ['diasTrab','diasMes','faltas'].forEach(id=>{
-    const el=document.getElementById(id); if(!el) return;
-    el.addEventListener('input',()=>{
-      const v=parseInt(el.value);
-      if(!userOverrides[currentTab]) userOverrides[currentTab]={};
-      userOverrides[currentTab][id]=isFinite(v)?v:(id==='faltas'?0:30);
-      // diasMes mudou: atualiza domingosFer para manter sum = diasMes
-      if(id==='diasMes'&&isFinite(v)){
-        const duEl=document.getElementById('diasUteis');
-        if(duEl){
-          const duv=parseInt(duEl.value)||0;
-          const dfEl=document.getElementById('domingosFer');
-          if(dfEl){const dfv=Math.max(0,v-duv);dfEl.value=dfv;if(!userOverrides[currentTab].dsr)userOverrides[currentTab].dsr={};userOverrides[currentTab].dsr.domingosFer=dfv;}
-        }
-      }
-      saveSharedState(); recalcCLT();
-    });
-    el.addEventListener('blur',()=>{clampInput(id);recalcCLT();});
-  });
+  function _linkDiasTrab() {
+    const v=parseInt(document.getElementById('diasTrab')?.value)||0;
+    if(!userOverrides[currentTab]) userOverrides[currentTab]={};
+    userOverrides[currentTab].diasTrab=v;
+    saveSharedState(); recalcCLT();
+  }
+  function _linkFaltas() {
+    const v=parseInt(document.getElementById('faltas')?.value)||0;
+    if(!userOverrides[currentTab]) userOverrides[currentTab]={};
+    userOverrides[currentTab].faltas=v;
+    saveSharedState(); recalcCLT();
+  }
+  function _linkFaltasDSR() {
+    const v=document.getElementById('faltasDSRCheckbox')?.checked??true;
+    if(!userOverrides[currentTab]) userOverrides[currentTab]={};
+    userOverrides[currentTab].faltasDSR=v;
+    saveSharedState(); recalcCLT();
+  }
+  function _linkAdcNotDSR() {
+    const v=document.getElementById('adcNotDSRCheckbox')?.checked??false;
+    if(!userOverrides[currentTab]) userOverrides[currentTab]={};
+    userOverrides[currentTab].adcNotDSR=v;
+    saveSharedState(); recalcCLT();
+  }
+  document.getElementById('diasTrab')?.addEventListener('input',_linkDiasTrab);
+  document.getElementById('diasTrab')?.addEventListener('blur',()=>{clampInput('diasTrab');_linkDiasTrab();});
+  document.getElementById('faltas')?.addEventListener('input',_linkFaltas);
+  document.getElementById('faltas')?.addEventListener('blur',()=>{clampInput('faltas');_linkFaltas();});
+  document.getElementById('faltasDSRCheckbox')?.addEventListener('change',_linkFaltasDSR);
+  document.getElementById('adcNotDSRCheckbox')?.addEventListener('change',_linkAdcNotDSR);
 
   // Pontos facultativos
   document.getElementById('pontosFacCheckbox')?.addEventListener('change',e=>{
@@ -1702,13 +2086,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnExemploMulta').addEventListener('click',preencherExemploMulta);
   document.getElementById('btnLimparMulta').addEventListener('click',limparMulta);
 
-  // Botões de eventos adicionais
-  document.getElementById('btnAddEarning')?.addEventListener('click',e=>{openExtraDropdown(currentTab,'earning',e.currentTarget);});
-  document.getElementById('btnAddDeduction')?.addEventListener('click',e=>{openExtraDropdown(currentTab,'deduction',e.currentTarget);});
-  document.addEventListener('click',()=>closeExtraDropdown());
+  // Botões de proventos/descontos — stopPropagation evita que o click feche o dropdown imediatamente
+  document.getElementById('btnAddEarning')?.addEventListener('click',e=>{e.stopPropagation();openExtraDropdown(currentTab,'earning',e.currentTarget);});
+  document.getElementById('btnAddDeduction')?.addEventListener('click',e=>{e.stopPropagation();openExtraDropdown(currentTab,'deduction',e.currentTarget);});
+  document.addEventListener('click',e=>{if(!e.target.closest('.sal-extra-dropdown'))closeExtraDropdown();});
 
   // Gear — params modal
-  document.getElementById('btnParams')?.addEventListener('click',()=>{if(isParamAdmin()) openParamsModal(currentTab);});
+  document.getElementById('btnParams')?.addEventListener('click',()=>{openParamsModal(currentTab);});
   const paramsModal=document.getElementById('paramsModal');
   paramsModal?.addEventListener('click',e=>{if(e.target===paramsModal) tryCloseParamsModal();});
   document.getElementById('btnCloseParamsModal')?.addEventListener('click',tryCloseParamsModal);
@@ -1745,6 +2129,25 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('periodoMes')?.addEventListener('change', onPeriodoChange);
   document.getElementById('periodoAno')?.addEventListener('change', onPeriodoChange);
   document.getElementById('periodoAno')?.addEventListener('keydown', e => { if(e.key==='Enter') e.target.blur(); });
+
+  // Enter move foco para o próximo input visível
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const active = document.activeElement;
+    if (!active) return;
+    const tag = active.tagName;
+    if (tag === 'BUTTON' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+    if (active.type === 'checkbox' || active.type === 'button' || active.type === 'submit') return;
+    const inputs = [...document.querySelectorAll(
+      'input:not([type=checkbox]):not([type=button]):not([type=submit]):not([type=radio]):not([disabled])'
+    )].filter(el => el.offsetParent !== null && !el.closest('[style*="display: none"]'));
+    const idx = inputs.indexOf(active);
+    if (idx >= 0 && idx < inputs.length - 1) {
+      e.preventDefault();
+      inputs[idx + 1].focus();
+      inputs[idx + 1].select?.();
+    }
+  });
 
   // Gerenciar abas
   document.getElementById('btnManageTabs')?.addEventListener('click',openManageTabsModal);

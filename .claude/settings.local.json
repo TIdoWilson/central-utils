@@ -5,7 +5,15 @@
       "Bash(dir *)",
       "Bash(python *)",
       "Bash(pip install *)",
-      "Bash(node --check public/js/calculo-salario.js)"
+      "Bash(node --check public/js/calculo-salario.js)",
+      "Bash(node *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/calculo-salario)",
+      "Bash(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object Id, ProcessName, CPU)",
+      "PowerShell($job = Start-Job -ScriptBlock { Set-Location \"w:\\\\DOCUMENTOS ESCRITORIO\\\\INSTALACAO SISTEMA\\\\central-utils\"; node src/server.js 2>&1 }; Start-Sleep 4; Invoke-WebRequest -Uri \"http://localhost:3000/calculo-salario\" -UseBasicParsing -TimeoutSec 5 | Select-Object -ExpandProperty StatusCode)",
+      "PowerShell(npm start *)",
+      "PowerShell(node --check \"w:\\\\DOCUMENTOS ESCRITORIO\\\\INSTALACAO SISTEMA\\\\central-utils\\\\public\\\\js\\\\calculo-salario.js\" 2>&1)",
+      "PowerShell(node --check \"w:\\\\DOCUMENTOS ESCRITORIO\\\\INSTALACAO SISTEMA\\\\central-utils\\\\public\\\\js\\\\calculo-salario.js\" 2>&1; if \\($?\\) { \"OK\" } else { \"ERRO\" })"
     ]
   }
 }

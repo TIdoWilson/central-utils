@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Extrator fiscal SPED</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .extrator-sped-grid { display: grid; gap: 16px; }
+      .extrator-sped-status { border: 1px solid #dbe4ee; border-radius: 10px; padding: 12px; background: #f8fafc; white-space: pre-wrap; }
+      .extrator-sped-status.is-error { border-color: #f87171; background: #fff1f2; color: #7f1d1d; }
+      .extrator-sped-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+      .extrator-sped-result { border: 1px dashed #cbd5e1; border-radius: 12px; padding: 14px; background: #fff; }
+      .extrator-sped-result strong { display: block; margin-bottom: 6px; color: #12324a; }
+      .extrator-sped-muted { color: #475569; font-size: 14px; }
+    </style>
+  </head>
+  <body class="app-body nfe-body">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Abrir menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Fiscal / Extrator fiscal SPED</div>
+          <h1>Extrator fiscal SPED</h1>
+          <p>Envie um arquivo SPED em TXT para gerar um relatorio XLSX das compras de entrada.</p>
+        </header>
+
+        <section class="nfe-card extrator-sped-grid">
+          <h2>Processar arquivo</h2>
+          <label class="nfe-input-file-label" style="min-width: 320px; max-width: 560px;">
+            <span>Arquivo SPED (.txt)</span>
+            <input type="file" id="arquivoSped" accept=".txt,text/plain" />
+          </label>
+          <div class="extrator-sped-actions">
+            <button id="btnProcessar" type="button" class="btn btn-primary">Gerar XLSX</button>
+            <a id="btnBaixar" class="btn btn-secondary" href="#" style="display:none;">Baixar XLSX</a>
+          </div>
+          <div id="statusBox" class="extrator-sped-status" aria-live="polite">Nenhum arquivo processado.</div>
+        </section>
+
+        <section class="nfe-card extrator-sped-grid">
+          <h2>Resultado</h2>
+          <div id="resultadoBox" class="extrator-sped-result">
+            <strong>Aguardando processamento</strong>
+            <div class="extrator-sped-muted">O portal vai liberar o download do XLSX assim que o processamento concluir.</div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/extrator-fiscal-sped.js"></script>
+  </body>
+</html>

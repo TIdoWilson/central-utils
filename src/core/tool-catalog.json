@@ -500,12 +500,45 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "xml-faenello",
+      "title": "XML Faenello",
+      "group": "Fiscal",
+      "hasPage": true,
+      "hasApi": false,
+      "apiBase": null,
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "comparador-fsist-sped",
+      "title": "Comparador FSIST x SPED",
+      "group": "Fiscal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/comparador-fsist-sped",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "speds",
       "title": "SPEDS",
       "group": "Fiscal",
       "hasPage": true,
       "hasApi": true,
       "apiBase": "/api/speds",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
+      "slug": "extrator-fiscal-sped",
+      "title": "Extrator fiscal SPED",
+      "group": "Fiscal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/extrator-fiscal-sped",
       "adminOnly": false,
       "aliases": [],
       "sharedApisUsed": []

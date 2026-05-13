@@ -60,6 +60,16 @@ Ferramenta que replica a planilha `docs/SALARIO 4.xlsx`. Permite calcular folha 
 - **FOLHA 2025 (2):** IRRF zerado quando < R$ 10,00.
 - **PROLABORE 26:** INSS flat 11%, cap R$ 988,09. Deduão simplificada = R$ 564,80.
 
+## ParÃ¢metros avanÃ§ados compartilhados
+
+- A ediÃ§Ã£o dos parÃ¢metros avanÃ§ados exige usuÃ¡rio `ADMIN` ou e-mail explicitamente liberado na lista de controle da prÃ³pria ferramenta.
+- UsuÃ¡rios fora dessa lista continuam usando a calculadora normalmente, mas nÃ£o podem persistir alteraÃ§Ãµes em tabelas de IRRF/INSS, teto do INSS, percentual do prÃ³-labore nem lista de e-mails autorizados.
+- As tabelas de IRRF sÃ£o sincronizadas entre as abas vinculadas de folha e prÃ³-labore ao salvar os parÃ¢metros avanÃ§ados.
+- Nas abas de prÃ³-labore, o modal avanÃ§ado exibe e permite alterar tanto o percentual do INSS quanto o teto do INSS.
+
+- Usuarios sem permissao de edicao ainda podem abrir o modal em modo somente leitura para consultar os parametros.
+- Entre abas do mesmo ano, a sincronizacao inclui: `diasTrab`, `diasMes`, `dsr.diasUteis`, `dsr.domingosFer`, `params.fgtsRate`, `params.valorPorDep`, `params.deducaoSimplificada`, `inssMax` e `irrfBands`.
+
 ## Tabelas por ano
 
 ### INSS 2024
@@ -113,3 +123,5 @@ Ferramenta que replica a planilha `docs/SALARIO 4.xlsx`. Permite calcular folha 
 | DSR zero com horas extras | Campos diasUteis/domingosFer = 0 | Preencher dias úteis e domingos/feriados |
 | Cidade aparece duplicada no seletor de feriados | Base com município salvo em caixa/grafia inconsistente (`Rio de Janeiro`/`RIO DE JANEIRO`, `GOIANIA`/`GOIÂNIA`) | Normalizar `locations[].name` em maiúsculo, padronizar `locations[].code` e remover duplicatas lógicas do JSON |
 | Mesmo feriado municipal aparece 2x no card/calendário | Base contém o mesmo feriado com data em formatos diferentes (`2026-02-02` e `2026-02-02T00:00:00.000Z`) ou carga repetida da mesma cidade | Deduplicar por chave lógica (`data + tipo + nome + local`) no JSON e manter deduplicação defensiva no front ao carregar os feriados |
+| UsuÃ¡rio sem e-mail liberado consegue salvar tabela IRRF/INSS | Restricao aplicada so no front ou lista de e-mails vazia | Validar a lista de e-mails no modal `Gerenciar abas` e conferir que o backend retorna `403` para mutacoes avancadas fora da lista |
+| Aba de prÃ³-labore nÃ£o mostra teto/percentual do INSS no modal avanÃ§ado | Modal exibindo apenas a grade de faixas ou somente parte dos campos do INSS | Abrir o modal da aba de prÃ³-labore e ajustar `Percentual INSS` e `Teto INSS` diretamente na secao `INSS do Pro-labore` |

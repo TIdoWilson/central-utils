@@ -1,6 +1,6 @@
 # STATUS_ATUAL.md
 
-Data de referencia: 2026-05-07
+Data de referencia: 2026-05-08
 
 ## Concluido recentemente
 1. A fila exclusiva da CCT passou a acumular CNPJs enviados em intervalo curto antes de restaurar a fila automatica, evitando que o pedido anterior fique de fora da rodada imediata.
@@ -37,9 +37,11 @@ Data de referencia: 2026-05-07
 30. A `calculadora-icms-st` passou a usar o bundle local de XLSX em `/vendor/xlsx.full.min.js`, removendo a dependencia de CDN externo na exportacao.
 31. `lotes-txt` e `acerto-lotes-toscan` passaram a ler TXT com fallback de UTF-8, Windows-1252 e Latin1 para evitar acentos quebrados na entrada e na saida.
 32. O `conciliador-cartao-wilson` passou a reconstruir corretamente o nome do cliente no Razao, removendo o codigo numerico sem perder o resto do nome e melhorando o score de casamento.
-33. O `conciliador-cartao-wilson` passou a comparar valor absoluto na conciliacao, corrigindo divergencias falsas quando o mesmo lancamento vinha com sinal oposto entre Razao e Financeiro.`r`n34. O `conciliador-cartao-wilson` passou a ignorar saldos de fechamento colados apos o lancamento no Razao, evitando capturar `Saldo Mês`/`Saldo Atual` como se fossem o valor do titulo.
+33. O `conciliador-cartao-wilson` passou a comparar valor absoluto na conciliacao, corrigindo divergencias falsas quando o mesmo lancamento vinha com sinal oposto entre Razao e Financeiro.
+34. O `conciliador-cartao-wilson` passou a ignorar saldos de fechamento colados apos o lancamento no Razao, evitando capturar `Saldo Mês`/`Saldo Atual` como se fossem o valor do titulo.
 
 35. A documentação pública do portal passou a ter pipeline dedicada no GitHub Actions para buildar o MkDocs e publicar automaticamente no Cloudflare Pages a cada push em `main`.
+36. A ferramenta `comparador-fsist-sped` foi criada com card na home, menu na área Fiscal, leitura de SPED ICMS/IPI e Contribuições, comparação de notas faltantes e CST, e exportação em XLSX com duas abas.
 
 ## Estado tecnico atual
 - Arquitetura multicamadas consolidada (Node.js, Python/FastAPI, PostgreSQL e filesystem).
@@ -59,3 +61,7 @@ Data de referencia: 2026-05-07
 1. Fechar `WIL-170` na SN com validação visual da nova lista, exclusão e histórico de recibos.
 2. Executar `WIL-52` para eliminar o 404 operacional do `conciliador-hausen-ocean`.
 3. Definir baseline de testes para `WIL-53` e amarrar esse baseline no pipeline de `WIL-55`.
+4. Validar e publicar a tela `XML Faenello` com o mesmo ciclo de documentação e Linear.
+5. Garantir no `XML Faenello` o descarte de NFS-e canceladas em tabela, dashboard e exportação.
+6. Exibir no dashboard do `XML Faenello` o total de ISSQN não retido fora de Francisco Beltrão no lugar do quadro de NFS-e processadas.
+7. Incluir o atalho do `XML Faenello` na home do portal, na seção Fiscal.

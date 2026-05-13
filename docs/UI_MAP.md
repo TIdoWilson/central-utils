@@ -21,6 +21,7 @@ Este arquivo é gerado automaticamente a partir de `src/core/tool-catalog.json`.
 
 ## Fiscal
 
+- **Comparador FSIST x SPED** — `/comparador-fsist-sped` • API: `/api/comparador-fsist-sped`
 - **SPEDS** — `/speds` • API: `/api/speds`
 
 ## Geral

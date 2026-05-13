@@ -46,8 +46,11 @@ const MENU_CONFIG = [
     icon: '&#128193;',
     items: [
       { id: 'nfe', label: 'Consulta NF-e', href: '/nfe', icon: '&#129534;' },
+      { id: 'xml-faenello', label: 'XML Faenello', href: '/xml-faenello', icon: '&#128196;' },
       { id: 'calculadora-icms-st', label: 'Calculadora de ICMS ST', href: '/calculadora-icms-st', icon: '&#128196;' },
+      { id: 'comparador-fsist-sped', label: 'Comparador FSIST x SPED', href: '/comparador-fsist-sped', icon: '&#128202;' },
       { id: 'speds', label: 'SPEDS', href: '/speds', icon: '&#128209;' },
+      { id: 'extrator-fiscal-sped', label: 'Extrator fiscal SPED', href: '/extrator-fiscal-sped', icon: '&#128196;' },
     ],
   },
   {

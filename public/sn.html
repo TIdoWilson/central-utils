@@ -9,7 +9,6 @@
 
 <body class="app-body nfe-body page-sn">
   <div class="nfe-layout">
-    <!-- SIDEBAR -->
     <aside class="nfe-sidebar">
       <div class="nfe-sidebar-top">
         <div class="nfe-sidebar-logo">
@@ -25,71 +24,14 @@
       </div>
 
       <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
-
     </aside>
 
-    <!-- CONTEÚDO PRINCIPAL -->
     <main class="nfe-main">
-      <!-- Cabeçalho / Breadcrumb -->
       <header class="nfe-header">
         <div class="nfe-breadcrumb">Portal / Fiscal / Declaração SN</div>
-        <h1>Declaração Mensal – Simples Nacional</h1>
-        <p>Cadastre as empresas, selecione o período e envie declarações ou consulte os recibos via Integra Contador.
-        </p>
+        <h1>Declaração Mensal - Simples Nacional</h1>
+        <p>Cadastre as empresas, selecione o período e envie declarações ou consulte os recibos via Integra Contador.</p>
       </header>
-
-      <!-- Linha principal: filtros + resumo -->
-      <section class="nfe-row sn-overview-row">
-        <!-- CARD: Período -->
-        <div class="nfe-card nfe-card-upload sn-main-card">
-          <h2>Período de apuração</h2>
-          <p class="nfe-card-subtitle">
-            Selecione o período de apuração para envio das declarações ou consulta dos recibos já transmitidos.
-          </p>
-
-          <div class="nfe-section">
-            <div class="sn-section-title-row">
-              <h3>Período de apuração</h3>
-              <span class="sn-chip">Selecione mês e ano</span>
-            </div>
-            <div class="nfe-upload-form sn-period-grid">
-              <label class="nfe-input-file-label">
-                <span>Mês:</span>
-                <select id="paMes" class="sn-select" required>
-                  <option value="">Selecione</option>
-                  <option value="01">01</option>
-                  <option value="02">02</option>
-                  <option value="03">03</option>
-                  <option value="04">04</option>
-                  <option value="05">05</option>
-                  <option value="06">06</option>
-                  <option value="07">07</option>
-                  <option value="08">08</option>
-                  <option value="09">09</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                </select>
-              </label>
-
-              <label class="nfe-input-file-label">
-                <span>Ano:</span>
-                <select id="paAno" class="sn-select" required>
-                  <!-- preenchido via JS -->
-                </select>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div class="nfe-card nfe-card-ext sn-summary-card">
-          <h2>Resumo do consumo</h2>
-          <p class="nfe-card-subtitle">
-            Acompanhe as operações realizadas (declarações + consultas) e o valor total estimado.
-          </p>
-          <p id="consumoInfo">Nenhuma operação realizada.</p>
-        </div>
-      </section>
 
       <section class="nfe-row sn-companies-row">
         <div class="nfe-card nfe-card-upload sn-companies-card">
@@ -106,24 +48,63 @@
               </button>
             </div>
 
-            <p id="snCompaniesMeta" class="sn-company-meta">Carregando empresas...</p>
+            <div class="sn-company-filters">
+              <div class="nfe-section sn-company-period-box">
+                <div class="sn-section-title-row">
+                  <h3>Período de apuração</h3>
+                  <span class="sn-chip">Selecione mês e ano</span>
+                </div>
+                <div class="nfe-upload-form sn-period-grid">
+                  <label class="nfe-input-file-label">
+                    <span>Mês:</span>
+                    <select id="paMes" class="sn-select" required>
+                      <option value="">Selecione</option>
+                      <option value="01">01</option>
+                      <option value="02">02</option>
+                      <option value="03">03</option>
+                      <option value="04">04</option>
+                      <option value="05">05</option>
+                      <option value="06">06</option>
+                      <option value="07">07</option>
+                      <option value="08">08</option>
+                      <option value="09">09</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                    </select>
+                  </label>
 
-            <div class="sn-company-search">
-              <label class="nfe-input-file-label">
-                <span>Buscar empresa:</span>
-                <input
-                  type="text"
-                  id="snCompanySearch"
-                  placeholder="Filtre por CNPJ ou razão social"
-                  autocomplete="off"
-                />
-              </label>
+                  <label class="nfe-input-file-label">
+                    <span>Ano:</span>
+                    <select id="paAno" class="sn-select" required>
+                      <!-- preenchido via JS -->
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <div class="nfe-section sn-company-search-box">
+                <div class="sn-section-title-row">
+                  <h3>Filtros</h3>
+                  <span class="sn-chip">Busca e seleção</span>
+                </div>
+                <div class="nfe-upload-form sn-company-filter-grid">
+                  <label class="nfe-input-file-label sn-company-search-label">
+                    <span>Buscar empresa:</span>
+                    <input
+                      type="text"
+                      id="snCompanySearch"
+                      placeholder="Filtre por CNPJ ou razão social"
+                      autocomplete="off"
+                    />
+                  </label>
+                  <p id="snCompaniesMeta" class="sn-company-meta">Carregando empresas...</p>
+                </div>
+              </div>
             </div>
 
             <div class="sn-companies-list">
-              <div id="companiesOptions" class="sn-companies-options">
-                <!-- preenchido via JS -->
-              </div>
+              <div id="companiesOptions" class="sn-companies-options"></div>
             </div>
           </div>
 
@@ -153,7 +134,6 @@
         </div>
       </section>
 
-      <!-- Resultados -->
       <section class="nfe-row sn-results-row">
         <div class="nfe-card nfe-card-upload">
           <h2>Resultado do processamento</h2>
@@ -177,9 +157,7 @@
                   <th>Recibo</th>
                 </tr>
               </thead>
-              <tbody>
-                <!-- preenchido via JS -->
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
@@ -187,7 +165,6 @@
     </main>
   </div>
 
-  <!-- MODAL DE CADASTRO DE EMPRESA -->
   <div id="companyModal" class="modal hidden">
     <div class="modal-overlay" id="companyModalOverlay"></div>
     <div class="modal-content">
@@ -228,6 +205,14 @@
         Consulte os recibos gerados pela API no período selecionado e abra cada PDF diretamente.
       </p>
 
+      <div class="nfe-card nfe-card-ext sn-summary-card sn-history-summary-card">
+        <h2>Resumo do consumo</h2>
+        <p class="nfe-card-subtitle">
+          Acompanhe as operações realizadas (declarações + consultas) e o valor total estimado.
+        </p>
+        <p id="consumoInfo">Nenhuma operação realizada.</p>
+      </div>
+
       <div class="sn-history-actions">
         <button type="button" id="btnRefreshReceiptHistory" class="btn btn-secondary">
           Atualizar histórico
@@ -250,9 +235,7 @@
               <th>Recibo</th>
             </tr>
           </thead>
-          <tbody>
-            <!-- preenchido via JS -->
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
     </div>

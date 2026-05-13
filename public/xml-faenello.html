@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PORTAL WILSON LOPES - XML Faenello</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body class="app-body nfe-body page-xml-faenello">
+    <div class="nfe-layout">
+        <aside class="nfe-sidebar">
+            <div class="nfe-sidebar-top">
+                <div class="nfe-sidebar-logo">
+                    <span class="logo-circle">WL</span>
+                    <span class="logo-text">Portal</span>
+                </div>
+
+                <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+
+            <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+        </aside>
+
+        <main class="nfe-main">
+            <header class="nfe-header xml-faenello-header">
+                <div class="nfe-breadcrumb">Portal / Fiscal / XML Faenello</div>
+                <h1>XML Faenello</h1>
+                
+            </header>
+
+            <section class="nfe-card xml-faenello-upload-card">
+                <div class="nfe-card-header">
+                    <h2>1. Carregar XML</h2>
+                    <p class="nfe-card-subtitle">Anexe e processe o XML. Depois disso a tabela e o dashboard são preenchidos automaticamente.</p>
+                </div>
+
+                <form id="xmlFaenelloForm" class="xml-faenello-form">
+                    <label class="nfe-input-file-label">
+                        <span>arraste ou anexe o XML aqui</span>
+                        <input type="file" id="xmlFaenelloInput" accept=".xml,text/xml,application/xml" required />
+                    </label>
+
+                    <div class="xml-faenello-actions">
+                        <button type="submit" class="btn btn-primary" id="btnProcessarXml">Processar XML</button>
+                        <button type="button" class="btn btn-secondary" id="btnLimparXml">Limpar</button>
+                        <button type="button" class="btn btn-primary" id="btnExportarXlsx" disabled>Exportar XLSX</button>
+                    </div>
+
+                    <div class="xml-faenello-status" id="xmlFaenelloStatus">Aguardando o envio do XML.</div>
+                </form>
+            </section>
+
+            <section class="nfe-card xml-faenello-dashboard-card" id="xmlFaenelloDashboardCard" hidden>
+                <div class="nfe-card-header">
+                    <h2>2. Dashboard</h2>
+                    <p class="nfe-card-subtitle">Resumo consolidado por NFS-e e por município de tributação.</p>
+                </div>
+
+                <div class="xml-faenello-dashboard" id="xmlFaenelloDashboard"></div>
+
+                <div class="xml-faenello-municipios">
+                    <div class="nfe-card-header">
+                        <h3>Total ISSQN não retido por município</h3>
+                        <p class="nfe-card-subtitle">Somatório das notas com ISS não retido, agrupado pelo município de tributação.</p>
+                    </div>
+
+                    <div class="nfe-table-wrapper">
+                        <table class="nfe-table xml-faenello-municipios-table">
+                            <thead>
+                                <tr>
+                                    <th>Município</th>
+                                    <th>Qtde NFS-e</th>
+                                    <th>Total ISSQN não retido</th>
+                                </tr>
+                            </thead>
+                            <tbody id="xmlFaenelloMunicipiosBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="nfe-card nfe-card-table" id="xmlFaenelloTableCard" hidden>
+                <div class="nfe-card-header">
+                    <h2>3. Tabela lida do XML</h2>
+                    <p class="nfe-card-subtitle">Valores monetários exibidos sempre em R$ 0,00 e exportados com acentuação preservada.</p>
+                </div>
+
+                <div class="nfe-table-wrapper">
+                    <table class="nfe-table xml-faenello-table">
+                        <thead>
+                            <tr>
+                                <th>Nr NFSE</th>
+                                <th>Tributado em</th>
+                                <th>ISS retido</th>
+                                <th>Cliente</th>
+                                <th>CPF/CNPJ</th>
+                                <th>Valor total da nota</th>
+                                <th>Base de calculo ISS</th>
+                                <th>Valor ISS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="xmlFaenelloTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="nfe-card xml-faenello-empty" id="xmlFaenelloEmpty">
+                <h2>Sem XML carregado</h2>
+                <p>Selecione um arquivo XML para ler os dados da Faenello e gerar a planilha.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="/vendor/xlsx.full.min.js"></script>
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/upload-helper.js"></script>
+    <script src="/js/xml-faenello.js"></script>
+</body>
+
+</html>

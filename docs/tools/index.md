@@ -18,6 +18,8 @@ Esta lista é gerada automaticamente a partir de `src/core/tool-catalog.json`.
 - [GIAST](./giast.md) — `/giast` • API: `/api/giast`
 ## Fiscal
 
+- [XML Faenello](./xml-faenello.md) — `/xml-faenello`
+- [Comparador FSIST x SPED](./comparador-fsist-sped.md) — `/comparador-fsist-sped` • API: `/api/comparador-fsist-sped`
 - [SPEDS](./speds.md) — `/speds` • API: `/api/speds`
 ## Geral
 

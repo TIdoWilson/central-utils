@@ -93,9 +93,71 @@
         .sal-kpi-sub { font-size: 11px; color: #94a3b8; margin-top: 1px; }
         .sal-kpi-sep { width: 1px; background: #e2e8f0; align-self: stretch; margin: 0 4px; }
 
+        /* ---- Faixa de valores por hora ---- */
+        .sal-hora-strip {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: space-evenly;
+            align-self: stretch;
+            flex-shrink: 0;
+            width: 96px;
+        }
+        .sal-hora-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 10px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        /* ---- Painel unificado: municipio + feriados ---- */
+        .sal-feriados-panel {
+            flex: 0 0 auto;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px 16px;
+            font-size: 13px;
+            max-width: 290px;
+        }
+        .sal-feriados-panel .sal-col-periodo { gap: 6px; }
+        #feriadosCard { max-height: 240px; overflow-y: auto; }
+        .sal-hora-card-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+        .sal-hora-card-val {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e40af;
+            font-variant-numeric: tabular-nums;
+        }
+        .sal-hora-card-sub {
+            font-size: 10px;
+            color: #94a3b8;
+            font-variant-numeric: tabular-nums;
+        }
+        .sal-hora-card.he-50  { border-color: #bfdbfe; background: #eff6ff; }
+        .sal-hora-card.he-50  .sal-hora-card-val { color: #1d4ed8; }
+        .sal-hora-card.he-100 { border-color: #a5b4fc; background: #eef2ff; }
+        .sal-hora-card.he-100 .sal-hora-card-val { color: #4338ca; }
+        .sal-hora-card.not-20 { border-color: #d1d5db; background: #f9fafb; }
+        .sal-hora-card.not-20 .sal-hora-card-val { color: #374151; }
+        .sal-hora-card.dsr    { border-color: #a7f3d0; background: #ecfdf5; }
+        .sal-hora-card.dsr    .sal-hora-card-val { color: #065f46; }
+
         /* ---- Resultados detalhados ---- */
         .sal-results { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin-top: 16px; }
-        .sal-result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+        .sal-result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px 12px; }
+        #cltTitle { font-size: 16px; }
         .sal-result-item { display: flex; flex-direction: column; gap: 2px; }
         .sal-result-label { font-size: 10px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
         .sal-result-value { font-size: 17px; font-weight: 700; color: #1e293b; }
@@ -292,21 +354,14 @@
         </aside>
 
         <main class="nfe-main">
-            <header class="nfe-header">
-                <div class="nfe-breadcrumb">Portal / Pessoal / Cálculo de Salário</div>
-                <h1>Cálculo de Salário / Pró-labore</h1>
-                <p>Selecione a aba/ano para calcular folha CLT, pró-labore ou multa rescisória. Todos os cálculos seguem as tabelas da planilha <strong>SALARIO 4.xlsx</strong>.</p>
-            </header>
-
             <!-- ===== SEÇÃO CLT / PROLABORE ===== -->
             <section class="nfe-card sal-section active" id="sec-clt">
                 <div class="nfe-card-header">
                     <div>
                         <h2 id="cltTitle">Folha de Pagamento — 2026</h2>
-                        <p class="nfe-card-subtitle" id="cltSubtitle">Tabela INSS 2026 progressiva · Tabela IRRF 2026</p>
                     </div>
                     <div class="nfe-table-actions">
-                        <button class="btn btn-secondary btn-icon" type="button" id="btnParams" title="Parâmetros avançados (tabelas INSS/IRRF e percentuais)">⚙</button>
+                        <button class="btn btn-secondary btn-icon" type="button" id="btnParams" title="Parâmetros avançados (tabelas INSS/IRRF e percentuais)" style="display:none">⚙</button>
                         <button class="btn btn-secondary" type="button" id="btnLimpar">Limpar</button>
                         <button class="btn btn-primary"   type="button" id="btnExemplo">Preencher Exemplo</button>
                     </div>
@@ -332,17 +387,21 @@
                             Dependentes (qtde)
                             <input id="numDep" class="auth-input" type="number" step="1" min="0" value="0" />
                         </label>
-                        <label class="auth-label" style="margin:0">
+                        <label class="auth-label sal-he-row" style="margin:0">
                             HE 50% (HH:MM)
                             <input id="he50" class="auth-input sal-input-time" type="text" placeholder="0:00" autocomplete="off" />
                         </label>
-                        <label class="auth-label" style="margin:0">
+                        <label class="auth-label sal-he-row" style="margin:0">
                             HE 100% (HH:MM)
                             <input id="he100" class="auth-input sal-input-time" type="text" placeholder="0:00" autocomplete="off" />
                         </label>
-                        <label class="auth-label" style="margin:0">
+                        <label class="auth-label sal-he-row" style="margin:0">
                             Ad. Noturno 20%
                             <input id="adcNot" class="auth-input sal-input-time" type="text" placeholder="0:00" autocomplete="off" />
+                        </label>
+                        <label class="auth-label sal-he-row" style="margin:0;display:flex;align-items:center;gap:6px;cursor:pointer;flex-direction:row">
+                            <input id="adcNotDSRCheckbox" type="checkbox" style="margin:0;width:auto;cursor:pointer" />
+                            <span style="font-weight:500;font-size:12px;color:#475569">Adic. Not. compõe DSR</span>
                         </label>
                         <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:2px">
                             <label class="auth-label" style="margin:0">
@@ -351,12 +410,43 @@
                             </label>
                             <label class="auth-label" style="margin:0">
                                 Dias do Mês
-                                <input id="diasMes" class="auth-input" type="number" step="1" min="1" max="31" value="30" style="width:66px" />
+                                <input id="diasMes" class="auth-input" type="number" step="1" min="1" max="31" value="30" style="width:66px;background:#f1f5f9;cursor:not-allowed" readonly title="Definido automaticamente pelo mês selecionado" />
                             </label>
                             <label class="auth-label" style="margin:0">
                                 Faltas
-                                <input id="faltas" class="auth-input" type="number" step="1" min="0" max="31" value="0" style="width:50px" title="Faltas injustificadas (desc. dia + reflexo DSR)" />
+                                <input id="faltas" class="auth-input" type="number" step="1" min="0" max="31" value="0" style="width:50px" title="Faltas injustificadas" />
                             </label>
+                        </div>
+                        <label class="auth-label" style="margin:2px 0 0;display:flex;align-items:center;gap:6px;cursor:pointer;flex-direction:row">
+                            <input id="faltasDSRCheckbox" type="checkbox" checked style="margin:0;width:auto;cursor:pointer" />
+                            <span style="font-weight:500;font-size:12px;color:#475569">Faltas com reflexo no DSR</span>
+                        </label>
+                    </div>
+
+                    <!-- Faixa de valores por hora (coluna vertical) -->
+                    <div class="sal-hora-strip" id="horaStrip">
+                        <div class="sal-hora-card">
+                            <span class="sal-hora-card-label">Valor Hora</span>
+                            <span class="sal-hora-card-val" id="rHoraCard">R$ —</span>
+                        </div>
+                        <div class="sal-hora-card he-50" id="rHE50Card" style="display:none">
+                            <span class="sal-hora-card-label">HE 50%</span>
+                            <span class="sal-hora-card-val" id="rHE50CardVal">R$ —</span>
+                            <span class="sal-hora-card-sub" id="rHE50CardRate"></span>
+                        </div>
+                        <div class="sal-hora-card he-100" id="rHE100Card" style="display:none">
+                            <span class="sal-hora-card-label">HE 100%</span>
+                            <span class="sal-hora-card-val" id="rHE100CardVal">R$ —</span>
+                            <span class="sal-hora-card-sub" id="rHE100CardRate"></span>
+                        </div>
+                        <div class="sal-hora-card not-20" id="rNotCard" style="display:none">
+                            <span class="sal-hora-card-label">Adc Not 20%</span>
+                            <span class="sal-hora-card-val" id="rNotCardVal">R$ —</span>
+                            <span class="sal-hora-card-sub" id="rNotCardRate"></span>
+                        </div>
+                        <div class="sal-hora-card dsr" id="rDSRCard" style="display:none">
+                            <span class="sal-hora-card-label">DSR</span>
+                            <span class="sal-hora-card-val" id="rDSRCardVal">R$ —</span>
                         </div>
                     </div>
 
@@ -364,42 +454,17 @@
 
                     <!-- Col 2: Proventos / Descontos (inline) -->
                     <div class="sal-col-he">
-                        <div id="salExtraTitle" class="sal-section-title" style="margin-top:18px;display:none">Proventos / Descontos Adicionais</div>
+                        <div class="sal-section-title" style="margin-top:0">Proventos / Descontos</div>
                         <div style="display:flex;gap:8px;margin-bottom:6px">
                             <button class="btn btn-secondary" style="font-size:12px;padding:5px 12px" type="button" id="btnAddEarning">+ Provento</button>
-                            <button class="btn btn-secondary" style="font-size:12px;padding:5px 12px" type="button" id="btnAddDeduction">− Desconto</button>
+                            <button class="btn btn-secondary" style="font-size:12px;padding:5px 12px" type="button" id="btnAddDeduction">+ Desconto</button>
                         </div>
                         <div id="salExtraList"></div>
                     </div>
 
                     <div class="sal-col-divider"></div>
 
-                    <!-- Col 3: Município + Dias Úteis + Domingos/Feriados -->
-                    <div class="sal-col-periodo">
-                        <div class="sal-city-wrap">
-                            <label class="auth-label" style="margin:0">
-                                Município <span style="font-weight:400;color:#94a3b8;font-size:10px">(opcional)</span>
-                                <input id="cidadeInput" class="auth-input" type="text" placeholder="Digite para filtrar..." disabled autocomplete="off" style="width:212px" />
-                            </label>
-                            <div id="cidadeDropdown" class="sal-city-dropdown" style="display:none"></div>
-                        </div>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap">
-                            <label class="auth-label" style="margin:0">
-                                Dias Úteis
-                                <input id="diasUteis" class="auth-input" type="number" step="1" min="1" max="31" title="Seg–Sáb sem feriado (divisor DSR)" style="width:68px" />
-                            </label>
-                            <label class="auth-label" style="margin:0">
-                                Domingos/Feriados
-                                <input id="domingosFer" class="auth-input" type="number" step="1" min="0" max="31" title="Dom + feriados Seg–Sáb (multiplicador DSR)" style="width:80px" />
-                            </label>
-                        </div>
-                        <label class="auth-label" style="margin:0;display:flex;align-items:center;gap:6px;cursor:pointer;flex-direction:row;margin-top:4px">
-                            <input id="pontosFacCheckbox" type="checkbox" style="margin:0;width:auto;cursor:pointer" />
-                            <span style="font-weight:500;font-size:12px;color:#475569">Pontos fac. como feriado</span>
-                        </label>
-                    </div>
-
-                    <!-- Calendário inline + Mês/Ano + popover -->
+                    <!-- Col 3: Calendário inline + Mês/Ano + popover -->
                     <div class="sal-cal-cal">
                         <div class="sal-periodo-inputs">
                             <label class="auth-label" style="margin:0">
@@ -429,8 +494,34 @@
                         <div id="calDayPopover" class="sal-cal-popover" style="display:none"></div>
                     </div>
 
-                    <!-- Col 6: Card de feriados -->
-                    <div id="feriadosCard" class="sal-feriados-card" style="display:none"></div>
+                    <!-- Painel unificado: inputs de período + lista de feriados -->
+                    <div class="sal-feriados-panel">
+                        <div class="sal-col-periodo">
+                            <div class="sal-city-wrap">
+                                <label class="auth-label" style="margin:0">
+                                    Município <span style="font-weight:400;color:#94a3b8;font-size:10px">(opcional)</span>
+                                    <input id="cidadeInput" class="auth-input" type="text" placeholder="Digite para filtrar..." disabled autocomplete="off" style="width:100%;box-sizing:border-box" />
+                                </label>
+                                <div id="cidadeDropdown" class="sal-city-dropdown" style="display:none"></div>
+                            </div>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+                                <label class="auth-label" style="margin:0">
+                                    Dias Úteis
+                                    <input id="diasUteis" class="auth-input" type="number" step="1" min="1" max="31" title="Seg–Sáb sem feriado (divisor DSR)" style="width:68px" />
+                                </label>
+                                <label class="auth-label" style="margin:0">
+                                    Domingos/Feriados
+                                    <input id="domingosFer" class="auth-input" type="number" step="1" min="0" max="31" title="Dom + feriados Seg–Sáb (multiplicador DSR)" style="width:80px" />
+                                </label>
+                            </div>
+                            <label class="auth-label" style="margin:4px 0 0;display:flex;align-items:center;gap:6px;cursor:pointer;flex-direction:row">
+                                <input id="pontosFacCheckbox" type="checkbox" style="margin:0;width:auto;cursor:pointer" />
+                                <span style="font-weight:500;font-size:12px;color:#475569">Pontos fac. como feriado</span>
+                            </label>
+                        </div>
+                        <!-- Lista de feriados (populada pelo JS ao selecionar mês/ano) -->
+                        <div id="feriadosCard" style="display:none;margin-top:10px"></div>
+                    </div>
 
                 </div>
 
@@ -446,41 +537,38 @@
                         <span class="sal-kpi-value desconto" id="kpiDescontos">R$ —</span>
                         <span class="sal-kpi-sub" id="kpiPctDesc">—</span>
                     </div>
+                    <div class="sal-kpi-sep"></div>
+                    <div class="sal-kpi">
+                        <span class="sal-kpi-label">(=) Salário Líquido</span>
+                        <span class="sal-kpi-value destaque" id="kpiLiquido">R$ —</span>
+                    </div>
                 </div>
 
                 <!-- Resultados detalhados -->
                 <div class="sal-results">
                     <div class="sal-section-title" style="margin-top:0">Detalhamento</div>
-
-                    <!-- Linha 1: informativos -->
-                    <div class="sal-result-grid">
+                    <div class="sal-result-grid" id="detalhamentoGrid">
                         <div class="sal-result-item">
                             <span class="sal-result-label">(i) Valor da Hora</span>
                             <span class="sal-result-value neutro" id="rValorHora">R$ —</span>
                         </div>
                         <div class="sal-result-item">
-                            <span class="sal-result-label">(i) Salário Proporcional</span>
+                            <span class="sal-result-label">(i) Sal. Proporcional</span>
                             <span class="sal-result-value neutro" id="rSalProp">R$ —</span>
                         </div>
                         <div class="sal-result-item">
-                            <span class="sal-result-label">(i) HE + Adc Not + DSR</span>
+                            <span class="sal-result-label">(i) HE+Adc+DSR</span>
                             <span class="sal-result-value neutro" id="rHorasTotal">R$ —</span>
                         </div>
                         <div class="sal-result-item">
-                            <span class="sal-result-label">(i) Base INSS/IRRF/FGTS</span>
+                            <span class="sal-result-label">(i) Base INSS/FGTS</span>
                             <span class="sal-result-value informativo" id="rBaseINSS">R$ —</span>
                         </div>
                         <div class="sal-result-item" id="rFaltasRow" style="display:none">
-                            <span class="sal-result-label">(−) Desconto Faltas</span>
-                            <span class="sal-result-value desconto" id="rFaltasValor">R$ —</span>
+                            <span class="sal-result-label">(i) Faltas</span>
+                            <span class="sal-result-value informativo" id="rFaltasValor">R$ —</span>
                             <span class="sal-inss-detail" id="rFaltasDetalhe"></span>
                         </div>
-                    </div>
-
-                    <hr class="sal-divider" />
-
-                    <!-- Linha 2: descontos + FGTS -->
-                    <div class="sal-result-grid">
                         <div class="sal-result-item">
                             <span class="sal-result-label">(−) INSS</span>
                             <span class="sal-result-value desconto" id="rINSS">R$ —</span>
@@ -498,19 +586,6 @@
                         <div class="sal-result-item">
                             <span class="sal-result-label">(i) FGTS</span>
                             <span class="sal-result-value informativo" id="rFGTS">R$ —</span>
-                        </div>
-                    </div>
-
-                    <!-- Extra earnings/deductions detail -->
-                    <div id="rExtraContainer" style="display:none"></div>
-
-                    <hr class="sal-divider" />
-
-                    <!-- Linha 3: líquido -->
-                    <div class="sal-result-grid">
-                        <div class="sal-result-item">
-                            <span class="sal-result-label">(=) Salário Líquido</span>
-                            <span class="sal-result-value destaque" id="rLiquido">R$ —</span>
                         </div>
                     </div>
                 </div>

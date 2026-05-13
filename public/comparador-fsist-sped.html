@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Comparador FSIST x SPED</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body class="app-body nfe-body page-comparador-fsist-sped">
+    <div class="nfe-layout">
+      <aside class="nfe-sidebar">
+        <div class="nfe-sidebar-top">
+          <div class="nfe-sidebar-logo">
+            <span class="logo-circle">WL</span>
+            <span class="logo-text">Portal</span>
+          </div>
+          <button class="nfe-sidebar-toggle" id="sidebarToggle" type="button">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <nav class="nfe-sidebar-menu" id="sidebarMenu"></nav>
+      </aside>
+
+      <main class="nfe-main">
+        <header class="nfe-header">
+          <div class="nfe-breadcrumb">Portal / Fiscal / Comparador FSIST x SPED</div>
+          <h1>Comparador FSIST x SPED</h1>
+          <p>
+            Compare as notas de entrada do SPED ICMS/IPI ou Contribuições com os XMLs salvos do FSIST.
+            O resultado destaca as notas que existem no FSIST e nao aparecem no SPED, alem da conferência
+            de CST de PIS e COFINS item a item.
+          </p>
+        </header>
+
+        <section class="nfe-card nfe-card-upload">
+          <div class="nfe-card-header">
+            <div>
+              <h2>Arquivos de entrada</h2>
+              <p class="nfe-card-subtitle">
+                Use um TXT do SPED e um lote de XMLs do FSIST em XML avulso ou ZIP. O tipo do SPED pode ser
+                selecionado manualmente ou deixado em auto-detectar.
+              </p>
+            </div>
+          </div>
+
+          <form id="comparadorFsistSpedForm" class="nfe-upload-form">
+            <label class="auth-label speds-field">
+              <span>Tipo do SPED</span>
+              <select id="tipoSpedSelect" class="speds-select">
+                <option value="auto">Auto-detectar</option>
+                <option value="icms">ICMS/IPI</option>
+                <option value="contribuicoes">Contribuições</option>
+              </select>
+              <span class="speds-meta">Auto usa heurísticas de blocos típicos e pode ser ajustado manualmente.</span>
+            </label>
+
+            <label class="nfe-input-file-label">
+              <span>SPED TXT</span>
+              <input type="file" id="spedTxtInput" accept=".txt" required />
+            </label>
+
+            <label class="nfe-input-file-label">
+              <span>XMLs do FSIST (.xml ou .zip)</span>
+              <input type="file" id="fsistInput" accept=".xml,.zip" multiple required />
+            </label>
+
+            <div class="nfe-table-actions" style="margin-top: 12px">
+              <button type="submit" class="btn btn-primary" id="btnProcessar">Processar</button>
+              <button type="button" class="btn btn-secondary" id="btnLimpar" disabled>Limpar</button>
+              <button type="button" class="btn btn-secondary" id="btnBaixar" disabled>Baixar Excel</button>
+            </div>
+
+            <div id="statusMsg" class="nfe-upload-message" aria-live="polite" style="margin-top: 10px"></div>
+          </form>
+        </section>
+
+        <section class="nfe-row">
+          <div class="nfe-card nfe-card-ext">
+            <h2>Resumo</h2>
+            <div id="resumoBox">
+              <p>Nenhum processamento ainda.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="nfe-card nfe-card-table">
+          <h2>Notas faltantes</h2>
+          <p class="nfe-card-subtitle">
+            Mostra somente as notas que existem no FSIST e nao foram encontradas no SPED.
+          </p>
+          <div class="nfe-table-wrapper">
+            <table class="nfe-table">
+              <thead>
+                <tr>
+                  <th>Tipo SPED</th>
+                  <th>Registro</th>
+                  <th>Chave</th>
+                  <th>Serie</th>
+                  <th>Numero</th>
+                  <th>Data</th>
+                  <th>CNPJ/CPF</th>
+                  <th>Valor XML</th>
+                  <th>FSIST</th>
+                  <th>Observacao</th>
+                </tr>
+              </thead>
+              <tbody id="tblFaltantes"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="nfe-card nfe-card-table">
+          <h2>Comparação de CST</h2>
+          <p class="nfe-card-subtitle">
+            Comparação por item entre o CST do XML e o CST informado no SPED.
+          </p>
+          <div class="nfe-table-wrapper">
+            <table class="nfe-table">
+              <thead>
+                <tr>
+                  <th>Tipo SPED</th>
+                  <th>Registro</th>
+                  <th>Chave</th>
+                  <th>Serie</th>
+                  <th>Numero</th>
+                  <th>Item XML</th>
+                  <th>Item SPED</th>
+                  <th>CST PIS XML</th>
+                  <th>CST PIS SPED</th>
+                  <th>Status PIS</th>
+                  <th>CST COFINS XML</th>
+                  <th>CST COFINS SPED</th>
+                  <th>Status COFINS</th>
+                  <th>Observacao</th>
+                </tr>
+              </thead>
+              <tbody id="tblCst"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/auth-client.js"></script>
+    <script src="/js/upload-helper.js"></script>
+    <script src="/js/comparador-fsist-sped.js"></script>
+  </body>
+</html>

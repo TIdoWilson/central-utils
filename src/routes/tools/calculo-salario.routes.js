@@ -5,6 +5,61 @@ module.exports = function createCalculoSalarioRoutes(deps) {
   const { requireCsrf, fs, dataDir } = deps;
   const router = express.Router();
   const STATE_FILE = path.join(dataDir, 'calculo-salario-shared.json');
+  const SAFE_OVERRIDE_KEYS = new Set(['diasTrab', 'diasMes', 'dsr', 'faltas', 'pontosFac', 'extraEarnings', 'extraDeductions']);
+
+  function normalizeEmail(value) {
+    return String(value || '').trim().toLowerCase();
+  }
+
+  function readSharedState() {
+    if (!fs.existsSync(STATE_FILE)) return {};
+    try {
+      return JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function isAdvancedParamsAdmin(user, state) {
+    if (String(user?.role || '').toUpperCase() === 'ADMIN') return true;
+    const email = normalizeEmail(user?.email);
+    if (!email) return false;
+    const admins = Array.isArray(state?.paramAdmins) ? state.paramAdmins.map(normalizeEmail).filter(Boolean) : [];
+    return admins.includes(email);
+  }
+
+  function getProtectedOverrides(overrides) {
+    const source = overrides && typeof overrides === 'object' ? overrides : {};
+    const snapshot = {};
+    for (const [tab, tabOverrides] of Object.entries(source)) {
+      if (!tabOverrides || typeof tabOverrides !== 'object') continue;
+      const protectedSlice = {};
+      for (const key of ['params', 'inssBands', 'inssMax', 'inssFlat', 'irrfBands']) {
+        if (tabOverrides[key] !== undefined) protectedSlice[key] = tabOverrides[key];
+      }
+      if (Object.keys(protectedSlice).length) snapshot[tab] = protectedSlice;
+    }
+    return snapshot;
+  }
+
+  function mergeOverrides(existingOverrides, incomingOverrides, canEditAdvanced) {
+    const existing = existingOverrides && typeof existingOverrides === 'object' ? existingOverrides : {};
+    const incoming = incomingOverrides && typeof incomingOverrides === 'object' ? incomingOverrides : {};
+    if (canEditAdvanced) {
+      return { ...existing, ...incoming };
+    }
+
+    const merged = { ...existing };
+    for (const [tab, tabOverrides] of Object.entries(incoming)) {
+      if (!tabOverrides || typeof tabOverrides !== 'object') continue;
+      const current = merged[tab] && typeof merged[tab] === 'object' ? { ...merged[tab] } : {};
+      for (const key of SAFE_OVERRIDE_KEYS) {
+        if (tabOverrides[key] !== undefined) current[key] = tabOverrides[key];
+      }
+      merged[tab] = current;
+    }
+    return merged;
+  }
 
   // GET /state — retorna estado compartilhado entre todos os usuários
   router.get('/state', (req, res) => {
@@ -22,8 +77,34 @@ module.exports = function createCalculoSalarioRoutes(deps) {
   // POST /state — persiste estado compartilhado
   router.post('/state', requireCsrf, (req, res) => {
     try {
+      const currentState = readSharedState();
+      const incomingState = req.body && typeof req.body === 'object' ? req.body : {};
+      const user = req.user || req.auth?.user || null;
+      const canEditAdvanced = isAdvancedParamsAdmin(user, currentState) || isAdvancedParamsAdmin(user, incomingState);
+
+      if (!canEditAdvanced) {
+        const protectedChanged = JSON.stringify(getProtectedOverrides(incomingState.overrides)) !== JSON.stringify(getProtectedOverrides(currentState.overrides))
+          || JSON.stringify(Array.isArray(incomingState.paramAdmins) ? incomingState.paramAdmins : []) !== JSON.stringify(Array.isArray(currentState.paramAdmins) ? currentState.paramAdmins : [])
+          || JSON.stringify(Array.isArray(incomingState.deletedTabs) ? incomingState.deletedTabs : []) !== JSON.stringify(Array.isArray(currentState.deletedTabs) ? currentState.deletedTabs : []);
+        if (protectedChanged) {
+          return res.status(403).json({ error: 'Sem permissão para alterar parâmetros avançados.' });
+        }
+      }
+
+      const nextState = {
+        ...currentState,
+        ...incomingState,
+        overrides: mergeOverrides(currentState.overrides, incomingState.overrides, canEditAdvanced),
+        hiddenTabs: Array.isArray(incomingState.hiddenTabs) ? incomingState.hiddenTabs : (currentState.hiddenTabs || []),
+        dynamicTabs: Array.isArray(incomingState.dynamicTabs) ? incomingState.dynamicTabs : (currentState.dynamicTabs || []),
+        deletedTabs: canEditAdvanced && Array.isArray(incomingState.deletedTabs) ? incomingState.deletedTabs : (currentState.deletedTabs || []),
+        paramAdmins: canEditAdvanced && Array.isArray(incomingState.paramAdmins)
+          ? incomingState.paramAdmins.map(normalizeEmail).filter(Boolean)
+          : (currentState.paramAdmins || []),
+      };
+
       // req.body já foi parseado pelo express.json(); re-serializa preservando __INF__
-      const raw = JSON.stringify(req.body, null, 2);
+      const raw = JSON.stringify(nextState, null, 2);
       fs.writeFileSync(STATE_FILE, raw, 'utf8');
       res.json({ ok: true });
     } catch (e) {
