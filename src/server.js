@@ -62,6 +62,7 @@ const createSpedsRoutes = require('./routes/tools/speds.routes');
 const createPlanilhaNrcRoutes = require('./routes/tools/planilha-nrc.routes');
 const createExtratorFiscalSpedRoutes = require('./routes/tools/extrator-fiscal-sped.routes');
 const createCalculoSalarioRoutes = require('./routes/tools/calculo-salario.routes');
+const createCalculadoraFeriasRoutes = require('./routes/tools/calculadora-ferias.routes');
 const { createDimobService } = require('./services/dimob.service');
 const { createCctService } = require('./services/cct.service');
 const createLotesRenasulService = require('./services/lotes-renasul.service');
@@ -1597,6 +1598,12 @@ app.use(
   requireAuth,
   requireToolApi('calculo-salario'),
   createCalculoSalarioRoutes({ requireCsrf, fs, dataDir: DATA_DIR })
+);
+app.use(
+  '/api/calculadora-ferias',
+  requireAuth,
+  requireToolApi('calculadora-ferias'),
+  createCalculadoraFeriasRoutes({ requireCsrf, fs, dataDir: DATA_DIR })
 );
 
 // Página interna (protegida)

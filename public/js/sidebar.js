@@ -11,6 +11,7 @@ const MENU_CONFIG = [
       { id: 'importador-cartao-horas-bandeira-transportes', label: 'Importador Cart&atilde;o Horas Bandeira Transportes', href: '/importador-cartao-horas-bandeira-transportes', icon: '&#128666;' },
       { id: 'comparador-eventos-holerite', label: 'Comparador de Eventos de Holerite', href: '/comparador-eventos-holerite', icon: '&#128176;' },
       { id: 'ferias-funcionario', label: 'F&eacute;rias por Funcion&aacute;rio', href: '/separador-ferias-funcionario', icon: '&#127958;&#65039;' },
+      { id: 'calculadora-ferias', label: 'Calculadora de F&eacute;rias', href: '/calculadora-ferias', icon: '&#128197;' },
       { id: 'holerites-empresa', label: 'Holerites por Empresa', href: '/separador-holerites-por-empresa', icon: '&#128196;' },
       { id: 'relatorio-ferias', label: 'Relat&oacute;rio de F&eacute;rias por Empresa', href: '/separador-pdf-relatorio-de-ferias', icon: '&#128209;' },
       { id: 'calculo-salario', label: 'C&aacute;lculo de Sal&aacute;rio / Pr&oacute;-labore', href: '/calculo-salario', icon: '&#128178;' },

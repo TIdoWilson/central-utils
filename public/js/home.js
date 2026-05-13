@@ -12,6 +12,7 @@ const TOOL_ICON_MAP = {
   'cartao-horas-iob': buildMonoIcon('mdi:clock-time-four-outline'),
   'importador-cartao-horas-bandeira-transportes': buildMonoIcon('mdi:truck-clock'),
   'separador-ferias-funcionario': buildMonoIcon('mdi:palm-tree'),
+  'calculadora-ferias': buildMonoIcon('mdi:calendar-month-outline'),
   'separador-holerites-por-empresa': buildMonoIcon('mdi:file-account-outline'),
   'separador-pdf-relatorio-de-ferias': buildMonoIcon('mdi:file-document-multiple-outline'),
   'acertos-lotes-internets': buildMonoIcon('mdi:text-box-check-outline'),

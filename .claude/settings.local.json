@@ -13,7 +13,8 @@
       "PowerShell($job = Start-Job -ScriptBlock { Set-Location \"w:\\\\DOCUMENTOS ESCRITORIO\\\\INSTALACAO SISTEMA\\\\central-utils\"; node src/server.js 2>&1 }; Start-Sleep 4; Invoke-WebRequest -Uri \"http://localhost:3000/calculo-salario\" -UseBasicParsing -TimeoutSec 5 | Select-Object -ExpandProperty StatusCode)",
       "PowerShell(npm start *)",
       "PowerShell(node --check \"w:\\\\DOCUMENTOS ESCRITORIO\\\\INSTALACAO SISTEMA\\\\central-utils\\\\public\\\\js\\\\calculo-salario.js\" 2>&1)",
-      "PowerShell(node --check \"w:\\\\DOCUMENTOS ESCRITORIO\\\\INSTALACAO SISTEMA\\\\central-utils\\\\public\\\\js\\\\calculo-salario.js\" 2>&1; if \\($?\\) { \"OK\" } else { \"ERRO\" })"
+      "PowerShell(node --check \"w:\\\\DOCUMENTOS ESCRITORIO\\\\INSTALACAO SISTEMA\\\\central-utils\\\\public\\\\js\\\\calculo-salario.js\" 2>&1; if \\($?\\) { \"OK\" } else { \"ERRO\" })",
+      "WebFetch(domain:api.anthropic.com)"
     ]
   }
 }

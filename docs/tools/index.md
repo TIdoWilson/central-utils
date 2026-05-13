@@ -18,9 +18,10 @@ Esta lista é gerada automaticamente a partir de `src/core/tool-catalog.json`.
 - [GIAST](./giast.md) — `/giast` • API: `/api/giast`
 ## Fiscal
 
-- [XML Faenello](./xml-faenello.md) — `/xml-faenello`
 - [Comparador FSIST x SPED](./comparador-fsist-sped.md) — `/comparador-fsist-sped` • API: `/api/comparador-fsist-sped`
+- [Extrator fiscal SPED](./extrator-fiscal-sped.md) — `/extrator-fiscal-sped` • API: `/api/extrator-fiscal-sped`
 - [SPEDS](./speds.md) — `/speds` • API: `/api/speds`
+- [XML Faenello](./xml-faenello.md) — `/xml-faenello`
 ## Geral
 
 - [Acerto Lotes Toscan](./acerto-lotes-toscan.md) — `/acerto-lotes-toscan`
@@ -59,9 +60,10 @@ Esta lista é gerada automaticamente a partir de `src/core/tool-catalog.json`.
 - [Parcelamentos de Impostos](./parcelamentos.md) — `/parcelamentos` • API: `/api/parcelamentos`
 ## Pessoal
 
+- [Calculadora de Ferias](./calculadora-ferias.md) — `/calculadora-ferias` • API: `/api/calculadora-ferias`
+- [Calculo de Salario / Pro-labore](./calculo-salario.md) — `/calculo-salario` • API: `/api/calculo-salario`
+- [Calculo de Salario Codex](./calculo-salario-codex.md) — `/calculo-salario-codex`
 - [Cartao Horas IOB](./cartao-horas-iob.md) — `/cartao-horas-iob` • API: `/api/cartao-horas-iob`
 - [Consulta CCT](./cct.md) — `/cct` • API: `/api/cct`
 - [Comparador Eventos Holerite](./comparador-eventos-holerite.md) — `/comparador-eventos-holerite` • API: `/api/comparador-eventos-holerite`
 - [Importador Cartao de Horas Bandeira Transportes](./importador-cartao-horas-bandeira-transportes.md) — `/importador-cartao-horas-bandeira-transportes` • API: `/api/cartao-horas-bandeira-transportes`
-- [Calculo de Salario / Pro-labore](./calculo-salario.md) — `/calculo-salario`
-- [Calculo de Salario Codex](./calculo-salario-codex.md) — `/calculo-salario-codex`

@@ -80,6 +80,17 @@
       "sharedApisUsed": []
     },
     {
+      "slug": "calculadora-ferias",
+      "title": "Calculadora de Ferias",
+      "group": "Pessoal",
+      "hasPage": true,
+      "hasApi": true,
+      "apiBase": "/api/calculadora-ferias",
+      "adminOnly": false,
+      "aliases": [],
+      "sharedApisUsed": []
+    },
+    {
       "slug": "cartao-horas-iob",
       "title": "Cartao Horas IOB",
       "group": "Pessoal",
